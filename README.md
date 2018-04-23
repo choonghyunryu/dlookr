@@ -40,14 +40,8 @@ dlookr includes several vignettes files, which we use throughout the documentati
 Provided vignettes is as follows.
 
 -   Data quality diagnosis
-    -   English language version
-    -   Korean language version
 -   Exploratory Data Analysis
-    -   English language version
-    -   Korean language version
 -   Data Transformation
-    -   English language version
-    -   Korean language version
 
 ``` r
 browseVignettes(package = "dlookr")
@@ -1197,13 +1191,13 @@ urban <- imputate_na(carseats, Urban, US, method = "mice")
 urban
 #>   [1] Yes Yes Yes Yes Yes No  Yes Yes No  No  No  Yes Yes Yes Yes No  Yes
 #>  [18] Yes No  Yes Yes No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes Yes
-#>  [35] Yes No  No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes
+#>  [35] Yes Yes No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes
 #>  [52] Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes
-#>  [69] Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes No 
+#>  [69] Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes No  No 
 #>  [86] No  Yes No  Yes No  No  Yes Yes No  Yes Yes No  Yes No  No  No  Yes
-#> [103] No  Yes Yes Yes No  Yes Yes No  Yes Yes No  Yes Yes Yes No  Yes Yes
-#> [120] Yes Yes Yes Yes No  Yes No  Yes Yes Yes No  Yes No  Yes Yes Yes No 
-#> [137] No  Yes Yes No  Yes Yes Yes Yes No  Yes Yes No  No  Yes No  No  No 
+#> [103] No  Yes Yes Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes
+#> [120] Yes Yes Yes Yes No  Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes No 
+#> [137] No  Yes Yes No  Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes No  No 
 #> [154] No  No  Yes Yes No  No  No  No  No  Yes No  No  Yes Yes Yes Yes Yes
 #> [171] Yes Yes Yes Yes No  Yes No  Yes No  Yes Yes Yes Yes Yes No  Yes No 
 #> [188] Yes Yes No  No  Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes No  Yes
@@ -1213,8 +1207,8 @@ urban
 #> [256] Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes No  No  Yes Yes Yes Yes
 #> [273] Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes No  No  Yes No  Yes No 
 #> [290] Yes No  No  Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
-#> [307] Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No  No  No  Yes Yes Yes
-#> [324] Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes
+#> [307] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes No  No  No  Yes Yes Yes
+#> [324] Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes Yes Yes
 #> [341] Yes No  No  Yes No  Yes No  No  Yes No  No  No  Yes No  Yes Yes Yes
 #> [358] Yes Yes Yes No  No  Yes Yes Yes No  No  Yes No  Yes Yes Yes No  Yes
 #> [375] Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes
@@ -1239,9 +1233,9 @@ summary(urban)
 #> 
 #> * Information of Imputation (before vs after)
 #>      original imputation original_percent imputation_percent
-#> No        115        122            28.75               30.5
-#> Yes       275        278            68.75               69.5
-#> <NA>       10          0             2.50                0.0
+#> No        115        119            28.75              29.75
+#> Yes       275        281            68.75              70.25
+#> <NA>       10          0             2.50               0.00
 
 # viz of imputate
 plot(urban)
@@ -1622,8 +1616,8 @@ binning(carseats$Income, nbins = 5, type = "bclust")
 #> binned type: bclust
 #> number of bins: 5
 #> x
-#>   (21,39.5] (39.5,64.5]   (64.5,85]    (85,108]   (108,120]        <NA> 
-#>          73          90          97          77          39          24
+#>   (21,39.5]   (39.5,49]   (49,75.5] (75.5,94.5]  (94.5,120]        <NA> 
+#>          73          38         104          81          80          24
 
 # -------------------------
 # Using pipes & dplyr
