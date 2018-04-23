@@ -1,0 +1,433 @@
+---
+title: "Data Transformation"
+author: "Choonghyun Ryu"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Data Transformation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r environment, echo = FALSE, message = FALSE, warning=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "")
+options(tibble.print_min = 4L, tibble.print_max = 4L)
+
+library(dlookr)
+library(dplyr)
+library(ggplot2)
+```
+
+## Preface
+After you have acquired the data, you should do the following:
+
+* Diagnose data quality.
+    + If there is a problem with data quality,
+    + The data must be corrected or re-acquired.
+* Explore data to understand the data and find scenarios for performing the analysis.
+* **Derive new variables or perform variable transformations.**
+
+The dlookr package makes these steps fast and easy:
+
+* Performs an data diagnosis or automatically generates a data diagnosis report.
+* Discover data in a variety of ways, and automatically generate EDA(exploratory data analysis) report.
+* **Imputate missing values and outliers, resolve skewed data, and binarize continuous variables into categorical variables. And generates an automated report to support it.**
+
+This document introduces **data transformation** methods provided by the dlookr package. You will learn how to transform of `tbl_df` data that inherits from data.frame and `data.frame` with functions provided by dlookr.
+
+dlookr synergy with `dplyr` increases. Particularly in data transformation and data wrangle, it increases the efficiency of the `tidyverse` package group.
+
+## datasets
+To illustrate the basic use of EDA in the dlookr package, I use a `Carseats` datasets.
+`Carseats` in the `ISLR` package is simulation dataset that sells children's car seats at 400 stores. This data is a data.frame created for the purpose of predicting sales volume.
+
+```{r import_data}
+library(ISLR)
+str(Carseats)
+```
+
+The contents of individual variables are as follows. (Refer to ISLR::Carseats Man page)
+
+* Sales
+    + Unit sales (in thousands) at each location
+* CompPrice
+    + Price charged by competitor at each location
+* Income
+    + Community income level (in thousands of dollars)
+* Advertising
+    + Local advertising budget for company at each location (in thousands of dollars)
+* Population
+    + Population size in region (in thousands)
+* Price
+    + Price company charges for car seats at each site
+* ShelveLoc
+    + A factor with levels Bad, Good and Medium indicating the quality of the shelving location for the car seats at each site
+* Age
+    + Average age of the local population
+* Education
+    + Education level at each location
+* Urban
+    + A factor with levels No and Yes to indicate whether the store is in an urban or rural location
+* US
+    + A factor with levels No and Yes to indicate whether the store is in the US or not
+
+When data analysis is performed, data containing missing values is often encountered. However, Carseats is complete data without missing. Therefore, the missing values are generated as follows. And I created a data.frame object named carseats.
+
+```{r missing}
+carseats <- ISLR::Carseats
+
+set.seed(123)
+carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
+
+set.seed(456)
+carseats[sample(seq(NROW(carseats)), 10), "Urban"] <- NA
+```
+
+## Data Transformation
+dlookr imputates missing values and outliers and resolves skewed data. It also provides the ability to bin continuous variables as categorical variables.
+
+Here is a list of the data conversion functions and functions provided by dlookr:
+
+* `find_na()` finds a variable that contains the missing values variable, and `imputate_na()` imputates the missing values.
+* `find_outliers()` finds a variable that contains the outliers, and `imputate_outlier()` imputates the outlier.
+* `summary.imputation()` and `plot.imputation()` provide information and visualization of the imputated variables.
+* `find_skewness()` finds the variables of the skewed data, and `transform()` performs the resolving of the skewed data.
+* `transform()` also performs standardization of numeric variables.
+* `summary.transform()` and `plot.transform()` provide information and visualization of transformed variables.
+* `binning()` and `binning_by()` convert binational data into categorical data.
+* `print.bins()` and `summary.bins()` show and summarize the binning results.
+* `plot.bins()` and `plot.optimal_bins()` provide visualization of the binning result.
+* `transformation_report()` performs the data transform and reports the result.
+
+
+## Imputation of missing values
+### Imputates the missing value with `imputate_na()`
+
+`imputate_na()` imputates the missing value in the variable. The predictor with missing values supports both numeric and categorical variables and supports the following methods.
+
+* predictor is numerical variable
+    + "mean" : arithmetic mean
+    + "median" : median
+    + "mode" : mode
+    + "knn" : K-nearest neighbors
+        + target variable must be specified
+    + "rpart" : Recursive Partitioning and Regression Trees
+        + target variable must be specified    
+    + "mice" : Multivariate Imputation by Chained Equations
+        + target variable must be specified  
+        + random seed must be set
+* predictor is categorical variable
+    + "mode" : mode
+    + "rpart" : Recursive Partitioning and Regression Trees
+        + target variable must be specified    
+    + "mice" : Multivariate Imputation by Chained Equations
+        + target variable must be specified  
+        + random seed must be set
+    
+`imputate_na()` imputates the missing value with "rpart" for the numeric variable, `Income`.
+`summary()` summarizes missing value imputation information, and `plot()` visualizes imputation information.
+
+```{r imputate_na, fig.width = 7, fig.height = 4}
+income <- imputate_na(carseats, Income, US, method = "rpart")
+
+# result of imputate
+income
+
+# summary of imputate
+summary(income)
+
+# viz of imputate
+plot(income)
+```
+
+The following imputates the categorical variable `urban` by the "mice" method.
+
+```{r imputate_na2, fig.width = 7, fig.height = 4}
+library(mice)
+
+urban <- imputate_na(carseats, Urban, US, method = "mice")
+
+# result of imputate
+urban
+
+# summary of imputate
+summary(urban)
+
+# viz of imputate
+plot(urban)
+```
+    
+### Collaboration with dplyr
+The following is an example of calculating the arithmetic mean of `US` variables by using the `Income` variable that imputates the missing value with `dplyr`.
+
+```{r imputate_na3}
+# The mean before and after the imputation of the Income variable
+carseats %>%
+  mutate(Income_imp = imputate_na(carseats, Income, US, method = "knn")) %>%
+  group_by(US) %>%
+  summarise(orig = mean(Income, na.rm = TRUE),
+    imputation = mean(Income_imp))
+```
+
+
+## Imputation of outliers
+### Imputates thr outliers with `imputate_outlier()`
+
+`imputate_outlier()` imputates the outliers value. The predictor with outliers supports only numeric variables and supports the following methods.
+
+* predictor is numerical variable
+    + "mean" : arithmetic mean
+    + "median" : median
+    + "mode" : mode
+    + "capping" : Imputate the upper outliers with 95 percentile, and Imputate the bottom outliers with 5 percentile.
+
+`imputate_outlier()` imputates the outliers with the numeric variable `Price` as the "capping" method, as follows. `summary()` summarizes outliers imputation information, and `plot()` visualizes imputation information.
+
+```{r imputate_outlier, fig.width = 7, fig.height = 4}
+price <- imputate_outlier(carseats, Price, method = "capping")
+
+# result of imputate
+price
+
+# summary of imputate
+summary(price)
+
+# viz of imputate
+plot(price)
+```
+
+### Collaboration with dplyr
+The following is an example of calculating the arithmetic mean of `US` variables by using the `Price` variable that imputates the outlier with `dplyr`.
+
+```{r imputate_outlier2}
+# The mean before and after the imputation of the Price variable
+carseats %>%
+  mutate(Price_imp = imputate_outlier(carseats, Price, method = "capping")) %>%
+  group_by(US) %>%
+  summarise(orig = mean(Price, na.rm = TRUE),
+    imputation = mean(Price_imp, na.rm = TRUE))
+```
+    
+
+## Standardization and Resolving Skewness
+### Introduction to the use of `transform()`
+`transform()` performs data transformation. Only numeric variables are supported, and the following methods are provided.
+
+* Standardization
+    + "zscore" : z-score transformation. (x - mu) / sigma
+    + "minmax" : minmax transformation. (x - min) / (max - min)
+* Resolving Skewness
+    + "log" : log transformation. log(x)
+    + "log+1" : log transformation. log(x + 1). Used for values that contain 0.
+    + "sqrt" : square root transformation.
+    + "1/x" : 1 / x transformation
+    + "x^2" : x square transformation
+    + "x^3" : x^3 square transformation
+
+### Standardization with `transform()`
+Use the methods "zscore" and "minmax" to perform standardization.
+
+```{r standardization, fig.width = 6, fig.height = 4}
+carseats %>% 
+  mutate(Income_minmax = transform(carseats$Income, method = "minmax"),
+    Sales_minmax = transform(carseats$Sales, method = "minmax")) %>% 
+  select(Income_minmax, Sales_minmax) %>% 
+  boxplot()
+```
+
+### Resolving Skewness data with `transform()`
+`find_skewness()` calculates the skewness and finds the skewed data.
+
+```{r resolving1}
+# find index of skewed variables
+find_skewness(carseats)
+
+# find names of skewed variables
+find_skewness(carseats, index = FALSE)
+
+# compute the skewness
+find_skewness(carseats, value = TRUE)
+
+# compute the skewness & filtering with threshold
+find_skewness(carseats, value = TRUE, thres = 0.1)
+```
+
+The skewness of `Advertising` is 0.637, which is a little slanted to the left, so I use `transformation ()` to convert it to `log`.
+`summary()` summarizes the transformation information, and `plot()` visualizes the transformation information.
+
+```{r resolving2, fig.width = 7, fig.height = 4}
+Advertising_log = transform(carseats$Advertising, method = "log")
+
+# result of transformation
+head(Advertising_log)
+# summary of transformation
+summary(Advertising_log)
+# viz of transformation
+plot(Advertising_log)
+```
+
+It seems that the raw data contains 0, as there is a -Inf in the log converted value. So this time we convert it to "log + 1".
+
+```{r resolving3, fig.width = 7, fig.height = 4}
+Advertising_log <- transform(carseats$Advertising, method = "log+1")
+
+# result of transformation
+head(Advertising_log)
+# summary of transformation
+summary(Advertising_log)
+# viz of transformation
+plot(Advertising_log)
+```
+
+## Binning
+### Binning of individual variables using `binning()`
+
+`binning()` transforms a numeric variable into a categorical variable by binning it. The following types of binning are supported.
+
+* "quantile" : categorize using quantile to include the same frequencies
+* "equal" : categorize to have equal length segments
+* "pretty" : categorized into moderately good segments
+* "kmeans" : categorization using K-means clustering
+* "bclust" : categorization using bagged clustering technique
+
+The following example illustrates some ways to `Income` binning using `binning()`.:
+
+```{r binning, fig.width = 6, fig.height = 5}
+# Binning the carat variable. default type argument is "quantile"
+bin <- binning(carseats$Income)
+# Print bins class object
+bin
+# Summarise bins class object
+summary(bin)
+# Plot bins class object
+plot(bin)
+# Using labels argument
+bin <- binning(carseats$Income, nbins = 4,
+              labels = c("LQ1", "UQ1", "LQ3", "UQ3"))
+bin
+# Using another type argument
+binning(carseats$Income, nbins = 5, type = "equal")
+binning(carseats$Income, nbins = 5, type = "pretty")
+binning(carseats$Income, nbins = 5, type = "kmeans")
+binning(carseats$Income, nbins = 5, type = "bclust")
+
+# -------------------------
+# Using pipes & dplyr
+# -------------------------
+library(dplyr)
+
+carseats %>%
+ mutate(Income_bin = binning(carseats$Income)) %>%
+ group_by(ShelveLoc, Income_bin) %>%
+ summarise(freq = n()) %>%
+ arrange(desc(freq)) %>%
+ head(10)
+```
+    
+### Optimal Binning with `binning_by()`
+
+`binning_by()` converts a numeric variable into a categorical variable by optimal binning. This method is often used when developing a `scorecard model`.
+
+The following `binning_by()` example optimally binning `Advertising` if `US` is a target variable with a binary class.
+
+```{r binning_by, fig.width = 6, fig.height = 5}
+# optimal binning
+bin <- binning_by(carseats, "US", "Advertising")
+bin
+
+# summary optimal_bins class
+summary(bin)
+
+# information value 
+attr(bin, "iv")
+
+# information value table
+attr(bin, "ivtable")
+
+# visualize optimal_bins class
+plot(bin, sub = "bins of Advertising variable")
+```
+
+## Creating a data transformation report using `transformation_report()`
+`transformation_report()` creates a data transformation report for all the variables in the data frame or objects that inherit the data frame (`tbl_df`, `tbl`, etc.).
+
+`transformation_report()` creates a data transformation report in two forms:
+
+* pdf file based on Latex
+* html file
+
+The contents of the report are as follows.:
+
+* Imputation
+    + Missing Values
+        + Missing values imputation information
+        + (variable names)
+    + Outliers
+        + Outliers imputation information
+        + (variable names)
+* Resolving Skewness
+    + Skewed variables information
+        + (variable names)
+* Binning
+    + Numerical Variables for Binning
+    + Binning
+        + (variable names)
+    + Optimal Binning
+        + (variable names)
+
+The following creates a data transformation report for `carseats`. The file format is pdf, and the file name is `Transformation_Report.pdf`.
+
+```{r trans_report, eval=FALSE}
+carseats %>%
+  transformation_report(target = US)
+```
+
+The following generates a report in html format called `transformation.html`.
+
+```{r, eval=FALSE}
+carseats %>%
+  transformation_report(target = US, output_format = "html", 
+    output_file = "transformation.html")
+```
+
+Data transformation reports are automated reports to assist in the data transformation process. Design data conversion scenarios by referring to the report results.
+
+### Data transformation report contents
+#### Contents of pdf file
+* The cover of the report is shown in the following figure.
+
+```{r trans_title_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Data transformation report cover"}
+knitr::include_graphics('img/trans_title_pdf.png')
+```
+
+* The report's argenda is shown in the following figure.
+
+```{r trans_agenda_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Table of Contents"}
+knitr::include_graphics('img/trans_agenda_pdf.png')
+```
+
+* Much of the information is displayed in tables and visualization results in reports. An example is shown in the following figure.
+
+```{r trans_content_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Data Transformation Report Table and Visualization Example"}
+knitr::include_graphics('img/trans_content_pdf.png')
+```
+
+#### Contents of html file
+* The title and contents of the report are shown in the following figure.
+
+```{r trans_agenda_html, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="Data transformation report titles and table of contents"}
+knitr::include_graphics('img/trans_agenda_html.png')
+```
+
+* Much information is represented in tables in the report. An example of a table in an html file is shown in the following figure.
+
+```{r trans_table_html, echo=FALSE, out.width='50%', fig.align='center', fig.pos="!h", fig.cap="Report table example (Web)"}
+knitr::include_graphics('img/trans_table_html.png')
+```
+
+* Binning information in the data transformation report includes visualization results. The result of the html file is shown in the following figure.
+
+```{r trans_viz_html, echo=FALSE, out.width='75%', fig.align='center', fig.pos="!h", fig.cap="Data transformation report Binning information (web)"}
+knitr::include_graphics('img/trans_viz_html.png')
+```
+

@@ -1,0 +1,444 @@
+---
+title: "탐색적 데이터 분석"
+author: "유 충 현"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Exploratory Data Analysis - Korean}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r environment, echo = FALSE, message = FALSE, warning=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "")
+options(tibble.print_min = 4L, tibble.print_max = 4L)
+
+library(dlookr)
+library(dplyr)
+library(ggplot2)
+```
+
+## 일러두기
+
+**"본 vignett는 dplyr 패키지와의 상호 운용성을 강조하기 위해서 dplyr 패키지의 vignett인 'Introduction to dplyr'을 참고하였다."**
+
+분석을 위한 데이터를 획득한 후에는 다음을 수행해야 한다.:
+
+* 데이터의 품질을 진단한다.
+    + 만약 데이터 품질의 문제를 발견한다면,
+    + 문제의 데이터를 보완하거나 경우에 따라서는 재획득을 수행햐야 한다.
+* **데이터를 이해하기 위한 탐색을 수행하여, 분석의 전개 방향에 대한 시나리오를 수립한다.**
+* 분석에 효과적인 변수를 파생하거나 변수의 변환을 수행한다.
+
+dlookr 패키지는 다음의 과정을 빠르고 쉽게 수행하도록 도움을 준다.
+
+* 데이터의 진단을 수행하거나 데이터 품질 진단 리포트를 자동으로 생성한다.
+* **다양한 방법으로 데이터를 탐색하고 EDA(탐색적 데이터 분석) 보고서를 생성한다.**
+* 연속형 변수를 비닝(binning)하여 범주형 변수로 만들고, 비닝의 의사결정에 도움을 주는 리포트를 생성한다.
+
+이 문서는 dlookr 기능 중에서 **탐색적 데이터 분석** 기능을 소개한다. 여러분은 dlookr에서 제공하는 함수로 데이터 프레임과 데이터 프레임을 상속한 tbl_df 데이터의 탐색적 데이터 분석을 수행하는 방법을 일힐 수 있을 것이다.
+
+dlookr 패키지는 `dplyr` 패키지와 함께 사용하면 시너지가 증가된다. 특히 데이터 탐색 및 데이터 조작에서 `tidyverse` 패키지 그룹의 효율성을 높여준다.
+
+## 데이터
+dlookr 패키지로 EDA를 수행하는 기초적인 사용 방법을 설명하기 위해서 `Carseats`를 사용한다.
+`ISLR` 패키지의 `Carseats`는 400개의 매장에서 아동용 카시트를 판매하는 시뮬레이션 데이터다. 이 데이터는 판매량을 예측하는 목적으로 생성한 데이터 프레임이다.
+
+```{r import_data}
+library(ISLR)
+str(Carseats)
+```
+
+개별 변수들의 의미는 다음과 같다. (ISLR::Carseats Man page 참고)
+
+* Sales
+    + 지역의 단위 판매량 (단위: 천개)
+* CompPrice
+    + 지역의 경쟁 업체가 부과하는 가격
+* Income
+    + 지역 공동체 수입 수준 (단위: 천달러)
+* Advertising
+    + 회사의 지역에 대한 광고 예산 (단위: 천달러)
+* Population
+    + 지역의 인구 규모 (단위: 천명)
+* Price
+    + 지역의 자동차 좌석 요금
+* ShelveLoc
+    + 각 사이트에서 자동차 좌석의 선반 위치의 품질을 나타내는 수준. "Bad", "Good", "Medium".
+* Age
+    + 각 지역의 평균 연령
+* Education
+    + 각 지역의 교육 수준
+* Urban
+    + 점포의 도시 또는 농촌 소재 여부. Yes는 도시, No는 농촌.
+* US
+    + 점포의 미국 소재 여부. Yes는 미국 소재, No는 미국 외 소재.
+
+데이터 분석을 수행할 때, 결측치가 포함된 데이터를 자주 접한다. 그러나 Carseats는 결측치가 없은 완전한 데이터다. 그래서 다음과 같이 결측치를 생성하였다. 그리고 carseats라는 이름의 데이터 프레임 객체를 생성한다.
+
+```{r missing}
+carseats <- ISLR::Carseats
+
+set.seed(123)
+carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
+
+set.seed(456)
+carseats[sample(seq(NROW(carseats)), 10), "Urban"] <- NA
+```
+
+
+## 탐색적 데이터 분석
+dlookr은 수치 데이터의 기술통계량을 계산하여 데이터의 분포를 이해할 수 있도록 도와준다. 또한 변수들 사이의  상관관계를 규명하고 정규성 검정을 수행한다. 그리고 목적변수(Target Variable)와 독립변수들간의 관계를 규명해준다.
+
+다음은 dlookr이 제공하는 EDA 함수와 함수의 기능 목록이다.:
+
+* `describe()`는 수치 데이터의 기술통계량을 제공한다.
+* `normality()`와 `plot_normality()`는 수치 데이터의 정규성 검정과 시각화를 수행한다.
+* `correlate()`와 `plot_correlate()`는 두 수치 데이터 간의 상관계수를 계산하고 시각화를 제공한다.
+* `target_by()`는 목적변수(Target Variable)을 정의하고 `relate()`는 목적변수에 대응하는 관심있는 변수와의 관계를 규명한다.
+* `plot.relate()`는 목적변수에 대응하는 관심있는 변수와의 관계를 시각화한다.
+* `eda_report()`는 탐색적 데이터 분석을 수행한 후 그 결과를 보고서로 만들어 준다.
+
+
+## 단변량 데이터 EDA
+### `describe()`을 이용한 기술통계량 계산
+
+`describe()`는 수치 데이터의 기술통계량을 계산해 준다. 기술통계량은 수치 변수의 분포를 판단하는 것을 도와준다.
+
+`describe()`가 반환하는 `tbl_df` 객체의 변수는 다음과 같다.
+
+* `n` : 결측치를 제외한 데이터 건수
+* `na` : 결측치 건수
+* `mean` : 산술평균
+* `sd` : 표준편차
+* `se_mean` : 표준오차. sd/sqrt(n)
+* `IQR` : 사분위 범위(Interquartile range) (Q3-Q1)
+* `skewness` : 왜도
+* `kurtosis` : 첨도
+* `p25` : Q1. 25% 백분위수
+* `p50` : 중위수. 50% 백분위수
+* `p75` : Q3. 75% 백분위수
+* `p01`, `p05, `p10`, `p20`, `p30` : 1%, 5%, 20%, 30% 백분위수
+* `p40`, `p60, `p70`, `p80` : 40%, 60%, 70%, 80% 백분위수
+* `p90`, `p95, `p99`, `p100` : 90%, 95%, 99%, 100% 백분위수
+
+다음처럼 `describe()`는 `carseats`의 모든 수치 변수의 통계량을 계산한다.:
+
+```{r describe}
+describe(carseats)
+```
+
+* `왜도` : 왼쪽으로 치우친 분포의 데이터, 즉 skewness가 제법 큰 양수를 갖는 변수는 정규분포를 따르도록 log, sqrt 변환 등을 고려해야 한다. Advertising 변수는 변수변환을 고려해야할 것 같다.
+* `산술평균`, `표준편차`, `표준오차` : 표준오차(`se_mean`)가 7.3688218로 상당히 큰 `Population`는 대표치인 산술평균(`mean`)의 대표성이 낮다. 산술평균에 비해서 표준편차(`sd`)의 크기도 상당히 큰 편이다. 
+
+다음은 선택된 몇 개의 변수에 대해서만 기술통계량을 계산한다.
+
+```{r describes2}
+# Select columns by name
+describe(carseats, Sales, CompPrice, Income)
+
+# Select all columns between year and day (inclusive)
+describe(carseats, Sales:Income)
+
+# Select all columns except those from year to day (inclusive)
+describe(carseats, -(Sales:Income))
+```
+
+dplyr을 이용해서 `왼쪽이나 오른쪽으로 치우친 정도`(왜도)의 크기별로 정렬할 수 있다.:
+
+```{r diagnose_pipe}
+library(dplyr)
+
+carseats %>%
+  describe() %>%
+  select(variable, skewness, mean, p25, p50, p75) %>% 
+  filter(!is.na(skewness)) %>% 
+  arrange(desc(abs(skewness)))
+```
+
+`describe()` 함수는 `dplyr` 패키지의 `group_by()` 함수 구문을 지원한다. 
+
+```{r diagnose_pipe2}
+carseats %>%
+  group_by(US) %>% 
+  describe(Sales, Income) 
+```
+
+```{r diagnose_pipe3}
+carseats %>%
+  group_by(US, Urban) %>% 
+  describe(Sales, Income) 
+```
+
+
+### `normality()`을 이용한 수치형 변수의 정규성 검정
+`normality()`는 수치 데이터의 정규성 검정을 수행한다. Shapiro-Wilk 정규성 검정을 수행하며, 관측치의 개수가 5000보다 클 경우에는 5000개의 단순 임의 추출을 수행한 후 검정한다. 
+
+`normality()`가 반환하는 `tbl_df` 객체의 변수는 다음과 같다.
+
+* `statistic` : Shapiro-Wilk 검정의 통계량
+* `p_value` : Shapiro-Wilk 검정의 p-value
+* `sample` : Shapiro-Wilk 검정을 수행한 샘플 관측치의 개수
+
+다음처럼 `normality()`는 `carseats`의 모든 수치 변수의 정규성 검정을 수행한다.:
+
+```{r normality}
+normality(carseats)
+```
+
+다음은 선택된 몇 개의 변수에 대해서만 정규성 검정을 수행한다.
+
+```{r normality2}
+# Select columns by name
+normality(carseats, Sales, CompPrice, Income)
+
+# Select all columns between year and day (inclusive)
+normality(carseats, Sales:Income)
+
+# Select all columns except those from year to day (inclusive)
+normality(carseats, -(Sales:Income))
+```
+
+dplyr을 이용해서 `정규분포를 따르지 않는` 변수를 p_value 순으로 정렬할 수 있다.:
+
+```{r normality_pipe}
+library(dplyr)
+
+carseats %>%
+  normality() %>%
+  filter(p_value <= 0.01) %>% 
+  arrange(abs(p_value))
+```
+
+특히 Advertising 변수는 정규분포에서 가장 벗어난 것으로 파악된다.
+
+
+`normality()` 함수는 `dplyr` 패키지의 `group_by()` 함수 구문을 지원한다. 
+
+```{r normality_pipe2}
+carseats %>%
+  group_by(ShelveLoc, US) %>%
+  normality(Income) %>% 
+  arrange(desc(p_value))
+```
+
+Income 변수는 정규분포를 따르지 않지만, 유의수준 0.01 기준으로 US가 No이면서 ShelveLoc가 Good, Bad인 경우는 정규분포를 따르는 것으로 볼 수 있다.
+
+
+다음은 범주형 변수인 ShelveLoc, US 변수의 조합별로 log(Income)의 정규성 검정을 수행하여, 정규분포를 따르는 변수를 조회한다.
+
+```{r normality_pipe3}
+carseats %>%
+  mutate(log_income = log(Income)) %>%
+  group_by(ShelveLoc, US) %>%
+  normality(log_income) %>%
+  filter(p_value > 0.01)
+```
+
+
+### `plot_normality()`를 이용한 수치변수의 정규성 시각화 
+`plot_normality()`는 수치 데이터의 정규성을 시각화한다. 
+
+`plot_normality()`가 시각화하는 정보는 다음과 같다.
+
+* `원 데이터의 히스토그램`
+* `원 데이터의 Q-Q plot` 
+* `log 변환 데이터의 히스토그램` 
+* `sqrt 변환 데이터의 히스토그램` 
+
+데이터 분석 과정에서 멱분포(power-law distribution)를 따르는 수치 데이터를 접하는 경우가 많다. 멱분포를 따르는 수치 데이터는 log, sqrt 변환을 수행하여 정규분포로 변화라기 때문에 log, sqrt 변환데 데이터의 히스토그램을 그린다. 
+
+
+`plot_normality()`도 `normality()` 함수처럼 여러 개의 변수를 지정할 수 있다.
+
+```{r plot_normality, fig.width = 7, fig.height = 4}
+# Select columns by name
+plot_normality(carseats, Sales, CompPrice)
+```
+
+
+`plot_normality()` 함수도 `dplyr` 패키지의 `group_by()` 함수 구문을 지원한다. 
+
+```{r plot_normality2, fig.width = 7, fig.height = 4}
+carseats %>%
+  filter(ShelveLoc == "Good") %>%
+  group_by(US) %>%
+  plot_normality(Income)
+```
+
+
+## 이변량 데이터 EDA
+### `correlate()`을 이용한 상관계수 계산
+
+다음처럼 `correlate()`는 `carseats`의 모든 수치 변수의 조합의 상관계수를 구한다.:
+
+
+```{r correlate}
+correlate(carseats)
+```
+
+
+다음은 선택된 몇 개의 변수를 포함한 조합에 대해서만 정규성 검정을 수행한다.
+
+```{r correlate2}
+# Select columns by name
+correlate(carseats, Sales, CompPrice, Income)
+
+# Select all columns between year and day (inclusive)
+correlate(carseats, Sales:Income)
+
+# Select all columns except those from year to day (inclusive)
+correlate(carseats, -(Sales:Income))
+```
+
+`correlate()`는 두벌의 변수 조합을 만든다. 그래서 다음과 같은 filter() 함수를 사용해서 한 벌의 조합에 대한 상관계수를 구할 수 있다.:
+
+```{r correlate3}
+carseats %>%
+  correlate(Sales:Income) %>%
+  filter(as.integer(var1) > as.integer(var2))
+```
+
+`correlate()` 함수도 `dplyr` 패키지의 `group_by()` 함수 구문을 지원한다.
+
+```{r correlate4}
+carseats %>%
+  filter(ShelveLoc == "Good") %>%
+  group_by(Urban, US) %>%
+  correlate(Sales) %>%
+  filter(abs(coef_corr) > 0.5)
+```
+
+### `plot_correlate()`를 이용한 상관행렬의 시각화
+`plot_correlate()`는 상관행렬을 시각화한다. 
+
+```{r plot_correlate, fig.width = 7, fig.height = 4}
+plot_correlate(carseats)
+```
+
+`plot_correlate()`도 `correlate()` 함수처럼 여러 개의 변수를 지정할 수 있다.
+다음은 선택된 몇 개의 변수를 포함한 상관행렬의 시각화를 수행한다.
+
+```{r plot_correlate2, fig.width = 7, fig.height = 4}
+# Select columns by name
+plot_correlate(carseats, Sales, Price)
+```
+
+`plot_correlate()` 함수도 `dplyr` 패키지의 `group_by()` 함수 구문을 지원한다.
+
+```{r plot_correlate3, fig.width = 7, fig.height = 4, warning=FALSE}
+carseats %>%
+  filter(ShelveLoc == "Good") %>%
+  group_by(Urban, US) %>%
+  plot_correlate(Sales)
+```
+
+
+## `eda_report()`를 이용한 EDA 보고서 작성
+`eda_report()`는 데이터 프레임이나 데이터 프레임을 상속받은 객체(`tbl_df`, `tbl` 등)의 모든 변수들에 대해서 EDA를 수행한다.
+
+`eda_report()`는 EDA 보고서를 다음과 같은 두 개의 형태로 작성한다.
+
+* Latex에 기반한 pdf 파일
+* html 파일
+
+보고서의 목차는 다음과 같다.
+
+* 개요
+    + 데이터셋 정보
+    + 변수 정보
+    + 수치변수
+* 일변량 변수 EDA
+    + 기술통계
+    + 수치변수의 정규성 검정
+        + 통계량과 시각화 정보
+* 변수들간의 관계
+    + 상관계수
+        + 변수 조합의 상관계수
+        + 수치변수의 상관행렬 플롯
+* Target 변수 기반의 EDA
+    + 그룹화된 기술통계
+        + 그룹화된 Target과 수치형 변수 관계
+        + 그룹화된 Target과 범주형 변수 관계
+    + 그룹화된 Target과 변수들간의 관계
+        + 그룹화된 Target과 수치형 변수의 상관계수
+        + 그룹화된 Target과 수치형 변수의 상관행렬 플롯
+
+다음은 `carseats`의 품질진단 리포트를 작성한다. 파일 형식은 pdf이며, 파일이름은 `EDA_Report.pdf`다.
+
+```{r eda_report, eval=FALSE}
+carseats %>%
+  eda_report(target = Sales)
+```
+
+다음은 `EDA.html`라는 이름의 html 형식의 보고서를 생성한다.
+
+```{r, eval=FALSE}
+carseats %>%
+  eda_report(target = Sales, output_format = "html", output_file = "EDA.html")
+```
+
+EDA 보고서는 EDA 과정에 도움을 주기 위한 자동화 보고서다. 보고서 결과를 참고하여 데이터 분석 시나리오를 설계한다.
+
+### EDA 리포트 내용
+#### pdf 파일의 내용
+* 보고서의 표지는 다음 그림과 같다.
+
+```{r eda_title_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="EDA 보고서 표지"}
+knitr::include_graphics('img/eda_title_pdf.png')
+```
+
+* 보고서의 차례는 다음 그림과 같다.
+
+```{r eda_agenda_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="EDA 보고서 차례"}
+knitr::include_graphics('img/eda_agenda_pdf.png')
+```
+
+* 많은 정보는 보고서에서 표로 표현된다. 표의 예시는 다음 그림과 같다.
+
+```{r eda_intro_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="EDA 보고서 도표 예시"}
+knitr::include_graphics('img/eda_intro_pdf.png')
+```
+
+* EDA 보고서에서 정규성 검정 내용은 시각화 결과를 포함한다. 그 결과는 다음 그림과 같다.
+
+```{r eda_normality_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="EDA 보고서 정규성 검정 내용"}
+knitr::include_graphics('img/eda_normality_pdf.png')
+```
+
+* EDA 보고서에서 상관관계 정보는 시각화 결과를 포함한다. 그 결과는 다음 그림과 같다.
+
+```{r eda_correlation_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="EDA 보고서 상관관계 내용"}
+knitr::include_graphics('img/eda_correlation_pdf.png')
+```
+
+* EDA 보고서에서 선형관계에 대한 정보는 표와 시각화 결과를 포함한다. 그 결과는 다음 그림과 같다.
+
+```{r eda_lm_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="EDA 보고서 선형관계 정보"}
+knitr::include_graphics('img/eda_lm_pdf.png')
+```
+
+* EDA 보고서에서 ANOVA 정보는 표와 시각화 결과를 포함한다. 그 결과는 다음 그림과 같다.
+
+```{r eda_anova_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="EDA 보고서 ANOVA 정보"}
+knitr::include_graphics('img/eda_anova_pdf.png')
+```
+
+#### html 파일의 내용
+* 보고서의 타이틀과 목차는 다음 그림과 같다.
+
+```{r eda_egenda_html, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="EDA 보고서 타이틀과 목차"}
+knitr::include_graphics('img/eda_agenda_html.png')
+```
+
+* 많은 정보는 보고서에서 표로 표현된다. html 파일에서 표의 예시는 다음 그림과 같다.
+
+```{r eda_table_html, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="EDA 보고서 도표 예시 (웹)"}
+knitr::include_graphics('img/eda_table_html.png')
+```
+
+*  EDA 보고서에서 정규성 검정 정보는 시각화 결과를 포함한다. html 파일의 결과는 다음 그림과 같다.
+
+```{r eda_normality_html, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="EDA 보고서 정규성 검정 정보 (웹)"}
+knitr::include_graphics('img/eda_normality_html.png')
+```
