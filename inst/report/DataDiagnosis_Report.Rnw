@@ -1,0 +1,105 @@
+\PassOptionsToPackage{table}{xcolor}
+\documentclass{book}
+\usepackage[a4paper, top=3cm, bottom=3cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{setspace}
+\usepackage{tocloft}
+\usepackage{makeidx}
+\usepackage{relsize,setspace}
+\usepackage{rotating}
+\usepackage{lscape}
+\usepackage{hyperref}
+%------- for kableExtra package in R, start
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage[table]{xcolor}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage[normalem]{ulem}
+%------- for kableExtra package in R, end
+
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+\makeindex
+
+\begin{document}
+
+<<setup, include=FALSE, cache=FALSE>>=
+# set global chunk options
+opts_chunk$set(fig.path='figure/minimal-', fig.align='center', fig.show='hold', warning=FALSE, message=FALSE)
+options(replace.assign=TRUE, width=90)
+@
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+%------- title page
+\begin{titlepage}
+\begin{center}
+
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\includegraphics[width=0.4\textwidth]{./img/Rlogo}~\\[1cm]
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+\includegraphics[width=0.3\textwidth]{./img/detective_2}~\\[1cm]
+\end{flushright}
+\end{minipage}\\[4.5cm]
+
+\textsc{\Large report series with dlookr}\\[1.0cm]
+
+% Title
+\HRule \\[0.4cm]
+{ \huge \bfseries Data Quality Diagnosis Report \\[0.4cm] }
+
+\HRule \\[4.5cm]
+
+% Author and package version
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Author:}\\
+dlookr package
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+\emph{Version:} \\
+0.3.0
+\end{flushright}
+\end{minipage}
+
+\vfill
+
+% Bottom of the page
+{\large \today}
+
+\end{center}
+\end{titlepage}
+
+% Last pages for ToC
+%-------------------------------------------------------------------------------
+\newpage
+% Include dots between chapter name and page number
+\renewcommand{\cftchapdotsep}{\cftdotsep}
+% Last pages for ToC
+%-------------------------------------------------------------------------------
+% Include the ToC
+\tableofcontents
+
+<<'child-section-application', child='01_Diagnose.Rnw'>>=
+@
+
+\end{document}

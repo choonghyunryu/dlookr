@@ -1,0 +1,98 @@
+---
+title: "Binning Information Report"
+author: "Report by dlookr package"
+date: "`r Sys.Date()`"
+output: 
+  prettydoc::html_pretty:
+    toc: true
+    number_sections: true
+    theme: cayman
+    highlight: github
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r environment, echo=FALSE, warning=FALSE, message=FALSE}
+library(xtable)
+library(magrittr)
+library(dlookr)
+library(dplyr)
+library(ggplot2)
+library(gridExtra)
+library(moments)
+library(knitr)
+library(kableExtra)
+```
+
+# Characteristic Analysis
+## Optimal Binning
+
+For the scoring modeling, optimal binning is performed considering the characteristics of numerical data.
+This work uses the recursive partitioning technique known as supervised discretization when categorizing numeric data as categorical data.
+
+### Numerical Variables for Binning
+
+```{r init, echo=FALSE, warning=FALSE, message=FALSE}
+library(smbinning)
+library(xtable)
+
+edaData <- as.data.frame(get("edaData", .dlookrEnv))
+targetVariable <- get("targetVariable", .dlookrEnv)
+
+names(edaData) <- gsub("[[:punct:][:space:]]", "_", names(edaData))
+
+idx.numeric <- find_class(edaData, type = "numerical")
+varname <- names(edaData)[idx.numeric]
+
+varname <- setdiff(varname, targetVariable)
+
+setUnder <- function(x) {
+  gsub("_", ".", x)
+}
+```
+
+The numerical variables for binning are as follows.
+```{r target, echo=FALSE, warning=FALSE, message=FALSE, comment=""}
+varname
+```
+
+## Characteristic Analysis Results
+```{r optimal, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=6, fig.width=7, results='asis'}
+# Optimal Binning for Scoring Modeling
+results <- lapply(varname, function(x)
+  binning_by(df = edaData, y = targetVariable, x = x, p = 0.05))
+
+# could also use tapply here
+for (i in 1:length(varname)) {
+  cat("\n")
+  cat("###", setUnder(varname[i]), "\n")
+
+  result <- results[[i]]
+
+  if (is.character(result)) {
+    cat(result)
+    cat("\n")
+    next
+  }
+
+  cat("\n")
+
+  tab <- attr(result, "ivtable")
+  kable(tab, digits = 2, format = "html",
+        format.args = list(big.mark = ",")) %>% 
+    kable_styling(full_width = FALSE, font_size = 13) %>% 
+    row_spec(NROW(tab), bold = TRUE, color = "white", background = "#FFA349") %>% 
+    print()
+  
+  cat("\n")
+  cat(sprintf("Information value = %s", attr(result, "iv")))
+  cat("<br><br><br>\n")
+  
+  plot(result)
+  cat("\n")
+}
+```
+
+

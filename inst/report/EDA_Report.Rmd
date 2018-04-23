@@ -1,0 +1,587 @@
+---
+title: "Exploratory Data Analysis Report"
+author: "Report by dlookr package"
+date: "`r Sys.Date()`"
+output: 
+  prettydoc::html_pretty:
+    toc: true
+    number_sections: true
+    theme: cayman
+    highlight: github
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r enrironment, echo=FALSE, warning=FALSE, message=FALSE}
+library(xtable)
+library(magrittr)
+library(dlookr)
+library(dplyr)
+library(ggplot2)
+library(gridExtra)
+library(moments)
+library(knitr)
+library(kableExtra)
+```
+
+
+```{r udf, echo=FALSE, warning=FALSE, message=FALSE}
+dist_numeric <- function(df, target, predictor) {
+  library(dplyr)
+
+  descr <- df %>%
+    target_by(target) %>%
+    relate(predictor)
+
+  vars <- unlist(descr[, 2])
+
+  descr <- descr %>%
+    select(-c(1:2)) %>%
+    t
+
+  colnames(descr) <- vars
+
+  descr <- descr[, rev(seq(NCOL(descr)))]
+
+  rnames <- c("n", "NA", "mean", "sd", "se(mean)", "IQR",
+              "skewness", "kurtosis")
+  rnames <- c(rnames, paste0(c(0, 1, 5, 10, 20, 25, 30, 40, 50, 60, 70,
+                               75, 80, 90, 95, 99, 100), "%"))
+  row.names(descr) <- rnames
+
+  as.data.frame(descr)
+}
+
+
+setUnder <- function(x) {
+  gsub("_", ".", x)
+}
+
+edaData <- as.data.frame(get("edaData", .dlookrEnv))
+targetVariable <- get("targetVariable", .dlookrEnv)
+
+if (length(targetVariable) == 0) targetVariable <- NULL
+```
+
+```{r check_variables, echo=FALSE, warning=FALSE, message=FALSE, comment=""}
+idx.numeric <- find_class(edaData, type = "numerical")
+idx.factor <- find_class(edaData, type = "categorical")
+nm.numeric <- find_class(edaData, type = "numerical", index = FALSE)
+nm.factor <- find_class(edaData, type = "categorical", index = FALSE)
+
+if (!is.null(targetVariable)) {
+  # remove target variable from variable index
+  idx.numeric <- idx.numeric[nm.numeric != targetVariable]
+  idx.factor <- idx.factor[nm.factor != targetVariable]
+  
+  factor_flag <- class(pull(edaData, targetVariable))[1] %in% c("factor", "ordered")
+  numeric_flag <- class(pull(edaData, targetVariable))[1] %in% c("integer", "numeric")
+  
+  target <- if (!factor_flag & numeric_flag) 
+    factor(pull(edaData, targetVariable)) else
+      pull(edaData, targetVariable)
+}
+
+# if all elements of a numerical variable are NA,
+# remove from correlation coefficient calculation
+idx.numeric <- idx.numeric[apply(edaData[, idx.numeric], 2,
+                                 function(x) !all(is.na(x)))]
+
+# if all elements of the numerical variable are the same value,
+# remove from the correlation coefficient calculation
+idx.numeric <- idx.numeric[apply(edaData[, idx.numeric], 2,
+                                 function(x) diff(range(x, na.rm = TRUE)) > 0)]
+```
+
+
+# Introduction
+The EDA Report provides exploratory data analysis information on objects that inherit data.frame and data.frame.
+
+
+## Information of Dataset
+The dataset that generated the EDA Report is an **'`r class(edaData)[1]`'** object. It consists of **`r format(NROW(edaData), big.mark = ",")` observations** and **`r NCOL(edaData)` variables**.
+
+
+## Information of Variables
+The variable information of the data set that generated the EDA Report is shown in the following table.:
+```{r info_variables, echo=FALSE, warning=FALSE, message=FALSE, comment="", results='asis'}
+cap <- "Information of Variables"
+
+vars <- edaData %>% 
+  diagnose() 
+
+
+knitr::kable(vars, caption = cap, format = "html") %>% 
+  kable_styling(full_width = FALSE, font_size = 15, position = "left") %>% 
+  cat()
+
+target_nm <- if (is.null(targetVariable)) "NULL" else targetVariable
+target_type <- if (is.null(targetVariable)) 
+  "NULL(You did not specify a target variable)" else 
+  class(pull(edaData, targetVariable))[1]
+```
+
+The target variable of the data is **'`r target_nm`'**, and the data type of the variable is **`r target_type`**.
+
+
+## About EDA Report
+EDA reports provide information and visualization results that support the EDA process. In particular, it provides a variety of information to understand the relationship between the target variable and the rest of the variables of interest.
+
+
+# Univariate Analysis
+## Descriptive Statistics
+```{r describe_univariate, echo=FALSE, warning=FALSE, message=FALSE, comment=""}
+x <- Hmisc:::describe.data.frame(edaData)
+Hmisc::html(x, file = "")
+```
+
+
+## Normality Test of Numerical Variables
+### Statistics and Visualization of (Sample) Data
+```{r normality, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=4, fig.width=6, results='asis'}
+if (length(idx.numeric) == 0) {
+  cat("\n\nThere is no numeric variable.\n\n")
+} else {
+  for (i in idx.numeric) {
+    cap <- sprintf("%s", names(edaData)[i])
+    cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\_")
+    
+    cat("<b><font size='3' face='verdana'>[", names(edaData)[i], 
+            "]</font></b>", "\n")
+    
+    cat("\nnormality test : Shapiro-Wilk normality test\n\n")
+    
+    x <- if (NROW(edaData) > 5000) {
+      sample(pull(edaData, i), size = 5000, replace = TRUE)
+    } else {
+      pull(edaData, i)
+    }
+    
+    if (all(is.na(x))) {
+      cat("all 'x' values are NA\n\n")
+      next
+    }
+    
+    if(length(x) < 3L || length(x) > 5000L) {
+      cat("sample size must be between 3 and 5000\n\n")
+      next
+    }
+    
+    if(diff(range(x, na.rm = TRUE)) == 0) {
+      cat("all 'x' values are identical\n\n")
+      next
+    }
+    
+    y <- shapiro.test(x)
+
+    cat(sprintf("\t statistic : %s,  p-value : %G\n\n",
+                round(y$statistic, 5),  y$p.value))
+    cat("\n<br>\n")
+
+    skew <- c(skewness(x, na.rm = TRUE),
+              skewness(log(x), na.rm = TRUE),
+              skewness(sqrt(x), na.rm = TRUE))
+  
+    kurt <- c(kurtosis(x, na.rm = TRUE),
+              kurtosis(log(x), na.rm = TRUE),
+              kurtosis(sqrt(x), na.rm = TRUE))
+  
+    type <- c("original", "log transformation", "sqrt transformation")
+    stats <- data.frame(type = type, skewness = skew, kurtosis = kurt)
+
+    cap <- "skewness and kurtosis"
+    knitr::kable(stats, caption = cap, format = "html") %>% 
+      kable_styling(full_width = FALSE, font_size = 15, position = "left") %>% 
+      cat()
+    
+    cat("\n<br>\n")
+    par(mfrow = c(2, 2), mar = c(2, 4, 2, 2))
+    hist(x, col = "lightblue", las = 1, main = "origin")
+    qqnorm(x, main = "origin: Q-Q plot")
+    qqline(x)
+    hist(log(x), col = "lightblue", las = 1, main = "log")
+    hist(sqrt(x), col = "lightblue", las = 1, main = "sqrt")
+  
+    cat("\n<hr>\n<br>\n")
+  }
+}  
+```
+
+
+# Relationship Between Variables
+## Correlation Coefficient
+### Correlation Coefficient by Variable Combination
+```{r correlations, echo=FALSE, warning=FALSE, message=FALSE, comment=""}
+if (length(idx.numeric) > 2) {
+  eps <- 0.5
+
+  cors <- edaData %>%
+    correlate %>%
+    filter(abs(coef_corr) >= eps) %>%
+    filter(as.integer(var1) > as.integer(var2)) %>%
+    arrange(desc(abs(coef_corr)))
+
+  if (NROW(cors) > 0) {
+    names(cors) <- c("Variable1", "Variable2", "Correlation Coefficient")
+
+    cap = "Table of correlation coefficients (0.5 or more)"
+    knitr::kable(cors, caption = cap, format = "html") %>% 
+      kable_styling(full_width = FALSE, font_size = 15, position = "left")
+  } else {
+    cat("No correlation coefficient is greater than 0.5.\n\n")
+  }
+} else {
+  cat("Number of numerical variables is less than 2.\n\n")
+}
+```
+
+
+### Correlation Plot of Numerical Variables
+```{r plot_correlations, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=4, fig.width=6}
+if (length(idx.numeric) > 2) {
+  edaData %>%
+    plot_correlate()
+} else {
+  cat("Number of numerical variables is less than 2.\n\n")
+}  
+```
+
+
+# Target based Analysis
+## Gruoped Descriptive Statistics
+### Gruoped Numerical Variables
+```{r numeric_variables, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=4, fig.width=8, results='asis'}
+if (!is.null(targetVariable)) {
+  if (factor_flag) {
+    if (length(idx.numeric) == 0) {
+      cat("There is no numeric variable.\n\n")
+    } else {
+      for (i in idx.numeric) {
+        cat("<b><font size='3' face='verdana'>[", names(edaData)[i], "]</font></b>", "\n")
+    
+        z <- dist_numeric(edaData, targetVariable, names(edaData)[i])
+    
+        ncols <- NCOL(z) - 1
+        rcnt <- round(ncols / 3)
+    
+        cap <- names(edaData)[i]
+        cap <- sprintf("Distribution of %s", cap)
+    
+        cat(sprintf("<br><br>\n * %s", cap))
+    
+        knitr::kable(z, digits = 2, caption = cap, format = "html",
+                     format.args = list(big.mark = ",")) %>% 
+          kable_styling(full_width = FALSE, font_size = 15, position = "left") %>% 
+          cat()
+    
+        cat("<br>")
+    
+        fig1  <- ggplot(edaData, aes_string(x = targetVariable,
+                                            y = names(edaData)[i]))
+        fig2  <- ggplot(edaData, aes_string(x = names(edaData)[i]))
+    
+        tmpData <- edaData[!edaData[, names(edaData)[i]] %in%
+                             boxplot.stats(pull(edaData, names(edaData)[i]))$out,
+                           c(targetVariable, names(edaData)[i])]
+    
+        target2 <- if (!factor_flag) factor(pull(tmpData, targetVariable)) else
+          pull(tmpData, targetVariable)
+    
+        fig3  <- ggplot(tmpData, aes_string(x = targetVariable,
+                                            y = names(edaData)[i]))
+        fig4  <- ggplot(tmpData, aes_string(x = names(tmpData)[2]))
+    
+        cat("<br>\n * Visualization of Distribution<br>\n")
+    
+        grid.arrange(fig1 + geom_boxplot(aes(fill = target)) +
+                       labs(x = targetVariable, y = names(edaData)[i],
+                            title = "boxplot with outliers") +
+                       guides(fill = guide_legend(title = "", nrow = rcnt, byrow = TRUE)) +
+                       theme(legend.position = "bottom",
+                            axis.text.x = element_text(angle = 45, hjust = 1)),
+                     fig2 + geom_density(aes(group = target, colour = target,
+                                             linetype = target)) +
+                       labs(x = names(edaData)[i],
+                            title = "density with outliers") +
+                       guides(col = guide_legend(nrow = rcnt, byrow = TRUE)) +
+                      theme(legend.position = "bottom"),
+                     fig3 + geom_boxplot(aes(fill = target2)) +
+                       labs(x = targetVariable, y = names(tmpData)[2],
+                            title = "boxplot without outliers") +
+                       guides(fill = guide_legend(title = "", nrow = rcnt, byrow = TRUE)) +
+                       theme(legend.position = "bottom",
+                             axis.text.x = element_text(angle = 45, hjust = 1)),
+                     fig4 + geom_density(aes(group = target2, colour = target2,
+                                             linetype = target2)) +
+                       labs(x = names(tmpData)[2],
+                            title = "density without outliers") +
+                      guides(col = guide_legend(nrow = rcnt, byrow = TRUE)) +
+                       theme(legend.position = "bottom"),
+                    nrow = 2, ncol = 2)
+    
+        cat("<br><br>\n<hr>")
+      }
+    }  
+  } else if (numeric_flag) {
+    if (length(idx.numeric) == 0) {
+        cat("There is no numeric variable.\n\n")
+    } else {
+      targetby <- target_by(edaData, targetVariable)
+      for (i in idx.numeric) {
+        cat("<b><font size='3' face='verdana'>[", names(edaData)[i], 
+            "]</font></b>", "\n")
+        
+        num_num <- relate(targetby, names(edaData)[i])
+        
+        tab <- summary(num_num)$coefficients
+        rsq <- summary(num_num)$r.squared
+        adj <- summary(num_num)$adj.r.squared
+        fstat <- summary(num_num)$fstatistic
+        df <- summary(num_num)$df
+        rse <- summary(num_num)$sigma
+        
+        cat("\nSimple Linear Model Information\n\n")
+        cat(sprintf("\t Residual standard error: %s on %s degrees of freedom\n",
+                round(rse),  df[2]))
+        cat(sprintf("\t Multiple R-squared:  %s,	Adjusted R-squared:  %s\n",
+                round(rsq, 5), round(adj, 5)))        
+        cat(sprintf("\t F-statistic: %s on %s and %s DF,  p-value: %s\n",
+                round(fstat["value"]),  fstat["numdf"], fstat["dendf"],
+                tab[2, 4]))    
+        cat("\n<br>")
+    
+        cat("Coefficients:\n")
+        cap <- sprintf("Simple Linear Model coefficients : %s", names(edaData)[i])
+        cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\\\_")
+    
+        knitr::kable(tab, digits = 2, caption = cap, format = "html") %>% 
+          kable_styling(full_width = FALSE, font_size = 15, position = "left") %>% 
+          cat()
+        
+        cat("\n<br>Visualization:\n")
+        cat("\n<br>\n")
+        
+        plot(num_num)
+        
+        cat("\n<hr>\n<br>\n")
+      }
+    }  
+  }
+} else {
+  cat("There is no target variable.\n\n")
+}
+```
+
+
+### Gruoped Categorical Variables
+```{r category_variables, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=4, fig.width=7, results='asis'}
+if (!is.null(targetVariable)) {
+  if (factor_flag) {
+    if (length(idx.factor) == 0) {
+      cat("There is no categorical variable.\n\n")
+    } else {
+      for (i in idx.factor) {
+        if (sum(!is.na(edaData[, i])) == 0) next
+    
+        cat("\n")
+        cat("<b><font size='3' face='verdana'>[", names(edaData)[i], "]</font></b>", "\n")
+    
+        cat("<br><br>\n * Frequency Table")
+    
+        tab <- edaData %>%
+          target_by(targetVariable) %>%
+          relate(names(edaData)[i]) %>%
+          t()
+    
+        freq <- addmargins(tab)
+        idx.na <- which(is.na(rownames(freq)))
+        rownames(freq)[idx.na] <- "NA"
+    
+        ncols <- NCOL(freq) - 1
+        rcnt <- round(ncols / 3)
+    
+        ratio <- sweep(freq, 2, c(apply(tab, 2, sum), sum(tab)), "/") * 100
+        idx.na <- which(is.na(rownames(ratio)))
+        rownames(ratio)[idx.na] <- "NA"
+    
+        cap <- sprintf("%s : frequency", names(edaData)[i])
+        cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\\\_")
+    
+        knitr::kable(freq, digits = 2, caption = cap, format = "html",
+                     format.args = list(big.mark = ",")) %>% 
+          kable_styling(full_width = FALSE, font_size = 15, position = "left") %>% 
+          column_spec(NCOL(freq) + 1, bold = TRUE) %>%
+          row_spec(NROW(freq), bold = TRUE, color = "white", background = "#FFA349") %>% 
+          cat()
+    
+        cat("<br>\n")
+    
+        if (ncols > 2) {
+          cat("\n")
+        }
+    
+        cat("<br>\n * Relative Frequency Table (%)")
+        cap <- sprintf("%s : ratio", names(edaData)[i])
+        cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\_")
+    
+        knitr::kable(ratio, digits = 2, caption = cap, format = "html") %>% 
+          kable_styling(full_width = FALSE, font_size = 15, position = "left") %>% 
+          column_spec(NCOL(ratio) + 1, bold = TRUE) %>%
+          row_spec(NROW(ratio), bold = TRUE, color = "white", background = "#FFA349") %>% 
+          cat()
+    
+        cat("<br>\n")
+    
+        cat("<br>\n * Visualization of Frequency<br>\n")
+    
+        fig  <- ggplot(edaData, aes_string(x = names(edaData)[i], fill = target))
+    
+        grid.arrange(fig + geom_bar(position="stack") +
+                       labs(x = "") +
+                       labs(title = "Stack Bar Chart") +
+                       guides(fill = guide_legend(title = "", nrow = rcnt, byrow = TRUE)) +
+                       theme(legend.position = "bottom",
+                             axis.text.x = element_text(angle = 45, hjust = 1)) ,
+                     fig + geom_bar(position="fill") +
+                       labs(x = "") +
+                       labs(title = "Fill Bar Chart") +
+                       guides(fill = guide_legend(title = "", nrow = rcnt, byrow = TRUE)) +
+                      theme(legend.position = "bottom",
+                             axis.text.x = element_text(angle = 45, hjust = 1)),
+                     nrow = 1, ncol = 2)
+    
+        cat("<br><br>\n<hr>")
+      }
+    }  
+  } else if (numeric_flag) {
+    if (length(idx.factor) == 0) {
+        cat("There is no categorical variable.\n\n")
+    } else {
+      targetby <- target_by(edaData, targetVariable)
+      for (i in idx.factor) {
+        cat("<b><font size='3' face='verdana'>[", names(edaData)[i], 
+            "]</font></b>", "\n<br>\n")
+        
+        num_cat <- relate(targetby, names(edaData)[i])
+        
+        tab_aov <- data.frame(anova(num_cat))
+        
+        cat("<br>\n1. Analysis of Variance\n\n")
+        
+        cap <- sprintf("Analysis of Variance Table : %s", names(edaData)[i])
+        cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\\\_")
+        
+        knitr::kable(tab_aov, digits = 2, caption = cap, format = "html") %>% 
+          kable_styling(full_width = FALSE, font_size = 15, position = "left") %>% 
+          cat()
+        
+        cat("\n<br>")
+        
+        tab <- summary(num_cat)$coefficients
+        rsq <- summary(num_cat)$r.squared
+        adj <- summary(num_cat)$adj.r.squared
+        fstat <- summary(num_cat)$fstatistic
+        df <- summary(num_cat)$df
+        rse <- summary(num_cat)$sigma
+        
+        cat("\n2. Simple Linear Model Information\n\n")
+        cat(sprintf("\t Residual standard error: %s on %s degrees of freedom\n",
+                round(rse),  df[2]))
+        cat(sprintf("\t Multiple R-squared:  %s,	Adjusted R-squared:  %s\n",
+                round(rsq, 5), round(adj, 5)))        
+        cat(sprintf("\t F-statistic: %s on %s and %s DF,  p-value: %s\n",
+                round(fstat["value"]),  fstat["numdf"], fstat["dendf"],
+                tab[2, 4]))    
+        cat("\n<br>")
+    
+        cat("Coefficients:\n")
+        cap <- sprintf("Simple Linear Model coefficients : %s", names(edaData)[i])
+        cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\\\_")
+    
+        knitr::kable(tab, digits = 2, caption = cap, format = "html") %>% 
+          kable_styling(full_width = FALSE, font_size = 15, position = "left") %>% 
+          cat()
+
+        cat("\n<br>3. Visualization:\n")
+        cat("\n<br>\n")
+        
+        print(plot(num_cat))
+        
+        cat("\n<hr>\n<br>\n")
+      }
+    }  
+  }
+} else {
+  cat("There is no target variable.\n\n")
+} 
+```
+
+
+## Gruoped Relationship Between Variables
+### Grouped Correlation Coefficient
+```{r group_correlations, echo=FALSE, warning=FALSE, message=FALSE, comment=""}
+if (!is.null(targetVariable)) {
+  if (factor_flag) {
+    if (length(idx.numeric) > 2) {
+      eps <- 0.5
+    
+      idx <- which(names(edaData) %in% targetVariable)
+      names(edaData)[idx] <- "targetVariable"
+    
+      cors <- edaData %>%
+        group_by(targetVariable) %>%
+        correlate %>%
+        filter(abs(coef_corr) >= eps) %>%
+        filter(as.integer(var1) > as.integer(var2)) %>%
+        arrange(targetVariable, desc(abs(coef_corr)))
+    
+      if (NROW(cors) > 0) {
+        names(cors) <- c(targetVariable, "Variable1", "Variable2", 
+                         "Correlation Coefficient")
+      
+        cap <- "Table of correlation coefficients (0.5 or more)"
+        knitr::kable(cors, caption = cap, format = "html") %>% 
+          kable_styling(full_width = FALSE, font_size = 15, position = "left")
+      } else {
+        cat("No correlation coefficient is greater than 0.5.\n\n")
+      }
+    } else {
+      cat("Number of numerical variables is less than 2.\n\n")
+    }
+  } else if (numeric_flag) {
+    cat("Numerical target variables are not supported.\n\n")
+  }  
+} else {
+  cat("There is no target variable.\n\n")
+}  
+```
+
+
+### Grouped Correlation Plot of Numerical Variables
+```{r plot_group_correlations, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=4, fig.width=6}
+if (!is.null(targetVariable)) {
+  if (factor_flag) {
+    if (length(idx.numeric) > 2) {
+      level_name <- levels(edaData$targetVariable)
+  
+      for (nm in level_name) {
+        cat(sprintf("- Grouped Correlation Case of (%s == %s)\n", targetVariable, nm))
+    
+        edaData %>%
+          filter(targetVariable %in% nm) %>% 
+          plot_correlate()
+      }
+    } else {
+      cat("Number of numerical variables is less than 2.\n\n")
+    }
+  } else if (numeric_flag) {
+    cat("Numerical target variables are not supported.\n\n")
+  } 
+} else {
+  cat("There is no target variable.\n\n")
+}  
+```
+
+
