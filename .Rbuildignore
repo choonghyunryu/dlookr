@@ -1,0 +1,7 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^\.travis\.yml$
+^/\.gitattributes$
+^README\.Rmd$
+^README\.md$
+^README-.*\.png$

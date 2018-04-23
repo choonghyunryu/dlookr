@@ -29,7 +29,7 @@ install.packages("dlookr")
 Or you can get the development version from GitHub:
 
 ``` r
-devtools::install_github("choonghyunryu/dlookr")
+devtools::install_github("choonghyunryu/dlookr", build_vignettes = TRUE)
 ```
 
 Usage
@@ -1191,13 +1191,13 @@ urban <- imputate_na(carseats, Urban, US, method = "mice")
 urban
 #>   [1] Yes Yes Yes Yes Yes No  Yes Yes No  No  No  Yes Yes Yes Yes No  Yes
 #>  [18] Yes No  Yes Yes No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes Yes
-#>  [35] Yes Yes No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes
+#>  [35] Yes No  No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes
 #>  [52] Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes
-#>  [69] Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes No  No 
-#>  [86] No  Yes No  Yes No  No  Yes Yes No  Yes Yes No  Yes No  No  No  Yes
-#> [103] No  Yes Yes Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes
+#>  [69] Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes No 
+#>  [86] No  Yes No  Yes No  No  Yes Yes Yes Yes Yes No  Yes No  No  No  Yes
+#> [103] No  Yes Yes Yes No  Yes Yes No  Yes Yes No  Yes Yes Yes No  Yes Yes
 #> [120] Yes Yes Yes Yes No  Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes No 
-#> [137] No  Yes Yes No  Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes No  No 
+#> [137] No  Yes Yes No  Yes Yes Yes Yes No  Yes Yes No  No  Yes No  No  No 
 #> [154] No  No  Yes Yes No  No  No  No  No  Yes No  No  Yes Yes Yes Yes Yes
 #> [171] Yes Yes Yes Yes No  Yes No  Yes No  Yes Yes Yes Yes Yes No  Yes No 
 #> [188] Yes Yes No  No  Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes No  Yes
@@ -1207,7 +1207,7 @@ urban
 #> [256] Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes No  No  Yes Yes Yes Yes
 #> [273] Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes No  No  Yes No  Yes No 
 #> [290] Yes No  No  Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
-#> [307] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes No  No  No  Yes Yes Yes
+#> [307] Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No  No  No  Yes Yes Yes
 #> [324] Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes Yes Yes
 #> [341] Yes No  No  Yes No  Yes No  No  Yes No  No  No  Yes No  Yes Yes Yes
 #> [358] Yes Yes Yes No  No  Yes Yes Yes No  No  Yes No  Yes Yes Yes No  Yes
@@ -1616,8 +1616,8 @@ binning(carseats$Income, nbins = 5, type = "bclust")
 #> binned type: bclust
 #> number of bins: 5
 #> x
-#>   (21,39.5]   (39.5,49]   (49,75.5] (75.5,94.5]  (94.5,120]        <NA> 
-#>          73          38         104          81          80          24
+#>     (21,49]   (49,65.5] (65.5,87.5]  (87.5,101]   (101,120]        <NA> 
+#>         111          56          98          51          60          24
 
 # -------------------------
 # Using pipes & dplyr
