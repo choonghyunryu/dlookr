@@ -1,0 +1,46 @@
+Package: dlookr
+Type: Package
+Title: Tools for Data Diagnosis, Exploration, Transformation
+Version: 0.3.0
+Authors@R: c(
+  person("Choonghyun", "Ryu",, "choonghyun.ryu@gmail.com", role = c("aut", "cre"))
+  )
+Description: A collection of tools that support data diagnosis, exploration, and transformation.
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+Depends:
+    R (>= 3.2.0)
+Imports: dplyr,
+    magrittr,
+    tidyr,
+    ggplot2,
+    RcmdrMisc,
+    corrplot,
+    rlang,
+    purrr,
+    tibble,
+    tidyselect,
+    classInt,
+    moments,
+    kableExtra,
+    prettydoc,
+    smbinning,
+    xtable,
+    knitr,
+    rmarkdown,
+    RColorBrewer,
+    gridExtra,
+    tinytex,
+    methods,
+    DMwR,
+    mice,
+    rpart,
+    randomForest
+Suggests: ISLR,
+    nycflights13,
+    testthat
+Author: Choonghyun Ryu [aut, cre]
+Maintainer: Choonghyun Ryu <choonghyun.ryu@gmail.com>    
+VignetteBuilder: knitr    
+RoxygenNote: 6.0.1
