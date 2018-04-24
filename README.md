@@ -26,9 +26,16 @@ The released version is available on CRAN
 install.packages("dlookr")
 ```
 
-Or you can get the development version from GitHub:
+Or you can get the development version from GitHub without vignettes:
 
 ``` r
+devtools::install_github("choonghyunryu/dlookr")
+```
+
+Or you can get the development version from GitHub with vignettes:
+
+``` r
+install.packages(c("nycflights13", "ISLR"))
 devtools::install_github("choonghyunryu/dlookr", build_vignettes = TRUE)
 ```
 
@@ -1191,12 +1198,12 @@ urban <- imputate_na(carseats, Urban, US, method = "mice")
 urban
 #>   [1] Yes Yes Yes Yes Yes No  Yes Yes No  No  No  Yes Yes Yes Yes No  Yes
 #>  [18] Yes No  Yes Yes No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes Yes
-#>  [35] Yes No  No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes
+#>  [35] Yes Yes No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes
 #>  [52] Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes
-#>  [69] Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes No 
+#>  [69] Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes No  No 
 #>  [86] No  Yes No  Yes No  No  Yes Yes Yes Yes Yes No  Yes No  No  No  Yes
-#> [103] No  Yes Yes Yes No  Yes Yes No  Yes Yes No  Yes Yes Yes No  Yes Yes
-#> [120] Yes Yes Yes Yes No  Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes No 
+#> [103] No  Yes Yes Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes
+#> [120] Yes Yes Yes Yes No  Yes No  Yes Yes Yes No  Yes No  Yes Yes Yes No 
 #> [137] No  Yes Yes No  Yes Yes Yes Yes No  Yes Yes No  No  Yes No  No  No 
 #> [154] No  No  Yes Yes No  No  No  No  No  Yes No  No  Yes Yes Yes Yes Yes
 #> [171] Yes Yes Yes Yes No  Yes No  Yes No  Yes Yes Yes Yes Yes No  Yes No 
@@ -1206,9 +1213,9 @@ urban
 #> [239] Yes Yes Yes Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes
 #> [256] Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes No  No  Yes Yes Yes Yes
 #> [273] Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes No  No  Yes No  Yes No 
-#> [290] Yes No  No  Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
-#> [307] Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No  No  No  Yes Yes Yes
-#> [324] Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes Yes Yes
+#> [290] Yes No  Yes Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
+#> [307] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes No  No  No  Yes Yes Yes
+#> [324] Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes
 #> [341] Yes No  No  Yes No  Yes No  No  Yes No  No  No  Yes No  Yes Yes Yes
 #> [358] Yes Yes Yes No  No  Yes Yes Yes No  No  Yes No  Yes Yes Yes No  Yes
 #> [375] Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes
@@ -1233,9 +1240,9 @@ summary(urban)
 #> 
 #> * Information of Imputation (before vs after)
 #>      original imputation original_percent imputation_percent
-#> No        115        119            28.75              29.75
-#> Yes       275        281            68.75              70.25
-#> <NA>       10          0             2.50               0.00
+#> No        115        120            28.75                 30
+#> Yes       275        280            68.75                 70
+#> <NA>       10          0             2.50                  0
 
 # viz of imputate
 plot(urban)
@@ -1610,14 +1617,14 @@ binning(carseats$Income, nbins = 5, type = "kmeans")
 #> binned type: kmeans
 #> number of bins: 5
 #> x
-#>   (21,36.5] (36.5,55.5] (55.5,75.5] (75.5,97.5]  (97.5,120]        <NA> 
-#>          62          62          91          86          75          24
+#>   (21,44.5] (44.5,65.5]   (65.5,85]    (85,104]   (104,120]        <NA> 
+#>          96          71          93          65          51          24
 binning(carseats$Income, nbins = 5, type = "bclust")
 #> binned type: bclust
 #> number of bins: 5
 #> x
-#>     (21,49]   (49,65.5] (65.5,87.5]  (87.5,101]   (101,120]        <NA> 
-#>         111          56          98          51          60          24
+#>   (21,36.5]   (36.5,49]   (49,76.5] (76.5,95.5]  (95.5,120]        <NA> 
+#>          62          49         108          78          79          24
 
 # -------------------------
 # Using pipes & dplyr
