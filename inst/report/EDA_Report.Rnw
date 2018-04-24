@@ -36,15 +36,6 @@
 
 \begin{document}
 
-<<setup, include=FALSE, cache=FALSE>>=
-# set global chunk options
-library(knitr)
-
-opts_chunk$set(fig.path = 'figure/minimal-', fig.align = 'center',
-               fig.show = 'hold', warning = FALSE, message = FALSE)
-options(replace.assign = TRUE, width = 90)
-@
-
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 
 %------- title page

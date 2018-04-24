@@ -11,6 +11,10 @@ library(moments)
 library(knitr)
 library(kableExtra)
 
+opts_chunk$set(fig.path = 'figure/minimal-', fig.align = 'center',
+               fig.show = 'hold', warning = FALSE, message = FALSE)
+options(replace.assign = TRUE, width = 90)
+
 dist_numeric <- function(df, target, predictor) {
   descr <- df %>%
     target_by(target) %>%

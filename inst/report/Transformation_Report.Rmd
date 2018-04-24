@@ -23,6 +23,7 @@ library(dplyr)
 library(ggplot2)
 library(gridExtra)
 library(moments)
+library(mice)
 library(knitr)
 library(kableExtra)
 ```

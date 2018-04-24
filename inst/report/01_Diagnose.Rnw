@@ -8,6 +8,10 @@ library(dplyr)
 library(knitr)
 library(kableExtra)
 
+opts_chunk$set(fig.path = 'figure/minimal-', fig.align = 'center',
+               fig.show = 'hold', warning = FALSE, message = FALSE)
+options(replace.assign = TRUE, width = 90)
+
 change_under <- function(x) {
   gsub("_", "\\\\_", x)
 }
