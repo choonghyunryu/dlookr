@@ -315,7 +315,7 @@ plot.transform <- function(x, ...) {
 #' @importFrom utils browseURL
 #'
 #' @export
-transformation_report <- function(.data, target, output_format = c("pdf", "html"),
+transformation_report <- function(.data, target = NULL, output_format = c("pdf", "html"),
   output_file = NULL) {
   tryCatch(vars <- tidyselect::vars_select(names(.data), !!! rlang::enquo(target)),
     error = function(e) {
