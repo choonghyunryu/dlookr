@@ -1,6 +1,6 @@
 % !Rnw root = EDA_Report.Rnw
 
-<<enrironment, echo=FALSE>>=
+<<enrironment, echo=FALSE, warning=FALSE, message=FALSE>>=
 options(warn = -1)
 
 library(dplyr)

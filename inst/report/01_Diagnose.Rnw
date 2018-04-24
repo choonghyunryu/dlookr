@@ -1,5 +1,5 @@
 % !Rnw root = DataQuality_Report.Rnw
-<<environment, echo=FALSE>>=
+<<environment, echo=FALSE, warning=FALSE, message=FALSE>>=
 options(warn = -1)
 
 library(dlookr)
