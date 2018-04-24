@@ -152,8 +152,11 @@ eda_report <- function(.data, target = NULL, output_format = c("pdf", "html"),
     file.remove("02_RunEDA.Rnw")
     file.remove("EDA_Report.Rnw")
 
-    fname <- sub("pdf$", "tex", output_file)
-    file.remove(fname)
+    fnames <- sub("pdf$", "", output_file)
+    fnames <- grep(fnames, list.files(), value = TRUE)
+    fnames <- grep("\\.pdf$", fnames, invert = TRUE, value = TRUE)
+
+    file.remove(fnames)
 
     unlink("figure", recursive = TRUE)
     unlink("img", recursive = TRUE)

@@ -726,8 +726,11 @@ diagnose_report <- function(.data, output_format = c("pdf", "html"),
     file.remove("01_Diagnose.Rnw")
     file.remove("DataDiagnosis_Report.Rnw")
 
-    fname <- sub("pdf$", "tex", output_file)
-    file.remove(fname)
+    fnames <- sub("pdf$", "", output_file)
+    fnames <- grep(fnames, list.files(), value = TRUE)
+    fnames <- grep("\\.pdf$", fnames, invert = TRUE, value = TRUE)
+
+    file.remove(fnames)
 
     unlink("figure", recursive = TRUE)
     unlink("img", recursive = TRUE)
