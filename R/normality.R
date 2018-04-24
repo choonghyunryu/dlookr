@@ -318,8 +318,8 @@ plot_normality_group_impl <- function(df, vars) {
     plot_normality <- function(pos, df, var) {
       x <- unlist(df[attr(df, "indices")[[pos]], var])
 
-      label <- attr(df, "labels")[pos, ]
-      label <- paste(names(label), "==", label, collapse = ",")
+      label <- attr(df, "labels")
+      label <- paste(names(label), "==", unlist(label[pos, ]), collapse = ",")
 
       op <- par(no.readonly = TRUE)
       par(mfrow = c(2, 2), oma = c(0, 0, 3, 0), mar = c(2, 4, 2, 2))
