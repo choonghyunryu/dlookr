@@ -31,11 +31,11 @@ binned given in object. Variables of data frame is as follows.
 summary method for class "bins" and "optimal_bins".
 }
 \details{
-print.bins tries to be smart about formatting the frequency of bins, binned type, number of bins.
+print.bins() tries to be smart about formatting the frequency of bins, binned type, number of bins.
 summary.bins tries to be smart about formatting the levles, frequency of levels(bins),
 the ratio of levels in total observations. And this information is data.frame object.
 
-See vignette("binning") for an introduction to these concepts.
+See vignette("transformation") for an introduction to these concepts.
 }
 \examples{
 \dontrun{

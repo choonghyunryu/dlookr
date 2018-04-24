@@ -2,13 +2,13 @@
 % Please edit documentation in R/utils.R
 \name{find_class}
 \alias{find_class}
-\title{Extract variable names or indexes of a specific class}
+\title{Extract variable names or indices of a specific class}
 \usage{
 find_class(df, type = c("numerical", "categorical", "categorical2"),
   index = TRUE)
 }
 \arguments{
-\item{df}{data.frame or objects inheriting from data.frame}
+\item{df}{a data.frame or objects inheriting from data.frame}
 
 \item{type}{character. Defines a group of classes to be searched.
 "numerical" searches for "numeric" and "integer" classes,

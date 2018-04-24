@@ -7,15 +7,15 @@
 binning_by(df, y, x, p = 0.05, ordered = TRUE, labels = NULL)
 }
 \arguments{
-\item{df}{A data frame.}
+\item{df}{a data frame.}
 
-\item{y}{Binary response variable (0,1). Integer(int) is required.
+\item{y}{binary response variable (0,1). Integer(int) is required.
 Name of y must not have a dot. Name "default" is not allowed.}
 
-\item{x}{Continuous characteristic. At least 5 different values.
+\item{x}{continuous characteristic. At least 5 different values.
 Value Inf is not allowed. Name of x must not have a dot.}
 
-\item{p}{Percentage of records per bin. Default 5\% (0.05).
+\item{p}{percentage of records per bin. Default 5\% (0.05).
 This parameter only accepts values greater that 0.00 (0\%) and lower than 0.50 (50\%).}
 
 \item{ordered}{whether to build an ordered factor or not.}
@@ -23,7 +23,7 @@ This parameter only accepts values greater that 0.00 (0\%) and lower than 0.50 (
 \item{labels}{the label names to use for each of the bins.}
 }
 \value{
-An object of optimal_bins class.
+an object of optimal_bins class.
 Attributes of optimal_bins class is as follows.
 \itemize{
 \item type : binning type, "optimal".
@@ -59,7 +59,7 @@ Attributes of the "optimal_bins" classs that is as follows.
 \item target : binary response variable
 }
 
-See vignette("binning") for an introduction to these concepts.
+See vignette("transformation") for an introduction to these concepts.
 }
 
 \examples{

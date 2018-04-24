@@ -7,9 +7,9 @@
 plot_normality(.data, ...)
 }
 \arguments{
-\item{.data}{A data.frame or a \code{\link{tbl_df}}.}
+\item{.data}{a data.frame or a \code{\link{tbl_df}}.}
 
-\item{...}{One or more unquoted expressions separated by commas.
+\item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
 Positive values select variables; negative values to drop variables.
 If the first expression is negative, plot_normality() will automatically
@@ -18,7 +18,7 @@ These arguments are automatically quoted and evaluated in a context where column
 represent column positions.
 They support unquoting and splicing.
 
-See vignette("eda") for an introduction to these concepts.}
+See vignette("EDA") for an introduction to these concepts.}
 }
 \description{
 The plot_normality() visualize distribution information

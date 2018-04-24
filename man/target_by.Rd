@@ -7,12 +7,12 @@
 target_by(.data, target)
 }
 \arguments{
-\item{.data}{A data.frame or a \code{\link{tbl_df}}.}
+\item{.data}{a data.frame or a \code{\link{tbl_df}}.}
 
 \item{target}{target variable.}
 }
 \value{
-An object of target_df class.
+an object of target_df class.
 Attributes of target_df class is as follows.
 \itemize{
 \item type_y : the data type of target variable.
@@ -33,7 +33,7 @@ Data analysis proceeds with the purpose of predicting target variables that
  target_by() inherits the \code{\link{grouped_df}} class and returns a target_df
  class containing information about the target variable and the variable.
 
-#' See vignette("target_by") for an introduction to these concepts.
+See vignette("EDA") for an introduction to these concepts.
 }
 \examples{
 \dontrun{

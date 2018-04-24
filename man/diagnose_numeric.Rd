@@ -7,9 +7,9 @@
 diagnose_numeric(.data, ...)
 }
 \arguments{
-\item{.data}{A data.frame or a \code{\link{tbl_df}}.}
+\item{.data}{a data.frame or a \code{\link{tbl_df}}.}
 
-\item{...}{One or more unquoted expressions separated by commas.
+\item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
 Positive values select variables; negative values to drop variables.
 If the first expression is negative, diagnose_numeric() will automatically
@@ -19,7 +19,7 @@ represent column positions.
 They support unquoting and splicing.}
 }
 \value{
-An object of tbl_df.
+an object of tbl_df.
 }
 \description{
 The diagnose_numeric() produces information
@@ -50,7 +50,7 @@ The information derived from the numerical data diagnosis is as follows.
 \item outlier : count of outliers
 }
 
-See vignette("dlookr") for an introduction to these concepts.
+See vignette("diagonosis") for an introduction to these concepts.
 }
 
 \examples{

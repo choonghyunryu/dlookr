@@ -10,7 +10,7 @@ binning(x, nbins, type = c("quantile", "equal", "pretty", "kmeans", "bclust"),
 \arguments{
 \item{x}{numeric vector for binning.}
 
-\item{nbins}{number of classes required, if missing, nclass.Sturges is used.}
+\item{nbins}{number of classes. required. if missing, nclass.Sturges is used.}
 
 \item{type}{binning method. one of "quantile", "equal", "equal", "pretty", "kmeans", "bclust"
 The "quantile" style provides quantile breaks.
@@ -36,7 +36,7 @@ Attributes of bins class is as follows.
 }
 }
 \description{
-The bbinning() converts a numeric variable to a categorization variable.
+The binning() converts a numeric variable to a categorization variable.
 }
 \details{
 This function is useful when used with the mutate/transmute
@@ -54,7 +54,7 @@ Attributes of the "bins" classs that is as follows.
 \item raw : before the binned the raw data
 }
 
-See vignette("binning") for an introduction to these concepts.
+See vignette("transformation") for an introduction to these concepts.
 }
 
 \examples{

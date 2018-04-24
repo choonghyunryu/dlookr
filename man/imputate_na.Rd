@@ -2,7 +2,7 @@
 % Please edit documentation in R/imputation.R
 \name{imputate_na}
 \alias{imputate_na}
-\title{Impute Missing values}
+\title{Imputate Missing values}
 \usage{
 imputate_na(.data, xvar, yvar, method, seed, print_flag)
 }
@@ -49,7 +49,7 @@ Attributes of imputation class is as follows.
 }
 }
 \description{
-Missing values are replaced with some representative values and
+Missing values are imputated with some representative values and
 statistical methods.
 }
 \details{

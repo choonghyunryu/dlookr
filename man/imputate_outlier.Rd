@@ -2,7 +2,7 @@
 % Please edit documentation in R/imputation.R
 \name{imputate_outlier}
 \alias{imputate_outlier}
-\title{Impute Outliers}
+\title{Imputate Outliers}
 \usage{
 imputate_outlier(.data, xvar, method)
 }
@@ -34,7 +34,7 @@ Attributes of imputation class is as follows.
 }
 }
 \description{
-Outliers are replaced with some representative values and
+Outliers are imputated with some representative values and
 statistical methods.
 }
 \details{

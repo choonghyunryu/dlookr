@@ -7,10 +7,10 @@
 get_class(df)
 }
 \arguments{
-\item{df}{data.frame or objects inheriting from data.frame}
+\item{df}{a data.frame or objects inheriting from data.frame}
 }
 \value{
-data.frame
+a data.frame
 Variables of data.frame is as follows.
 \itemize{
 \item variable : variables name
@@ -18,7 +18,7 @@ Variables of data.frame is as follows.
 }
 }
 \description{
-The get_class() getting class of variables in data.frame or tbl_df.
+The get_class() gets class of variables in data.frame or tbl_df.
 }
 \examples{
 \dontrun{

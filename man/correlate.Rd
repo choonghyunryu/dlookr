@@ -7,9 +7,9 @@
 correlate(.data, ...)
 }
 \arguments{
-\item{.data}{A data.frame or a \code{\link{tbl_df}}.}
+\item{.data}{a data.frame or a \code{\link{tbl_df}}.}
 
-\item{...}{One or more unquoted expressions separated by commas.
+\item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
 Positive values select variables; negative values to drop variables.
 If the first expression is negative, correlate() will automatically start with all variables.
@@ -17,17 +17,17 @@ These arguments are automatically quoted and evaluated in a context where column
 represent column positions.
 They support unquoting and splicing.
 
-See vignette("describe") for an introduction to these concepts.}
+See vignette("EDA") for an introduction to these concepts.}
 }
 \description{
 The correlate() compute pearson's the correlation
 coefficient of the numerical data.
 }
 \details{
-This function is useful when used with the group_by function of the dplyr package.
+This function is useful when used with the group_by() function of the dplyr package.
 If you want to compute by level of the categorical data you are interested in,
-rather than the whole observation, you can use \code{\link{grouped_df}} as the group_by function.
-This function is computed stats::cor function by use = "pairwise.complete.obs" option.
+rather than the whole observation, you can use \code{\link{grouped_df}} as the group_by() function.
+This function is computed stats::cor() function by use = "pairwise.complete.obs" option.
 }
 \section{Correlation coefficient information}{
 
@@ -35,7 +35,7 @@ The information derived from the numerical data compute is as follows.
 
 \itemize{
 \item var1 : names of numerical variable
-\item var2 : alternate names of numerical variable
+\item var2 : name of the corresponding numeric variable
 \item coef_corr : pearson's correlation coefficient
 }
 }

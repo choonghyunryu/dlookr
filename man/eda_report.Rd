@@ -8,15 +8,15 @@ eda_report(.data, target = NULL, output_format = c("pdf", "html"),
   output_file = NULL)
 }
 \arguments{
-\item{.data}{A data.frame or a \code{\link{tbl_df}}.}
+\item{.data}{a data.frame or a \code{\link{tbl_df}}.}
 
 \item{target}{target variable.}
 
-\item{output_format}{Report output type. Choose either "pdf" and "html".
-"pdf" create pdf file by knitr::knit.
-"html" create html file by rmarkdown::render.}
+\item{output_format}{report output type. Choose either "pdf" and "html".
+"pdf" create pdf file by knitr::knit().
+"html" create html file by rmarkdown::render().}
 
-\item{output_file}{Name of generated file. default is NULL.}
+\item{output_file}{name of generated file. default is NULL.}
 }
 \description{
 The eda_report() report the information of Exploratory
@@ -37,7 +37,7 @@ The EDA process will report the following information:
   \itemize{
     \item Information of Dataset
     \item Information of Variables
-    \item Numerical Variables
+    \item About EDA Report
   }
   \item Univariate Analysis
   \itemize{
@@ -70,7 +70,7 @@ The EDA process will report the following information:
   }
 }
 
-See vignette("eda") for an introduction to these concepts.
+See vignette("EDA") for an introduction to these concepts.
 }
 
 \examples{

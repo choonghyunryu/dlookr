@@ -13,7 +13,7 @@ imputate_outlier().}
 \item{...}{further arguments passed to or from other methods.}
 }
 \description{
-print and summary method for "relate" class.
+print and summary method for "imputation" class.
 }
 \details{
 summary.imputation tries to be smart about formatting two kinds of imputation.

@@ -11,9 +11,9 @@ diagnose_category(.data, ...)
   add_character = TRUE)
 }
 \arguments{
-\item{.data}{A data.frame or a \code{\link{tbl_df}}.}
+\item{.data}{a data.frame or a \code{\link{tbl_df}}.}
 
-\item{...}{One or more unquoted expressions separated by commas.
+\item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
 Positive values select variables; negative values to drop variables.
 If the first expression is negative, diagnose_category() will automatically
@@ -22,17 +22,17 @@ These arguments are automatically quoted and evaluated in a context where
 column names represent column positions.
 They support unquoting and splicing.}
 
-\item{top}{A integer. Specifies the upper top rank to extract.
+\item{top}{an integer. Specifies the upper top rank to extract.
 Default is 10.}
 
 \item{add_character}{logical. Decide whether to include text variables in the
 diagnosis of categorical data. The default value is TRUE, which also includes character variables.}
 }
 \value{
-An object of tbl_df.
+an object of tbl_df.
 }
 \description{
-TThe diagnose_category() produces information for
+The diagnose_category() produces information for
 diagnosing the quality of the variables of data.frame or tbl_df.
 }
 \details{
@@ -55,7 +55,7 @@ The information derived from the categorical data diagnosis is as follows.
 \item rank : rank of occupancy ratio of levels
 }
 
-See vignette("dlookr") for an introduction to these concepts.
+See vignette("diagonosis") for an introduction to these concepts.
 }
 
 \examples{
