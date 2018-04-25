@@ -69,7 +69,7 @@ if (length(nalist) > 0) {
 }
 ```
 
-```{r impute_function, echo=FALSE}
+```{r Imputate_function, echo=FALSE}
 numerics <- c("mean", "median", "mode", "knn", "rpart", "mice")
 categories <- c("mode", "rpart", "mice")
 
@@ -132,7 +132,7 @@ imputae_summary <- function(object) {
       met <- "Multivariate Imputation by Chained Equations"
       met <- sprintf("%s\n - random seed : %s", met, seed)
     }
-    cat(sprintf("* Impute %s based on %s\n\n", type, met))
+    cat(sprintf("* Imputate %s based on %s\n\n", type, met))
   }
 
   cat("* Information of Imputation (before vs after)\n")
@@ -142,7 +142,7 @@ imputae_summary <- function(object) {
 ```
 
 
-```{r impute_na, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=5, fig.width=7, results='asis'}
+```{r Imputate_na, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=5, fig.width=7, results='asis'}
 
 if (length(nalist) > 0) {
   for (i in 1:length(nalist)) {
@@ -196,7 +196,7 @@ if (length(outlist) > 0) {
 }
 ```
 
-```{r impute_outliers, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=5, fig.width=7, results='asis'}
+```{r Imputate_outliers, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=5, fig.width=7, results='asis'}
 
 if (length(outlist) > 0) {
   for (i in 1:length(outlist)) {

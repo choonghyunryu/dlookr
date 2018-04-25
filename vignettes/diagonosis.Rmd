@@ -275,11 +275,11 @@ flights %>%
 ```
 
 
-The following script creates an html report named `Diagn.html`.
+The following script creates an html report named `DataDiagnosis_Report.html`.
 
 ```{r, eval=FALSE}
 flights %>%
-  diagnose_report(output = "html", file_name = "Diagn.html")
+  diagnose_report(output_format = "html")
 ```
 
 The following generates an HTML report named `Diagn.html`.

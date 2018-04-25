@@ -117,7 +117,7 @@ imputae_summary <- function(object) {
       met <- "Multivariate Imputation by Chained Equations"
       met <- sprintf("%s\n\\\\ - random seed : %s", met, seed)
     }
-    cat(sprintf("* Impute %s based on %s\n\n", type, met))
+    cat(sprintf("* Imputate %s based on %s\n\n", type, met))
   }
 
   invisible(smmry)
@@ -142,7 +142,7 @@ if (length(nalist) > 0) {
 
     for (j in 1:length(method)) {
       cat("\n")
-      cat("\\subsubsection{Impute missing values with ", method[j], "}\n", sep = "")
+      cat("\\subsubsection{Imputate missing values with ", method[j], "}\n", sep = "")
 
       impu <- imputate_na(edaData, nalist[i], targetVariable, method = method[j], print_flag = FALSE)
       tab <- imputae_summary(impu)
