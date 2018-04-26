@@ -124,7 +124,7 @@ eda_report <- function(.data, target = NULL, output_format = c("pdf", "html"),
   assign("targetVariable", vars, .dlookrEnv)
   
   path <- output_dir
-  
+
   if (output_format == "pdf") {
     installed <- file.exists(Sys.which("pdflatex"))
     
