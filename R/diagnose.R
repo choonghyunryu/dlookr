@@ -654,6 +654,7 @@ plot_outlier_impl <- function(df, vars) {
 #' "pdf" create pdf file by knitr::knit().
 #' "html" create html file by rmarkdown::render().
 #' @param output_file name of generated file. default is NULL.
+#' @param output_dir name of directory to generate report file. default is tempdir().
 #'
 #' @examples
 #' \donttest{
@@ -681,12 +682,12 @@ plot_outlier_impl <- function(df, vars) {
 #'
 #' @export
 diagnose_report <- function(.data, output_format = c("pdf", "html"),
-  output_file = NULL) {
+  output_file = NULL, output_dir = tempdir()) {
   output_format <- match.arg(output_format)
   
   assign("edaData", as.data.frame(.data), .dlookrEnv)
   
-  path <- tempdir()
+  path <- output_dir
   
   if (output_format == "pdf") {
     installed <- file.exists(Sys.which("pdflatex"))

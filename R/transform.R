@@ -276,6 +276,7 @@ plot.transform <- function(x, ...) {
 #' "pdf" create pdf file by knitr::knit().
 #' "html" create html file by rmarkdown::render().
 #' @param output_file name of generated file. default is NULL.
+#' @param output_dir name of directory to generate report file. default is tempdir().
 #'
 #' @examples
 #' \donttest{
@@ -310,7 +311,7 @@ plot.transform <- function(x, ...) {
 #'
 #' @export
 transformation_report <- function(.data, target = NULL, output_format = c("pdf", "html"),
-  output_file = NULL) {
+  output_file = NULL, output_dir = tempdir()) {
   tryCatch(vars <- tidyselect::vars_select(names(.data), !!! rlang::enquo(target)),
     error = function(e) {
       pram <- as.character(substitute(target))
@@ -321,7 +322,7 @@ transformation_report <- function(.data, target = NULL, output_format = c("pdf",
   assign("edaData", as.data.frame(.data), .dlookrEnv)
   assign("targetVariable", vars, .dlookrEnv)
 
-  path <- tempdir()
+  path <- output_dir
   
   if (output_format == "pdf") {
     installed <- file.exists(Sys.which("pdflatex"))
