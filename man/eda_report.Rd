@@ -5,7 +5,7 @@
 \title{Reporting the information of EDA}
 \usage{
 eda_report(.data, target = NULL, output_format = c("pdf", "html"),
-  output_file = NULL)
+  output_file = NULL, output_dir = tempdir())
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}
@@ -17,6 +17,8 @@ eda_report(.data, target = NULL, output_format = c("pdf", "html"),
 "html" create html file by rmarkdown::render().}
 
 \item{output_file}{name of generated file. default is NULL.}
+
+\item{output_dir}{name of directory to generate report file. default is tempdir().}
 }
 \description{
 The eda_report() report the information of Exploratory
