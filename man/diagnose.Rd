@@ -51,7 +51,6 @@ See vignette("diagonosis") for an introduction to these concepts.
 }
 
 \examples{
-\dontrun{
 # Generate data for the example
 carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -90,7 +89,6 @@ carseats \%>\%
 carseats \%>\%
   diagnose() \%>\%
   filter(missing_count > 0)
-}
 }
 \seealso{
 \code{\link{diagnose_category}}, \code{\link{diagnose_numeric}}.

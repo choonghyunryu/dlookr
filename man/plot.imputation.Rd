@@ -19,7 +19,7 @@ The imputation of a numerical variable is a density plot,
 and the imputation of a categorical variable is a bar plot.
 }
 \examples{
-\dontrun{
+\donttest{
 # Generate data for the example
 carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA

@@ -48,7 +48,7 @@
 #' }
 #' @seealso \code{\link{imputate_outlier}}.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -99,6 +99,7 @@ imputate_na <- function(.data, xvar, yvar, method, seed, print_flag) {
 #' @method imputate_na data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang enquo
+#' @import mice
 #' @export
 imputate_na.data.frame <- function(.data, xvar, yvar = NULL,
   method = c("mean", "median", "mode", "rpart", "knn", "mice"), seed = NULL,
@@ -286,7 +287,6 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL, print_flag = T
 #' }
 #' @seealso \code{\link{imputate_na}}.
 #' @examples
-#' \dontrun{
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -314,7 +314,6 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL, print_flag = T
 #' price
 #' summary(price)
 #' plot(price)
-#' }
 #' @export
 imputate_outlier <- function(.data, xvar, method) {
   UseMethod("imputate_outlier")
@@ -416,7 +415,7 @@ imputate_outlier_impl <- function(df, xvar, method) {
 #'
 #' @seealso \code{\link{imputate_na}}, \code{\link{imputate_outlier}}, \code{\link{summary.imputation}}.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -532,7 +531,7 @@ summary.imputation <- function(object, ...) {
 #' only applies when the model argument is TRUE, and is used for ... of the plot.lm () function.
 #' @seealso \code{\link{imputate_na}}, \code{\link{imputate_outlier}}, \code{\link{summary.imputation}}.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA

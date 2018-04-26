@@ -57,7 +57,6 @@ The information derived from the numerical data describe is as follows.
 }
 
 \examples{
-\dontrun{
 # Generate data for the example
 carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -100,7 +99,6 @@ carseats \%>\%
  filter(Urban == "Yes") \%>\%
  group_by(ShelveLoc, US) \%>\%
  describe(Sales)
-}
 }
 \seealso{
 \code{\link{diagnose_numeric}}.

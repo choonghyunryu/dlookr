@@ -29,7 +29,6 @@ Since the plot is drawn for each variable, if you specify more than
 one variable in the ... argument, the specified number of plots are drawn.
 }
 \examples{
-\dontrun{
 # Generate data for the example
 carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -82,7 +81,6 @@ carseats \%>\%
  filter(ShelveLoc == "Good") \%>\%
  group_by(Urban, US) \%>\%
  plot_correlate(Sales)
-}
 }
 \seealso{
 \code{\link{plot_outlier}}.

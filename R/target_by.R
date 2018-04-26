@@ -26,7 +26,6 @@
 #' }
 #' @seealso \code{\link{relate}}.
 #' @examples
-#' \dontrun{
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -62,7 +61,6 @@
 #' num_cat
 #' summary(num_cat)
 #' plot(num_cat)
-#' }
 #' @export
 #'
 target_by <- function(.data, target) {
@@ -168,7 +166,6 @@ target_by_impl <- function(.data, target) {
 #' @seealso \code{\link{print.relate}}, \code{\link{plot.relate}}.
 #'
 #' @examples
-#' \dontrun{
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -204,7 +201,6 @@ target_by_impl <- function(.data, target) {
 #' num_cat
 #' summary(num_cat)
 #' plot(num_cat)
-#' }
 #' @export
 relate <- function(.data, predictor) {
   UseMethod("relate")
@@ -358,7 +354,6 @@ relate_impl <- function(.data, predictor) {
 #'
 #'
 #' @examples
-#' \dontrun{
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -394,7 +389,6 @@ relate_impl <- function(.data, predictor) {
 #' num_cat
 #' summary(num_cat)
 #' plot(num_cat)
-#' }
 #' @method print relate
 #' @importFrom stats anova
 #' @export
@@ -428,7 +422,6 @@ print.relate <- function(x, ...) {
 #' only applies when the model argument is TRUE, and is used for ... of the plot.lm () function.
 #' @seealso \code{\link{relate}}, \code{\link{print.relate}}.
 #' @examples
-#' \dontrun{
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -464,7 +457,6 @@ print.relate <- function(x, ...) {
 #' num_cat
 #' summary(num_cat)
 #' plot(num_cat)
-#' }
 #' @method plot relate
 #' @import ggplot2
 #' @importFrom RColorBrewer brewer.pal

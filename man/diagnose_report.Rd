@@ -4,7 +4,8 @@
 \alias{diagnose_report}
 \title{Reporting the information of data diagnosis}
 \usage{
-diagnose_report(.data, output_format = c("pdf", "html"), output_file = NULL)
+diagnose_report(.data, output_format = c("pdf", "html"), output_file = NULL,
+  output_dir = tempdir())
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}
@@ -14,6 +15,8 @@ diagnose_report(.data, output_format = c("pdf", "html"), output_file = NULL)
 "html" create html file by rmarkdown::render().}
 
 \item{output_file}{name of generated file. default is NULL.}
+
+\item{output_dir}{name of directory to generate report file. default is tempdir().}
 }
 \description{
 The diagnose_report() report the information for diagnosing
@@ -61,7 +64,7 @@ See vignette("diagonosis") for an introduction to these concepts.
 }
 
 \examples{
-\dontrun{
+\donttest{
 carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
@@ -76,5 +79,4 @@ diagnose_report(carseats, output_format = "html")
 # create html file. file name is Diagn.html
 diagnose_report(carseats, output_format = "html", output_file = "Diagn.html")
 }
-
 }

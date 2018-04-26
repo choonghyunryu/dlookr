@@ -18,7 +18,6 @@ print and summary method for "transform" class.
 summary.transform compares the distribution of data before and after data conversion.
 }
 \examples{
-\dontrun{
 # Generate data for the example
 carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -35,7 +34,6 @@ advertising_log <- transform(carseats$Advertising, method = "log")
 advertising_log
 summary(advertising_log)
 plot(advertising_log)
-}
 }
 \seealso{
 \code{\link{transform}}, \code{\link{summary.transform}}.

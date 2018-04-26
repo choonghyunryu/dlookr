@@ -1201,10 +1201,10 @@ urban
 #>  [35] Yes Yes No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes
 #>  [52] Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes
 #>  [69] Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes No  No 
-#>  [86] No  Yes No  Yes No  No  Yes Yes Yes Yes Yes No  Yes No  No  No  Yes
-#> [103] No  Yes Yes Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes
-#> [120] Yes Yes Yes Yes No  Yes No  Yes Yes Yes No  Yes No  Yes Yes Yes No 
-#> [137] No  Yes Yes No  Yes Yes Yes Yes No  Yes Yes No  No  Yes No  No  No 
+#>  [86] No  Yes No  Yes No  No  Yes Yes No  Yes Yes No  Yes No  No  No  Yes
+#> [103] No  Yes Yes Yes No  Yes Yes No  Yes Yes No  Yes Yes Yes No  Yes Yes
+#> [120] Yes Yes Yes Yes No  Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes No 
+#> [137] No  Yes Yes No  Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes No  No 
 #> [154] No  No  Yes Yes No  No  No  No  No  Yes No  No  Yes Yes Yes Yes Yes
 #> [171] Yes Yes Yes Yes No  Yes No  Yes No  Yes Yes Yes Yes Yes No  Yes No 
 #> [188] Yes Yes No  No  Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes No  Yes
@@ -1213,9 +1213,9 @@ urban
 #> [239] Yes Yes Yes Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes
 #> [256] Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes No  No  Yes Yes Yes Yes
 #> [273] Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes No  No  Yes No  Yes No 
-#> [290] Yes No  Yes Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
-#> [307] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes No  No  No  Yes Yes Yes
-#> [324] Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes
+#> [290] Yes No  No  Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
+#> [307] Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No  No  No  Yes Yes Yes
+#> [324] Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes Yes Yes
 #> [341] Yes No  No  Yes No  Yes No  No  Yes No  No  No  Yes No  Yes Yes Yes
 #> [358] Yes Yes Yes No  No  Yes Yes Yes No  No  Yes No  Yes Yes Yes No  Yes
 #> [375] Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes
@@ -1240,9 +1240,9 @@ summary(urban)
 #> 
 #> * Information of Imputation (before vs after)
 #>      original imputation original_percent imputation_percent
-#> No        115        120            28.75                 30
-#> Yes       275        280            68.75                 70
-#> <NA>       10          0             2.50                  0
+#> No        115        119            28.75              29.75
+#> Yes       275        281            68.75              70.25
+#> <NA>       10          0             2.50               0.00
 
 # viz of imputate
 plot(urban)
@@ -1617,14 +1617,14 @@ binning(carseats$Income, nbins = 5, type = "kmeans")
 #> binned type: kmeans
 #> number of bins: 5
 #> x
-#>   (21,44.5] (44.5,65.5]   (65.5,85]    (85,104]   (104,120]        <NA> 
-#>          96          71          93          65          51          24
+#>   (21,43.5] (43.5,63.5] (63.5,83.5]  (83.5,102]   (102,120]        <NA> 
+#>          92          65          96          67          56          24
 binning(carseats$Income, nbins = 5, type = "bclust")
 #> binned type: bclust
 #> number of bins: 5
 #> x
-#>   (21,36.5]   (36.5,49]   (49,76.5] (76.5,95.5]  (95.5,120]        <NA> 
-#>          62          49         108          78          79          24
+#>   (21,49] (49,63.5] (63.5,85]  (85,106] (106,120]      <NA> 
+#>       111        46       103        76        40        24
 
 # -------------------------
 # Using pipes & dplyr
@@ -1739,11 +1739,11 @@ flights %>%
   diagnose_report()
 ```
 
-The following script creates an html report named `Diagn.html`.
+The following script creates an html report named `DataDiagnosis_Report.html`.
 
 ``` r
 flights %>%
-  diagnose_report(output = "html", file_name = "Diagn.html")
+  diagnose_report(output_format = "html")
 ```
 
 The following generates an HTML report named `Diagn.html`.

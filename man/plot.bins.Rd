@@ -17,7 +17,6 @@ The plot at the top is a histogram representing the frequency of the level.
 The plot at the bottom is a bar chart representing the frequency of the level.
 }
 \examples{
-\dontrun{
 # Generate data for the example
 carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -35,7 +34,6 @@ bin <- binning(carseats$Income, nbins = 5, type = "kmeans")
 plot(bin)
 bin <- binning(carseats$Income, nbins = 5, type = "bclust")
 plot(bin)
-}
 }
 \seealso{
 \code{\link{binning}}, \code{\link{print.bins}}, \code{\link{summary.bins}}.

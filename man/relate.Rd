@@ -78,7 +78,6 @@ The information derived from the numerical data describe is as follows.
 }
 
 \examples{
-\dontrun{
 # Generate data for the example
 carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -114,7 +113,6 @@ num_cat <- relate(num, ShelveLoc)
 num_cat
 summary(num_cat)
 plot(num_cat)
-}
 }
 \seealso{
 \code{\link{print.relate}}, \code{\link{plot.relate}}.

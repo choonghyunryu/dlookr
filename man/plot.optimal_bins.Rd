@@ -26,7 +26,6 @@ running smbinning and saving its output.
 See vignette("transformation") for an introduction to these concepts.
 }
 \examples{
-\dontrun{
 # Generate data for the example
 carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -47,7 +46,6 @@ attr(bin, "ivtable")
 
 # visualize optimal_bins class
 plot(bin, sub = "bins of Advertising variable")
-}
 }
 \seealso{
 \code{\link{binning_by}}, \code{\link{plot.bins}}, \code{\link{smbinning.plot}}.

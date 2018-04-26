@@ -41,7 +41,6 @@ The information derived from the numerical data compute is as follows.
 }
 
 \examples{
-\dontrun{
 # Generate data for the example
 carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -109,7 +108,6 @@ carseats \%>\%
  correlate(Sales) \%>\%
  filter(coef_corr < 0) \%>\%
  filter(abs(coef_corr) > 0.5)
-}
 }
 \seealso{
 \code{\link{cor}}.

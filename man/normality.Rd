@@ -46,7 +46,7 @@ The number of observations supported by the stats::shapiro.test function is 3 to
 }
 
 \examples{
-\dontrun{
+\donttest{
 # Generate data for the example
 carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
