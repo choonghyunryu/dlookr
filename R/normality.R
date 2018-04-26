@@ -34,7 +34,7 @@
 #' @seealso \code{\link{diagnose_numeric}}, \code{\link{describe}}, \code{\link{plot_normality}}.
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -131,7 +131,7 @@ normality <- function(.data, ...) {
 #' @seealso \code{\link{plot_outlier}}.
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA

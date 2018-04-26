@@ -42,7 +42,7 @@ The plot derived from the numerical data vizualization is as follows.
 }
 
 \examples{
-\dontrun{
+\donttest{
 # Generate data for the example
 carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA

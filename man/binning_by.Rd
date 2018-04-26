@@ -63,7 +63,6 @@ See vignette("transformation") for an introduction to these concepts.
 }
 
 \examples{
-\dontrun{
 # Generate data for the example
 carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -76,7 +75,6 @@ bin
 summary(bin)
 # visualize optimal_bins class
 plot(bin, sub = "bins of Advertising variable")
-}
 }
 \seealso{
 \code{\link{binning}}, \code{\link{smbinning}}.

@@ -36,7 +36,6 @@
 #' }
 #' @seealso \code{\link{summary.transform}}, \code{\link{plot.transform}}.
 #' @examples
-#' \dontrun{
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -60,7 +59,6 @@
 #' carseats %>%
 #'   mutate(Advertising_log = transform(Advertising, method = "log+1")) %>%
 #'   lm(Sales ~ Advertising_log, data = .)
-#' }
 #' @export
 #' @import tibble
 #' @importFrom methods is
@@ -116,7 +114,6 @@ transform <- function(x, method = c("zscore", "minmax", "log", "log+1", "sqrt",
 #'
 #' @seealso \code{\link{transform}}, \code{\link{summary.transform}}.
 #' @examples
-#' \dontrun{
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -133,7 +130,6 @@ transform <- function(x, method = c("zscore", "minmax", "log", "log+1", "sqrt",
 #' advertising_log
 #' summary(advertising_log)
 #' plot(advertising_log)
-#' }
 #' @method summary transform
 #' @importFrom tidyr gather
 #' @export
@@ -176,7 +172,6 @@ summary.transform <- function(object, ...) {
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
 #' @seealso \code{\link{transform}}, \code{\link{summary.transform}}.
 #' @examples
-#' \dontrun{
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -193,7 +188,6 @@ summary.transform <- function(object, ...) {
 #' advertising_log
 #' summary(advertising_log)
 #' plot(advertising_log)
-#' }
 #' @method plot transform
 #' @import ggplot2
 #' @importFrom tidyr gather
@@ -284,7 +278,7 @@ plot.transform <- function(x, ...) {
 #' @param output_file name of generated file. default is NULL.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -327,6 +321,8 @@ transformation_report <- function(.data, target = NULL, output_format = c("pdf",
   assign("edaData", as.data.frame(.data), .dlookrEnv)
   assign("targetVariable", vars, .dlookrEnv)
 
+  path <- tempdir()
+  
   if (output_format == "pdf") {
     installed <- file.exists(Sys.which("pdflatex"))
 
@@ -338,44 +334,45 @@ transformation_report <- function(.data, target = NULL, output_format = c("pdf",
       output_file <- "Transformation_Report.pdf"
 
     Rnw_file <- file.path(system.file(package = "dlookr"), "report", "Transformation_Report.Rnw")
-    file.copy(from = Rnw_file, to = getwd())
+    file.copy(from = Rnw_file, to = path)
 
     Rnw_file <- file.path(system.file(package = "dlookr"), "report", "03_Transformation.Rnw")
-    file.copy(from = Rnw_file, to = getwd())
+    file.copy(from = Rnw_file, to = path)
 
     Img_file <- file.path(system.file(package = "dlookr"), "img")
-    file.copy(from = Img_file, to = getwd(), recursive = TRUE)
+    file.copy(from = Img_file, to = path, recursive = TRUE)
 
-    dir.create("figure")
+    dir.create(paste(path, "figure", sep = "/"))
 
-    knitr::knit2pdf("Transformation_Report.Rnw", compiler = "pdflatex",
-      output = sub("pdf$", "tex", output_file))
+    knitr::knit2pdf(paste(path, "Transformation_Report.Rnw", sep = "/"), 
+      compiler = "pdflatex",
+      output = sub("pdf$", "tex", paste(path, output_file, sep = "/")))
 
-    file.remove("03_Transformation.Rnw")
-    file.remove("Transformation_Report.Rnw")
+    file.remove(paste(path, "03_Transformation.Rnw", sep = "/"))
+    file.remove(paste(path, "Transformation_Report.Rnw", sep = "/"))
 
     fnames <- sub("pdf$", "", output_file)
-    fnames <- grep(fnames, list.files(), value = TRUE)
+    fnames <- grep(fnames, list.files(path), value = TRUE)
     fnames <- grep("\\.pdf$", fnames, invert = TRUE, value = TRUE)
 
-    file.remove(fnames)
-
-    unlink("figure", recursive = TRUE)
-    unlink("img", recursive = TRUE)
+    file.remove(paste(path, fnames, sep = "/"))
+    
+    unlink(paste(path, "figure", sep = "/"), recursive = TRUE)
+    unlink(paste(path, "img", sep = "/"), recursive = TRUE)
   } else if (output_format == "html") {
     output_file <- "Transformation_Report.html"
 
     Rmd_file <- file.path(system.file(package = "dlookr"), "report", "Transformation_Report.Rmd")
-    file.copy(from = Rmd_file, to = getwd(), recursive = TRUE)
+    file.copy(from = Rmd_file, to = path, recursive = TRUE)
 
-    rmarkdown::render("Transformation_Report.Rmd",
+    rmarkdown::render(paste(path, "Transformation_Report.Rmd", sep = "/"),
       prettydoc::html_pretty(toc = TRUE, number_sections = TRUE),
-      output_file = output_file)
+      output_file = paste(path, output_file, sep = "/"))
 
-    file.remove("Transformation_Report.Rmd")
+    file.remove(paste(path, "Transformation_Report.Rmd", sep = "/"))
   }
 
-  if (file.exists(output_file)) {
-    browseURL(output_file)
+  if (file.exists(paste(path, output_file, sep = "/"))) {
+    browseURL(paste(path, output_file, sep = "/"))
   }
 }

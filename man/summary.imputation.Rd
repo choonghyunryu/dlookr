@@ -19,7 +19,7 @@ print and summary method for "imputation" class.
 summary.imputation tries to be smart about formatting two kinds of imputation.
 }
 \examples{
-\dontrun{
+\donttest{
 # Generate data for the example
 carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA

@@ -5,7 +5,14 @@ Version: 0.3.0
 Authors@R: c(
   person("Choonghyun", "Ryu",, "choonghyun.ryu@gmail.com", role = c("aut", "cre"))
   )
-Description: A collection of tools that support data diagnosis, exploration, and transformation.
+Description: A collection of tools that support data diagnosis, exploration, and transformation. 
+    Data Diagnostics provides information and visualization of missing values and outliers and 
+    unique and negative values to help you understand the distribution and quality of your data. 
+    Data Exploration provides information and visualization of the descriptive statistics of 
+    univariate variables, normality tests and outliers, correlation of two variables, and 
+    relationship between target variable and predictor. Data Transformation supports binning 
+    for categorizing continuous variables, Imputates missing values and outliers, resolving skewness. 
+    And it creates automated reports that support these three tasks.
 License: GPL-2
 Encoding: UTF-8
 LazyData: true

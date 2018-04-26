@@ -38,7 +38,6 @@ the ratio of levels in total observations. And this information is data.frame ob
 See vignette("transformation") for an introduction to these concepts.
 }
 \examples{
-\dontrun{
 # Generate data for the example
 carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -52,7 +51,6 @@ bin
 
 # Summarise bins class object
 summary(bin)
-}
 }
 \seealso{
 \code{\link{binning}}

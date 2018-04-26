@@ -4,8 +4,8 @@
 \alias{transformation_report}
 \title{Reporting the information of transformation}
 \usage{
-transformation_report(.data, target, output_format = c("pdf", "html"),
-  output_file = NULL)
+transformation_report(.data, target = NULL, output_format = c("pdf",
+  "html"), output_file = NULL)
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}
@@ -72,7 +72,7 @@ See vignette("transformation") for an introduction to these concepts.
 }
 
 \examples{
-\dontrun{
+\donttest{
 # Generate data for the example
 carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA

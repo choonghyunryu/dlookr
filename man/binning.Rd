@@ -58,7 +58,6 @@ See vignette("transformation") for an introduction to these concepts.
 }
 
 \examples{
-\dontrun{
 # Generate data for the example
 carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -96,7 +95,6 @@ carseats \%>\%
  summarise(freq = n()) \%>\%
  arrange(desc(freq)) \%>\%
  head(10)
-}
 }
 \seealso{
 \code{\link{binning_by}}, \code{\link{print.bins}}, \code{\link{summary.bins}}.

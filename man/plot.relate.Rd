@@ -20,7 +20,6 @@ only applies when the model argument is TRUE, and is used for ... of the plot.lm
 Visualize four kinds of plot by attribute of relate class.
 }
 \examples{
-\dontrun{
 # Generate data for the example
 carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -56,7 +55,6 @@ num_cat <- relate(num, ShelveLoc)
 num_cat
 summary(num_cat)
 plot(num_cat)
-}
 }
 \seealso{
 \code{\link{relate}}, \code{\link{print.relate}}.

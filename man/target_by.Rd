@@ -36,7 +36,6 @@ Data analysis proceeds with the purpose of predicting target variables that
 See vignette("EDA") for an introduction to these concepts.
 }
 \examples{
-\dontrun{
 # Generate data for the example
 carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -72,7 +71,6 @@ num_cat <- relate(num, ShelveLoc)
 num_cat
 summary(num_cat)
 plot(num_cat)
-}
 }
 \seealso{
 \code{\link{relate}}.

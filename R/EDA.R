@@ -59,7 +59,7 @@
 #' @param output_file name of generated file. default is NULL.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(dplyr)
 #'
 #' # Generate data for the example
@@ -110,71 +110,74 @@
 #'
 #' @export
 eda_report <- function(.data, target = NULL, output_format = c("pdf", "html"),
-                       output_file = NULL) {
+  output_file = NULL) {
   tryCatch(vars <- tidyselect::vars_select(names(.data),
-                                           !!! rlang::enquo(target)),
-           error = function(e) {
-             pram <- as.character(substitute(target))
-             stop(sprintf("Column %s is unknown", pram))
-           },
-           finally = NULL)
+    !!! rlang::enquo(target)),
+    error = function(e) {
+      pram <- as.character(substitute(target))
+      stop(sprintf("Column %s is unknown", pram))
+    },
+    finally = NULL)
   output_format <- match.arg(output_format)
-
+  
   assign("edaData", as.data.frame(.data), .dlookrEnv)
   assign("targetVariable", vars, .dlookrEnv)
-
+  
+  path <- tempdir()
+  
   if (output_format == "pdf") {
     installed <- file.exists(Sys.which("pdflatex"))
-
+    
     if (!installed) {
       stop("No TeX installation detected. Please install TeX before running.\nor Use output_format = \"html\"")
     }
-
+    
     if (is.null(output_file))
       output_file <- "EDA_Report.pdf"
-
+    
     Rnw_file <- file.path(system.file(package = "dlookr"), "report",
-                          "EDA_Report.Rnw")
-    file.copy(from = Rnw_file, to = getwd())
-
+      "EDA_Report.Rnw")
+    file.copy(from = Rnw_file, to = path)
+    
     Rnw_file <- file.path(system.file(package = "dlookr"), "report",
-                          "02_RunEDA.Rnw")
-    file.copy(from = Rnw_file, to = getwd())
-
+      "02_RunEDA.Rnw")
+    file.copy(from = Rnw_file, to = path)
+    
     Img_file <- file.path(system.file(package = "dlookr"), "img")
-    file.copy(from = Img_file, to = getwd(), recursive = TRUE)
-
-    dir.create("figure")
-
-    knitr::knit2pdf("EDA_Report.Rnw", compiler = "pdflatex",
-                    output = sub("pdf$", "tex", output_file))
-
-    file.remove("02_RunEDA.Rnw")
-    file.remove("EDA_Report.Rnw")
-
+    file.copy(from = Img_file, to = path, recursive = TRUE)
+    
+    dir.create(paste(path, "figure", sep = "/"))
+    
+    knitr::knit2pdf(paste(path, "EDA_Report.Rnw", sep = "/"), 
+      compiler = "pdflatex",
+      output = sub("pdf$", "tex", paste(path, output_file, sep = "/")))
+    
+    file.remove(paste(path, "02_RunEDA.Rnw", sep = "/"))
+    file.remove(paste(path, "EDA_Report.Rnw", sep = "/"))
+    
     fnames <- sub("pdf$", "", output_file)
-    fnames <- grep(fnames, list.files(), value = TRUE)
+    fnames <- grep(fnames, list.files(path), value = TRUE)
     fnames <- grep("\\.pdf$", fnames, invert = TRUE, value = TRUE)
-
-    file.remove(fnames)
-
-    unlink("figure", recursive = TRUE)
-    unlink("img", recursive = TRUE)
+    
+    file.remove(paste(path, fnames, sep = "/"))
+    
+    unlink(paste(path, "figure", sep = "/"), recursive = TRUE)
+    unlink(paste(path, "img", sep = "/"), recursive = TRUE)
   } else if (output_format == "html") {
     output_file <- "EDA_Report.html"
-
+    
     Rmd_file <- file.path(system.file(package = "dlookr"), "report",
-                          "EDA_Report.Rmd")
-    file.copy(from = Rmd_file, to = getwd(), recursive = TRUE)
-
-    rmarkdown::render("EDA_Report.Rmd",
-                      prettydoc::html_pretty(toc = TRUE, number_sections = TRUE),
-                      output_file = output_file)
-
-    file.remove("EDA_Report.Rmd")
+      "EDA_Report.Rmd")
+    file.copy(from = Rmd_file, to = path, recursive = TRUE)
+    
+    rmarkdown::render(paste(path, "EDA_Report.Rmd", sep = "/"),
+      prettydoc::html_pretty(toc = TRUE, number_sections = TRUE),
+      output_file = paste(path, output_file, sep = "/"))
+    
+    file.remove(paste(path, "EDA_Report.Rmd", sep = "/"))
   }
-
-  if (file.exists(output_file)) {
-    browseURL(output_file)
+  
+  if (file.exists(paste(path, output_file, sep = "/"))) {
+    browseURL(paste(path, output_file, sep = "/"))
   }
 }

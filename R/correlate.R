@@ -31,7 +31,6 @@
 #' @seealso \code{\link{cor}}.
 #' @export
 #' @examples
-#' \dontrun{
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -99,7 +98,6 @@
 #'  correlate(Sales) %>%
 #'  filter(coef_corr < 0) %>%
 #'  filter(abs(coef_corr) > 0.5)
-#' }
 correlate <- function(.data, ...) {
   UseMethod("correlate")
 }
@@ -128,7 +126,6 @@ correlate <- function(.data, ...) {
 #' @seealso \code{\link{plot_outlier}}.
 #' @export
 #' @examples
-#' \dontrun{
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -181,7 +178,6 @@ correlate <- function(.data, ...) {
 #'  filter(ShelveLoc == "Good") %>%
 #'  group_by(Urban, US) %>%
 #'  plot_correlate(Sales)
-#' }
 plot_correlate <- function(.data, ...) {
   UseMethod("plot_correlate")
 }

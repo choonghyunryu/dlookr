@@ -47,7 +47,6 @@ and method of transformation.
 See vignette("transformation") for an introduction to these concepts.
 }
 \examples{
-\dontrun{
 # Generate data for the example
 carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -71,7 +70,6 @@ library(dplyr)
 carseats \%>\%
   mutate(Advertising_log = transform(Advertising, method = "log+1")) \%>\%
   lm(Sales ~ Advertising_log, data = .)
-}
 }
 \seealso{
 \code{\link{summary.transform}}, \code{\link{plot.transform}}.

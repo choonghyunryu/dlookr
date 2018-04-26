@@ -47,7 +47,6 @@ to help determine whether the imputated value is used in the analysis.
 See vignette("transformation") for an introduction to these concepts.
 }
 \examples{
-\dontrun{
 # Generate data for the example
 carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -75,7 +74,6 @@ price <- imputate_outlier(carseats, Price)
 price
 summary(price)
 plot(price)
-}
 }
 \seealso{
 \code{\link{imputate_na}}.

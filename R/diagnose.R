@@ -39,7 +39,6 @@
 #' @seealso \code{\link{diagnose_category}}, \code{\link{diagnose_numeric}}.
 #' @export
 #' @examples
-#' \dontrun{
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -78,7 +77,6 @@
 #' carseats %>%
 #'   diagnose() %>%
 #'   filter(missing_count > 0)
-#' }
 diagnose <- function(.data, ...) {
   UseMethod("diagnose")
 }
@@ -159,7 +157,6 @@ diagn_std_impl <- function(df, vars) {
 #' \code{\link{diagnose_outlier}}.
 #' @export
 #' @examples
-#' \dontrun{
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -201,7 +198,6 @@ diagn_std_impl <- function(df, vars) {
 #' carseats %>%
 #'   diagnose_category()  %>%
 #'   filter(ratio >= 60)
-#' }
 diagnose_category <- function(.data, ...) {
   UseMethod("diagnose_category")
 }
@@ -286,7 +282,6 @@ diagn_category_impl <- function(df, vars, top, add_character) {
 #' @seealso \code{\link{diagnose}}, \code{\link{diagnose_category}}, \code{\link{diagnose_outlier}}.
 #' @export
 #' @examples
-#' \dontrun{
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -325,7 +320,6 @@ diagn_category_impl <- function(df, vars, top, add_character) {
 #' carseats %>%
 #'   diagnose_numeric()  %>%
 #'   filter(zero > 0)
-#' }
 diagnose_numeric <- function(.data, ...) {
   UseMethod("diagnose_numeric")
 }
@@ -407,7 +401,6 @@ diagn_numeric_impl <- function(df, vars) {
 #' @seealso \code{\link{diagnose}}, \code{\link{diagnose_category}}, \code{\link{diagnose_numeric}}.
 #' @export
 #' @examples
-#' \dontrun{
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -446,7 +439,6 @@ diagn_numeric_impl <- function(df, vars) {
 #' carseats %>%
 #'   diagnose_outlier()  %>%
 #'   filter(outliers_ratio > 1)
-#' }
 diagnose_outlier <- function(.data, ...) {
   UseMethod("diagnose_outlier")
 }
@@ -523,7 +515,6 @@ diagnose_outlier_impl <- function(df, vars) {
 #' @seealso \code{\link{diagnose_outlier}}.
 #' @export
 #' @examples
-#' \dontrun{
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -566,7 +557,6 @@ diagnose_outlier_impl <- function(df, vars) {
 #'       filter(outliers_ratio > 1) %>%
 #'       select(variables) %>%
 #'       pull())
-#' }
 plot_outlier <- function(.data, ...) {
   UseMethod("plot_outlier")
 }
@@ -666,7 +656,7 @@ plot_outlier_impl <- function(df, vars) {
 #' @param output_file name of generated file. default is NULL.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 #' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
@@ -691,64 +681,67 @@ plot_outlier_impl <- function(df, vars) {
 #'
 #' @export
 diagnose_report <- function(.data, output_format = c("pdf", "html"),
-                            output_file = NULL) {
+  output_file = NULL) {
   output_format <- match.arg(output_format)
-
+  
   assign("edaData", as.data.frame(.data), .dlookrEnv)
-
+  
+  path <- tempdir()
+  
   if (output_format == "pdf") {
     installed <- file.exists(Sys.which("pdflatex"))
-
+    
     if (!installed) {
       stop("No TeX installation detected. Please install TeX before running.\nor Use output_format = \"html\"")
     }
-
+    
     if (is.null(output_file))
       output_file <- "DataDiagnosis_Report.pdf"
-
+    
     Rnw_file <- file.path(system.file(package = "dlookr"),
       "report", "DataDiagnosis_Report.Rnw")
-    file.copy(from = Rnw_file, to = getwd())
-
+    file.copy(from = Rnw_file, to = path)
+    
     Rnw_file <- file.path(system.file(package = "dlookr"),
       "report", "01_Diagnose.Rnw")
-    file.copy(from = Rnw_file, to = getwd())
-
+    file.copy(from = Rnw_file, to = path)
+    
     Img_file <- file.path(system.file(package = "dlookr"), "img")
-    file.copy(from = Img_file, to = getwd(), recursive = TRUE)
-
-    dir.create("figure")
-
+    file.copy(from = Img_file, to = path, recursive = TRUE)
+    
+    dir.create(paste(path, "figure", sep = "/"))
+    
     # you needs tinytex package for compiler = "pdflatex"
-    knitr::knit2pdf("DataDiagnosis_Report.Rnw", compiler = "pdflatex",
-      output = sub("pdf$", "tex", output_file))
-
-    file.remove("01_Diagnose.Rnw")
-    file.remove("DataDiagnosis_Report.Rnw")
-
+    knitr::knit2pdf(paste(path, "DataDiagnosis_Report.Rnw", sep = "/"),
+      compiler = "pdflatex",
+      output = sub("pdf$", "tex", paste(path, output_file, sep = "/")))
+      
+    file.remove(paste(path, "01_Diagnose.Rnw", sep = "/"))
+    file.remove(paste(path, "DataDiagnosis_Report.Rnw", sep = "/"))
+      
     fnames <- sub("pdf$", "", output_file)
-    fnames <- grep(fnames, list.files(), value = TRUE)
+    fnames <- grep(fnames, list.files(path), value = TRUE)
     fnames <- grep("\\.pdf$", fnames, invert = TRUE, value = TRUE)
-
-    file.remove(fnames)
-
-    unlink("figure", recursive = TRUE)
-    unlink("img", recursive = TRUE)
+      
+    file.remove(paste(path, fnames, sep = "/"))
+      
+    unlink(paste(path, "figure", sep = "/"), recursive = TRUE)
+    unlink(paste(path, "img", sep = "/"), recursive = TRUE)
   } else if (output_format == "html") {
     output_file <- "Diagnosis_Report.html"
-
+    
     Rmd_file <- file.path(system.file(package = "dlookr"),
       "report", "Diagnosis_Report.Rmd")
-    file.copy(from = Rmd_file, to = getwd(), recursive = TRUE)
-
-    rmarkdown::render("Diagnosis_Report.Rmd",
+    file.copy(from = Rmd_file, to = path, recursive = TRUE)
+    
+    rmarkdown::render(paste(path, "Diagnosis_Report.Rmd", sep = "/"),
       output_format = prettydoc::html_pretty(toc = TRUE, number_sections = TRUE),
-      output_file = output_file)
-
-    file.remove("Diagnosis_Report.Rmd")
+      output_file = paste(path, output_file, sep = "/"))
+    
+    file.remove(paste(path, "Diagnosis_Report.Rmd", sep = "/"))
   }
-
-  if (file.exists(output_file)) {
-    browseURL(output_file)
+  
+  if (file.exists(paste(path, output_file, sep = "/"))) {
+    browseURL(paste(path, output_file, sep = "/"))
   }
 }

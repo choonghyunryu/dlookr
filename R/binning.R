@@ -41,7 +41,6 @@
 #' @seealso \code{\link{binning_by}}, \code{\link{print.bins}}, \code{\link{summary.bins}}.
 #' @export
 #' @examples
-#' \dontrun{
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -79,7 +78,6 @@
 #'  summarise(freq = n()) %>%
 #'  arrange(desc(freq)) %>%
 #'  head(10)
-#' }
 #' @importFrom classInt classIntervals
 #' @importFrom grDevices nclass.Sturges
 #' @importFrom stats na.omit quantile
@@ -187,7 +185,6 @@ binning <- function(x, nbins,
 #' }
 #' @seealso \code{\link{binning}}
 #' @examples
-#' \dontrun{
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -201,7 +198,6 @@ binning <- function(x, nbins,
 #'
 #' # Summarise bins class object
 #' summary(bin)
-#' }
 #' @method summary bins
 #' @export
 summary.bins <- function(object, ...) {
@@ -234,7 +230,6 @@ print.bins <- function(x, ...) {
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
 #' @seealso \code{\link{binning}}, \code{\link{print.bins}}, \code{\link{summary.bins}}.
 #' @examples
-#' \dontrun{
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -252,7 +247,6 @@ print.bins <- function(x, ...) {
 #' plot(bin)
 #' bin <- binning(carseats$Income, nbins = 5, type = "bclust")
 #' plot(bin)
-#' }
 #' @export
 #' @method plot bins
 #' @importFrom graphics plot
@@ -322,7 +316,6 @@ plot.bins <- function(x, ...) {
 #' }
 #' @seealso \code{\link{binning}}, \code{\link{smbinning}}.
 #' @examples
-#' \dontrun{
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -335,7 +328,6 @@ plot.bins <- function(x, ...) {
 #' summary(bin)
 #' # visualize optimal_bins class
 #' plot(bin, sub = "bins of Advertising variable")
-#' }
 #' @importFrom smbinning smbinning
 #' @export
 binning_by <- function(df, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
@@ -435,7 +427,6 @@ binning_by <- function(df, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
 #' only applies to the first graph that is implemented with the boxplot() function.
 #' @seealso \code{\link{binning_by}}, \code{\link{plot.bins}}, \code{\link{smbinning.plot}}.
 #' @examples
-#' \dontrun{
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -456,7 +447,6 @@ binning_by <- function(df, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
 #'
 #' # visualize optimal_bins class
 #' plot(bin, sub = "bins of Advertising variable")
-#' }
 #' @importFrom graphics boxplot mtext
 #' @importFrom smbinning smbinning.plot
 #' @export
