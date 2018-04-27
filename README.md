@@ -3,6 +3,8 @@
 dlookr <img src="inst/img/detective_2.png" align="right" height="120" width="103.6"/>
 =====================================================================================
 
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/dlookr)](https://cran.r-project.org/package=dlookr)
+
 Overview
 --------
 
@@ -1197,14 +1199,14 @@ urban <- imputate_na(carseats, Urban, US, method = "mice")
 # result of imputate
 urban
 #>   [1] Yes Yes Yes Yes Yes No  Yes Yes No  No  No  Yes Yes Yes Yes No  Yes
-#>  [18] Yes No  Yes Yes No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes Yes
+#>  [18] Yes No  Yes Yes No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes
 #>  [35] Yes Yes No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes
 #>  [52] Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes
 #>  [69] Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes No  No 
 #>  [86] No  Yes No  Yes No  No  Yes Yes No  Yes Yes No  Yes No  No  No  Yes
 #> [103] No  Yes Yes Yes No  Yes Yes No  Yes Yes No  Yes Yes Yes No  Yes Yes
-#> [120] Yes Yes Yes Yes No  Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes No 
-#> [137] No  Yes Yes No  Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes No  No 
+#> [120] Yes Yes Yes Yes No  Yes No  Yes Yes Yes No  Yes No  Yes Yes Yes No 
+#> [137] No  Yes Yes No  Yes Yes Yes Yes No  Yes Yes No  No  Yes No  No  No 
 #> [154] No  No  Yes Yes No  No  No  No  No  Yes No  No  Yes Yes Yes Yes Yes
 #> [171] Yes Yes Yes Yes No  Yes No  Yes No  Yes Yes Yes Yes Yes No  Yes No 
 #> [188] Yes Yes No  No  Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes No  Yes
@@ -1213,7 +1215,7 @@ urban
 #> [239] Yes Yes Yes Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes
 #> [256] Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes No  No  Yes Yes Yes Yes
 #> [273] Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes No  No  Yes No  Yes No 
-#> [290] Yes No  No  Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
+#> [290] Yes No  Yes Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
 #> [307] Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No  No  No  Yes Yes Yes
 #> [324] Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes Yes Yes
 #> [341] Yes No  No  Yes No  Yes No  No  Yes No  No  No  Yes No  Yes Yes Yes
@@ -1240,8 +1242,8 @@ summary(urban)
 #> 
 #> * Information of Imputation (before vs after)
 #>      original imputation original_percent imputation_percent
-#> No        115        119            28.75              29.75
-#> Yes       275        281            68.75              70.25
+#> No        115        121            28.75              30.25
+#> Yes       275        279            68.75              69.75
 #> <NA>       10          0             2.50               0.00
 
 # viz of imputate
@@ -1617,14 +1619,14 @@ binning(carseats$Income, nbins = 5, type = "kmeans")
 #> binned type: kmeans
 #> number of bins: 5
 #> x
-#>   (21,43.5] (43.5,63.5] (63.5,83.5]  (83.5,102]   (102,120]        <NA> 
-#>          92          65          96          67          56          24
+#>     (21,49]   (49,71.5] (71.5,89.5]  (89.5,106]   (106,120]        <NA> 
+#>         111          88          75          62          40          24
 binning(carseats$Income, nbins = 5, type = "bclust")
 #> binned type: bclust
 #> number of bins: 5
 #> x
-#>   (21,49] (49,63.5] (63.5,85]  (85,106] (106,120]      <NA> 
-#>       111        46       103        76        40        24
+#>   (21,50.5] (50.5,70.5] (70.5,86.5]  (86.5,108]   (108,120]        <NA> 
+#>         112          85          65          76          38          24
 
 # -------------------------
 # Using pipes & dplyr
