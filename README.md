@@ -8,12 +8,12 @@ dlookr <img src="inst/img/detective_2.png" align="right" height="120" width="103
 Overview
 --------
 
-Diagnose, explorate and transformate data with `dlookr`.
+Diagnose, explore and transform data with `dlookr`.
 
 Features:
 
 -   Diagnose data quality.
--   Explore data to understand the data and find scenarios for performing the analysis.
+-   Find appropriate scenarios to pursuit the follow-up analysis through data exploration and understanding
 -   Derive new variables or perform variable transformations.
 -   Automatically generate reports for the above three tasks.
 
@@ -28,13 +28,13 @@ The released version is available on CRAN
 install.packages("dlookr")
 ```
 
-Or you can get the development version from GitHub without vignettes:
+Or you can get the development version without vignettes from GitHub:
 
 ``` r
 devtools::install_github("choonghyunryu/dlookr")
 ```
 
-Or you can get the development version from GitHub with vignettes:
+Or you can get the development version with vignettes from GitHub:
 
 ``` r
 install.packages(c("nycflights13", "ISLR"))
@@ -44,7 +44,7 @@ devtools::install_github("choonghyunryu/dlookr", build_vignettes = TRUE)
 Usage
 -----
 
-dlookr includes several vignettes files, which we use throughout the documentation.
+dlookr includes several vignette files, which we use throughout the documentation.
 
 Provided vignettes is as follows.
 
@@ -60,7 +60,9 @@ browseVignettes(package = "dlookr")
 
 #### Data: nycflights13
 
-To illustrate basic use of the dlookr package, use the `flights` data from the `nycflights13` package. The `flights` data frame is data about departure and arrival on all flights departing from NYC in 2013.
+To illustrate basic use of the dlookr package, use the `flights` data from the `nycflights13` package. 
+Once loading `nycflights13` library, the `flights` data frame is available.
+The `flights` dataframe contains departure and arrival information on all flights departing from NYC in 2013.
 
 ``` r
 library(nycflights13)
@@ -88,7 +90,9 @@ flights
 
 #### General diagnosis of all variables with `diagnose()`
 
-`diagnose()` allows you to diagnosis a variables in a data frame. Like function of dplyr, the first argument is the tibble (or data frame). The second and subsequent arguments refer to variables within that data frame.
+`diagnose()` allows you to diagnose variables on a data frame. 
+Like any other `dplyr` functions, the first argument is the tibble (or data frame). 
+The second and subsequent arguments refer to variables within the data frame.
 
 The variables of the `tbl_df` object returned by `diagnose ()` are as follows.
 
@@ -130,10 +134,13 @@ diagnose(flights)
 #> 19 time_hour  POSI…             0           0             6936  0.0206
 ```
 
--   `Missing Value(NA)` : Variables with very large missing values, ie those with a `missing_percent` close to 100, should be excluded from the analysis.
--   `Unique value` : Variables with a unique value (`unique_count` = 1) are considered to be excluded from data analysis. And if the data type is not numeric (integer, numeric) and the number of unique values is equal to the number of observations (unique\_rate = 1), then the variable is likely to be an identifier. Therefore, this variable is also not suitable for the analysis model.
+-   `Missing Value(NA)` : Variables with very large missing values, i.e. those with a `missing_percent` close to 100, should be excluded from the analysis.
+-   `Unique value` : Variables with a unique value (`unique_count` = 1) are considered to be excluded from data analysis. 
+And if the data type is not numeric (integer, numeric) and the number of unique values is equal to the number of observations (unique\_rate = 1), 
+then the variable is likely to be an identifier. Therefore, this variable is also not suitable for the analysis model.
 
-`year` can be considered not to be used in the analysis model since `unique_count` is 1. However, you do not have to remove it if you configure `date` as a combination of `year`, `month`, and `day`.
+`year` can be considered not to be used in the analysis model since `unique_count` is 1. 
+However, you do not have to remove it if you configure `date` as a combination of `year`, `month`, and `day`.
 
 For example, we can diagnose only a few selected variables:
 
