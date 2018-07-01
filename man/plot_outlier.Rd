@@ -17,6 +17,8 @@ with all variables.
 These arguments are automatically quoted and evaluated in a context
 where column names represent column positions.
 They support unquoting and splicing.}
+
+\item{col}{a color to be used to fill the bars. The default is "lightblue".}
 }
 \description{
 The plot_outlier() visualize outlier information
@@ -55,6 +57,9 @@ plot_outlier(carseats, Sales, Price)
 plot_outlier(carseats, -Sales, -Price)
 plot_outlier(carseats, "Sales", "Price")
 plot_outlier(carseats, 6)
+
+# Using the col argument
+plot_outlier(carseats, Sales, col = "gray")
 
 # Using pipes ---------------------------------
 library(dplyr)

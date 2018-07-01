@@ -146,6 +146,8 @@ find_na <- function(.data, index = TRUE, rate = FALSE) {
     idx <- .data %>%
       map_lgl(function(x) any(is.na(x))) %>%
       which()
+    
+    names(idx) <- NULL
 
     if (!index) idx <- names(.data)[idx]
   }

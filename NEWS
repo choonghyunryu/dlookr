@@ -1,0 +1,8 @@
+dlookr 0.3.1
+----------------------------------------------------------------
+
+* Fix typographical errors in EDA Report headings (@hangtime79, #2).
+
+* The `plot_outlier()` supports a col argument that a color to be used to fill the bars. (@hangtime79, #3).
+
+* Remove the name of the numeric vector to return when index = TRUE in `find_na ()`.

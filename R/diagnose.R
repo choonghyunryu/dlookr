@@ -511,6 +511,7 @@ diagnose_outlier_impl <- function(df, vars) {
 #' These arguments are automatically quoted and evaluated in a context
 #' where column names represent column positions.
 #' They support unquoting and splicing.
+#' @param col a color to be used to fill the bars. The default is "lightblue".
 #'
 #' @seealso \code{\link{diagnose_outlier}}.
 #' @export
@@ -529,6 +530,9 @@ diagnose_outlier_impl <- function(df, vars) {
 #' plot_outlier(carseats, "Sales", "Price")
 #' plot_outlier(carseats, 6)
 #'
+#' # Using the col argument
+#' plot_outlier(carseats, Sales, col = "gray")
+#' 
 #' # Using pipes ---------------------------------
 #' library(dplyr)
 #'
@@ -565,16 +569,17 @@ plot_outlier <- function(.data, ...) {
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
 #' @export
-plot_outlier.data.frame <- function(.data, ...) {
+plot_outlier.data.frame <- function(.data, ..., col = "lightblue") {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
-  plot_outlier_impl(.data, vars)
+  plot_outlier_impl(.data, vars, col)
 }
 
 #' @importFrom graphics boxplot hist title par
-plot_outlier_impl <- function(df, vars) {
+plot_outlier_impl <- function(df, vars, col = "lightblue") {
   if (length(vars) == 0) vars <- names(df)
 
-  if (length(vars) == 1 & !is.tibble(df)) df <- as.tibble(df)
+  if (length(vars) == 1 & !tibble::is.tibble(df)) 
+    df <- tibble::as.tibble(df)
 
   idx_numeric <- find_class(df[, vars], type = "numerical")
 
@@ -583,26 +588,26 @@ plot_outlier_impl <- function(df, vars) {
     invisible()
   }
 
-  plot_outliers <- function(df, var) {
-    x <- pull(df, var)
+  plot_outliers <- function(df, var, col) {
+    x <- dplyr::pull(df, var)
 
     op <- par(no.readonly = TRUE)
     par(mfrow = c(2, 2), oma = c(0, 0, 3, 0), mar = c(2, 4, 2, 2))
     on.exit(par(op))
 
-    boxplot(x, main = "With outliers", col = "lightblue")
-    hist(x, main = "With outliers", xlab = NA, ylab = NA, col = "lightblue")
+    boxplot(x, main = "With outliers", col = col)
+    hist(x, main = "With outliers", xlab = NA, ylab = NA, col = col)
 
     outlier <- boxplot.stats(x)$out
     x <- ifelse(x %in% outlier, NA, x)
-    boxplot(x, main = "Without outliers", col = "lightblue")
-    hist(x, main = "Without outliers", xlab = NA, ylab = NA, col = "lightblue")
+    boxplot(x, main = "Without outliers", col = col)
+    hist(x, main = "Without outliers", xlab = NA, ylab = NA, col = col)
 
     title(sprintf("Outlier Diagnosis Plot (%s)", var), outer = TRUE)
   }
 
   tmp <- lapply(vars[idx_numeric],
-                function(x) plot_outliers(df, x))
+                function(x) plot_outliers(df, x, col))
 }
 
 
