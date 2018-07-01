@@ -250,8 +250,8 @@ if (length(idx.numeric) > 2) {
 
 
 # Target based Analysis
-## Gruoped Descriptive Statistics
-### Gruoped Numerical Variables
+## Grouped Descriptive Statistics
+### Grouped Numerical Variables
 ```{r numeric_variables, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=4, fig.width=8, results='asis'}
 if (!is.null(targetVariable)) {
   if (factor_flag) {
@@ -375,7 +375,7 @@ if (!is.null(targetVariable)) {
 ```
 
 
-### Gruoped Categorical Variables
+### Grouped Categorical Variables
 ```{r category_variables, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=4, fig.width=7, results='asis'}
 if (!is.null(targetVariable)) {
   if (factor_flag) {
@@ -519,7 +519,7 @@ if (!is.null(targetVariable)) {
 ```
 
 
-## Gruoped Relationship Between Variables
+## Grouped Relationship Between Variables
 ### Grouped Correlation Coefficient
 ```{r group_correlations, echo=FALSE, warning=FALSE, message=FALSE, comment=""}
 if (!is.null(targetVariable)) {

@@ -246,8 +246,8 @@ edaData %>%
 @
 
 \chapter{Target based Analysis}
-\section{Gruoped Descriptive Statistics}
-\subsection{Gruoped Numerical Variables}
+\section{Grouped Descriptive Statistics}
+\subsection{Grouped Numerical Variables}
 
 <<numeric_variables, echo=FALSE, results='asis'>>=
 flag <- class(pull(edaData, targetVariable))[1] %in% c("factor", "ordered")
@@ -396,7 +396,7 @@ if (!is.null(targetVariable)) {
 }
 @
 
-\subsection{Gruoped Categorical Variables}
+\subsection{Grouped Categorical Variables}
 
 <<category_variables, echo=FALSE, results='asis'>>=
 if (!is.null(targetVariable)) {
@@ -555,7 +555,7 @@ if (!is.null(targetVariable)) {
 }
 @
 
-\section{Gruoped Relationship Between Variables}
+\section{Grouped Relationship Between Variables}
 \subsection{Grouped Correlation Coefficient}
 <<group_correlations, echo=FALSE, results='asis'>>=
 if (!is.null(targetVariable)) {
