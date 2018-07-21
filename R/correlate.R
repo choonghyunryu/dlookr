@@ -1,3 +1,17 @@
+#' @rdname correlate.data.frame
+#' @export
+correlate <- function(.data, ...) {
+  UseMethod("correlate", .data)
+}
+
+
+#' @rdname plot_correlate.data.frame
+#' @export
+plot_correlate <- function(.data, ...) {
+  UseMethod("plot_correlate", .data)
+}
+
+
 #' Compute the correlation coefficient between two numerical data
 #'
 #' @description The correlate() compute pearson's the correlation
@@ -28,7 +42,7 @@
 #'
 #' See vignette("EDA") for an introduction to these concepts.
 #'
-#' @seealso \code{\link{cor}}.
+#' @seealso \code{\link{cor}}, \code{\link{correlate.tbl_dbi}}.
 #' @export
 #' @examples
 #' # Generate data for the example
@@ -98,8 +112,75 @@
 #'  correlate(Sales) %>%
 #'  filter(coef_corr < 0) %>%
 #'  filter(abs(coef_corr) > 0.5)
-correlate <- function(.data, ...) {
-  UseMethod("correlate")
+#' @method correlate data.frame
+#' @importFrom tidyselect vars_select
+#' @importFrom rlang quos
+#' @export
+correlate.data.frame <- function(.data, ...) {
+  vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
+  correlate_impl(.data, vars)
+}
+
+
+#' @import tibble
+#' @importFrom stats cor
+correlate_impl <- function(df, vars) {
+  if (length(vars) == 0) vars <- names(df)
+
+  idx_numeric <- find_class(df, type = "numerical")
+
+  M <- cor(df[, names(df)[idx_numeric]],
+    use = "pairwise.complete.obs")
+  m <- as.vector(M)
+  tab <- as.tibble(expand.grid(var1 = row.names(M),
+    var2 = row.names(M)))
+  add_column(tab, coef_corr = m) %>%
+    filter(var1 != var2) %>%
+    filter(var1 %in% vars)
+}
+
+
+#' @method correlate grouped_df
+#' @importFrom tidyselect vars_select
+#' @importFrom rlang quos
+#' @export
+correlate.grouped_df <- function(.data, ...) {
+  vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
+  correlate_group_impl(.data, vars)
+}
+
+#' @importFrom tidyr unnest
+#' @importFrom stats cor
+#' @import tibble
+correlate_group_impl <- function(df, vars) {
+  if (length(vars) == 0) vars <- names(df)
+
+  idx_numeric <- find_class(df, type = "numerical")
+
+  call_corr <- function(pos, df, vars) {
+    idx <- attr(df, "indices")[[pos]]
+    M <- cor(df[idx, names(df)[idx_numeric]],
+      use = "pairwise.complete.obs")
+    m <- as.vector(M)
+    tab <- expand.grid(var1 = row.names(M),
+      var2 = row.names(M))
+    tab <- data.frame(tab, coef_corr = m) %>%
+      filter(var1 != var2) %>%
+      filter(var1 %in% vars)
+    label <- data.frame(attr(df, "labels")[pos, ])
+    corrs <-merge(label, tab)
+    names(corrs)[seq(attr(df, "vars"))] <- attr(df, "vars")
+    corrs
+  }
+
+  cnt <- nrow(attr(df, "labels"))
+
+  statistic <- lapply(seq(cnt), call_corr, df, vars)
+
+  suppressWarnings(
+    tibble(statistic) %>%
+      tidyr::unnest()
+  )  
 }
 
 
@@ -123,7 +204,7 @@ correlate <- function(.data, ...) {
 #'
 #' See vignette("EDA") for an introduction to these concepts.
 #'
-#' @seealso \code{\link{plot_outlier}}.
+#' @seealso \code{\link{plot_correlate.tbl_dbi}}, \code{\link{plot_outlier.data.frame}}.
 #' @export
 #' @examples
 #' # Generate data for the example
@@ -178,79 +259,6 @@ correlate <- function(.data, ...) {
 #'  filter(ShelveLoc == "Good") %>%
 #'  group_by(Urban, US) %>%
 #'  plot_correlate(Sales)
-plot_correlate <- function(.data, ...) {
-  UseMethod("plot_correlate")
-}
-
-
-#' @method correlate data.frame
-#' @importFrom tidyselect vars_select
-#' @importFrom rlang quos
-#' @export
-correlate.data.frame <- function(.data, ...) {
-  vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
-  correlate_impl(.data, vars)
-}
-
-#' @import tibble
-#' @importFrom stats cor
-correlate_impl <- function(df, vars) {
-  if (length(vars) == 0) vars <- names(df)
-
-  idx_numeric <- find_class(df, type = "numerical")
-
-  M <- cor(df[, names(df)[idx_numeric]],
-    use = "pairwise.complete.obs")
-  m <- as.vector(M)
-  tab <- as.tibble(expand.grid(var1 = row.names(M),
-    var2 = row.names(M)))
-  add_column(tab, coef_corr = m) %>%
-    filter(var1 != var2) %>%
-    filter(var1 %in% vars)
-}
-
-#' @method correlate grouped_df
-#' @importFrom tidyselect vars_select
-#' @importFrom rlang quos
-#' @export
-correlate.grouped_df <- function(.data, ...) {
-  vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
-  correlate_group_impl(.data, vars)
-}
-
-#' @importFrom tidyr unnest
-#' @importFrom stats cor
-#' @import tibble
-correlate_group_impl <- function(df, vars) {
-  if (length(vars) == 0) vars <- names(df)
-
-  idx_numeric <- find_class(df, type = "numerical")
-
-  call_corr <- function(pos, df, vars) {
-    idx <- attr(df, "indices")[[pos]]
-    M <- cor(df[idx, names(df)[idx_numeric]],
-      use = "pairwise.complete.obs")
-    m <- as.vector(M)
-    tab <- expand.grid(var1 = row.names(M),
-      var2 = row.names(M))
-    tab <- data.frame(tab, coef_corr = m) %>%
-      filter(var1 != var2) %>%
-      filter(var1 %in% vars)
-    label <- data.frame(attr(df, "labels")[pos, ])
-    corrs <-merge(label, tab)
-    names(corrs)[seq(attr(df, "vars"))] <- attr(df, "vars")
-    corrs
-  }
-
-  cnt <- nrow(attr(df, "labels"))
-
-  statistic <- lapply(seq(cnt), call_corr, df, vars)
-
-  tibble(statistic) %>%
-    tidyr::unnest()
-}
-
-
 #' @method plot_correlate data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
@@ -259,6 +267,7 @@ plot_correlate.data.frame <- function(.data, ...) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
   plot_correlate_impl(.data, vars)
 }
+
 
 #' @importFrom corrplot corrplot
 #' @importFrom stats cor
@@ -291,6 +300,7 @@ plot_correlate.grouped_df <- function(.data, ...) {
   plot_correlate_group_impl(.data, vars)
 }
 
+
 #' @importFrom stats cor
 plot_correlate_group_impl <- function(df, vars) {
   if (length(vars) == 0) vars <- names(df)
@@ -305,25 +315,27 @@ plot_correlate_group_impl <- function(df, vars) {
       values <- attr(df, "labels")[pos, ]
 
       rlang::warn(sprintf("Passed a group with no more than five observations.\n(%s)",
-        paste(vars, "==", values, collapse = " and ")))
+        paste(names(attr(df, "labels")), "==", values, collapse = " and ")))
     } else {
       idx <- attr(df, "indices")[[pos]]
 
       label <- attr(df, "labels")[pos, ]
-      label <- paste(names(label), "==", label, collapse = ",")
+      label <- paste(names(attr(df, "labels")), "==", label, collapse = ",")
 
       M <- cor(df[idx, names(df)[idx_numeric]],
         use = "pairwise.complete.obs")
 
       M2 <- M[row.names(M) %in% vars, ]
 
-      if (!is.matrix(M2)) {
-        M2 <- t(as.matrix(M2))
-        row.names(M2) <- vars
-      }
-
-      corrplot::corrplot(M2, method = "ellipse", diag = FALSE,
-        tl.srt = 45, type = "upper", mar = c(0, 0, 1, 0), title = label)
+      if (any(complete.cases(M2))) {
+        if (!is.matrix(M2)) {
+          M2 <- t(as.matrix(M2))
+          row.names(M2) <- vars
+        }
+        
+        corrplot::corrplot(M2, method = "ellipse", diag = FALSE, tl.srt = 45, 
+                           type = "upper", mar = c(0, 0, 1, 0), title = label)
+      } 
     }
   }
 

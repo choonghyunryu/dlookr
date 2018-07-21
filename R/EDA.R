@@ -1,3 +1,10 @@
+#' @rdname eda_report.data.frame
+#' @export
+eda_report <- function(.data, ...) {
+  UseMethod("eda_report")
+}
+
+
 #' Reporting the information of EDA
 #'
 #' @description The eda_report() report the information of Exploratory
@@ -58,7 +65,8 @@
 #' "html" create html file by rmarkdown::render().
 #' @param output_file name of generated file. default is NULL.
 #' @param output_dir name of directory to generate report file. default is tempdir().
-#'
+#' @param ... arguments to be passed to methods.
+#' 
 #' @examples
 #' \donttest{
 #' library(dplyr)
@@ -108,10 +116,10 @@
 #' @importFrom prettydoc html_pretty
 #' @importFrom kableExtra kable_styling
 #' @importFrom utils browseURL
-#'
+#' @method eda_report data.frame
 #' @export
-eda_report <- function(.data, target = NULL, output_format = c("pdf", "html"),
-  output_file = NULL, output_dir = tempdir()) {
+eda_report.data.frame <- function(.data, target = NULL, output_format = c("pdf", "html"),
+  output_file = NULL, output_dir = tempdir(), ...) {
   tryCatch(vars <- tidyselect::vars_select(names(.data),
     !!! rlang::enquo(target)),
     error = function(e) {

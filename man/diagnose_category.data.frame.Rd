@@ -102,6 +102,5 @@ carseats \%>\%
   filter(ratio >= 60)
 }
 \seealso{
-\code{\link{diagnose_category}}, \code{\link{diagnose_numeric}},
-\code{\link{diagnose_outlier}}.
+\code{\link{diagnose_category.tbl_dbi}}, \code{\link{diagnose.data.frame}}, \code{\link{diagnose_numeric.data.frame}}, \code{\link{diagnose_outlier.data.frame}}.
 }

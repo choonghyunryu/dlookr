@@ -2,13 +2,19 @@
 % Please edit documentation in R/EDA.R
 \name{eda_report}
 \alias{eda_report}
+\alias{eda_report.data.frame}
 \title{Reporting the information of EDA}
 \usage{
-eda_report(.data, target = NULL, output_format = c("pdf", "html"),
-  output_file = NULL, output_dir = tempdir())
+eda_report(.data, ...)
+
+\method{eda_report}{data.frame}(.data, target = NULL,
+  output_format = c("pdf", "html"), output_file = NULL,
+  output_dir = tempdir(), ...)
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}
+
+\item{...}{arguments to be passed to methods.}
 
 \item{target}{target variable.}
 

@@ -1,3 +1,10 @@
+#' @rdname target_by.data.frame
+#' @export
+target_by <- function(.data, target, ...) {
+  UseMethod("target_by", .data)
+}
+
+
 #' Target by one variables
 #'
 #' @description
@@ -19,6 +26,7 @@
 #'
 #' @param .data a data.frame or a \code{\link{tbl_df}}.
 #' @param target target variable.
+#' @param ... arguments to be passed to methods.
 #' @return an object of target_df class.
 #' Attributes of target_df class is as follows.
 #' \itemize{
@@ -61,17 +69,12 @@
 #' num_cat
 #' summary(num_cat)
 #' plot(num_cat)
-#' @export
 #'
-target_by <- function(.data, target) {
-  UseMethod("target_by")
-}
-
 #' @method target_by data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang enquo
 #' @export
-target_by.data.frame <- function(.data, target) {
+target_by.data.frame <- function(.data, target, ...) {
   tryCatch(vars <- tidyselect::vars_select(names(.data), !!! rlang::enquo(target)),
     error = function(e) {
       pram <- as.character(substitute(target))
@@ -203,7 +206,7 @@ target_by_impl <- function(.data, target) {
 #' plot(num_cat)
 #' @export
 relate <- function(.data, predictor) {
-  UseMethod("relate")
+  UseMethod("relate", .data)
 }
 
 
@@ -309,16 +312,24 @@ relate_impl <- function(.data, predictor) {
 
   if (type_y %in% c("ordered", "factor") &&
       type_x %in% c("numeric", "integer")) {
-    relate <- relate_cat_by_num_impl(.data, predictor)
+    suppressWarnings(
+      relate <- relate_cat_by_num_impl(.data, predictor)
+    )
   } else if (type_y %in% c("ordered", "factor") &&
              type_x %in% c("ordered", "factor")) {
-    relate <- relate_cat_by_cat_impl(.data, predictor)
+    suppressWarnings(
+      relate <- relate_cat_by_cat_impl(.data, predictor)
+    )  
   } else if (type_y %in% c("numeric", "integer") &&
              type_x %in% c("numeric", "integer")) {
-    relate <- relate_num_by_num_impl(.data, predictor)
+    suppressWarnings(
+      relate <- relate_num_by_num_impl(.data, predictor)
+    )  
   } else if (type_y %in% c("numeric", "integer") &&
              type_x %in% c("ordered", "factor")) {
-    relate <- relate_num_by_cat_impl(.data, predictor)
+    suppressWarnings(
+      relate <- relate_num_by_cat_impl(.data, predictor)
+    )  
   }
 
   relate
@@ -418,6 +429,12 @@ print.relate <- function(x, ...) {
 #' @param model logical. This argument selects whether to output the visualization result
 #' to the visualization of the object of the lm model to grasp the relationship between
 #' the numerical variables.
+#' @param hex_thres an integer. Use only when the target and predictor are numeric variables.
+#' Used when the number of observations is large. 
+#' Specify the threshold of the observations to draw hexabin plots that are not scatterplots. 
+#' The default value is 1000.
+#' @param pal Color palette to paint hexabin. Use only when the target and predictor are numeric variables.
+#' Applied only when the number of observations is greater than hex_thres.
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
 #' only applies when the model argument is TRUE, and is used for ... of the plot.lm () function.
 #' @seealso \code{\link{relate}}, \code{\link{print.relate}}.
@@ -451,6 +468,7 @@ print.relate <- function(x, ...) {
 #' num_num
 #' summary(num_num)
 #' plot(num_num)
+#' plot(num_num, hex_thres = 400)
 #'
 #' # If the variable of interest is a categorical variable
 #' num_cat <- relate(num, ShelveLoc)
@@ -464,7 +482,8 @@ print.relate <- function(x, ...) {
 #' @importFrom stats complete.cases
 #' @importFrom graphics plot
 #' @export
-plot.relate <- function(x, model = FALSE, ...) {
+plot.relate <- function(x, model = FALSE, 
+  hex_thres = 1000, pal = RColorBrewer::brewer.pal(7,"YlOrRd"), ...) {
   type <- attr(x, "model")
   xvar <- attr(x, "predictor")
   yvar <- attr(x, "target")
@@ -492,8 +511,17 @@ plot.relate <- function(x, model = FALSE, ...) {
       plot(x, which = 3, ...)
       plot(x, which = 5, ...)
     } else {
-      fig1 <- ggplot(aes_string(x = xvar, y = yvar), data = attr(x, "raw")) +
-        geom_point(alpha = 1/10) +
+      fig1 <- ggplot(aes_string(x = xvar, y = yvar), data = attr(x, "raw")) 
+      if (NROW(attr(x, "raw")) >= hex_thres) {
+        fig1 <- fig1 + 
+          geom_hex(color = "grey") +
+          scale_fill_gradientn(colours = pal) + 
+          geom_density2d(colour = "black")
+      } else {
+        fig1 <- fig1 + geom_point(alpha = 1/10)
+      }
+      
+      fig1 <- fig1 +   
         stat_smooth(method = lm) +
         ggtitle(sprintf("%s's scatter plot by %s", yvar, xvar)) +
         theme(plot.title = element_text(hjust = 0.5))
@@ -507,8 +535,16 @@ plot.relate <- function(x, model = FALSE, ...) {
       min_x <- min(c(df$Predicted, df$Observed))
       max_x <- max(c(df$Predicted, df$Observed))
 
-      fig2 <- ggplot(aes(x = Observed, y = Predicted), data = df) +
-        geom_point(alpha = 1/10) +
+      fig2 <- ggplot(aes(x = Observed, y = Predicted), data = df) 
+      if (NROW(attr(x, "raw")) >= hex_thres) {
+        fig2 <- fig2 + 
+          geom_hex(color = "grey") +
+          scale_fill_gradientn(colours = pal) + 
+          geom_density2d(colour = "black")
+      } else {
+        fig2 <- fig2 + geom_point(alpha = 1/10)
+      }
+      fig2 <- fig2 + 
         xlim(min_x, max_x) +
         ylim(min_x, max_x) +
         geom_abline(intercept = 0, slope = 1, color = "red", linetype = 2) +

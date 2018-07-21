@@ -1,3 +1,17 @@
+#' @rdname normality.data.frame
+#' @export
+normality <- function(.data, ...) {
+  UseMethod("normality", .data)
+}
+
+
+#' @rdname plot_normality.data.frame
+#' @export
+plot_normality <- function(.data, ...) {
+  UseMethod("plot_normality", .data)
+}
+
+
 #' Performs the Shapiro-Wilk test of normality
 #'
 #' @description The normality() performs Shapiro-Wilk test of normality of numeric values.
@@ -27,11 +41,12 @@
 #' These arguments are automatically quoted and evaluated in a context where column names
 #' represent column positions.
 #' They support unquoting and splicing.
+#' @param sample the numer of samples to perform the test.
 #'
 #' See vignette("EDA") for an introduction to these concepts.
 #'
 #' @return An object of the same class as .data.
-#' @seealso \code{\link{diagnose_numeric}}, \code{\link{describe}}, \code{\link{plot_normality}}.
+#' @seealso \code{\link{normality.tbl_dbi}}, \code{\link{diagnose_numeric.data.frame}}, \code{\link{describe.data.frame}}, \code{\link{plot_normality.data.frame}}.
 #' @export
 #' @examples
 #' \donttest{
@@ -92,8 +107,90 @@
 #'  normality(log_income) %>%
 #'  filter(p_value > 0.01)
 #' }
-normality <- function(.data, ...) {
-  UseMethod("normality")
+#' 
+#' @method normality data.frame
+#' @importFrom tidyselect vars_select
+#' @importFrom rlang quos
+#' @importFrom tibble is.tibble
+#' @export
+normality.data.frame <- function(.data, ..., sample = 5000) {
+  sample <- min(5000, nrow(.data), sample)
+  .data <- sample_n(.data, sample)
+
+  vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
+  normality_impl(.data, vars, sample)
+}
+
+#' @importFrom stats shapiro.test
+normality_impl <- function(df, vars, sample) {
+  if (length(vars) == 0) vars <- names(df)
+
+  if (length(vars) == 1 & !tibble::is.tibble(df)) df <- as.tibble(df)
+
+  idx_numeric <- find_class(df[, vars], type = "numerical")
+
+  num_normal <- function(x) {
+    result <- shapiro.test(x)
+
+    tibble(statistic = result$statistic, p_value = result$p.value)
+  }
+
+  statistic <- lapply(vars[idx_numeric], function(x) num_normal(pull(df, x)))
+
+  tibble(vars = vars[idx_numeric], statistic, sample = sample) %>%
+    tidyr::unnest() %>%
+    select(vars, statistic, p_value, sample)
+}
+
+
+#' @method normality grouped_df
+#' @importFrom tidyselect vars_select
+#' @importFrom rlang quos
+#' @importFrom tibble is.tibble
+#' @export
+normality.grouped_df <- function(.data, ..., sample = 5000) {
+  vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
+  normality_group_impl(.data, vars, sample)
+}
+
+#' @importFrom stats shapiro.test
+normality_group_impl <- function(df, vars, sample) {
+  if (length(vars) == 0) vars <- names(df)
+
+  if (length(vars) == 1 & !tibble::is.tibble(df)) df <- as.tibble(df)
+
+  idx_numeric <- find_class(df[, vars], type = "numerical")
+
+  num_normal <- function(x, .data, vars, n_sample) {
+    nums <- .data[x + 1, vars][[1]]
+
+    n_sample <- min(length(nums), n_sample)
+    
+    tryCatch(result <- shapiro.test(sample(nums, n_sample)),
+             error = function(e) NULL,
+             finally = NULL)
+    
+    if (length(ls(pattern = "result")) == 0) {
+      tibble(statistic = NA, p_value = NA, sample = n_sample)
+    } else {
+      tibble(statistic = result$statistic, p_value = result$p.value, 
+             sample = n_sample)
+    }        
+  }
+
+  call_normal <- function(vars) {
+    #idx <- which(sapply(attr(df, "indices"), length) >= 3)
+    statistic <- purrr::map_df(attr(df, "indices"),
+      num_normal, df, vars, sample)
+
+    dplyr::bind_cols(tibble(variable = rep(vars, nrow(statistic))),
+      as.tibble(attr(df, "labels")), statistic)
+  }
+
+  statistic <- lapply(vars[idx_numeric], function(x) call_normal(x))
+
+  tibble(statistic) %>%
+    tidyr::unnest()
 }
 
 
@@ -125,10 +222,10 @@ normality <- function(.data, ...) {
 #' These arguments are automatically quoted and evaluated in a context where column names
 #' represent column positions.
 #' They support unquoting and splicing.
-#'
+#' 
 #' See vignette("EDA") for an introduction to these concepts.
 #'
-#' @seealso \code{\link{plot_outlier}}.
+#' @seealso \code{\link{plot_normality.tbl_dbi}}, \code{\link{plot_outlier.data.frame}}.
 #' @export
 #' @examples
 #' \donttest{
@@ -178,90 +275,10 @@ normality <- function(.data, ...) {
 #'  group_by(US) %>%
 #'  plot_normality(Income)
 #' }
-plot_normality <- function(.data, ...) {
-  UseMethod("plot_normality")
-}
-
-
-#' @method normality data.frame
-#' @importFrom tidyselect vars_select
-#' @importFrom rlang quos
-#' @export
-normality.data.frame <- function(.data, ..., sample = 5000) {
-  sample <- min(5000, nrow(.data), sample)
-  .data <- sample_n(.data, sample)
-
-  vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
-  normality_impl(.data, vars, sample)
-}
-
-#' @importFrom stats shapiro.test
-normality_impl <- function(df, vars, sample) {
-  if (length(vars) == 0) vars <- names(df)
-
-  if (length(vars) == 1 & !is.tibble(df)) df <- as.tibble(df)
-
-  idx_numeric <- find_class(df[, vars], type = "numerical")
-
-  num_normal <- function(x) {
-    result <- shapiro.test(x)
-
-    tibble(statistic = result$statistic, p_value = result$p.value)
-  }
-
-  statistic <- lapply(vars[idx_numeric], function(x) num_normal(pull(df, x)))
-
-  tibble(vars = vars[idx_numeric], statistic, sample = sample) %>%
-    tidyr::unnest() %>%
-    select(vars, statistic, p_value, sample)
-}
-
-
-#' @method normality grouped_df
-#' @importFrom tidyselect vars_select
-#' @importFrom rlang quos
-#' @export
-normality.grouped_df <- function(.data, ..., sample = 5000) {
-  vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
-  normality_group_impl(.data, vars, sample)
-}
-
-#' @importFrom stats shapiro.test
-normality_group_impl <- function(df, vars, sample) {
-  if (length(vars) == 0) vars <- names(df)
-
-  if (length(vars) == 1 & !is.tibble(df)) df <- as.tibble(df)
-
-  idx_numeric <- find_class(df[, vars], type = "numerical")
-
-  num_normal <- function(x, .data, vars, n_sample) {
-    nums <- .data[x + 1, vars][[1]]
-
-    n_sample <- min(length(nums), n_sample)
-    result <- shapiro.test(sample(nums, n_sample))
-
-    tibble(statistic = result$statistic, p_value = result$p.value,
-      sample = n_sample)
-  }
-
-  call_normal <- function(vars) {
-    statistic <- purrr::map_df(attr(df, "indices"),
-      num_normal, df, vars, sample)
-
-    dplyr::bind_cols(tibble(variable = rep(vars, nrow(statistic))),
-      as.tibble(attr(df, "labels")), statistic)
-  }
-
-  statistic <- lapply(vars[idx_numeric], function(x) call_normal(x))
-
-  tibble(statistic) %>%
-    tidyr::unnest()
-}
-
-
 #' @method plot_normality data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
+#' @importFrom tibble is.tibble
 #' @export
 plot_normality.data.frame <- function(.data, ...) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
@@ -272,7 +289,7 @@ plot_normality.data.frame <- function(.data, ...) {
 plot_normality_impl <- function(df, vars) {
   if (length(vars) == 0) vars <- names(df)
 
-  if (length(vars) == 1 & !is.tibble(df)) df <- as.tibble(df)
+  if (length(vars) == 1 & !tibble::is.tibble(df)) df <- as.tibble(df)
 
   idx_numeric <- find_class(df[, vars], type = "numerical")
 
@@ -300,6 +317,7 @@ plot_normality_impl <- function(df, vars) {
 #' @method plot_normality grouped_df
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
+#' @importFrom tibble is.tibble
 #' @export
 plot_normality.grouped_df <- function(.data, ...) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
@@ -307,10 +325,11 @@ plot_normality.grouped_df <- function(.data, ...) {
 }
 
 #' @importFrom stats qqline qqnorm
+#' @importFrom graphics text
 plot_normality_group_impl <- function(df, vars) {
   if (length(vars) == 0) vars <- names(df)
 
-  if (length(vars) == 1 & !is.tibble(df)) df <- as.tibble(df)
+  if (length(vars) == 1 & !tibble::is.tibble(df)) df <- as.tibble(df)
 
   idx_numeric <- find_class(df[, vars], type = "numerical")
 
@@ -329,16 +348,24 @@ plot_normality_group_impl <- function(df, vars) {
       qqnorm(x, main = "origin: Q-Q plot")
       qqline(x)
 
-      hist(log(x), col = "lightblue", las = 1, main = "log")
+      finite_cnt <- sum(is.finite(log(x)))
+      
+      if (finite_cnt == 0) {
+        plot(0, axes = FALSE, type = "n", xlab = "", ylab ="")
+        text(1, 0, "All log transfomed data is infinite", cex = 1.1)
+      } else {
+        hist(log(x), col = "lightblue", las = 1, main = "log")
+      }
+      
       hist(sqrt(x), col = "lightblue", las = 1, main = "sqrt")
 
-      title(sprintf("Normality Diagnosis Plot (%s) %s", var, label),
+      title(sprintf("Normality Diagnosis Plot\n(%s by %s)", var, label),
             outer = TRUE)
     }
 
     cnt <- nrow(attr(df, "labels"))
 
-    lapply(seq(cnt), plot_normality, df, vars)
+    lapply(seq(cnt), plot_normality, df, var)
   }
 
   tmp <- lapply(vars[idx_numeric], function(x) call_plot(x))

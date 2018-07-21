@@ -71,7 +71,7 @@ dlookr package
 \begin{minipage}{0.4\textwidth}
 \begin{flushright} \large
 \emph{Version:} \\
-0.3.0
+0.3.2
 \end{flushright}
 \end{minipage}
 

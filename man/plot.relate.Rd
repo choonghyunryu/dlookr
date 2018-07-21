@@ -4,7 +4,8 @@
 \alias{plot.relate}
 \title{Visualize Information for an "relate" Object}
 \usage{
-\method{plot}{relate}(x, model = FALSE, ...)
+\method{plot}{relate}(x, model = FALSE, hex_thres = 1000,
+  pal = RColorBrewer::brewer.pal(7, "YlOrRd"), ...)
 }
 \arguments{
 \item{x}{an object of class "relate", usually, a result of a call to relate().}
@@ -12,6 +13,14 @@
 \item{model}{logical. This argument selects whether to output the visualization result
 to the visualization of the object of the lm model to grasp the relationship between
 the numerical variables.}
+
+\item{hex_thres}{an integer. Use only when the target and predictor are numeric variables.
+Used when the number of observations is large. 
+Specify the threshold of the observations to draw hexabin plots that are not scatterplots. 
+The default value is 1000.}
+
+\item{pal}{Color palette to paint hexabin. Use only when the target and predictor are numeric variables.
+Applied only when the number of observations is greater than hex_thres.}
 
 \item{...}{arguments to be passed to methods, such as graphical parameters (see par).
 only applies when the model argument is TRUE, and is used for ... of the plot.lm () function.}
@@ -49,6 +58,7 @@ num_num <- relate(num, Price)
 num_num
 summary(num_num)
 plot(num_num)
+plot(num_num, hex_thres = 400)
 
 # If the variable of interest is a categorical variable
 num_cat <- relate(num, ShelveLoc)
