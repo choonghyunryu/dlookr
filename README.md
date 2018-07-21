@@ -39,7 +39,7 @@ devtools::install_github("choonghyunryu/dlookr")
 Or you can get the development version with vignettes from GitHub:
 
 ``` r
-install.packages(c("nycflights13", "ISLR"))
+install.packages(c("nycflights13", "ISLR", "DBI", "RSQLite"))
 devtools::install_github("choonghyunryu/dlookr", build_vignettes = TRUE)
 ```
 
@@ -1673,6 +1673,7 @@ The following `binning_by()` example optimally binning `Advertising` if `US` is 
 bin <- binning_by(carseats, "US", "Advertising")
 #> Warning in binning_by(carseats, "US", "Advertising"): The factor y has been
 #> changed to a numeric vector consisting of 0 and 1.
+#> Warning: package 'RSQLite' was built under R version 3.4.4
 bin
 #> binned type: optimal
 #> number of bins: 3
