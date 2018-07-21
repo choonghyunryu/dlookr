@@ -13,9 +13,11 @@ Diagnose, explore and transform data with `dlookr`.
 Features:
 
 -   Diagnose data quality.
--   Find appropriate scenarios to pursuit the follow-up analysis through data exploration and understanding
+-   Find appropriate scenarios to pursuit the follow-up analysis through data exploration and understanding.
 -   Derive new variables or perform variable transformations.
 -   Automatically generate reports for the above three tasks.
+-   Supports quality diagnosis and EDA of table of DBMS.
+    -   dlookr (≥ 0.3.2)
 
 The name `dlookr` comes from `looking at the data` in the data analysis process.
 
@@ -48,8 +50,8 @@ dlookr includes several vignette files, which we use throughout the documentatio
 
 Provided vignettes is as follows.
 
--   Data quality diagnosis
--   Exploratory Data Analysis
+-   Data quality diagnosis for data.frame, tbl\_df, and table of DBMS
+-   Exploratory Data Analysis for data.frame, tbl\_df, and table of DBMS
 -   Data Transformation
 
 ``` r
@@ -60,12 +62,11 @@ browseVignettes(package = "dlookr")
 
 #### Data: nycflights13
 
-To illustrate basic use of the dlookr package, use the `flights` data from the `nycflights13` package. 
-Once loading `nycflights13` library, the `flights` data frame is available.
-The `flights` dataframe contains departure and arrival information on all flights departing from NYC in 2013.
+To illustrate basic use of the dlookr package, use the `flights` data from the `nycflights13` package. Once loading `nycflights13` library, the `flights` data frame is available. The `flights` dataframe contains departure and arrival information on all flights departing from NYC in 2013.
 
 ``` r
 library(nycflights13)
+#> Warning: package 'nycflights13' was built under R version 3.4.4
 dim(flights)
 #> [1] 336776     19
 flights
@@ -90,9 +91,7 @@ flights
 
 #### General diagnosis of all variables with `diagnose()`
 
-`diagnose()` allows you to diagnose variables on a data frame. 
-Like any other `dplyr` functions, the first argument is the tibble (or data frame). 
-The second and subsequent arguments refer to variables within the data frame.
+`diagnose()` allows you to diagnose variables on a data frame. Like any other `dplyr` functions, the first argument is the tibble (or data frame). The second and subsequent arguments refer to variables within the data frame.
 
 The variables of the `tbl_df` object returned by `diagnose ()` are as follows.
 
@@ -135,12 +134,9 @@ diagnose(flights)
 ```
 
 -   `Missing Value(NA)` : Variables with very large missing values, i.e. those with a `missing_percent` close to 100, should be excluded from the analysis.
--   `Unique value` : Variables with a unique value (`unique_count` = 1) are considered to be excluded from data analysis. 
-And if the data type is not numeric (integer, numeric) and the number of unique values is equal to the number of observations (unique\_rate = 1), 
-then the variable is likely to be an identifier. Therefore, this variable is also not suitable for the analysis model.
+-   `Unique value` : Variables with a unique value (`unique_count` = 1) are considered to be excluded from data analysis. And if the data type is not numeric (integer, numeric) and the number of unique values is equal to the number of observations (unique\_rate = 1), then the variable is likely to be an identifier. Therefore, this variable is also not suitable for the analysis model.
 
-`year` can be considered not to be used in the analysis model since `unique_count` is 1. 
-However, you do not have to remove it if you configure `date` as a combination of `year`, `month`, and `day`.
+`year` can be considered not to be used in the analysis model since `unique_count` is 1. However, you do not have to remove it if you configure `date` as a combination of `year`, `month`, and `day`.
 
 For example, we can diagnose only a few selected variables:
 
@@ -192,6 +188,7 @@ flights %>%
   select(-unique_count, -unique_rate) %>% 
   filter(missing_count > 0) %>% 
   arrange(desc(missing_count))
+#> Warning: package 'bindrcpp' was built under R version 3.4.4
 #> # A tibble: 6 x 4
 #>   variables types     missing_count missing_percent
 #>   <chr>     <chr>             <int>           <dbl>
@@ -1172,7 +1169,13 @@ The following imputates the categorical variable `urban` by the "mice" method.
 
 ``` r
 library(mice)
+#> Warning: package 'mice' was built under R version 3.4.4
 #> Loading required package: lattice
+#> 
+#> Attaching package: 'mice'
+#> The following objects are masked from 'package:base':
+#> 
+#>     cbind, rbind
 
 urban <- imputate_na(carseats, Urban, US, method = "mice")
 #> 
@@ -1207,13 +1210,13 @@ urban <- imputate_na(carseats, Urban, US, method = "mice")
 urban
 #>   [1] Yes Yes Yes Yes Yes No  Yes Yes No  No  No  Yes Yes Yes Yes No  Yes
 #>  [18] Yes No  Yes Yes No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes
-#>  [35] Yes Yes No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes
+#>  [35] Yes No  No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes
 #>  [52] Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes
-#>  [69] Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes No  No 
+#>  [69] Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes No 
 #>  [86] No  Yes No  Yes No  No  Yes Yes No  Yes Yes No  Yes No  No  No  Yes
-#> [103] No  Yes Yes Yes No  Yes Yes No  Yes Yes No  Yes Yes Yes No  Yes Yes
+#> [103] No  Yes Yes Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes
 #> [120] Yes Yes Yes Yes No  Yes No  Yes Yes Yes No  Yes No  Yes Yes Yes No 
-#> [137] No  Yes Yes No  Yes Yes Yes Yes No  Yes Yes No  No  Yes No  No  No 
+#> [137] No  Yes Yes No  Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes No  No 
 #> [154] No  No  Yes Yes No  No  No  No  No  Yes No  No  Yes Yes Yes Yes Yes
 #> [171] Yes Yes Yes Yes No  Yes No  Yes No  Yes Yes Yes Yes Yes No  Yes No 
 #> [188] Yes Yes No  No  Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes No  Yes
@@ -1222,9 +1225,9 @@ urban
 #> [239] Yes Yes Yes Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes
 #> [256] Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes No  No  Yes Yes Yes Yes
 #> [273] Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes No  No  Yes No  Yes No 
-#> [290] Yes No  Yes Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
-#> [307] Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No  No  No  Yes Yes Yes
-#> [324] Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes Yes Yes
+#> [290] Yes No  No  Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
+#> [307] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes No  No  No  Yes Yes Yes
+#> [324] Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes
 #> [341] Yes No  No  Yes No  Yes No  No  Yes No  No  No  Yes No  Yes Yes Yes
 #> [358] Yes Yes Yes No  No  Yes Yes Yes No  No  Yes No  Yes Yes Yes No  Yes
 #> [375] Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes
@@ -1243,15 +1246,18 @@ urban
 
 # summary of imputate
 summary(urban)
+#> Warning in if (attr(list(...)[[1]], "class") == "mids")
+#> return(cbind.mids(...)) else return(base::cbind(...)): length > 1 이라는 조
+#> 건이 있고, 첫번째 요소만이 사용될 것입니다
 #> * Impute missing values based on Multivariate Imputation by Chained Equations
 #>  - method : mice
 #>  - random seed : 67257
 #> 
 #> * Information of Imputation (before vs after)
 #>      original imputation original_percent imputation_percent
-#> No        115        121            28.75              30.25
-#> Yes       275        279            68.75              69.75
-#> <NA>       10          0             2.50               0.00
+#> No        115        122            28.75               30.5
+#> Yes       275        278            68.75               69.5
+#> <NA>       10          0             2.50                0.0
 
 # viz of imputate
 plot(urban)
@@ -1443,8 +1449,7 @@ carseats %>%
 ``` r
 # find index of skewed variables
 find_skewness(carseats)
-#> Advertising 
-#>           4
+#> [1] 4
 
 # find names of skewed variables
 find_skewness(carseats, index = FALSE)
@@ -1632,8 +1637,8 @@ binning(carseats$Income, nbins = 5, type = "bclust")
 #> binned type: bclust
 #> number of bins: 5
 #> x
-#>   (21,50.5] (50.5,70.5] (70.5,86.5]  (86.5,108]   (108,120]        <NA> 
-#>         112          85          65          76          38          24
+#>   (21,38.5] (38.5,63.5] (63.5,86.5]  (86.5,108]   (108,120]        <NA> 
+#>          70          87         105          76          38          24
 
 # -------------------------
 # Using pipes & dplyr
@@ -1924,3 +1929,390 @@ In EDA reports, normality test information includes visualization results. The r
 <p class="caption">
 EDA Report Normality Test Information (Web)
 </p>
+
+Supports table of DBMS
+----------------------
+
+### Functions that supports tables of DBMS
+
+The DBMS table diagnostic/EDA function supports In-database mode that performs SQL operations on the DBMS side. If the size of the data is large, using In-database mode is faster.
+
+It is difficult to obtain anomaly or to implement the sampling-based algorithm in SQL of DBMS. So some functions do not yet support In-database mode. In this case, it is performed in In-memory mode in which table data is brought to R side and calculated. In this case, if the data size is large, the execution speed may be slow. It supports the collect\_size argument, which allows you to import the specified number of samples of data into R.
+
+-   In-database support fuctions
+    -   `diagonse()`
+    -   `diagnose_category()`
+-   In-database not support fuctions
+    -   `diagnose_numeric()`
+    -   `diagnose_outlier()`
+    -   `plot_outlier()`
+    -   `diagnose_report()`
+    -   `normality()`
+    -   `plot_normality()`
+    -   `correlate()`
+    -   `plot_correlate()`
+    -   `describe()`
+    -   `eda_report()`
+
+#### How to use functions
+
+-   Function calls using the In-database mode
+    -   in\_database = TRUE
+-   Function calls using the In-memory mode
+    -   in\_database = FALSE
+-   Diagnosis and EDA using sample data from DBMS
+    -   collect\_size = <sample size>
+    -   only In-memory mode
+
+### Preparing table data
+
+Copy the `carseats` data frame to the SQLite DBMS and create it as a table named `TB_CARSEATS`. Mysql/MariaDB, PostgreSQL, Oracle DBMS, etc. are also available for your environment.
+
+``` r
+if (!require(DBI)) install.packages('DBI')
+if (!require(RSQLite)) install.packages('RSQLite')
+if (!require(dplyr)) install.packages('dplyr')
+if (!require(dbplyr)) install.packages('dbplyr')
+
+library(dbplyr)
+library(dplyr)
+
+carseats <- ISLR::Carseats
+carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
+carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+
+# connect DBMS
+con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+
+# copy carseats to the DBMS with a table named TB_CARSEATS
+copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
+```
+
+### Diagonose table of the DBMS
+
+#### Diagnose data quality of variables in the DBMS
+
+Use `dplyr::tbl()` to create a tbl\_dbi object, then use it as a data frame object. That is, the data argument of all diagonose function is specified as tbl\_dbi object instead of data frame object.
+
+``` r
+# Diagnosis of all columns
+con_sqlite %>% 
+  tbl("TB_CARSEATS") %>% 
+  diagnose()
+#> # A tibble: 11 x 6
+#>    variables  types missing_count missing_percent unique_count unique_rate
+#>    <chr>      <chr>         <dbl>           <dbl>        <int>       <dbl>
+#>  1 Sales      doub…          0               0             336     0.840  
+#>  2 CompPrice  doub…          0               0              73     0.182  
+#>  3 Income     doub…         20.0             5.00           98     0.245  
+#>  4 Advertisi… doub…          0               0              28     0.0700 
+#>  5 Population doub…          0               0             275     0.688  
+#>  6 Price      doub…          0               0             101     0.252  
+#>  7 ShelveLoc  char…          0               0               3     0.00750
+#>  8 Age        doub…          0               0              56     0.140  
+#>  9 Education  doub…          0               0               9     0.0225 
+#> 10 Urban      char…          5.00            1.25            3     0.00750
+#> 11 US         char…          0               0               2     0.00500
+
+# Positions values select columns, and In-memory mode
+con_sqlite %>% 
+  tbl("TB_CARSEATS") %>% 
+  diagnose(1, 3, 8, in_database = FALSE)
+#> # A tibble: 3 x 6
+#>   variables types   missing_count missing_percent unique_count unique_rate
+#>   <chr>     <chr>           <int>           <dbl>        <int>       <dbl>
+#> 1 Sales     numeric             0            0             336       0.840
+#> 2 Income    numeric            20            5.00           98       0.245
+#> 3 Age       numeric             0            0              56       0.140
+```
+
+#### Diagnose data quality of categorical variables in the DBMS
+
+``` r
+# Positions values select variables, and In-memory mode and collect size is 200
+con_sqlite %>% 
+  tbl("TB_CARSEATS") %>% 
+  diagnose_category(7, in_database = FALSE, collect_size = 200) 
+#> # A tibble: 3 x 6
+#>   variables levels     N  freq ratio  rank
+#> * <chr>     <chr>  <int> <int> <dbl> <int>
+#> 1 ShelveLoc Medium   200   113  56.5     1
+#> 2 ShelveLoc Bad      200    47  23.5     2
+#> 3 ShelveLoc Good     200    40  20.0     3
+```
+
+#### Diagnose data quality of numerical variables in the DBMS
+
+``` r
+# Diagnosis of all numerical variables
+con_sqlite %>% 
+  tbl("TB_CARSEATS") %>% 
+  diagnose_numeric()
+#> # A tibble: 8 x 10
+#>   variables     min     Q1   mean median     Q3   max  zero minus outlier
+#>   <chr>       <dbl>  <dbl>  <dbl>  <dbl>  <dbl> <dbl> <int> <int>   <int>
+#> 1 Sales         0     5.39   7.50   7.49   9.32  16.3     1     0       2
+#> 2 CompPrice    77.0 115    125    125    135    175       0     0       2
+#> 3 Income       21.0  44.0   69.2   69.0   91.2  120       0     0       0
+#> 4 Advertising   0     0      6.64   5.00  12.0   29.0   144     0       0
+#> 5 Population   10.0 139    265    272    398    509       0     0       0
+#> 6 Price        24.0 100    116    117    131    191       0     0       5
+#> 7 Age          25.0  39.8   53.3   54.5   66.0   80.0     0     0       0
+#> 8 Education    10.0  12.0   13.9   14.0   16.0   18.0     0     0       0
+```
+
+#### Diagnose outlier of numerical variables in the DBMS
+
+``` r
+con_sqlite %>% 
+  tbl("TB_CARSEATS") %>% 
+  diagnose_outlier()  %>%
+  filter(outliers_ratio > 1)
+#> # A tibble: 1 x 6
+#>   variables outliers_cnt outliers_ratio outliers_mean with_mean
+#>   <chr>            <int>          <dbl>         <dbl>     <dbl>
+#> 1 Price                5           1.25           100       116
+#> # ... with 1 more variable: without_mean <dbl>
+```
+
+#### Plot outlier information of numerical data diagnosis in the DBMS
+
+``` r
+# Visualization of numerical variables with a ratio of
+# outliers greater than 1%
+con_sqlite %>% 
+  tbl("TB_CARSEATS") %>% 
+  plot_outlier(con_sqlite %>% 
+                 tbl("TB_CARSEATS") %>% 
+                 diagnose_outlier() %>%
+                 filter(outliers_ratio > 1) %>%
+                 select(variables) %>%
+                 pull())
+```
+
+![](man/figures/README-plot_outlier_dbi-1.png)
+
+#### Reporting the information of data diagnosis for table of thr DBMS
+
+The following shows several examples of creating an data diagnosis report for a DBMS table.
+
+Using the `collect_size` argument, you can perform data diagonosis with the corresponding number of sample data. If the number of data is very large, use `collect_size`.
+
+``` r
+# create pdf file. file name is DataDiagnosis_Report.pdf
+con_sqlite %>% 
+  tbl("TB_CARSEATS") %>% 
+  diagnose_report()
+
+# create html file. file name is Diagn.html
+con_sqlite %>% 
+  tbl("TB_CARSEATS") %>% 
+  diagnose_report(output_format = "html", output_file = "Diagn.html")
+```
+
+### EDA table of the DBMS
+
+#### Calculating descriptive statistics of numerical column of table in the DBMS
+
+Use `dplyr::tbl()` to create a tbl\_dbi object, then use it as a data frame object. That is, the data argument of all EDA function is specified as tbl\_dbi object instead of data frame object.
+
+``` r
+# extract only those with 'Urban' variable level is "Yes",
+# and find 'Sales' statistics by 'ShelveLoc' and 'US'
+con_sqlite %>% 
+  tbl("TB_CARSEATS") %>% 
+  filter(Urban == "Yes") %>%
+  group_by(ShelveLoc, US) %>%
+  describe(Sales)
+#> # A tibble: 3 x 27
+#>   variable ShelveLoc     n    na  mean    sd se_mean   IQR skewness
+#>   <chr>    <chr>     <dbl> <dbl> <dbl> <dbl>   <dbl> <dbl>    <dbl>
+#> 1 Sales    Bad        73.0     0  5.53  2.38   0.279  3.59    0.123
+#> 2 Sales    Good       57.0     0 10.4   2.64   0.349  3.78   -0.235
+#> 3 Sales    Medium    151       0  7.34  2.16   0.176  3.05    0.226
+#> # ... with 18 more variables: kurtosis <dbl>, p00 <dbl>, p01 <dbl>,
+#> #   p05 <dbl>, p10 <dbl>, p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>,
+#> #   p50 <dbl>, p60 <dbl>, p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>,
+#> #   p95 <dbl>, p99 <dbl>, p100 <dbl>
+```
+
+#### Test of normality on numeric columns using in the DBMS
+
+``` r
+# Test log(Income) variables by 'ShelveLoc' and 'US',
+# and extract only p.value greater than 0.01.
+
+# SQLite extension functions for log transformation
+RSQLite::initExtension(con_sqlite)
+
+con_sqlite %>% 
+  tbl("TB_CARSEATS") %>% 
+ mutate(log_income = log(Income)) %>%
+ group_by(ShelveLoc, US) %>%
+ normality(log_income) %>%
+ filter(p_value > 0.01)
+#> # A tibble: 1 x 6
+#>   variable   ShelveLoc US    statistic p_value sample
+#>   <chr>      <chr>     <chr>     <dbl>   <dbl>  <dbl>
+#> 1 log_income Bad       No        0.947   0.132   34.0
+```
+
+#### Normalization visualization of numerical column in the DBMS
+
+``` r
+# extract only those with 'ShelveLoc' variable level is "Good",
+# and plot 'Income' by 'US'
+con_sqlite %>% 
+  tbl("TB_CARSEATS") %>% 
+  filter(ShelveLoc == "Good") %>%
+  group_by(US) %>%
+  plot_normality(Income)
+```
+
+![](man/figures/README-plot_normality_dbi-1.png)![](man/figures/README-plot_normality_dbi-2.png)
+
+#### Compute the correlation coefficient between two columns of table in DBMS
+
+``` r
+# extract only those with 'ShelveLoc' variable level is "Good",
+# and compute the correlation coefficient of 'Sales' variable
+# by 'Urban' and 'US' variables.
+# And the correlation coefficient is negative and smaller than 0.5
+con_sqlite %>% 
+  tbl("TB_CARSEATS") %>% 
+  filter(ShelveLoc == "Good") %>%
+  group_by(Urban, US) %>%
+  correlate(Sales) %>%
+  filter(coef_corr < 0) %>%
+  filter(abs(coef_corr) > 0.5)
+#> # A tibble: 4 x 5
+#>   Urban US    var1  var2  coef_corr
+#>   <chr> <chr> <fct> <fct>     <dbl>
+#> 1 No    No    Sales Price    -0.943
+#> 2 No    No    Sales Age      -0.722
+#> 3 No    Yes   Sales Price    -0.801
+#> 4 Yes   No    Sales Price    -0.595
+```
+
+#### Visualize correlation plot of numerical columns in the DBMS
+
+``` r
+# Extract only those with 'ShelveLoc' variable level is "Good",
+# and visualize correlation plot of 'Sales' variable by 'Urban'
+# and 'US' variables.
+con_sqlite %>% 
+  tbl("TB_CARSEATS") %>% 
+  filter(ShelveLoc == "Good") %>%
+  group_by(Urban, US) %>%
+  plot_correlate(Sales)
+```
+
+![](man/figures/README-plot_correlation_dbi-1.png)![](man/figures/README-plot_correlation_dbi-2.png)![](man/figures/README-plot_correlation_dbi-3.png)![](man/figures/README-plot_correlation_dbi-4.png)
+
+#### EDA based on target variable
+
+The following is an EDA where the target column is character and the predictor column is a numeric type.
+
+``` r
+# If the target variable is a categorical variable
+categ <- target_by(con_sqlite %>% tbl("TB_CARSEATS") , US)
+
+# If the variable of interest is a numarical variable
+cat_num <- relate(categ, Sales)
+cat_num
+#> # A tibble: 3 x 27
+#>   variable US        n    na  mean    sd se_mean   IQR skewness kurtosis
+#>   <chr>    <fct> <dbl> <dbl> <dbl> <dbl>   <dbl> <dbl>    <dbl>    <dbl>
+#> 1 Sales    No      142     0  6.82  2.60   0.218  3.44   0.323    0.808 
+#> 2 Sales    Yes     258     0  7.87  2.88   0.179  4.23   0.0760  -0.326 
+#> 3 Sales    total   400     0  7.50  2.82   0.141  3.93   0.186   -0.0809
+#> # ... with 17 more variables: p00 <dbl>, p01 <dbl>, p05 <dbl>, p10 <dbl>,
+#> #   p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>, p60 <dbl>,
+#> #   p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>, p99 <dbl>,
+#> #   p100 <dbl>
+summary(cat_num)
+#>    variable             US          n               na         mean      
+#>  Length:3           No   :1   Min.   :142.0   Min.   :0   Min.   :6.823  
+#>  Class :character   Yes  :1   1st Qu.:200.0   1st Qu.:0   1st Qu.:7.160  
+#>  Mode  :character   total:1   Median :258.0   Median :0   Median :7.496  
+#>                               Mean   :266.7   Mean   :0   Mean   :7.395  
+#>                               3rd Qu.:329.0   3rd Qu.:0   3rd Qu.:7.682  
+#>                               Max.   :400.0   Max.   :0   Max.   :7.867  
+#>        sd           se_mean            IQR           skewness      
+#>  Min.   :2.603   Min.   :0.1412   Min.   :3.442   Min.   :0.07603  
+#>  1st Qu.:2.713   1st Qu.:0.1602   1st Qu.:3.686   1st Qu.:0.13080  
+#>  Median :2.824   Median :0.1791   Median :3.930   Median :0.18556  
+#>  Mean   :2.768   Mean   :0.1796   Mean   :3.866   Mean   :0.19489  
+#>  3rd Qu.:2.851   3rd Qu.:0.1988   3rd Qu.:4.077   3rd Qu.:0.25432  
+#>  Max.   :2.877   Max.   :0.2184   Max.   :4.225   Max.   :0.32308  
+#>     kurtosis             p00              p01              p05       
+#>  Min.   :-0.32638   Min.   :0.0000   Min.   :0.4675   Min.   :3.147  
+#>  1st Qu.:-0.20363   1st Qu.:0.0000   1st Qu.:0.6868   1st Qu.:3.148  
+#>  Median :-0.08088   Median :0.0000   Median :0.9062   Median :3.149  
+#>  Mean   : 0.13350   Mean   :0.1233   Mean   :1.0072   Mean   :3.183  
+#>  3rd Qu.: 0.36344   3rd Qu.:0.1850   3rd Qu.:1.2771   3rd Qu.:3.200  
+#>  Max.   : 0.80776   Max.   :0.3700   Max.   :1.6480   Max.   :3.252  
+#>       p10             p20             p25             p30       
+#>  Min.   :3.917   Min.   :4.754   Min.   :5.080   Min.   :5.306  
+#>  1st Qu.:4.018   1st Qu.:4.910   1st Qu.:5.235   1st Qu.:5.587  
+#>  Median :4.119   Median :5.066   Median :5.390   Median :5.867  
+#>  Mean   :4.073   Mean   :5.051   Mean   :5.411   Mean   :5.775  
+#>  3rd Qu.:4.152   3rd Qu.:5.199   3rd Qu.:5.576   3rd Qu.:6.010  
+#>  Max.   :4.184   Max.   :5.332   Max.   :5.763   Max.   :6.153  
+#>       p40             p50             p60             p70       
+#>  Min.   :5.994   Min.   :6.660   Min.   :7.496   Min.   :7.957  
+#>  1st Qu.:6.301   1st Qu.:7.075   1st Qu.:7.787   1st Qu.:8.386  
+#>  Median :6.608   Median :7.490   Median :8.078   Median :8.815  
+#>  Mean   :6.506   Mean   :7.313   Mean   :8.076   Mean   :8.740  
+#>  3rd Qu.:6.762   3rd Qu.:7.640   3rd Qu.:8.366   3rd Qu.:9.132  
+#>  Max.   :6.916   Max.   :7.790   Max.   :8.654   Max.   :9.449  
+#>       p75             p80              p90              p95       
+#>  Min.   :8.523   Min.   : 8.772   Min.   : 9.349   Min.   :11.28  
+#>  1st Qu.:8.921   1st Qu.: 9.265   1st Qu.:10.325   1st Qu.:11.86  
+#>  Median :9.320   Median : 9.758   Median :11.300   Median :12.44  
+#>  Mean   :9.277   Mean   : 9.665   Mean   :10.795   Mean   :12.08  
+#>  3rd Qu.:9.654   3rd Qu.:10.111   3rd Qu.:11.518   3rd Qu.:12.49  
+#>  Max.   :9.988   Max.   :10.464   Max.   :11.736   Max.   :12.54  
+#>       p99             p100      
+#>  Min.   :13.64   Min.   :14.90  
+#>  1st Qu.:13.78   1st Qu.:15.59  
+#>  Median :13.91   Median :16.27  
+#>  Mean   :13.86   Mean   :15.81  
+#>  3rd Qu.:13.97   3rd Qu.:16.27  
+#>  Max.   :14.03   Max.   :16.27
+```
+
+``` r
+plot(cat_num)
+```
+
+![](man/figures/README-plot_target_by_dbi-1.png)
+
+#### Reporting the information of EDA for table of the DBMS
+
+The following shows several examples of creating an EDA report for a DBMS table.
+
+Using the `collect_size` argument, you can perform EDA with the corresponding number of sample data. If the number of data is very large, use `collect_size`.
+
+``` r
+# create html file. file name is EDA.html
+con_sqlite %>% 
+  tbl("TB_CARSEATS") %>% 
+  eda_report(US, output_format = "html", output_file = "EDA.html")
+
+## target variable is numerical variable
+# reporting the EDA information, and collect size is 350
+con_sqlite %>% 
+  tbl("TB_CARSEATS") %>% 
+  eda_report(Sales, collect_size = 350)
+
+# create pdf file. file name is EDA2.pdf
+con_sqlite %>% 
+  tbl("TB_CARSEATS") %>% 
+  eda_report("Sales", output_file = "EDA2.pdf")
+
+# create html file. file name is EDA_Report.html
+con_sqlite %>% 
+  tbl("TB_CARSEATS") %>% 
+  eda_report("Sales", output_format = "html")
+```

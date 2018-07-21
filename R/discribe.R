@@ -1,3 +1,10 @@
+#' @rdname describe.data.frame
+#' @export
+describe <- function(.data, ...) {
+  UseMethod("describe", .data)
+}
+
+
 #' Compute descriptive statistic
 #'
 #' @description The describe() compute descriptive statistic of numeric
@@ -42,7 +49,7 @@
 #' See vignette("EDA") for an introduction to these concepts.
 #'
 #' @return An object of the same class as .data.
-#' @seealso \code{\link{diagnose_numeric}}.
+#' @seealso \code{\link{describe.tbl_dbi}}, \code{\link{diagnose_numeric.data.frame}}.
 #' @export
 #' @examples
 #' # Generate data for the example
@@ -87,11 +94,6 @@
 #'  filter(Urban == "Yes") %>%
 #'  group_by(ShelveLoc, US) %>%
 #'  describe(Sales)
-describe <- function(.data, ...) {
-  UseMethod("describe")
-}
-
-
 #' @method describe data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
@@ -109,7 +111,7 @@ describe.data.frame <- function(.data, ...) {
 describe_impl <- function(df, vars) {
   if (length(vars) == 0) vars <- names(df)
 
-  if (length(vars) == 1 & !is.tibble(df)) df <- as.tibble(df)
+  if (length(vars) == 1 & !tibble::is.tibble(df)) df <- tibble::as.tibble(df)
 
   idx_numeric <- find_class(df[, vars], type = "numerical")
 
@@ -125,10 +127,10 @@ describe_impl <- function(df, vars) {
     result <- RcmdrMisc::numSummary(x, statistics = stats,
       quantiles = quant)
 
-    numsum <- as.tibble(result$table)
+    numsum <- tibble::as.tibble(result$table)
     names(numsum) <- vname
 
-    add_column(numsum, n = result$n,
+    tibble::add_column(numsum, n = result$n,
       na = ifelse(is.null(result$NAs), 0, result$NAs),
       .before = 1)
   }

@@ -1,3 +1,33 @@
+dlookr 0.3.2
+----------------------------------------------------------------
+* plot.relate() supports hexabin plotting when this target variable is numeric and the predictor is also a numeric type.
+
+* Add a new function get_column_info() to show the table information of the DBMS.
+
+* diagnose() supports diagnosing columns of table in the DBMS.
+
+* diagnose_category() supports diagnosing character columns of table in the DBMS.
+
+* diagnose_numeric() supports diagnosing numeric columns of table in the DBMS.
+
+* diagnose_outlier() supports diagnosing outlier of numeric columns of table in the DBMS.
+
+* plot_outlier() supports diagnosing outlier of numeric columns of table in the DBMS.
+
+* normality() supports test of normality for numeric columns of table in the DBMS.
+
+* plot_normality() supports test of normality for numeric columns of table in the DBMS.
+
+* correlate() supports Computing the correlation coefficient of numeric columns of table in the DBMS.
+
+* plot_correlate() supports computing the correlation coefficient of numeric columns of table in the DBMS.
+
+* describe() supports computing descriptive statistic of numeric columns of table in the DBMS.
+
+* target_by() supports columns of table in the DBMS.
+
+* Fix in 4.1.1 of EDA report without target variable.
+
 dlookr 0.3.1
 ----------------------------------------------------------------
 

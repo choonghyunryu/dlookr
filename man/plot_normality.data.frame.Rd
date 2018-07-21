@@ -2,9 +2,12 @@
 % Please edit documentation in R/normality.R
 \name{plot_normality}
 \alias{plot_normality}
+\alias{plot_normality.data.frame}
 \title{Plot distribution information of numerical data}
 \usage{
 plot_normality(.data, ...)
+
+\method{plot_normality}{data.frame}(.data, ...)
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}
@@ -91,5 +94,5 @@ carseats \%>\%
 }
 }
 \seealso{
-\code{\link{plot_outlier}}.
+\code{\link{plot_normality.tbl_dbi}}, \code{\link{plot_outlier.data.frame}}.
 }

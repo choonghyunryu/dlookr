@@ -2,9 +2,12 @@
 % Please edit documentation in R/diagnose.R
 \name{plot_outlier}
 \alias{plot_outlier}
+\alias{plot_outlier.data.frame}
 \title{Plot outlier information of numerical data diagnosis}
 \usage{
 plot_outlier(.data, ...)
+
+\method{plot_outlier}{data.frame}(.data, ..., col = "lightblue")
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}
@@ -89,7 +92,8 @@ carseats \%>\%
       filter(outliers_ratio > 1) \%>\%
       select(variables) \%>\%
       pull())
+  
 }
 \seealso{
-\code{\link{diagnose_outlier}}.
+\code{\link{plot_outlier.tbl_dbi}}, \code{\link{diagnose_outlier.data.frame}}.
 }

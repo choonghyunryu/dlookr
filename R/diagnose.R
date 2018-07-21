@@ -1,3 +1,10 @@
+#' @rdname diagnose.data.frame
+#' @export
+diagnose <- function(.data, ...) {
+  UseMethod("diagnose", .data)
+}
+
+
 #' Diagnose data quality of variables
 #'
 #' @description The diagnose() produces information for diagnosing
@@ -36,7 +43,7 @@
 #' They support unquoting and splicing.
 #'
 #' @return An object of tbl_df.
-#' @seealso \code{\link{diagnose_category}}, \code{\link{diagnose_numeric}}.
+#' @seealso \code{\link{diagnose.tbl_dbi}}, \code{\link{diagnose_category.data.frame}}, \code{\link{diagnose_numeric.data.frame}}.
 #' @export
 #' @examples
 #' # Generate data for the example
@@ -77,11 +84,6 @@
 #' carseats %>%
 #'   diagnose() %>%
 #'   filter(missing_count > 0)
-diagnose <- function(.data, ...) {
-  UseMethod("diagnose")
-}
-
-
 #' @method diagnose data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
@@ -110,6 +112,13 @@ diagn_std_impl <- function(df, vars) {
     missing_percent = missing_count / data_count * 100,
     unique_count = unique_count,
     unique_rate = unique_count / data_count)
+}
+
+
+#' @rdname diagnose_category.data.frame
+#' @export
+diagnose_category <- function(.data, ...) {
+  UseMethod("diagnose_category", .data)
 }
 
 
@@ -153,8 +162,7 @@ diagn_std_impl <- function(df, vars) {
 #' @param add_character logical. Decide whether to include text variables in the
 #' diagnosis of categorical data. The default value is TRUE, which also includes character variables.
 #' @return an object of tbl_df.
-#' @seealso \code{\link{diagnose_category}}, \code{\link{diagnose_numeric}},
-#' \code{\link{diagnose_outlier}}.
+#' @seealso \code{\link{diagnose_category.tbl_dbi}}, \code{\link{diagnose.data.frame}}, \code{\link{diagnose_numeric.data.frame}}, \code{\link{diagnose_outlier.data.frame}}.
 #' @export
 #' @examples
 #' # Generate data for the example
@@ -198,12 +206,6 @@ diagn_std_impl <- function(df, vars) {
 #' carseats %>%
 #'   diagnose_category()  %>%
 #'   filter(ratio >= 60)
-diagnose_category <- function(.data, ...) {
-  UseMethod("diagnose_category")
-}
-
-
-#' @rdname diagnose_category
 #' @method diagnose_category data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
@@ -216,7 +218,7 @@ diagnose_category.data.frame <- function(.data, ..., top = 10, add_character = T
 diagn_category_impl <- function(df, vars, top, add_character) {
   if (length(vars) == 0) vars <- names(df)
 
-  if (length(vars) == 1 & !is.tibble(df)) df <- as.tibble(df)
+  if (length(vars) == 1 & !tibble::is.tibble(df)) df <- as.tibble(df)
 
   if (add_character)
     idx_factor <- find_class(df[, vars], type = "categorical2")
@@ -234,7 +236,16 @@ diagn_category_impl <- function(df, vars, top, add_character) {
 
   result <- lapply(vars[idx_factor],
                    function(x) get_topn(df, x, top))
-  do.call("rbind", result)
+  suppressWarnings(
+    do.call("rbind", result)
+  )
+}
+
+
+#' @rdname diagnose_numeric.data.frame
+#' @export
+diagnose_numeric <- function(.data, ...) {
+  UseMethod("diagnose_numeric")
 }
 
 
@@ -279,7 +290,7 @@ diagn_category_impl <- function(df, vars, top, add_character) {
 #' They support unquoting and splicing.
 #'
 #' @return an object of tbl_df.
-#' @seealso \code{\link{diagnose}}, \code{\link{diagnose_category}}, \code{\link{diagnose_outlier}}.
+#' @seealso \code{\link{diagnose_numeric.tbl_dbi}}, \code{\link{diagnose.data.frame}}, \code{\link{diagnose_category.data.frame}}, \code{\link{diagnose_outlier.data.frame}}.
 #' @export
 #' @examples
 #' # Generate data for the example
@@ -320,10 +331,6 @@ diagn_category_impl <- function(df, vars, top, add_character) {
 #' carseats %>%
 #'   diagnose_numeric()  %>%
 #'   filter(zero > 0)
-diagnose_numeric <- function(.data, ...) {
-  UseMethod("diagnose_numeric")
-}
-
 #' @method diagnose_numeric data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
@@ -337,7 +344,7 @@ diagnose_numeric.data.frame <- function(.data, ...) {
 diagn_numeric_impl <- function(df, vars) {
   if (length(vars) == 0) vars <- names(df)
 
-  if (length(vars) == 1 & !is.tibble(df)) df <- as.tibble(df)
+  if (length(vars) == 1 & !tibble::is.tibble(df)) df <- as.tibble(df)
 
   idx_numeric <- find_class(df[, vars], type = "numerical")
 
@@ -359,7 +366,17 @@ diagn_numeric_impl <- function(df, vars) {
 
   result <- lapply(vars[idx_numeric],
     function(x) get_descr(df, x))
-  as.tbl(do.call("rbind", result))
+  
+  suppressWarnings(
+    as.tbl(do.call("rbind", result))
+  )  
+}
+
+
+#' @rdname diagnose_outlier.data.frame
+#' @export
+diagnose_outlier <- function(.data, ...) {
+  UseMethod("diagnose_outlier", .data)
 }
 
 
@@ -398,7 +415,7 @@ diagn_numeric_impl <- function(df, vars) {
 #' They support unquoting and splicing.
 #'
 #' @return an object of tbl_df.
-#' @seealso \code{\link{diagnose}}, \code{\link{diagnose_category}}, \code{\link{diagnose_numeric}}.
+#' @seealso \code{\link{diagnose_outlier.tbl_dbi}}, \code{\link{diagnose.data.frame}}, \code{\link{diagnose_category.data.frame}}, \code{\link{diagnose_numeric.data.frame}}.
 #' @export
 #' @examples
 #' # Generate data for the example
@@ -439,10 +456,6 @@ diagn_numeric_impl <- function(df, vars) {
 #' carseats %>%
 #'   diagnose_outlier()  %>%
 #'   filter(outliers_ratio > 1)
-diagnose_outlier <- function(.data, ...) {
-  UseMethod("diagnose_outlier")
-}
-
 #' @method diagnose_outlier data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
@@ -456,7 +469,7 @@ diagnose_outlier.data.frame <- function(.data, ...) {
 diagnose_outlier_impl <- function(df, vars) {
   if (length(vars) == 0) vars <- names(df)
 
-  if (length(vars) == 1 & !is.tibble(df)) df <- as.tibble(df)
+  if (length(vars) == 1 & !tibble::is.tibble(df)) df <- as.tibble(df)
 
   idx_numeric <- find_class(df[, vars], type = "numerical")
 
@@ -477,7 +490,17 @@ diagnose_outlier_impl <- function(df, vars) {
 
   result <- lapply(vars[idx_numeric],
     function(x) get_outlier(df, x))
-  do.call("rbind", result)
+  
+  suppressWarnings(
+    do.call("rbind", result)
+  )  
+}
+
+
+#' @rdname plot_outlier.data.frame
+#' @export
+plot_outlier <- function(.data, ...) {
+  UseMethod("plot_outlier", .data)
 }
 
 
@@ -513,7 +536,7 @@ diagnose_outlier_impl <- function(df, vars) {
 #' They support unquoting and splicing.
 #' @param col a color to be used to fill the bars. The default is "lightblue".
 #'
-#' @seealso \code{\link{diagnose_outlier}}.
+#' @seealso \code{\link{plot_outlier.tbl_dbi}}, \code{\link{diagnose_outlier.data.frame}}.
 #' @export
 #' @examples
 #' # Generate data for the example
@@ -561,10 +584,7 @@ diagnose_outlier_impl <- function(df, vars) {
 #'       filter(outliers_ratio > 1) %>%
 #'       select(variables) %>%
 #'       pull())
-plot_outlier <- function(.data, ...) {
-  UseMethod("plot_outlier")
-}
-
+#'   
 #' @method plot_outlier data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
@@ -608,6 +628,13 @@ plot_outlier_impl <- function(df, vars, col = "lightblue") {
 
   tmp <- lapply(vars[idx_numeric],
                 function(x) plot_outliers(df, x, col))
+}
+
+
+#' @rdname diagnose_report.data.frame
+#' @export
+diagnose_report <- function(.data, output_format, output_file, output_dir, ...) {
+  UseMethod("diagnose_report", .data)
 }
 
 
@@ -660,6 +687,7 @@ plot_outlier_impl <- function(df, vars, col = "lightblue") {
 #' "html" create html file by rmarkdown::render().
 #' @param output_file name of generated file. default is NULL.
 #' @param output_dir name of directory to generate report file. default is tempdir().
+#' @param ... arguments to be passed to methods.
 #'
 #' @examples
 #' \donttest{
@@ -684,10 +712,10 @@ plot_outlier_impl <- function(df, vars, col = "lightblue") {
 #' @importFrom kableExtra kable_styling
 #' @importFrom tinytex latexmk
 #' @importFrom utils browseURL
-#'
+#' @method diagnose_report data.frame
 #' @export
-diagnose_report <- function(.data, output_format = c("pdf", "html"),
-  output_file = NULL, output_dir = tempdir()) {
+diagnose_report.data.frame <- function(.data, output_format = c("pdf", "html"),
+  output_file = NULL, output_dir = tempdir(), ...) {
   output_format <- match.arg(output_format)
   
   assign("edaData", as.data.frame(.data), .dlookrEnv)

@@ -1,7 +1,7 @@
 Package: dlookr
 Type: Package
 Title: Tools for Data Diagnosis, Exploration, Transformation
-Version: 0.3.1
+Version: 0.3.2
 Authors@R: c(
   person("Choonghyun", "Ryu",, "choonghyun.ryu@gmail.com", role = c("aut", "cre"))
   )
@@ -19,6 +19,7 @@ LazyData: true
 Depends:
     R (>= 3.2.0)
 Imports: dplyr,
+    dbplyr,
     magrittr,
     tidyr,
     ggplot2,
@@ -46,6 +47,8 @@ Imports: dplyr,
     randomForest
 Suggests: ISLR,
     nycflights13,
+    DBI,
+    RSQLite,
     testthat
 Author: Choonghyun Ryu [aut, cre]
 Maintainer: Choonghyun Ryu <choonghyun.ryu@gmail.com>    

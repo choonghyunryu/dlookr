@@ -2,9 +2,12 @@
 % Please edit documentation in R/diagnose.R
 \name{diagnose_numeric}
 \alias{diagnose_numeric}
+\alias{diagnose_numeric.data.frame}
 \title{Diagnose data quality of numerical variables}
 \usage{
 diagnose_numeric(.data, ...)
+
+\method{diagnose_numeric}{data.frame}(.data, ...)
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}
@@ -94,5 +97,5 @@ carseats \%>\%
   filter(zero > 0)
 }
 \seealso{
-\code{\link{diagnose}}, \code{\link{diagnose_category}}, \code{\link{diagnose_outlier}}.
+\code{\link{diagnose_numeric.tbl_dbi}}, \code{\link{diagnose.data.frame}}, \code{\link{diagnose_category.data.frame}}, \code{\link{diagnose_outlier.data.frame}}.
 }

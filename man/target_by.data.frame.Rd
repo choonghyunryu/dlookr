@@ -2,14 +2,19 @@
 % Please edit documentation in R/target_by.R
 \name{target_by}
 \alias{target_by}
+\alias{target_by.data.frame}
 \title{Target by one variables}
 \usage{
-target_by(.data, target)
+target_by(.data, target, ...)
+
+\method{target_by}{data.frame}(.data, target, ...)
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}
 
 \item{target}{target variable.}
+
+\item{...}{arguments to be passed to methods.}
 }
 \value{
 an object of target_df class.
@@ -71,6 +76,7 @@ num_cat <- relate(num, ShelveLoc)
 num_cat
 summary(num_cat)
 plot(num_cat)
+
 }
 \seealso{
 \code{\link{relate}}.

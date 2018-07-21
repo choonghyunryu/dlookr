@@ -250,8 +250,6 @@ edaData %>%
 \subsection{Grouped Numerical Variables}
 
 <<numeric_variables, echo=FALSE, results='asis'>>=
-flag <- class(pull(edaData, targetVariable))[1] %in% c("factor", "ordered")
-
 if (!is.null(targetVariable)) {
   if (factor_flag) {
     if (length(idx.numeric) == 0) {
@@ -274,9 +272,6 @@ if (!is.null(targetVariable)) {
               format.args = list(big.mark = ",")) %>%
           kable_styling(latex_options = c("striped", "hold_position")) %>%
           cat()
-
-        target <- if (!flag) factor(edaData[, targetVariable]) else
-          edaData[, targetVariable]
 
         fig1  <- ggplot(edaData, aes_string(x = targetVariable,
                                             y = names(edaData)[i]))

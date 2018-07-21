@@ -202,7 +202,7 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL, print_flag = T
 
   get_mice <- function(x, y, seed = NULL, print_flag = TRUE) {
     if (is.null(seed))
-      seed <<- sample(seq(1e5), size = 1)
+      seed <- sample(seq(1e5), size = 1)
 
     if (!na_flag) {
       data <- pull(df, x)
