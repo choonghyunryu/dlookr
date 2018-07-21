@@ -17,7 +17,7 @@ Features:
 -   Derive new variables or perform variable transformations.
 -   Automatically generate reports for the above three tasks.
 -   Supports quality diagnosis and EDA of table of DBMS.
-    -   dlookr (≥ 0.3.2)
+    -   version (≥ 0.3.2)
 
 The name `dlookr` comes from `looking at the data` in the data analysis process.
 
