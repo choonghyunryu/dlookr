@@ -2,11 +2,14 @@
 \documentclass{book}
 \usepackage[a4paper, top=3cm, bottom=3cm]{geometry}
 \usepackage[utf8]{inputenc}
+%------- for Korean using kotex
+\usepackage[hangul]{kotex}
 \usepackage{setspace}
-\usepackage{fancyhdr}
 \usepackage{tocloft}
 \usepackage{makeidx}
 \usepackage{relsize,setspace}
+\usepackage{rotating}
+\usepackage{lscape}
 \usepackage{hyperref}
 %------- for kableExtra package in R, start
 \usepackage{booktabs}
@@ -33,17 +36,6 @@
 
 \makeindex
 
-\newcommand\bloodp[3]{
-  \begin{figure}[!htb]%
-    \begin{center}%
-      \includegraphics[width=140mm]{figure/binns#1}%
-      \caption{ distribution, bad rate, and weight of evidence #2}%
-      \label{fig:binns#1}%
-    \end{center}%
-  \end{figure}%
-  \clearpage % Better use FloatBarrier here
-}
-
 \begin{document}
 
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
@@ -59,7 +51,7 @@
 \end{minipage}
 \begin{minipage}{0.4\textwidth}
 \begin{flushright} \large
-\includegraphics[width=0.4\textwidth]{./img/detective_2}~\\[1cm]
+\includegraphics[width=0.3\textwidth]{./img/detective_2}~\\[1cm]
 \end{flushright}
 \end{minipage}\\[4.5cm]
 
@@ -67,7 +59,7 @@
 
 % Title
 \HRule \\[0.4cm]
-{ \huge \bfseries Transformation Report\\[0.4cm] }
+{ \huge \bfseries Data Quality Diagnosis Report \\[0.4cm] }
 
 \HRule \\[4.5cm]
 
@@ -103,7 +95,7 @@ dlookr package
 % Include the ToC
 \tableofcontents
 
-<<'child-section-application', child='03_Transformation.Rnw'>>=
+<<'child-section-application', child='01_Diagnose_KR.Rnw'>>=
 @
 
 \end{document}

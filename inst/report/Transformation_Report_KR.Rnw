@@ -2,6 +2,8 @@
 \documentclass{book}
 \usepackage[a4paper, top=3cm, bottom=3cm]{geometry}
 \usepackage[utf8]{inputenc}
+%------- for Korean using kotex
+\usepackage[hangul]{kotex}
 \usepackage{setspace}
 \usepackage{fancyhdr}
 \usepackage{tocloft}
@@ -103,7 +105,7 @@ dlookr package
 % Include the ToC
 \tableofcontents
 
-<<'child-section-application', child='03_Transformation.Rnw'>>=
+<<'child-section-application', child='03_Transformation_KR.Rnw'>>=
 @
 
 \end{document}

@@ -1373,7 +1373,8 @@ target_by.tbl_dbi <- function(.data, target, in_database = FALSE, collect_size =
 #' You can choose to output to pdf and html files.
 #' This is useful for diagnosing a data frame with a large number of variables
 #' than data with a small number of variables.
-#'
+#' For pdf output, Korean Gothic font must be installed in Korean operating system.
+#' 
 #' @section Reported information:
 #' Reported from the data diagnosis is as follows.
 #'
@@ -1481,7 +1482,8 @@ diagnose_report.tbl_dbi <- function(.data, output_format = c("pdf", "html"), out
 #' You can choose to output to pdf and html files.
 #' This is useful for EDA a data frame with a large number of variables
 #' than data with a small number of variables.
-#'
+#' For pdf output, Korean Gothic font must be installed in Korean operating system.
+#' 
 #' @section Reported information:
 #' The EDA process will report the following information:
 #'

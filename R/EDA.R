@@ -14,7 +14,8 @@ eda_report <- function(.data, ...) {
 #' You can choose to output to pdf and html files.
 #' This is useful for EDA a data frame with a large number of variables
 #' than data with a small number of variables.
-#'
+#' For pdf output, Korean Gothic font must be installed in Korean operating system.
+#' 
 #' @section Reported information:
 #' The EDA process will report the following information:
 #'
@@ -133,6 +134,14 @@ eda_report.data.frame <- function(.data, target = NULL, output_format = c("pdf",
   assign("targetVariable", vars, .dlookrEnv)
   
   path <- output_dir
+  if (length(grep("ko_KR", Sys.getenv("LANG"))) == 1) {
+    latex_main <- "EDA_Report_KR.Rnw"
+    latex_sub <- "02_RunEDA_KR.Rnw"
+    ggplot2::theme_set(theme_gray(base_family="NanumGothic"))
+  } else {
+    latex_main <- "EDA_Report.Rnw"
+    latex_sub <- "02_RunEDA.Rnw"
+  }  
   
   if (output_format == "pdf") {
     installed <- file.exists(Sys.which("pdflatex"))
@@ -144,12 +153,10 @@ eda_report.data.frame <- function(.data, target = NULL, output_format = c("pdf",
     if (is.null(output_file))
       output_file <- "EDA_Report.pdf"
     
-    Rnw_file <- file.path(system.file(package = "dlookr"), "report",
-      "EDA_Report.Rnw")
+    Rnw_file <- file.path(system.file(package = "dlookr"), "report", latex_main)
     file.copy(from = Rnw_file, to = path)
     
-    Rnw_file <- file.path(system.file(package = "dlookr"), "report",
-      "02_RunEDA.Rnw")
+    Rnw_file <- file.path(system.file(package = "dlookr"), "report", latex_sub)
     file.copy(from = Rnw_file, to = path)
     
     Img_file <- file.path(system.file(package = "dlookr"), "img")
@@ -157,12 +164,12 @@ eda_report.data.frame <- function(.data, target = NULL, output_format = c("pdf",
     
     dir.create(paste(path, "figure", sep = "/"))
     
-    knitr::knit2pdf(paste(path, "EDA_Report.Rnw", sep = "/"), 
+    knitr::knit2pdf(paste(path, latex_main, sep = "/"), 
       compiler = "pdflatex",
       output = sub("pdf$", "tex", paste(path, output_file, sep = "/")))
     
-    file.remove(paste(path, "02_RunEDA.Rnw", sep = "/"))
-    file.remove(paste(path, "EDA_Report.Rnw", sep = "/"))
+    file.remove(paste(path, latex_sub, sep = "/"))
+    file.remove(paste(path, latex_main, sep = "/"))
     
     fnames <- sub("pdf$", "", output_file)
     fnames <- grep(fnames, list.files(path), value = TRUE)

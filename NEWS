@@ -1,3 +1,13 @@
+dlookr 0.3.3
+----------------------------------------------------------------
+* diagnose_report() supports Korean language(hangul) with pdf output. (@cardiomoon)
+
+* eda_report() supports Korean language(hangul) with pdf output. (@cardiomoon)
+
+* transformation_report() supports Korean language(hangul) with pdf output. (@cardiomoon)
+
+* eda_report() fix in table/figure caption of EDA report 
+
 dlookr 0.3.2
 ----------------------------------------------------------------
 * plot.relate() supports hexabin plotting when this target variable is numeric and the predictor is also a numeric type.

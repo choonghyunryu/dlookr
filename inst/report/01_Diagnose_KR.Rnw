@@ -1,0 +1,295 @@
+% !Rnw root = DataQuality_Report_KR.Rnw
+<<environment, echo=FALSE, warning=FALSE, message=FALSE>>=
+options(warn = -1)
+
+library(dlookr)
+library(magrittr)
+library(dplyr)
+library(knitr)
+library(kableExtra)
+
+opts_chunk$set(fig.path = 'figure/minimal-', fig.align = 'center',
+               fig.show = 'hold', warning = FALSE, message = FALSE)
+options(replace.assign = TRUE, width = 90)
+
+change_under <- function(x) {
+  gsub("_", "\\\\_", x)
+}
+
+options(knitr.table.format = "latex")
+
+edaData <- get("edaData", .dlookrEnv)
+
+N <- nrow(edaData)
+@
+
+\chapter{Diagnose Data}
+\section{Overview of Diagnosis}
+\subsection{List of all variables quality}
+<<overview, echo=FALSE, results='asis'>>=
+diagn_overview <- diagnose(edaData)
+
+names(diagn_overview) <- c("variables", "type", "missing value(n)",
+                           "missing value(%)", "unique value(n)",
+                           "unique value(n/N)")
+
+cap <- "Data quality overview table"
+
+kable(diagn_overview, booktabs = TRUE,
+      caption = cap, digits = 4, longtable = TRUE,
+      format.args = list(big.mark = ",")) %>%
+  kable_styling(latex_options = c("striped", "scale_down")) %>%
+  kable_styling(latex_options = c("hold_position")) %>%
+  kable_styling(latex_options = c("repeat_header")) %>%
+  cat()
+@
+
+\subsection{Diagnosis of missing data}
+<<missing_data, echo=FALSE, results='asis'>>=
+
+diagn_missing <- diagn_overview %>%
+  filter(`missing value(n)` > 0) %>%
+  arrange(desc(`missing value(n)`))
+
+if (NROW(diagn_missing) > 0) {
+  cap <- "Variables that include missing values"
+
+  kable(diagn_missing, booktabs = TRUE,
+      caption = cap, digits = 4, longtable = TRUE,
+      format.args = list(big.mark = ",")) %>%
+    kable_styling(latex_options = c("striped", "scale_down")) %>%
+    kable_styling(latex_options = c("hold_position")) %>%
+    kable_styling(latex_options = c("repeat_header")) %>%
+    cat()
+} else {
+  cat("\n\nNo variables including missing values\n\n")
+}
+@
+
+%\clearpage
+
+\subsection{Diagnosis of unique data(Text and Category)}
+<<unique_date_category, echo=FALSE, results='asis'>>=
+
+diagn_uniq_cat <- diagn_overview %>%
+  filter(type %in% c("character", "factor", "ordered")) %>%
+  filter(`unique value(n/N)` >= 0.5) %>%
+  arrange(desc(`unique value(n/N)`))
+
+
+if (NROW(diagn_uniq_cat) > 0) {
+  cap <- "Variables where the proportion of unique data is more than 0.5"
+
+  kable(diagn_uniq_cat, booktabs = TRUE,
+        caption = cap, digits = 4, longtable = TRUE,
+        format.args = list(big.mark = ",")) %>%
+    kable_styling(latex_options = c("striped", "scale_down")) %>%
+    kable_styling(latex_options = c("hold_position")) %>%
+    kable_styling(latex_options = c("repeat_header")) %>%
+    cat()
+} else {
+  cat("\n\nNo variable with a high proportion greater than 0.5\n\n")
+}
+@
+
+%\clearpage
+
+\subsection{Diagnosis of unique data(Numerical)}
+<<unique_data_numeric, echo=FALSE, results='asis'>>=
+
+diagn_uniq_num <- diagn_overview %>%
+  filter(type %in% c("numeric", "integer")) %>%
+  filter(`unique value(n/N)` <= 0.1) %>%
+  arrange(desc(`unique value(n/N)`))
+
+if (NROW(diagn_uniq_num) > 0) {
+  cap <- "Variables where the proportion of unique data is less than 0.1"
+
+  kable(diagn_uniq_num, booktabs = TRUE,
+        caption = cap, digits = 4, longtable = TRUE,
+        format.args = list(big.mark = ",")) %>%
+    kable_styling(latex_options = c("striped", "scale_down")) %>%
+    kable_styling(latex_options = c("hold_position")) %>%
+    kable_styling(latex_options = c("repeat_header")) %>%
+    cat()
+} else {
+  cat("\n\nNo variable with unique data proportion less than 0.1\n\n")
+}
+@
+
+%\clearpage
+
+\section{Detailed data diagnosis}
+\subsection{Diagnosis of categorical variables}
+<<diagnose_catagory, echo=FALSE, results='asis'>>=
+diagn_category <- diagnose_category(edaData)
+
+if (NROW(diagn_category) > 0) {
+  names(diagn_category)[5] <- "ratio(%)"
+
+  cap <- "Categorical variable level top 10"
+
+  kable(diagn_category, booktabs = TRUE,
+        caption = cap, digits = 4, longtable = TRUE,
+        format.args = list(big.mark = ",")) %>%
+    kable_styling(latex_options = c("striped", "scale_down")) %>%
+    kable_styling(latex_options = c("hold_position")) %>%
+    kable_styling(latex_options = c("repeat_header")) %>%
+    cat()
+} else {
+  cat("\n\nNo categorical variable\n\n")
+}
+@
+
+\subsection{Diagnosis of numerical variables}
+<<diagnose_numeric, echo=FALSE, results='asis'>>=
+diagn_numeric <- diagnose_numeric(edaData)
+
+if (NROW(diagn_numeric) > 0) {
+  cap <- "General list of numerical diagnosis"
+
+  kable(diagn_numeric, booktabs = TRUE,
+        caption = cap, digits = 4, longtable = TRUE,
+        format.args = list(big.mark = ",")) %>%
+    kable_styling(latex_options = c("striped", "scale_down")) %>%
+    kable_styling(latex_options = c("hold_position")) %>%
+    kable_styling(latex_options = c("repeat_header")) %>%
+    #landscape() %>%
+    cat()
+} else {
+  cat("\n\nNo numerical variable\n\n")
+}
+@
+
+%\clearpage
+
+\subsection{List of numerical diagnosis (zero)}
+<<numeric_zero, echo=FALSE, results='asis'>>=
+diagn_zero <- diagn_numeric %>%
+  filter(zero > 0) %>%
+  select(variables, min, median, max, zero) %>%
+  mutate(`zero ratio(%)` = zero / N * 100) %>%
+  arrange(desc(zero))
+
+if (NROW(diagn_zero) > 0) {
+  cap <- "List of numerical diagnosis (zero)"
+
+  kable(diagn_zero, booktabs = TRUE,
+        caption = cap, digits = 4, longtable = TRUE,
+        format.args = list(big.mark = ",")) %>%
+    kable_styling(latex_options = c("striped", "scale_down")) %>%
+    kable_styling(latex_options = c("hold_position")) %>%
+    kable_styling(latex_options = c("repeat_header")) %>%
+    cat()
+} else {
+  cat("\n\nNo numeric variable with zero value\n\n")
+}
+@
+
+%\clearpage
+
+\subsection{List of numerical diagnosis (minus)}
+<<numeric_minus, echo=FALSE, results='asis'>>=
+diagn_minus <- diagn_numeric %>%
+  filter(minus > 0) %>%
+  select(variables, min, median, max, minus) %>%
+  mutate(`minus ratio(%)` = minus / N * 100) %>%
+  arrange(desc(minus))
+
+if (NROW(diagn_minus) > 0) {
+  cap <- "List of numerical diagnosis (minus)"
+
+  kable(diagn_minus, booktabs = TRUE,
+        caption = cap, digits = 4, longtable = TRUE,
+        format.args = list(big.mark = ",")) %>%
+    kable_styling(latex_options = c("striped", "scale_down")) %>%
+    kable_styling(latex_options = c("hold_position")) %>%
+    kable_styling(latex_options = c("repeat_header")) %>%
+    cat()
+} else {
+  cat("\n\nNo numeric variable with negative value\n\n")
+}
+@
+
+%\clearpage
+
+\chapter{Diagnose Outliers}
+\section{Overview of Diagnosis}
+\subsection{Diagnosis of numerical variable outliers}
+<<outliers, echo=FALSE, results='asis'>>=
+diagn_outlier <- diagn_numeric %>%
+  filter(outlier > 0) %>%
+  select(variables, min, median, max, outlier) %>%
+  mutate(`outlier ratio(%)` = outlier / N * 100) %>%
+  arrange(desc(outlier))
+
+if (NROW(diagn_outlier) > 0) {
+  cap <- "Diagnosis of numerical variable outliers"
+
+  kable(diagn_outlier, booktabs = TRUE,
+        caption = cap, digits = 4, longtable = TRUE,
+        format.args = list(big.mark = ",")) %>%
+    kable_styling(latex_options = c("striped", "scale_down")) %>%
+    kable_styling(latex_options = c("hold_position")) %>%
+    kable_styling(latex_options = c("repeat_header")) %>%
+    cat()
+} else {
+  cat("\n\nNo numeric variables including outliers\n\n")
+}
+@
+
+\clearpage
+
+\section{Detailed outliers diagnosis}
+<<detail_outliers, tidy=TRUE, tidy.opts=list(width.cutoff=65), size="small", echo=FALSE, results='asis'>>=
+diagn_outlier2 <- edaData %>%
+  diagnose_outlier(diagn_outlier$variables)
+
+cols <- c("Outliers count", "Outliers ratio (%)", "Mean of outliers",
+          "Mean with outliers", "Mean without outliers")
+
+if (NROW(diagn_outlier2) > 0) {
+  variables <- diagn_outlier2 %>%
+    select(variables) %>%
+    unlist
+
+  for (i in seq(variables)) {
+    cap <- change_under(variables[i])
+    cap_table <- paste("Outliers information of", cap)
+
+    cat(sprintf("\\subsubsection{variable : %s}\n", cap))
+
+    outlier_df <- data.frame(Measures = cols,
+                             Values = as.vector(t(diagn_outlier2[i, -1])))
+
+    kable(outlier_df, booktabs = TRUE,
+        caption = cap_table, digits = 2,
+        format.args = list(big.mark = ",")) %>%
+    kable_styling(latex_options = c("striped")) %>%
+    kable_styling(latex_options = c("hold_position")) %>%
+    cat()
+
+    cairo_pdf(filename = sprintf("./figure/out%s.pdf", i), width = 6, height = 4,
+      family = "NanumGothic")
+    plot_outlier(edaData, variables[i])
+    dev.off()
+
+    cap_fig <- paste("Distribution of", cap)
+
+    cat("\\begin{figure}[!ht]\n")
+    cat("\\centering\n")
+    cat(sprintf("\\includegraphics[width=1.0\\textwidth]{figure/out%s.pdf}\n", i))
+    cat(sprintf("\\caption{%s}\n", cap_fig))
+    cat("\\end{figure}\n")
+
+    cat("\\clearpage\n")
+  }
+} else {
+  cat("\n\nNo numeric variables including outliers\n\n")
+}
+@
+
+<<option_undo, echo=FALSE>>=
+options(warn = 0)
+@
+

@@ -647,6 +647,7 @@ diagnose_report <- function(.data, output_format, output_file, output_dir, ...) 
 #' You can choose to output to pdf and html files.
 #' This is useful for diagnosing a data frame with a large number of variables
 #' than data with a small number of variables.
+#' For pdf output, Korean Gothic font must be installed in Korean operating system.
 #'
 #' @section Reported information:
 #' Reported from the data diagnosis is as follows.
@@ -721,6 +722,14 @@ diagnose_report.data.frame <- function(.data, output_format = c("pdf", "html"),
   assign("edaData", as.data.frame(.data), .dlookrEnv)
   
   path <- output_dir
+  if (length(grep("ko_KR", Sys.getenv("LANG"))) == 1) {
+    latex_main <- "DataDiagnosis_Report_KR.Rnw"
+    latex_sub <- "01_Diagnose_KR.Rnw"
+    ggplot2::theme_set(theme_gray(base_family="NanumGothic"))
+  } else {
+    latex_main <- "DataDiagnosis_Report.Rnw"
+    latex_sub <- "01_Diagnose.Rnw"
+  }
   
   if (output_format == "pdf") {
     installed <- file.exists(Sys.which("pdflatex"))
@@ -733,11 +742,11 @@ diagnose_report.data.frame <- function(.data, output_format = c("pdf", "html"),
       output_file <- "DataDiagnosis_Report.pdf"
     
     Rnw_file <- file.path(system.file(package = "dlookr"),
-      "report", "DataDiagnosis_Report.Rnw")
+      "report", latex_main)
     file.copy(from = Rnw_file, to = path)
     
     Rnw_file <- file.path(system.file(package = "dlookr"),
-      "report", "01_Diagnose.Rnw")
+      "report", latex_sub)
     file.copy(from = Rnw_file, to = path)
     
     Img_file <- file.path(system.file(package = "dlookr"), "img")
@@ -746,12 +755,12 @@ diagnose_report.data.frame <- function(.data, output_format = c("pdf", "html"),
     dir.create(paste(path, "figure", sep = "/"))
     
     # you needs tinytex package for compiler = "pdflatex"
-    knitr::knit2pdf(paste(path, "DataDiagnosis_Report.Rnw", sep = "/"),
+    knitr::knit2pdf(paste(path, latex_main, sep = "/"),
       compiler = "pdflatex",
       output = sub("pdf$", "tex", paste(path, output_file, sep = "/")))
       
-    file.remove(paste(path, "01_Diagnose.Rnw", sep = "/"))
-    file.remove(paste(path, "DataDiagnosis_Report.Rnw", sep = "/"))
+    file.remove(paste(path, latex_sub, sep = "/"))
+    file.remove(paste(path, latex_main, sep = "/"))
       
     fnames <- sub("pdf$", "", output_file)
     fnames <- grep(fnames, list.files(path), value = TRUE)

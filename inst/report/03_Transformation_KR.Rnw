@@ -1,0 +1,458 @@
+% !Rnw root = Transformation_Report_KR.Rnw
+
+<<init, echo=FALSE, warning=FALSE, message=FALSE>>=
+options(warn = -1)
+
+library(mice)
+library(smbinning)
+library(knitr)
+library(kableExtra)
+
+opts_chunk$set(fig.path = 'figure/minimal-', fig.align = 'center',
+               fig.show = 'hold', warning = FALSE, message = FALSE)
+options(replace.assign = TRUE, width = 90)
+
+edaData <- as.data.frame(get("edaData", .dlookrEnv))
+targetVariable <- get("targetVariable", .dlookrEnv)
+
+if (length(targetVariable) == 0) targetVariable <- NULL
+
+names(edaData) <- gsub("[[:punct:][:space:]]", "_", names(edaData))
+
+idx.numeric <- find_class(edaData, type = "numerical")
+varname <- names(edaData)[idx.numeric]
+
+varname <- setdiff(varname, targetVariable)
+
+change_under <- function(x) {
+  gsub("_", "\\\\_", x)
+}
+
+options(knitr.table.format = "latex")
+@
+
+\chapter{Imputation}
+\section{Missing Values}
+\subsection{Missing values imputation information}
+The numerical variables for imputate missing values are as follows.
+
+<<nalist, tidy=TRUE, echo=FALSE, warning=FALSE, message=FALSE, comment="", tidy.opts=list(width.cutoff=65), size="small">>=
+nalist <- find_na(edaData, index = FALSE)
+
+if (length(nalist) > 0) {
+  naclass <- get_class(edaData) %>%
+    filter(variable %in% nalist) %>%
+    select(class) %>%
+    pull() %>%
+    as.character()
+
+  cat(paste(nalist, collapse = ", "))
+} else {
+  cat("There are no variables including missing values.")
+}
+@
+
+
+<<impute_function, tidy=TRUE, echo=FALSE, warning=FALSE, message=FALSE, comment="", tidy.opts=list(width.cutoff=65), size="small">>=
+numerics <- c("mean", "median", "mode", "knn", "rpart", "mice")
+categories <- c("mode", "rpart", "mice")
+
+imputae_summary <- function(object) {
+  type <- attr(object, "type")
+  method <- attr(object, "method")
+  var_type <- attr(object, "var_type")
+
+  original <- object
+
+  if (type == "missing values") {
+    na_pos <- attr(object, "na_pos")
+    seed <- attr(object, "seed")
+
+    original[na_pos] <- NA
+  } else if (type == "outliers") {
+    outlier_pos <- attr(object, "outlier_pos")
+    outliers <- attr(object, "outliers")
+
+    original[outlier_pos] <- outliers
+  }
+
+  if (var_type == "numerical") {
+    original <- as.numeric(original)
+    object <- as.numeric(object)
+  } else if (var_type == "categorical") {
+    original <- factor(original)
+    object <- factor(object)
+  }
+
+  dframe <- data.frame(original = original,
+    imputation = object) %>%
+    tidyr::gather()
+
+  if (var_type == "numerical") {
+    smmry <- dframe %>%
+      group_by(key) %>%
+      describe("value") %>%
+      select(-variable, -key) %>%
+      t
+
+    smmry <- smmry[, 2:1]
+    colnames(smmry) <- c("Original", "Imputation")
+    row.names(smmry)[5] <- c("se(mean)")
+  } else if (var_type == "categorical") {
+    tab_freq <- xtabs(~ value + key, dframe, addNA = TRUE)
+    tab_relat <- round(prop.table(tab_freq, 2) * 100, 2)
+
+    smmry <- cbind(tab_freq, tab_relat)
+    smmry <- smmry[, c(2, 1, 4, 3)]
+    colnames(smmry) <- c("original", "imputation",
+      "original\\_percent", "imputation\\_percent")
+  }
+
+  if (method %in% c("knn", "rpart", "mice")) {
+    if (method == "knn") {
+      met <- "K-Nearest Neighbors"
+    } else if (method == "rpart") {
+      met <- "Recursive Partitioning and Regression Trees"
+    } else if (method == "mice") {
+      met <- "Multivariate Imputation by Chained Equations"
+      met <- sprintf("%s\n\\\\ - random seed : %s", met, seed)
+    }
+    cat(sprintf("* Imputate %s based on %s\n\n", type, met))
+  }
+
+  invisible(smmry)
+}
+@
+
+<<imputate_na, tidy=TRUE, echo=FALSE, warning=FALSE, message=FALSE, comment="", tidy.opts=list(width.cutoff=65), size="small", fig.height=5, fig.width=7, fig.align='center', results='asis'>>=
+if (length(nalist) > 0) {
+  for (i in 1:length(nalist)) {
+    cat("\n")
+    cat("\\subsection{", change_under(nalist[i]), "}\n")
+
+    if (naclass[i] %in% c("integer", "numeric")) {
+      method <- numerics
+    } else if (naclass[i] %in% c("factor", "ordered")) {
+      method <- categories
+    }
+
+    if (is.null(targetVariable)) {
+      method <- setdiff(method, c("knn", "rpart", "mice"))
+    }
+
+    for (j in 1:length(method)) {
+      cat("\n")
+      cat("\\subsubsection{Imputate missing values with ", method[j], "}\n", sep = "")
+
+      impu <- imputate_na(edaData, nalist[i], targetVariable, method = method[j], print_flag = FALSE)
+      tab <- imputae_summary(impu)
+
+      cap <- sprintf("Descriptive Statistics : %s with '%s'", nalist[i], method[j])
+      cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\\\_")
+
+      kable(tab, digits = 2, caption = cap, booktabs = TRUE, escape = FALSE) %>%
+        kable_styling(latex_options = c("striped", "hold_position")) %>%
+        cat()
+
+      cat("\n")
+
+      png(filename = sprintf("./figure/na-%s-method%s.png", i, j), width = 800, height = 400)
+        grid.draw(plot(impu))
+      dev.off()
+
+      cap <- paste(change_under(nalist[i]), method[j], sep = " - ")
+
+      cat("\n")
+      cat("\\subsubsection{Information of Imputation (before vs after)}\n")
+
+      cat("\n\\begin{center}\n")
+      cat("\\begin{figure}[!ht]\n")
+      cat("\\centering\n")
+      cat(sprintf("\\includegraphics[width=0.7\\textwidth]{figure/na-%s-method%s.png}\n", i, j))
+      cat(sprintf("\\caption{%s}\n", cap))
+      cat("\\end{figure}\n")
+
+      cat("\n\\end{center}\n")
+      cat("\\clearpage")
+    }
+  }
+}
+@
+
+
+\section{Outliers}
+\subsection{Outliers imputation information}
+The numerical variables for imputate outliers are as follows.
+
+<<outlist, tidy=TRUE, echo=FALSE, warning=FALSE, message=FALSE, comment="", tidy.opts=list(width.cutoff=65), size="small">>=
+outlist <- find_outliers(edaData, index = FALSE)
+
+if (length(outlist) > 0) {
+  cat(paste(outlist, collapse = ", "))
+} else {
+  cat("There are no variables including outliers.")
+}
+@
+
+<<impute_outliers, tidy=TRUE, echo=FALSE, warning=FALSE, message=FALSE, comment="", tidy.opts=list(width.cutoff=65), size="small", fig.height=5, fig.width=7, fig.align='center', results='asis'>>=
+if (length(outlist) > 0) {
+  for (i in 1:length(outlist)) {
+    cat("\n")
+    cat("\\subsection{", change_under(outlist[i]), "}\n")
+
+    method <- c("mean", "median", "mode", "capping")
+
+    for (j in 1:length(method)) {
+      cat("\n")
+      cat("\\subsubsection{Imputate outliers with ", method[j], "}\n", sep = "")
+
+      impu <- imputate_outlier(edaData, outlist[i], method = method[j])
+      tab <- imputae_summary(impu)
+
+      cap <- sprintf("Descriptive Statistics : %s with '%s'", nalist[i], method[j])
+      cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\\\_")
+
+      kable(tab, digits = 2, caption = cap, booktabs = TRUE, escape = FALSE) %>%
+        kable_styling(latex_options = c("striped", "hold_position")) %>%
+        cat()
+
+      cat("\n")
+
+      png(filename = sprintf("./figure/outlier-%s-method%s.png", i, j), width = 800, height = 400)
+        grid.draw(plot(impu))
+      dev.off()
+
+      cap <- paste(change_under(outlist[i]), method[j], sep = " - ")
+
+      cat("\n")
+      cat("\\subsubsection{Information of Imputation (before vs after)}\n")
+
+      cat("\n\\begin{center}\n")
+      cat("\\begin{figure}[!ht]\n")
+      cat("\\centering\n")
+      cat(sprintf("\\includegraphics[width=0.7\\textwidth]{figure/outlier-%s-method%s.png}\n", i, j))
+      cat(sprintf("\\caption{%s}\n", cap))
+      cat("\\end{figure}\n")
+
+      cat("\n\\end{center}\n")
+      cat("\\clearpage")
+    }
+  }
+}
+@
+
+\chapter{Resolving Skewness}
+\section{Skewed variables information}
+The numerical variables for resolving skewness are as follows.
+
+<<summary_transform, echo=FALSE, warning=FALSE, message=FALSE>>=
+summary_transform <- function(object, ...) {
+  method <- attr(object, "method")
+  origin <- attr(object, "origin")
+
+  suppressWarnings({dframe <- data.frame(original = origin,
+    trans = object) %>%
+    tidyr::gather()})
+
+  smmry <- dframe %>%
+    group_by(key) %>%
+    describe("value") %>%
+    select(-variable, -key) %>%
+    t
+  colnames(smmry) <- c("Original", "Transformation")
+  invisible(smmry)
+}
+@
+
+<<skewlist, tidy=TRUE, echo=FALSE, warning=FALSE, message=FALSE, comment="", tidy.opts=list(width.cutoff=65), size="small">>=
+skewlist <- find_skewness(edaData, index = FALSE)
+skew <- find_skewness(edaData, value = TRUE)
+
+if (length(skewlist) > 0) {
+  cat(paste(skewlist, collapse = ", "))
+  skew <- skew[skewlist]
+} else {
+  cat("There are no variables including outliers.")
+}
+@
+
+<<resolve_skewness, tidy=TRUE, echo=FALSE, warning=FALSE, message=FALSE, comment="", tidy.opts=list(width.cutoff=65), size="small", fig.height=4, fig.width=8, fig.align='center', results='asis'>>=
+if (length(skewlist) > 0) {
+  for (i in 1:length(skewlist)) {
+    cat("\n")
+    cat("\\subsection{", change_under(skewlist[i]), "}\n")
+
+    if (skew[i] <= 0)
+      method <- c("1/x", "x^2", "x^3")
+    else
+      method <- c("log", "log+1", "sqrt")
+
+    for (j in 1:length(method)) {
+      cat("\n")
+
+      if (stringr::str_detect(method[j], "\\^"))
+        str_method <- sprintf("$%s$", method[j])
+      else
+        str_method <- method[j]
+
+      cat("\\subsubsection{Resolving skewness with ", str_method, "}\n", sep = "")
+
+      trans <- transform(pull(edaData, skewlist[i]), method = method[j])
+      tab <- summary_transform(trans)
+      row.names(tab)[5] <- c("se(mean)")
+
+      cap <- sprintf("Descriptive Statistics : %s with '%s'", skewlist[i], str_method)
+      cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\\\_")
+
+      kable(tab, digits = 2, caption = cap, booktabs = TRUE, escape = FALSE) %>%
+        kable_styling(latex_options = c("striped", "hold_position")) %>%
+        cat()
+
+      cat("\n")
+      png(filename = sprintf("./figure/skew-%s-method%s.png", i, j), width = 800, height = 400)
+        grid.draw(plot(trans))
+      dev.off()
+
+      cap <- paste(change_under(skewlist[i]), str_method, sep = " - ")
+
+      cat("\n")
+      cat("\\subsubsection{Information of Imputation (before vs after)}\n")
+
+      cat("\n\\begin{center}\n")
+      cat("\\begin{figure}[!ht]\n")
+      cat("\\centering\n")
+      cat(sprintf("\\includegraphics[width=0.7\\textwidth]{figure/skew-%s-method%s.png}\n", i, j))
+      cat(sprintf("\\caption{%s}\n", cap))
+      cat("\\end{figure}\n")
+
+      cat("\n\\end{center}\n")
+      cat("\\clearpage")
+    }
+  }
+}
+@
+
+
+\chapter{Binning}
+\section{Numerical Variables for Binning}
+The numerical variables for binning are as follows.
+
+<<var_numeric, echo=FALSE, warning=FALSE, message=FALSE>>=
+idx.numeric <- find_class(edaData, type = "numerical")
+var_numeric <- names(edaData)[idx.numeric]
+
+var_numeric <- setdiff(var_numeric, targetVariable)
+@
+
+<<target, tidy=TRUE, echo=FALSE, warning=FALSE, message=FALSE, comment="", tidy.opts=list(width.cutoff=65), size="small">>=
+if (length(var_numeric) > 0) {
+  cat(paste(var_numeric, collapse = ", "))
+} else {
+  cat("There are no numerical variables.")
+}
+@
+
+\section{Binning}
+<<binning, tidy=TRUE, echo=FALSE, warning=FALSE, message=FALSE, comment="", tidy.opts=list(width.cutoff=65), size="small", fig.height=4, fig.width=8, fig.align='center', results='asis'>>=
+if (length(var_numeric) > 0) {
+  for (i in 1:length(var_numeric)) {
+    cat("\n")
+    cat("\\subsection{", change_under(var_numeric[i]), "}\n")
+
+    method <- c("quantile", "equal", "pretty", "kmeans", "bclust")
+
+    for (j in 1:length(method)) {
+      cat("\n")
+      cat("\\subsubsection{Binning with ", method[j], "}\n", sep = "")
+
+      binn <- binning(pull(edaData, var_numeric[i]), type = method[j])
+      tab <- summary(binn)
+
+      cap <- sprintf("Frequency of Levels : %s with '%s'", var_numeric[i], method[j])
+      cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\\\_")
+
+      kable(tab, digits = 4, caption = cap, booktabs = TRUE, escape = FALSE) %>%
+        kable_styling(latex_options = c("striped", "hold_position")) %>%
+        cat()
+
+      cat("\n")
+      png(filename = sprintf("./figure/binn-%s-method%s.png", i, j), width = 600, height = 500)
+        plot(binn)
+      dev.off()
+
+      cap <- paste(change_under(var_numeric[i]), method[j], sep = " - ")
+
+      cat("\n")
+      cat("\\subsubsection{Information of Binning}\n")
+
+      cat("\n\\begin{center}\n")
+      cat("\\begin{figure}[!ht]\n")
+      cat("\\centering\n")
+      cat(sprintf("\\includegraphics[width=0.7\\textwidth]{figure/binn-%s-method%s.png}\n", i, j))
+      cat(sprintf("\\caption{%s}\n", cap))
+      cat("\\end{figure}\n")
+
+      cat("\n\\end{center}\n")
+      cat("\\clearpage")
+    }
+  }
+}
+@
+
+\section{Optimal Binning}
+
+For the scoring modeling, optimal binning is performed considering the characteristics of numerical data.
+This work uses the recursive partitioning technique known as supervised discretization when categorizing numeric data as categorical data.
+
+<<optimal, tidy=TRUE, echo=FALSE, warning=FALSE, message=FALSE, comment="", tidy.opts=list(width.cutoff=65), size="small", fig.height=4, fig.width=8, fig.align='center', results='asis'>>=
+if (!is.null(targetVariable)) {
+  n_levles <- length(table(pull(edaData, targetVariable)))
+
+  if (n_levles == 2) {
+    # Optimal Binning for Scoring Modeling
+    results <- lapply(varname, function(x)
+      binning_by(df = edaData, y = targetVariable, x = x, p = 0.05))
+
+    # could also use tapply here
+    for (i in 1:length(varname)) {
+      cat("\n")
+      cat("\\subsection{", change_under(varname[i]), "}")
+
+      result <- results[[i]]
+
+      if (is.character(result)) {
+        cat(result)
+        next
+      }
+
+      tab <- attr(result, "ivtable")
+      tab$Cutpoint <- gsub("<", "$<$", tab$Cutpoint)
+      tab$Cutpoint <- gsub(">", "$>$", tab$Cutpoint)
+      tab$Cutpoint
+
+      kable(tab, booktabs = TRUE, escape = FALSE) %>%
+        kable_styling(latex_options = c("striped", "scale_down")) %>%
+        cat()
+
+      cat(sprintf("Information value = %s\\\\", attr(result, "iv")))
+
+      cat("\\bloodp{", i, "}{",
+        change_under(varname[i]), "}\n", sep = "")
+
+      cairo_pdf(paste("./figure/binns", i, ".pdf", sep = ""))
+      plot(result)
+      dev.off()
+    }
+  } else {
+    cat("The target variable is not a binary class.\n\n")
+  }
+} else {
+  cat("\n\\enspace\\textbf{There is no target variable.}\n\n")
+}
+@
+
+<<option_undo, echo=FALSE>>=
+options(warn = 0)
+@
+
+

@@ -32,6 +32,7 @@ Generate generalized data diagnostic reports automatically.
 You can choose to output to pdf and html files.
 This is useful for diagnosing a data frame with a large number of variables
 than data with a small number of variables.
+For pdf output, Korean Gothic font must be installed in Korean operating system.
 }
 \section{Reported information}{
 

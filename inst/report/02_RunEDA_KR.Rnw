@@ -1,4 +1,4 @@
-% !Rnw root = EDA_Report.Rnw
+% !Rnw root = EDA_Report_KR.Rnw
 
 <<enrironment, echo=FALSE, warning=FALSE, message=FALSE>>=
 options(warn = -1)
@@ -185,7 +185,8 @@ if (length(idx.numeric) == 0) {
     cat("\\\\")
     cat("\n")
 
-    cairo_pdf(filename = sprintf("./figure/norm%s.pdf", i), width = 6, height = 4)
+    cairo_pdf(filename = sprintf("./figure/norm%s.pdf", i), width = 6, height = 4, 
+      family = "NanumGothic")
     par(mfrow = c(2, 2), mar = c(2, 4, 2, 2))
     hist(x, col = "lightblue", las = 1, main = "origin")
     qqnorm(x, main = "origin: Q-Q plot")
@@ -240,7 +241,7 @@ if (length(idx.numeric) > 2) {
 @
 
 \subsection{Correlation Plot of Numerical Variables}
-<<plot_correlations, dev='cairo_pdf', fig.align='center', fig.width=6, fig.height=6, out.width="0.99\\textwidth", dpi=300, fig.cap="The correlation coefficient of numerical variables", fig.pos="!h", echo=FALSE>>=
+<<plot_correlations, dev='cairo_pdf', fig.align='center', fig.width=6, fig.height=6, out.width="0.99\\textwidth", dpi=300, fig.cap="The correlation coefficient of numerical variables", fig.pos="!h", echo=FALSE, dev.args=list(family='Korea1deb')>>=
 edaData %>%
   plot_correlate()
 @
@@ -288,7 +289,8 @@ if (!is.null(targetVariable)) {
                                             y = names(edaData)[i]))
         fig4  <- ggplot(tmpData, aes_string(x = names(tmpData)[2]))
 
-        cairo_pdf(filename = sprintf("./figure/%s.pdf", i), width = 6, height = 7)
+        cairo_pdf(filename = sprintf("./figure/%s.pdf", i), width = 6, height = 7,
+          family = "NanumGothic")
         grid.arrange(fig1 + geom_boxplot(aes(fill = target)) +
                        labs(x = targetVariable, y = names(edaData)[i],
                             title = "boxplot with outliers") +
@@ -442,7 +444,8 @@ if (!is.null(targetVariable)) {
 
         fig  <- ggplot(edaData, aes_string(x = names(edaData)[i], fill = target))
 
-        cairo_pdf(filename = sprintf("./figure/%s.pdf", i), width = 6, height = 4)
+        cairo_pdf(filename = sprintf("./figure/%s.pdf", i), width = 6, height = 4,
+          family = "NanumGothic")
         grid.arrange(fig + geom_bar(position="stack") +
                        labs(x = "") +
                        labs(title = "Stack Bar Chart") +
@@ -526,7 +529,8 @@ if (!is.null(targetVariable)) {
           kable_styling(latex_options = c("striped", "hold_position")) %>%
           cat()
 
-        cairo_pdf(filename = sprintf("./figure/%s.pdf", i), width = 6, height = 4)
+        cairo_pdf(filename = sprintf("./figure/%s.pdf", i), width = 6, height = 4,
+          family = "NanumGothic")
         print(plot(num_cat))
         dev.off()
 
@@ -601,19 +605,20 @@ if (!is.null(targetVariable)) {
     if (length(idx.numeric) > 2) {
       level_name <- levels(edaData$targetVariable)
 
-      for (nm in level_name) {
-        cat(sprintf("\\noindent- Grouped Correlation Case of (%s == %s)\n\n", 
-          targetVariable, nm))
+      for (i in seq(level_name)) {
+        cat(sprintf("\\noindent - Grouped Correlation Case of (%s == %s)\n\n", 
+          targetVariable, level_name[i]))
 
-        fname <- paste("./figure/myfile_", nm, ".pdf", sep = "")
-        cairo_pdf(filename = fname, width = 6, height = 6)
+        fname <- paste("./figure/myfile_", i, ".pdf", sep = "")
+        cairo_pdf(filename = fname, width = 6, height = 6, family = "NanumGothic")
         edaData %>%
-          filter(targetVariable %in% nm) %>%
+          filter(targetVariable %in% level_name[i]) %>%
           plot_correlate()
         dev.off()
-
-        cap <- sprintf("Correlation Matrix Plot (%s == %s)", targetVariable, nm)
         
+        cap <- sprintf("Correlation Matrix Plot (%s == %s)", 
+          targetVariable, level_name[i])
+
         cat("\\begin{figure}")
         cat("\\begin{center}")
         cat("\\includegraphics{", fname, "}\n", sep = "")

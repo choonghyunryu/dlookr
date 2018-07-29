@@ -228,7 +228,8 @@ plot.transform <- function(x, ...) {
 #' You can choose to output to pdf and html files.
 #' This is useful for Binning a data frame with a large number of variables
 #' than data with a small number of variables.
-#'
+#' For pdf output, Korean Gothic font must be installed in Korean operating system.
+#' 
 #' @section Reported information:
 #' The transformation process will report the following information:
 #'
@@ -323,6 +324,13 @@ transformation_report <- function(.data, target = NULL, output_format = c("pdf",
   assign("targetVariable", vars, .dlookrEnv)
 
   path <- output_dir
+  if (length(grep("ko_KR", Sys.getenv("LANG"))) == 1) {
+    latex_rnw <- "Transformation_Report_KR.Rnw"
+    ggplot2::theme_set(theme_gray(base_family="NanumGothic"))
+    par(family = "NanumGothic")
+  } else {
+    latex_rnw <- "Transformation_Report.Rnw"
+  } 
   
   if (output_format == "pdf") {
     installed <- file.exists(Sys.which("pdflatex"))
@@ -334,7 +342,7 @@ transformation_report <- function(.data, target = NULL, output_format = c("pdf",
     if (is.null(output_file))
       output_file <- "Transformation_Report.pdf"
 
-    Rnw_file <- file.path(system.file(package = "dlookr"), "report", "Transformation_Report.Rnw")
+    Rnw_file <- file.path(system.file(package = "dlookr"), "report", latex_rnw)
     file.copy(from = Rnw_file, to = path)
 
     Rnw_file <- file.path(system.file(package = "dlookr"), "report", "03_Transformation.Rnw")
@@ -345,12 +353,12 @@ transformation_report <- function(.data, target = NULL, output_format = c("pdf",
 
     dir.create(paste(path, "figure", sep = "/"))
 
-    knitr::knit2pdf(paste(path, "Transformation_Report.Rnw", sep = "/"), 
+    knitr::knit2pdf(paste(path, latex_rnw, sep = "/"), 
       compiler = "pdflatex",
       output = sub("pdf$", "tex", paste(path, output_file, sep = "/")))
 
     file.remove(paste(path, "03_Transformation.Rnw", sep = "/"))
-    file.remove(paste(path, "Transformation_Report.Rnw", sep = "/"))
+    file.remove(paste(path, latex_rnw, sep = "/"))
 
     fnames <- sub("pdf$", "", output_file)
     fnames <- grep(fnames, list.files(path), value = TRUE)
