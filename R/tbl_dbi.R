@@ -1419,6 +1419,7 @@ target_by.tbl_dbi <- function(.data, target, in_database = FALSE, collect_size =
 #' "html" create html file by rmarkdown::render().
 #' @param output_file name of generated file. default is NULL.
 #' @param output_dir name of directory to generate report file. default is tempdir().
+#' @param font_family charcter. font family name for figure in pdf.
 #' @param ... arguments to be passed to methods.
 #' 
 #' @seealso \code{\link{diagnose_report.data.frame}}.
@@ -1463,12 +1464,14 @@ target_by.tbl_dbi <- function(.data, target, in_database = FALSE, collect_size =
 #' @method diagnose_report tbl_dbi
 #' @export
 #' 
-diagnose_report.tbl_dbi <- function(.data, output_format = c("pdf", "html"), output_file = NULL, output_dir = tempdir(), in_database = FALSE, collect_size = Inf, ...) {
+diagnose_report.tbl_dbi <- function(.data, output_format = c("pdf", "html"), 
+  output_file = NULL, output_dir = tempdir(), font_family = NULL, 
+  in_database = FALSE, collect_size = Inf, ...) {
   if (in_database) {
     stop("It does not yet support in-database mode. Use in_database = FALSE.")
   } else {
     diagnose_report(collect(.data, n = collect_size), output_format, 
-      output_file, output_dir)
+      output_file, output_dir, font_family)
   }  
 }
 
@@ -1539,6 +1542,7 @@ diagnose_report.tbl_dbi <- function(.data, output_format = c("pdf", "html"), out
 #' "html" create html file by rmarkdown::render().
 #' @param output_file name of generated file. default is NULL.
 #' @param output_dir name of directory to generate report file. default is tempdir().
+#' @param font_family charcter. font family name for figure in pdf.
 #' @param ... arguments to be passed to methods.
 #' 
 #' @seealso \code{\link{eda_report.data.frame}}.
@@ -1625,7 +1629,9 @@ diagnose_report.tbl_dbi <- function(.data, output_format = c("pdf", "html"), out
 #'
 #' @export
 #' 
-eda_report.tbl_dbi <- function(.data, target = NULL,  output_format = c("pdf", "html"), output_file = NULL, output_dir = tempdir(), in_database = FALSE, collect_size = Inf, ...) {
+eda_report.tbl_dbi <- function(.data, target = NULL,  output_format = c("pdf", "html"), 
+  output_file = NULL, font_family = NULL, output_dir = tempdir(), in_database = FALSE, 
+  collect_size = Inf, ...) {
   tryCatch(vars <- tidyselect::vars_select(colnames(.data), !!! rlang::enquo(target)),
     error = function(e) {
       pram <- as.character(substitute(target))
@@ -1642,7 +1648,7 @@ eda_report.tbl_dbi <- function(.data, target = NULL,  output_format = c("pdf", "
       mutate_if(is.character, as.factor) 
     
     eda_report(tab, target = vars, output_format, 
-      output_file, output_dir)    
+      output_file, output_dir, font_family)    
   }
 }
 

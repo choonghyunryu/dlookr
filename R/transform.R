@@ -278,6 +278,7 @@ plot.transform <- function(x, ...) {
 #' "html" create html file by rmarkdown::render().
 #' @param output_file name of generated file. default is NULL.
 #' @param output_dir name of directory to generate report file. default is tempdir().
+#' @param font_family charcter. font family name for figure in pdf.
 #'
 #' @examples
 #' \donttest{
@@ -312,7 +313,7 @@ plot.transform <- function(x, ...) {
 #'
 #' @export
 transformation_report <- function(.data, target = NULL, output_format = c("pdf", "html"),
-  output_file = NULL, output_dir = tempdir()) {
+  output_file = NULL, output_dir = tempdir(), font_family = NULL) {
   tryCatch(vars <- tidyselect::vars_select(names(.data), !!! rlang::enquo(target)),
     error = function(e) {
       pram <- as.character(substitute(target))
@@ -325,12 +326,17 @@ transformation_report <- function(.data, target = NULL, output_format = c("pdf",
 
   path <- output_dir
   if (length(grep("ko_KR", Sys.getenv("LANG"))) == 1) {
-    latex_rnw <- "Transformation_Report_KR.Rnw"
-    ggplot2::theme_set(theme_gray(base_family="NanumGothic"))
-    par(family = "NanumGothic")
+    latex_main <- "Transformation_Report_KR.Rnw"
+    latex_sub <- "03_Transformation_KR.Rnw"
   } else {
-    latex_rnw <- "Transformation_Report.Rnw"
+    latex_main <- "Transformation_Report_KR.Rnw"
+    latex_sub <- "03_Transformation_KR.Rnw"
   } 
+  
+  if (!is.null(font_family)) {
+    ggplot2::theme_set(ggplot2::theme_gray(base_family = font_family))
+    par(family = font_family)
+  }
   
   if (output_format == "pdf") {
     installed <- file.exists(Sys.which("pdflatex"))
@@ -342,10 +348,10 @@ transformation_report <- function(.data, target = NULL, output_format = c("pdf",
     if (is.null(output_file))
       output_file <- "Transformation_Report.pdf"
 
-    Rnw_file <- file.path(system.file(package = "dlookr"), "report", latex_rnw)
+    Rnw_file <- file.path(system.file(package = "dlookr"), "report", latex_main)
     file.copy(from = Rnw_file, to = path)
 
-    Rnw_file <- file.path(system.file(package = "dlookr"), "report", "03_Transformation.Rnw")
+    Rnw_file <- file.path(system.file(package = "dlookr"), "report", latex_sub)
     file.copy(from = Rnw_file, to = path)
 
     Img_file <- file.path(system.file(package = "dlookr"), "img")
@@ -353,12 +359,12 @@ transformation_report <- function(.data, target = NULL, output_format = c("pdf",
 
     dir.create(paste(path, "figure", sep = "/"))
 
-    knitr::knit2pdf(paste(path, latex_rnw, sep = "/"), 
+    knitr::knit2pdf(paste(path, latex_main, sep = "/"), 
       compiler = "pdflatex",
       output = sub("pdf$", "tex", paste(path, output_file, sep = "/")))
 
-    file.remove(paste(path, "03_Transformation.Rnw", sep = "/"))
-    file.remove(paste(path, latex_rnw, sep = "/"))
+    file.remove(paste(path, latex_sub, sep = "/"))
+    file.remove(paste(path, latex_main, sep = "/"))
 
     fnames <- sub("pdf$", "", output_file)
     fnames <- grep(fnames, list.files(path), value = TRUE)

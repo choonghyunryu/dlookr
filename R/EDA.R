@@ -66,6 +66,7 @@ eda_report <- function(.data, ...) {
 #' "html" create html file by rmarkdown::render().
 #' @param output_file name of generated file. default is NULL.
 #' @param output_dir name of directory to generate report file. default is tempdir().
+#' @param font_family charcter. font family name for figure in pdf.
 #' @param ... arguments to be passed to methods.
 #' 
 #' @examples
@@ -120,7 +121,7 @@ eda_report <- function(.data, ...) {
 #' @method eda_report data.frame
 #' @export
 eda_report.data.frame <- function(.data, target = NULL, output_format = c("pdf", "html"),
-  output_file = NULL, output_dir = tempdir(), ...) {
+  output_file = NULL, output_dir = tempdir(), font_family = NULL, ...) {
   tryCatch(vars <- tidyselect::vars_select(names(.data),
     !!! rlang::enquo(target)),
     error = function(e) {
@@ -137,11 +138,15 @@ eda_report.data.frame <- function(.data, target = NULL, output_format = c("pdf",
   if (length(grep("ko_KR", Sys.getenv("LANG"))) == 1) {
     latex_main <- "EDA_Report_KR.Rnw"
     latex_sub <- "02_RunEDA_KR.Rnw"
-    ggplot2::theme_set(theme_gray(base_family="NanumGothic"))
   } else {
     latex_main <- "EDA_Report.Rnw"
     latex_sub <- "02_RunEDA.Rnw"
   }  
+  
+  if (!is.null(font_family)) {
+    ggplot2::theme_set(ggplot2::theme_gray(base_family = font_family))
+    par(family = font_family)
+  }
   
   if (output_format == "pdf") {
     installed <- file.exists(Sys.which("pdflatex"))

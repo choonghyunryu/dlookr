@@ -5,8 +5,8 @@
 \title{Reporting the information of data diagnosis for table of the DBMS}
 \usage{
 \method{diagnose_report}{tbl_dbi}(.data, output_format = c("pdf", "html"),
-  output_file = NULL, output_dir = tempdir(), in_database = FALSE,
-  collect_size = Inf, ...)
+  output_file = NULL, output_dir = tempdir(), font_family = NULL,
+  in_database = FALSE, collect_size = Inf, ...)
 }
 \arguments{
 \item{.data}{a tbl_dbi.}
@@ -18,6 +18,8 @@
 \item{output_file}{name of generated file. default is NULL.}
 
 \item{output_dir}{name of directory to generate report file. default is tempdir().}
+
+\item{font_family}{charcter. font family name for figure in pdf.}
 
 \item{in_database}{Specifies whether to perform in-database operations. 
 If TRUE, most operations are performed in the DBMS. if FALSE, 

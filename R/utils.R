@@ -208,8 +208,8 @@ find_outliers <- function(.data, index = TRUE, rate = FALSE) {
       .[, numeric_flag] %>%
       map_lgl(function(x) length(boxplot.stats(x)$out) > 0) %>%
       which()
-
-    names(idx) <- NULL
+    
+    idx <- which(numeric_flag)[idx]
     
     if (!index) idx <- names(.data)[idx]
   }
@@ -281,7 +281,7 @@ find_skewness <- function(.data, index = TRUE, value = FALSE, thres = NULL) {
       map_lgl(function(x) abs(moments::skewness(x)) >= thres) %>%
       which()
 
-    names(idx) <- NULL
+    idx <- which(numeric_flag)[idx]
     
     if (!index) idx <- names(.data)[idx]
   }

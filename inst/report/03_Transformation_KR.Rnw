@@ -148,7 +148,7 @@ if (length(nalist) > 0) {
       tab <- imputae_summary(impu)
 
       cap <- sprintf("Descriptive Statistics : %s with '%s'", nalist[i], method[j])
-      cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\\\_")
+      cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\_")
 
       kable(tab, digits = 2, caption = cap, booktabs = TRUE, escape = FALSE) %>%
         kable_styling(latex_options = c("striped", "hold_position")) %>%
@@ -209,8 +209,8 @@ if (length(outlist) > 0) {
       impu <- imputate_outlier(edaData, outlist[i], method = method[j])
       tab <- imputae_summary(impu)
 
-      cap <- sprintf("Descriptive Statistics : %s with '%s'", nalist[i], method[j])
-      cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\\\_")
+      cap <- sprintf("Descriptive Statistics : %s with '%s'", outlist[i], method[j])
+      cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\_")
 
       kable(tab, digits = 2, caption = cap, booktabs = TRUE, escape = FALSE) %>%
         kable_styling(latex_options = c("striped", "hold_position")) %>%
@@ -302,7 +302,7 @@ if (length(skewlist) > 0) {
       row.names(tab)[5] <- c("se(mean)")
 
       cap <- sprintf("Descriptive Statistics : %s with '%s'", skewlist[i], str_method)
-      cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\\\_")
+      cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\_")
 
       kable(tab, digits = 2, caption = cap, booktabs = TRUE, escape = FALSE) %>%
         kable_styling(latex_options = c("striped", "hold_position")) %>%
@@ -369,7 +369,7 @@ if (length(var_numeric) > 0) {
       tab <- summary(binn)
 
       cap <- sprintf("Frequency of Levels : %s with '%s'", var_numeric[i], method[j])
-      cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\\\_")
+      cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\_")
 
       kable(tab, digits = 4, caption = cap, booktabs = TRUE, escape = FALSE) %>%
         kable_styling(latex_options = c("striped", "hold_position")) %>%
@@ -421,6 +421,7 @@ if (!is.null(targetVariable)) {
       result <- results[[i]]
 
       if (is.character(result)) {
+        result <- sub("<", "$<$", result)
         cat(result)
         next
       }

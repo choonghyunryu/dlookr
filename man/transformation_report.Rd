@@ -5,7 +5,7 @@
 \title{Reporting the information of transformation}
 \usage{
 transformation_report(.data, target = NULL, output_format = c("pdf",
-  "html"), output_file = NULL, output_dir = tempdir())
+  "html"), output_file = NULL, output_dir = tempdir(), font_family = NULL)
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}
@@ -22,6 +22,8 @@ target variable is not a binary class.}
 \item{output_file}{name of generated file. default is NULL.}
 
 \item{output_dir}{name of directory to generate report file. default is tempdir().}
+
+\item{font_family}{charcter. font family name for figure in pdf.}
 }
 \description{
 The transformation_report() report the information of transformate

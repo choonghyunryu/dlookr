@@ -1,3 +1,16 @@
+dlookr 0.3.4
+----------------------------------------------------------------
+* find_outliers() fix errors in index or name extraction of variables containing outliers
+
+* find_skewness() fix errors in index or name extraction of variables with skewness exceeds the threshold
+
+* eda_report() fix in table caption of EDA report. and added ability to set font family of pdf report figure
+
+* transformation_report() fix in table caption of Transformation report. and added ability to set font family of pdf report figure 
+
+* diagnose_report() Added ability to set font family of pdf report figure 
+
+
 dlookr 0.3.3
 ----------------------------------------------------------------
 * diagnose_report() supports Korean language(hangul) with pdf output. (@cardiomoon)
@@ -7,6 +20,7 @@ dlookr 0.3.3
 * transformation_report() supports Korean language(hangul) with pdf output. (@cardiomoon)
 
 * eda_report() fix in table/figure caption of EDA report 
+
 
 dlookr 0.3.2
 ----------------------------------------------------------------
@@ -37,6 +51,7 @@ dlookr 0.3.2
 * target_by() supports columns of table in the DBMS.
 
 * Fix in 4.1.1 of EDA report without target variable.
+
 
 dlookr 0.3.1
 ----------------------------------------------------------------

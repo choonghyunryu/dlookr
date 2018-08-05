@@ -688,6 +688,7 @@ diagnose_report <- function(.data, output_format, output_file, output_dir, ...) 
 #' "html" create html file by rmarkdown::render().
 #' @param output_file name of generated file. default is NULL.
 #' @param output_dir name of directory to generate report file. default is tempdir().
+#' @param font_family charcter. font family name for figure in pdf.
 #' @param ... arguments to be passed to methods.
 #'
 #' @examples
@@ -716,7 +717,7 @@ diagnose_report <- function(.data, output_format, output_file, output_dir, ...) 
 #' @method diagnose_report data.frame
 #' @export
 diagnose_report.data.frame <- function(.data, output_format = c("pdf", "html"),
-  output_file = NULL, output_dir = tempdir(), ...) {
+  output_file = NULL, output_dir = tempdir(), font_family = NULL, ...) {
   output_format <- match.arg(output_format)
   
   assign("edaData", as.data.frame(.data), .dlookrEnv)
@@ -725,10 +726,14 @@ diagnose_report.data.frame <- function(.data, output_format = c("pdf", "html"),
   if (length(grep("ko_KR", Sys.getenv("LANG"))) == 1) {
     latex_main <- "DataDiagnosis_Report_KR.Rnw"
     latex_sub <- "01_Diagnose_KR.Rnw"
-    ggplot2::theme_set(theme_gray(base_family="NanumGothic"))
   } else {
     latex_main <- "DataDiagnosis_Report.Rnw"
     latex_sub <- "01_Diagnose.Rnw"
+  }
+  
+  if (!is.null(font_family)) {
+    ggplot2::theme_set(ggplot2::theme_gray(base_family = font_family))
+    par(family = font_family)
   }
   
   if (output_format == "pdf") {
