@@ -225,6 +225,11 @@ diagn_category_impl <- function(df, vars, top, add_character) {
   else
     idx_factor <- find_class(df[, vars], type = "categorical")
 
+  if (length(idx_factor) == 0) {
+    message("There is no categorical variable in the data or variable list.\n")
+    return(NULL)
+  }
+  
   get_topn <- function(df, var, top) {
     df %>%
       select(variable = var) %>%
@@ -348,6 +353,11 @@ diagn_numeric_impl <- function(df, vars) {
 
   idx_numeric <- find_class(df[, vars], type = "numerical")
 
+  if (length(idx_numeric) == 0) {
+    message("There is no numeric variable in the data or variable list.\n")
+    return(NULL)
+  }
+  
   get_descr <- function(df, var) {
     df %>%
       select(variable = var) %>%
@@ -473,6 +483,11 @@ diagnose_outlier_impl <- function(df, vars) {
 
   idx_numeric <- find_class(df[, vars], type = "numerical")
 
+  if (length(idx_numeric) == 0) {
+    message("There is no numeric variable in the data or variable list.\n")
+    return(NULL)
+  }
+  
   get_outlier <- function(df, var) {
     df %>%
       select(variable = var) %>%
@@ -602,10 +617,10 @@ plot_outlier_impl <- function(df, vars, col = "lightblue") {
     df <- tibble::as.tibble(df)
 
   idx_numeric <- find_class(df[, vars], type = "numerical")
-
+  
   if (length(idx_numeric) == 0) {
-    cat("The argument 'var' does not contain a numeric variable name.\n")
-    invisible()
+    message("There is no numeric variable in the data or variable list.\n")
+    invisible(NULL)
   }
 
   plot_outliers <- function(df, var, col) {

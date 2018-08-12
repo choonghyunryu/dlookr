@@ -343,6 +343,7 @@ if (!is.null(targetVariable)) {
 
         tab <- summary(num_num)$coefficients
         colnames(tab)[4] <- c("Pr($\\textgreater \\mid t \\mid$)")
+        row.names(tab) <- change_under(row.names(tab))
 
         rsq <- summary(num_num)$r.squared
         adj <- summary(num_num)$adj.r.squared

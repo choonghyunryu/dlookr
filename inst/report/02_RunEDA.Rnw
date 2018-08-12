@@ -18,7 +18,7 @@ options(replace.assign = TRUE, width = 90)
 dist_numeric <- function(df, target, predictor) {
   descr <- df %>%
     target_by(target) %>%
-    relate(predictor)
+    describe(predictor)
 
   vars <- unlist(descr[, 2])
 
