@@ -1,21 +1,36 @@
-% !Rnw root = EDA_Report_KR.Rnw
+---
+title: "탐색적 데이터분석 보고서"
+author: "Report by dlookr package"
+date: "`r Sys.Date()`"
+output: 
+  prettydoc::html_pretty:
+    toc: true
+    number_sections: true
+    theme: cayman
+    highlight: github
+---
 
-<<enrironment, echo=FALSE, warning=FALSE, message=FALSE>>=
-options(warn = -1)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
-library(dplyr)
+```{r enrironment, echo=FALSE, warning=FALSE, message=FALSE}
 library(xtable)
+library(magrittr)
+library(dlookr)
+library(dplyr)
 library(ggplot2)
 library(gridExtra)
 library(moments)
 library(knitr)
 library(kableExtra)
+```
 
-opts_chunk$set(fig.path = paste(tempdir(), 'figure/minimal-', sep = "/"), fig.align = 'center',
-               fig.show = 'hold', warning = FALSE, message = FALSE)
-options(replace.assign = TRUE, width = 90)
 
+```{r udf, echo=FALSE, warning=FALSE, message=FALSE}
 dist_numeric <- function(df, target, predictor) {
+  library(dplyr)
+
   descr <- df %>%
     target_by(target) %>%
     relate(predictor)
@@ -39,19 +54,20 @@ dist_numeric <- function(df, target, predictor) {
   as.data.frame(descr)
 }
 
-change_under <- function(x) {
-  gsub("_", "\\\\_", x)
+setUnder <- function(x) {
+  gsub("_", ".", x)
 }
 
 edaData <- as.data.frame(get("edaData", .dlookrEnv))
 targetVariable <- get("targetVariable", .dlookrEnv)
+font_family <- get("font_family", .dlookrEnv)
 
 if (length(targetVariable) == 0) targetVariable <- NULL
 
-options(knitr.table.format = "latex")
-@
+ggplot2::theme_update(text = element_text(family = font_family))
+```
 
-<<check_variables, echo=FALSE>>=
+```{r check_variables, echo=FALSE, warning=FALSE, message=FALSE, comment=""}
 idx.numeric <- find_class(edaData, type = "numerical")
 idx.factor <- find_class(edaData, type = "categorical")
 nm.numeric <- find_class(edaData, type = "numerical", index = FALSE)
@@ -61,11 +77,11 @@ if (!is.null(targetVariable)) {
   # remove target variable from variable index
   idx.numeric <- idx.numeric[nm.numeric != targetVariable]
   idx.factor <- idx.factor[nm.factor != targetVariable]
-
+  
   factor_flag <- class(pull(edaData, targetVariable))[1] %in% c("factor", "ordered")
   numeric_flag <- class(pull(edaData, targetVariable))[1] %in% c("integer", "numeric")
-
-  target <- if (!factor_flag & numeric_flag)
+  
+  target <- if (!factor_flag & numeric_flag) 
     factor(pull(edaData, targetVariable)) else
       pull(edaData, targetVariable)
 }
@@ -79,139 +95,126 @@ idx.numeric <- idx.numeric[apply(edaData[, idx.numeric], 2,
 # remove from the correlation coefficient calculation
 idx.numeric <- idx.numeric[apply(edaData[, idx.numeric], 2,
                                  function(x) diff(range(x, na.rm = TRUE)) > 0)]
-@
+```
 
-\chapter{개요}
-EDA(Exploratory Data Analysis) 보고서는 data.frame 및 data.frame을 상속받은 객체에 대한 탐색적 데이터 분석 정보를 제공한다.
 
-\section{데이터셋 정보}
-EDA 보고서를 생성한 데이터셋은 '\Sexpr{class(edaData)[1]}' 객체다. 이 데이터 객체는 \Sexpr{format(NROW(edaData), big.mark = ",")}개의 관측치와 \Sexpr{NCOL(edaData)}개의 변수로 구성되었다.
+# 개요
+데이터 분석 정보를 제공한다.
 
-\section{변수들의 정보}
-<<info_variables, echo=FALSE, results='asis'>>=
+
+## 데이터셋 정보
+EDA 보고서를 생성한 데이터셋은 **'`r class(edaData)[1]`'** 객체다. 이 데이터 객체는 **`r format(NROW(edaData), big.mark = ",")`개의 관측치** 와 **`r NCOL(edaData)`개의 변**수로 구성되었다.
+
+
+## 변수들의 정보
+EDA 보고서를 생성한 데이터셋의 변수 정보가 다음 표에 나와 있다.:
+```{r info_variables, echo=FALSE, warning=FALSE, message=FALSE, comment="", results='asis'}
 cap <- "변수들의 정보 목록"
 
-vars <- edaData %>%
-  diagnose()
+vars <- edaData %>% 
+  diagnose() 
 
-knitr::kable(vars, caption = cap, booktabs = TRUE) %>%
-  kable_styling(latex_options = c("striped", "hold_position")) %>%
+
+knitr::kable(vars, caption = cap, format = "html") %>% 
+  kable_styling(full_width = FALSE, font_size = 15, position = "left") %>% 
   cat()
 
 target_nm <- if (is.null(targetVariable)) "NULL" else targetVariable
-target_type <- if (is.null(targetVariable))
-  "NULL(You did not specify a target variable)" else
+target_type <- if (is.null(targetVariable)) 
+  "NULL(You did not specify a target variable)" else 
   class(pull(edaData, targetVariable))[1]
-@
+```
 
-데이터셋의 목적변수(target variable) 이름은 '\Sexpr{target_nm}', 변수의 데이터 유형(data type)은 \Sexpr{target_type}이다.
+데이터셋의 목적변수(target variable) 이름은 **'`r target_nm`'**, 변수의 데이터 유형(data type)은 **`r target_type`**이다.
 
-\section{EDA 보고서에 대해}
+
+## EDA 보고서에 대해
 EDA 보고서는 EDA 프로세스를 지원하는 정보 및 시각화 결과를 제공한다. 특히 목적변수와 나머지 변수(predictor, 예측자 혹은 독립변수)의 관계를 이해하기 위한 다양한 정보를 제공한다.
 
-\chapter{단변량 분석}
-\section{기술통계(Descriptive Statistics)}
-
-<<describe_univariate, echo=FALSE, comment="", results='asis'>>=
+# 단변량 분석
+## 기술통계(Descriptive Statistics)
+```{r describe_univariate, echo=FALSE, warning=FALSE, message=FALSE, comment=""}
 x <- Hmisc:::describe.data.frame(edaData)
-Hmisc::latex(x, file = "")
-@
+Hmisc::html(x, file = "")
+```
 
-\clearpage
 
-\section{정규성 검정}
-\subsection{통계량과 시각화}
-<<normality, echo=FALSE, results='asis'>>=
+## 정규성 검정
+### 통계량과 시각화
+```{r normality, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=4, fig.width=6, results='asis'}
 if (length(idx.numeric) == 0) {
   cat("\n\n수치형 변수가 없습니다.\n\n")
 } else {
   for (i in idx.numeric) {
-      cap <- change_under(names(edaData)[i])
-
-      cat("\n")
-      cat("\\subsubsection{", cap, "}\n")
-
+    cap <- sprintf("%s", names(edaData)[i])
+    cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\_")
+    
+    cat("<b><font size='3' face='verdana'>[", names(edaData)[i], 
+            "]</font></b>", "\n")
+    
     cat("\n검정 방법 : Shapiro-Wilk normality test\n\n")
-
+    
     x <- if (NROW(edaData) > 5000) {
       sample(pull(edaData, i), size = 5000, replace = TRUE)
     } else {
       pull(edaData, i)
     }
-
+    
     if (all(is.na(x))) {
       cat("모든 관측치가 결측치입니다.\n\n")
-      cat("\\clearpage")
       next
     }
-
+    
     if(length(x) < 3L || length(x) > 5000L) {
       cat("검정을 위한 샘플의 크기는 3 이상 5000 이하여야 합니다.\n\n")
-      cat("\\clearpage")
       next
     }
-
+    
     if(diff(range(x, na.rm = TRUE)) == 0) {
       cat("모든 관측치가 동일한 값입니다.\n\n")
-      cat("\\clearpage")
       next
     }
-
+    
     y <- shapiro.test(x)
 
-    cat(sprintf("\\noindent statistic : %s,  p-value : %G\\\\\n",
+    cat(sprintf("\t statistic : %s,  p-value : %G\n\n",
                 round(y$statistic, 5),  y$p.value))
+    cat("\n<br>\n")
 
     skew <- c(skewness(x, na.rm = TRUE),
               skewness(log(x), na.rm = TRUE),
               skewness(sqrt(x), na.rm = TRUE))
-
+  
     kurt <- c(kurtosis(x, na.rm = TRUE),
               kurtosis(log(x), na.rm = TRUE),
               kurtosis(sqrt(x), na.rm = TRUE))
-
+  
     type <- c("원본", "log 변환", "sqrt 변환")
     stats <- data.frame(type = type, skewness = skew, kurtosis = kurt)
 
-    tab_cap <- paste("skewness and kurtosis :", cap)
-
-    cat("\\\\")
-
-    print(xtable(stats, caption = tab_cap, digits = 4),
-          floating = FALSE, booktabs = TRUE,
-          include.rownames = FALSE,
-          caption.placement = "top", table.placement = "!htb")
-
-    cat("\\\\")
-    cat("\n")
-
-    cairo_pdf(filename = sprintf("./figure/norm%s.pdf", i), width = 6, height = 4, 
-      family = "NanumGothic")
+    cap <- "skewness and kurtosis"
+    knitr::kable(stats, caption = cap, format = "html") %>% 
+      kable_styling(full_width = FALSE, font_size = 15, position = "left") %>% 
+      cat()
+    
+    cat("\n<br>\n")
     par(mfrow = c(2, 2), mar = c(2, 4, 2, 2))
     hist(x, col = "lightblue", las = 1, main = "origin")
     qqnorm(x, main = "origin: Q-Q plot")
     qqline(x)
     hist(log(x), col = "lightblue", las = 1, main = "log")
     hist(sqrt(x), col = "lightblue", las = 1, main = "sqrt")
-    dev.off()
-
-    cap <- change_under(names(edaData)[i])
-
-    cat("\\begin{figure}[!ht]\n")
-    cat("\\centering\n")
-    cat(sprintf("\\includegraphics[width=1.0\\textwidth]{figure/norm%s.pdf}\n", i))
-    cat(sprintf("\\caption{%s}\n", cap))
-    cat("\\end{figure}\n")
-
-    cat("\\clearpage")
+  
+    cat("\n<hr>\n<br>\n")
   }
-}
-@
+}  
+```
 
-\chapter{변수들간의 관계}
-\section{상관계수}
-\subsection{변수조합별 상관계수}
-<<correlations, echo=FALSE, results='asis'>>=
+
+# 변수들간의 관계
+## 상관계수
+### 변수조합별 상관계수
+```{r correlations, echo=FALSE, warning=FALSE, message=FALSE, comment=""}
 if (length(idx.numeric) > 2) {
   eps <- 0.5
 
@@ -225,72 +228,74 @@ if (length(idx.numeric) > 2) {
     names(cors) <- c("기준변수", "대응변수", "상관계수")
 
     cap <- "변수별 상관계수 목록 (0.5 이상)"
-
-    kable(cors, booktabs = TRUE, caption = cap,
-          digits = 3, longtable = TRUE) %>%
-      kable_styling(latex_options = c("striped", "scale_down")) %>%
-      kable_styling(latex_options = c("hold_position")) %>%
-      kable_styling(latex_options = c("repeat_header")) %>%
-      cat()
+    knitr::kable(cors, caption = cap, format = "html") %>% 
+      kable_styling(full_width = FALSE, font_size = 15, position = "left")
   } else {
-    cat("\n\n상관계수의 절대치가 0.5 이상인 수치형 변수의 조합이 없습니다.\n\n")
+    cat("상관계수의 절대치가 0.5 이상인 수치형 변수의 조합이 없습니다.\n\n")
   }
 } else {
-  cat("\n\n수치형 변수의 개수가 2보다 적습니다.\n\n")
+  cat("수치형 변수의 개수가 2보다 적습니다.\n\n")
 }
-@
+```
 
-\subsection{변수조합별 상관계수 시각화}
-<<plot_correlations, dev='cairo_pdf', fig.align='center', fig.width=6, fig.height=6, out.width="0.99\\textwidth", dpi=300, fig.cap="상관행렬 플롯", fig.pos="!h", echo=FALSE, dev.args=list(family='Korea1deb')>>=
-edaData %>%
-  plot_correlate()
-@
 
-\chapter{목적변수 기반의 분석}
-\section{목적변수 그룹별 기술통계}
-\subsection{목적변수 대응 수치형 변수}
+### 변수조합별 상관계수 시각화
+```{r plot_correlations, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=4, fig.width=6}
+if (length(idx.numeric) > 2) {
+  edaData %>%
+    plot_correlate()
+} else {
+  cat("수치형 변수의 개수가 2보다 적습니다.\n\n")
+}  
+```
 
-<<numeric_variables, echo=FALSE, results='asis'>>=
+
+# 목적변수 기반의 분석
+## 목적변수 그룹별 기술통계
+### 목적변수 대응 수치형 변수
+```{r numeric_variables, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=4, fig.width=8, results='asis'}
 if (!is.null(targetVariable)) {
   if (factor_flag) {
     if (length(idx.numeric) == 0) {
       cat("수치형 변수가 없습니다.\n\n")
     } else {
       for (i in idx.numeric) {
-        cat("\n")
-        cat("\\subsubsection{", change_under(names(edaData)[i]), "}\n")
-
-        cat("\n\\begin{center}\n")
-
+        cat("<b><font size='3' face='verdana'>[", names(edaData)[i], "]</font></b>", "\n")
+    
         z <- dist_numeric(edaData, targetVariable, names(edaData)[i])
-
+    
         ncols <- NCOL(z) - 1
         rcnt <- round(ncols / 3)
-
-        cap <- change_under(names(edaData)[i])
-
-        kable(z, digits = 2, caption = cap, booktabs = TRUE,
-              format.args = list(big.mark = ",")) %>%
-          kable_styling(latex_options = c("striped", "hold_position")) %>%
+    
+        cap <- names(edaData)[i]
+        cap <- sprintf("%s의 분포", cap)
+    
+        cat(sprintf("<br><br>\n * %s", cap))
+    
+        knitr::kable(z, digits = 2, caption = cap, format = "html",
+                     format.args = list(big.mark = ",")) %>% 
+          kable_styling(full_width = FALSE, font_size = 15, position = "left") %>% 
           cat()
-
+    
+        cat("<br>")
+    
         fig1  <- ggplot(edaData, aes_string(x = targetVariable,
                                             y = names(edaData)[i]))
         fig2  <- ggplot(edaData, aes_string(x = names(edaData)[i]))
-
+    
         tmpData <- edaData[!edaData[, names(edaData)[i]] %in%
                              boxplot.stats(pull(edaData, names(edaData)[i]))$out,
                            c(targetVariable, names(edaData)[i])]
-
+    
         target2 <- if (!factor_flag) factor(pull(tmpData, targetVariable)) else
           pull(tmpData, targetVariable)
-
+    
         fig3  <- ggplot(tmpData, aes_string(x = targetVariable,
                                             y = names(edaData)[i]))
         fig4  <- ggplot(tmpData, aes_string(x = names(tmpData)[2]))
-
-        cairo_pdf(filename = sprintf("./figure/%s.pdf", i), width = 6, height = 7,
-          family = "NanumGothic")
+    
+        cat("<br>\n * 분포의 시각화<br>\n")
+    
         grid.arrange(fig1 + geom_boxplot(aes(fill = target)) +
                        labs(x = targetVariable, y = names(edaData)[i],
                             title = "boxplot with outliers") +
@@ -316,137 +321,124 @@ if (!is.null(targetVariable)) {
                       guides(col = guide_legend(nrow = rcnt, byrow = TRUE)) +
                        theme(legend.position = "bottom"),
                     nrow = 2, ncol = 2)
-        dev.off()
-
-        cap <- change_under(names(edaData)[i])
-
-        cat("\\begin{figure}[!ht]\n")
-        cat("\\centering\n")
-        cat(sprintf("\\includegraphics[width=1.0\\textwidth]{figure/%s.pdf}\n", i))
-        cat(sprintf("\\caption{%s}\n", cap))
-        cat("\\end{figure}\n")
-
-        cat("\n\\end{center}\n")
-        cat("\\clearpage")
+    
+        cat("<br><br>\n<hr>")
       }
-    }
+    }  
   } else if (numeric_flag) {
     if (length(idx.numeric) == 0) {
-        cat("수치형 변수가 없습니다.\n\n")
+        cat("단순 선형모형 정보\n\n")
     } else {
       targetby <- target_by(edaData, targetVariable)
       for (i in idx.numeric) {
-        cat("\n")
-        cat("\\subsubsection{", change_under(names(edaData)[i]), "}\n")
-
+        cat("<b><font size='3' face='verdana'>[", names(edaData)[i], 
+            "]</font></b>", "\n")
+        
         num_num <- relate(targetby, names(edaData)[i])
-
+        
         tab <- summary(num_num)$coefficients
-        colnames(tab)[4] <- c("Pr($\\textgreater \\mid t \\mid$)")
-        row.names(tab) <- change_under(row.names(tab))
-
         rsq <- summary(num_num)$r.squared
         adj <- summary(num_num)$adj.r.squared
         fstat <- summary(num_num)$fstatistic
         df <- summary(num_num)$df
         rse <- summary(num_num)$sigma
-
-        cat("\n\\textbf{1. 단순 선형모형 정보}\n\\\\")
-        cat("\\\\")
-        cat(sprintf("\t Residual standard error: %s on %s degrees of freedom\n\\\\",
+        
+        cat("\n단순 선형모형 정보\n\n")
+        cat(sprintf("\t Residual standard error: %s on %s degrees of freedom\n",
                 round(rse),  df[2]))
-        cat(sprintf("\t Multiple R-squared:  %s,	Adjusted R-squared:  %s\n\\\\",
-                round(rsq, 5), round(adj, 5)))
+        cat(sprintf("\t Multiple R-squared:  %s,	Adjusted R-squared:  %s\n",
+                round(rsq, 5), round(adj, 5)))        
         cat(sprintf("\t F-statistic: %s on %s and %s DF,  p-value: %s\n",
                 round(fstat["value"]),  fstat["numdf"], fstat["dendf"],
-                round(tab[2, 4], 7)))
-        cat("\n")
-
+                tab[2, 4]))    
+        cat("\n<br>")
+    
+        cat("Coefficients:\n")
         cap <- sprintf("단순 선형모형의 계수 : %s", names(edaData)[i])
-        cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\_")
-
-        kable(tab, digits = 2, caption = cap, booktabs = TRUE, escape = FALSE) %>%
-          kable_styling(latex_options = c("striped", "hold_position")) %>%
+        cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\\\_")
+    
+        knitr::kable(tab, digits = 2, caption = cap, format = "html") %>% 
+          kable_styling(full_width = FALSE, font_size = 15, position = "left") %>% 
           cat()
-
-        png(filename = sprintf("./figure/%s.png", i), width = 800, height = 400)
+        
+        cat("\n<br>시각화 - 산점도:\n")
+        cat("\n<br>\n")
+        
         plot(num_num)
-        dev.off()
-
-        cap <- change_under(names(edaData)[i])
-
-        cat("\n\\noindent\\textbf{2. 시각화 - 산점도}\n")
-
-        cat("\n\\begin{center}\n")
-        cat("\\begin{figure}[!ht]\n")
-        cat("\\centering\n")
-        cat(sprintf("\\includegraphics[width=1.0\\textwidth]{figure/%s.png}\n", i))
-        cat(sprintf("\\caption{%s}\n", cap))
-        cat("\\end{figure}\n")
-
-        cat("\n\\end{center}\n")
-        cat("\\clearpage")
+        
+        cat("\n<hr>\n<br>\n")
       }
-    }
+    }  
   }
 } else {
   cat("목적변수를 지정하지 않았습니다.\n\n")
 }
-@
+```
 
-\subsection{목적변수 대응 범주형 변수}
 
-<<category_variables, echo=FALSE, results='asis'>>=
+### 목적변수 대응 범주형 변수
+```{r category_variables, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=4, fig.width=7, results='asis'}
 if (!is.null(targetVariable)) {
   if (factor_flag) {
     if (length(idx.factor) == 0) {
-      cat("범주형 변수가 없습니다.\n\n")
+      cat("There is no categorical variable.\n\n")
     } else {
       for (i in idx.factor) {
         if (sum(!is.na(edaData[, i])) == 0) next
-
+    
         cat("\n")
-        cat("\\subsubsection{", change_under(names(edaData)[i]), "}\n")
-
-        cat("\n\\begin{center}\n")
-
+        cat("<b><font size='3' face='verdana'>[", names(edaData)[i], "]</font></b>", "\n")
+    
+        cat("<br><br>\n * 도수분포표(Frequency Table)")
+    
         tab <- edaData %>%
           target_by(targetVariable) %>%
           relate(names(edaData)[i]) %>%
           t()
-
+    
         freq <- addmargins(tab)
         idx.na <- which(is.na(rownames(freq)))
         rownames(freq)[idx.na] <- "NA"
-
+    
         ncols <- NCOL(freq) - 1
         rcnt <- round(ncols / 3)
-
+    
         ratio <- sweep(freq, 2, c(apply(tab, 2, sum), sum(tab)), "/") * 100
         idx.na <- which(is.na(rownames(ratio)))
         rownames(ratio)[idx.na] <- "NA"
-
-        kable(freq, booktabs = TRUE,
-              format.args = list(big.mark = ",")) %>%
-          kable_styling(font_size = 8, latex_options = "striped") %>%
-          row_spec(NROW(ratio), bold = TRUE) %>%
+    
+        cap <- sprintf("%s : frequency", names(edaData)[i])
+        cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\\\_")
+    
+        knitr::kable(freq, digits = 2, caption = cap, format = "html",
+                     format.args = list(big.mark = ",")) %>% 
+          kable_styling(full_width = FALSE, font_size = 15, position = "left") %>% 
+          column_spec(NCOL(freq) + 1, bold = TRUE) %>%
+          row_spec(NROW(freq), bold = TRUE, color = "white", background = "#FFA349") %>% 
           cat()
-
-        if(ncols > 2) {
+    
+        cat("<br>\n")
+    
+        if (ncols > 2) {
           cat("\n")
-          cat("\n\\vspace{2em}")
         }
-
-        kable(ratio, booktabs = TRUE, digits = 2,
-              format.args = list(big.mark = ",")) %>%
-          kable_styling(font_size = 8, latex_options = "striped") %>%
-          row_spec(NROW(ratio), bold = TRUE) %>%
+    
+        cat("<br>\n * 상대 도수분포표(Relative Frequency Table (%))")
+        cap <- sprintf("%s : ratio", names(edaData)[i])
+        cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\_")
+    
+        knitr::kable(ratio, digits = 2, caption = cap, format = "html") %>% 
+          kable_styling(full_width = FALSE, font_size = 15, position = "left") %>% 
+          column_spec(NCOL(ratio) + 1, bold = TRUE) %>%
+          row_spec(NROW(ratio), bold = TRUE, color = "white", background = "#FFA349") %>% 
           cat()
-
+    
+        cat("<br>\n")
+    
+        cat("<br>\n * 도수의 시각화<br>\n")
+    
         fig  <- ggplot(edaData, aes_string(x = names(edaData)[i], fill = target))
-
-        cairo_pdf(filename = sprintf("./figure/%s.pdf", i), width = 6, height = 4,
-          family = "NanumGothic")
+    
         grid.arrange(fig + geom_bar(position="stack") +
                        labs(x = "") +
                        labs(title = "Stack Bar Chart") +
@@ -460,188 +452,136 @@ if (!is.null(targetVariable)) {
                       theme(legend.position = "bottom",
                              axis.text.x = element_text(angle = 45, hjust = 1)),
                      nrow = 1, ncol = 2)
-        dev.off()
-
-        cat("\n\\vspace{1em}\n")
-        cap <- change_under(names(edaData)[i])
-
-        cat("\\begin{figure}[!ht]\n")
-        cat("\\centering\n")
-        cat(sprintf("\\includegraphics[width=1.0\\textwidth]{figure/%s.pdf}\n", i))
-        cat(sprintf("\\caption{%s}\n", cap))
-        cat("\\end{figure}\n")
-
-        cat("\n\\end{center}\n")
-        cat("\\clearpage")
+    
+        cat("<br><br>\n<hr>")
       }
-    }
+    }  
   } else if (numeric_flag) {
     if (length(idx.factor) == 0) {
         cat("범주형 변수가 없습니다.\n\n")
     } else {
       targetby <- target_by(edaData, targetVariable)
       for (i in idx.factor) {
-        cat("\n")
-        cat("\\subsubsection{", change_under(names(edaData)[i]), "}\n")
-
+        cat("<b><font size='3' face='verdana'>[", names(edaData)[i], 
+            "]</font></b>", "\n<br>\n")
+        
         num_cat <- relate(targetby, names(edaData)[i])
-
+        
         tab_aov <- data.frame(anova(num_cat))
-        colnames(tab_aov) <- c("Df", "Sum Sq", "Mean Sq", "F value",
-                               "Pr($\\textgreater \\mid F \\mid$)")
-
-        cat("\n\\textbf{1. 분산분석(ANOVA)}\n\n")
-
+        
+        cat("<br>\n1. 분산분석(ANOVA)\n\n")
+        
         cap <- sprintf("분산분석표 : %s", names(edaData)[i])
-        cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\_")
-
-        row.names(tab_aov) <- change_under(row.names(tab_aov))
-
-        knitr::kable(tab_aov, digits = 2, caption = cap,
-                     booktabs = TRUE, escape = FALSE) %>%
-          kable_styling(latex_options = c("striped", "hold_position")) %>%
+        cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\\\_")
+        
+        knitr::kable(tab_aov, digits = 2, caption = cap, format = "html") %>% 
+          kable_styling(full_width = FALSE, font_size = 15, position = "left") %>% 
           cat()
-
-        cat("\n")
-
+        
+        cat("\n<br>")
+        
         tab <- summary(num_cat)$coefficients
-        colnames(tab)[4] <- c("Pr($\\textgreater \\mid t \\mid$)")
-
         rsq <- summary(num_cat)$r.squared
         adj <- summary(num_cat)$adj.r.squared
         fstat <- summary(num_cat)$fstatistic
         df <- summary(num_cat)$df
         rse <- summary(num_cat)$sigma
-
-        cat("\\noindent\\textbf{2. 단순 선형모형 정보}\n\\\\")
-        cat("\\\\")
-        cat(sprintf("\t Residual standard error: %s on %s degrees of freedom\n\\\\",
+        
+        cat("\n2. 단순 선형모형 정보\n\n")
+        cat(sprintf("\t Residual standard error: %s on %s degrees of freedom\n",
                 round(rse),  df[2]))
-        cat(sprintf("\t Multiple R-squared:  %s,	Adjusted R-squared:  %s\n\\\\",
-                round(rsq, 5), round(adj, 5)))
+        cat(sprintf("\t Multiple R-squared:  %s,	Adjusted R-squared:  %s\n",
+                round(rsq, 5), round(adj, 5)))        
         cat(sprintf("\t F-statistic: %s on %s and %s DF,  p-value: %s\n",
                 round(fstat["value"]),  fstat["numdf"], fstat["dendf"],
-                round(tab[2, 4], 7)))
-        cat("\n")
-
-        cap <- sprintf("단순 선형모형의 계수 : %s", names(edaData)[i])
-        cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\_")
-
-        row.names(tab) <- change_under(row.names(tab))
-        
-        knitr::kable(tab, digits = 2, caption = cap,
-                     booktabs = TRUE, escape = FALSE) %>%
-          kable_styling(latex_options = c("striped", "hold_position")) %>%
+                tab[2, 4]))    
+        cat("\n<br>")
+    
+        cat("Coefficients:\n")
+        cap <- sprintf("단순 선형모형 계수 : %s", names(edaData)[i])
+        cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\\\_")
+    
+        knitr::kable(tab, digits = 2, caption = cap, format = "html") %>% 
+          kable_styling(full_width = FALSE, font_size = 15, position = "left") %>% 
           cat()
 
-        cairo_pdf(filename = sprintf("./figure/%s.pdf", i), width = 6, height = 4,
-          family = "NanumGothic")
+        cat("\n<br>3. 시각화:\n")
+        cat("\n<br>\n")
+        
         print(plot(num_cat))
-        dev.off()
-
-        cat("\n\\vspace{1em}\n")
-        cap <- change_under(names(edaData)[i])
-
-        cat("\n\\begin{center}\n")
-        cat("\\begin{figure}[!ht]\n")
-        cat("\\centering\n")
-        cat(sprintf("\\includegraphics[width=0.8\\textwidth]{figure/%s.pdf}\n", i))
-        cat(sprintf("\\caption{%s}\n", cap))
-        cat("\\end{figure}\n")
-
-        cat("\n\\end{center}\n")
-        cat("\\clearpage")
+        
+        cat("\n<hr>\n<br>\n")
       }
-    }
+    }  
   }
 } else {
   cat("목적변수를 지정하지 않았습니다.\n\n")
-}
-@
+} 
+```
 
-\section{목적변수 그룹별 변수들간의 관계}
-\subsection{목적변수 대응 상관계수}
-<<group_correlations, echo=FALSE, results='asis'>>=
+
+## 목적변수 그룹별 변수들간의 관계
+### 목적변수 대응 상관계수
+```{r group_correlations, echo=FALSE, warning=FALSE, message=FALSE, comment=""}
 if (!is.null(targetVariable)) {
   if (factor_flag) {
     if (length(idx.numeric) > 2) {
       eps <- 0.5
-
+    
       idx <- which(names(edaData) %in% targetVariable)
       names(edaData)[idx] <- "targetVariable"
-
+    
       cors <- edaData %>%
         group_by(targetVariable) %>%
         correlate %>%
         filter(abs(coef_corr) >= eps) %>%
         filter(as.integer(var1) > as.integer(var2)) %>%
         arrange(targetVariable, desc(abs(coef_corr)))
-
+    
       if (NROW(cors) > 0) {
         names(cors) <- c(targetVariable, "기준변수", "대응변수", "상관계수")
-
+      
         cap <- "변수별 상관계수 목록 (0.5 이상)"
-
-        kable(cors, booktabs = TRUE,
-              caption = cap, digits = 3, longtable = TRUE) %>%
-          kable_styling(latex_options = c("striped", "scale_down")) %>%
-          kable_styling(latex_options = c("hold_position")) %>%
-          kable_styling(latex_options = c("repeat_header")) %>%
-          cat()
+        knitr::kable(cors, caption = cap, format = "html") %>% 
+          kable_styling(full_width = FALSE, font_size = 15, position = "left")
       } else {
-        cat("상관계수의 절대치가 0.5 이상인 수치형 변수의 조합이 없습니다.\n\n")
+        cat("N상관계수의 절대치가 0.5 이상인 수치형 변수의 조합이 없습니다.\n\n")
       }
     } else {
       cat("수치형 변수의 개수가 2보다 적습니다.\n\n")
     }
   } else if (numeric_flag) {
     cat("목적변수가 수치형 변수인 경우에는 지원하지 않습니다.\n\n")
-  }
+  }  
 } else {
   cat("목적변수를 지정하지 않았습니다.\n\n")
-}
-@
+}  
+```
 
-\subsection{목적변수 대응 상관계수 시각화}
-<<plot_group_correlations, dev='cairo_pdf', fig.align='center', fig.width=6, fig.height=6, out.width="0.99\\textwidth", dpi=300, fig.cap="The correlation coefficient of numerical variables", fig.pos="!h", echo=FALSE, results='asis'>>=
+
+### 목적변수 대응 상관계수 시각화
+```{r plot_group_correlations, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=4, fig.width=6}
 if (!is.null(targetVariable)) {
   if (factor_flag) {
     if (length(idx.numeric) > 2) {
       level_name <- levels(edaData$targetVariable)
-
-      for (i in seq(level_name)) {
-        cat(sprintf("\\noindent - 목적변수의 조건 (%s == %s)\n\n", 
-          targetVariable, level_name[i]))
-
-        fname <- paste("./figure/myfile_", i, ".pdf", sep = "")
-        cairo_pdf(filename = fname, width = 6, height = 6, family = "NanumGothic")
+  
+      for (nm in level_name) {
+        cat(sprintf("- 목적변수의 조건 (%s == %s)\n", targetVariable, nm))
+    
         edaData %>%
-          filter(targetVariable %in% level_name[i]) %>%
+          filter(targetVariable %in% nm) %>% 
           plot_correlate()
-        dev.off()
-        
-        cap <- sprintf("상관행렬 플롯 (%s == %s)", 
-          targetVariable, level_name[i])
-
-        cat("\\begin{figure}")
-        cat("\\begin{center}")
-        cat("\\includegraphics{", fname, "}\n", sep = "")
-        cat("\\caption{", cap, "}\n", sep = "")
-        cat("\\end{center}")
-        cat("\\end{figure}")
       }
     } else {
       cat("수치형 변수의 개수가 2보다 적습니다.\n\n")
     }
   } else if (numeric_flag) {
     cat("목적변수가 수치형 변수인 경우에는 지원하지 않습니다.\n\n")
-  }
+  } 
 } else {
   cat("목적변수를 지정하지 않았습니다.\n\n")
-}
-@
+}  
+```
 
-<<option_undo, echo=FALSE>>=
-options(warn = 0)
-@
 

@@ -128,6 +128,9 @@ diagn_category <- diagnose_category(edaData)
 if (NROW(diagn_category) > 0) {
   names(diagn_category)[5] <- "ratio(%)"
 
+  diagn_category <- diagn_category %>% 
+  filter(rank <= 50)
+    
   cap <- "Categorical variable level top 10"
 
   kable(diagn_category, booktabs = TRUE,

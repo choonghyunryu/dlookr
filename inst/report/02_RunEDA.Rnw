@@ -491,6 +491,8 @@ if (!is.null(targetVariable)) {
         cap <- sprintf("Analysis of Variance Table : %s", names(edaData)[i])
         cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\_")
 
+        row.names(tab_aov) <- change_under(row.names(tab_aov))
+        
         knitr::kable(tab_aov, digits = 2, caption = cap,
                      booktabs = TRUE, escape = FALSE) %>%
           kable_styling(latex_options = c("striped", "hold_position")) %>%
@@ -521,6 +523,8 @@ if (!is.null(targetVariable)) {
         cap <- sprintf("Simple Linear Model coefficients : %s", names(edaData)[i])
         cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\_")
 
+        row.names(tab) <- change_under(row.names(tab))
+        
         knitr::kable(tab, digits = 2, caption = cap,
                      booktabs = TRUE, escape = FALSE) %>%
           kable_styling(latex_options = c("striped", "hold_position")) %>%

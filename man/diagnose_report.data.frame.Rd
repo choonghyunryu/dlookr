@@ -8,7 +8,8 @@
 diagnose_report(.data, output_format, output_file, output_dir, ...)
 
 \method{diagnose_report}{data.frame}(.data, output_format = c("pdf", "html"),
-  output_file = NULL, output_dir = tempdir(), font_family = NULL, ...)
+  output_file = NULL, output_dir = tempdir(), font_family = NULL,
+  browse = TRUE, ...)
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}
@@ -24,6 +25,8 @@ diagnose_report(.data, output_format, output_file, output_dir, ...)
 \item{...}{arguments to be passed to methods.}
 
 \item{font_family}{charcter. font family name for figure in pdf.}
+
+\item{browse}{logical. choose whether to output the report results to the browser.}
 }
 \description{
 The diagnose_report() report the information for diagnosing
@@ -82,6 +85,9 @@ carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 diagnose_report(carseats)
 # create pdf file. file name is Diagn.pdf
 diagnose_report(carseats, output_file = "Diagn.pdf")
+# create pdf file. file name is ./Diagn.pdf and not browse
+diagnose_report(carseats, output_dir = ".", output_file = "Diagn.pdf", 
+  browse = FALSE)
 # create html file. file name is Diagnosis_Report.html
 diagnose_report(carseats, output_format = "html")
 # create html file. file name is Diagn.html

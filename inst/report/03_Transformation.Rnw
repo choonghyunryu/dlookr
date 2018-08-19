@@ -34,7 +34,7 @@ options(knitr.table.format = "latex")
 \chapter{Imputation}
 \section{Missing Values}
 \subsection{Missing values imputation information}
-The numerical variables for imputate missing values are as follows.
+The variables for imputate missing values are as follows.
 
 <<nalist, tidy=TRUE, echo=FALSE, warning=FALSE, message=FALSE, comment="", tidy.opts=list(width.cutoff=65), size="small">>=
 nalist <- find_na(edaData, index = FALSE)
@@ -272,7 +272,7 @@ if (length(skewlist) > 0) {
   cat(paste(skewlist, collapse = ", "))
   skew <- skew[skewlist]
 } else {
-  cat("There are no variables including outliers.")
+  cat("There are no variables including skewed.")
 }
 @
 

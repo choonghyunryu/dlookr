@@ -11,6 +11,7 @@
 \usepackage{rotating}
 \usepackage{lscape}
 \usepackage{hyperref}
+\usepackage{titletoc}
 %------- for kableExtra package in R, start
 \usepackage{booktabs}
 \usepackage{longtable}
@@ -27,6 +28,7 @@
 %------- for kableExtra package in R, end
 
 \hypersetup{
+    pdfencoding=auto,
     colorlinks,
     citecolor=black,
     filecolor=black,
@@ -55,25 +57,25 @@
 \end{flushright}
 \end{minipage}\\[4.5cm]
 
-\textsc{\Large report series with dlookr}\\[1.0cm]
+\textsc{\Large dlookr 보고서 시리즈}\\[1.0cm]
 
 % Title
 \HRule \\[0.4cm]
-{ \huge \bfseries Data Quality Diagnosis Report \\[0.4cm] }
+{ \huge \bfseries 데이터 품질진단 보고서 \\[0.4cm] }
 
 \HRule \\[4.5cm]
 
 % Author and package version
 \begin{minipage}{0.4\textwidth}
 \begin{flushleft} \large
-\emph{Author:}\\
+\emph{작성자:}\\
 dlookr package
 \end{flushleft}
 \end{minipage}
 \begin{minipage}{0.4\textwidth}
 \begin{flushright} \large
-\emph{Version:} \\
-0.3.5
+\emph{버전:} \\
+0.3.6
 \end{flushright}
 \end{minipage}
 
@@ -90,6 +92,11 @@ dlookr package
 \newpage
 % Include dots between chapter name and page number
 \renewcommand{\cftchapdotsep}{\cftdotsep}
+% \dottedcontents{<section>}[<left>]{<above-code>}
+% {<label width>}{<leader width>}
+\dottedcontents{chapter}[1em]{\bfseries}{4em}{1pc}
+\dottedcontents{section}[4em]{\bfseries}{4em}{1pc}
+\dottedcontents{subsection}[6em]{\mdseries}{3em}{1pc}
 % Last pages for ToC
 %-------------------------------------------------------------------------------
 % Include the ToC

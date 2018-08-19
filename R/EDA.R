@@ -67,6 +67,7 @@ eda_report <- function(.data, ...) {
 #' @param output_file name of generated file. default is NULL.
 #' @param output_dir name of directory to generate report file. default is tempdir().
 #' @param font_family charcter. font family name for figure in pdf.
+#' @param browse logical. choose whether to output the report results to the browser.
 #' @param ... arguments to be passed to methods.
 #' 
 #' @examples
@@ -82,30 +83,44 @@ eda_report <- function(.data, ...) {
 #' # reporting the EDA information
 #' # create pdf file. file name is EDA_Report.pdf
 #' eda_report(carseats, US)
+#' 
 #' # create pdf file. file name is EDA.pdf
 #' eda_report(carseats, "US", output_file = "EDA.pdf")
+#' 
+#' # create pdf file. file name is EDA.pdf and not browse
+#' eda_report(carseats, "US", output_dir = ".", output_file = "EDA.pdf", browse = FALSE)
+#' 
 #' # create html file. file name is EDA_Report.html
 #' eda_report(carseats, "US", output_format = "html")
+#' 
 #' # create html file. file name is EDA.html
 #' eda_report(carseats, US, output_format = "html", output_file = "EDA.html")
+#'
 #'
 #' ## target variable is numerical variable
 #' # reporting the EDA information
 #' eda_report(carseats, Sales)
+#' 
 #' # create pdf file. file name is EDA2.pdf
 #' eda_report(carseats, "Sales", output_file = "EDA2.pdf")
+#' 
 #' # create html file. file name is EDA_Report.html
 #' eda_report(carseats, "Sales", output_format = "html")
+#' 
 #' # create html file. file name is EDA2.html
 #' eda_report(carseats, Sales, output_format = "html", output_file = "EDA2.html")
 #'
 #' ## target variable is null
 #' # reporting the EDA information
 #' eda_report(carseats)
+#' 
+#' 
 #' # create pdf file. file name is EDA2.pdf
 #' eda_report(carseats, output_file = "EDA2.pdf")
+#' 
 #' # create html file. file name is EDA_Report.html
 #' eda_report(carseats, output_format = "html")
+#' 
 #' # create html file. file name is EDA2.html
 #' eda_report(carseats, output_format = "html", output_file = "EDA2.html")
 #' }
@@ -121,7 +136,7 @@ eda_report <- function(.data, ...) {
 #' @method eda_report data.frame
 #' @export
 eda_report.data.frame <- function(.data, target = NULL, output_format = c("pdf", "html"),
-  output_file = NULL, output_dir = tempdir(), font_family = NULL, ...) {
+  output_file = NULL, output_dir = tempdir(), font_family = NULL, browse = TRUE, ...) {
   tryCatch(vars <- tidyselect::vars_select(names(.data),
     !!! rlang::enquo(target)),
     error = function(e) {
@@ -185,20 +200,29 @@ eda_report.data.frame <- function(.data, target = NULL, output_format = c("pdf",
     unlink(paste(path, "figure", sep = "/"), recursive = TRUE)
     unlink(paste(path, "img", sep = "/"), recursive = TRUE)
   } else if (output_format == "html") {
-    output_file <- "EDA_Report.html"
+    if (length(grep("ko_KR", Sys.getenv("LANG"))) == 1) {
+      rmd <- "EDA_Report_KR.Rmd"
+    } else {
+      rmd <- "EDA_Report.Rmd"
+    }
     
-    Rmd_file <- file.path(system.file(package = "dlookr"), "report",
-      "EDA_Report.Rmd")
+    if (is.null(output_file))
+      output_file <- "EDA_Report.html"
+    
+    if (!is.null(font_family))
+      assign("font_family", font_family, envir = .dlookrEnv)
+    
+    Rmd_file <- file.path(system.file(package = "dlookr"), "report", rmd)
     file.copy(from = Rmd_file, to = path, recursive = TRUE)
     
-    rmarkdown::render(paste(path, "EDA_Report.Rmd", sep = "/"),
+    rmarkdown::render(paste(path, rmd, sep = "/"),
       prettydoc::html_pretty(toc = TRUE, number_sections = TRUE),
       output_file = paste(path, output_file, sep = "/"))
     
-    file.remove(paste(path, "EDA_Report.Rmd", sep = "/"))
+    file.remove(paste(path, rmd, sep = "/"))
   }
   
-  if (file.exists(paste(path, output_file, sep = "/"))) {
+  if (browse & file.exists(paste(path, output_file, sep = "/"))) {
     browseURL(paste(path, output_file, sep = "/"))
   }
 }

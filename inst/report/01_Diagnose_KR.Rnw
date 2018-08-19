@@ -24,9 +24,9 @@ edaData <- get("edaData", .dlookrEnv)
 N <- nrow(edaData)
 @
 
-\chapter{Diagnose Data}
-\section{Overview of Diagnosis}
-\subsection{List of all variables quality}
+\chapter{데이터 진단}
+\section{개괄적 진단}
+\subsection{전체 변수의 개괄적 진단}
 <<overview, echo=FALSE, results='asis'>>=
 diagn_overview <- diagnose(edaData)
 
@@ -34,7 +34,7 @@ names(diagn_overview) <- c("variables", "type", "missing (n)",
                            "missing (%)", "unique (n)",
                            "unique (n/N)")
 
-cap <- "Data quality overview table"
+cap <- "개괄적 데이터 품질 진단 목록"
 
 kable(diagn_overview, booktabs = TRUE,
       caption = cap, digits = digit, longtable = TRUE,
@@ -45,7 +45,7 @@ kable(diagn_overview, booktabs = TRUE,
   cat()
 @
 
-\subsection{Diagnosis of missing data}
+\subsection{결측치 진단}
 <<missing_data, echo=FALSE, results='asis'>>=
 
 diagn_missing <- diagn_overview %>%
@@ -53,7 +53,7 @@ diagn_missing <- diagn_overview %>%
   arrange(desc(`missing (n)`))
 
 if (NROW(diagn_missing) > 0) {
-  cap <- "Variables that include missing values"
+  cap <- "결측치 포함 변수의 목록"
 
   kable(diagn_missing, booktabs = TRUE,
       caption = cap, digits = digit, longtable = TRUE,
@@ -63,13 +63,13 @@ if (NROW(diagn_missing) > 0) {
     kable_styling(latex_options = c("repeat_header")) %>%
     cat()
 } else {
-  cat("\n\nNo variables including missing values\n\n")
+  cat("\n\n결측치가 포함된 변수가 없습니다.\n\n")
 }
 @
 
 %\clearpage
 
-\subsection{Diagnosis of unique data(Text and Category)}
+\subsection{유일값 진단(문자형 및 범주형)}
 <<unique_date_category, echo=FALSE, results='asis'>>=
 
 diagn_uniq_cat <- diagn_overview %>%
@@ -79,7 +79,7 @@ diagn_uniq_cat <- diagn_overview %>%
 
 
 if (NROW(diagn_uniq_cat) > 0) {
-  cap <- "Variables where the proportion of unique data is more than 0.5"
+  cap <- "유일값의 비율이 0.5 이상인 변수 목록"
 
   kable(diagn_uniq_cat, booktabs = TRUE,
         caption = cap, digits = digit, longtable = TRUE,
@@ -89,22 +89,22 @@ if (NROW(diagn_uniq_cat) > 0) {
     kable_styling(latex_options = c("repeat_header")) %>%
     cat()
 } else {
-  cat("\n\nNo variable with a high proportion greater than 0.5\n\n")
+  cat("\n\n유일값의 비율이 0.5보다 큰 변수가 없습니다.\n\n")
 }
 @
 
 %\clearpage
 
-\subsection{Diagnosis of unique data(Numerical)}
+\subsection{유일값 진단(수치형)}
 <<unique_data_numeric, echo=FALSE, results='asis'>>=
 
 diagn_uniq_num <- diagn_overview %>%
   filter(type %in% c("numeric", "integer")) %>%
   filter(`unique (n/N)` <= 0.1) %>%
-  arrange(desc(`unique (n/N)`))
+  arrange(`unique (n/N)`)
 
 if (NROW(diagn_uniq_num) > 0) {
-  cap <- "Variables where the proportion of unique data is less than 0.1"
+  cap <- "유일값의 비율이 0.1 이하인 변수 목록"
 
   kable(diagn_uniq_num, booktabs = TRUE,
         caption = cap, digits = digit, longtable = TRUE,
@@ -114,21 +114,24 @@ if (NROW(diagn_uniq_num) > 0) {
     kable_styling(latex_options = c("repeat_header")) %>%
     cat()
 } else {
-  cat("\n\nNo variable with unique data proportion less than 0.1\n\n")
+  cat("\n\n유일값의 비율이 0.1보다 작은 변수가 없습니다.\n\n")
 }
 @
 
 %\clearpage
 
-\section{Detailed data diagnosis}
-\subsection{Diagnosis of categorical variables}
+\section{데이터 진단 상세}
+\subsection{범주형 변수의 진단}
 <<diagnose_catagory, echo=FALSE, results='asis'>>=
 diagn_category <- diagnose_category(edaData)
 
 if (NROW(diagn_category) > 0) {
   names(diagn_category)[5] <- "ratio(%)"
 
-  cap <- "Categorical variable level top 10"
+  diagn_category <- diagn_category %>% 
+  filter(rank <= 50)
+  
+  cap <- "범주형 변수의 상위 10 수준(levels) 목록"
 
   kable(diagn_category, booktabs = TRUE,
         caption = cap, digits = digit, longtable = TRUE,
@@ -138,16 +141,16 @@ if (NROW(diagn_category) > 0) {
     kable_styling(latex_options = c("repeat_header")) %>%
     cat()
 } else {
-  cat("\n\nNo categorical variable\n\n")
+  cat("\n\n범주형 변수가 없습니다.\n\n")
 }
 @
 
-\subsection{Diagnosis of numerical variables}
+\subsection{수치형 변수의 진단}
 <<diagnose_numeric, echo=FALSE, results='asis'>>=
 diagn_numeric <- diagnose_numeric(edaData)
 
 if (NROW(diagn_numeric) > 0) {
-  cap <- "General list of numerical diagnosis"
+  cap <- "수치형 변수의 진단 목록"
 
   kable(diagn_numeric, booktabs = TRUE,
         caption = cap, digits = 4, longtable = TRUE,
@@ -158,13 +161,13 @@ if (NROW(diagn_numeric) > 0) {
     landscape() %>%
     cat()
 } else {
-  cat("\n\nNo numerical variable\n\n")
+  cat("\n\n수치형 변수가 없습니다.\n\n")
 }
 @
 
 %\clearpage
 
-\subsection{List of numerical diagnosis (zero)}
+\subsection{수치형 변수의 진단 (zero)}
 <<numeric_zero, echo=FALSE, results='asis'>>=
 diagn_zero <- diagn_numeric %>%
   filter(zero > 0) %>%
@@ -173,7 +176,7 @@ diagn_zero <- diagn_numeric %>%
   arrange(desc(zero))
 
 if (NROW(diagn_zero) > 0) {
-  cap <- "List of numerical diagnosis (zero)"
+  cap <- "수치형 변수의 진단 (zero) 목록"
 
   kable(diagn_zero, booktabs = TRUE,
         caption = cap, digits = digit, longtable = TRUE,
@@ -183,13 +186,13 @@ if (NROW(diagn_zero) > 0) {
     kable_styling(latex_options = c("repeat_header")) %>%
     cat()
 } else {
-  cat("\n\nNo numeric variable with zero value\n\n")
+  cat("\n\n0을 포함한 수치형 변수가 없습니다.\n\n")
 }
 @
 
 %\clearpage
 
-\subsection{List of numerical diagnosis (minus)}
+\subsection{수치형 변수의 진단 (음수)}
 <<numeric_minus, echo=FALSE, results='asis'>>=
 diagn_minus <- diagn_numeric %>%
   filter(minus > 0) %>%
@@ -198,7 +201,7 @@ diagn_minus <- diagn_numeric %>%
   arrange(desc(minus))
 
 if (NROW(diagn_minus) > 0) {
-  cap <- "List of numerical diagnosis (minus)"
+  cap <- "수치형 변수의 진단 (음수) 목록"
 
   kable(diagn_minus, booktabs = TRUE,
         caption = cap, digits = digit, longtable = TRUE,
@@ -208,15 +211,15 @@ if (NROW(diagn_minus) > 0) {
     kable_styling(latex_options = c("repeat_header")) %>%
     cat()
 } else {
-  cat("\n\nNo numeric variable with negative value\n\n")
+  cat("\n\n음수를 포함한 수치형 변수가 없습니다.\n\n")
 }
 @
 
 %\clearpage
 
-\chapter{Diagnose Outliers}
-\section{Overview of Diagnosis}
-\subsection{Diagnosis of numerical variable outliers}
+\chapter{이상치 진단}
+\section{이상치 개요}
+\subsection{수치형 변수의 이상치 진단}
 <<outliers, echo=FALSE, results='asis'>>=
 diagn_outlier <- diagn_numeric %>%
   filter(outlier > 0) %>%
@@ -225,7 +228,7 @@ diagn_outlier <- diagn_numeric %>%
   arrange(desc(outlier))
 
 if (NROW(diagn_outlier) > 0) {
-  cap <- "Diagnosis of numerical variable outliers"
+  cap <- "수치형 변수의 이상치 목록"
 
   kable(diagn_outlier, booktabs = TRUE,
         caption = cap, digits = digit, longtable = TRUE,
@@ -235,19 +238,19 @@ if (NROW(diagn_outlier) > 0) {
     kable_styling(latex_options = c("repeat_header")) %>%
     cat()
 } else {
-  cat("\n\nNo numeric variables including outliers\n\n")
+  cat("\n\n이상치를 포함한 수치형 변수가 없습니다.\n\n")
 }
 @
 
 \clearpage
 
-\section{Detailed outliers diagnosis}
+\section{이상치 상세}
 <<detail_outliers, tidy=TRUE, tidy.opts=list(width.cutoff=65), size="small", echo=FALSE, results='asis'>>=
 diagn_outlier2 <- edaData %>%
   diagnose_outlier(diagn_outlier$variables)
 
-cols <- c("Outliers count", "Outliers ratio (%)", "Mean of outliers",
-          "Mean with outliers", "Mean without outliers")
+cols <- c("이상치 개수", "이상치 백분율 (%)", "이상치 산술평균",
+          "이상치를 포함 산술평균", "이상치 제외 산술평균")
 
 if (NROW(diagn_outlier2) > 0) {
   variables <- diagn_outlier2 %>%
@@ -256,9 +259,9 @@ if (NROW(diagn_outlier2) > 0) {
 
   for (i in seq(variables)) {
     cap <- change_under(variables[i])
-    cap_table <- paste("Outliers information of", cap)
+    cap_table <- paste0(cap, "의 이상치 정보")
 
-    cat(sprintf("\\subsubsection{variable : %s}\n", cap))
+    cat(sprintf("\\subsubsection{변수 : %s}\n", cap))
 
     outlier_df <- data.frame(Measures = cols,
                              Values = as.vector(t(diagn_outlier2[i, -1])))
@@ -275,7 +278,7 @@ if (NROW(diagn_outlier2) > 0) {
     plot_outlier(edaData, variables[i])
     dev.off()
 
-    cap_fig <- paste("Distribution of", cap)
+    cap_fig <- paste0(cap, "의 분포현황")
 
     cat("\\begin{figure}[!ht]\n")
     cat("\\centering\n")
@@ -286,7 +289,7 @@ if (NROW(diagn_outlier2) > 0) {
     cat("\\clearpage\n")
   }
 } else {
-  cat("\n\nNo numeric variables including outliers\n\n")
+  cat("\n\n이상치를 포함한 수치형 변수가 없습니다.\n\n")
 }
 @
 

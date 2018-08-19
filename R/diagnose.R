@@ -704,6 +704,7 @@ diagnose_report <- function(.data, output_format, output_file, output_dir, ...) 
 #' @param output_file name of generated file. default is NULL.
 #' @param output_dir name of directory to generate report file. default is tempdir().
 #' @param font_family charcter. font family name for figure in pdf.
+#' @param browse logical. choose whether to output the report results to the browser.
 #' @param ... arguments to be passed to methods.
 #'
 #' @examples
@@ -717,6 +718,9 @@ diagnose_report <- function(.data, output_format, output_file, output_dir, ...) 
 #' diagnose_report(carseats)
 #' # create pdf file. file name is Diagn.pdf
 #' diagnose_report(carseats, output_file = "Diagn.pdf")
+#' # create pdf file. file name is ./Diagn.pdf and not browse
+#' diagnose_report(carseats, output_dir = ".", output_file = "Diagn.pdf", 
+#'   browse = FALSE)
 #' # create html file. file name is Diagnosis_Report.html
 #' diagnose_report(carseats, output_format = "html")
 #' # create html file. file name is Diagn.html
@@ -732,7 +736,7 @@ diagnose_report <- function(.data, output_format, output_file, output_dir, ...) 
 #' @method diagnose_report data.frame
 #' @export
 diagnose_report.data.frame <- function(.data, output_format = c("pdf", "html"),
-  output_file = NULL, output_dir = tempdir(), font_family = NULL, ...) {
+  output_file = NULL, output_dir = tempdir(), font_family = NULL, browse = TRUE, ...) {
   output_format <- match.arg(output_format)
   
   assign("edaData", as.data.frame(.data), .dlookrEnv)
@@ -791,20 +795,26 @@ diagnose_report.data.frame <- function(.data, output_format = c("pdf", "html"),
     unlink(paste(path, "figure", sep = "/"), recursive = TRUE)
     unlink(paste(path, "img", sep = "/"), recursive = TRUE)
   } else if (output_format == "html") {
-    output_file <- "Diagnosis_Report.html"
+    if (length(grep("ko_KR", Sys.getenv("LANG"))) == 1) {
+      rmd <- "Diagnosis_Report_KR.Rmd"
+    } else {
+      rmd <- "Diagnosis_Report.Rmd"
+    }
     
-    Rmd_file <- file.path(system.file(package = "dlookr"),
-      "report", "Diagnosis_Report.Rmd")
+    if (is.null(output_file))
+      output_file <- "Diagnosis_Report.html"
+    
+    Rmd_file <- file.path(system.file(package = "dlookr"), "report", rmd)
     file.copy(from = Rmd_file, to = path, recursive = TRUE)
     
-    rmarkdown::render(paste(path, "Diagnosis_Report.Rmd", sep = "/"),
+    rmarkdown::render(paste(path, rmd, sep = "/"),
       output_format = prettydoc::html_pretty(toc = TRUE, number_sections = TRUE),
       output_file = paste(path, output_file, sep = "/"))
     
-    file.remove(paste(path, "Diagnosis_Report.Rmd", sep = "/"))
+    file.remove(paste(path, rmd, sep = "/"))
   }
   
-  if (file.exists(paste(path, output_file, sep = "/"))) {
+  if (browse & file.exists(paste(path, output_file, sep = "/"))) {
     browseURL(paste(path, output_file, sep = "/"))
   }
 }

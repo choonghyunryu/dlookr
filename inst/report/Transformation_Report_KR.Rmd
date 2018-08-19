@@ -1,5 +1,5 @@
 ---
-title: "Transformation Information Report"
+title: "데이터 변환 보고서"
 author: "Report by dlookr package"
 date: "`r Sys.Date()`"
 output: 
@@ -49,10 +49,10 @@ setUnder <- function(x) {
 }
 ```
 
-# Imputation
-## Missing Values
-### Missing values imputation information
-The variables for imputate missing values are as follows.
+# 대체 (Imputation)
+## 결측치 (Missing Values)
+### 결측치 대체 정보
+결측값을 대체하기 위한 변수는 다음과 같다.
 ```{r nalist, echo=FALSE, warning=FALSE, message=FALSE, comment=""}
 nalist <- find_na(edaData, index = FALSE)
 
@@ -65,7 +65,7 @@ if (length(nalist) > 0) {
   
   cat(paste(nalist, collapse = ", "))
 } else {
-  cat("There are no variables including missing values.")
+  cat("결측치를 포함한 변수가 없습니다.")
 }
 ```
 
@@ -132,10 +132,10 @@ imputae_summary <- function(object) {
       met <- "Multivariate Imputation by Chained Equations"
       met <- sprintf("%s\n - random seed : %s", met, seed)
     }
-    cat(sprintf("* Imputate %s based on %s\n\n", type, met))
+    cat(sprintf("* '%s' 방법에 대한 %s의 기술통계량\n\n", met, type))
   }
 
-  cat("* Information of Imputation (before vs after)\n")
+  cat("* 결측치 대체 정보 (대체 전 vs 대체 후)\n")
 
   invisible(smmry)
 }
@@ -161,8 +161,7 @@ if (length(nalist) > 0) {
     
     for (j in 1:length(method)) {
       cat("\n")
-      cat("#### Imputate missing values with '", method[j], "'\n")
-      
+      cat(sprintf("#### %s 방법의 결측치 대체\n", method[j]))
       impu <- imputate_na(edaData, nalist[i], targetVariable, method = method[j], print_flag = FALSE)
       tab <- imputae_summary(impu)
       
@@ -182,9 +181,9 @@ if (length(nalist) > 0) {
 }
 ```
 
-## Outliers
-### Outliers imputation information
-The numerical variables for imputate outliers are as follows.
+## 이상치 (Outliers)
+### 이상치 대체 정보
+이상치를 대체하기 위한 수치 변수는 다음과 같다.
 
 ```{r outlist, echo=FALSE, warning=FALSE, message=FALSE, comment=""}
 outlist <- find_outliers(edaData, index = FALSE)
@@ -192,7 +191,7 @@ outlist <- find_outliers(edaData, index = FALSE)
 if (length(outlist) > 0) {
   cat(paste(outlist, collapse = ", "))
 } else {
-  cat("There are no variables including outliers.")
+  cat("이상치를 포함한 수치변수가 없습니다.")
 }
 ```
 
@@ -207,7 +206,7 @@ if (length(outlist) > 0) {
     
     for (j in 1:length(method)) {
       cat("\n")
-      cat("#### Imputate outliers with '", method[j], "'\n")
+      cat(sprintf("#### %s 방법의 이상치 대체\n", method[j]))
       
       impu <- imputate_outlier(edaData, outlist[i], method = method[j])
       tab <- imputae_summary(impu)
@@ -228,9 +227,10 @@ if (length(outlist) > 0) {
 }
 ```
 
-# Resolving Skewness
-## Skewed variables information
-The numerical variables for resolving skewness are as follows.
+# 비대칭 보정 (Resolving Skewness)
+## 비대칭 변수 정보
+비대칭을 해결하기위한 수치 변수는 다음과 같다.
+
 ```{r, echo=FALSE}
 summary_transform <- function(object, ...) {
   method <- attr(object, "method")
@@ -245,7 +245,7 @@ summary_transform <- function(object, ...) {
     describe("value") %>%
     select(-variable, -key) %>%
     t
-  colnames(smmry) <- c("Original", "Transformation")
+  colnames(smmry) <- c("원본", "변환값")
   invisible(smmry)
 }
 ```
@@ -259,7 +259,7 @@ if (length(skewlist) > 0) {
   cat(paste(skewlist, collapse = ", "))
   skew <- skew[skewlist]
 } else {
-  cat("There are no variables including skewed.")
+  cat("비대칭이 아주 심한 변수는 없습니다.")
 }
 ```
 
@@ -278,7 +278,7 @@ if (length(skewlist) > 0) {
       
     for (j in 1:length(method)) {
       cat("\n")
-      cat("#### Resolving skewness with '", method[j], "'\n")
+      cat(sprintf("#### '%s' 방법의 비대칭 보정}\n", method[j]))      
       
       trans <- transform(pull(edaData, skewlist[i]), method = method[j])
       tab <- summary_transform(trans)
@@ -299,9 +299,10 @@ if (length(skewlist) > 0) {
 }
 ```
 
-# Binning
-## Numerical Variables for Binning
-The numerical variables for binning are as follows.
+# 비닝 (Binning)
+## 비닝을 위한 수치형 변수
+비닝을 위한 수치형 변수는 다음과 같습니다.
+
 ```{r, echo=FALSE}
 idx.numeric <- find_class(edaData, type = "numerical")
 var_numeric <- names(edaData)[idx.numeric]
@@ -324,7 +325,7 @@ if (length(var_numeric) > 0) {
     
     for (j in 1:length(method)) {
       cat("\n")
-      cat("#### Binning with '", method[j], "'\n")
+      cat(sprintf("#### '%s' 방법의 비닝\n", method[j]))      
       
       binn <- binning(pull(edaData, var_numeric[i]), type = method[j])
       tab <- summary(binn)
@@ -345,9 +346,10 @@ if (length(var_numeric) > 0) {
 }
 ```
 
-## Optimal Binning
-For the scoring modeling, optimal binning is performed considering the characteristics of numerical data.
-This work uses the recursive partitioning technique known as supervised discretization when categorizing numeric data as categorical data.
+## 최적 비닝(Optimal Binning)
+스코어링(scorecard) 모델링의 경우에는 일반적으로 수치형 데이터와 목적변수와의 특성을 고려하여 최적의 비닝(optimal binning)을 수행한다.
+optimal binning 작업에서는 수치형 데이터를 범주형 데이터로 범주화할 때, supervised discretization이라고 하는 재귀적 분할(recursive partitioning) 기법을 사용한다.
+단, optimal binning은 목적변수가 이진분류(binary class)일 경우만 가능하다.
 
 ```{r optimal, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=6, fig.width=7, results='asis'}
 if (!is.null(targetVariable)) {
@@ -366,6 +368,9 @@ if (!is.null(targetVariable)) {
       result <- results[[i]]
 
       if (is.character(result)) {
+        if (result == "No significant splits")
+          result <- "목적변수와의 관계에서 유효한 범주화를 도출할 수 없습니다."
+        
         cat(result)
         cat("\n")
         next
@@ -388,10 +393,10 @@ if (!is.null(targetVariable)) {
       cat("\n")
     } 
   } else {
-    cat("The target variable is not a binary class.\n\n")
+    cat("목적변수가 이진분류(binary class)가 아닙니다.\n\n")
   }
 } else {
-  cat("There is no target variable.\n\n")
+  cat("목적변수를 지정하지 않았습니다.\n\n")
 }
 ```
 

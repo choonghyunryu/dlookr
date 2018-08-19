@@ -1,3 +1,20 @@
+dlookr 0.3.6
+----------------------------------------------------------------
+* diagnose_report() was converted to Korean version of Hangul Report in Korean O/S.
+
+* diagnose_report() was added an argument to choose whether to present the report results to the browser.
+
+* diagnose_report() limited the maximum number of cases per "Categorical variable level top 10" to 50 cases.
+
+* eda_report() was converted to Korean version of Hangul Report in Korean O/S.
+
+* eda_report() was added an argument to choose whether to present the report results to the browser.
+
+* transformation_report() was converted to Korean version of Hangul Report in Korean O/S.
+
+* transformation_report() was added an argument to choose whether to present the report results to the browser.
+
+
 dlookr 0.3.5
 ----------------------------------------------------------------
 * diagnose_category() fixed subscript error in data where all variables are numeric variables

@@ -279,6 +279,7 @@ plot.transform <- function(x, ...) {
 #' @param output_file name of generated file. default is NULL.
 #' @param output_dir name of directory to generate report file. default is tempdir().
 #' @param font_family charcter. font family name for figure in pdf.
+#' @param browse logical. choose whether to output the report results to the browser.
 #'
 #' @examples
 #' \donttest{
@@ -313,7 +314,7 @@ plot.transform <- function(x, ...) {
 #'
 #' @export
 transformation_report <- function(.data, target = NULL, output_format = c("pdf", "html"),
-  output_file = NULL, output_dir = tempdir(), font_family = NULL) {
+  output_file = NULL, output_dir = tempdir(), font_family = NULL, browse = TRUE) {
   tryCatch(vars <- tidyselect::vars_select(names(.data), !!! rlang::enquo(target)),
     error = function(e) {
       pram <- as.character(substitute(target))
@@ -375,19 +376,26 @@ transformation_report <- function(.data, target = NULL, output_format = c("pdf",
     unlink(paste(path, "figure", sep = "/"), recursive = TRUE)
     unlink(paste(path, "img", sep = "/"), recursive = TRUE)
   } else if (output_format == "html") {
-    output_file <- "Transformation_Report.html"
+    if (length(grep("ko_KR", Sys.getenv("LANG"))) == 1) {
+      rmd <- "Transformation_Report_KR.Rmd"
+    } else {
+      rmd <- "Transformation_Report.Rmd"
+    }
+    
+    if (is.null(output_file))
+      output_file <- "Transformation_Report.html"
 
-    Rmd_file <- file.path(system.file(package = "dlookr"), "report", "Transformation_Report.Rmd")
+    Rmd_file <- file.path(system.file(package = "dlookr"), "report", rmd)
     file.copy(from = Rmd_file, to = path, recursive = TRUE)
 
-    rmarkdown::render(paste(path, "Transformation_Report.Rmd", sep = "/"),
+    rmarkdown::render(paste(path, rmd, sep = "/"),
       prettydoc::html_pretty(toc = TRUE, number_sections = TRUE),
       output_file = paste(path, output_file, sep = "/"))
 
-    file.remove(paste(path, "Transformation_Report.Rmd", sep = "/"))
+    file.remove(paste(path, rmd, sep = "/"))
   }
 
-  if (file.exists(paste(path, output_file, sep = "/"))) {
+  if (browse & file.exists(paste(path, output_file, sep = "/"))) {
     browseURL(paste(path, output_file, sep = "/"))
   }
 }
