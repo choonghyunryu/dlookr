@@ -140,40 +140,48 @@ if (NROW(diagn_numeric) > 0) {
 
 ### List of numerical diagnosis (zero)
 ```{r numeric_zero, echo=FALSE, warning=FALSE, message=FALSE, comment=""}
-diagn_zero <- diagn_numeric %>%
-  filter(zero > 0) %>%
-  select(variables, min, median, max, zero) %>%
-  mutate(`zero ratio(%)` = zero / N * 100) %>%
-  arrange(desc(zero))
+if (NROW(diagn_numeric) > 0) {
+  diagn_zero <- diagn_numeric %>%
+    filter(zero > 0) %>%
+    select(variables, min, median, max, zero) %>%
+    mutate(`zero ratio(%)` = zero / N * 100) %>%
+    arrange(desc(zero))
 
-if (NROW(diagn_zero) > 0) {
-  cap <- "List of numerical diagnosis (zero)"
+  if (NROW(diagn_zero) > 0) {
+    cap <- "List of numerical diagnosis (zero)"
   
-  knitr::kable(diagn_zero, digits = 2, caption = cap, format = "html",
-               format.args = list(big.mark = ",")) %>% 
-    kable_styling(full_width = FALSE, font_size = 15, position = "left") 
+    knitr::kable(diagn_zero, digits = 2, caption = cap, format = "html",
+                 format.args = list(big.mark = ",")) %>% 
+      kable_styling(full_width = FALSE, font_size = 15, position = "left") 
+  } else {
+    cat("No numeric variable with zero value")
+  }
 } else {
-  cat("No numeric variable with zero value")
+  cat("No numerical variable")
 }
 ```
 
 
 ### List of numerical diagnosis (minus)
 ```{r numeric_minus, echo=FALSE, warning=FALSE, message=FALSE, comment=""}
-diagn_minus <- diagn_numeric %>%
-  filter(minus > 0) %>%
-  select(variables, min, median, max, minus) %>%
-  mutate(`minus ratio(%)` = minus / N * 100) %>%
-  arrange(desc(minus))
+if (NROW(diagn_numeric) > 0) {
+  diagn_minus <- diagn_numeric %>%
+    filter(minus > 0) %>%
+    select(variables, min, median, max, minus) %>%
+    mutate(`minus ratio(%)` = minus / N * 100) %>%
+    arrange(desc(minus))
 
-if (NROW(diagn_minus) > 0) {
-  cap <- "List of numerical diagnosis (minus)"
+  if (NROW(diagn_minus) > 0) {
+    cap <- "List of numerical diagnosis (minus)"
   
-  knitr::kable(diagn_minus, digits = 2, caption = cap, format = "html",
-               format.args = list(big.mark = ",")) %>% 
-    kable_styling(full_width = FALSE, font_size = 15, position = "left") 
+    knitr::kable(diagn_minus, digits = 2, caption = cap, format = "html",
+                 format.args = list(big.mark = ",")) %>% 
+      kable_styling(full_width = FALSE, font_size = 15, position = "left") 
+  } else {
+    cat("No numeric variable with negative value")
+  }
 } else {
-  cat("No numeric variable with negative value")
+  cat("No numerical variable")
 }
 ```
 
@@ -181,57 +189,65 @@ if (NROW(diagn_minus) > 0) {
 ## Overview of Diagnosis
 ### Diagnosis of numerical variable outliers
 ```{r outliers, echo=FALSE, warning=FALSE, message=FALSE, comment=""}
-diagn_outlier <- diagn_numeric %>%
-  filter(outlier > 0) %>%
-  select(variables, min, median, max, outlier) %>%
-  mutate(`outlier ratio(%)` = outlier / N * 100) %>%
-  arrange(desc(outlier))
+if (NROW(diagn_numeric) > 0) {
+  diagn_outlier <- diagn_numeric %>%
+    filter(outlier > 0) %>%
+    select(variables, min, median, max, outlier) %>%
+    mutate(`outlier ratio(%)` = outlier / N * 100) %>%
+    arrange(desc(outlier))
 
-if (NROW(diagn_outlier) > 0) {
-  cap <- "Diagnosis of numerical variable outliers"
+  if (NROW(diagn_outlier) > 0) {
+    cap <- "Diagnosis of numerical variable outliers"
   
-  knitr::kable(diagn_outlier, digits = 2, caption = cap, format = "html",
-               format.args = list(big.mark = ",")) %>% 
-    kable_styling(full_width = FALSE, font_size = 15, position = "left") 
+    knitr::kable(diagn_outlier, digits = 2, caption = cap, format = "html",
+                 format.args = list(big.mark = ",")) %>% 
+      kable_styling(full_width = FALSE, font_size = 15, position = "left") 
+  } else {
+    cat("No numeric variables including outliers")
+  }
 } else {
-  cat("No numeric variables including outliers")
+  cat("No numerical variable")
 }
 ```
 
 
 ## Detailed outliers diagnosis
 ```{r detail_outliers, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=4, fig.width=6, results='asis'}
-diagn_outlier2 <- edaData %>%
-  diagnose_outlier(diagn_outlier$variables)
+if (NROW(diagn_numeric) > 0) {
+  diagn_outlier2 <- edaData %>%
+    diagnose_outlier(diagn_outlier$variables)
 
-cols <- c("Outliers count", "Outliers ratio (%)", "Mean of outliers",
-          "Mean with outliers", "Mean without outliers")
+  cols <- c("Outliers count", "Outliers ratio (%)", "Mean of outliers",
+            "Mean with outliers", "Mean without outliers")
 
-if (NROW(diagn_outlier2) > 0) {
-  variables <- diagn_outlier2 %>%
-    select(variables) %>%
-    unlist
+  if (NROW(diagn_outlier2) > 0) {
+    variables <- diagn_outlier2 %>%
+      select(variables) %>%
+      unlist
 
-  for (i in seq(variables)) {
-    cap <- sprintf("%s", variables[i])
+    for (i in seq(variables)) {
+      cap <- sprintf("%s", variables[i])
 
-    cat(sprintf("variable : %s", cap))
-    cap_table <- paste("Outliers information of", cap)
+      cat(sprintf("variable : %s", cap))
+      cap_table <- paste("Outliers information of", cap)
 
-    outlier_df <- data.frame(Measures = cols,
-                             Values = as.vector(t(diagn_outlier2[i, -1])))
+      outlier_df <- data.frame(Measures = cols,
+                               Values = as.vector(t(diagn_outlier2[i, -1])))
 
-    knitr::kable(outlier_df, digits = 2, caption = cap_table, format = "html") %>% 
-      kable_styling(full_width = FALSE, font_size = 15, position = "left") %>% 
-      print()
+      knitr::kable(outlier_df, digits = 2, caption = cap_table, format = "html") %>% 
+        kable_styling(full_width = FALSE, font_size = 15, position = "left") %>% 
+        print()
 
-    plot_outlier(edaData, variables[i])
+      plot_outlier(edaData, variables[i])
     
-    cat("<br><hr>\n\n<br>")
+      cat("<br><hr>\n\n<br>")
 
+    }
+  } else {
+    cat("No numeric variables including outliers")
   }
 } else {
-  cat("No numeric variables including outliers")
+  cat("No numerical variable")
 }
 ```
 

@@ -1,3 +1,12 @@
+dlookr 0.3.7
+----------------------------------------------------------------
+* diagnose_report() fixed errors when number of numeric variables is zero.
+
+* eda_report() fixed errors that are outputting abnormalities in pdf documents when the target variable name contains "_".
+
+* eda_report() Handle exceptions when there are fewer than two numeric variables when outputting a reflation plot.
+
+
 dlookr 0.3.6
 ----------------------------------------------------------------
 * diagnose_report() was converted to Korean version of Hangul Report in Korean O/S.

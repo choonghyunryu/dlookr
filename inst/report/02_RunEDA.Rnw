@@ -104,7 +104,7 @@ target_type <- if (is.null(targetVariable))
   class(pull(edaData, targetVariable))[1]
 @
 
-The target variable of the data is '\Sexpr{target_nm}', and the data type of the variable is \Sexpr{target_type}.
+The target variable of the data is '\Sexpr{change_under(target_nm)}', and the data type of the variable is \Sexpr{target_type}.
 
 \section{About EDA Report}
 EDA reports provide information and visualization results that support the EDA process. In particular, it provides a variety of information to understand the relationship between the target variable and the rest of the variables of interest.
@@ -240,9 +240,13 @@ if (length(idx.numeric) > 2) {
 @
 
 \subsection{Correlation Plot of Numerical Variables}
-<<plot_correlations, dev='cairo_pdf', fig.align='center', fig.width=6, fig.height=6, out.width="0.99\\textwidth", dpi=300, fig.cap="The correlation coefficient of numerical variables", fig.pos="!h", echo=FALSE>>=
-edaData %>%
-  plot_correlate()
+<<plot_correlations, dev='cairo_pdf', fig.align='center', fig.width=6, fig.height=6, out.width="0.99\\textwidth", dpi=300, fig.cap="The correlation coefficient of numerical variables", fig.pos="!h", echo=FALSE, comment="">>=
+if (length(idx.numeric) > 2) {
+  edaData %>%
+    plot_correlate()
+} else {
+  cat("Number of numerical variables is less than 2.\n\n")
+} 
 @
 
 \chapter{Target based Analysis}
@@ -607,7 +611,7 @@ if (!is.null(targetVariable)) {
 
       for (nm in level_name) {
         cat(sprintf("\\noindent- Grouped Correlation Case of (%s == %s)\n\n", 
-          targetVariable, nm))
+          change_under(targetVariable), nm))
 
         fname <- paste("./figure/myfile_", nm, ".pdf", sep = "")
         cairo_pdf(filename = fname, width = 6, height = 6)
@@ -616,7 +620,7 @@ if (!is.null(targetVariable)) {
           plot_correlate()
         dev.off()
 
-        cap <- sprintf("Correlation Matrix Plot (%s == %s)", targetVariable, nm)
+        cap <- sprintf("Correlation Matrix Plot (%s == %s)", change_under(targetVariable), nm)
         
         cat("\\begin{figure}")
         cat("\\begin{center}")

@@ -104,7 +104,7 @@ target_type <- if (is.null(targetVariable))
   class(pull(edaData, targetVariable))[1]
 @
 
-데이터셋의 목적변수(target variable) 이름은 '\Sexpr{target_nm}', 변수의 데이터 유형(data type)은 \Sexpr{target_type}이다.
+데이터셋의 목적변수(target variable) 이름은 '\Sexpr{change_under(target_nm)}', 변수의 데이터 유형(data type)은 \Sexpr{target_type}이다.
 
 \section{EDA 보고서에 대해}
 EDA 보고서는 EDA 프로세스를 지원하는 정보 및 시각화 결과를 제공한다. 특히 목적변수와 나머지 변수(predictor, 예측자 혹은 독립변수)의 관계를 이해하기 위한 다양한 정보를 제공한다.
@@ -241,9 +241,13 @@ if (length(idx.numeric) > 2) {
 @
 
 \subsection{변수조합별 상관계수 시각화}
-<<plot_correlations, dev='cairo_pdf', fig.align='center', fig.width=6, fig.height=6, out.width="0.99\\textwidth", dpi=300, fig.cap="상관행렬 플롯", fig.pos="!h", echo=FALSE, dev.args=list(family='Korea1deb')>>=
-edaData %>%
-  plot_correlate()
+<<plot_correlations, dev='cairo_pdf', fig.align='center', fig.width=6, fig.height=6, out.width="0.99\\textwidth", dpi=300, fig.cap="상관행렬 플롯", fig.pos="!h", echo=FALSE, dev.args=list(family='Korea1deb'),comment="">>=
+if (length(idx.numeric) > 2) {
+  edaData %>%
+    plot_correlate()
+} else {
+  cat("수치형 변수의 개수가 2보다 적습니다.\n\n")
+} 
 @
 
 \chapter{목적변수 기반의 분석}
@@ -611,7 +615,7 @@ if (!is.null(targetVariable)) {
 
       for (i in seq(level_name)) {
         cat(sprintf("\\noindent - 목적변수의 조건 (%s == %s)\n\n", 
-          targetVariable, level_name[i]))
+          change_under(targetVariable), level_name[i]))
 
         fname <- paste("./figure/myfile_", i, ".pdf", sep = "")
         cairo_pdf(filename = fname, width = 6, height = 6, family = "NanumGothic")
@@ -621,7 +625,7 @@ if (!is.null(targetVariable)) {
         dev.off()
         
         cap <- sprintf("상관행렬 플롯 (%s == %s)", 
-          targetVariable, level_name[i])
+          change_under(targetVariable), level_name[i])
 
         cat("\\begin{figure}")
         cat("\\begin{center}")
