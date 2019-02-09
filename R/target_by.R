@@ -235,10 +235,17 @@ relate_impl <- function(.data, predictor) {
     names(total)[2] <- names(indiv)[2]
 
     relate <- rbind(indiv, total)
-    attr(relate, "target") <- attr(.data, "vars")
+    
+    if (utils::packageVersion("dplyr") >= "0.8.0") {
+      target <- attr(.data, "groups") %>% names() %>% "["(1)
+    } else {
+      target <- attr(.data, "vars")
+    }  
+    
+    attr(relate, "target") <- target
     attr(relate, "predictor") <- predictor
     attr(relate, "model") <- "describe"
-    attr(relate, "raw") <- .data[, c(attr(.data, "vars"), predictor)]
+    attr(relate, "raw") <- .data[, c(target , predictor)]
 
     class(relate) <- append("relate", class(relate))
 
@@ -246,13 +253,19 @@ relate_impl <- function(.data, predictor) {
   }
 
   relate_cat_by_cat_impl <- function(.data, predictor) {
-    data <- .data[, c(attr(.data, "vars"), predictor)]
+    if (utils::packageVersion("dplyr") >= "0.8.0") {
+      target <- attr(.data, "groups") %>% names() %>% "["(1)
+    } else {
+      target <- attr(.data, "vars")
+    }  
+    
+    data <- .data[, c(target, predictor)]
 
-    formula_str <- sprintf(" ~ %s + %s", attr(.data, "vars"), predictor)
+    formula_str <- sprintf(" ~ %s + %s", target, predictor)
 
     relate <- xtabs(formula_str, data = data, addNA = TRUE)
 
-    attr(relate, "target") <- attr(.data, "vars")
+    attr(relate, "target") <- target
     attr(relate, "predictor") <- predictor
     attr(relate, "model") <- "crosstable"
     attr(relate, "raw") <- data
@@ -264,17 +277,23 @@ relate_impl <- function(.data, predictor) {
 
 
   relate_num_by_num_impl <- function(.data, predictor) {
-    data <- .data[, c(attr(.data, "vars"), predictor)]
+    if (utils::packageVersion("dplyr") >= "0.8.0") {
+      target <- attr(.data, "groups") %>% names() %>% "["(1)
+    } else {
+      target <- attr(.data, "vars")
+    }  
+    
+    data <- .data[, c(target, predictor)]
 
     method <- c("pearson", "spearman")
 
     correlation <- sapply(method, function(x)
       cor(pull(data, 1), pull(data, 2), method = x))
 
-    formula_str <- sprintf("%s ~ %s", attr(.data, "vars"), predictor)
+    formula_str <- sprintf("%s ~ %s", target, predictor)
     relate <- lm(formula_str, data = data)
 
-    attr(relate, "target") <- attr(.data, "vars")
+    attr(relate, "target") <- target
     attr(relate, "predictor") <- predictor
     attr(relate, "correlation") <- correlation
     attr(relate, "model") <- "linear"
@@ -287,17 +306,23 @@ relate_impl <- function(.data, predictor) {
 
 
   relate_num_by_cat_impl <- function(.data, predictor) {
-    data <- .data[, c(attr(.data, "vars"), predictor)]
+    if (utils::packageVersion("dplyr") >= "0.8.0") {
+      target <- attr(.data, "groups") %>% names() %>% "["(1)
+    } else {
+      target <- attr(.data, "vars")
+    }  
+    
+    data <- .data[, c(target, predictor)]
 
     # ordered factor to factor
     tmp <- pull(data, 2)
     class(tmp) <- "factor"
     data[, 2] <- tmp
 
-    formula_str <- sprintf("%s ~ %s", attr(.data, "vars"), predictor)
+    formula_str <- sprintf("%s ~ %s", target, predictor)
     relate <- lm(formula(formula_str), data = data)
 
-    attr(relate, "target") <- attr(.data, "vars")
+    attr(relate, "target") <- target
     attr(relate, "predictor") <- predictor
     attr(relate, "model") <- "ANOVA"
     attr(relate, "raw") <- data
@@ -307,7 +332,13 @@ relate_impl <- function(.data, predictor) {
     relate
   }
 
-  type_y <- is(.data[, attr(.data, "vars")][[1]])[1]
+  if (utils::packageVersion("dplyr") >= "0.8.0") {
+    cname <- attr(.data, "groups") %>% names() %>% "["(1)
+    type_y <- .data[, cname] %>% pull %>% is %>% "["(1)
+  } else {
+    type_y <- is(.data[, attr(.data, "vars")][[1]])[1]
+  } 
+  
   type_x <- is(.data[, predictor][[1]])[1]
 
   if (type_y %in% c("ordered", "factor") &&

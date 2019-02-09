@@ -268,7 +268,7 @@ if (!is.null(targetVariable)) {
 
         z <- dist_numeric(edaData, targetVariable, names(edaData)[i])
 
-        ncols <- NCOL(z) - 1
+        ncols <- NCOL(z) 
         rcnt <- round(ncols / 3)
 
         cap <- change_under(names(edaData)[i])

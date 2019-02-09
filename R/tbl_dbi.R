@@ -349,7 +349,7 @@ diagn_category_impl_dbi <- function(df, vars, top) {
   
   result <- lapply(vars[idx_factor],
                    function(x) get_topn(df, x, top))
-  tibble::as_tibble(do.call("rbind", result))
+  as_tibble(do.call("rbind", result))
 }
 
 

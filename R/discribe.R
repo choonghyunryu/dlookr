@@ -111,7 +111,7 @@ describe.data.frame <- function(.data, ...) {
 describe_impl <- function(df, vars) {
   if (length(vars) == 0) vars <- names(df)
 
-  if (length(vars) == 1 & !tibble::is.tibble(df)) df <- tibble::as.tibble(df)
+  if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
 
   idx_numeric <- find_class(df[, vars], type = "numerical")
 
@@ -127,7 +127,7 @@ describe_impl <- function(df, vars) {
     result <- RcmdrMisc::numSummary(x, statistics = stats,
       quantiles = quant)
 
-    numsum <- tibble::as.tibble(result$table)
+    numsum <- as_tibble(result$table)
     names(numsum) <- vname
 
     tibble::add_column(numsum, n = result$n,
@@ -160,7 +160,7 @@ describe.grouped_df <- function(.data, ...) {
 describe_group_impl <- function(df, vars, margin) {
   if (length(vars) == 0) vars <- names(df)
 
-  if (length(vars) == 1 & !is.tibble(df)) df <- as.tibble(df)
+  if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
 
   idx_numeric <- find_class(df[, vars], type = "numerical")
 
@@ -181,10 +181,13 @@ describe_group_impl <- function(df, vars, margin) {
       stats <- stats[-c(6:7)]
     }
 
-    result <- RcmdrMisc::numSummary(.data[x + 1, vars],
+    if (utils::packageVersion("dplyr") >= "0.8.0") flag <- 0
+    else flag <- 1
+    
+    result <- RcmdrMisc::numSummary(.data[x + flag, vars],
       statistics = stats, quantiles = quant)
 
-    numsum <- as.tibble(result$table)
+    numsum <- as_tibble(result$table)
 
     if (n <= 3) {
       numsum <- cbind(numsum[, 1:4], skewness = NA,
@@ -199,11 +202,22 @@ describe_group_impl <- function(df, vars, margin) {
   }
 
   call_summary <- function(vars) {
-    statistic <- purrr::map_df(attr(df, "indices"),
-      num_summary, df, vars)
+    if (utils::packageVersion("dplyr") >= "0.8.0") {
+      statistic <- purrr::map_df(attr(df, "groups") %>% 
+                                   select(tidyselect::matches("\\.rows")) %>% 
+                                   pull, num_summary, df, vars)
+      
+      glables <- attr(df, "groups") %>% 
+        select(-tidyselect::matches("\\.rows"))
+    } else {
+      statistic <- purrr::map_df(attr(df, "indices"),
+                                 num_summary, df, vars)
+      
+      glables <- attr(df, "labels")
+    }  
 
     dplyr::bind_cols(tibble(variable = rep(vars, nrow(statistic))),
-      as.tibble(attr(df, "labels")), statistic)
+      as_tibble(glables), statistic)
   }
 
   statistic <- lapply(vars[idx_numeric], function(x) call_summary(x))

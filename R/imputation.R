@@ -476,11 +476,20 @@ summary.imputation <- function(object, ...) {
     tidyr::gather()
 
   if (var_type == "numerical") {
-    smmry <- dframe %>%
-      group_by(key) %>%
-      describe("value") %>%
-      select(-variable, -key) %>%
-      t
+    if (utils::packageVersion("dplyr") >= "0.8.0") {
+      smmry <- dframe %>%
+        group_by(key) %>%
+        group_map(~ describe(.x)) %>%
+        ungroup() %>% 
+        select(which(!names(.) %in% c("variable", "key"))) %>% 
+        t
+    } else {
+      smmry <- dframe %>%
+        group_by(key) %>%
+        describe("value") %>%
+        select(which(!names(.) %in% c("variable", "key"))) %>% 
+        t
+    }
 
     smmry <- smmry[, 2:1]
     colnames(smmry) <- c("Original", "Imputation")

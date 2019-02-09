@@ -111,7 +111,7 @@ plot_normality <- function(.data, ...) {
 #' @method normality data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
-#' @importFrom tibble is.tibble
+#' @importFrom tibble is_tibble
 #' @export
 normality.data.frame <- function(.data, ..., sample = 5000) {
   sample <- min(5000, nrow(.data), sample)
@@ -125,7 +125,7 @@ normality.data.frame <- function(.data, ..., sample = 5000) {
 normality_impl <- function(df, vars, sample) {
   if (length(vars) == 0) vars <- names(df)
 
-  if (length(vars) == 1 & !tibble::is.tibble(df)) df <- as.tibble(df)
+  if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
 
   idx_numeric <- find_class(df[, vars], type = "numerical")
 
@@ -146,7 +146,7 @@ normality_impl <- function(df, vars, sample) {
 #' @method normality grouped_df
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
-#' @importFrom tibble is.tibble
+#' @importFrom tibble is_tibble
 #' @export
 normality.grouped_df <- function(.data, ..., sample = 5000) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
@@ -157,12 +157,15 @@ normality.grouped_df <- function(.data, ..., sample = 5000) {
 normality_group_impl <- function(df, vars, sample) {
   if (length(vars) == 0) vars <- names(df)
 
-  if (length(vars) == 1 & !tibble::is.tibble(df)) df <- as.tibble(df)
+  if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
 
   idx_numeric <- find_class(df[, vars], type = "numerical")
 
+  if (utils::packageVersion("dplyr") >= "0.8.0") flag <- 0
+  else flag <- 1
+  
   num_normal <- function(x, .data, vars, n_sample) {
-    nums <- .data[x + 1, vars][[1]]
+    nums <- .data[x + flag, vars][[1]]
 
     n_sample <- min(length(nums), n_sample)
     
@@ -180,11 +183,22 @@ normality_group_impl <- function(df, vars, sample) {
 
   call_normal <- function(vars) {
     #idx <- which(sapply(attr(df, "indices"), length) >= 3)
-    statistic <- purrr::map_df(attr(df, "indices"),
-      num_normal, df, vars, sample)
-
+    if (utils::packageVersion("dplyr") >= "0.8.0") {
+      statistic <- purrr::map_df(attr(df, "groups") %>% 
+                                   select(tidyselect::matches("\\.rows")) %>% 
+                                   pull, num_normal, df, vars, sample)
+      
+      glables <- attr(df, "groups") %>% 
+        select(-tidyselect::matches("\\.rows"))
+    } else {
+      statistic <- purrr::map_df(attr(df, "indices"),
+                                 num_normal, df, vars, sample)
+      
+      glables <- attr(df, "labels")
+    }  
+    
     dplyr::bind_cols(tibble(variable = rep(vars, nrow(statistic))),
-      as.tibble(attr(df, "labels")), statistic)
+      as_tibble(glables), statistic)
   }
 
   statistic <- lapply(vars[idx_numeric], function(x) call_normal(x))
@@ -278,7 +292,7 @@ normality_group_impl <- function(df, vars, sample) {
 #' @method plot_normality data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
-#' @importFrom tibble is.tibble
+#' @importFrom tibble is_tibble
 #' @export
 plot_normality.data.frame <- function(.data, ...) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
@@ -289,7 +303,7 @@ plot_normality.data.frame <- function(.data, ...) {
 plot_normality_impl <- function(df, vars) {
   if (length(vars) == 0) vars <- names(df)
 
-  if (length(vars) == 1 & !tibble::is.tibble(df)) df <- as.tibble(df)
+  if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
 
   idx_numeric <- find_class(df[, vars], type = "numerical")
 
@@ -317,7 +331,7 @@ plot_normality_impl <- function(df, vars) {
 #' @method plot_normality grouped_df
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
-#' @importFrom tibble is.tibble
+#' @importFrom tibble is_tibble
 #' @export
 plot_normality.grouped_df <- function(.data, ...) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
@@ -329,17 +343,26 @@ plot_normality.grouped_df <- function(.data, ...) {
 plot_normality_group_impl <- function(df, vars) {
   if (length(vars) == 0) vars <- names(df)
 
-  if (length(vars) == 1 & !tibble::is.tibble(df)) df <- as.tibble(df)
+  if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
 
   idx_numeric <- find_class(df[, vars], type = "numerical")
 
   call_plot <- function(var) {
     plot_normality <- function(pos, df, var) {
-      x <- unlist(df[attr(df, "indices")[[pos]], var])
+      if (utils::packageVersion("dplyr") >= "0.8.0") {
+        x <- unlist(df[(attr(df, "groups") %>% 
+                         select(tidyselect::matches("\\.rows")) %>% 
+                         pull)[[pos]], var])
+        
+        label <- attr(df, "groups") %>% select(-tidyselect::matches("\\.rows"))
+      } else {
+        x <- unlist(df[attr(df, "indices")[[pos]] + 1, var])
+        
+        label <- attr(df, "labels")
+      }  
 
-      label <- attr(df, "labels")
       label <- paste(names(label), "==", unlist(label[pos, ]), collapse = ",")
-
+      
       op <- par(no.readonly = TRUE)
       par(mfrow = c(2, 2), oma = c(0, 0, 3, 0), mar = c(2, 4, 2, 2))
       on.exit(par(op))
@@ -363,8 +386,12 @@ plot_normality_group_impl <- function(df, vars) {
             outer = TRUE)
     }
 
-    cnt <- nrow(attr(df, "labels"))
-
+    if (utils::packageVersion("dplyr") >= "0.8.0") {
+      cnt <- nrow(attr(df, "groups")) 
+    } else {
+      cnt <- nrow(attr(df, "labels"))
+    } 
+    
     lapply(seq(cnt), plot_normality, df, var)
   }
 

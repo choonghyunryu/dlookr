@@ -132,7 +132,7 @@ correlate_impl <- function(df, vars) {
   M <- cor(df[, names(df)[idx_numeric]],
     use = "pairwise.complete.obs")
   m <- as.vector(M)
-  tab <- as.tibble(expand.grid(var1 = row.names(M),
+  tab <- as_tibble(expand.grid(var1 = row.names(M),
     var2 = row.names(M)))
   add_column(tab, coef_corr = m) %>%
     filter(var1 != var2) %>%
@@ -158,24 +158,51 @@ correlate_group_impl <- function(df, vars) {
   idx_numeric <- find_class(df, type = "numerical")
 
   call_corr <- function(pos, df, vars) {
-    idx <- attr(df, "indices")[[pos]]
+    
+    if (utils::packageVersion("dplyr") >= "0.8.0") {
+      idx <- (attr(df, "groups") %>% 
+        select(tidyselect::matches("\\.rows")) %>% 
+        pull)[[pos]]
+      
+      label <- data.frame((attr(df, "groups") %>% 
+                 select(-tidyselect::matches("\\.rows")))[pos, ])
+      
+    } else {
+      idx <- attr(df, "indices")[[pos]] + 1
+      
+      label <- data.frame(attr(df, "labels")[pos, ])
+    }  
+    
     M <- cor(df[idx, names(df)[idx_numeric]],
       use = "pairwise.complete.obs")
     m <- as.vector(M)
+    
     tab <- expand.grid(var1 = row.names(M),
       var2 = row.names(M))
     tab <- data.frame(tab, coef_corr = m) %>%
       filter(var1 != var2) %>%
       filter(var1 %in% vars)
-    label <- data.frame(attr(df, "labels")[pos, ])
-    corrs <-merge(label, tab)
-    names(corrs)[seq(attr(df, "vars"))] <- attr(df, "vars")
+    
+    corrs <- merge(label, tab)
+    
+    if (utils::packageVersion("dplyr") < "0.8.0")
+      names(corrs)[seq(attr(df, "vars"))] <- attr(df, "vars")
+    
     corrs
   }
 
-  cnt <- nrow(attr(df, "labels"))
+  if (utils::packageVersion("dplyr") >= "0.8.0") {
+    cnt <- nrow(attr(df, "groups")) 
+    
+    idx <- seq(cnt)
+    idx <- idx[sapply(pull(attr(df, "groups")[, ".rows"]), length) > 0]
+  } else {
+    cnt <- nrow(attr(df, "labels"))
+    
+    idx <- seq(cnt)
+  } 
 
-  statistic <- lapply(seq(cnt), call_corr, df, vars)
+  suppressWarnings(statistic <- lapply(idx, call_corr, df, vars))
 
   suppressWarnings(
     tibble(statistic) %>%
@@ -308,19 +335,36 @@ plot_correlate_group_impl <- function(df, vars) {
   idx_numeric <- find_class(df, type = "numerical")
 
   plot_correlate <- function(pos, df, var) {
-    cnt <- attr(df, "group_sizes")[pos]
-
+    if (utils::packageVersion("dplyr") >= "0.8.0") {
+      cnt <- length(pull(attr(df, "groups")[, ".rows"])[[pos]])
+      #cnt <- cnt[cnt > 0]
+    } else {
+      cnt <- attr(df, "group_sizes")[pos]      
+    }  
+    
     if (cnt <= 5) {
-      vars <- names(attr(df, "labels")[pos, ])
-      values <- attr(df, "labels")[pos, ]
+      if (utils::packageVersion("dplyr") >= "0.8.0") {
+        vars <- names(attr(df, "groups") %>% select(-tidyselect::matches("\\.rows")))
+        values <- sapply((attr(df, "groups") %>% select(-tidyselect::matches("\\.rows"))), as.character)[pos, ]
+      } else {
+        vars <- names(attr(df, "labels")[pos, ])
+        values <- attr(df, "labels")[pos, ]
+      }  
 
       rlang::warn(sprintf("Passed a group with no more than five observations.\n(%s)",
-        paste(names(attr(df, "labels")), "==", values, collapse = " and ")))
+        paste(vars, "==", values, collapse = " and ")))
     } else {
-      idx <- attr(df, "indices")[[pos]]
-
-      label <- attr(df, "labels")[pos, ]
-      label <- paste(names(attr(df, "labels")), "==", label, collapse = ",")
+      if (utils::packageVersion("dplyr") >= "0.8.0") {
+        idx <- (attr(df, "groups") %>% select(tidyselect::matches("\\.rows")) %>% pull)[[pos]]
+        
+        values <- sapply((attr(df, "groups") %>% select(-tidyselect::matches("\\.rows"))), as.character)[pos, ]
+        label <- paste(names(attr(df, "groups") %>% select(-tidyselect::matches("\\.rows"))), "==", values, collapse = ",")
+      } else {
+        idx <- attr(df, "indices")[[pos]] + 1
+        
+        label <- sapply(attr(df, "labels")[pos, ], as.character)
+        label <- paste(names(attr(df, "labels")), "==", label, collapse = ",")
+      }  
 
       M <- cor(df[idx, names(df)[idx_numeric]],
         use = "pairwise.complete.obs")
@@ -339,8 +383,17 @@ plot_correlate_group_impl <- function(df, vars) {
     }
   }
 
-  cnt <- nrow(attr(df, "labels"))
-
-  tmp <- lapply(seq(cnt), plot_correlate, df, vars)
+  if (utils::packageVersion("dplyr") >= "0.8.0") {
+    cnt <- nrow(attr(df, "groups")) 
+    
+    idx <- seq(cnt)
+    idx <- idx[sapply(pull(attr(df, "groups")[, ".rows"]), length) > 0]
+  } else {
+    cnt <- nrow(attr(df, "labels"))
+    
+    idx <- seq(cnt)
+  } 
+  
+  tmp <- lapply(idx, plot_correlate, df, vars)
 }
 

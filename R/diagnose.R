@@ -218,7 +218,7 @@ diagnose_category.data.frame <- function(.data, ..., top = 10, add_character = T
 diagn_category_impl <- function(df, vars, top, add_character) {
   if (length(vars) == 0) vars <- names(df)
 
-  if (length(vars) == 1 & !tibble::is.tibble(df)) df <- as.tibble(df)
+  if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
 
   if (add_character)
     idx_factor <- find_class(df[, vars], type = "categorical2")
@@ -349,7 +349,7 @@ diagnose_numeric.data.frame <- function(.data, ...) {
 diagn_numeric_impl <- function(df, vars) {
   if (length(vars) == 0) vars <- names(df)
 
-  if (length(vars) == 1 & !tibble::is.tibble(df)) df <- as.tibble(df)
+  if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
 
   idx_numeric <- find_class(df[, vars], type = "numerical")
 
@@ -479,7 +479,7 @@ diagnose_outlier.data.frame <- function(.data, ...) {
 diagnose_outlier_impl <- function(df, vars) {
   if (length(vars) == 0) vars <- names(df)
 
-  if (length(vars) == 1 & !tibble::is.tibble(df)) df <- as.tibble(df)
+  if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
 
   idx_numeric <- find_class(df[, vars], type = "numerical")
 
@@ -613,8 +613,8 @@ plot_outlier.data.frame <- function(.data, ..., col = "lightblue") {
 plot_outlier_impl <- function(df, vars, col = "lightblue") {
   if (length(vars) == 0) vars <- names(df)
 
-  if (length(vars) == 1 & !tibble::is.tibble(df)) 
-    df <- tibble::as.tibble(df)
+  if (length(vars) == 1 & !tibble::is_tibble(df)) 
+    df <- as_tibble(df)
 
   idx_numeric <- find_class(df[, vars], type = "numerical")
   

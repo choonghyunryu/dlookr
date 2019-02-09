@@ -1,3 +1,23 @@
+dlookr 0.3.8
+----------------------------------------------------------------
+* summary.imputation() modified features to correspond to dplyr 0.8.0 or later.
+
+* describe.grouped_df() modified features to correspond to dplyr 0.8.0 or later.
+
+* normality.grouped_df() modified features to correspond to dplyr 0.8.0 or later.
+
+* plot_normality.grouped_df() modified features to correspond to dplyr 0.8.0 or later.
+
+* correlate.grouped_df() modified features to correspond to dplyr 0.8.0 or later.
+
+* plot_correlate.grouped_df() modified features to correspond to dplyr 0.8.0 or later.
+
+* relate.target_df() modified features to correspond to dplyr 0.8.0 or later.
+
+* plot.relate() modified features to correspond to dplyr 0.8.0 or later.
+
+* plot_correlate.grouped_df() fixed error in the main title of the plot output the factor value as an integer.
+
 dlookr 0.3.7
 ----------------------------------------------------------------
 * diagnose_report() fixed errors when number of numeric variables is zero.
