@@ -46,7 +46,6 @@ The get_column_info() retrieves the column information of the DBMS table through
 
 \examples{
 library(dplyr)
-library(dbplyr)
 
 # Generate data for the example
 carseats <- ISLR::Carseats

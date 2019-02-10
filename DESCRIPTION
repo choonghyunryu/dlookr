@@ -19,7 +19,6 @@ LazyData: true
 Depends:
     R (>= 3.2.0)
 Imports: dplyr,
-    dbplyr,
     magrittr,
     tidyr,
     ggplot2,
@@ -43,10 +42,11 @@ Imports: dplyr,
     methods,
     DMwR,
     mice,
-    rpart,
-    randomForest
+    rpart
 Suggests: ISLR,
     nycflights13,
+    randomForest,
+    dbplyr,
     DBI,
     RSQLite,
     testthat
@@ -54,4 +54,4 @@ Author: Choonghyun Ryu [aut, cre]
 Maintainer: Choonghyun Ryu <choonghyun.ryu@gmail.com>    
 BugReports: https://github.com/choonghyunryu/dlookr/issues
 VignetteBuilder: knitr    
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1

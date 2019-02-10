@@ -4,8 +4,8 @@
 \alias{binning}
 \title{Binning the Numeric Data}
 \usage{
-binning(x, nbins, type = c("quantile", "equal", "pretty", "kmeans", "bclust"),
-  ordered = TRUE, labels = NULL)
+binning(x, nbins, type = c("quantile", "equal", "pretty", "kmeans",
+  "bclust"), ordered = TRUE, labels = NULL)
 }
 \arguments{
 \item{x}{numeric vector for binning.}

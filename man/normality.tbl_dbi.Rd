@@ -4,8 +4,8 @@
 \alias{normality.tbl_dbi}
 \title{Performs the Shapiro-Wilk test of normality}
 \usage{
-\method{normality}{tbl_dbi}(.data, ..., sample = 5000, in_database = FALSE,
-  collect_size = Inf)
+\method{normality}{tbl_dbi}(.data, ..., sample = 5000,
+  in_database = FALSE, collect_size = Inf)
 }
 \arguments{
 \item{.data}{a tbl_dbi.}
@@ -59,7 +59,6 @@ The number of observations supported by the stats::shapiro.test function is 3 to
 \examples{
 \donttest{
 library(dplyr)
-library(dbplyr)
 
 # Generate data for the example
 carseats <- ISLR::Carseats

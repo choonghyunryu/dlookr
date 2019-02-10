@@ -18,6 +18,7 @@ dlookr 0.3.8
 
 * plot_correlate.grouped_df() fixed error in the main title of the plot output the factor value as an integer.
 
+
 dlookr 0.3.7
 ----------------------------------------------------------------
 * diagnose_report() fixed errors when number of numeric variables is zero.

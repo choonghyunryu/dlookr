@@ -51,7 +51,6 @@ The information derived from the numerical data compute is as follows.
 
 \examples{
 library(dplyr)
-library(dbplyr)
 
 # Generate data for the example
 carseats <- ISLR::Carseats

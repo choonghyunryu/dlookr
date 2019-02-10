@@ -138,48 +138,48 @@ cat_num <- relate(categ, Sales)
 cat_num
 summary(cat_num)
 
-## ----target_by3, fig.width = 7, fig.height = 5, warning=FALSE----------
+## ----target_by3, fig.width = 7, fig.height = 5, warning=FALSE------------
 plot(cat_num)
 
-## ----target_by4--------------------------------------------------------
+## ----target_by4----------------------------------------------------------
 # If the variable of interest is a categorical variable
 cat_cat <- relate(categ, ShelveLoc)
 cat_cat
 summary(cat_cat)
 
-## ----target_by5, fig.width = 7, fig.height = 5, warning=FALSE----------
+## ----target_by5, fig.width = 7, fig.height = 5, warning=FALSE------------
 plot(cat_cat)
 
-## ----target_by6--------------------------------------------------------
+## ----target_by6----------------------------------------------------------
 # If the variable of interest is a numarical variable
 num <- target_by(carseats, Sales)
 
-## ----target_by7--------------------------------------------------------
+## ----target_by7----------------------------------------------------------
 # If the variable of interest is a numarical variable
 num_num <- relate(num, Price)
 num_num
 summary(num_num)
 
-## ----target_by8, fig.width = 7, fig.height = 5, warning=FALSE----------
+## ----target_by8, fig.width = 7, fig.height = 5, warning=FALSE------------
 plot(num_num)
 
-## ----target_by8_2, fig.width = 7, fig.height = 5, warning=FALSE--------
+## ----target_by8_2, fig.width = 7, fig.height = 5, warning=FALSE----------
 plot(num_num, hex_thres = 350)
 
-## ----target_by9--------------------------------------------------------
+## ----target_by9----------------------------------------------------------
 # If the variable of interest is a categorical variable
 num_cat <- relate(num, ShelveLoc)
 num_cat
 summary(num_cat)
 
-## ----target_by10, fig.width = 7, fig.height = 5, warning=FALSE---------
+## ----target_by10, fig.width = 7, fig.height = 5, warning=FALSE-----------
 plot(num_cat)
 
-## ----eda_report, eval=FALSE--------------------------------------------
+## ----eda_report, eval=FALSE----------------------------------------------
 #  carseats %>%
 #    eda_report(target = Sales)
 
-## ---- eval=FALSE-------------------------------------------------------
+## ---- eval=FALSE---------------------------------------------------------
 #  carseats %>%
 #    eda_report(target = Sales, output_format = "html", output_file = "EDA.html")
 
@@ -213,13 +213,12 @@ knitr::include_graphics('img/eda_table_html.png')
 ## ----eda_normality_html, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="EDA Report Normality Test Information (Web)"----
 knitr::include_graphics('img/eda_normality_html.png')
 
-## ----dbi_table, warning=FALSE, message=FALSE---------------------------
+## ----dbi_table, warning=FALSE, message=FALSE-----------------------------
 if (!require(DBI)) install.packages('DBI')
 if (!require(RSQLite)) install.packages('RSQLite')
 if (!require(dplyr)) install.packages('dplyr')
 if (!require(dbplyr)) install.packages('dbplyr')
 
-library(dbplyr)
 library(dplyr)
 
 carseats <- ISLR::Carseats
@@ -232,7 +231,7 @@ con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 # copy carseats to the DBMS with a table named TB_CARSEATS
 copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
 
-## ----dbi_describe------------------------------------------------------
+## ----dbi_describe--------------------------------------------------------
 # Positive values select variables
 con_sqlite %>% 
   tbl("TB_CARSEATS") %>% 
@@ -259,7 +258,7 @@ con_sqlite %>%
   group_by(ShelveLoc, US) %>%
   describe(Sales)
 
-## ----dbi_normality-----------------------------------------------------
+## ----dbi_normality-------------------------------------------------------
 # Test all numerical variables by 'ShelveLoc' and 'US',
 # and extract only those with 'ShelveLoc' variable level is "Good".
 con_sqlite %>% 
@@ -289,7 +288,7 @@ con_sqlite %>%
  normality(log_income) %>%
  filter(p_value > 0.01)
 
-## ----plot_normality_dbi, fig.width = 7, fig.height = 5-----------------
+## ----plot_normality_dbi, fig.width = 7, fig.height = 5-------------------
 # Plot 'Sales' variable by 'ShelveLoc' and 'US'
 con_sqlite %>% 
   tbl("TB_CARSEATS") %>% 
@@ -304,7 +303,7 @@ con_sqlite %>%
   group_by(US) %>%
   plot_normality(Income)
 
-## ----dbi_correlation---------------------------------------------------
+## ----dbi_correlation-----------------------------------------------------
 # Correlation coefficient
 # that eliminates redundant combination of variables
 con_sqlite %>% 
@@ -338,7 +337,7 @@ con_sqlite %>%
   filter(coef_corr < 0) %>%
   filter(abs(coef_corr) > 0.5)
 
-## ----plot_correlation_dbi, fig.width = 7, fig.height = 5---------------
+## ----plot_correlation_dbi, fig.width = 7, fig.height = 5-----------------
 # Extract only those with 'ShelveLoc' variable level is "Good",
 # and visualize correlation plot of 'Sales' variable by 'Urban'
 # and 'US' variables.
@@ -348,7 +347,7 @@ con_sqlite %>%
   group_by(Urban, US) %>%
   plot_correlate(Sales)
 
-## ----dbi_ctarget_by----------------------------------------------------
+## ----dbi_ctarget_by------------------------------------------------------
 # If the target variable is a categorical variable
 categ <- target_by(con_sqlite %>% tbl("TB_CARSEATS") , US)
 
@@ -357,10 +356,10 @@ cat_num <- relate(categ, Sales)
 cat_num
 summary(cat_num)
 
-## ----plot_target_by_dbi, fig.width = 7, fig.height = 5-----------------
+## ----plot_target_by_dbi, fig.width = 7, fig.height = 5-------------------
 plot(cat_num)
 
-## ----dbi_diag_report, eval=FALSE---------------------------------------
+## ----dbi_diag_report, eval=FALSE-----------------------------------------
 #  ## target variable is categorical variable
 #  # reporting the EDA information
 #  # create pdf file. file name is EDA_Report.pdf

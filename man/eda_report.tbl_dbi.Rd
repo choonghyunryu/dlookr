@@ -4,9 +4,10 @@
 \alias{eda_report.tbl_dbi}
 \title{Reporting the information of EDA for table of the DBMS}
 \usage{
-\method{eda_report}{tbl_dbi}(.data, target = NULL, output_format = c("pdf",
-  "html"), output_file = NULL, font_family = NULL, output_dir = tempdir(),
-  in_database = FALSE, collect_size = Inf, ...)
+\method{eda_report}{tbl_dbi}(.data, target = NULL,
+  output_format = c("pdf", "html"), output_file = NULL,
+  font_family = NULL, output_dir = tempdir(), in_database = FALSE,
+  collect_size = Inf, ...)
 }
 \arguments{
 \item{.data}{a tbl_dbi.}
@@ -91,7 +92,6 @@ See vignette("EDA") for an introduction to these concepts.
 \examples{
 \donttest{
 library(dplyr)
-library(dbplyr)
 
 # Generate data for the example
 carseats <- ISLR::Carseats

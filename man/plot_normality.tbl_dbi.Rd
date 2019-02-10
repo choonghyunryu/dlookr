@@ -53,7 +53,6 @@ The plot derived from the numerical data vizualization is as follows.
 \examples{
 \donttest{
 library(dplyr)
-library(dbplyr)
 
 # Generate data for the example
 carseats <- ISLR::Carseats

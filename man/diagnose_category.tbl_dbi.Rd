@@ -62,7 +62,6 @@ See vignette("diagonosis") for an introduction to these concepts.
 
 \examples{
 library(dplyr)
-library(dbplyr)
 
 # Generate data for the example
 carseats <- ISLR::Carseats

@@ -25,6 +25,13 @@ resolving skewness, and binning of continuous variables.
 To learn more about dlookr, start with the vignettes:
 `browseVignettes(package = "dlookr")`
 }
+\seealso{
+Useful links:
+\itemize{
+  \item Report bugs at \url{https://github.com/choonghyunryu/dlookr/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Choonghyun Ryu \email{choonghyun.ryu@gmail.com}
 

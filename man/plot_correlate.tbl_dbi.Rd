@@ -39,7 +39,6 @@ one variable in the ... argument, the specified number of plots are drawn.
 }
 \examples{
 library(dplyr)
-library(dbplyr)
 
 # Generate data for the example
 carseats <- ISLR::Carseats

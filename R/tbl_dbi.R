@@ -35,7 +35,6 @@
 #' @export
 #' @examples
 #' library(dplyr)
-#' library(dbplyr)
 #' 
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
@@ -111,7 +110,6 @@ get_column_info <- function(df) {
 #' @import dplyr
 #' @examples
 #' library(dplyr)
-#' library(dbplyr)
 #' 
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
@@ -255,7 +253,6 @@ diagn_std_impl_dbi <- function(df, vars) {
 #' @export
 #' @examples
 #' library(dplyr)
-#' library(dbplyr)
 #' 
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
@@ -403,7 +400,6 @@ diagn_category_impl_dbi <- function(df, vars, top) {
 #' @export
 #' @examples
 #' library(dplyr)
-#' library(dbplyr)
 #' 
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
@@ -507,7 +503,6 @@ diagnose_numeric.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_si
 #' @export
 #' @examples
 #' library(dplyr)
-#' library(dbplyr)
 #' 
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
@@ -608,7 +603,6 @@ diagnose_outlier.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_si
 #' @export
 #' @examples
 #' library(dplyr)
-#' library(dbplyr)
 #' 
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
@@ -717,7 +711,6 @@ plot_outlier.tbl_dbi <- function(.data, ..., col = "lightblue",
 #' @examples
 #' \donttest{
 #' library(dplyr)
-#' library(dbplyr)
 #' 
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
@@ -845,7 +838,6 @@ normality.tbl_dbi <- function(.data, ..., sample = 5000,
 #' @examples
 #' \donttest{
 #' library(dplyr)
-#' library(dbplyr)
 #' 
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
@@ -949,7 +941,6 @@ plot_normality.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
 #' @export
 #' @examples
 #' library(dplyr)
-#' library(dbplyr)
 #' 
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
@@ -1072,7 +1063,6 @@ correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = In
 #' @export
 #' @examples
 #' library(dplyr)
-#' library(dbplyr)
 #' 
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
@@ -1200,7 +1190,6 @@ plot_correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
 #' @export
 #' @examples
 #' library(dplyr)
-#' library(dbplyr)
 #' 
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
@@ -1298,7 +1287,6 @@ describe.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = Inf
 #' @seealso \code{\link{target_by.data.frame}}, \code{\link{relate}}.
 #' @examples
 #' library(dplyr)
-#' library(dbplyr)
 #' 
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
@@ -1426,7 +1414,6 @@ target_by.tbl_dbi <- function(.data, target, in_database = FALSE, collect_size =
 #' @examples
 #' \donttest{
 #' library(dplyr)
-#' library(dbplyr)
 #' 
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
@@ -1549,7 +1536,6 @@ diagnose_report.tbl_dbi <- function(.data, output_format = c("pdf", "html"),
 #' @examples
 #' \donttest{
 #' library(dplyr)
-#' library(dbplyr)
 #' 
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats

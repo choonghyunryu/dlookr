@@ -4,8 +4,8 @@
 \alias{transform}
 \title{Data Transformations}
 \usage{
-transform(x, method = c("zscore", "minmax", "log", "log+1", "sqrt", "1/x",
-  "x^2", "x^3"))
+transform(x, method = c("zscore", "minmax", "log", "log+1", "sqrt",
+  "1/x", "x^2", "x^3"))
 }
 \arguments{
 \item{x}{numeric vector for transformation.}
