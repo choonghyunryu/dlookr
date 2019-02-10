@@ -88,9 +88,9 @@ find_class <- function(df, type = c("numerical", "categorical", "categorical2"),
   if (type == "numerical") {
     idx <- which(clist %in% c("integer", "numeric"))
   } else if (type == "categorical") {
-    idx <- which(clist %in% c("factor", "ordered"))
+    idx <- which(clist %in% c("factor", "ordered", "labelled"))
   } else if (type == "categorical2") {
-    idx <- which(clist %in% c("factor", "ordered", "character"))
+    idx <- which(clist %in% c("factor", "ordered", "labelled", "character"))
   }
 
   if (!index) idx <- names(df)[idx]
