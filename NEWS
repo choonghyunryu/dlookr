@@ -1,3 +1,11 @@
+dlookr 0.3.9
+----------------------------------------------------------------
+* find_class() handled 'labelled' vectors as categorical variables.
+
+* binning() fixed error to converts a numeric variable to a categorization variable. (@Green-16, #4).
+
+* binning_by() fixed error to converts a numeric variable to a categorization variable. (@Green-16, #4).
+
 dlookr 0.3.8
 ----------------------------------------------------------------
 * summary.imputation() modified features to correspond to dplyr 0.8.0 or later.

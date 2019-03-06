@@ -147,7 +147,7 @@ binning <- function(x, nbins,
     breaks <- ci$brks
   }
 
-  fct <- cut(x, breaks = breaks, labels = labels)
+  fct <- cut(x, breaks = breaks, labels = labels, include.lowest = TRUE)
 
   if (ordered == TRUE)
     fct <- ordered(fct)
@@ -384,7 +384,7 @@ binning_by <- function(df, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
       breaks <- unique(c(ifelse(min(breaks) == dup, dup - 1, dup + 1), breaks))
     }
 
-    fct <- cut(df[, x], breaks = breaks, labels = labels)
+    fct <- cut(df[, x], breaks = breaks, labels = labels, include.lowest = TRUE)
 
     if (ordered == TRUE)
       fct <- ordered(fct)
