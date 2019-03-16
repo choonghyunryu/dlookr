@@ -207,6 +207,7 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL, print_flag = T
     if (!na_flag) {
       data <- pull(df, x)
     } else {
+      suppressWarnings(RNGversion("3.5.0"))
       set.seed(seed = seed)
       model <- mice(df[, !names(df) %in% y], method = "rf", printFlag = print_flag)
 

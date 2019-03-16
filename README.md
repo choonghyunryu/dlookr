@@ -455,9 +455,11 @@ When data analysis is performed, data containing missing values is often encount
 ``` r
 carseats <- ISLR::Carseats
 
+suppressWarnings(RNGversion("3.5.0"))
 set.seed(123)
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 
+suppressWarnings(RNGversion("3.5.0"))
 set.seed(456)
 carseats[sample(seq(NROW(carseats)), 10), "Urban"] <- NA
 ```
@@ -1569,14 +1571,14 @@ bin
 #> binned type: quantile
 #> number of bins: 10
 #> x
-#>     (21,30]     (30,39]     (39,48]     (48,62]     (62,69]     (69,78] 
-#>          36          37          38          40          42          33 
+#>     [21,30]     (30,39]     (39,48]     (48,62]     (62,69]     (69,78] 
+#>          40          37          38          40          42          33 
 #>   (78,86.6] (86.6,96.6]  (96.6,109]   (109,120]        <NA> 
-#>          36          38          38          38          24
+#>          36          38          38          38          20
 # Summarise bins class object
 summary(bin)
 #>         levels freq   rate
-#> 1      (21,30]   36 0.0900
+#> 1      [21,30]   40 0.1000
 #> 2      (30,39]   37 0.0925
 #> 3      (39,48]   38 0.0950
 #> 4      (48,62]   40 0.1000
@@ -1586,7 +1588,7 @@ summary(bin)
 #> 8  (86.6,96.6]   38 0.0950
 #> 9   (96.6,109]   38 0.0950
 #> 10   (109,120]   38 0.0950
-#> 11        <NA>   24 0.0600
+#> 11        <NA>   20 0.0500
 # Plot bins class object
 plot(bin)
 ```
@@ -1602,32 +1604,32 @@ bin
 #> number of bins: 4
 #> x
 #>  LQ1  UQ1  LQ3  UQ3 <NA> 
-#>   91  102   89   94   24
+#>   95  102   89   94   20
 # Using another type argument
 binning(carseats$Income, nbins = 5, type = "equal")
 #> binned type: equal
 #> number of bins: 5
 #> x
-#>   (21,40.8] (40.8,60.6] (60.6,80.4]  (80.4,100]   (100,120]        <NA> 
-#>          77          65          94          80          60          24
+#>   [21,40.8] (40.8,60.6] (60.6,80.4]  (80.4,100]   (100,120]        <NA> 
+#>          81          65          94          80          60          20
 binning(carseats$Income, nbins = 5, type = "pretty")
 #> binned type: pretty
 #> number of bins: 5
 #> x
-#>   (20,40]   (40,60]   (60,80]  (80,100] (100,120]      <NA> 
+#>   [20,40]   (40,60]   (60,80]  (80,100] (100,120]      <NA> 
 #>        81        65        94        80        60        20
 binning(carseats$Income, nbins = 5, type = "kmeans")
 #> binned type: kmeans
 #> number of bins: 5
 #> x
-#>   (21,36.5] (36.5,55.5] (55.5,75.5] (75.5,97.5]  (97.5,120]        <NA> 
-#>          62          62          91          86          75          24
+#>   [21,36.5] (36.5,55.5] (55.5,75.5] (75.5,97.5]  (97.5,120]        <NA> 
+#>          66          62          91          86          75          20
 binning(carseats$Income, nbins = 5, type = "bclust")
 #> binned type: bclust
 #> number of bins: 5
 #> x
-#>   (21,34.5] (34.5,55.5] (55.5,77.5] (77.5,96.5]  (96.5,120]        <NA> 
-#>          53          71          98          78          76          24
+#>   [21,34.5] (34.5,55.5] (55.5,77.5] (77.5,96.5]  (96.5,120]        <NA> 
+#>          57          71          98          78          76          20
 
 # -------------------------
 # Using pipes & dplyr
@@ -1646,7 +1648,7 @@ carseats %>%
 #> # Groups:   ShelveLoc [1]
 #>    ShelveLoc Income_bin   freq
 #>    <fct>     <ord>       <int>
-#>  1 Medium    (21,30]        24
+#>  1 Medium    [21,30]        25
 #>  2 Medium    (62,69]        24
 #>  3 Medium    (48,62]        23
 #>  4 Medium    (39,48]        21

@@ -13,9 +13,11 @@ str(Carseats)
 ## ----missing-------------------------------------------------------------
 carseats <- ISLR::Carseats
 
+suppressWarnings(RNGversion("3.5.0"))
 set.seed(123)
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 
+suppressWarnings(RNGversion("3.5.0"))
 set.seed(456)
 carseats[sample(seq(NROW(carseats)), 10), "Urban"] <- NA
 

@@ -6,6 +6,13 @@ dlookr 0.3.9
 
 * binning_by() fixed error to converts a numeric variable to a categorization variable. (@Green-16, #4).
 
+* imputate_na() modified to set the random number generation version to 3.5.0 in the 'mice' method.
+
+* Set the random number generation version to 3.5.0 before calling set.seed() in the code of vignette of "EDA".
+
+* Set the random number generation version to 3.5.0 before calling set.seed() in the code of vignette of "Data Transformation".
+
+
 dlookr 0.3.8
 ----------------------------------------------------------------
 * summary.imputation() modified features to correspond to dplyr 0.8.0 or later.
