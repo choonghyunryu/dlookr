@@ -4,6 +4,8 @@ dlookr <img src="inst/img/detective_2.png" align="right" height="120" width="103
 =====================================================================================
 
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/dlookr)](https://cran.r-project.org/package=dlookr)
+[![Total
+Downloads](https://cranlogs.r-pkg.org/badges/grand-total/dlookr)](https://cran.r-project.org/package=dlookr)
 
 Overview
 --------
