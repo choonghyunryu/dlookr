@@ -124,7 +124,7 @@ imputate_na.data.frame <- function(.data, xvar, yvar = NULL,
 
 #' @import tibble
 #' @import dplyr
-#' @import mice
+#' @importFrom mice mice
 #' @importFrom DMwR knnImputation
 #' @importFrom rpart rpart
 #' @importFrom stats predict
@@ -209,7 +209,13 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL, print_flag = T
     } else {
       suppressWarnings(RNGversion("3.5.0"))
       set.seed(seed = seed)
-      model <- mice(df[, !names(df) %in% y], method = "rf", printFlag = print_flag)
+      
+      if (requireNamespace("mice", quietly = TRUE)) {
+        model <- mice::mice(df[, !names(df) %in% y], method = "rf", printFlag = print_flag)
+      } else {
+        stop("Package 'mice' needed for this function to work. Please install it.", 
+             call. = FALSE)
+      }
 
       if (type == "numerical") {
         pred <- apply(model$imp[[x]], 1, mean)

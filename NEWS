@@ -1,3 +1,8 @@
+dlookr 0.3.10
+----------------------------------------------------------------
+* imputate_na() fixed error to imputation using 'method' argument value is "mice".
+
+
 dlookr 0.3.9
 ----------------------------------------------------------------
 * find_class() handled 'labelled' vectors as categorical variables.
