@@ -618,14 +618,9 @@ plot_outlier_impl <- function(df, vars, col = "lightblue") {
 
   idx_numeric <- find_class(df[, vars], type = "numerical")
   
-  if (length(idx_numeric) == 0) {
-    message("There is no numeric variable in the data or variable list.\n")
-    invisible(NULL)
-  }
-
   plot_outliers <- function(df, var, col) {
     x <- dplyr::pull(df, var)
-
+    
     op <- par(no.readonly = TRUE)
     par(mfrow = c(2, 2), oma = c(0, 0, 3, 0), mar = c(2, 4, 2, 2))
     on.exit(par(op))
@@ -641,8 +636,23 @@ plot_outlier_impl <- function(df, vars, col = "lightblue") {
     title(sprintf("Outlier Diagnosis Plot (%s)", var), outer = TRUE)
   }
 
-  tmp <- lapply(vars[idx_numeric],
-                function(x) plot_outliers(df, x, col))
+  if (length(idx_numeric) == 0) {
+    message("There is no numeric variable in the data or variable list.\n")
+    invisible(NULL)
+  } else if (length(idx_numeric) == 1 & all(is.na(df[, vars]))) {
+    message("All observed values for numeric variables are NA.\n")
+    invisible(NULL)
+  } else {
+    idx_na <- sapply(vars[idx_numeric],
+                     function(x) all(is.na(df[, x])))
+    if (sum(idx_na) > 0) {
+      name_null <- paste(vars[idx_numeric][idx_na], collapse = ",")
+      message(sprintf("All observations for the numerical variable %s are NA.", name_null))
+    }
+    
+    tmp <- lapply(vars[idx_numeric][!idx_na],
+                  function(x) plot_outliers(df, x, col))
+  }
 }
 
 

@@ -1,3 +1,12 @@
+dlookr 0.3.11
+----------------------------------------------------------------
+* plot_outlier() fixed error run against a dataset with a numeric column where all values are NA(@rhinomlbox, #8).
+
+* describe() fixed error run against a dataset with a numeric column where all values are NA.
+
+* transformation_report() fixed the problem of trying to output Korean language report in English operating system environment
+
+
 dlookr 0.3.10
 ----------------------------------------------------------------
 * imputate_na() fixed error to imputation using 'method' argument value is "mice".

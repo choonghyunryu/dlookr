@@ -330,8 +330,8 @@ transformation_report <- function(.data, target = NULL, output_format = c("pdf",
     latex_main <- "Transformation_Report_KR.Rnw"
     latex_sub <- "03_Transformation_KR.Rnw"
   } else {
-    latex_main <- "Transformation_Report_KR.Rnw"
-    latex_sub <- "03_Transformation_KR.Rnw"
+    latex_main <- "Transformation_Report.Rnw"
+    latex_sub <- "03_Transformation.Rnw"
   } 
   
   if (!is.null(font_family)) {
