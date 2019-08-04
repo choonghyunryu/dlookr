@@ -2,7 +2,9 @@ dlookr 0.3.11
 ----------------------------------------------------------------
 * plot_outlier() fixed error run against a dataset with a numeric column where all values are NA(@rhinomlbox, #8).
 
-* describe() fixed error run against a dataset with a numeric column where all values are NA.
+* describe() fixed error run against a dataset with a numeric column where number of complate values are 0 to 3.
+
+* describe.grouped_df() fixed error run against a dataset with a numeric column where number of complate values are 0 to 3.
 
 * transformation_report() fixed the problem of trying to output Korean language report in English operating system environment
 

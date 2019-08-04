@@ -123,20 +123,41 @@ describe_impl <- function(df, vars) {
     vname <- c("mean", "sd", "se_mean", "IQR", "skewness", "kurtosis",
       "p00", "p01", "p05", "p10", "p20", "p25", "p30", "p40", "p50",
       "p60", "p70", "p75", "p80", "p90", "p95", "p99", "p100")
+    
+    cnt_complete <- sum(complete.cases(x))
+    
+    numsum <- as_tibble(matrix(NA, ncol = length(vname) + 2, nrow = 1))
+    
+    if (cnt_complete >= 4) {
+      result <- RcmdrMisc::numSummary(x, statistics = stats,
+                                      quantiles = quant)
+      numsum[, 3:(length(vname) + 2)] <- as_tibble(result$table)
+    } else {
+      if (cnt_complete <= 2) {
+        result <- RcmdrMisc::numSummary(x, statistics = stats[1:5],
+                                        quantiles = quant)
+        numsum[, 3:6] <- as_tibble(result$table)[, 1:4]
+        numsum[, 9:(length(vname) + 2)] <- as_tibble(result$table)[, 7:21]
+      } else if (cnt_complete <= 3) {
+        result <- RcmdrMisc::numSummary(x, statistics = stats[1:6],
+                                        quantiles = quant)
+        numsum[, 3:7] <- as_tibble(result$table)[, 1:5]
+        numsum[, 9:(length(vname) + 2)] <- as_tibble(result$table)[, 7:21]
+      }
+    }
+    
+    names(numsum)[3:(length(vname) + 2)] <- vname
 
-    result <- RcmdrMisc::numSummary(x, statistics = stats,
-      quantiles = quant)
+    numsum[, 1] <- cnt_complete
+    numsum[, 2] <- length(x) - cnt_complete
 
-    numsum <- as_tibble(result$table)
-    names(numsum) <- vname
-
-    tibble::add_column(numsum, n = result$n,
-      na = ifelse(is.null(result$NAs), 0, result$NAs),
-      .before = 1)
+    names(numsum)[1:2] <- c("n", "na")
+    
+    numsum
   }
 
   statistic <- lapply(vars[idx_numeric],
-    function(x) num_summary(pull(df, x)))
+                      function(x) num_summary(pull(df, x)))
 
   tibble(variable = vars[idx_numeric], statistic) %>%
     tidyr::unnest()
@@ -165,8 +186,6 @@ describe_group_impl <- function(df, vars, margin) {
   idx_numeric <- find_class(df[, vars], type = "numerical")
 
   num_summary <- function(x, .data, vars) {
-    n <- length(x)
-
     stats <- c("mean", "sd", "se(mean)", "IQR", "quantiles",
       "skewness", "kurtosis")
 
@@ -177,21 +196,27 @@ describe_group_impl <- function(df, vars, margin) {
       "p00", "p01", "p05", "p10", "p20", "p25", "p30", "p40", "p50",
       "p60", "p70", "p75", "p80", "p90", "p95", "p99", "p100")
 
-    if (n <= 3) {
-      stats <- stats[-c(6:7)]
-    }
-
     if (utils::packageVersion("dplyr") >= "0.8.0") flag <- 0
     else flag <- 1
+    
+    cnt_complete <- sum(complete.cases(.data[x + flag, vars]))
+    
+    if (cnt_complete <= 2) {
+      stats <- stats[-c(6:7)]
+    } else if (cnt_complete <= 3) {
+      stats <- stats[-c(7)]
+    }
     
     result <- RcmdrMisc::numSummary(.data[x + flag, vars],
       statistics = stats, quantiles = quant)
 
     numsum <- as_tibble(result$table)
 
-    if (n <= 3) {
+    if (cnt_complete <= 2) {
       numsum <- cbind(numsum[, 1:4], skewness = NA,
         kurtosis = NA, numsum[, 5:21])
+    } else if (cnt_complete <= 3) {
+      numsum <- cbind(numsum[, 1:5], kurtosis = NA, numsum[, 5:21])
     }
 
     names(numsum) <- vname
