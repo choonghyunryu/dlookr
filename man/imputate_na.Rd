@@ -46,6 +46,8 @@ Attributes of imputation class is as follows.
 \item na_pos : position of missing value in predictor.
 \item seed : the random seed used in mice. only used "mice" method.
 \item type : "missing values". type of imputation.
+\item message : a message tells you if the result was successful.
+\item success : Whether the imputation was successful.
 }
 }
 \description{

@@ -145,6 +145,12 @@ if (length(nalist) > 0) {
       cat(sprintf("\\subsubsection{%s 방법의 결측치 대체}\n", method[j]))
 
       impu <- imputate_na(edaData, nalist[i], targetVariable, method = method[j], print_flag = FALSE)
+      
+      if (!attr(impu, "success")) {
+        cat(attr(impu, "message"), "\n\n")
+        next
+      }
+      
       tab <- imputae_summary(impu)
 
       cap <- sprintf("'%s' 방법에 대한 %s의 기술통계량", method[j], nalist[i])
@@ -365,8 +371,21 @@ if (length(var_numeric) > 0) {
       cat("\n")
       cat(sprintf("\\subsubsection{%s 방법의 비닝}\n", method[j]))
 
-      binn <- binning(pull(edaData, var_numeric[i]), type = method[j])
+      error_flag <- FALSE
+      tryCatch(binn <- binning(pull(edaData, var_numeric[i]), type = method[j]),
+        error = function(e) {
+          msg <<- e$message
+          error_flag <<- TRUE
+      }, finally = NULL)
+      
+      if (error_flag) {
+        cat(msg, "\n\n")
+        rm(msg, error_flag)
+        next
+      }
+      
       tab <- summary(binn)
+      tab$levels <- c(paste("{", tab$levels[1], "}", sep = ""), as.character(tab$levels)[-1])
 
       cap <- sprintf("'%s' 방법에 대한 %s의 범주의 도수분포", method[j], var_numeric[i])
       cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\_")

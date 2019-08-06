@@ -6,7 +6,23 @@ dlookr 0.3.11
 
 * describe.grouped_df() fixed error run against a dataset with a numeric column where number of complate values are 0 to 3.
 
-* transformation_report() fixed the problem of trying to output Korean language report in English operating system environment
+* transformation_report() fixed the problem of trying to output Korean language report in English operating system environment.
+
+* transformation_report() fixed the LaTeX error like "Illegal unit of measure (pt inserted)" in Binning section. 
+
+* transformation_report() fixed the error imputate_na() function call. 
+
+* binning() fixed error like "'breaks' are not unique".
+
+* binning() fixed error of binning with a column where all values are NA. 
+
+* imputate_na() fixed the problem of imputation using 'rpart' method with a column where all values are NA.  
+
+* imputate_na() fixed the problem of imputation using 'mode' method with a column where all values are NA. 
+
+* imputate_na() fixed the problem of imputation using 'mice' method with a column where all values are NA. 
+
+* imputate_na() fixed the problem of imputation using 'knn' method when the complete case is small.  
 
 
 dlookr 0.3.10

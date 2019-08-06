@@ -164,6 +164,12 @@ if (length(nalist) > 0) {
       cat("#### Imputate missing values with '", method[j], "'\n")
       
       impu <- imputate_na(edaData, nalist[i], targetVariable, method = method[j], print_flag = FALSE)
+      
+      if (!attr(impu, "success")) {
+        cat(attr(impu, "message"), "<br><br><br>\n")
+        next
+      }
+      
       tab <- imputae_summary(impu)
       
       kable(tab, digits = 2, format = "html",
@@ -326,7 +332,19 @@ if (length(var_numeric) > 0) {
       cat("\n")
       cat("#### Binning with '", method[j], "'\n")
       
-      binn <- binning(pull(edaData, var_numeric[i]), type = method[j])
+      error_flag <- FALSE
+      tryCatch(binn <- binning(pull(edaData, var_numeric[i]), type = method[j]),
+        error = function(e) {
+          msg <<- e$message
+          error_flag <<- TRUE
+      }, finally = NULL)
+      
+      if (error_flag) {
+        cat(msg, "\n\n")
+        rm(msg, error_flag)
+        next
+      }
+      
       tab <- summary(binn)
       
       kable(tab, digits = 4, format = "html",

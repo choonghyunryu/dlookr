@@ -145,6 +145,12 @@ if (length(nalist) > 0) {
       cat("\\subsubsection{Imputate missing values with ", method[j], "}\n", sep = "")
 
       impu <- imputate_na(edaData, nalist[i], targetVariable, method = method[j], print_flag = FALSE)
+      
+      if (!attr(impu, "success")) {
+        cat(attr(impu, "message"), "\n\n")
+        next
+      }
+      
       tab <- imputae_summary(impu)
 
       cap <- sprintf("Descriptive Statistics : %s with '%s'", nalist[i], method[j])
@@ -365,8 +371,21 @@ if (length(var_numeric) > 0) {
       cat("\n")
       cat("\\subsubsection{Binning with ", method[j], "}\n", sep = "")
 
-      binn <- binning(pull(edaData, var_numeric[i]), type = method[j])
+      error_flag <- FALSE
+      tryCatch(binn <- binning(pull(edaData, var_numeric[i]), type = method[j]),
+        error = function(e) {
+          msg <<- e$message
+          error_flag <<- TRUE
+      }, finally = NULL)
+      
+      if (error_flag) {
+        cat(msg, "\n\n")
+        rm(msg, error_flag)
+        next
+      }
+      
       tab <- summary(binn)
+      tab$levels <- c(paste("{", tab$levels[1], "}", sep = ""), as.character(tab$levels)[-1])
 
       cap <- sprintf("Frequency of Levels : %s with '%s'", var_numeric[i], method[j])
       cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\_")

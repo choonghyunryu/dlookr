@@ -147,6 +147,7 @@ binning <- function(x, nbins,
     breaks <- ci$brks
   }
 
+  breaks <- unique(breaks)
   fct <- cut(x, breaks = breaks, labels = labels, include.lowest = TRUE)
 
   if (ordered == TRUE)
