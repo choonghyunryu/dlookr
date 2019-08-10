@@ -24,6 +24,8 @@ dlookr 0.3.11
 
 * imputate_na() fixed the problem of imputation using 'knn' method when the complete case is small.  
 
+* summary.imputation() fixed the problem of imputation object isn't compleate.
+
 
 dlookr 0.3.10
 ----------------------------------------------------------------

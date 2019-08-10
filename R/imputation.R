@@ -397,9 +397,6 @@ imputate_outlier_impl <- function(df, xvar, method) {
   outliers <- data[outlier_pos]
 
   outlier_flag <- length(outlier_pos) > 0
-  if (!outlier_flag) {
-    warning(sprintf("There are no outliers in %s.", xvar))
-  }
 
   get_mean <- function(x) {
     data[outlier_pos] <- mean(data, na.rm = TRUE)
@@ -445,7 +442,18 @@ imputate_outlier_impl <- function(df, xvar, method) {
   attr(result, "outlier_pos") <- outlier_pos
   attr(result, "outliers") <- outliers
   attr(result, "type") <- "outliers"
-
+  
+  if (!outlier_flag) {
+    msg <- sprintf("There are no outliers in %s.", xvar)
+    warning(msg)
+    
+    attr(result, "message") <- msg
+    attr(result, "success") <- FALSE
+  } else {
+    attr(result, "message") <- "complete imputation"
+    attr(result, "success") <- TRUE
+  }
+  
   class(result) <- append("imputation", class(result))
   result
 }
@@ -491,6 +499,13 @@ imputate_outlier_impl <- function(df, xvar, method) {
 #' @importFrom tidyr gather
 #' @export
 summary.imputation <- function(object, ...) {
+  success <- attr(object, "success")
+  
+  if (!success) {
+    message("imputation object isn't success.")
+    return()
+  }
+  
   type <- attr(object, "type")
   method <- attr(object, "method")
   var_type <- attr(object, "var_type")
