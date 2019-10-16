@@ -1,3 +1,18 @@
+dlookr 0.3.12
+----------------------------------------------------------------
+* diagnose_report() Adjusted the pdf margins to increase the number of columns represented in the table. In the latex, duplicate table labels were removed.
+
+* eda_report() Adjusted the pdf margins to increase the number of columns represented in the table. In the latex, duplicate table labels were removed.
+
+* transformation_report() Adjusted the pdf margins to increase the number of columns represented in the table. In the latex, duplicate table labels were removed.
+
+* imputate_na() fixed error when method is 'rpart' or 'knn' .  
+
+* imputate_na() appended no_attrs argument that choice the return value. return object of imputation class or numerical/categorical variable.  
+
+* imputate_outlier() appended no_attrs argument that choice the return value. return object of imputation class or numerical vector.  
+
+
 dlookr 0.3.11
 ----------------------------------------------------------------
 * plot_outlier() fixed error run against a dataset with a numeric column where all values are NA(@rhinomlbox, #8).

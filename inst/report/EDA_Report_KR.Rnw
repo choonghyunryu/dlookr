@@ -1,6 +1,6 @@
 \PassOptionsToPackage{table}{xcolor}
 \documentclass{book}
-\usepackage[a4paper, top=3cm, bottom=3cm]{geometry}
+\usepackage[a4paper, top=3cm, bottom=3cm, left=2cm, right=2cm]{geometry}
 \usepackage[utf8]{inputenc}
 %------- for Korean using kotex
 \usepackage[hangul]{kotex}
@@ -75,7 +75,7 @@ dlookr package
 \begin{minipage}{0.4\textwidth}
 \begin{flushright} \large
 \emph{버전:} \\
-0.3.6
+0.3.12
 \end{flushright}
 \end{minipage}
 

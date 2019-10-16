@@ -10,6 +10,8 @@ library(kableExtra)
 
 opts_chunk$set(fig.path = 'figure/minimal-', fig.align = 'center',
                fig.show = 'hold', warning = FALSE, message = FALSE)
+knit_hooks$set(document = function(x) {sub('\\usepackage[]{color}', '\\usepackage{xcolor}', x, fixed = TRUE)})
+
 options(replace.assign = TRUE, width = 90)
 
 edaData <- as.data.frame(get("edaData", .dlookrEnv))
@@ -124,7 +126,7 @@ imputae_summary <- function(object) {
 }
 @
 
-<<imputate_na, tidy=TRUE, echo=FALSE, warning=FALSE, message=FALSE, comment="", tidy.opts=list(width.cutoff=65), size="small", fig.height=5, fig.width=7, fig.align='center', results='asis'>>=
+<<imputate_na, tidy=TRUE, echo=FALSE, warning=FALSE, message=FALSE, comment="",  results='asis'>>=
 if (length(nalist) > 0) {
   for (i in 1:length(nalist)) {
     cat("\n")
@@ -156,7 +158,9 @@ if (length(nalist) > 0) {
       cap <- sprintf("Descriptive Statistics : %s with '%s'", nalist[i], method[j])
       cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\_")
 
-      kable(tab, digits = 2, caption = cap, booktabs = TRUE, escape = FALSE) %>%
+      kable(tab, digits = 2, caption = cap, 
+            label = paste0("imputate_na", i, j),
+            booktabs = TRUE, escape = FALSE) %>%
         kable_styling(latex_options = c("striped", "hold_position")) %>%
         cat()
 
@@ -200,7 +204,7 @@ if (length(outlist) > 0) {
 }
 @
 
-<<impute_outliers, tidy=TRUE, echo=FALSE, warning=FALSE, message=FALSE, comment="", tidy.opts=list(width.cutoff=65), size="small", fig.height=5, fig.width=7, fig.align='center', results='asis'>>=
+<<impute_outliers, tidy=TRUE, echo=FALSE, warning=FALSE, message=FALSE, comment="", results='asis'>>=
 if (length(outlist) > 0) {
   for (i in 1:length(outlist)) {
     cat("\n")
@@ -218,7 +222,9 @@ if (length(outlist) > 0) {
       cap <- sprintf("Descriptive Statistics : %s with '%s'", outlist[i], method[j])
       cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\_")
 
-      kable(tab, digits = 2, caption = cap, booktabs = TRUE, escape = FALSE) %>%
+      kable(tab, digits = 2, caption = cap, 
+            label = paste0("impute_outliers", i, j),
+            booktabs = TRUE, escape = FALSE) %>%
         kable_styling(latex_options = c("striped", "hold_position")) %>%
         cat()
 
@@ -282,7 +288,7 @@ if (length(skewlist) > 0) {
 }
 @
 
-<<resolve_skewness, tidy=TRUE, echo=FALSE, warning=FALSE, message=FALSE, comment="", tidy.opts=list(width.cutoff=65), size="small", fig.height=4, fig.width=8, fig.align='center', results='asis'>>=
+<<resolve_skewness, tidy=TRUE, echo=FALSE, warning=FALSE, message=FALSE, comment="", results='asis'>>=
 if (length(skewlist) > 0) {
   for (i in 1:length(skewlist)) {
     cat("\n")
@@ -310,7 +316,9 @@ if (length(skewlist) > 0) {
       cap <- sprintf("Descriptive Statistics : %s with '%s'", skewlist[i], str_method)
       cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\_")
 
-      kable(tab, digits = 2, caption = cap, booktabs = TRUE, escape = FALSE) %>%
+      kable(tab, digits = 2, caption = cap, 
+            label = paste0("resolve_skewness", j),
+            booktabs = TRUE, escape = FALSE) %>%
         kable_styling(latex_options = c("striped", "hold_position")) %>%
         cat()
 
@@ -359,7 +367,7 @@ if (length(var_numeric) > 0) {
 @
 
 \section{Binning}
-<<binning, tidy=TRUE, echo=FALSE, warning=FALSE, message=FALSE, comment="", tidy.opts=list(width.cutoff=65), size="small", fig.height=4, fig.width=8, fig.align='center', results='asis'>>=
+<<binning, tidy=TRUE, echo=FALSE, warning=FALSE, message=FALSE, comment="", results='asis'>>=
 if (length(var_numeric) > 0) {
   for (i in 1:length(var_numeric)) {
     cat("\n")
@@ -390,7 +398,9 @@ if (length(var_numeric) > 0) {
       cap <- sprintf("Frequency of Levels : %s with '%s'", var_numeric[i], method[j])
       cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\_")
 
-      kable(tab, digits = 4, caption = cap, booktabs = TRUE, escape = FALSE) %>%
+      kable(tab, digits = 4, caption = cap, 
+            label = paste0("binning", i, j),
+            booktabs = TRUE, escape = FALSE) %>%
         kable_styling(latex_options = c("striped", "hold_position")) %>%
         cat()
 
@@ -423,7 +433,7 @@ if (length(var_numeric) > 0) {
 For the scoring modeling, optimal binning is performed considering the characteristics of numerical data.
 This work uses the recursive partitioning technique known as supervised discretization when categorizing numeric data as categorical data.
 
-<<optimal, tidy=TRUE, echo=FALSE, warning=FALSE, message=FALSE, comment="", tidy.opts=list(width.cutoff=65), size="small", fig.height=4, fig.width=8, fig.align='center', results='asis'>>=
+<<optimal, tidy=TRUE, echo=FALSE, warning=FALSE, message=FALSE, comment="", tidy.opts=list(width.cutoff=65), size="small", fig.height=4, fig.width=8, fig.align='center', fig.pos="!ht", results='asis'>>=
 if (!is.null(targetVariable)) {
   n_levles <- length(table(pull(edaData, targetVariable)))
 
@@ -450,7 +460,8 @@ if (!is.null(targetVariable)) {
       tab$Cutpoint <- gsub(">", "$>$", tab$Cutpoint)
       tab$Cutpoint
 
-      kable(tab, booktabs = TRUE, escape = FALSE) %>%
+      kable(tab, booktabs = TRUE, 
+            label = paste0("optimal", i), escape = FALSE) %>%
         kable_styling(latex_options = c("striped", "scale_down")) %>%
         cat()
 

@@ -20,7 +20,11 @@
 #' @param seed integer. the random seed used in mice. only used "mice" method.
 #' @param print_flag logical. If TRUE, mice will print history on console.
 #' Use print_flag=FALSE for silent computation. Used only when method is "mice".
-#' @return An object of imputation class.
+#' @param no_attrs logical. If TRUE, return numerical variable or categorical variable. 
+#' else If FALSE, imputation class.
+#' @return An object of imputation class. or numerical variable or categorical variable. 
+#' if no_attrs is FALSE then return imputation class, else no_attrs is TRUE then return
+#' numerical vector or factor.
 #' Attributes of imputation class is as follows.
 #' \itemize{
 #' \item var_type : the data type of predictor to replace missing value.
@@ -75,7 +79,7 @@
 #'
 #' # The mean before and after the imputation of the Income variable
 #' carseats %>%
-#'   mutate(Income_imp = imputate_na(carseats, Income, US, method = "knn")) %>%
+#'   mutate(Income_imp = imputate_na(carseats, Income, US, method = "knn", no_attrs = TRUE)) %>%
 #'   group_by(US) %>%
 #'   summarise(orig = mean(Income, na.rm = TRUE),
 #'     imputation = mean(Income_imp))
@@ -94,7 +98,7 @@
 #' }
 #' @export
 #'
-imputate_na <- function(.data, xvar, yvar, method, seed, print_flag) {
+imputate_na <- function(.data, xvar, yvar, method, seed, print_flag, no_attrs) {
   UseMethod("imputate_na")
 }
 
@@ -105,7 +109,7 @@ imputate_na <- function(.data, xvar, yvar, method, seed, print_flag) {
 #' @export
 imputate_na.data.frame <- function(.data, xvar, yvar = NULL,
   method = c("mean", "median", "mode", "rpart", "knn", "mice"), seed = NULL,
-  print_flag = TRUE) {
+  print_flag = TRUE, no_attrs = FALSE) {
   tryCatch(vars <- tidyselect::vars_select(names(.data), !!! rlang::enquo(xvar)),
     error = function(e) {
       pram <- as.character(substitute(xvar))
@@ -120,7 +124,7 @@ imputate_na.data.frame <- function(.data, xvar, yvar = NULL,
 
   method <- match.arg(method)
 
-  imputate_na_impl(.data, vars, target, method, seed, print_flag)
+  imputate_na_impl(.data, vars, target, method, seed, print_flag, no_attrs)
 }
 
 
@@ -131,7 +135,8 @@ imputate_na.data.frame <- function(.data, xvar, yvar = NULL,
 #' @importFrom rpart rpart
 #' @importFrom stats predict
 #' @importFrom methods is
-imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL, print_flag = TRUE) {
+imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL, 
+                             print_flag = TRUE, no_attrs = FALSE) {
   type <- ""
 
   if (is(pull(df, xvar))[1] %in% c("integer", "numeric")) {
@@ -189,7 +194,7 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL, print_flag = T
       complete_cnt <- length(which(complete.cases(df[, complete_order])))
     }
     
-    if (!y %in% complete_order) {
+    if (!x %in% complete_order) {
       return(rep(NA, length(data)))
     }
     
@@ -209,13 +214,14 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL, print_flag = T
     }
 
     complete_flag <- apply(df, 2, function(x) sum(complete.cases(x)) != 0)
+    complete_flag <- names(complete_flag[complete_flag])
     
     if (!x %in% complete_flag) {
       return(rep(NA, length(data)))
     }
     
     model <- rpart::rpart(sprintf("%s ~ .", x),
-      data = df[!is.na(pull(df, x)), !names(df) %in% y & complete_flag],
+      data = df[!is.na(pull(df, x)), setdiff(intersect(names(df), complete_flag), y)],
       method = method, na.action = na.omit)
 
     pred <- predict(model, df[is.na(pull(df, x)), !names(df) %in% y],
@@ -274,23 +280,26 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL, print_flag = T
   else if (method == "mice")
     result <- get_mice(xvar, yvar, seed, print_flag)
 
-  attr(result, "var_type") <- type
-  attr(result, "method") <- method
-  attr(result, "na_pos") <- na_pos
-  attr(result, "seed") <- seed
-  attr(result, "type") <- "missing values"
-  if (all(is.na(result))) {
-    msg <- "All values returned as NA. The data is not good enough for a imputation."
-    warning(msg)
+  if (!no_attrs) {
+    attr(result, "var_type") <- type
+    attr(result, "method") <- method
+    attr(result, "na_pos") <- na_pos
+    attr(result, "seed") <- seed
+    attr(result, "type") <- "missing values"
+    if (all(is.na(result))) {
+      msg <- "All values returned as NA. The data is not good enough for a imputation."
+      warning(msg)
+      
+      attr(result, "message") <- msg
+      attr(result, "success") <- FALSE
+    } else {
+      attr(result, "message") <- "complete imputation"
+      attr(result, "success") <- TRUE
+    }
     
-    attr(result, "message") <- msg
-    attr(result, "success") <- FALSE
-  } else {
-    attr(result, "message") <- "complete imputation"
-    attr(result, "success") <- TRUE
+    class(result) <- append("imputation", class(result))    
   }
-  
-  class(result) <- append("imputation", class(result))
+
   result
 }
 
@@ -313,7 +322,11 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL, print_flag = T
 #' @param .data a data.frame or a \code{\link{tbl_df}}.
 #' @param xvar variable name to replace missing value.
 #' @param method method of missing values imputation.
-#' @return An object of imputation class.
+#' @param no_attrs logical. If TRUE, return numerical variable or categorical variable. 
+#' else If FALSE, imputation class. 
+#' @return An object of imputation class. or numerical variable. 
+#' if no_attrs is FALSE then return imputation class, else no_attrs is TRUE then return
+#' numerical vector.
 #' Attributes of imputation class is as follows.
 #' \itemize{
 #' \item method : method of missing value imputation.
@@ -350,7 +363,7 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL, print_flag = T
 #'
 #' # The mean before and after the imputation of the Price variable
 #' carseats %>%
-#'   mutate(Price_imp = imputate_outlier(carseats, Price, method = "capping")) %>%
+#'   mutate(Price_imp = imputate_outlier(carseats, Price, method = "capping", no_attrs = TRUE)) %>%
 #'   group_by(US) %>%
 #'   summarise(orig = mean(Price, na.rm = TRUE),
 #'     imputation = mean(Price_imp, na.rm = TRUE))
@@ -361,7 +374,7 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL, print_flag = T
 #' summary(price)
 #' plot(price)
 #' @export
-imputate_outlier <- function(.data, xvar, method) {
+imputate_outlier <- function(.data, xvar, method, no_attrs) {
   UseMethod("imputate_outlier")
 }
 
@@ -370,7 +383,7 @@ imputate_outlier <- function(.data, xvar, method) {
 #' @importFrom rlang enquo
 #' @export
 imputate_outlier.data.frame <- function(.data, xvar,
-  method = c("capping", "mean", "median", "mode")) {
+  method = c("capping", "mean", "median", "mode"), no_attrs = FALSE) {
   tryCatch(vars <- tidyselect::vars_select(names(.data), !!! rlang::enquo(xvar)),
     error = function(e) {
       pram <- as.character(substitute(xvar))
@@ -379,13 +392,13 @@ imputate_outlier.data.frame <- function(.data, xvar,
 
   method <- match.arg(method)
 
-  imputate_outlier_impl(.data, vars, method)
+  imputate_outlier_impl(.data, vars, method, no_attrs)
 }
 
 #' @import dplyr
 #' @importFrom grDevices boxplot.stats
 #' @importFrom methods is
-imputate_outlier_impl <- function(df, xvar, method) {
+imputate_outlier_impl <- function(df, xvar, method, no_attrs = FALSE) {
   if (!is(pull(df, xvar))[1] %in% c("integer", "numeric")) {
     stop(sprintf("Categorical variable(%s) not support imputate_outlier()",
       xvar))
@@ -437,24 +450,27 @@ imputate_outlier_impl <- function(df, xvar, method) {
   else if (method == "capping")
     result <- get_capping()
 
-  attr(result, "method") <- method
-  attr(result, "var_type") <- "numerical"
-  attr(result, "outlier_pos") <- outlier_pos
-  attr(result, "outliers") <- outliers
-  attr(result, "type") <- "outliers"
-  
-  if (!outlier_flag) {
-    msg <- sprintf("There are no outliers in %s.", xvar)
-    warning(msg)
+  if (!no_attrs) {
+    attr(result, "method") <- method
+    attr(result, "var_type") <- "numerical"
+    attr(result, "outlier_pos") <- outlier_pos
+    attr(result, "outliers") <- outliers
+    attr(result, "type") <- "outliers"
     
-    attr(result, "message") <- msg
-    attr(result, "success") <- FALSE
-  } else {
-    attr(result, "message") <- "complete imputation"
-    attr(result, "success") <- TRUE
+    if (!outlier_flag) {
+      msg <- sprintf("There are no outliers in %s.", xvar)
+      warning(msg)
+      
+      attr(result, "message") <- msg
+      attr(result, "success") <- FALSE
+    } else {
+      attr(result, "message") <- "complete imputation"
+      attr(result, "success") <- TRUE
+    }
+    
+    class(result) <- append("imputation", class(result))
   }
-  
-  class(result) <- append("imputation", class(result))
+
   result
 }
 

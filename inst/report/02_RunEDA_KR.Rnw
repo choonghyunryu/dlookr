@@ -241,10 +241,20 @@ if (length(idx.numeric) > 2) {
 @
 
 \subsection{변수조합별 상관계수 시각화}
-<<plot_correlations, dev='cairo_pdf', fig.align='center', fig.width=6, fig.height=6, out.width="0.99\\textwidth", dpi=300, fig.cap="상관행렬 플롯", fig.pos="!h", echo=FALSE, dev.args=list(family='Korea1deb'),comment="">>=
+<<plot_correlations, echo=FALSE, results='asis'>>=
 if (length(idx.numeric) > 2) {
+  cairo_pdf(filename = sprintf("./figure/correlation.pdf", i), width = 6, height = 6)
   edaData %>%
     plot_correlate()
+  dev.off()
+
+  cap <- "상관행렬 플롯"
+
+  cat("\\begin{figure}[!ht]\n")
+  cat("\\centering\n")
+  cat(sprintf("\\includegraphics[width=0.99\\textwidth]{figure/correlation.pdf}\n", i))
+  cat(sprintf("\\caption{%s}\n", cap))
+  cat("\\end{figure}\n")  
 } else {
   cat("수치형 변수의 개수가 2보다 적습니다.\n\n")
 } 
@@ -274,6 +284,7 @@ if (!is.null(targetVariable)) {
         cap <- change_under(names(edaData)[i])
 
         kable(z, digits = 2, caption = cap, booktabs = TRUE,
+              label = paste0("numeric_variables", i),
               format.args = list(big.mark = ",")) %>%
           kable_styling(latex_options = c("striped", "hold_position")) %>%
           cat()
@@ -369,7 +380,9 @@ if (!is.null(targetVariable)) {
         cap <- sprintf("단순 선형모형의 계수 : %s", names(edaData)[i])
         cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\_")
 
-        kable(tab, digits = 2, caption = cap, booktabs = TRUE, escape = FALSE) %>%
+        kable(tab, digits = 2, caption = cap, 
+              label = paste0("numeric_variables", i),
+              booktabs = TRUE, escape = FALSE) %>%
           kable_styling(latex_options = c("striped", "hold_position")) %>%
           cat()
 
@@ -431,6 +444,7 @@ if (!is.null(targetVariable)) {
         rownames(ratio)[idx.na] <- "NA"
 
         kable(freq, booktabs = TRUE,
+              label = paste0("category_variables", i),
               format.args = list(big.mark = ",")) %>%
           kable_styling(font_size = 8, latex_options = "striped") %>%
           row_spec(NROW(ratio), bold = TRUE) %>%
@@ -442,6 +456,7 @@ if (!is.null(targetVariable)) {
         }
 
         kable(ratio, booktabs = TRUE, digits = 2,
+              label = paste0("category_variables_2", i),
               format.args = list(big.mark = ",")) %>%
           kable_styling(font_size = 8, latex_options = "striped") %>%
           row_spec(NROW(ratio), bold = TRUE) %>%
@@ -502,6 +517,7 @@ if (!is.null(targetVariable)) {
         row.names(tab_aov) <- change_under(row.names(tab_aov))
 
         knitr::kable(tab_aov, digits = 2, caption = cap,
+                     label = paste0("category_variables_3", i),
                      booktabs = TRUE, escape = FALSE) %>%
           kable_styling(latex_options = c("striped", "hold_position")) %>%
           cat()
@@ -534,6 +550,7 @@ if (!is.null(targetVariable)) {
         row.names(tab) <- change_under(row.names(tab))
         
         knitr::kable(tab, digits = 2, caption = cap,
+                     label = paste0("category_variables_4", i),
                      booktabs = TRUE, escape = FALSE) %>%
           kable_styling(latex_options = c("striped", "hold_position")) %>%
           cat()
@@ -607,7 +624,7 @@ if (!is.null(targetVariable)) {
 @
 
 \subsection{목적변수 대응 상관계수 시각화}
-<<plot_group_correlations, dev='cairo_pdf', fig.align='center', fig.width=6, fig.height=6, out.width="0.99\\textwidth", dpi=300, fig.cap="The correlation coefficient of numerical variables", fig.pos="!h", echo=FALSE, results='asis'>>=
+<<plot_group_correlations, echo=FALSE, results='asis'>>=
 if (!is.null(targetVariable)) {
   if (factor_flag) {
     if (length(idx.numeric) > 2) {
@@ -627,11 +644,11 @@ if (!is.null(targetVariable)) {
         cap <- sprintf("상관행렬 플롯 (%s == %s)", 
           change_under(targetVariable), level_name[i])
 
-        cat("\\begin{figure}")
-        cat("\\begin{center}")
+        cat("\\begin{figure}[!ht]\n")
+        cat("\\begin{center}\n")
         cat("\\includegraphics{", fname, "}\n", sep = "")
         cat("\\caption{", cap, "}\n", sep = "")
-        cat("\\end{center}")
+        cat("\\end{center}\n")
         cat("\\end{figure}")
       }
     } else {

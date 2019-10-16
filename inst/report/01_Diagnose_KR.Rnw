@@ -281,6 +281,7 @@ if (NROW(diagn_numeric) > 0) {
 
       kable(outlier_df, booktabs = TRUE,
           caption = cap_table, digits = 2,
+          label = paste0("detail_outliers", i),
           format.args = list(big.mark = ",")) %>%
       kable_styling(latex_options = c("striped")) %>%
       kable_styling(latex_options = c("hold_position")) %>%

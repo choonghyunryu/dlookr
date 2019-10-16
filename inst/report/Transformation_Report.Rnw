@@ -1,6 +1,6 @@
 \PassOptionsToPackage{table}{xcolor}
 \documentclass{book}
-\usepackage[a4paper, top=3cm, bottom=3cm]{geometry}
+\usepackage[a4paper, top=3cm, bottom=3cm, left=2cm, right=2cm]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage{setspace}
 \usepackage{fancyhdr}
@@ -81,7 +81,7 @@ dlookr package
 \begin{minipage}{0.4\textwidth}
 \begin{flushright} \large
 \emph{Version:} \\
-0.3.6
+0.3.12
 \end{flushright}
 \end{minipage}
 

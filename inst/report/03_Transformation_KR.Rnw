@@ -10,6 +10,8 @@ library(kableExtra)
 
 opts_chunk$set(fig.path = 'figure/minimal-', fig.align = 'center',
                fig.show = 'hold', warning = FALSE, message = FALSE)
+knit_hooks$set(document = function(x) {sub('\\usepackage[]{color}', '\\usepackage{xcolor}', x, fixed = TRUE)})
+
 options(replace.assign = TRUE, width = 90)
 
 edaData <- as.data.frame(get("edaData", .dlookrEnv))
@@ -156,7 +158,9 @@ if (length(nalist) > 0) {
       cap <- sprintf("'%s' 방법에 대한 %s의 기술통계량", method[j], nalist[i])
       cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\_")
 
-      kable(tab, digits = 2, caption = cap, booktabs = TRUE, escape = FALSE) %>%
+      kable(tab, digits = 2, caption = cap, 
+            label = paste0("imputate_na", i, j),
+            booktabs = TRUE, escape = FALSE) %>%
         kable_styling(latex_options = c("striped", "hold_position")) %>%
         cat()
 
@@ -218,7 +222,9 @@ if (length(outlist) > 0) {
       cap <- sprintf("'%s' 방법에 대한 %s의 기술통계량", method[j], outlist[i])
       cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\_")
 
-      kable(tab, digits = 2, caption = cap, booktabs = TRUE, escape = FALSE) %>%
+      kable(tab, digits = 2, caption = cap, 
+            label = paste0("impute_outliers", i, j),
+            booktabs = TRUE, escape = FALSE) %>%
         kable_styling(latex_options = c("striped", "hold_position")) %>%
         cat()
 
@@ -310,7 +316,9 @@ if (length(skewlist) > 0) {
       cap <- sprintf("'%s' 방법에 대한 %s의 기술통계량", str_method, skewlist[i])
       cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\_")
 
-      kable(tab, digits = 2, caption = cap, booktabs = TRUE, escape = FALSE) %>%
+      kable(tab, digits = 2, caption = cap, 
+            label = paste0("resolve_skewness", j),
+            booktabs = TRUE, escape = FALSE) %>%
         kable_styling(latex_options = c("striped", "hold_position")) %>%
         cat()
 
@@ -390,7 +398,9 @@ if (length(var_numeric) > 0) {
       cap <- sprintf("'%s' 방법에 대한 %s의 범주의 도수분포", method[j], var_numeric[i])
       cap <- paste(unlist(strsplit(cap, "_")), collapse = "\\_")
 
-      kable(tab, digits = 4, caption = cap, booktabs = TRUE, escape = FALSE) %>%
+      kable(tab, digits = 4, caption = cap, 
+            label = paste0("binning", i, j),
+            booktabs = TRUE, escape = FALSE) %>%
         kable_styling(latex_options = c("striped", "hold_position")) %>%
         cat()
 
@@ -424,7 +434,7 @@ if (length(var_numeric) > 0) {
 optimal binning 작업에서는 수치형 데이터를 범주형 데이터로 범주화할 때, supervised discretization이라고 하는 재귀적 분할(recursive partitioning) 기법을 사용한다.
 단, optimal binning은 목적변수가 이진분류(binary class)일 경우만 가능하다.
 
-<<optimal, tidy=TRUE, echo=FALSE, warning=FALSE, message=FALSE, comment="", tidy.opts=list(width.cutoff=65), size="small", fig.height=4, fig.width=8, fig.align='center', results='asis'>>=
+<<optimal, tidy=TRUE, echo=FALSE, warning=FALSE, message=FALSE, comment="", tidy.opts=list(width.cutoff=65), size="small", fig.height=4, fig.width=8, fig.align='center', fig.pos="!ht", results='asis'>>=
 if (!is.null(targetVariable)) {
   n_levles <- length(table(pull(edaData, targetVariable)))
 
@@ -455,7 +465,8 @@ if (!is.null(targetVariable)) {
       tab$Cutpoint <- gsub(">", "$>$", tab$Cutpoint)
       tab$Cutpoint
 
-      kable(tab, booktabs = TRUE, escape = FALSE) %>%
+      kable(tab, booktabs = TRUE, 
+            label = paste0("optimal", i), escape = FALSE) %>%
         kable_styling(latex_options = c("striped", "scale_down")) %>%
         cat()
 
