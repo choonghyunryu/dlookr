@@ -4,7 +4,7 @@
 \alias{imputate_na}
 \title{Imputate Missing values}
 \usage{
-imputate_na(.data, xvar, yvar, method, seed, print_flag)
+imputate_na(.data, xvar, yvar, method, seed, print_flag, no_attrs)
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}
@@ -19,9 +19,14 @@ imputate_na(.data, xvar, yvar, method, seed, print_flag)
 
 \item{print_flag}{logical. If TRUE, mice will print history on console.
 Use print_flag=FALSE for silent computation. Used only when method is "mice".}
+
+\item{no_attrs}{logical. If TRUE, return numerical variable or categorical variable. 
+else If FALSE, imputation class.}
 }
 \value{
-An object of imputation class.
+An object of imputation class. or numerical variable or categorical variable. 
+if no_attrs is FALSE then return imputation class, else no_attrs is TRUE then return
+numerical vector or factor.
 Attributes of imputation class is as follows.
 \itemize{
 \item var_type : the data type of predictor to replace missing value.
@@ -89,7 +94,7 @@ library(dplyr)
 
 # The mean before and after the imputation of the Income variable
 carseats \%>\%
-  mutate(Income_imp = imputate_na(carseats, Income, US, method = "knn")) \%>\%
+  mutate(Income_imp = imputate_na(carseats, Income, US, method = "knn", no_attrs = TRUE)) \%>\%
   group_by(US) \%>\%
   summarise(orig = mean(Income, na.rm = TRUE),
     imputation = mean(Income_imp))

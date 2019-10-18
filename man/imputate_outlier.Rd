@@ -4,7 +4,7 @@
 \alias{imputate_outlier}
 \title{Imputate Outliers}
 \usage{
-imputate_outlier(.data, xvar, method)
+imputate_outlier(.data, xvar, method, no_attrs)
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}
@@ -12,9 +12,14 @@ imputate_outlier(.data, xvar, method)
 \item{xvar}{variable name to replace missing value.}
 
 \item{method}{method of missing values imputation.}
+
+\item{no_attrs}{logical. If TRUE, return numerical variable or categorical variable. 
+else If FALSE, imputation class.}
 }
 \value{
-An object of imputation class.
+An object of imputation class. or numerical variable. 
+if no_attrs is FALSE then return imputation class, else no_attrs is TRUE then return
+numerical vector.
 Attributes of imputation class is as follows.
 \itemize{
 \item method : method of missing value imputation.
@@ -64,7 +69,7 @@ library(dplyr)
 
 # The mean before and after the imputation of the Price variable
 carseats \%>\%
-  mutate(Price_imp = imputate_outlier(carseats, Price, method = "capping")) \%>\%
+  mutate(Price_imp = imputate_outlier(carseats, Price, method = "capping", no_attrs = TRUE)) \%>\%
   group_by(US) \%>\%
   summarise(orig = mean(Price, na.rm = TRUE),
     imputation = mean(Price_imp, na.rm = TRUE))
