@@ -1,3 +1,5 @@
+^Meta$
+^doc$
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.travis\.yml$
@@ -5,3 +7,4 @@
 ^README\.Rmd$
 ^README\.md$
 ^README-.*\.png$
+\.DS_Store$
