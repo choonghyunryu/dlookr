@@ -4,8 +4,13 @@
 \alias{plot.relate}
 \title{Visualize Information for an "relate" Object}
 \usage{
-\method{plot}{relate}(x, model = FALSE, hex_thres = 1000,
-  pal = RColorBrewer::brewer.pal(7, "YlOrRd"), ...)
+\method{plot}{relate}(
+  x,
+  model = FALSE,
+  hex_thres = 1000,
+  pal = RColorBrewer::brewer.pal(7, "YlOrRd"),
+  ...
+)
 }
 \arguments{
 \item{x}{an object of class "relate", usually, a result of a call to relate().}

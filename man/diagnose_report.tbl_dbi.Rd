@@ -4,9 +4,16 @@
 \alias{diagnose_report.tbl_dbi}
 \title{Reporting the information of data diagnosis for table of the DBMS}
 \usage{
-\method{diagnose_report}{tbl_dbi}(.data, output_format = c("pdf",
-  "html"), output_file = NULL, output_dir = tempdir(),
-  font_family = NULL, in_database = FALSE, collect_size = Inf, ...)
+\method{diagnose_report}{tbl_dbi}(
+  .data,
+  output_format = c("pdf", "html"),
+  output_file = NULL,
+  output_dir = tempdir(),
+  font_family = NULL,
+  in_database = FALSE,
+  collect_size = Inf,
+  ...
+)
 }
 \arguments{
 \item{.data}{a tbl_dbi.}

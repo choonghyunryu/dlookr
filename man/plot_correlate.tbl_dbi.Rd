@@ -4,8 +4,7 @@
 \alias{plot_correlate.tbl_dbi}
 \title{Visualize correlation plot of numerical data}
 \usage{
-\method{plot_correlate}{tbl_dbi}(.data, ..., in_database = FALSE,
-  collect_size = Inf)
+\method{plot_correlate}{tbl_dbi}(.data, ..., in_database = FALSE, collect_size = Inf)
 }
 \arguments{
 \item{.data}{a tbl_dbi.}

@@ -1,7 +1,7 @@
 Package: dlookr
 Type: Package
 Title: Tools for Data Diagnosis, Exploration, Transformation
-Version: 0.3.12
+Version: 0.3.13
 Authors@R: c(
   person("Choonghyun", "Ryu",, "choonghyun.ryu@gmail.com", role = c("aut", "cre"))
   )
@@ -54,4 +54,4 @@ Author: Choonghyun Ryu [aut, cre]
 Maintainer: Choonghyun Ryu <choonghyun.ryu@gmail.com>    
 BugReports: https://github.com/choonghyunryu/dlookr/issues
 VignetteBuilder: knitr    
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.1

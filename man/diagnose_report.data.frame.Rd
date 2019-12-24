@@ -7,9 +7,15 @@
 \usage{
 diagnose_report(.data, output_format, output_file, output_dir, ...)
 
-\method{diagnose_report}{data.frame}(.data, output_format = c("pdf",
-  "html"), output_file = NULL, output_dir = tempdir(),
-  font_family = NULL, browse = TRUE, ...)
+\method{diagnose_report}{data.frame}(
+  .data,
+  output_format = c("pdf", "html"),
+  output_file = NULL,
+  output_dir = tempdir(),
+  font_family = NULL,
+  browse = TRUE,
+  ...
+)
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}

@@ -4,8 +4,7 @@
 \alias{diagnose_outlier.tbl_dbi}
 \title{Diagnose outlier of numerical variables in the DBMS}
 \usage{
-\method{diagnose_outlier}{tbl_dbi}(.data, ..., in_database = FALSE,
-  collect_size = Inf)
+\method{diagnose_outlier}{tbl_dbi}(.data, ..., in_database = FALSE, collect_size = Inf)
 }
 \arguments{
 \item{.data}{a tbl_dbi.}

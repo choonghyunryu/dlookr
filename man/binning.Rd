@@ -4,8 +4,14 @@
 \alias{binning}
 \title{Binning the Numeric Data}
 \usage{
-binning(x, nbins, type = c("quantile", "equal", "pretty", "kmeans",
-  "bclust"), ordered = TRUE, labels = NULL)
+binning(
+  x,
+  nbins,
+  type = c("quantile", "equal", "pretty", "kmeans", "bclust"),
+  ordered = TRUE,
+  labels = NULL,
+  approxy.lab = TRUE
+)
 }
 \arguments{
 \item{x}{numeric vector for binning.}
@@ -24,6 +30,9 @@ The "bclust" style uses e1071::bclust function to generate the breaks using bagg
 \item{ordered}{whether to build an ordered factor or not.}
 
 \item{labels}{the label names to use for each of the bins.}
+
+\item{approxy.lab}{logical. If TRUE, large number breaks are approximated to pretty numbers. 
+If FALSE, the original breaks obtained by type are used.}
 }
 \value{
 An object of bins class.
@@ -82,6 +91,12 @@ bin
 bin <- binning(carseats$Income, nbins = 5, type = "kmeans")
 bin
 bin <- binning(carseats$Income, nbins = 5, type = "bclust")
+bin
+
+x <- sample(1:1000, size = 50) * 12345679
+bin <- binning(x)
+bin
+bin <- binning(x, approxy.lab = FALSE)
 bin
 
 # -------------------------

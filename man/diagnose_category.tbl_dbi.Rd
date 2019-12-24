@@ -4,8 +4,7 @@
 \alias{diagnose_category.tbl_dbi}
 \title{Diagnose data quality of categorical variables in the DBMS}
 \usage{
-\method{diagnose_category}{tbl_dbi}(.data, ..., top = 10,
-  in_database = TRUE, collect_size = Inf)
+\method{diagnose_category}{tbl_dbi}(.data, ..., top = 10, in_database = TRUE, collect_size = Inf)
 }
 \arguments{
 \item{.data}{a tbl_dbi.}

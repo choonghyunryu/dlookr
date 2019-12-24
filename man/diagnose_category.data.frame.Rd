@@ -7,8 +7,7 @@
 \usage{
 diagnose_category(.data, ...)
 
-\method{diagnose_category}{data.frame}(.data, ..., top = 10,
-  add_character = TRUE)
+\method{diagnose_category}{data.frame}(.data, ..., top = 10, add_character = TRUE)
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}

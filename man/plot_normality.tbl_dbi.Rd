@@ -4,8 +4,7 @@
 \alias{plot_normality.tbl_dbi}
 \title{Plot distribution information of numerical data}
 \usage{
-\method{plot_normality}{tbl_dbi}(.data, ..., in_database = FALSE,
-  collect_size = Inf)
+\method{plot_normality}{tbl_dbi}(.data, ..., in_database = FALSE, collect_size = Inf)
 }
 \arguments{
 \item{.data}{a tbl_dbi.}

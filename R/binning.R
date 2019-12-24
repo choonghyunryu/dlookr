@@ -30,6 +30,8 @@
 #' "kmeans" and "bclust" type logic was implemented by classInt::classIntervals function.
 #' @param ordered whether to build an ordered factor or not.
 #' @param labels the label names to use for each of the bins.
+#' @param approxy.lab logical. If TRUE, large number breaks are approximated to pretty numbers. 
+#' If FALSE, the original breaks obtained by type are used.
 #' @return An object of bins class.
 #' Attributes of bins class is as follows.
 #' \itemize{
@@ -66,6 +68,12 @@
 #' bin
 #' bin <- binning(carseats$Income, nbins = 5, type = "bclust")
 #' bin
+#' 
+#' x <- sample(1:1000, size = 50) * 12345679
+#' bin <- binning(x)
+#' bin
+#' bin <- binning(x, approxy.lab = FALSE)
+#' bin
 #'
 #' # -------------------------
 #' # Using pipes & dplyr
@@ -84,7 +92,7 @@
 #' @export
 binning <- function(x, nbins,
                     type = c("quantile", "equal", "pretty", "kmeans", "bclust"),
-                    ordered = TRUE, labels = NULL) {
+                    ordered = TRUE, labels = NULL, approxy.lab = TRUE) {
   if (is.factor(x))
     stop("x is categorical value")
   if (!is.numeric(x))
@@ -140,15 +148,41 @@ binning <- function(x, nbins,
   } else {
     xx <- na.omit(x)
     if (type == "bclust") {
-      ci <- classIntervals(var = xx, n = nbins, style = type, verbose = FALSE)
+      ci <- classInt::classIntervals(var = xx, n = nbins, style = type, verbose = FALSE)
     } else {
-      ci <- classIntervals(var = xx, n = nbins, style = type)
+      ci <- classInt::classIntervals(var = xx, n = nbins, style = type)
     }
     breaks <- ci$brks
   }
 
   breaks <- unique(breaks)
   fct <- cut(x, breaks = breaks, labels = labels, include.lowest = TRUE)
+  
+  if (is.null(labels)) {
+    pretty.lab <- levels(fct) %>% 
+      gsub("[(\\[]|]", "", .) %>% 
+      strsplit(",") %>% 
+      sapply(c) %>% 
+      as.numeric() %>% 
+      unique()
+    pretty.lab[1] <- min(x, na.rm = TRUE)
+    
+    if (approxy.lab) {
+      if (!all(pretty.lab == breaks)) {
+        fct <- cut(x, breaks = pretty.lab, labels = levels(fct), include.lowest = TRUE)
+      }
+    } else {
+      if (!all(pretty.lab == breaks)) {
+        lab <- NULL
+        for (i in 2:length(breaks)) {
+          lab <- c(lab, paste0("(", prettyNum(breaks[i-1]), ",", prettyNum(breaks[i]), "]"))
+        }
+        lab[1] <- sub("^\\(", "[", lab[1])
+        
+        levels(fct) <- lab
+      }    
+    } 
+  }
 
   if (ordered == TRUE)
     fct <- ordered(fct)

@@ -1,3 +1,10 @@
+dlookr 0.3.13
+----------------------------------------------------------------
+* binning() fixed error an issue where some bining errors could occur at values close to breaks for large numbers.
+
+* binning() appended approxy.lab argument that choice large number breaks are approximated to pretty numbers.  
+
+
 dlookr 0.3.12
 ----------------------------------------------------------------
 * diagnose_report() Adjusted the pdf margins to increase the number of columns represented in the table. In the latex, duplicate table labels were removed.

@@ -4,9 +4,15 @@
 \alias{transformation_report}
 \title{Reporting the information of transformation}
 \usage{
-transformation_report(.data, target = NULL, output_format = c("pdf",
-  "html"), output_file = NULL, output_dir = tempdir(),
-  font_family = NULL, browse = TRUE)
+transformation_report(
+  .data,
+  target = NULL,
+  output_format = c("pdf", "html"),
+  output_file = NULL,
+  output_dir = tempdir(),
+  font_family = NULL,
+  browse = TRUE
+)
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}

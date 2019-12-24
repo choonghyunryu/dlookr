@@ -4,8 +4,7 @@
 \alias{target_by.tbl_dbi}
 \title{Target by one column in the DBMS}
 \usage{
-\method{target_by}{tbl_dbi}(.data, target, in_database = FALSE,
-  collect_size = Inf, ...)
+\method{target_by}{tbl_dbi}(.data, target, in_database = FALSE, collect_size = Inf, ...)
 }
 \arguments{
 \item{.data}{a tbl_dbi.}

@@ -4,8 +4,7 @@
 \alias{correlate.tbl_dbi}
 \title{Compute the correlation coefficient between two numerical data}
 \usage{
-\method{correlate}{tbl_dbi}(.data, ..., in_database = FALSE,
-  collect_size = Inf)
+\method{correlate}{tbl_dbi}(.data, ..., in_database = FALSE, collect_size = Inf)
 }
 \arguments{
 \item{.data}{a tbl_dbi.}

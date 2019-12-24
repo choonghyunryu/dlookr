@@ -4,8 +4,11 @@
 \alias{find_class}
 \title{Extract variable names or indices of a specific class}
 \usage{
-find_class(df, type = c("numerical", "categorical", "categorical2"),
-  index = TRUE)
+find_class(
+  df,
+  type = c("numerical", "categorical", "categorical2"),
+  index = TRUE
+)
 }
 \arguments{
 \item{df}{a data.frame or objects inheriting from data.frame}

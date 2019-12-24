@@ -4,8 +4,7 @@
 \alias{describe.tbl_dbi}
 \title{Compute descriptive statistic}
 \usage{
-\method{describe}{tbl_dbi}(.data, ..., in_database = FALSE,
-  collect_size = Inf)
+\method{describe}{tbl_dbi}(.data, ..., in_database = FALSE, collect_size = Inf)
 }
 \arguments{
 \item{.data}{a tbl_dbi.}

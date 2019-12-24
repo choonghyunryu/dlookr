@@ -7,9 +7,16 @@
 \usage{
 eda_report(.data, ...)
 
-\method{eda_report}{data.frame}(.data, target = NULL,
-  output_format = c("pdf", "html"), output_file = NULL,
-  output_dir = tempdir(), font_family = NULL, browse = TRUE, ...)
+\method{eda_report}{data.frame}(
+  .data,
+  target = NULL,
+  output_format = c("pdf", "html"),
+  output_file = NULL,
+  output_dir = tempdir(),
+  font_family = NULL,
+  browse = TRUE,
+  ...
+)
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}

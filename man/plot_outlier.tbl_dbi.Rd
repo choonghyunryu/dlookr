@@ -4,8 +4,13 @@
 \alias{plot_outlier.tbl_dbi}
 \title{Plot outlier information of numerical data diagnosis in the DBMS}
 \usage{
-\method{plot_outlier}{tbl_dbi}(.data, ..., col = "lightblue",
-  in_database = FALSE, collect_size = Inf)
+\method{plot_outlier}{tbl_dbi}(
+  .data,
+  ...,
+  col = "lightblue",
+  in_database = FALSE,
+  collect_size = Inf
+)
 }
 \arguments{
 \item{.data}{a tbl_dbi.}

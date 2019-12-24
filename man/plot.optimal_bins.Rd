@@ -4,8 +4,7 @@
 \alias{plot.optimal_bins}
 \title{Visualize Distribution for an "optimal_bins" Object}
 \usage{
-\method{plot}{optimal_bins}(x, type = c("dist", "goodrate", "badrate",
-  "WoE"), sub = "", ...)
+\method{plot}{optimal_bins}(x, type = c("dist", "goodrate", "badrate", "WoE"), sub = "", ...)
 }
 \arguments{
 \item{x}{an object of class "optimal_bins", usually,

@@ -4,8 +4,7 @@
 \alias{diagnose.tbl_dbi}
 \title{Diagnose data quality of variables in the DBMS}
 \usage{
-\method{diagnose}{tbl_dbi}(.data, ..., in_database = TRUE,
-  collect_size = Inf)
+\method{diagnose}{tbl_dbi}(.data, ..., in_database = TRUE, collect_size = Inf)
 }
 \arguments{
 \item{.data}{a tbl_dbi.}
