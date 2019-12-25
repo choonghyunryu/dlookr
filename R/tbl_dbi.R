@@ -1335,7 +1335,7 @@ describe.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = Inf
 #' @export
 #'
 target_by.tbl_dbi <- function(.data, target, in_database = FALSE, collect_size = Inf, ...) {
-  tryCatch(vars <- tidyselect::vars_select(colnames(.data), !!! rlang::enquo(target)),
+  tryCatch(vars <- tidyselect::vars_select(colnames(.data), !! rlang::enquo(target)),
            error = function(e) {
              pram <- as.character(substitute(target))
              stop(sprintf("Column %s is unknown", pram))
@@ -1618,7 +1618,7 @@ diagnose_report.tbl_dbi <- function(.data, output_format = c("pdf", "html"),
 eda_report.tbl_dbi <- function(.data, target = NULL,  output_format = c("pdf", "html"), 
   output_file = NULL, font_family = NULL, output_dir = tempdir(), in_database = FALSE, 
   collect_size = Inf, ...) {
-  tryCatch(vars <- tidyselect::vars_select(colnames(.data), !!! rlang::enquo(target)),
+  tryCatch(vars <- tidyselect::vars_select(colnames(.data), !! rlang::enquo(target)),
     error = function(e) {
       pram <- as.character(substitute(target))
       stop(sprintf("Column %s is unknown", pram))

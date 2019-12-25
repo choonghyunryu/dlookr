@@ -110,13 +110,13 @@ imputate_na <- function(.data, xvar, yvar, method, seed, print_flag, no_attrs) {
 imputate_na.data.frame <- function(.data, xvar, yvar = NULL,
   method = c("mean", "median", "mode", "rpart", "knn", "mice"), seed = NULL,
   print_flag = TRUE, no_attrs = FALSE) {
-  tryCatch(vars <- tidyselect::vars_select(names(.data), !!! rlang::enquo(xvar)),
+  tryCatch(vars <- tidyselect::vars_select(names(.data), !! rlang::enquo(xvar)),
     error = function(e) {
       pram <- as.character(substitute(xvar))
       stop(sprintf("Column %s is unknown", pram))
     }, finally = NULL)
 
-  tryCatch(target <- tidyselect::vars_select(names(.data), !!! rlang::enquo(yvar)),
+  tryCatch(target <- tidyselect::vars_select(names(.data), !! rlang::enquo(yvar)),
     error = function(e) {
       pram <- as.character(substitute(yvar))
       stop(sprintf("Column %s is unknown", pram))
@@ -384,7 +384,7 @@ imputate_outlier <- function(.data, xvar, method, no_attrs) {
 #' @export
 imputate_outlier.data.frame <- function(.data, xvar,
   method = c("capping", "mean", "median", "mode"), no_attrs = FALSE) {
-  tryCatch(vars <- tidyselect::vars_select(names(.data), !!! rlang::enquo(xvar)),
+  tryCatch(vars <- tidyselect::vars_select(names(.data), !! rlang::enquo(xvar)),
     error = function(e) {
       pram <- as.character(substitute(xvar))
       stop(sprintf("Column %s is unknown", pram))

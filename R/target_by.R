@@ -75,7 +75,7 @@ target_by <- function(.data, target, ...) {
 #' @importFrom rlang enquo
 #' @export
 target_by.data.frame <- function(.data, target, ...) {
-  tryCatch(vars <- tidyselect::vars_select(names(.data), !!! rlang::enquo(target)),
+  tryCatch(vars <- tidyselect::vars_select(names(.data), !! rlang::enquo(target)),
     error = function(e) {
       pram <- as.character(substitute(target))
       stop(sprintf("Column %s is unknown", pram))
@@ -213,7 +213,7 @@ relate <- function(.data, predictor) {
 #' @method relate target_df
 #' @export
 relate.target_df <- function(.data, predictor) {
-  tryCatch(vars <- tidyselect::vars_select(names(.data), !!! rlang::enquo(predictor)),
+  tryCatch(vars <- tidyselect::vars_select(names(.data), !! rlang::enquo(predictor)),
     error = function(e) {
       pram <- as.character(substitute(predictor))
       stop(sprintf("Column %s is unknown", pram))

@@ -1,4 +1,4 @@
-## ----environment, echo = FALSE, message = FALSE, warning=FALSE-----------
+## ----environment, echo = FALSE, message = FALSE, warning=FALSE----------------
 knitr::opts_chunk$set(collapse = TRUE, comment = "")
 options(tibble.print_min = 4L, tibble.print_max = 4L)
 
@@ -6,11 +6,11 @@ library(dlookr)
 library(dplyr)
 library(ggplot2)
 
-## ----import_data---------------------------------------------------------
+## ----import_data--------------------------------------------------------------
 library(ISLR)
 str(Carseats)
 
-## ----missing-------------------------------------------------------------
+## ----missing------------------------------------------------------------------
 carseats <- ISLR::Carseats
 
 suppressWarnings(RNGversion("3.5.0"))
@@ -21,7 +21,7 @@ suppressWarnings(RNGversion("3.5.0"))
 set.seed(456)
 carseats[sample(seq(NROW(carseats)), 10), "Urban"] <- NA
 
-## ----imputate_na, fig.width = 7, fig.height = 5--------------------------
+## ----imputate_na, fig.width = 7, fig.height = 5-------------------------------
 income <- imputate_na(carseats, Income, US, method = "rpart")
 
 # result of imputate
@@ -33,7 +33,7 @@ summary(income)
 # viz of imputate
 plot(income)
 
-## ----imputate_na2, fig.width = 7, fig.height = 5-------------------------
+## ----imputate_na2, fig.width = 7, fig.height = 5------------------------------
 library(mice)
 
 urban <- imputate_na(carseats, Urban, US, method = "mice")
@@ -47,7 +47,7 @@ summary(urban)
 # viz of imputate
 plot(urban)
 
-## ----imputate_na3--------------------------------------------------------
+## ----imputate_na3-------------------------------------------------------------
 # The mean before and after the imputation of the Income variable
 carseats %>%
   mutate(Income_imp = imputate_na(carseats, Income, US, method = "knn")) %>%
@@ -55,7 +55,7 @@ carseats %>%
   summarise(orig = mean(Income, na.rm = TRUE),
     imputation = mean(Income_imp))
 
-## ----imputate_outlier, fig.width = 7, fig.height = 5---------------------
+## ----imputate_outlier, fig.width = 7, fig.height = 5--------------------------
 price <- imputate_outlier(carseats, Price, method = "capping")
 
 # result of imputate
@@ -67,7 +67,7 @@ summary(price)
 # viz of imputate
 plot(price)
 
-## ----imputate_outlier2---------------------------------------------------
+## ----imputate_outlier2--------------------------------------------------------
 # The mean before and after the imputation of the Price variable
 carseats %>%
   mutate(Price_imp = imputate_outlier(carseats, Price, method = "capping")) %>%
@@ -75,14 +75,14 @@ carseats %>%
   summarise(orig = mean(Price, na.rm = TRUE),
     imputation = mean(Price_imp, na.rm = TRUE))
 
-## ----standardization, fig.width = 7, fig.height = 5----------------------
+## ----standardization, fig.width = 7, fig.height = 5---------------------------
 carseats %>% 
   mutate(Income_minmax = transform(carseats$Income, method = "minmax"),
     Sales_minmax = transform(carseats$Sales, method = "minmax")) %>% 
   select(Income_minmax, Sales_minmax) %>% 
   boxplot()
 
-## ----resolving1----------------------------------------------------------
+## ----resolving1---------------------------------------------------------------
 # find index of skewed variables
 find_skewness(carseats)
 
@@ -95,7 +95,7 @@ find_skewness(carseats, value = TRUE)
 # compute the skewness & filtering with threshold
 find_skewness(carseats, value = TRUE, thres = 0.1)
 
-## ----resolving2, fig.width = 7, fig.height = 5---------------------------
+## ----resolving2, fig.width = 7, fig.height = 5--------------------------------
 Advertising_log = transform(carseats$Advertising, method = "log")
 
 # result of transformation
@@ -105,7 +105,7 @@ summary(Advertising_log)
 # viz of transformation
 plot(Advertising_log)
 
-## ----resolving3, fig.width = 7, fig.height = 5---------------------------
+## ----resolving3, fig.width = 7, fig.height = 5--------------------------------
 Advertising_log <- transform(carseats$Advertising, method = "log+1")
 
 # result of transformation
@@ -115,7 +115,7 @@ summary(Advertising_log)
 # viz of transformation
 plot(Advertising_log)
 
-## ----binning, fig.width = 6, fig.height = 5------------------------------
+## ----binning, fig.width = 6, fig.height = 5-----------------------------------
 # Binning the carat variable. default type argument is "quantile"
 bin <- binning(carseats$Income)
 # Print bins class object
@@ -146,7 +146,7 @@ carseats %>%
  arrange(desc(freq)) %>%
  head(10)
 
-## ----binning_by, fig.width = 6, fig.height = 5---------------------------
+## ----binning_by, fig.width = 6, fig.height = 5--------------------------------
 # optimal binning
 bin <- binning_by(carseats, "US", "Advertising")
 bin
@@ -163,11 +163,11 @@ attr(bin, "ivtable")
 # visualize optimal_bins class
 plot(bin, sub = "bins of Advertising variable")
 
-## ----trans_report, eval=FALSE--------------------------------------------
+## ----trans_report, eval=FALSE-------------------------------------------------
 #  carseats %>%
 #    transformation_report(target = US)
 
-## ---- eval=FALSE---------------------------------------------------------
+## ---- eval=FALSE--------------------------------------------------------------
 #  carseats %>%
 #    transformation_report(target = US, output_format = "html",
 #      output_file = "transformation.html")

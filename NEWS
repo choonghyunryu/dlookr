@@ -1,8 +1,12 @@
 dlookr 0.3.13
 ----------------------------------------------------------------
-* binning() fixed error an issue where some bining errors could occur at values close to breaks for large numbers.
+* normality() fixed an issue where NaN is returned in the result if the data contains Inf. And  fixed warning message that is "`cols` is now required."
 
-* binning() appended approxy.lab argument that choice large number breaks are approximated to pretty numbers.  
+* plot_normality() fixed an issue where plots are not drawn correctly if data contains Inf.
+
+* binning() fixed error an issue where some bining errors could occur at values close to breaks for large numbers. And appended approxy.lab argument that choice large number breaks are approximated to pretty numbers.  
+
+* describe() fixed warning message that is "`cols` is now required."
 
 
 dlookr 0.3.12

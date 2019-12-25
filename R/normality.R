@@ -130,6 +130,8 @@ normality_impl <- function(df, vars, sample) {
   idx_numeric <- find_class(df[, vars], type = "numerical")
 
   num_normal <- function(x) {
+    x <- x[which(!is.infinite(x))]
+    
     result <- shapiro.test(x)
 
     tibble(statistic = result$statistic, p_value = result$p.value)
@@ -138,7 +140,7 @@ normality_impl <- function(df, vars, sample) {
   statistic <- lapply(vars[idx_numeric], function(x) num_normal(pull(df, x)))
 
   tibble(vars = vars[idx_numeric], statistic, sample = sample) %>%
-    tidyr::unnest() %>%
+    tidyr::unnest(cols = c(statistic)) %>%
     select(vars, statistic, p_value, sample)
 }
 
@@ -169,7 +171,10 @@ normality_group_impl <- function(df, vars, sample) {
 
     n_sample <- min(length(nums), n_sample)
     
-    tryCatch(result <- shapiro.test(sample(nums, n_sample)),
+    x <- sample(nums, n_sample)
+    x <- x[which(!is.infinite(x))]
+    
+    tryCatch(result <- shapiro.test(x),
              error = function(e) NULL,
              finally = NULL)
     
@@ -204,7 +209,7 @@ normality_group_impl <- function(df, vars, sample) {
   statistic <- lapply(vars[idx_numeric], function(x) call_normal(x))
 
   tibble(statistic) %>%
-    tidyr::unnest()
+    tidyr::unnest(cols = c(statistic))
 }
 
 
@@ -315,8 +320,11 @@ plot_normality_impl <- function(df, vars) {
     on.exit(par(op))
 
     hist(x, col = "lightblue", las = 1, main = "origin")
-    qqnorm(x, main = "origin: Q-Q plot")
-    qqline(x)
+    
+    x2 <- x[which(!is.infinite(x))]
+    
+    qqnorm(x2, main = "origin: Q-Q plot")
+    qqline(x2)
 
     hist(log(x), col = "lightblue", las = 1, main = "log")
     hist(sqrt(x), col = "lightblue", las = 1, main = "sqrt")

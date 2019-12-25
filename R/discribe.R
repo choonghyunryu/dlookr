@@ -160,7 +160,7 @@ describe_impl <- function(df, vars) {
                       function(x) num_summary(pull(df, x)))
 
   tibble(variable = vars[idx_numeric], statistic) %>%
-    tidyr::unnest()
+    tidyr::unnest(cols = c(statistic))
 }
 
 
@@ -248,7 +248,7 @@ describe_group_impl <- function(df, vars, margin) {
   statistic <- lapply(vars[idx_numeric], function(x) call_summary(x))
 
   desc <- tibble(statistic) %>%
-    tidyr::unnest()
+    tidyr::unnest(cols = c(statistic))
 
   desc
 }

@@ -1,4 +1,4 @@
-## ----environment, echo = FALSE, message = FALSE, warning=FALSE-----------
+## ----environment, echo = FALSE, message = FALSE, warning=FALSE----------------
 knitr::opts_chunk$set(collapse = TRUE, comment = "")
 options(tibble.print_min = 4L, tibble.print_max = 4L)
 
@@ -6,11 +6,11 @@ library(dlookr)
 library(dplyr)
 library(ggplot2)
 
-## ----import_data, warning=FALSE------------------------------------------
+## ----import_data, warning=FALSE-----------------------------------------------
 library(ISLR)
 str(Carseats)
 
-## ----missing-------------------------------------------------------------
+## ----missing------------------------------------------------------------------
 carseats <- ISLR::Carseats
 
 suppressWarnings(RNGversion("3.5.0"))
@@ -21,10 +21,10 @@ suppressWarnings(RNGversion("3.5.0"))
 set.seed(456)
 carseats[sample(seq(NROW(carseats)), 10), "Urban"] <- NA
 
-## ----describe------------------------------------------------------------
+## ----describe-----------------------------------------------------------------
 describe(carseats)
 
-## ----describes2----------------------------------------------------------
+## ----describes2---------------------------------------------------------------
 # Select columns by name
 describe(carseats, Sales, CompPrice, Income)
 # Select all columns between year and day (inclusive)
@@ -32,27 +32,27 @@ describe(carseats, Sales:Income)
 # Select all columns except those from year to day (inclusive)
 describe(carseats, -(Sales:Income))
 
-## ----describe_pipe-------------------------------------------------------
+## ----describe_pipe------------------------------------------------------------
 carseats %>%
   describe() %>%
   select(variable, skewness, mean, p25, p50, p75) %>% 
   filter(!is.na(skewness)) %>% 
   arrange(desc(abs(skewness)))
 
-## ----diagnose_pipe2------------------------------------------------------
+## ----diagnose_pipe2-----------------------------------------------------------
 carseats %>%
   group_by(US) %>% 
   describe(Sales, Income) 
 
-## ----diagnose_pipe3------------------------------------------------------
+## ----diagnose_pipe3-----------------------------------------------------------
 carseats %>%
   group_by(US, Urban) %>% 
   describe(Sales, Income) 
 
-## ----normality-----------------------------------------------------------
+## ----normality----------------------------------------------------------------
 normality(carseats)
 
-## ----normality2----------------------------------------------------------
+## ----normality2---------------------------------------------------------------
 # Select columns by name
 normality(carseats, Sales, CompPrice, Income)
 
@@ -62,7 +62,7 @@ normality(carseats, Sales:Income)
 # Select all columns except those from year to day (inclusive)
 normality(carseats, -(Sales:Income))
 
-## ----normality_pipe------------------------------------------------------
+## ----normality_pipe-----------------------------------------------------------
 library(dplyr)
 
 carseats %>%
@@ -70,33 +70,33 @@ carseats %>%
   filter(p_value <= 0.01) %>% 
   arrange(abs(p_value))
 
-## ----normality_pipe2-----------------------------------------------------
+## ----normality_pipe2----------------------------------------------------------
 carseats %>%
   group_by(ShelveLoc, US) %>%
   normality(Income) %>% 
   arrange(desc(p_value))
 
-## ----normality_pipe3-----------------------------------------------------
+## ----normality_pipe3----------------------------------------------------------
 carseats %>%
   mutate(log_income = log(Income)) %>%
   group_by(ShelveLoc, US) %>%
   normality(log_income) %>%
   filter(p_value > 0.01)
 
-## ----plot_normality, fig.width = 7, fig.height = 5-----------------------
+## ----plot_normality, fig.width = 7, fig.height = 5----------------------------
 # Select columns by name
 plot_normality(carseats, Sales, CompPrice)
 
-## ----plot_normality2, fig.width = 7, fig.height = 5----------------------
+## ----plot_normality2, fig.width = 7, fig.height = 5---------------------------
 carseats %>%
   filter(ShelveLoc == "Good") %>%
   group_by(US) %>%
   plot_normality(Income)
 
-## ----correlate-----------------------------------------------------------
+## ----correlate----------------------------------------------------------------
 correlate(carseats)
 
-## ----correlate2----------------------------------------------------------
+## ----correlate2---------------------------------------------------------------
 # Select columns by name
 correlate(carseats, Sales, CompPrice, Income)
 
@@ -106,82 +106,82 @@ correlate(carseats, Sales:Income)
 # Select all columns except those from year to day (inclusive)
 correlate(carseats, -(Sales:Income))
 
-## ----correlate3----------------------------------------------------------
+## ----correlate3---------------------------------------------------------------
 carseats %>%
   correlate(Sales:Income) %>%
   filter(as.integer(var1) > as.integer(var2))
 
-## ----correlate4----------------------------------------------------------
+## ----correlate4---------------------------------------------------------------
 carseats %>%
   filter(ShelveLoc == "Good") %>%
   group_by(Urban, US) %>%
   correlate(Sales) %>%
   filter(abs(coef_corr) > 0.5)
 
-## ----plot_correlate, fig.width = 7, fig.height = 5-----------------------
+## ----plot_correlate, fig.width = 7, fig.height = 5----------------------------
 plot_correlate(carseats)
 
-## ----plot_correlate2, fig.width = 7, fig.height = 5----------------------
+## ----plot_correlate2, fig.width = 7, fig.height = 5---------------------------
 # Select columns by name
 plot_correlate(carseats, Sales, Price)
 
-## ----plot_correlate3, fig.width = 7, fig.height = 5, warning=FALSE-------
+## ----plot_correlate3, fig.width = 7, fig.height = 5, warning=FALSE------------
 carseats %>%
   filter(ShelveLoc == "Good") %>%
   group_by(Urban, US) %>%
   plot_correlate(Sales)
 
-## ----target_by-----------------------------------------------------------
+## ----target_by----------------------------------------------------------------
 categ <- target_by(carseats, US)
 
-## ----target_by2----------------------------------------------------------
+## ----target_by2---------------------------------------------------------------
 # If the variable of interest is a numarical variable
 cat_num <- relate(categ, Sales)
 cat_num
 summary(cat_num)
 
-## ----target_by3, fig.width = 7, fig.height = 5, warning=FALSE------------
+## ----target_by3, fig.width = 7, fig.height = 5, warning=FALSE-----------------
 plot(cat_num)
 
-## ----target_by4----------------------------------------------------------
+## ----target_by4---------------------------------------------------------------
 # If the variable of interest is a categorical variable
 cat_cat <- relate(categ, ShelveLoc)
 cat_cat
 summary(cat_cat)
 
-## ----target_by5, fig.width = 7, fig.height = 5, warning=FALSE------------
+## ----target_by5, fig.width = 7, fig.height = 5, warning=FALSE-----------------
 plot(cat_cat)
 
-## ----target_by6----------------------------------------------------------
+## ----target_by6---------------------------------------------------------------
 # If the variable of interest is a numarical variable
 num <- target_by(carseats, Sales)
 
-## ----target_by7----------------------------------------------------------
+## ----target_by7---------------------------------------------------------------
 # If the variable of interest is a numarical variable
 num_num <- relate(num, Price)
 num_num
 summary(num_num)
 
-## ----target_by8, fig.width = 7, fig.height = 5, warning=FALSE------------
+## ----target_by8, fig.width = 7, fig.height = 5, warning=FALSE-----------------
 plot(num_num)
 
-## ----target_by8_2, fig.width = 7, fig.height = 5, warning=FALSE----------
+## ----target_by8_2, fig.width = 7, fig.height = 5, warning=FALSE---------------
 plot(num_num, hex_thres = 350)
 
-## ----target_by9----------------------------------------------------------
+## ----target_by9---------------------------------------------------------------
 # If the variable of interest is a categorical variable
 num_cat <- relate(num, ShelveLoc)
 num_cat
 summary(num_cat)
 
-## ----target_by10, fig.width = 7, fig.height = 5, warning=FALSE-----------
+## ----target_by10, fig.width = 7, fig.height = 5, warning=FALSE----------------
 plot(num_cat)
 
-## ----eda_report, eval=FALSE----------------------------------------------
+## ----eda_report, eval=FALSE---------------------------------------------------
 #  carseats %>%
 #    eda_report(target = Sales)
 
-## ---- eval=FALSE---------------------------------------------------------
+## ---- eval=FALSE--------------------------------------------------------------
 #  carseats %>%
 #    eda_report(target = Sales, output_format = "html", output_file = "EDA.html")
 
@@ -215,7 +215,7 @@ knitr::include_graphics('img/eda_table_html.png')
 ## ----eda_normality_html, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="EDA Report Normality Test Information (Web)"----
 knitr::include_graphics('img/eda_normality_html.png')
 
-## ----dbi_table, warning=FALSE, message=FALSE-----------------------------
+## ----dbi_table, warning=FALSE, message=FALSE----------------------------------
 if (!require(DBI)) install.packages('DBI')
 if (!require(RSQLite)) install.packages('RSQLite')
 if (!require(dplyr)) install.packages('dplyr')
@@ -233,7 +233,7 @@ con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 # copy carseats to the DBMS with a table named TB_CARSEATS
 copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
 
-## ----dbi_describe--------------------------------------------------------
+## ----dbi_describe-------------------------------------------------------------
 # Positive values select variables
 con_sqlite %>% 
   tbl("TB_CARSEATS") %>% 
@@ -260,7 +260,7 @@ con_sqlite %>%
   group_by(ShelveLoc, US) %>%
   describe(Sales)
 
-## ----dbi_normality-------------------------------------------------------
+## ----dbi_normality------------------------------------------------------------
 # Test all numerical variables by 'ShelveLoc' and 'US',
 # and extract only those with 'ShelveLoc' variable level is "Good".
 con_sqlite %>% 
@@ -290,7 +290,7 @@ con_sqlite %>%
  normality(log_income) %>%
  filter(p_value > 0.01)
 
-## ----plot_normality_dbi, fig.width = 7, fig.height = 5-------------------
+## ----plot_normality_dbi, fig.width = 7, fig.height = 5------------------------
 # Plot 'Sales' variable by 'ShelveLoc' and 'US'
 con_sqlite %>% 
   tbl("TB_CARSEATS") %>% 
@@ -305,7 +305,7 @@ con_sqlite %>%
   group_by(US) %>%
   plot_normality(Income)
 
-## ----dbi_correlation-----------------------------------------------------
+## ----dbi_correlation----------------------------------------------------------
 # Correlation coefficient
 # that eliminates redundant combination of variables
 con_sqlite %>% 
@@ -339,7 +339,7 @@ con_sqlite %>%
   filter(coef_corr < 0) %>%
   filter(abs(coef_corr) > 0.5)
 
-## ----plot_correlation_dbi, fig.width = 7, fig.height = 5-----------------
+## ----plot_correlation_dbi, fig.width = 7, fig.height = 5----------------------
 # Extract only those with 'ShelveLoc' variable level is "Good",
 # and visualize correlation plot of 'Sales' variable by 'Urban'
 # and 'US' variables.
@@ -349,7 +349,7 @@ con_sqlite %>%
   group_by(Urban, US) %>%
   plot_correlate(Sales)
 
-## ----dbi_ctarget_by------------------------------------------------------
+## ----dbi_ctarget_by-----------------------------------------------------------
 # If the target variable is a categorical variable
 categ <- target_by(con_sqlite %>% tbl("TB_CARSEATS") , US)
 
@@ -358,10 +358,10 @@ cat_num <- relate(categ, Sales)
 cat_num
 summary(cat_num)
 
-## ----plot_target_by_dbi, fig.width = 7, fig.height = 5-------------------
+## ----plot_target_by_dbi, fig.width = 7, fig.height = 5------------------------
 plot(cat_num)
 
-## ----dbi_diag_report, eval=FALSE-----------------------------------------
+## ----dbi_diag_report, eval=FALSE----------------------------------------------
 #  ## target variable is categorical variable
 #  # reporting the EDA information
 #  # create pdf file. file name is EDA_Report.pdf
