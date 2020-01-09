@@ -83,11 +83,11 @@ carseats %>%
   normality(log_income) %>%
   filter(p_value > 0.01)
 
-## ----plot_normality, fig.width = 7, fig.height = 5----------------------------
+## ----plot_normality, fig.align='center', fig.width = 6, fig.height = 4--------
 # Select columns by name
 plot_normality(carseats, Sales, CompPrice)
 
-## ----plot_normality2, fig.width = 7, fig.height = 5---------------------------
+## ----plot_normality2, fig.align='center', fig.width = 6, fig.height = 4-------
 carseats %>%
   filter(ShelveLoc == "Good") %>%
   group_by(US) %>%
@@ -118,14 +118,14 @@ carseats %>%
   correlate(Sales) %>%
   filter(abs(coef_corr) > 0.5)
 
-## ----plot_correlate, fig.width = 7, fig.height = 5----------------------------
+## ----plot_correlate, fig.align='center', fig.width = 6, fig.height = 4--------
 plot_correlate(carseats)
 
-## ----plot_correlate2, fig.width = 7, fig.height = 5---------------------------
+## ----plot_correlate2, fig.align='center', fig.width = 6, fig.height = 4-------
 # Select columns by name
 plot_correlate(carseats, Sales, Price)
 
-## ----plot_correlate3, fig.width = 7, fig.height = 5, warning=FALSE------------
+## ----plot_correlate3, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE----
 carseats %>%
   filter(ShelveLoc == "Good") %>%
   group_by(Urban, US) %>%
@@ -140,7 +140,7 @@ cat_num <- relate(categ, Sales)
 cat_num
 summary(cat_num)
 
-## ----target_by3, fig.width = 7, fig.height = 5, warning=FALSE-----------------
+## ----target_by3, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE----
 plot(cat_num)
 
 ## ----target_by4---------------------------------------------------------------
@@ -149,7 +149,7 @@ cat_cat <- relate(categ, ShelveLoc)
 cat_cat
 summary(cat_cat)
 
-## ----target_by5, fig.width = 7, fig.height = 5, warning=FALSE-----------------
+## ----target_by5, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE----
 plot(cat_cat)
 
 ## ----target_by6---------------------------------------------------------------
@@ -162,10 +162,10 @@ num_num <- relate(num, Price)
 num_num
 summary(num_num)
 
-## ----target_by8, fig.width = 7, fig.height = 5, warning=FALSE-----------------
+## ----target_by8, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE----
 plot(num_num)
 
-## ----target_by8_2, fig.width = 7, fig.height = 5, warning=FALSE---------------
+## ----target_by8_2, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE----
 plot(num_num, hex_thres = 350)
 
 ## ----target_by9---------------------------------------------------------------
@@ -174,7 +174,7 @@ num_cat <- relate(num, ShelveLoc)
 num_cat
 summary(num_cat)
 
-## ----target_by10, fig.width = 7, fig.height = 5, warning=FALSE----------------
+## ----target_by10, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE----
 plot(num_cat)
 
 ## ----eda_report, eval=FALSE---------------------------------------------------
@@ -290,7 +290,7 @@ con_sqlite %>%
  normality(log_income) %>%
  filter(p_value > 0.01)
 
-## ----plot_normality_dbi, fig.width = 7, fig.height = 5------------------------
+## ----plot_normality_dbi, fig.align='center', fig.width = 6, fig.height = 4----
 # Plot 'Sales' variable by 'ShelveLoc' and 'US'
 con_sqlite %>% 
   tbl("TB_CARSEATS") %>% 
@@ -339,7 +339,7 @@ con_sqlite %>%
   filter(coef_corr < 0) %>%
   filter(abs(coef_corr) > 0.5)
 
-## ----plot_correlation_dbi, fig.width = 7, fig.height = 5----------------------
+## ----plot_correlation_dbi, fig.align='center', fig.width = 6, fig.height = 4----
 # Extract only those with 'ShelveLoc' variable level is "Good",
 # and visualize correlation plot of 'Sales' variable by 'Urban'
 # and 'US' variables.
@@ -358,7 +358,7 @@ cat_num <- relate(categ, Sales)
 cat_num
 summary(cat_num)
 
-## ----plot_target_by_dbi, fig.width = 7, fig.height = 5------------------------
+## ----plot_target_by_dbi, fig.align='center', fig.align='center', fig.width = 6, fig.height = 4----
 plot(cat_num)
 
 ## ----dbi_diag_report, eval=FALSE----------------------------------------------

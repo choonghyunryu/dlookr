@@ -229,14 +229,14 @@ The plot derived from the numerical data diagnosis is as follows.
 
 `plot_outlier()` can visualize an anomaly in the `arr_delay` variable of `flights` as follows:
 
-```{r plot_outlier, fig.width = 7, fig.height = 5}
+```{r plot_outlier, fig.align='center', fig.width = 6, fig.height = 4}
 flights %>%
   plot_outlier(arr_delay) 
 ```
 
 Use the function of the dplyr package and `plot_outlier()` and `diagnose_outlier()` to visualize anomaly values of all numeric variables with an outlier ratio of 0.5% or more.:
 
-```{r plot_outlier_pipe, fig.width = 7, fig.height = 5}
+```{r plot_outlier_pipe, fig.align='center', fig.width = 6, fig.height = 4}
 flights %>%
   plot_outlier(diagnose_outlier(flights) %>% 
                  filter(outliers_ratio >= 0.5) %>% 
@@ -438,7 +438,7 @@ con_sqlite %>%
 ```
 
 ### Plot outlier information of numerical data diagnosis in the DBMS
-```{r plot_outlier_dbi, fig.width = 7, fig.height = 5}
+```{r plot_outlier_dbi, fig.align='center', fig.width = 6, fig.height = 4}
 # Visualization of numerical variables with a ratio of
 # outliers greater than 1%
 con_sqlite %>% 

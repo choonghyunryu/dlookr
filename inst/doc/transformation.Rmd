@@ -129,7 +129,7 @@ Here is a list of the data conversion functions and functions provided by dlookr
 `imputate_na()` imputates the missing value with "rpart" for the numeric variable, `Income`.
 `summary()` summarizes missing value imputation information, and `plot()` visualizes imputation information.
 
-```{r imputate_na, fig.width = 7, fig.height = 5}
+```{r imputate_na, fig.align='center', fig.width = 6, fig.height = 4}
 income <- imputate_na(carseats, Income, US, method = "rpart")
 
 # result of imputate
@@ -144,7 +144,7 @@ plot(income)
 
 The following imputates the categorical variable `urban` by the "mice" method.
 
-```{r imputate_na2, fig.width = 7, fig.height = 5}
+```{r imputate_na2, fig.align='center', fig.width = 6, fig.height = 4}
 library(mice)
 
 urban <- imputate_na(carseats, Urban, US, method = "mice")
@@ -185,7 +185,7 @@ carseats %>%
 
 `imputate_outlier()` imputates the outliers with the numeric variable `Price` as the "capping" method, as follows. `summary()` summarizes outliers imputation information, and `plot()` visualizes imputation information.
 
-```{r imputate_outlier, fig.width = 7, fig.height = 5}
+```{r imputate_outlier, fig.align='center', fig.width = 6, fig.height = 4}
 price <- imputate_outlier(carseats, Price, method = "capping")
 
 # result of imputate
@@ -229,7 +229,7 @@ carseats %>%
 ### Standardization with `transform()`
 Use the methods "zscore" and "minmax" to perform standardization.
 
-```{r standardization, fig.width = 7, fig.height = 5}
+```{r standardization, fig.align='center', fig.width = 6, fig.height = 4}
 carseats %>% 
   mutate(Income_minmax = transform(carseats$Income, method = "minmax"),
     Sales_minmax = transform(carseats$Sales, method = "minmax")) %>% 
@@ -257,7 +257,7 @@ find_skewness(carseats, value = TRUE, thres = 0.1)
 The skewness of `Advertising` is 0.637, which is a little slanted to the left, so I use `transformation ()` to convert it to `log`.
 `summary()` summarizes the transformation information, and `plot()` visualizes the transformation information.
 
-```{r resolving2, fig.width = 7, fig.height = 5}
+```{r resolving2, fig.align='center', fig.width = 6, fig.height = 4}
 Advertising_log = transform(carseats$Advertising, method = "log")
 
 # result of transformation
@@ -270,7 +270,7 @@ plot(Advertising_log)
 
 It seems that the raw data contains 0, as there is a -Inf in the log converted value. So this time we convert it to "log + 1".
 
-```{r resolving3, fig.width = 7, fig.height = 5}
+```{r resolving3, fig.align='center', fig.width = 6, fig.height = 4}
 Advertising_log <- transform(carseats$Advertising, method = "log+1")
 
 # result of transformation

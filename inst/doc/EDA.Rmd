@@ -248,14 +248,14 @@ Numerical data following a `power-law distribution` are often encountered in dat
 
 `plot_normality()` can also specify several variables like `normality()` function.
 
-```{r plot_normality, fig.width = 7, fig.height = 5}
+```{r plot_normality, fig.align='center', fig.width = 6, fig.height = 4}
 # Select columns by name
 plot_normality(carseats, Sales, CompPrice)
 ```
 
 The `plot_normality()` function also supports the `group_by()` function syntax in the `dplyr` package.
 
-```{r plot_normality2, fig.width = 7, fig.height = 5}
+```{r plot_normality2, fig.align='center', fig.width = 6, fig.height = 4}
 carseats %>%
   filter(ShelveLoc == "Good") %>%
   group_by(US) %>%
@@ -307,21 +307,21 @@ carseats %>%
 ### Visualization of the correlation matrix using `plot_correlate()`
 `plot_correlate()` visualizes the correlation matrix.
 
-```{r plot_correlate, fig.width = 7, fig.height = 5}
+```{r plot_correlate, fig.align='center', fig.width = 6, fig.height = 4}
 plot_correlate(carseats)
 ```
 
 `plot_correlate()` can also specify multiple variables, like the `correlate()` function.
 The following is a visualization of the correlation matrix including several selected variables.
 
-```{r plot_correlate2, fig.width = 7, fig.height = 5}
+```{r plot_correlate2, fig.align='center', fig.width = 6, fig.height = 4}
 # Select columns by name
 plot_correlate(carseats, Sales, Price)
 ```
 
 The `plot_correlate()` function also supports the `group_by()` function syntax in the `dplyr` package.
 
-```{r plot_correlate3, fig.width = 7, fig.height = 5, warning=FALSE}
+```{r plot_correlate3, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE}
 carseats %>%
   filter(ShelveLoc == "Good") %>%
   group_by(Urban, US) %>%
@@ -356,7 +356,7 @@ summary(cat_num)
 
 The `relate class` object created with` relate()` visualizes the relationship between the target variable and the predictor with `plot()`. The relationship between US and Sales is represented by a density plot.
 
-```{r target_by3, fig.width = 7, fig.height = 5, warning=FALSE}
+```{r target_by3, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE}
 plot(cat_num)
 ```
 
@@ -373,7 +373,7 @@ summary(cat_cat)
 
 `plot()` visualizes the relationship between the target variable and the predictor. The relationship between `US` and `ShelveLoc` is represented by a `mosaics plot`.
 
-```{r target_by5, fig.width = 7, fig.height = 5, warning=FALSE}
+```{r target_by5, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE}
 plot(cat_cat)
 ```
 
@@ -400,7 +400,7 @@ The plot on the left represents the scatter plot of Sales and Price and the conf
 The plot on the right represents the relationship between the original data and the predicted value of the linear model as a scatter plot.
 If there is a linear relationship between the two variables, the observations will converge on the red diagonal in the scatter plot.
 
-```{r target_by8, fig.width = 7, fig.height = 5, warning=FALSE}
+```{r target_by8, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE}
 plot(num_num)
 ```
 
@@ -411,7 +411,7 @@ In `plot()`, the hex_thres argument provides a basis for drawing hexabin plots. 
 
 Next, draw a hexabin plot with `plot()` not a scatter plot, specifying 350 for the hex_thres argument. This is because the number of observations is 400.
 
-```{r target_by8_2, fig.width = 7, fig.height = 5, warning=FALSE}
+```{r target_by8_2, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE}
 plot(num_num, hex_thres = 350)
 ```
 
@@ -428,7 +428,7 @@ summary(num_cat)
 
 `plot()` visualizes the relationship between the target variable and the predictor. The relationship between `Sales` and `ShelveLoc` is represented by a `box plot`.
 
-```{r target_by10, fig.width = 7, fig.height = 5, warning=FALSE}
+```{r target_by10, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE}
 plot(num_cat)
 ```
 
@@ -648,7 +648,7 @@ con_sqlite %>%
 ```
 
 ### Normalization visualization of numerical column in the DBMS
-```{r plot_normality_dbi, fig.width = 7, fig.height = 5}
+```{r plot_normality_dbi, fig.align='center', fig.width = 6, fig.height = 4}
 # Plot 'Sales' variable by 'ShelveLoc' and 'US'
 con_sqlite %>% 
   tbl("TB_CARSEATS") %>% 
@@ -701,7 +701,7 @@ con_sqlite %>%
 ```
 
 ### Visualize correlation plot of numerical columns in the DBMS
-```{r plot_correlation_dbi, fig.width = 7, fig.height = 5}
+```{r plot_correlation_dbi, fig.align='center', fig.width = 6, fig.height = 4}
 # Extract only those with 'ShelveLoc' variable level is "Good",
 # and visualize correlation plot of 'Sales' variable by 'Urban'
 # and 'US' variables.
@@ -725,7 +725,7 @@ cat_num
 summary(cat_num)
 ```
 
-```{r plot_target_by_dbi, fig.width = 7, fig.height = 5}
+```{r plot_target_by_dbi, fig.align='center', fig.align='center', fig.width = 6, fig.height = 4}
 plot(cat_num)
 ```
 
