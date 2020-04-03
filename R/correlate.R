@@ -32,6 +32,8 @@ plot_correlate <- function(.data, ...) {
 #' }
 #'
 #' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param method a character string indicating which correlation coefficient (or covariance) is 
+#' to be computed. One of "pearson" (default), "kendall", or "spearman": can be abbreviated.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
 #' Positive values select variables; negative values to drop variables.
@@ -58,7 +60,9 @@ plot_correlate <- function(.data, ...) {
 #' correlate(carseats, -Sales, -Price)
 #' correlate(carseats, "Sales", "Price")
 #' correlate(carseats, 1)
-#'
+#' # Non-parametric correlation coefficient by kendall method
+#' correlate(carseats, Sales, method = "kendall")
+#'  
 #' # Using dplyr::grouped_dt
 #' library(dplyr)
 #'
@@ -82,6 +86,10 @@ plot_correlate <- function(.data, ...) {
 #' # Positions values select variables
 #' carseats %>%
 #'  correlate(-1, -2, -3, -5, -6)
+#' # Non-parametric correlation coefficient by spearman method
+#' carseats %>%
+#'  correlate(Sales, Price, method = "spearman")
+#'  
 #' # ---------------------------------------------
 #' # Correlation coefficient
 #' # that eliminates redundant combination of variables
@@ -116,21 +124,25 @@ plot_correlate <- function(.data, ...) {
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
 #' @export
-correlate.data.frame <- function(.data, ...) {
+correlate.data.frame <- function(.data, ..., method = c("pearson", "kendall", 
+                                                   "spearman")) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
-  correlate_impl(.data, vars)
+  method <- match.arg(method)
+  
+  correlate_impl(.data, vars, method)
 }
 
 
 #' @import tibble
 #' @importFrom stats cor
-correlate_impl <- function(df, vars) {
+correlate_impl <- function(df, vars, method) {
   if (length(vars) == 0) vars <- names(df)
 
   idx_numeric <- find_class(df, type = "numerical")
 
   M <- cor(df[, names(df)[idx_numeric]],
-    use = "pairwise.complete.obs")
+    use = "pairwise.complete.obs", method = method)
+
   m <- as.vector(M)
   tab <- as_tibble(expand.grid(var1 = row.names(M),
     var2 = row.names(M)))
@@ -144,15 +156,18 @@ correlate_impl <- function(df, vars) {
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
 #' @export
-correlate.grouped_df <- function(.data, ...) {
+correlate.grouped_df <- function(.data, ..., method = c("pearson", "kendall", 
+                                                   "spearman")) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
-  correlate_group_impl(.data, vars)
+  method <- match.arg(method)
+  
+  correlate_group_impl(.data, vars, method)
 }
 
 #' @importFrom tidyr unnest
 #' @importFrom stats cor
 #' @import tibble
-correlate_group_impl <- function(df, vars) {
+correlate_group_impl <- function(df, vars, method) {
   if (length(vars) == 0) vars <- names(df)
 
   idx_numeric <- find_class(df, type = "numerical")
@@ -174,7 +189,7 @@ correlate_group_impl <- function(df, vars) {
     }  
     
     M <- cor(df[idx, names(df)[idx_numeric]],
-      use = "pairwise.complete.obs")
+      use = "pairwise.complete.obs", method = method)
     m <- as.vector(M)
     
     tab <- expand.grid(var1 = row.names(M),
@@ -221,6 +236,8 @@ correlate_group_impl <- function(df, vars) {
 #' one variable in the ... argument, the specified number of plots are drawn.
 #'
 #' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param method a character string indicating which correlation coefficient (or covariance) is 
+#' to be computed. One of "pearson" (default), "kendall", or "spearman": can be abbreviated.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
 #' Positive values select variables; negative values to drop variables.
@@ -247,7 +264,8 @@ correlate_group_impl <- function(df, vars) {
 #' plot_correlate(carseats, -Sales, -Price)
 #' plot_correlate(carseats, "Sales", "Price")
 #' plot_correlate(carseats, 1)
-#'
+#' plot_correlate(carseats, Sales, Price, method = "spearman")
+#' 
 #' # Using dplyr::grouped_dt
 #' library(dplyr)
 #'
@@ -290,21 +308,24 @@ correlate_group_impl <- function(df, vars) {
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
 #' @export
-plot_correlate.data.frame <- function(.data, ...) {
+plot_correlate.data.frame <- function(.data, ..., method = c("pearson", "kendall", 
+                                                             "spearman")) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
-  plot_correlate_impl(.data, vars)
+  method <- match.arg(method)
+  
+  plot_correlate_impl(.data, vars, method)
 }
 
 
 #' @importFrom corrplot corrplot
 #' @importFrom stats cor
-plot_correlate_impl <- function(df, vars) {
+plot_correlate_impl <- function(df, vars, method) {
   if (length(vars) == 0) vars <- names(df)
 
   idx_numeric <- find_class(df, type = "numerical")
 
   M <- cor(df[, names(df)[idx_numeric]],
-    use = "pairwise.complete.obs")
+    use = "pairwise.complete.obs", method = method)
 
   M2 <- M[row.names(M) %in% vars, ]
 

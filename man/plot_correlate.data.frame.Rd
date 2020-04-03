@@ -7,7 +7,7 @@
 \usage{
 plot_correlate(.data, ...)
 
-\method{plot_correlate}{data.frame}(.data, ...)
+\method{plot_correlate}{data.frame}(.data, ..., method = c("pearson", "kendall", "spearman"))
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}
@@ -21,6 +21,9 @@ represent column positions.
 They support unquoting and splicing.
 
 See vignette("EDA") for an introduction to these concepts.}
+
+\item{method}{a character string indicating which correlation coefficient (or covariance) is 
+to be computed. One of "pearson" (default), "kendall", or "spearman": can be abbreviated.}
 }
 \description{
 The plot_correlate() visualize correlation plot
@@ -45,6 +48,7 @@ plot_correlate(carseats, Sales, Price)
 plot_correlate(carseats, -Sales, -Price)
 plot_correlate(carseats, "Sales", "Price")
 plot_correlate(carseats, 1)
+plot_correlate(carseats, Sales, Price, method = "spearman")
 
 # Using dplyr::grouped_dt
 library(dplyr)
