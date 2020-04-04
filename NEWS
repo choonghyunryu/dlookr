@@ -1,3 +1,10 @@
+dlookr 0.3.14
+----------------------------------------------------------------
+* correlate() add the non-parametric correlation coefficient, like "spearman" and "kendall" (#Roberto Passera)
+
+* plot_correlate() add the non-parametric correlation coefficient, like "spearman"" and "kendall"" (#Roberto Passera)
+
+
 dlookr 0.3.13
 ----------------------------------------------------------------
 * normality() fixed an issue where NaN is returned in the result if the data contains Inf. And  fixed warning message that is "`cols` is now required."
