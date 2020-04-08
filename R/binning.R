@@ -205,7 +205,7 @@ binning <- function(x, nbins,
 #' usually, a result of a call to binning().
 #' @details
 #' print.bins() tries to be smart about formatting the frequency of bins, binned type, number of bins.
-#' summary.bins tries to be smart about formatting the levles, frequency of levels(bins),
+#' summary.bins() tries to be smart about formatting the levles, frequency of levels(bins),
 #' the ratio of levels in total observations. And this information is data.frame object.
 #'
 #' See vignette("transformation") for an introduction to these concepts.

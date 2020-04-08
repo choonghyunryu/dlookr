@@ -373,8 +373,8 @@ relate_impl <- function(.data, predictor) {
 #' @param x an object of class "relate", usually, a result of a call to relate().
 #' @param ... further arguments passed to or from other methods.
 #' @details
-#' print.relate tries to be smart about formatting four kinds of relate.
-#' summary.relate tries to be smart about formatting four kinds of relate.
+#' print.relate() tries to be smart about formatting four kinds of relate.
+#' summary.relate() tries to be smart about formatting four kinds of relate.
 #'
 #' @seealso \code{\link{plot.relate}}.
 #' @examples
