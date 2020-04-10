@@ -15,8 +15,8 @@
 print and summary method for "relate" class.
 }
 \details{
-print.relate tries to be smart about formatting four kinds of relate.
-summary.relate tries to be smart about formatting four kinds of relate.
+print.relate() tries to be smart about formatting four kinds of relate.
+summary.relate() tries to be smart about formatting four kinds of relate.
 }
 \examples{
 \dontrun{
