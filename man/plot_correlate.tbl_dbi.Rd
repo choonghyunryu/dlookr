@@ -4,7 +4,13 @@
 \alias{plot_correlate.tbl_dbi}
 \title{Visualize correlation plot of numerical data}
 \usage{
-\method{plot_correlate}{tbl_dbi}(.data, ..., in_database = FALSE, collect_size = Inf)
+\method{plot_correlate}{tbl_dbi}(
+  .data,
+  ...,
+  in_database = FALSE,
+  collect_size = Inf,
+  method = c("pearson", "kendall", "spearman")
+)
 }
 \arguments{
 \item{.data}{a tbl_dbi.}
@@ -22,7 +28,10 @@ If TRUE, most operations are performed in the DBMS. if FALSE,
 table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.}
 
 \item{collect_size}{a integer. The number of data samples from the DBMS to R. 
-Applies only if in_database = FALSE.
+Applies only if in_database = FALSE.}
+
+\item{method}{a character string indicating which correlation coefficient (or covariance) is 
+to be computed. One of "pearson" (default), "kendall", or "spearman": can be abbreviated.
 
 See vignette("EDA") for an introduction to these concepts.}
 }

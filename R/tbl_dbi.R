@@ -934,6 +934,8 @@ plot_normality.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
 #' table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.
 #' @param collect_size a integer. The number of data samples from the DBMS to R. 
 #' Applies only if in_database = FALSE.
+#' @param method a character string indicating which correlation coefficient (or covariance) is 
+#' to be computed. One of "pearson" (default), "kendall", or "spearman": can be abbreviated.
 #' 
 #' See vignette("EDA") for an introduction to these concepts.
 #'
@@ -1014,8 +1016,11 @@ plot_normality.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
 #'   filter(coef_corr < 0) %>%
 #'   filter(abs(coef_corr) > 0.5)
 #'  
-correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = Inf) {
+correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = Inf,
+                              method = c("pearson", "kendall", "spearman")) {
   vars <- tidyselect::vars_select(colnames(.data), !!! rlang::quos(...))
+  
+  method <- match.arg(method)
   
   if (in_database) {
     stop("It does not yet support in-database mode. Use in_database = FALSE.")
@@ -1023,11 +1028,11 @@ correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = In
     if (class(.data$ops)[1] != "op_group_by") {
       .data %>% 
         dplyr::collect(n = collect_size) %>%
-        correlate_impl(vars)
+        correlate_impl(vars, method)
     } else {
       .data %>% 
         dplyr::collect(n = collect_size) %>%
-        correlate(vars)
+        correlate_group_impl(vars, method)
     }
   }
 }
@@ -1056,6 +1061,8 @@ correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = In
 #' table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.
 #' @param collect_size a integer. The number of data samples from the DBMS to R. 
 #' Applies only if in_database = FALSE.
+#' @param method a character string indicating which correlation coefficient (or covariance) is 
+#' to be computed. One of "pearson" (default), "kendall", or "spearman": can be abbreviated.
 #' 
 #' See vignette("EDA") for an introduction to these concepts.
 #'
@@ -1118,8 +1125,11 @@ correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = In
 #'   group_by(Urban, US) %>%
 #'   plot_correlate(Sales)
 #'  
-plot_correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = Inf) {
+plot_correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = Inf,
+                                   method = c("pearson", "kendall", "spearman")) {
   vars <- tidyselect::vars_select(colnames(.data), !!! rlang::quos(...))
+  
+  method <- match.arg(method)
   
   if (in_database) {
     stop("It does not yet support in-database mode. Use in_database = FALSE.")
@@ -1127,11 +1137,11 @@ plot_correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
     if (class(.data$ops)[1] != "op_group_by") {
       .data %>% 
         dplyr::collect(n = collect_size) %>%
-        plot_correlate_impl(vars)
+        plot_correlate_impl(vars, method)
     } else {
       .data %>% 
         dplyr::collect(n = collect_size) %>%
-        plot_correlate(vars)
+        plot_correlate_group_impl(vars, method)
     }
   }  
 }

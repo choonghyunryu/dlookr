@@ -24,5 +24,5 @@
 if (getRversion() >= "2.15.1") {
   utils::globalVariables(c(".", "key", "value", "var1", "var2", "outlier", "outliers_cnt",
     "outliers_mean", "outliers_ratio", "p_value", "variable", "with_mean", "without_mean",
-    "Q1", "Q3", "minus", "freq", "zero"))
+    "Q1", "Q3", "minus", "freq", "zero", "obs", "coef_corr", "method", "r.squared"))
 }

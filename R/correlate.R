@@ -140,8 +140,8 @@ correlate_impl <- function(df, vars, method) {
 
   idx_numeric <- find_class(df, type = "numerical")
 
-  M <- cor(df[, names(df)[idx_numeric]],
-    use = "pairwise.complete.obs", method = method)
+  suppressWarnings(M <- cor(df[, names(df)[idx_numeric]],
+    use = "pairwise.complete.obs", method = method))
 
   m <- as.vector(M)
   tab <- as_tibble(expand.grid(var1 = row.names(M),
@@ -188,8 +188,8 @@ correlate_group_impl <- function(df, vars, method) {
       label <- data.frame(attr(df, "labels")[pos, ])
     }  
     
-    M <- cor(df[idx, names(df)[idx_numeric]],
-      use = "pairwise.complete.obs", method = method)
+    suppressWarnings(M <- cor(df[idx, names(df)[idx_numeric]],
+      use = "pairwise.complete.obs", method = method))
     m <- as.vector(M)
     
     tab <- expand.grid(var1 = row.names(M),
@@ -343,14 +343,17 @@ plot_correlate_impl <- function(df, vars, method) {
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos warn
 #' @export
-plot_correlate.grouped_df <- function(.data, ...) {
+plot_correlate.grouped_df <- function(.data, ..., method = c("pearson", "kendall", 
+                                                             "spearman")) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
-  plot_correlate_group_impl(.data, vars)
+  method <- match.arg(method)
+  
+  plot_correlate_group_impl(.data, vars, method)
 }
 
 
 #' @importFrom stats cor
-plot_correlate_group_impl <- function(df, vars) {
+plot_correlate_group_impl <- function(df, vars, method) {
   if (length(vars) == 0) vars <- names(df)
 
   idx_numeric <- find_class(df, type = "numerical")
@@ -388,7 +391,7 @@ plot_correlate_group_impl <- function(df, vars) {
       }  
 
       M <- cor(df[idx, names(df)[idx_numeric]],
-        use = "pairwise.complete.obs")
+        use = "pairwise.complete.obs", method = method)
 
       M2 <- M[row.names(M) %in% vars, ]
 
