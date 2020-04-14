@@ -523,6 +523,7 @@ plot.relate <- function(x, model = FALSE,
     ggplot(aes_string(x = xvar, color = yvar), data = attr(x, "raw")) +
       geom_density() +
       ggtitle(sprintf("%s's density plot by %s", yvar, xvar)) +
+      theme_bw() +
       theme(plot.title = element_text(hjust = 0.5))
   } else if (type == "crosstable") {
     oldClass(x) <- c("xtabs", "table")
@@ -555,6 +556,7 @@ plot.relate <- function(x, model = FALSE,
       fig1 <- fig1 +   
         stat_smooth(method = lm) +
         ggtitle(sprintf("%s's scatter plot by %s", yvar, xvar)) +
+        theme_bw() +
         theme(plot.title = element_text(hjust = 0.5))
 
       idx <- complete.cases(attr(x, "raw"))
@@ -580,6 +582,7 @@ plot.relate <- function(x, model = FALSE,
         ylim(min_x, max_x) +
         geom_abline(intercept = 0, slope = 1, color = "red", linetype = 2) +
         ggtitle(sprintf("Predicted vs Observed (%s)", yvar)) +
+        theme_bw() +
         theme(plot.title = element_text(hjust = 0.5))
 
       gridExtra::grid.arrange(fig1, fig2, ncol = 2)
@@ -600,6 +603,7 @@ plot.relate <- function(x, model = FALSE,
       ggplot(aes_string(x = xvar, y = yvar, fill = xvar), data = attr(x, "raw")) +
         geom_boxplot() +
         ggtitle(sprintf("%s's box plot by %s", yvar, xvar)) +
+        theme_bw() +
         theme(plot.title = element_text(hjust = 0.5))
     }
   }
