@@ -95,6 +95,11 @@ target_by_impl <- function(.data, target) {
   target_by <- grouped_df(.data, target)
 
   attr(target_by , "type_y") <- is(.data[, target][[1]])[1]
+
+  if (attr(categ, "type_y") == "character") {
+    warning("The target variable was assigned a character type.")
+  }
+
   class(target_by) <- append("target_df", class(target_by))
 
   target_by
@@ -341,13 +346,13 @@ relate_impl <- function(.data, predictor) {
   
   type_x <- is(.data[, predictor][[1]])[1]
 
-  if (type_y %in% c("ordered", "factor") &&
+  if (type_y %in% c("ordered", "factor", "character") &&
       type_x %in% c("numeric", "integer")) {
     suppressWarnings(
       relate <- relate_cat_by_num_impl(.data, predictor)
     )
-  } else if (type_y %in% c("ordered", "factor") &&
-             type_x %in% c("ordered", "factor")) {
+  } else if (type_y %in% c("ordered", "factor", "character") &&
+             type_x %in% c("ordered", "factor", "character")) {
     suppressWarnings(
       relate <- relate_cat_by_cat_impl(.data, predictor)
     )  
@@ -357,7 +362,7 @@ relate_impl <- function(.data, predictor) {
       relate <- relate_num_by_num_impl(.data, predictor)
     )  
   } else if (type_y %in% c("numeric", "integer") &&
-             type_x %in% c("ordered", "factor")) {
+             type_x %in% c("ordered", "factor", "character")) {
     suppressWarnings(
       relate <- relate_num_by_cat_impl(.data, predictor)
     )  
