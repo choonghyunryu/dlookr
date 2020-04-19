@@ -96,7 +96,7 @@ target_by_impl <- function(.data, target) {
 
   attr(target_by , "type_y") <- is(.data[, target][[1]])[1]
 
-  if (attr(target, "type_y") == "character") {
+  if (attr(target_by, "type_y") == "character") {
     warning("The target variable was assigned a character type.")
   }
 
