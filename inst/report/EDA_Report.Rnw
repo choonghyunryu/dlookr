@@ -43,38 +43,11 @@
 \begin{titlepage}
 \begin{center}
 
-\begin{minipage}{0.4\textwidth}
-\begin{flushleft} \large
-\includegraphics[width=0.4\textwidth]{./img/Rlogo}~\\[1cm]
-\end{flushleft}
-\end{minipage}
-\begin{minipage}{0.4\textwidth}
-\begin{flushright} \large
-\includegraphics[width=0.3\textwidth]{./img/detective_2}~\\[1cm]
-\end{flushright}
-\end{minipage}\\[4.5cm]
-
-\textsc{\Large report series with dlookr}\\[1.0cm]
-
 % Title
 \HRule \\[0.4cm]
 { \huge \bfseries Exploratory Data Analysis Report \\[0.4cm] }
 
 \HRule \\[4.5cm]
-
-% Author and package version
-\begin{minipage}{0.4\textwidth}
-\begin{flushleft} \large
-\emph{Author:}\\
-dlookr package
-\end{flushleft}
-\end{minipage}
-\begin{minipage}{0.4\textwidth}
-\begin{flushright} \large
-\emph{Version:} \\
-0.3.12
-\end{flushright}
-\end{minipage}
 
 \vfill
 
