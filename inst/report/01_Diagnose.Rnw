@@ -158,7 +158,6 @@ if (NROW(diagn_numeric) > 0) {
     kable_styling(latex_options = c("striped", "scale_down")) %>%
     kable_styling(latex_options = c("hold_position")) %>%
     kable_styling(latex_options = c("repeat_header")) %>%
-    landscape() %>%
     cat()
 } else {
   cat("\n\nNo numerical variable\n\n")
