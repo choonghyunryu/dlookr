@@ -35,14 +35,14 @@ install.packages("dlookr")
 Or you can get the development version without vignettes from GitHub:
 
 ``` r
-devtools::install_github("choonghyunryu/dlookr")
+devtools::install_github("edu-research/dlookr")
 ```
 
 Or you can get the development version with vignettes from GitHub:
 
 ``` r
 install.packages(c("nycflights13", "ISLR", "DBI", "RSQLite"))
-devtools::install_github("choonghyunryu/dlookr", build_vignettes = TRUE)
+devtools::install_github("edu-research/dlookr", build_vignettes = TRUE)
 ```
 
 Usage
