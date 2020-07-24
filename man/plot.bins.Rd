@@ -2,7 +2,7 @@
 % Please edit documentation in R/binning.R
 \name{plot.bins}
 \alias{plot.bins}
-\title{Visualize Distribution for an "bins" object}
+\title{Visualize Distribution for a "bins" object}
 \usage{
 \method{plot}{bins}(x, ...)
 }
@@ -12,7 +12,7 @@
 \item{...}{arguments to be passed to methods, such as graphical parameters (see par).}
 }
 \description{
-Visualize both plots on a single screen.
+Visualize two plots on a single screen.
 The plot at the top is a histogram representing the frequency of the level.
 The plot at the bottom is a bar chart representing the frequency of the level.
 }

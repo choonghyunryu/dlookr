@@ -6,30 +6,30 @@
 #' function of the dplyr package.
 #'
 #' @section "bins" class attributes information:
-#' Attributes of the "bins" classs that is as follows.
+#' Attributes of the "bins" class that is as follows.
 #'
 #' \itemize{
-#' \item class : "bins".
-#' \item levels : factor or ordered factor levels
+#' \item class : "bins"
+#' \item levels : levels of factor or ordered factor 
 #' \item type : binning method
 #' \item breaks : breaks for binning
-#' \item raw : before the binned the raw data
+#' \item raw : raw data before binning
 #' }
 #'
 #' See vignette("transformation") for an introduction to these concepts.
 #'
-#' @param x numeric vector for binning.
-#' @param nbins number of classes. required. if missing, nclass.Sturges is used.
-#' @param type binning method. one of "quantile", "equal", "equal", "pretty", "kmeans", "bclust"
-#' The "quantile" style provides quantile breaks.
-#' The "equal" style divides the range of the variable into nbins parts.
-#' The "pretty" style chooses a number of breaks not necessarily equal
+#' @param x numeric. numeric vector for binning.
+#' @param nbins integer. number of intervals(bins). required. if missing, nclass.Sturges is used.
+#' @param type character. binning method. Choose from "quantile", "equal", "equal", "pretty", "kmeans" and "bclust".
+#' The "quantile" sets breaks with quantiles of the same interval.
+#' The "equal" sets breaks at the same interval.
+#' The "pretty" chooses a number of breaks not necessarily equal
 #' to nbins using base::pretty function.
-#' The "kmeans" style uses stats::kmeans function to generate the breaks.
-#' The "bclust" style uses e1071::bclust function to generate the breaks using bagged clustering.
-#' "kmeans" and "bclust" type logic was implemented by classInt::classIntervals function.
-#' @param ordered whether to build an ordered factor or not.
-#' @param labels the label names to use for each of the bins.
+#' The "kmeans" uses stats::kmeans function to generate the breaks.
+#' The "bclust" uses e1071::bclust function to generate the breaks using bagged clustering.
+#' "kmeans" and "bclust" was implemented by classInt::classIntervals function.
+#' @param ordered logical. whether to build an ordered factor or not.
+#' @param labels character. the label names to use for each of the bins.
 #' @param approxy.lab logical. If TRUE, large number breaks are approximated to pretty numbers. 
 #' If FALSE, the original breaks obtained by type are used.
 #' @return An object of bins class.
@@ -38,7 +38,7 @@
 #' \item type : binning type, "quantile", "equal", "pretty", "kmeans", "bclust".
 #' \item breaks : the number of intervals into which x is to be cut.
 #' \item levels : levels of binned value.
-#' \item raw : raw data, x argument value.
+#' \item raw : raw data, numeric vector corresponding to x argument.
 #' }
 #' @seealso \code{\link{binning_by}}, \code{\link{print.bins}}, \code{\link{summary.bins}}.
 #' @export
@@ -200,13 +200,13 @@ binning <- function(x, nbins,
 
 #' Summarizing Binned Variable
 #'
-#' @description summary method for class "bins" and "optimal_bins".
-#' @param object an object of class "bins" and "optimal_bins",
+#' @description summary method for "bins" and "optimal_bins".
+#' @param object an object of "bins" and "optimal_bins",
 #' usually, a result of a call to binning().
 #' @details
-#' print.bins() tries to be smart about formatting the frequency of bins, binned type, number of bins.
-#' summary.bins() tries to be smart about formatting the levles, frequency of levels(bins),
-#' the ratio of levels in total observations. And this information is data.frame object.
+#' print.bins() prints the information of "bins" and "optimal_bins" objects nicely.
+#' This includes frequency of bins, binned type, and number of bins.
+#' summary.bins() returns data.frame including frequency and relative frequency for each levels(bins).
 #'
 #' See vignette("transformation") for an introduction to these concepts.
 #'
@@ -214,9 +214,9 @@ binning <- function(x, nbins,
 #' The function summary.bins() computes and returns a data.frame of summary statistics of the
 #' binned given in object. Variables of data frame is as follows.
 #' \itemize{
-#' \item levels : levles of factor.
+#' \item levels : levels of factor.
 #' \item freq : frequency of levels.
-#' \item rate : ratio of levels in total observations. it is not percentage.
+#' \item rate : relative frequency of levels. it is not percentage.
 #' }
 #' @seealso \code{\link{binning}}
 #' @examples
@@ -255,10 +255,10 @@ print.bins <- function(x, ...) {
   print(table(x, exclude = NULL))
 }
 
-#' Visualize Distribution for an "bins" object
+#' Visualize Distribution for a "bins" object
 #'
 #' @description
-#' Visualize both plots on a single screen.
+#' Visualize two plots on a single screen.
 #' The plot at the top is a histogram representing the frequency of the level.
 #' The plot at the bottom is a bar chart representing the frequency of the level.
 #' @param x an object of class "bins", usually, a result of a call to binning().
@@ -306,7 +306,7 @@ plot.bins <- function(x, ...) {
 
 #' Optimal Binning for Scoring Modeling
 #'
-#' @description The binning_by() finding class intervals for numerical variable
+#' @description The binning_by() finding intervals for numerical variable
 #' using optical binning. Optimal binning categorizes a numeric characteristic
 #' into bins for ulterior usage in scoring modeling.
 #'
@@ -314,40 +314,44 @@ plot.bins <- function(x, ...) {
 #' function of the dplyr package. And this function is implemented using
 #' smbinning() function of smbinning package.
 #'
-#' @section "optimal_bins" class attributes information:
-#' Attributes of the "optimal_bins" classs that is as follows.
+#' @section attributes of "optimal_bins" class:
+#' Attributes of the "optimal_bins" class that is as follows.
 #' \itemize{
 #' \item class : "optimal_bins".
-#' \item levels : factor or ordered factor levels
-#' \item type : binning method
-#' \item breaks : breaks for binning
-#' \item raw : before the binned the raw data
-#' \item ivtable : information value table
-#' \item iv : information value
-#' \item target : binary response variable
+#' \item levels : character. factor or ordered factor levels
+#' \item type : character. binning method
+#' \item breaks : numeric. breaks for binning
+#' \item raw : numeric. before the binned the raw data
+#' \item ivtable : data.frame. information value table
+#' \item iv : numeric. information value
+#' \item target : integer. binary response variable
 #' }
 #'
 #' See vignette("transformation") for an introduction to these concepts.
 #'
 #' @param df a data frame.
-#' @param y binary response variable (0,1). Integer(int) is required.
-#' Name of y must not have a dot. Name "default" is not allowed.
-#' @param x continuous characteristic. At least 5 different values.
-#' Value Inf is not allowed. Name of x must not have a dot.
-#' @param p percentage of records per bin. Default 5\% (0.05).
+#' @param y character. name of binary response variable(0, 1). 
+#' The variable must contain only the integers 0 and 1 as element. 
+#' However, in the case of factor having two levels, it is performed while type conversion is performed in the calculation process.
+#' It does not support that the variable name is "default" 
+#' and that the dot is included in the variable name.
+#' @param x character. name of continuous characteristic variable. At least 5 different values.
+#' Inf is not allowed. It does not support that the variable name that the dot is included in the variable name.
+#' @param p numeric. percentage of records per bin. Default 5\% (0.05).
 #' This parameter only accepts values greater that 0.00 (0\%) and lower than 0.50 (50\%).
-#' @param ordered whether to build an ordered factor or not.
-#' @param labels the label names to use for each of the bins.
-#' @return an object of optimal_bins class.
-#' Attributes of optimal_bins class is as follows.
+#' @param ordered logical. whether to build an ordered factor or not.
+#' @param labels character. the label names to use for each of the bins.
+#' @return an object of "optimal_bins" class.
+#' Attributes of "optimal_bins" class is as follows.
 #' \itemize{
+#' \item class : "optimal_bins".
 #' \item type : binning type, "optimal".
-#' \item breaks : the number of intervals into which x is to be cut.
-#' \item levels : levels of binned value.
-#' \item raw : raw data, x argument value.
-#' \item ivtable : information value table
-#' \item iv : information value
-#' \item flag : information value
+#' \item breaks : numeric. the number of intervals into which x is to be cut.
+#' \item levels : character. levels of binned value.
+#' \item raw : numeric. raw data, x argument value.
+#' \item ivtable : data.frame. information value table
+#' \item iv : numeric. information value
+#' \item target : integer. binary response variable
 #' }
 #' @seealso \code{\link{binning}}, \code{\link{smbinning}}.
 #' @examples
@@ -448,16 +452,15 @@ binning_by <- function(df, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
 #' Visualize Distribution for an "optimal_bins" Object
 #'
 #' @description
-#' It generates plots for distribution, bad rate, and weight of evidence after
+#' It generates plots for understand distribution, bad rate, and weight of evidence after
 #' running smbinning and saving its output.
 #'
 #' See vignette("transformation") for an introduction to these concepts.
 #'
-#' @param x an object of class "optimal_bins", usually,
-#' a result of a call to binning_by().
-#' @param type options for visualization. Distribution ("dist"), Good Rate ("goodrate"),
+#' @param x an object of class "optimal_bins", usually, a result of a call to binning_by().
+#' @param type character. options for visualization. Distribution ("dist"), Good Rate ("goodrate"),
 #' Bad Rate ("badrate"), and Weight of Evidence ("WoE").
-#' @param sub subtitle for the chart (optional).
+#' @param sub character. sub title for the chart (optional).
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
 #' only applies to the first graph that is implemented with the boxplot() function.
 #' @seealso \code{\link{binning_by}}, \code{\link{plot.bins}}, \code{\link{smbinning.plot}}.

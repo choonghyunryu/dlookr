@@ -22,7 +22,7 @@ dlookr 0.3.14
 
 * Add a new function plot.univar_nuemeric() to visualize box plot and histogram by attribute of "univar_nuemeric" class. (@Roberto Passera)
 
-
+* Corrected sentence and typo in manuals and vignettes
 
  
 dlookr 0.3.13

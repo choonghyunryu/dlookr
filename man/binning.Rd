@@ -14,22 +14,22 @@ binning(
 )
 }
 \arguments{
-\item{x}{numeric vector for binning.}
+\item{x}{numeric. numeric vector for binning.}
 
-\item{nbins}{number of classes. required. if missing, nclass.Sturges is used.}
+\item{nbins}{integer. number of intervals(bins). required. if missing, nclass.Sturges is used.}
 
-\item{type}{binning method. one of "quantile", "equal", "equal", "pretty", "kmeans", "bclust"
-The "quantile" style provides quantile breaks.
-The "equal" style divides the range of the variable into nbins parts.
-The "pretty" style chooses a number of breaks not necessarily equal
+\item{type}{character. binning method. Choose from "quantile", "equal", "equal", "pretty", "kmeans" and "bclust".
+The "quantile" sets breaks with quantiles of the same interval.
+The "equal" sets breaks at the same interval.
+The "pretty" chooses a number of breaks not necessarily equal
 to nbins using base::pretty function.
-The "kmeans" style uses stats::kmeans function to generate the breaks.
-The "bclust" style uses e1071::bclust function to generate the breaks using bagged clustering.
-"kmeans" and "bclust" type logic was implemented by classInt::classIntervals function.}
+The "kmeans" uses stats::kmeans function to generate the breaks.
+The "bclust" uses e1071::bclust function to generate the breaks using bagged clustering.
+"kmeans" and "bclust" was implemented by classInt::classIntervals function.}
 
-\item{ordered}{whether to build an ordered factor or not.}
+\item{ordered}{logical. whether to build an ordered factor or not.}
 
-\item{labels}{the label names to use for each of the bins.}
+\item{labels}{character. the label names to use for each of the bins.}
 
 \item{approxy.lab}{logical. If TRUE, large number breaks are approximated to pretty numbers. 
 If FALSE, the original breaks obtained by type are used.}
@@ -41,7 +41,7 @@ Attributes of bins class is as follows.
 \item type : binning type, "quantile", "equal", "pretty", "kmeans", "bclust".
 \item breaks : the number of intervals into which x is to be cut.
 \item levels : levels of binned value.
-\item raw : raw data, x argument value.
+\item raw : raw data, numeric vector corresponding to x argument.
 }
 }
 \description{
@@ -53,14 +53,14 @@ function of the dplyr package.
 }
 \section{"bins" class attributes information}{
 
-Attributes of the "bins" classs that is as follows.
+Attributes of the "bins" class that is as follows.
 
 \itemize{
-\item class : "bins".
-\item levels : factor or ordered factor levels
+\item class : "bins"
+\item levels : levels of factor or ordered factor 
 \item type : binning method
 \item breaks : breaks for binning
-\item raw : before the binned the raw data
+\item raw : raw data before binning
 }
 
 See vignette("transformation") for an introduction to these concepts.

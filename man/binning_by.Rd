@@ -9,34 +9,38 @@ binning_by(df, y, x, p = 0.05, ordered = TRUE, labels = NULL)
 \arguments{
 \item{df}{a data frame.}
 
-\item{y}{binary response variable (0,1). Integer(int) is required.
-Name of y must not have a dot. Name "default" is not allowed.}
+\item{y}{character. name of binary response variable(0, 1). 
+The variable must contain only the integers 0 and 1 as element. 
+However, in the case of factor having two levels, it is performed while type conversion is performed in the calculation process.
+It does not support that the variable name is "default" 
+and that the dot is included in the variable name.}
 
-\item{x}{continuous characteristic. At least 5 different values.
-Value Inf is not allowed. Name of x must not have a dot.}
+\item{x}{character. name of continuous characteristic variable. At least 5 different values.
+Inf is not allowed. It does not support that the variable name that the dot is included in the variable name.}
 
-\item{p}{percentage of records per bin. Default 5\% (0.05).
+\item{p}{numeric. percentage of records per bin. Default 5\% (0.05).
 This parameter only accepts values greater that 0.00 (0\%) and lower than 0.50 (50\%).}
 
-\item{ordered}{whether to build an ordered factor or not.}
+\item{ordered}{logical. whether to build an ordered factor or not.}
 
-\item{labels}{the label names to use for each of the bins.}
+\item{labels}{character. the label names to use for each of the bins.}
 }
 \value{
-an object of optimal_bins class.
-Attributes of optimal_bins class is as follows.
+an object of "optimal_bins" class.
+Attributes of "optimal_bins" class is as follows.
 \itemize{
+\item class : "optimal_bins".
 \item type : binning type, "optimal".
-\item breaks : the number of intervals into which x is to be cut.
-\item levels : levels of binned value.
-\item raw : raw data, x argument value.
-\item ivtable : information value table
-\item iv : information value
-\item flag : information value
+\item breaks : numeric. the number of intervals into which x is to be cut.
+\item levels : character. levels of binned value.
+\item raw : numeric. raw data, x argument value.
+\item ivtable : data.frame. information value table
+\item iv : numeric. information value
+\item target : integer. binary response variable
 }
 }
 \description{
-The binning_by() finding class intervals for numerical variable
+The binning_by() finding intervals for numerical variable
 using optical binning. Optimal binning categorizes a numeric characteristic
 into bins for ulterior usage in scoring modeling.
 }
@@ -45,18 +49,18 @@ This function is useful when used with the mutate/transmute
 function of the dplyr package. And this function is implemented using
 smbinning() function of smbinning package.
 }
-\section{"optimal_bins" class attributes information}{
+\section{attributes of "optimal_bins" class}{
 
-Attributes of the "optimal_bins" classs that is as follows.
+Attributes of the "optimal_bins" class that is as follows.
 \itemize{
 \item class : "optimal_bins".
-\item levels : factor or ordered factor levels
-\item type : binning method
-\item breaks : breaks for binning
-\item raw : before the binned the raw data
-\item ivtable : information value table
-\item iv : information value
-\item target : binary response variable
+\item levels : character. factor or ordered factor levels
+\item type : character. binning method
+\item breaks : numeric. breaks for binning
+\item raw : numeric. before the binned the raw data
+\item ivtable : data.frame. information value table
+\item iv : numeric. information value
+\item target : integer. binary response variable
 }
 
 See vignette("transformation") for an introduction to these concepts.

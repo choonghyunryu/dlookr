@@ -580,7 +580,8 @@ plot.univar_category <- function(x, na.rm = TRUE, prompt = FALSE, ...) {
       ggtitle(sprintf("Bar plot of %s", variables[i])) +
       xlab(variables[i]) + 
       theme_bw() +
-      theme(legend.position = "None")
+      theme(legend.position = "None") +
+      theme(plot.title = element_text(hjust = 0.5))
     
     print(obj)
   } 
@@ -717,7 +718,8 @@ plot.univar_numeric <- function(x, indiv = FALSE, viz = c("hist", "boxplot"),
         xlab("Variables") + 
         ggtitle(sprintf("Boxplots of %s", value)) +
         theme_bw() +
-        theme(legend.position = "None")
+        theme(legend.position = "None") +
+        theme(plot.title = element_text(hjust = 0.5))
       
       suppressMessages(
         suppressWarnings(print(p)))
@@ -730,7 +732,8 @@ plot.univar_numeric <- function(x, indiv = FALSE, viz = c("hist", "boxplot"),
         ylab("Frequency") +
         xlab(value) + 
         ggtitle(sprintf("Histogram of %s", value)) +
-        theme_bw() 
+        theme_bw() +
+        theme(plot.title = element_text(hjust = 0.5))
       
       suppressMessages(
         suppressWarnings(print(p)))

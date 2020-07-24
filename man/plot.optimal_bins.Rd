@@ -7,19 +7,18 @@
 \method{plot}{optimal_bins}(x, type = c("dist", "goodrate", "badrate", "WoE"), sub = "", ...)
 }
 \arguments{
-\item{x}{an object of class "optimal_bins", usually,
-a result of a call to binning_by().}
+\item{x}{an object of class "optimal_bins", usually, a result of a call to binning_by().}
 
-\item{type}{options for visualization. Distribution ("dist"), Good Rate ("goodrate"),
+\item{type}{character. options for visualization. Distribution ("dist"), Good Rate ("goodrate"),
 Bad Rate ("badrate"), and Weight of Evidence ("WoE").}
 
-\item{sub}{subtitle for the chart (optional).}
+\item{sub}{character. sub title for the chart (optional).}
 
 \item{...}{arguments to be passed to methods, such as graphical parameters (see par).
 only applies to the first graph that is implemented with the boxplot() function.}
 }
 \description{
-It generates plots for distribution, bad rate, and weight of evidence after
+It generates plots for understand distribution, bad rate, and weight of evidence after
 running smbinning and saving its output.
 
 See vignette("transformation") for an introduction to these concepts.
