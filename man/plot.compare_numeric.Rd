@@ -15,7 +15,7 @@
 However, it does not support.}
 }
 \description{
-Visualize scatter plot included boxplots by attribute of compare_numeric class.
+Visualize scatter plot included box plots by attribute of compare_numeric class.
 }
 \examples{
 # Generate data for the example
@@ -23,13 +23,13 @@ carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 
-# Compare the all numerical variavels
+# Compare the all numerical variables
 all_var <- compare_numeric(carseats)
 
 # Print compare compare_numeric object
 all_var
   
-# Compare the two numerical variavels
+# Compare the two numerical variables
 two_var <- compare_numeric(carseats, CompPrice, Price)
 
 # Print compare_numeric class object

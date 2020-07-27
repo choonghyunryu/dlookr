@@ -35,7 +35,7 @@ The default value is FALSE, so no marginal value is added.}
 
 \item{verbose}{logical. Specifies whether to output additional information during the calculation process.
 The default is to output information as TRUE. In this case, the function returns the value with invisible(). 
-If FALSE, the value is returned by retuen().}
+If FALSE, the value is returned by return().}
 
 \item{...}{further arguments passed to or from other methods.}
 
@@ -58,13 +58,13 @@ carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 
 library(dplyr)
 
-# Compare the all categorical variavels
+# Compare the all categorical variables
 all_var <- compare_category(carseats)
 
 # Print compare class object
 all_var
   
-# Compare the two categorical variavels
+# Compare the two categorical variables
 two_var <- compare_category(carseats, ShelveLoc, Urban)
 
 # Print compare class object

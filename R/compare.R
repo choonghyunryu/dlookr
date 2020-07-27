@@ -23,11 +23,11 @@ compare_numeric <- function(.data, ...) {
 #' and return compare_category class that based list object.
 #'
 #' @return An object of the class as compare based list.
-#' The information to examine the relationship between categorical variables is as follows each componemts.
+#' The information to examine the relationship between categorical variables is as follows each components.
 #'
 #' \itemize{
 #' \item var1 : factor. The level of the first variable to compare. 'var1' is the name of the first variable to be compared.
-#' \item var2 : factor.The level of the second variable to compare. 'var2' is the name of the second variable to be compared.
+#' \item var2 : factor. The level of the second variable to compare. 'var2' is the name of the second variable to be compared.
 #' \item n : integer. frequency by var1 and var2.
 #' \item rate : double. relative frequency.
 #' \item first_rate : double. relative frequency in first variable.
@@ -60,17 +60,17 @@ compare_numeric <- function(.data, ...) {
 #' library(dplyr)
 #' library(stringr)
 #' 
-#' # Compare the all categorical variavels
+#' # Compare the all categorical variables
 #' all_var <- compare_category(carseats)
 #' 
 #' # Print compare_numeric class object
 #' all_var
 #' 
-#' # Compare the categorical variavels that case of joint the US variable
+#' # Compare the categorical variables that case of joint the US variable
 #' all_var %>% 
 #'   "["(str_detect(names(all_var), "US"))
 #'   
-#' # Compare the two categorical variavels
+#' # Compare the two categorical variables
 #' two_var <- compare_category(carseats, ShelveLoc, Urban)
 #' 
 #' # Print compare_numeric class object
@@ -206,17 +206,17 @@ compare_category_impl <- function(df, vars) {
 #' between numerical variables.
 #'
 #' @details 
-#' It is important to understand the relationship between numarical variables in EDA.
+#' It is important to understand the relationship between numerical variables in EDA.
 #' compare_numeric() compares relations by pair combination of all numerical variables. 
 #' and return compare_numeric class that based list object.
 #'
 #' @return An object of the class as compare based list.
-#' The information to examine the relationship between numerical variables is as follows each componemts.
-#' - correlation component : correlation coefficient of pearson
+#' The information to examine the relationship between numerical variables is as follows each components.
+#' - correlation component : Pearson's correlation coefficient.
 #' \itemize{
 #' \item var1 : factor. The level of the first variable to compare. 'var1' is the name of the first variable to be compared.
-#' \item var2 : factor.The level of the second variable to compare. 'var2' is the name of the second variable to be compared.
-#' \item coef_corr : double. correlation coefficient of pearson.
+#' \item var2 : factor. The level of the second variable to compare. 'var2' is the name of the second variable to be compared.
+#' \item coef_corr : double. Pearson's correlation coefficient.
 #' }
 #' 
 #' - linear component : linear model summaries
@@ -229,7 +229,7 @@ compare_category_impl <- function(df, vars) {
 #' \item statistic : double. F-statistic.
 #' \item p.value : double. p-value from the F test, describing whether the full regression is significant.
 #' \item df : integer degrees of freedom.
-#' \item logLik : double. the data's log-likelihood under the model.
+#' \item logLik : double. the log-likelihood of data under the model.
 #' \item AIC : double. the Akaike Information Criterion.
 #' \item BIC : double. the Bayesian Information Criterion.
 #' \item deviance : double. deviance.
@@ -262,7 +262,7 @@ compare_category_impl <- function(df, vars) {
 #'
 #' library(dplyr)
 #' 
-#' # Compare the all numerical variavels
+#' # Compare the all numerical variables
 #' all_var <- compare_numeric(carseats)
 #' 
 #' # Print compare_numeric class object
@@ -285,7 +285,7 @@ compare_category_impl <- function(df, vars) {
 #'   filter(var1 == "Price" | var2 == "Price") %>% 
 #'   arrange(desc(r.squared))
 #'   
-#' # Compare the two numerical variavels
+#' # Compare the two numerical variables
 #' two_var <- compare_numeric(carseats, Price, CompPrice)
 #' 
 #' # Print compare_numeric class object
@@ -300,7 +300,7 @@ compare_category_impl <- function(df, vars) {
 #' # Just correlation condition by r > 0.2
 #' summary(all_var, method = "correlation", thres_corr = 0.2)
 #' 
-#' # linear model summries condition by R^2 > 0.05
+#' # linear model summaries condition by R^2 > 0.05
 #' summary(all_var, thres_rs = 0.05)
 #' 
 #' # verbose is FALSE 
@@ -404,7 +404,7 @@ compare_numeric_impl <- function(df, vars) {
 #' The default value is FALSE, so no marginal value is added.
 #' @param verbose logical. Specifies whether to output additional information during the calculation process.
 #' The default is to output information as TRUE. In this case, the function returns the value with invisible(). 
-#' If FALSE, the value is returned by retuen().
+#' If FALSE, the value is returned by return().
 #' @param ... further arguments passed to or from other methods.
 #' @details
 #' print.compare_category() displays only the information compared between the variables included in compare_category. 
@@ -421,13 +421,13 @@ compare_numeric_impl <- function(df, vars) {
 #'
 #' library(dplyr)
 #' 
-#' # Compare the all categorical variavels
+#' # Compare the all categorical variables
 #' all_var <- compare_category(carseats)
 #' 
 #' # Print compare class object
 #' all_var
 #'   
-#' # Compare the two categorical variavels
+#' # Compare the two categorical variables
 #' two_var <- compare_category(carseats, ShelveLoc, Urban)
 #' 
 #' # Print compare class object
@@ -655,7 +655,7 @@ summary.compare_category <- function(object, method = c("all", "table", "relativ
 #' @description print and summary method for "compare_numeric" class.
 #' @param object an object of class "compare_numeric", usually, a result of a call to compare_numeric().
 #' @param method character. Select statistics to be aggregated. 
-#' "correlation" calculates the correlation coefficient of pearson, and "linear" returns the aggregation of the linear model.
+#' "correlation" calculates the Pearson's correlation coefficient, and "linear" returns the aggregation of the linear model.
 #' "all" returns both information. 
 #' However, the difference between summary.compare_numeric() and compare_numeric() is that only cases that are greater than the specified threshold are returned.
 #' "correlation" returns only cases with a correlation coefficient greater than the thres_corr argument value. 
@@ -666,7 +666,7 @@ summary.compare_category <- function(object, method = c("all", "table", "relativ
 #' The default is 0.1.
 #' @param verbose logical. Specifies whether to output additional information during the calculation process.
 #' The default is to output information as TRUE. In this case, the function returns the value with invisible(). 
-#' If FALSE, the value is returned by retuen().
+#' If FALSE, the value is returned by return().
 #' @param ... further arguments passed to or from other methods.
 #' @details
 #' print.compare_numeric() displays only the information compared between the variables included in compare_numeric. 
@@ -674,25 +674,25 @@ summary.compare_category <- function(object, method = c("all", "table", "relativ
 #' It is also advantageous to specify FALSE if you want to manipulate the results.
 #'
 #' @return An object of the class as compare based list.
-#' The information to examine the relationship between numerical variables is as follows each componemts.
-#' - correlation component : correlation coefficient of pearson
+#' The information to examine the relationship between numerical variables is as follows each components.
+#' - correlation component : Pearson's correlation coefficient.
 #' \itemize{
 #' \item var1 : factor. The level of the first variable to compare. 'var1' is the name of the first variable to be compared.
-#' \item var2 : factor.The level of the second variable to compare. 'var2' is the name of the second variable to be compared.
-#' \item coef_corr : double. correlation coefficient of pearson.
+#' \item var2 : factor. The level of the second variable to compare. 'var2' is the name of the second variable to be compared.
+#' \item coef_corr : double. Pearson's correlation coefficient.
 #' }
 #' 
 #' - linear component : linear model summaries
 #' \itemize{
 #' \item var1 : factor. The level of the first variable to compare. 'var1' is the name of the first variable to be compared.
-#' \item var2 : factor.The level of the second variable to compare. 'var2' is the name of the second variable to be compared.
+#' \item var2 : factor. The level of the second variable to compare. 'var2' is the name of the second variable to be compared.
 #' \item r.squared : double. The percent of variance explained by the model.
 #' \item adj.r.squared : double. r.squared adjusted based on the degrees of freedom.
 #' \item sigma : double. The square root of the estimated residual variance.
 #' \item statistic : double. F-statistic.
 #' \item p.value : double. p-value from the F test, describing whether the full regression is significant.
 #' \item df : integer degrees of freedom.
-#' \item logLik : double. the data's log-likelihood under the model.
+#' \item logLik : double. the log-likelihood of data under the model.
 #' \item AIC : double. the Akaike Information Criterion.
 #' \item BIC : double. the Bayesian Information Criterion.
 #' \item deviance : double. deviance.
@@ -708,7 +708,7 @@ summary.compare_category <- function(object, method = c("all", "table", "relativ
 #'
 #' library(dplyr)
 #' 
-#' # Compare the all numerical variavels
+#' # Compare the all numerical variables
 #' all_var <- compare_numeric(carseats)
 #' 
 #' # Print compare class object
@@ -731,7 +731,7 @@ summary.compare_category <- function(object, method = c("all", "table", "relativ
 #'   filter(var1 == "Price" | var2 == "Price") %>% 
 #'   arrange(desc(r.squared))
 #'   
-#' # Compare the two numerical variavels
+#' # Compare the two numerical variables
 #' two_var <- compare_numeric(carseats, Price, CompPrice)
 #' 
 #' # Print compare class object
@@ -859,13 +859,13 @@ print.compare_numeric <- function(x, ...) {
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 #' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 #'
-#' # Compare the all categorical variavels
+#' # Compare the all categorical variables
 #' all_var <- compare_category(carseats)
 #' 
 #' # Print compare class object
 #' all_var
 #'   
-#' # Compare the two categorical variavels
+#' # Compare the two categorical variables
 #' two_var <- compare_category(carseats, ShelveLoc, Urban)
 #' 
 #' # Print compare class object
@@ -929,7 +929,7 @@ plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE, ...) {
 #' Visualize Information for an "compare_numeric" Object
 #'
 #' @description
-#' Visualize scatter plot included boxplots by attribute of compare_numeric class.
+#' Visualize scatter plot included box plots by attribute of compare_numeric class.
 #'
 #' @param x an object of class "compare_numeric", usually, a result of a call to compare_numeric().
 #' @param prompt logical. The default value is FALSE. If there are multiple visualizations to be output, if this argument value is TRUE, a prompt is output each time. 
@@ -942,13 +942,13 @@ plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE, ...) {
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 #' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 #'
-#' # Compare the all numerical variavels
+#' # Compare the all numerical variables
 #' all_var <- compare_numeric(carseats)
 #' 
 #' # Print compare compare_numeric object
 #' all_var
 #'   
-#' # Compare the two numerical variavels
+#' # Compare the two numerical variables
 #' two_var <- compare_numeric(carseats, CompPrice, Price)
 #' 
 #' # Print compare_numeric class object

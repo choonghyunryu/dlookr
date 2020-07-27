@@ -20,7 +20,7 @@
 \item{object}{an object of class "compare_numeric", usually, a result of a call to compare_numeric().}
 
 \item{method}{character. Select statistics to be aggregated. 
-"correlation" calculates the correlation coefficient of pearson, and "linear" returns the aggregation of the linear model.
+"correlation" calculates the Pearson's correlation coefficient, and "linear" returns the aggregation of the linear model.
 "all" returns both information. 
 However, the difference between summary.compare_numeric() and compare_numeric() is that only cases that are greater than the specified threshold are returned.
 "correlation" returns only cases with a correlation coefficient greater than the thres_corr argument value. 
@@ -34,7 +34,7 @@ The default is 0.1.}
 
 \item{verbose}{logical. Specifies whether to output additional information during the calculation process.
 The default is to output information as TRUE. In this case, the function returns the value with invisible(). 
-If FALSE, the value is returned by retuen().}
+If FALSE, the value is returned by return().}
 
 \item{...}{further arguments passed to or from other methods.}
 
@@ -42,25 +42,25 @@ If FALSE, the value is returned by retuen().}
 }
 \value{
 An object of the class as compare based list.
-The information to examine the relationship between numerical variables is as follows each componemts.
-- correlation component : correlation coefficient of pearson
+The information to examine the relationship between numerical variables is as follows each components.
+- correlation component : Pearson's correlation coefficient.
 \itemize{
 \item var1 : factor. The level of the first variable to compare. 'var1' is the name of the first variable to be compared.
-\item var2 : factor.The level of the second variable to compare. 'var2' is the name of the second variable to be compared.
-\item coef_corr : double. correlation coefficient of pearson.
+\item var2 : factor. The level of the second variable to compare. 'var2' is the name of the second variable to be compared.
+\item coef_corr : double. Pearson's correlation coefficient.
 }
 
 - linear component : linear model summaries
 \itemize{
 \item var1 : factor. The level of the first variable to compare. 'var1' is the name of the first variable to be compared.
-\item var2 : factor.The level of the second variable to compare. 'var2' is the name of the second variable to be compared.
+\item var2 : factor. The level of the second variable to compare. 'var2' is the name of the second variable to be compared.
 \item r.squared : double. The percent of variance explained by the model.
 \item adj.r.squared : double. r.squared adjusted based on the degrees of freedom.
 \item sigma : double. The square root of the estimated residual variance.
 \item statistic : double. F-statistic.
 \item p.value : double. p-value from the F test, describing whether the full regression is significant.
 \item df : integer degrees of freedom.
-\item logLik : double. the data's log-likelihood under the model.
+\item logLik : double. the log-likelihood of data under the model.
 \item AIC : double. the Akaike Information Criterion.
 \item BIC : double. the Bayesian Information Criterion.
 \item deviance : double. deviance.
@@ -83,7 +83,7 @@ carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 
 library(dplyr)
 
-# Compare the all numerical variavels
+# Compare the all numerical variables
 all_var <- compare_numeric(carseats)
 
 # Print compare class object
@@ -106,7 +106,7 @@ all_var \%>\%
   filter(var1 == "Price" | var2 == "Price") \%>\% 
   arrange(desc(r.squared))
   
-# Compare the two numerical variavels
+# Compare the two numerical variables
 two_var <- compare_numeric(carseats, Price, CompPrice)
 
 # Print compare class object

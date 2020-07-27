@@ -21,12 +21,12 @@ They support unquoting and splicing.}
 }
 \value{
 An object of the class as compare based list.
-The information to examine the relationship between numerical variables is as follows each componemts.
-- correlation component : correlation coefficient of pearson
+The information to examine the relationship between numerical variables is as follows each components.
+- correlation component : Pearson's correlation coefficient.
 \itemize{
 \item var1 : factor. The level of the first variable to compare. 'var1' is the name of the first variable to be compared.
-\item var2 : factor.The level of the second variable to compare. 'var2' is the name of the second variable to be compared.
-\item coef_corr : double. correlation coefficient of pearson.
+\item var2 : factor. The level of the second variable to compare. 'var2' is the name of the second variable to be compared.
+\item coef_corr : double. Pearson's correlation coefficient.
 }
 
 - linear component : linear model summaries
@@ -39,7 +39,7 @@ The information to examine the relationship between numerical variables is as fo
 \item statistic : double. F-statistic.
 \item p.value : double. p-value from the F test, describing whether the full regression is significant.
 \item df : integer degrees of freedom.
-\item logLik : double. the data's log-likelihood under the model.
+\item logLik : double. the log-likelihood of data under the model.
 \item AIC : double. the Akaike Information Criterion.
 \item BIC : double. the Bayesian Information Criterion.
 \item deviance : double. deviance.
@@ -51,7 +51,7 @@ The compare_numeric() compute information to examine the relationship
 between numerical variables.
 }
 \details{
-It is important to understand the relationship between numarical variables in EDA.
+It is important to understand the relationship between numerical variables in EDA.
 compare_numeric() compares relations by pair combination of all numerical variables. 
 and return compare_numeric class that based list object.
 }
@@ -73,7 +73,7 @@ carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 
 library(dplyr)
 
-# Compare the all numerical variavels
+# Compare the all numerical variables
 all_var <- compare_numeric(carseats)
 
 # Print compare_numeric class object
@@ -96,7 +96,7 @@ all_var \%>\%
   filter(var1 == "Price" | var2 == "Price") \%>\% 
   arrange(desc(r.squared))
   
-# Compare the two numerical variavels
+# Compare the two numerical variables
 two_var <- compare_numeric(carseats, Price, CompPrice)
 
 # Print compare_numeric class object
@@ -111,7 +111,7 @@ summary(all_var, method = "correlation")
 # Just correlation condition by r > 0.2
 summary(all_var, method = "correlation", thres_corr = 0.2)
 
-# linear model summries condition by R^2 > 0.05
+# linear model summaries condition by R^2 > 0.05
 summary(all_var, thres_rs = 0.05)
 
 # verbose is FALSE 

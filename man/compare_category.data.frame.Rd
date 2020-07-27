@@ -21,11 +21,11 @@ They support unquoting and splicing.}
 }
 \value{
 An object of the class as compare based list.
-The information to examine the relationship between categorical variables is as follows each componemts.
+The information to examine the relationship between categorical variables is as follows each components.
 
 \itemize{
 \item var1 : factor. The level of the first variable to compare. 'var1' is the name of the first variable to be compared.
-\item var2 : factor.The level of the second variable to compare. 'var2' is the name of the second variable to be compared.
+\item var2 : factor. The level of the second variable to compare. 'var2' is the name of the second variable to be compared.
 \item n : integer. frequency by var1 and var2.
 \item rate : double. relative frequency.
 \item first_rate : double. relative frequency in first variable.
@@ -59,17 +59,17 @@ carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 library(dplyr)
 library(stringr)
 
-# Compare the all categorical variavels
+# Compare the all categorical variables
 all_var <- compare_category(carseats)
 
 # Print compare_numeric class object
 all_var
 
-# Compare the categorical variavels that case of joint the US variable
+# Compare the categorical variables that case of joint the US variable
 all_var \%>\% 
   "["(str_detect(names(all_var), "US"))
   
-# Compare the two categorical variavels
+# Compare the two categorical variables
 two_var <- compare_category(carseats, ShelveLoc, Urban)
 
 # Print compare_numeric class object

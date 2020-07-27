@@ -26,13 +26,13 @@ carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 
-# Compare the all categorical variavels
+# Compare the all categorical variables
 all_var <- compare_category(carseats)
 
 # Print compare class object
 all_var
   
-# Compare the two categorical variavels
+# Compare the two categorical variables
 two_var <- compare_category(carseats, ShelveLoc, Urban)
 
 # Print compare class object
