@@ -20,14 +20,14 @@ represent column positions.
 They support unquoting and splicing.}
 }
 \value{
-An object of the class as indivisual variabes based list.
+An object of the class as individual variables based list.
 A component named "statistics" is a tibble object with the following statistics.:
 \itemize{
 \item variable : factor. The level of the variable. 'variable' is the name of the variable.
 \item n : number of observations excluding missing values
 \item na : number of missing values
 \item mean : arithmetic average
-\item sd : standard devation
+\item sd : standard deviation
 \item se_mean : standrd error mean. sd/sqrt(n)
 \item IQR : interquartile range (Q3-Q1)
 \item skewness : skewness
@@ -41,7 +41,8 @@ The univar_numeric() calculates statistic of numerical variables that is frequen
 \details{
 univar_numeric() calculates the popular statistics of  numerical variables. 
 If a specific variable name is not specified, statistics for all categorical numerical included in the data are calculated.
-The statistics obtained by univar_numeric() are part of those obtained by describe(). Therefore, it is recommended to use describe() to simply calculate statistics. 
+The statistics obtained by univar_numeric() are part of those obtained by describe(). 
+Therefore, it is recommended to use describe() to simply calculate statistics. 
 However, if you want to visualize the distribution of individual variables, you should use univar_numeric().
 }
 \section{Attributes of return object}{
@@ -59,7 +60,7 @@ carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 
-# Calculates the all categorical variavels
+# Calculates the all categorical variables
 all_var <- univar_numeric(carseats)
 
 # Print univar_numeric class object
@@ -74,7 +75,7 @@ stat <- summary(all_var)
 # Summary by returned object
 stat
 
-# Statistics of numerical variables normalized by MinMax method
+# Statistics of numerical variables normalized by Min-Max method
 summary(all_var, stand = "minmax")
 
 # Statistics of numerical variables standardized by Z-score method
@@ -83,7 +84,7 @@ summary(all_var, stand = "zscore")
 # one plot with all variables
 plot(all_var)
 
-# one plot with all normalized variables by MinMax method
+# one plot with all normalized variables by Min-Max method
 plot(all_var, stand = "minmax")
 
 # one plot with all variables

@@ -42,7 +42,7 @@ target_by <- function(.data, target, ...) {
 #' # If the target variable is a categorical variable
 #' categ <- target_by(carseats, US)
 #'
-#' # If the variable of interest is a numarical variable
+#' # If the variable of interest is a numerical variable
 #' cat_num <- relate(categ, Sales)
 #' cat_num
 #' summary(cat_num)
@@ -58,7 +58,7 @@ target_by <- function(.data, target, ...) {
 #' # If the target variable is a categorical variable
 #' num <- target_by(carseats, Sales)
 #'
-#' # If the variable of interest is a numarical variable
+#' # If the variable of interest is a numerical variable
 #' num_num <- relate(num, Price)
 #' num_num
 #' summary(num_num)
@@ -119,12 +119,12 @@ target_by_impl <- function(.data, target) {
 #'   \itemize{
 #'     \item predictor: categorical variable
 #'     \itemize{
-#'       \item contegency table
+#'       \item contingency table
 #'       \item c("xtabs", "table") class
 #'     }
 #'     \item predictor: numerical variable
 #'     \itemize{
-#'       \item descriptive statistic for each levles and total observation.
+#'       \item descriptive statistic for each levels and total observation.
 #'     }
 #'   }
 #'   \item target variable: numerical variable
@@ -145,7 +145,7 @@ target_by_impl <- function(.data, target) {
 #'
 #' \itemize{
 #' \item mean : arithmetic average
-#' \item sd : standard devation
+#' \item sd : standard deviation
 #' \item se_mean : standrd error mean. sd/sqrt(n)
 #' \item IQR : interqurtle range (Q3-Q1)
 #' \item skewness : skewness
@@ -182,7 +182,7 @@ target_by_impl <- function(.data, target) {
 #' # If the target variable is a categorical variable
 #' categ <- target_by(carseats, US)
 #'
-#' # If the variable of interest is a numarical variable
+#' # If the variable of interest is a numerical variable
 #' cat_num <- relate(categ, Sales)
 #' cat_num
 #' summary(cat_num)
@@ -198,7 +198,7 @@ target_by_impl <- function(.data, target) {
 #' # If the target variable is a categorical variable
 #' num <- target_by(carseats, Sales)
 #'
-#' # If the variable of interest is a numarical variable
+#' # If the variable of interest is a numerical variable
 #' num_num <- relate(num, Price)
 #' num_num
 #' summary(num_num)
@@ -395,7 +395,7 @@ relate_impl <- function(.data, predictor) {
 #' # Print bins class object
 #' bin
 #'
-#' # Summarise bins class object
+#' # Summarize bins class object
 #' summary(bin)
 #' }
 #'
@@ -409,7 +409,7 @@ relate_impl <- function(.data, predictor) {
 #' # If the target variable is a categorical variable
 #' categ <- target_by(carseats, US)
 #'
-#' # If the variable of interest is a numarical variable
+#' # If the variable of interest is a numerical variable
 #' cat_num <- relate(categ, Sales)
 #' cat_num
 #' summary(cat_num)
@@ -425,7 +425,7 @@ relate_impl <- function(.data, predictor) {
 #' # If the target variable is a categorical variable
 #' num <- target_by(carseats, Sales)
 #'
-#' # If the variable of interest is a numarical variable
+#' # If the variable of interest is a numerical variable
 #' num_num <- relate(num, Price)
 #' num_num
 #' summary(num_num)
@@ -472,7 +472,7 @@ print.relate <- function(x, ...) {
 #' @param pal Color palette to paint hexabin. Use only when the target and predictor are numeric variables.
 #' Applied only when the number of observations is greater than hex_thres.
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
-#' only applies when the model argument is TRUE, and is used for ... of the plot.lm () function.
+#' only applies when the model argument is TRUE, and is used for ... of the plot.lm() function.
 #' @seealso \code{\link{relate}}, \code{\link{print.relate}}.
 #' @examples
 #' # Generate data for the example
@@ -483,7 +483,7 @@ print.relate <- function(x, ...) {
 #' # If the target variable is a categorical variable
 #' categ <- target_by(carseats, US)
 #'
-#' # If the variable of interest is a numarical variable
+#' # If the variable of interest is a numerical variable
 #' cat_num <- relate(categ, Sales)
 #' cat_num
 #' summary(cat_num)

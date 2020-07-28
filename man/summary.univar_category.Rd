@@ -20,8 +20,8 @@ The default is TRUE, where NA is removed and aggregated.}
 \item{x}{an object of class "univar_category", usually, a result of a call to univar_category().}
 }
 \value{
-An object of the class as indivisual variabes based list.
-The information to examine the relationship between categorical variables is as follows each componemts.
+An object of the class as individual variables based list.
+The information to examine the relationship between categorical variables is as follows each components.
 
 \itemize{
 \item variable : factor. The level of the variable. 'variable' is the name of the variable.
@@ -72,10 +72,10 @@ stat <- summary(all_var)
 # Summary by returned object
 stat
   
-# Summary chisquare test by returned object exclude NA
+# Summary chi-squared test by returned object exclude NA
 summary(urban)
 
-# Summary chisquare test by returned object include NA
+# Summary chi-squared test by returned object include NA
 summary(urban, na.rm = FALSE)
 
 }

@@ -13,7 +13,7 @@
 }
 \description{
 Visualize two kinds of plot by attribute of `transform` class.
-The Transformation of a numerical variable is a density plot.
+The transformation of a numerical variable is a density plot.
 }
 \examples{
 # Generate data for the example

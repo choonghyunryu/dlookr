@@ -17,7 +17,7 @@ These arguments are automatically quoted and evaluated in a context where column
 represent column positions.
 They support unquoting and splicing.}
 
-\item{sample}{the numer of samples to perform the test.}
+\item{sample}{the number of samples to perform the test.}
 
 \item{in_database}{Specifies whether to perform in-database operations. 
 If TRUE, most operations are performed in the DBMS. if FALSE, 

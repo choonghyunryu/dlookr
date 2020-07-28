@@ -12,7 +12,8 @@
 \item{na.rm}{logical. Specifies whether to include NA when plotting bar plot. 
 The default is FALSE, so plot NA.}
 
-\item{prompt}{logical. The default value is FALSE. If there are multiple visualizations to be output, if this argument value is TRUE, a prompt is output each time.}
+\item{prompt}{logical. The default value is FALSE. If there are multiple visualizations to be output, 
+if this argument value is TRUE, a prompt is output each time.}
 
 \item{...}{arguments to be passed to methods, such as graphical parameters (see par).
 However, it does not support all parameters.}
@@ -28,7 +29,7 @@ carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 
 library(dplyr)
 
-# Calculates the all categorical variavels
+# Calculates the all categorical variables
 all_var <- univar_category(carseats)
 
 # Print univar_category class object

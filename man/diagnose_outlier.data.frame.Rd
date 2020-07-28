@@ -40,7 +40,7 @@ The information derived from the numerical data diagnosis is as follows.
 
 \itemize{
 \item variables : variable names
-\item outliers_cnt : count of outliers
+\item outliers_cnt : number of outliers
 \item outliers_ratio : percent of outliers
 \item outliers_mean : arithmetic average of outliers
 \item with_mean : arithmetic average of with outliers

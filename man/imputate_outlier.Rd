@@ -2,7 +2,7 @@
 % Please edit documentation in R/imputation.R
 \name{imputate_outlier}
 \alias{imputate_outlier}
-\title{Imputate Outliers}
+\title{Impute Outliers}
 \usage{
 imputate_outlier(.data, xvar, method, no_attrs)
 }
@@ -29,8 +29,8 @@ Attributes of imputation class is as follows.
     \item "mean" : arithmetic mean
     \item "median" : median
     \item "mode" : mode
-    \item "capping" : Imputate the upper outliers with 95 percentile,
-    and Imputate the bottom outliers with 5 percentile.
+    \item "capping" : Impute the upper outliers with 95 percentile,
+    and Impute the bottom outliers with 5 percentile.
   }
 }
 \item outlier_pos : position of outliers in predictor.
@@ -39,15 +39,14 @@ Attributes of imputation class is as follows.
 }
 }
 \description{
-Outliers are imputated with some representative values and
-statistical methods.
+Outliers are imputed with some representative values and statistical methods.
 }
 \details{
 imputate_outlier() creates an imputation class.
-The `imputation` class includes missing value position, imputated value,
+The `imputation` class includes missing value position, imputed value,
 and method of missing value imputation, etc.
-The `imputation` class compares the imputated value with the original value
-to help determine whether the imputated value is used in the analysis.
+The `imputation` class compares the imputed value with the original value
+to help determine whether the imputed value is used in the analysis.
 
 See vignette("transformation") for an introduction to these concepts.
 }
@@ -57,11 +56,10 @@ carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 
-# Replace the missing value of the Price variable with median
+# Replace the outliers of the Price variable with median
 imputate_outlier(carseats, Price, method = "median")
 
-# Replace the missing value of the Price variable with rpart
-# The target variable is US.
+# Replace the outliers of the Price variable with capping
 imputate_outlier(carseats, Price, method = "capping")
 
 ## using dplyr -------------------------------------
@@ -74,7 +72,7 @@ carseats \%>\%
   summarise(orig = mean(Price, na.rm = TRUE),
     imputation = mean(Price_imp, na.rm = TRUE))
 
-# If the variable of interest is a numarical variable
+# If the variable of interest is a numerical variable
 price <- imputate_outlier(carseats, Price)
 price
 summary(price)

@@ -34,7 +34,7 @@ one variable in the ... argument, the specified number of plots are drawn.
 }
 \section{Distribution information}{
 
-The plot derived from the numerical data vizualization is as follows.
+The plot derived from the numerical data visualization is as follows.
 
 \itemize{
 \item histogram by original data
@@ -59,7 +59,7 @@ plot_normality(carseats, Income, Price)
 plot_normality(carseats, -Income, -Price)
 plot_normality(carseats, 1)
 
-# Using dtplyr::grouped_dt
+# Using dplyr::grouped_df
 library(dplyr)
 
 gdata <- group_by(carseats, ShelveLoc, US)

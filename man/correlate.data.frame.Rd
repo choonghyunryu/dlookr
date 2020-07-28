@@ -26,7 +26,7 @@ See vignette("EDA") for an introduction to these concepts.}
 to be computed. One of "pearson" (default), "kendall", or "spearman": can be abbreviated.}
 }
 \description{
-The correlate() compute pearson's the correlation
+The correlate() compute Pearson's the correlation
 coefficient of the numerical data.
 }
 \details{
@@ -42,7 +42,7 @@ The information derived from the numerical data compute is as follows.
 \itemize{
 \item var1 : names of numerical variable
 \item var2 : name of the corresponding numeric variable
-\item coef_corr : pearson's correlation coefficient
+\item coef_corr : Pearson's correlation coefficient
 }
 }
 

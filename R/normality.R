@@ -14,7 +14,7 @@ plot_normality <- function(.data, ...) {
 
 #' Performs the Shapiro-Wilk test of normality
 #'
-#' @description The normality() performs Shapiro-Wilk test of normality of numeric values.
+#' @description The normality() performs Shapiro-Wilk test of normality of numerical values.
 #'
 #' @details This function is useful when used with the \code{\link{group_by}}
 #' function of the dplyr package. If you want to test by level of the categorical
@@ -29,7 +29,7 @@ plot_normality <- function(.data, ...) {
 #' \item statistic : the value of the Shapiro-Wilk statistic.
 #' \item p_value : an approximate p-value for the test. This is said in
 #' Roystion(1995) to be adequate for p_value < 0.1.
-#' \item sample : the numer of samples to perform the test.
+#' \item sample : the number of samples to perform the test.
 #' The number of observations supported by the stats::shapiro.test function is 3 to 5000.
 #' }
 #'
@@ -41,7 +41,7 @@ plot_normality <- function(.data, ...) {
 #' These arguments are automatically quoted and evaluated in a context where column names
 #' represent column positions.
 #' They support unquoting and splicing.
-#' @param sample the numer of samples to perform the test.
+#' @param sample the number of samples to perform the test.
 #'
 #' See vignette("EDA") for an introduction to these concepts.
 #'
@@ -223,7 +223,7 @@ normality_group_impl <- function(df, vars, sample) {
 #' one variable in the ... argument, the specified number of plots are drawn.
 #'
 #' @section Distribution information:
-#' The plot derived from the numerical data vizualization is as follows.
+#' The plot derived from the numerical data visualization is as follows.
 #'
 #' \itemize{
 #' \item histogram by original data
@@ -261,7 +261,7 @@ normality_group_impl <- function(df, vars, sample) {
 #' plot_normality(carseats, -Income, -Price)
 #' plot_normality(carseats, 1)
 #'
-#' # Using dtplyr::grouped_dt
+#' # Using dplyr::grouped_df
 #' library(dplyr)
 #'
 #' gdata <- group_by(carseats, ShelveLoc, US)

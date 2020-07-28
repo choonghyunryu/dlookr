@@ -1,15 +1,15 @@
-#' Imputate Missing values
+#' Impute Missing Values
 #'
 #' @description
-#' Missing values are imputated with some representative values and
+#' Missing values are imputed with some representative values and
 #' statistical methods.
 #'
 #' @details
 #' imputate_na () creates an imputation class.
-#' The `imputation` class includes missing value position, imputated value,
+#' The `imputation` class includes missing value position, imputed value,
 #' and method of missing value imputation, etc.
-#' The `imputation` class compares the imputated value with the original value
-#' to help determine whether the imputated value is used in the analysis.
+#' The `imputation` class compares the imputed value with the original value
+#' to help determine whether the imputed value is used in the analysis.
 #'
 #' See vignette("transformation") for an introduction to these concepts.
 #'
@@ -18,7 +18,7 @@
 #' @param yvar target variable.
 #' @param method method of missing values imputation.
 #' @param seed integer. the random seed used in mice. only used "mice" method.
-#' @param print_flag logical. If TRUE, mice will print history on console.
+#' @param print_flag logical. If TRUE, mice will print running log on console.
 #' Use print_flag=FALSE for silent computation. Used only when method is "mice".
 #' @param no_attrs logical. If TRUE, return numerical variable or categorical variable. 
 #' else If FALSE, imputation class.
@@ -67,7 +67,7 @@
 #' # The target variable is US.
 #' imputate_na(carseats, Income, US, method = "rpart")
 #'
-#' # Replace the missing value of the Urban variable with median
+#' # Replace the missing value of the Urban variable with mode
 #' imputate_na(carseats, Urban, method = "mode")
 #'
 #' # Replace the missing value of the Urban variable with mice
@@ -84,7 +84,7 @@
 #'   summarise(orig = mean(Income, na.rm = TRUE),
 #'     imputation = mean(Income_imp))
 #'
-#' # If the variable of interest is a numarical variable
+#' # If the variable of interest is a numerical variable
 #' income <- imputate_na(carseats, Income, US, method = "rpart")
 #' income
 #' summary(income)
@@ -304,18 +304,17 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL,
 }
 
 
-#' Imputate Outliers
+#' Impute Outliers
 #'
 #' @description
-#' Outliers are imputated with some representative values and
-#' statistical methods.
+#' Outliers are imputed with some representative values and statistical methods.
 #'
 #' @details
 #' imputate_outlier() creates an imputation class.
-#' The `imputation` class includes missing value position, imputated value,
+#' The `imputation` class includes missing value position, imputed value,
 #' and method of missing value imputation, etc.
-#' The `imputation` class compares the imputated value with the original value
-#' to help determine whether the imputated value is used in the analysis.
+#' The `imputation` class compares the imputed value with the original value
+#' to help determine whether the imputed value is used in the analysis.
 #'
 #' See vignette("transformation") for an introduction to these concepts.
 #'
@@ -336,8 +335,8 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL,
 #'     \item "mean" : arithmetic mean
 #'     \item "median" : median
 #'     \item "mode" : mode
-#'     \item "capping" : Imputate the upper outliers with 95 percentile,
-#'     and Imputate the bottom outliers with 5 percentile.
+#'     \item "capping" : Impute the upper outliers with 95 percentile,
+#'     and Impute the bottom outliers with 5 percentile.
 #'   }
 #' }
 #' \item outlier_pos : position of outliers in predictor.
@@ -351,11 +350,10 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL,
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 #' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 #'
-#' # Replace the missing value of the Price variable with median
+#' # Replace the outliers of the Price variable with median
 #' imputate_outlier(carseats, Price, method = "median")
 #'
-#' # Replace the missing value of the Price variable with rpart
-#' # The target variable is US.
+#' # Replace the outliers of the Price variable with capping
 #' imputate_outlier(carseats, Price, method = "capping")
 #'
 #' ## using dplyr -------------------------------------
@@ -368,7 +366,7 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL,
 #'   summarise(orig = mean(Price, na.rm = TRUE),
 #'     imputation = mean(Price_imp, na.rm = TRUE))
 #'
-#' # If the variable of interest is a numarical variable
+#' # If the variable of interest is a numerical variable
 #' price <- imputate_outlier(carseats, Price)
 #' price
 #' summary(price)
@@ -491,8 +489,8 @@ imputate_outlier_impl <- function(df, xvar, method, no_attrs = FALSE) {
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 #' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 #'
-#' # Imputate missing values -----------------------------
-#' # If the variable of interest is a numarical variable
+#' # Impute missing values -----------------------------
+#' # If the variable of interest is a numerical variable
 #' income <- imputate_na(carseats, Income, US, method = "rpart")
 #' income
 #' summary(income)
@@ -504,8 +502,8 @@ imputate_outlier_impl <- function(df, xvar, method, no_attrs = FALSE) {
 #' summary(urban)
 #' plot(urban)
 #'
-#' # Imputate outliers ----------------------------------
-#' # If the variable of interest is a numarical variable
+#' # Impute outliers ----------------------------------
+#' # If the variable of interest is a numerical variable
 #' price <- imputate_outlier(carseats, Price, method = "capping")
 #' price
 #' summary(price)
@@ -605,7 +603,7 @@ summary.imputation <- function(object, ...) {
 #' @param x an object of class "imputation", usually, a result of a call to imputate_na()
 #' or imputate_outlier().
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
-#' only applies when the model argument is TRUE, and is used for ... of the plot.lm () function.
+#' only applies when the model argument is TRUE, and is used for ... of the plot.lm() function.
 #' @seealso \code{\link{imputate_na}}, \code{\link{imputate_outlier}}, \code{\link{summary.imputation}}.
 #' @examples
 #' \donttest{
@@ -614,8 +612,8 @@ summary.imputation <- function(object, ...) {
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 #' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 #'
-#' # Imputate missing values -----------------------------
-#' # If the variable of interest is a numarical variable
+#' # Impute missing values -----------------------------
+#' # If the variable of interest is a numerical variable
 #' income <- imputate_na(carseats, Income, US, method = "rpart")
 #' income
 #' summary(income)
@@ -627,8 +625,8 @@ summary.imputation <- function(object, ...) {
 #' summary(urban)
 #' plot(urban)
 #'
-#' # Imputate outliers ----------------------------------
-#' # If the variable of interest is a numarical variable
+#' # Impute outliers ----------------------------------
+#' # If the variable of interest is a numerical variable
 #' price <- imputate_outlier(carseats, Price, method = "capping")
 #' price
 #' summary(price)

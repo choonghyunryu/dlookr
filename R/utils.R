@@ -43,7 +43,7 @@ get_class <- function(df) {
 #' "categorical2" adds "character" class to "categorical".
 #' @param index logical. If TRUE is return numeric vector that is variables index.
 #' and if FALSE is return character vector that is variables name.
-#' defalut is TRUE.
+#' default is TRUE.
 #'
 #' @return character vector or numeric vector.
 #' The meaning of vector according to data type is as follows.

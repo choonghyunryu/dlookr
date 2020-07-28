@@ -20,7 +20,7 @@ These arguments are automatically quoted and evaluated in a context where column
 represent column positions.
 They support unquoting and splicing.}
 
-\item{sample}{the numer of samples to perform the test.
+\item{sample}{the number of samples to perform the test.
 
 See vignette("EDA") for an introduction to these concepts.}
 }
@@ -28,7 +28,7 @@ See vignette("EDA") for an introduction to these concepts.}
 An object of the same class as .data.
 }
 \description{
-The normality() performs Shapiro-Wilk test of normality of numeric values.
+The normality() performs Shapiro-Wilk test of normality of numerical values.
 }
 \details{
 This function is useful when used with the \code{\link{group_by}}
@@ -45,7 +45,7 @@ The information derived from the numerical data test is as follows.
 \item statistic : the value of the Shapiro-Wilk statistic.
 \item p_value : an approximate p-value for the test. This is said in
 Roystion(1995) to be adequate for p_value < 0.1.
-\item sample : the numer of samples to perform the test.
+\item sample : the number of samples to perform the test.
 The number of observations supported by the stats::shapiro.test function is 3 to 5000.
 }
 }

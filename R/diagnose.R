@@ -140,8 +140,8 @@ diagnose_category <- function(.data, ...) {
 #' \item variables : variable names
 #' \item levels: level names
 #' \item N : number of observation
-#' \item freq : number of observation at the levles
-#' \item ratio : percentage of observation at the levles
+#' \item freq : number of observation at the levels
+#' \item ratio : percentage of observation at the levels
 #' \item rank : rank of occupancy ratio of levels
 #' }
 #'
@@ -405,7 +405,7 @@ diagnose_outlier <- function(.data, ...) {
 #'
 #' \itemize{
 #' \item variables : variable names
-#' \item outliers_cnt : count of outliers
+#' \item outliers_cnt : number of outliers
 #' \item outliers_ratio : percent of outliers
 #' \item outliers_mean : arithmetic average of outliers
 #' \item with_mean : arithmetic average of with outliers
@@ -713,7 +713,7 @@ diagnose_report <- function(.data, output_format, output_file, output_dir, ...) 
 #' "html" create html file by rmarkdown::render().
 #' @param output_file name of generated file. default is NULL.
 #' @param output_dir name of directory to generate report file. default is tempdir().
-#' @param font_family charcter. font family name for figure in pdf.
+#' @param font_family character. font family name for figure in pdf.
 #' @param browse logical. choose whether to output the report results to the browser.
 #' @param ... arguments to be passed to methods.
 #'

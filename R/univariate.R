@@ -19,11 +19,11 @@ univar_numeric <- function(.data, ...) {
 #' @details 
 #' univar_category() calculates the frequency table of categorical variables. 
 #' If a specific variable name is not specified, frequency tables for all categorical variables included in the data are calculated.
-#' The univar_category class returned by univar_category() is useful because it can draw chisqure tests and barplots as well as frequency tables of individual variables.
+#' The univar_category class returned by univar_category() is useful because it can draw chisqure tests and bar plots as well as frequency tables of individual variables.
 #' and return univar_category class that based list object.
 #'
-#' @return An object of the class as indivisual variabes based list.
-#' The information to examine the relationship between categorical variables is as follows each componemts.
+#' @return An object of the class as individual variables based list.
+#' The information to examine the relationship between categorical variables is as follows each components.
 #'
 #' \itemize{
 #' \item variable : factor. The level of the variable. 'variable' is the name of the variable.
@@ -34,7 +34,7 @@ univar_numeric <- function(.data, ...) {
 #' @section Attributes of return object:
 #' Attributes of compare_category class is as follows.
 #' \itemize{
-#' \item variables : character. List of variables selected for calcualte frequency.
+#' \item variables : character. List of variables selected for calculate frequency.
 #' }
 #' 
 #' @param .data a data.frame or a \code{\link{tbl_df}}.
@@ -56,7 +56,7 @@ univar_numeric <- function(.data, ...) {
 #' library(dplyr)
 #' library(stringr)
 #' 
-#' # Calculates the all categorical variavels
+#' # Calculates the all categorical variables
 #' all_var <- univar_category(carseats)
 #' 
 #' # Print univar_category class object
@@ -146,17 +146,18 @@ univar_category_impl <- function(df, vars) {
 #' @details 
 #' univar_numeric() calculates the popular statistics of  numerical variables. 
 #' If a specific variable name is not specified, statistics for all categorical numerical included in the data are calculated.
-#' The statistics obtained by univar_numeric() are part of those obtained by describe(). Therefore, it is recommended to use describe() to simply calculate statistics. 
+#' The statistics obtained by univar_numeric() are part of those obtained by describe(). 
+#' Therefore, it is recommended to use describe() to simply calculate statistics. 
 #' However, if you want to visualize the distribution of individual variables, you should use univar_numeric().
 #'
-#' @return An object of the class as indivisual variabes based list.
+#' @return An object of the class as individual variables based list.
 #' A component named "statistics" is a tibble object with the following statistics.:
 #' \itemize{
 #' \item variable : factor. The level of the variable. 'variable' is the name of the variable.
 #' \item n : number of observations excluding missing values
 #' \item na : number of missing values
 #' \item mean : arithmetic average
-#' \item sd : standard devation
+#' \item sd : standard deviation
 #' \item se_mean : standrd error mean. sd/sqrt(n)
 #' \item IQR : interquartile range (Q3-Q1)
 #' \item skewness : skewness
@@ -187,7 +188,7 @@ univar_category_impl <- function(df, vars) {
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 #' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 #' 
-#' # Calculates the all categorical variavels
+#' # Calculates the all categorical variables
 #' all_var <- univar_numeric(carseats)
 #' 
 #' # Print univar_numeric class object
@@ -202,7 +203,7 @@ univar_category_impl <- function(df, vars) {
 #' # Summary by returned object
 #' stat
 #'
-#' # Statistics of numerical variables normalized by MinMax method
+#' # Statistics of numerical variables normalized by Min-Max method
 #' summary(all_var, stand = "minmax")
 #' 
 #' # Statistics of numerical variables standardized by Z-score method
@@ -211,7 +212,7 @@ univar_category_impl <- function(df, vars) {
 #' # one plot with all variables
 #' plot(all_var)
 #' 
-#' # one plot with all normalized variables by MinMax method
+#' # one plot with all normalized variables by Min-Max method
 #' plot(all_var, stand = "minmax")
 #' 
 #' # one plot with all variables
@@ -285,8 +286,8 @@ univar_numeric_impl <- function(df, vars) {
 #' print.univar_category() displays only the information of variables included in univar_category. 
 #' The "variables" attribute is not displayed.
 #'
-#' @return An object of the class as indivisual variabes based list.
-#' The information to examine the relationship between categorical variables is as follows each componemts.
+#' @return An object of the class as individual variables based list.
+#' The information to examine the relationship between categorical variables is as follows each components.
 #'
 #' \itemize{
 #' \item variable : factor. The level of the variable. 'variable' is the name of the variable.
@@ -331,10 +332,10 @@ univar_numeric_impl <- function(df, vars) {
 #' # Summary by returned object
 #' stat
 #'   
-#' # Summary chisquare test by returned object exclude NA
+#' # Summary chi-squared test by returned object exclude NA
 #' summary(urban)
 #' 
-#' # Summary chisquare test by returned object include NA
+#' # Summary chi-squared test by returned object include NA
 #' summary(urban, na.rm = FALSE)
 #' 
 #' @importFrom broom glance
@@ -395,8 +396,8 @@ summary.univar_category <- function(object, na.rm = TRUE, ...) {
 #' \item n : number of observations excluding missing values
 #' \item na : number of missing values
 #' \item mean : arithmetic average
-#' \item sd : standard devation
-#' \item se_mean : standrd error mean. sd/sqrt(n)
+#' \item sd : standard deviation
+#' \item se_mean : standard error mean. sd/sqrt(n)
 #' \item IQR : interquartile range (Q3-Q1)
 #' \item skewness : skewness
 #' \item kurtosis : kurtosis
@@ -427,7 +428,7 @@ summary.univar_category <- function(object, na.rm = TRUE, ...) {
 #' # Summary by returned object
 #' stat
 #'
-#' # Statistics of numerical variables normalized by MinMax method
+#' # Statistics of numerical variables normalized by Min-Max method
 #' summary(all_var, stand = "minmax")
 #' 
 #' # Statistics of numerical variables standardized by Z-score method
@@ -512,7 +513,8 @@ print.univar_numeric <- function(x, ...) {
 #' Visualize mosaics plot by attribute of univar_category class.
 #'
 #' @param x an object of class "univar_category", usually, a result of a call to univar_category().
-#' @param prompt logical. The default value is FALSE. If there are multiple visualizations to be output, if this argument value is TRUE, a prompt is output each time. 
+#' @param prompt logical. The default value is FALSE. If there are multiple visualizations to be output, 
+#' if this argument value is TRUE, a prompt is output each time. 
 #' @param na.rm logical. Specifies whether to include NA when plotting bar plot. 
 #' The default is FALSE, so plot NA.  
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
@@ -526,7 +528,7 @@ print.univar_numeric <- function(x, ...) {
 #'
 #' library(dplyr)
 #' 
-#' # Calculates the all categorical variavels
+#' # Calculates the all categorical variables
 #' all_var <- univar_category(carseats)
 #' 
 #' # Print univar_category class object
@@ -605,7 +607,8 @@ plot.univar_category <- function(x, na.rm = TRUE, prompt = FALSE, ...) {
 #' "zscore" standardizes the original data using z-Score transformation.
 #' "none" does not perform data transformation.
 #' he default is "none" if indiv is TRUE, and "robust" if FALSE.
-#' @param prompt logical. The default value is FALSE. If there are multiple visualizations to be output, if this argument value is TRUE, a prompt is output each time. 
+#' @param prompt logical. The default value is FALSE. If there are multiple visualizations to be output, 
+#' if this argument value is TRUE, a prompt is output each time. 
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
 #' However, it does not support.
 #' @seealso \code{\link{univar_numeric}}, \code{\link{print.univar_numeric}}, \code{\link{summary.univar_numeric}}.
@@ -615,7 +618,7 @@ plot.univar_category <- function(x, na.rm = TRUE, prompt = FALSE, ...) {
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 #' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 #' 
-#' # Calculates the all categorical variavels
+#' # Calculates the all categorical variables
 #' all_var <- univar_numeric(carseats)
 #' 
 #' # Print univar_numeric class object
@@ -630,7 +633,7 @@ plot.univar_category <- function(x, na.rm = TRUE, prompt = FALSE, ...) {
 #' # one plot with all variables
 #' plot(all_var)
 #' 
-#' # one plot with all normalized variables by MinMax method
+#' # one plot with all normalized variables by Min-Max method
 #' plot(all_var, stand = "minmax")
 #' 
 #' # one plot with all variables

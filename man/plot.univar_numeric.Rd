@@ -31,7 +31,8 @@ The default is FALSE. If only one variable is selected, TRUE is applied.}
 "none" does not perform data transformation.
 he default is "none" if indiv is TRUE, and "robust" if FALSE.}
 
-\item{prompt}{logical. The default value is FALSE. If there are multiple visualizations to be output, if this argument value is TRUE, a prompt is output each time.}
+\item{prompt}{logical. The default value is FALSE. If there are multiple visualizations to be output, 
+if this argument value is TRUE, a prompt is output each time.}
 
 \item{...}{arguments to be passed to methods, such as graphical parameters (see par).
 However, it does not support.}
@@ -45,7 +46,7 @@ carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 
-# Calculates the all categorical variavels
+# Calculates the all categorical variables
 all_var <- univar_numeric(carseats)
 
 # Print univar_numeric class object
@@ -60,7 +61,7 @@ stat
 # one plot with all variables
 plot(all_var)
 
-# one plot with all normalized variables by MinMax method
+# one plot with all normalized variables by Min-Max method
 plot(all_var, stand = "minmax")
 
 # one plot with all variables

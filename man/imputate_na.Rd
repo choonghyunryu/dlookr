@@ -2,7 +2,7 @@
 % Please edit documentation in R/imputation.R
 \name{imputate_na}
 \alias{imputate_na}
-\title{Imputate Missing values}
+\title{Impute Missing Values}
 \usage{
 imputate_na(.data, xvar, yvar, method, seed, print_flag, no_attrs)
 }
@@ -17,7 +17,7 @@ imputate_na(.data, xvar, yvar, method, seed, print_flag, no_attrs)
 
 \item{seed}{integer. the random seed used in mice. only used "mice" method.}
 
-\item{print_flag}{logical. If TRUE, mice will print history on console.
+\item{print_flag}{logical. If TRUE, mice will print running log on console.
 Use print_flag=FALSE for silent computation. Used only when method is "mice".}
 
 \item{no_attrs}{logical. If TRUE, return numerical variable or categorical variable. 
@@ -56,15 +56,15 @@ Attributes of imputation class is as follows.
 }
 }
 \description{
-Missing values are imputated with some representative values and
+Missing values are imputed with some representative values and
 statistical methods.
 }
 \details{
 imputate_na () creates an imputation class.
-The `imputation` class includes missing value position, imputated value,
+The `imputation` class includes missing value position, imputed value,
 and method of missing value imputation, etc.
-The `imputation` class compares the imputated value with the original value
-to help determine whether the imputated value is used in the analysis.
+The `imputation` class compares the imputed value with the original value
+to help determine whether the imputed value is used in the analysis.
 
 See vignette("transformation") for an introduction to these concepts.
 }
@@ -82,7 +82,7 @@ imputate_na(carseats, Income, method = "median")
 # The target variable is US.
 imputate_na(carseats, Income, US, method = "rpart")
 
-# Replace the missing value of the Urban variable with median
+# Replace the missing value of the Urban variable with mode
 imputate_na(carseats, Urban, method = "mode")
 
 # Replace the missing value of the Urban variable with mice
@@ -99,7 +99,7 @@ carseats \%>\%
   summarise(orig = mean(Income, na.rm = TRUE),
     imputation = mean(Income_imp))
 
-# If the variable of interest is a numarical variable
+# If the variable of interest is a numerical variable
 income <- imputate_na(carseats, Income, US, method = "rpart")
 income
 summary(income)

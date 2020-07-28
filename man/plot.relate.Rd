@@ -28,7 +28,7 @@ The default value is 1000.}
 Applied only when the number of observations is greater than hex_thres.}
 
 \item{...}{arguments to be passed to methods, such as graphical parameters (see par).
-only applies when the model argument is TRUE, and is used for ... of the plot.lm () function.}
+only applies when the model argument is TRUE, and is used for ... of the plot.lm() function.}
 }
 \description{
 Visualize four kinds of plot by attribute of relate class.
@@ -42,7 +42,7 @@ carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 # If the target variable is a categorical variable
 categ <- target_by(carseats, US)
 
-# If the variable of interest is a numarical variable
+# If the variable of interest is a numerical variable
 cat_num <- relate(categ, Sales)
 cat_num
 summary(cat_num)

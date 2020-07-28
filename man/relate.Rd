@@ -36,12 +36,12 @@ of the target variable and the data type of the variable of interest.
   \itemize{
     \item predictor: categorical variable
     \itemize{
-      \item contegency table
+      \item contingency table
       \item c("xtabs", "table") class
     }
     \item predictor: numerical variable
     \itemize{
-      \item descriptive statistic for each levles and total observation.
+      \item descriptive statistic for each levels and total observation.
     }
   }
   \item target variable: numerical variable
@@ -63,7 +63,7 @@ The information derived from the numerical data describe is as follows.
 
 \itemize{
 \item mean : arithmetic average
-\item sd : standard devation
+\item sd : standard deviation
 \item se_mean : standrd error mean. sd/sqrt(n)
 \item IQR : interqurtle range (Q3-Q1)
 \item skewness : skewness
@@ -86,7 +86,7 @@ carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 # If the target variable is a categorical variable
 categ <- target_by(carseats, US)
 
-# If the variable of interest is a numarical variable
+# If the variable of interest is a numerical variable
 cat_num <- relate(categ, Sales)
 cat_num
 summary(cat_num)
@@ -102,7 +102,7 @@ plot(cat_cat)
 # If the target variable is a categorical variable
 num <- target_by(carseats, Sales)
 
-# If the variable of interest is a numarical variable
+# If the variable of interest is a numerical variable
 num_num <- relate(num, Price)
 num_num
 summary(num_num)

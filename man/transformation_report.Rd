@@ -30,12 +30,12 @@ target variable is not a binary class.}
 
 \item{output_dir}{name of directory to generate report file. default is tempdir().}
 
-\item{font_family}{charcter. font family name for figure in pdf.}
+\item{font_family}{character. font family name for figure in pdf.}
 
 \item{browse}{logical. choose whether to output the report results to the browser.}
 }
 \description{
-The transformation_report() report the information of transformate
+The transformation_report() report the information of transform
 numerical variables for object inheriting from data.frame.
 }
 \details{

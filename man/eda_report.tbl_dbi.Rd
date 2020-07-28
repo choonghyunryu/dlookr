@@ -27,7 +27,7 @@
 
 \item{output_file}{name of generated file. default is NULL.}
 
-\item{font_family}{charcter. font family name for figure in pdf.}
+\item{font_family}{character. font family name for figure in pdf.}
 
 \item{output_dir}{name of directory to generate report file. default is tempdir().}
 
@@ -80,12 +80,12 @@ The EDA process will report the following information:
   }
   \item Target based Analysis
   \itemize{
-    \item Gruoped Descriptive Statistics
+    \item Grouped Descriptive Statistics
     \itemize{
-      \item Gruoped Numerical Variables
-      \item Gruoped Categorical Variables
+      \item Grouped Numerical Variables
+      \item Grouped Categorical Variables
     }
-    \item Gruoped Relationship Between Variables
+    \item Grouped Relationship Between Variables
     \itemize{
       \item Grouped Correlation Coefficient
       \item Grouped Correlation Plot of Numerical Variables

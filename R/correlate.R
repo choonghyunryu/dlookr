@@ -14,7 +14,7 @@ plot_correlate <- function(.data, ...) {
 
 #' Compute the correlation coefficient between two numerical data
 #'
-#' @description The correlate() compute pearson's the correlation
+#' @description The correlate() compute Pearson's the correlation
 #' coefficient of the numerical data.
 #'
 #' @details This function is useful when used with the group_by() function of the dplyr package.
@@ -28,7 +28,7 @@ plot_correlate <- function(.data, ...) {
 #' \itemize{
 #' \item var1 : names of numerical variable
 #' \item var2 : name of the corresponding numeric variable
-#' \item coef_corr : pearson's correlation coefficient
+#' \item coef_corr : Pearson's correlation coefficient
 #' }
 #'
 #' @param .data a data.frame or a \code{\link{tbl_df}}.

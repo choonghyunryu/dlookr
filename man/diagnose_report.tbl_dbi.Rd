@@ -26,7 +26,7 @@
 
 \item{output_dir}{name of directory to generate report file. default is tempdir().}
 
-\item{font_family}{charcter. font family name for figure in pdf.}
+\item{font_family}{character. font family name for figure in pdf.}
 
 \item{in_database}{Specifies whether to perform in-database operations. 
 If TRUE, most operations are performed in the DBMS. if FALSE, 

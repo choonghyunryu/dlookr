@@ -20,7 +20,7 @@ find_class(
 
 \item{index}{logical. If TRUE is return numeric vector that is variables index.
 and if FALSE is return character vector that is variables name.
-defalut is TRUE.}
+default is TRUE.}
 }
 \value{
 character vector or numeric vector.

@@ -166,7 +166,7 @@ summary.transform <- function(object, ...) {
 #'
 #' @description
 #' Visualize two kinds of plot by attribute of `transform` class.
-#' The Transformation of a numerical variable is a density plot.
+#' The transformation of a numerical variable is a density plot.
 #'
 #' @param x an object of class "transform", usually, a result of a call to transform().
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
@@ -221,7 +221,7 @@ plot.transform <- function(x, ...) {
 
 #' Reporting the information of transformation
 #'
-#' @description The transformation_report() report the information of transformate
+#' @description The transformation_report() report the information of transform
 #' numerical variables for object inheriting from data.frame.
 #'
 #' @details Generate transformation reports automatically.
@@ -278,7 +278,7 @@ plot.transform <- function(x, ...) {
 #' "html" create html file by rmarkdown::render().
 #' @param output_file name of generated file. default is NULL.
 #' @param output_dir name of directory to generate report file. default is tempdir().
-#' @param font_family charcter. font family name for figure in pdf.
+#' @param font_family character. font family name for figure in pdf.
 #' @param browse logical. choose whether to output the report results to the browser.
 #'
 #' @examples

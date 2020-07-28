@@ -49,8 +49,8 @@ The information derived from the categorical data diagnosis is as follows.
 \item variables : variable names
 \item levels: level names
 \item N : number of observation
-\item freq : number of observation at the levles
-\item ratio : percentage of observation at the levles
+\item freq : number of observation at the levels
+\item ratio : percentage of observation at the levels
 \item rank : rank of occupancy ratio of levels
 }
 

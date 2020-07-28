@@ -49,7 +49,7 @@ carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 # If the target variable is a categorical variable
 categ <- target_by(carseats, US)
 
-# If the variable of interest is a numarical variable
+# If the variable of interest is a numerical variable
 cat_num <- relate(categ, Sales)
 cat_num
 summary(cat_num)
@@ -65,7 +65,7 @@ plot(cat_cat)
 # If the target variable is a categorical variable
 num <- target_by(carseats, Sales)
 
-# If the variable of interest is a numarical variable
+# If the variable of interest is a numerical variable
 num_num <- relate(num, Price)
 num_num
 summary(num_num)

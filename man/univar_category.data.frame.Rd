@@ -20,8 +20,8 @@ represent column positions.
 They support unquoting and splicing.}
 }
 \value{
-An object of the class as indivisual variabes based list.
-The information to examine the relationship between categorical variables is as follows each componemts.
+An object of the class as individual variables based list.
+The information to examine the relationship between categorical variables is as follows each components.
 
 \itemize{
 \item variable : factor. The level of the variable. 'variable' is the name of the variable.
@@ -35,14 +35,14 @@ The univar_category() calculates statistic of categorical variables that is freq
 \details{
 univar_category() calculates the frequency table of categorical variables. 
 If a specific variable name is not specified, frequency tables for all categorical variables included in the data are calculated.
-The univar_category class returned by univar_category() is useful because it can draw chisqure tests and barplots as well as frequency tables of individual variables.
+The univar_category class returned by univar_category() is useful because it can draw chisqure tests and bar plots as well as frequency tables of individual variables.
 and return univar_category class that based list object.
 }
 \section{Attributes of return object}{
 
 Attributes of compare_category class is as follows.
 \itemize{
-\item variables : character. List of variables selected for calcualte frequency.
+\item variables : character. List of variables selected for calculate frequency.
 }
 }
 
@@ -55,7 +55,7 @@ carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 library(dplyr)
 library(stringr)
 
-# Calculates the all categorical variavels
+# Calculates the all categorical variables
 all_var <- univar_category(carseats)
 
 # Print univar_category class object

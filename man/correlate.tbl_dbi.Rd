@@ -36,7 +36,7 @@ to be computed. One of "pearson" (default), "kendall", or "spearman": can be abb
 See vignette("EDA") for an introduction to these concepts.}
 }
 \description{
-The correlate() compute pearson's the correlation
+The correlate() compute Pearson's the correlation
 coefficient of the numerical(INTEGER, NUMBER, etc.) column of 
 the DBMS table through tbl_dbi.
 }
@@ -53,7 +53,7 @@ The information derived from the numerical data compute is as follows.
 \itemize{
 \item var1 : names of numerical variable
 \item var2 : name of the corresponding numeric variable
-\item coef_corr : pearson's correlation coefficient
+\item coef_corr : Pearson's correlation coefficient
 }
 }
 
@@ -123,7 +123,7 @@ con_sqlite \%>\%
 # extract only those with 'ShelveLoc' variable level is "Good",
 # and compute the correlation coefficient of 'Sales' variable
 # by 'Urban' and 'US' variables.
-# And the correlation coefficient is negative and smaller than 0.5
+# And the correlation coefficient is negative and smaller than -0.5
 con_sqlite \%>\% 
   tbl("TB_CARSEATS") \%>\% 
   filter(ShelveLoc == "Good") \%>\%

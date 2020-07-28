@@ -39,7 +39,7 @@ one variable in the ... argument, the specified number of plots are drawn.
 }
 \section{Distribution information}{
 
-The plot derived from the numerical data vizualization is as follows.
+The plot derived from the numerical data visualization is as follows.
 
 \itemize{
 \item histogram by original data

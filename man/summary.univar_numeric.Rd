@@ -32,8 +32,8 @@ A component named "statistics" is a tibble object with the following statistics.
 \item n : number of observations excluding missing values
 \item na : number of missing values
 \item mean : arithmetic average
-\item sd : standard devation
-\item se_mean : standrd error mean. sd/sqrt(n)
+\item sd : standard deviation
+\item se_mean : standard error mean. sd/sqrt(n)
 \item IQR : interquartile range (Q3-Q1)
 \item skewness : skewness
 \item kurtosis : kurtosis
@@ -70,7 +70,7 @@ stat <- summary(all_var)
 # Summary by returned object
 stat
 
-# Statistics of numerical variables normalized by MinMax method
+# Statistics of numerical variables normalized by Min-Max method
 summary(all_var, stand = "minmax")
 
 # Statistics of numerical variables standardized by Z-score method

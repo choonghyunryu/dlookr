@@ -30,7 +30,7 @@ diagnose_report(.data, output_format, output_file, output_dir, ...)
 
 \item{...}{arguments to be passed to methods.}
 
-\item{font_family}{charcter. font family name for figure in pdf.}
+\item{font_family}{character. font family name for figure in pdf.}
 
 \item{browse}{logical. choose whether to output the report results to the browser.}
 }
