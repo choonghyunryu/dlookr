@@ -1,30 +1,30 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-dlookr <img src="inst/img/detective_2.png" align="right" height="120" width="103.6"/>
-=====================================================================================
+
+# dlookr <img src="inst/img/detective_2.png" align="right" height="120" width="103.6"/>
 
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/dlookr)](https://cran.r-project.org/package=dlookr)
 [![Total
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/dlookr)](https://cran.r-project.org/package=dlookr)
 
-Overview
---------
+## Overview
 
 Diagnose, explore and transform data with `dlookr`.
 
 Features:
 
--   Diagnose data quality.
--   Find appropriate scenarios to pursuit the follow-up analysis through data exploration and understanding.
--   Derive new variables or perform variable transformations.
--   Automatically generate reports for the above three tasks.
--   Supports quality diagnosis and EDA of table of DBMS.
-    -   version (≥ 0.3.2)
+  - Diagnose data quality.
+  - Find appropriate scenarios to pursuit the follow-up analysis through
+    data exploration and understanding.
+  - Derive new variables or perform variable transformations.
+  - Automatically generate reports for the above three tasks.
+  - Supports quality diagnosis and EDA of table of DBMS.
+      - version (≥ 0.3.2)
 
-The name `dlookr` comes from `looking at the data` in the data analysis process.
+The name `dlookr` comes from `looking at the data` in the data analysis
+process.
 
-Install dlookr
---------------
+## Install dlookr
 
 The released version is available on CRAN
 
@@ -45,17 +45,19 @@ install.packages(c("nycflights13", "ISLR", "DBI", "RSQLite"))
 devtools::install_github("choonghyunryu/dlookr", build_vignettes = TRUE)
 ```
 
-Usage
------
+## Usage
 
-dlookr includes several vignette files, which we use throughout the documentation.
+dlookr includes several vignette files, which we use throughout the
+documentation.
 
 Provided vignettes is as follows.
 
--   Data quality diagnosis for data.frame, tbl\_df, and table of DBMS
--   Exploratory Data Analysis for data.frame, tbl\_df, and table of DBMS
--   Data Transformation
--   Data diagnosis and EDA for table of DBMS
+  - Data quality diagnosis for data.frame, tbl\_df, and table of DBMS
+  - Exploratory Data Analysis for data.frame, tbl\_df, and table of DBMS
+  - Data Transformation
+  - Data diagnosis and EDA for table of DBMS
+
+<!-- end list -->
 
 ``` r
 browseVignettes(package = "dlookr")
@@ -65,7 +67,11 @@ browseVignettes(package = "dlookr")
 
 #### Data: nycflights13
 
-To illustrate basic use of the dlookr package, use the `flights` data from the `nycflights13` package. Once loading `nycflights13` library, the `flights` data frame is available. The `flights` dataframe contains departure and arrival information on all flights departing from NYC in 2013.
+To illustrate basic use of the dlookr package, use the `flights` data
+from the `nycflights13` package. Once loading `nycflights13` library,
+the `flights` data frame is available. The `flights` data frame contains
+departure and arrival information on all flights departing from NYC in
+2013.
 
 ``` r
 library(nycflights13)
@@ -73,36 +79,40 @@ dim(flights)
 #> [1] 336776     19
 flights
 #> # A tibble: 336,776 x 19
-#>     year month   day dep_time sched_dep_time dep_delay arr_time
-#>    <int> <int> <int>    <int>          <int>     <dbl>    <int>
-#>  1  2013     1     1      517            515         2      830
-#>  2  2013     1     1      533            529         4      850
-#>  3  2013     1     1      542            540         2      923
-#>  4  2013     1     1      544            545        -1     1004
-#>  5  2013     1     1      554            600        -6      812
-#>  6  2013     1     1      554            558        -4      740
-#>  7  2013     1     1      555            600        -5      913
-#>  8  2013     1     1      557            600        -3      709
-#>  9  2013     1     1      557            600        -3      838
-#> 10  2013     1     1      558            600        -2      753
-#> # … with 336,766 more rows, and 12 more variables: sched_arr_time <int>,
-#> #   arr_delay <dbl>, carrier <chr>, flight <int>, tailnum <chr>,
-#> #   origin <chr>, dest <chr>, air_time <dbl>, distance <dbl>, hour <dbl>,
-#> #   minute <dbl>, time_hour <dttm>
+#>     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+#>    <int> <int> <int>    <int>          <int>     <dbl>    <int>          <int>
+#>  1  2013     1     1      517            515         2      830            819
+#>  2  2013     1     1      533            529         4      850            830
+#>  3  2013     1     1      542            540         2      923            850
+#>  4  2013     1     1      544            545        -1     1004           1022
+#>  5  2013     1     1      554            600        -6      812            837
+#>  6  2013     1     1      554            558        -4      740            728
+#>  7  2013     1     1      555            600        -5      913            854
+#>  8  2013     1     1      557            600        -3      709            723
+#>  9  2013     1     1      557            600        -3      838            846
+#> 10  2013     1     1      558            600        -2      753            745
+#> # … with 336,766 more rows, and 11 more variables: arr_delay <dbl>,
+#> #   carrier <chr>, flight <int>, tailnum <chr>, origin <chr>, dest <chr>,
+#> #   air_time <dbl>, distance <dbl>, hour <dbl>, minute <dbl>, time_hour <dttm>
 ```
 
 #### General diagnosis of all variables with `diagnose()`
 
-`diagnose()` allows you to diagnose variables on a data frame. Like any other `dplyr` functions, the first argument is the tibble (or data frame). The second and subsequent arguments refer to variables within the data frame.
+`diagnose()` allows you to diagnose variables on a data frame. Like any
+other `dplyr` functions, the first argument is the tibble (or data
+frame). The second and subsequent arguments refer to variables within
+the data frame.
 
-The variables of the `tbl_df` object returned by `diagnose ()` are as follows.
+The variables of the `tbl_df` object returned by `diagnose ()` are as
+follows.
 
--   `variables` : variable name
--   `types` : the data type of the variable
--   `missing_count` : number of missing values
--   `missing_percent` : percentage of missing values
--   `unique_count` : number of unique values
--   `unique_rate` : rate of unique value. unique\_count / number of observation
+  - `variables` : variable names
+  - `types` : the data type of the variables
+  - `missing_count` : number of missing values
+  - `missing_percent` : percentage of missing values
+  - `unique_count` : number of unique values
+  - `unique_rate` : rate of unique value. unique\_count / number of
+    observation
 
 For example, we can diagnose all variables in `flights`:
 
@@ -112,33 +122,42 @@ library(dplyr)
 
 diagnose(flights)
 #> # A tibble: 19 x 6
-#>    variables   types missing_count missing_percent unique_count unique_rate
-#>    <chr>       <chr>         <int>           <dbl>        <int>       <dbl>
-#>  1 year        inte…             0           0                1  0.00000297
-#>  2 month       inte…             0           0               12  0.0000356 
-#>  3 day         inte…             0           0               31  0.0000920 
-#>  4 dep_time    inte…          8255           2.45          1319  0.00392   
-#>  5 sched_dep_… inte…             0           0             1021  0.00303   
-#>  6 dep_delay   nume…          8255           2.45           528  0.00157   
-#>  7 arr_time    inte…          8713           2.59          1412  0.00419   
-#>  8 sched_arr_… inte…             0           0             1163  0.00345   
-#>  9 arr_delay   nume…          9430           2.80           578  0.00172   
-#> 10 carrier     char…             0           0               16  0.0000475 
-#> 11 flight      inte…             0           0             3844  0.0114    
-#> 12 tailnum     char…          2512           0.746         4044  0.0120    
-#> 13 origin      char…             0           0                3  0.00000891
-#> 14 dest        char…             0           0              105  0.000312  
-#> 15 air_time    nume…          9430           2.80           510  0.00151   
-#> 16 distance    nume…             0           0              214  0.000635  
-#> 17 hour        nume…             0           0               20  0.0000594 
-#> 18 minute      nume…             0           0               60  0.000178  
-#> 19 time_hour   POSI…             0           0             6936  0.0206
+#>    variables     types    missing_count missing_percent unique_count unique_rate
+#>    <chr>         <chr>            <int>           <dbl>        <int>       <dbl>
+#>  1 year          integer              0           0                1  0.00000297
+#>  2 month         integer              0           0               12  0.0000356 
+#>  3 day           integer              0           0               31  0.0000920 
+#>  4 dep_time      integer           8255           2.45          1319  0.00392   
+#>  5 sched_dep_ti… integer              0           0             1021  0.00303   
+#>  6 dep_delay     numeric           8255           2.45           528  0.00157   
+#>  7 arr_time      integer           8713           2.59          1412  0.00419   
+#>  8 sched_arr_ti… integer              0           0             1163  0.00345   
+#>  9 arr_delay     numeric           9430           2.80           578  0.00172   
+#> 10 carrier       charact…             0           0               16  0.0000475 
+#> 11 flight        integer              0           0             3844  0.0114    
+#> 12 tailnum       charact…          2512           0.746         4044  0.0120    
+#> 13 origin        charact…             0           0                3  0.00000891
+#> 14 dest          charact…             0           0              105  0.000312  
+#> 15 air_time      numeric           9430           2.80           510  0.00151   
+#> 16 distance      numeric              0           0              214  0.000635  
+#> 17 hour          numeric              0           0               20  0.0000594 
+#> 18 minute        numeric              0           0               60  0.000178  
+#> 19 time_hour     POSIXct              0           0             6936  0.0206
 ```
 
--   `Missing Value(NA)` : Variables with very large missing values, i.e. those with a `missing_percent` close to 100, should be excluded from the analysis.
--   `Unique value` : Variables with a unique value (`unique_count` = 1) are considered to be excluded from data analysis. And if the data type is not numeric (integer, numeric) and the number of unique values is equal to the number of observations (unique\_rate = 1), then the variable is likely to be an identifier. Therefore, this variable is also not suitable for the analysis model.
+  - `Missing Value(NA)` : Variables with many missing values, i.e. those
+    with a `missing_percent` close to 100, should be excluded from the
+    analysis.
+  - `Unique value` : Variables with a unique value (`unique_count` = 1)
+    are considered to be excluded from data analysis. And if the data
+    type is not numeric (integer, numeric) and the number of unique
+    values is equal to the number of observations (unique\_rate = 1),
+    then the variable is likely to be an identifier. Therefore, this
+    variable is also not suitable for the analysis model.
 
-`year` can be considered not to be used in the analysis model since `unique_count` is 1. However, you do not have to remove it if you configure `date` as a combination of `year`, `month`, and `day`.
+`year` can be considered not to be used in the analysis model since
+`unique_count` is 1. However, you do not have to remove it if you
+configure `date` as a combination of `year`, `month`, and `day`.
 
 For example, we can diagnose only a few selected variables:
 
@@ -151,7 +170,7 @@ diagnose(flights, year, month, day)
 #> 1 year      integer             0               0            1  0.00000297
 #> 2 month     integer             0               0           12  0.0000356 
 #> 3 day       integer             0               0           31  0.0000920
-# Select all columns between year and day (inclusive)
+# Select all columns between year and day (include)
 diagnose(flights, year:day)
 #> # A tibble: 3 x 6
 #>   variables types   missing_count missing_percent unique_count unique_rate
@@ -159,30 +178,31 @@ diagnose(flights, year:day)
 #> 1 year      integer             0               0            1  0.00000297
 #> 2 month     integer             0               0           12  0.0000356 
 #> 3 day       integer             0               0           31  0.0000920
-# Select all columns except those from year to day (inclusive)
+# Select all columns except those from year to day (exclude)
 diagnose(flights, -(year:day))
 #> # A tibble: 16 x 6
-#>    variables   types missing_count missing_percent unique_count unique_rate
-#>    <chr>       <chr>         <int>           <dbl>        <int>       <dbl>
-#>  1 dep_time    inte…          8255           2.45          1319  0.00392   
-#>  2 sched_dep_… inte…             0           0             1021  0.00303   
-#>  3 dep_delay   nume…          8255           2.45           528  0.00157   
-#>  4 arr_time    inte…          8713           2.59          1412  0.00419   
-#>  5 sched_arr_… inte…             0           0             1163  0.00345   
-#>  6 arr_delay   nume…          9430           2.80           578  0.00172   
-#>  7 carrier     char…             0           0               16  0.0000475 
-#>  8 flight      inte…             0           0             3844  0.0114    
-#>  9 tailnum     char…          2512           0.746         4044  0.0120    
-#> 10 origin      char…             0           0                3  0.00000891
-#> 11 dest        char…             0           0              105  0.000312  
-#> 12 air_time    nume…          9430           2.80           510  0.00151   
-#> 13 distance    nume…             0           0              214  0.000635  
-#> 14 hour        nume…             0           0               20  0.0000594 
-#> 15 minute      nume…             0           0               60  0.000178  
-#> 16 time_hour   POSI…             0           0             6936  0.0206
+#>    variables     types    missing_count missing_percent unique_count unique_rate
+#>    <chr>         <chr>            <int>           <dbl>        <int>       <dbl>
+#>  1 dep_time      integer           8255           2.45          1319  0.00392   
+#>  2 sched_dep_ti… integer              0           0             1021  0.00303   
+#>  3 dep_delay     numeric           8255           2.45           528  0.00157   
+#>  4 arr_time      integer           8713           2.59          1412  0.00419   
+#>  5 sched_arr_ti… integer              0           0             1163  0.00345   
+#>  6 arr_delay     numeric           9430           2.80           578  0.00172   
+#>  7 carrier       charact…             0           0               16  0.0000475 
+#>  8 flight        integer              0           0             3844  0.0114    
+#>  9 tailnum       charact…          2512           0.746         4044  0.0120    
+#> 10 origin        charact…             0           0                3  0.00000891
+#> 11 dest          charact…             0           0              105  0.000312  
+#> 12 air_time      numeric           9430           2.80           510  0.00151   
+#> 13 distance      numeric              0           0              214  0.000635  
+#> 14 hour          numeric              0           0               20  0.0000594 
+#> 15 minute        numeric              0           0               60  0.000178  
+#> 16 time_hour     POSIXct              0           0             6936  0.0206
 ```
 
-By using dplyr, variables including missing values can be sorted by the weight of missing values.:
+By using with dplyr, variables including missing values can be sorted by
+the weight of missing values.:
 
 ``` r
 flights %>%
@@ -203,48 +223,69 @@ flights %>%
 
 #### Diagnosis of numeric variables with `diagnose_numeric()`
 
-`diagnose_numeric()` diagnoses numeric(continuous and discrete) variables in a data frame. Usage is the same as `diagnose()` but returns more diagnostic information. However, if you specify a non-numeric variable in the second and subsequent argument list, the variable is automatically ignored.
+`diagnose_numeric()` diagnoses numeric(continuous and discrete)
+variables in a data frame. Usage is the same as `diagnose()` but returns
+more diagnostic information. However, if you specify a non-numeric
+variable in the second and subsequent argument list, the variable is
+automatically ignored.
 
-The variables of the `tbl_df` object returned by `diagnose_numeric()` are as follows.
+The variables of the `tbl_df` object returned by `diagnose_numeric()`
+are as follows.
 
--   `min` : minimum value
--   `Q1` : 1/4 quartile, 25th percentile
--   `mean` : arithmetic mean
--   `median` : median, 50th percentile
--   `Q3` : 3/4 quartile, 75th percentile
--   `max` : maximum value
--   `zero` : number of observations with a value of 0
--   `minus` : number of observations with negative numbers
--   `outlier` : number of outliers
+  - `min` : minimum value
+  - `Q1` : 1/4 quartile, 25th percentile
+  - `mean` : arithmetic mean
+  - `median` : median, 50th percentile
+  - `Q3` : 3/4 quartile, 75th percentile
+  - `max` : maximum value
+  - `zero` : number of observations with a value of 0
+  - `minus` : number of observations with negative numbers
+  - `outlier` : number of outliers
 
-Applying the summary () function to a data frame can help you figure out the distribution of data by printing `min`, `Q1`, `mean`, `median`, `Q3`, and `max` give. However, the result is that analysts can only look at it with eyes. However, returning such information as a data frame structure like `tbl_df` widens the scope of utilization.
+The summary() function summarizes the distribution of individual
+variables in the data frame and outputs it to the console. The summary
+values of numeric variables are `min`, `Q1`, `mean`, `median`, `Q3` and
+`max`, which help to understand the distribution of data.
 
-`zero`, `minus`, and `outlier` are useful for diagnosing the integrity of data. For example, numerical data in some cases may not have 0 or a negative number.
+However, the result displayed on the console has the disadvantage that
+the analyst has to look at it with the eyes. However, when the summary
+information is returned in a data frame structure such as tbl\_df, the
+scope of utilization is expanded. `diagnose_numeric()` supports this.
 
-`diagnose_numeric()` can diagnose all numeric variables of `flights` as follows.:
+`zero`, `minus`, and `outlier` are useful measures to diagnose data
+integrity. For example, numerical data in some cases cannot have zero or
+negative numbers. A numeric variable called `employee salary` cannot
+have negative numbers or zeros. Therefore, this variable should be
+checked for the inclusion of zero or negative numbers in the data
+diagnosis process.
+
+`diagnose_numeric()` can diagnose all numeric variables of `flights` as
+follows.:
 
 ``` r
 diagnose_numeric(flights)
 #> # A tibble: 14 x 10
-#>    variables       min    Q1   mean median    Q3   max  zero  minus outlier
-#>    <chr>         <dbl> <dbl>  <dbl>  <dbl> <dbl> <dbl> <int>  <int>   <int>
-#>  1 year           2013  2013 2.01e3   2013  2013  2013     0      0       0
-#>  2 month             1     4 6.55e0      7    10    12     0      0       0
-#>  3 day               1     8 1.57e1     16    23    31     0      0       0
-#>  4 dep_time          1   907 1.35e3   1401  1744  2400     0      0       0
-#>  5 sched_dep_ti…   106   906 1.34e3   1359  1729  2359     0      0       0
-#>  6 dep_delay       -43    -5 1.26e1     -2    11  1301 16514 183575   43216
-#>  7 arr_time          1  1104 1.50e3   1535  1940  2400     0      0       0
-#>  8 sched_arr_ti…     1  1124 1.54e3   1556  1945  2359     0      0       0
-#>  9 arr_delay       -86   -17 6.90e0     -5    14  1272  5409 188933   27880
-#> 10 flight            1   553 1.97e3   1496  3465  8500     0      0       1
-#> 11 air_time         20    82 1.51e2    129   192   695     0      0    5448
-#> 12 distance         17   502 1.04e3    872  1389  4983     0      0     715
-#> 13 hour              1     9 1.32e1     13    17    23     0      0       0
-#> 14 minute            0     8 2.62e1     29    44    59 60696      0       0
+#>    variables        min    Q1    mean median    Q3   max  zero  minus outlier
+#>    <chr>          <dbl> <dbl>   <dbl>  <dbl> <dbl> <dbl> <int>  <int>   <int>
+#>  1 year            2013  2013 2013      2013  2013  2013     0      0       0
+#>  2 month              1     4    6.55      7    10    12     0      0       0
+#>  3 day                1     8   15.7      16    23    31     0      0       0
+#>  4 dep_time           1   907 1349.     1401  1744  2400     0      0       0
+#>  5 sched_dep_time   106   906 1344.     1359  1729  2359     0      0       0
+#>  6 dep_delay        -43    -5   12.6      -2    11  1301 16514 183575   43216
+#>  7 arr_time           1  1104 1502.     1535  1940  2400     0      0       0
+#>  8 sched_arr_time     1  1124 1536.     1556  1945  2359     0      0       0
+#>  9 arr_delay        -86   -17    6.90     -5    14  1272  5409 188933   27880
+#> 10 flight             1   553 1972.     1496  3465  8500     0      0       1
+#> 11 air_time          20    82  151.      129   192   695     0      0    5448
+#> 12 distance          17   502 1040.      872  1389  4983     0      0     715
+#> 13 hour               1     9   13.2      13    17    23     0      0       0
+#> 14 minute             0     8   26.2      29    44    59 60696      0       0
 ```
 
-If a numeric variable can not logically have a negative or zero value, it can be used with `filter()` to easily find a variable that does not logically match:
+If a numeric variable can not logically have a negative or zero value,
+it can be used with `filter()` to easily find a variable that does not
+logically match:
 
 ``` r
 diagnose_numeric(flights) %>% 
@@ -259,18 +300,28 @@ diagnose_numeric(flights) %>%
 
 #### Diagnosis of categorical variables with `diagnose_category()`
 
-`diagnose_category()` diagnoses the categorical(factor, ordered, character) variables of a data frame. The usage is similar to `diagnose ()` but returns more diagnostic information. If you specify a non-categorical variable in the second and subsequent argument list, the variable is automatically ignored. The top argument specifies the number of levels to return per variable. The default value is 10, which returns the top 10 level. Of course, if the number of levels is less than 10, all levels are returned.
+`diagnose_category()` diagnoses the categorical(factor, ordered,
+character) variables of a data frame. The usage is similar to
+`diagnose()` but returns more diagnostic information. If you specify a
+non-categorical variable in the second and subsequent argument list, the
+variable is automatically ignored.
 
-The variables of the `tbl_df` object returned by `diagnose_category()` are as follows.
+The `top` argument specifies the number of levels to return for each
+variable. The default is 10, which returns the top 10 level. Of course,
+if the number of levels is less than 10, all levels are returned.
 
--   `variables` : variable names
--   `levels`: level names
--   `N` : Number of observation
--   `freq` : Number of observation at the levles
--   `ratio` : Percentage of observation at the levles
--   `rank` : Rank of occupancy ratio of levels
+The variables of the `tbl_df` object returned by `diagnose_category()`
+are as follows.
 
-\``diagnose_category()` can diagnose all categorical variables of `flights` as follows.:
+  - `variables` : variable names
+  - `levels`: level names
+  - `N` : number of observation
+  - `freq` : number of observation at the levels
+  - `ratio` : percentage of observation at the levels
+  - `rank` : rank of occupancy ratio of levels
+
+\``diagnose_category()` can diagnose all categorical variables of
+`flights` as follows.:
 
 ``` r
 diagnose_category(flights)
@@ -290,7 +341,9 @@ diagnose_category(flights)
 #> # … with 23 more rows
 ```
 
-In collaboration with `filter()` in the `dplyr` package, we can see that the `tailnum` variable is ranked in top 1 with 2,512 missing values in the case where the missing value is included in the top 10:
+In collaboration with `filter()` in the `dplyr` package, we can see that
+the `tailnum` variable is ranked in top 1 with 2,512 missing values in
+the case where the missing value is included in the top 10:
 
 ``` r
 diagnose_category(flights) %>% 
@@ -301,7 +354,10 @@ diagnose_category(flights) %>%
 #> 1 tailnum   <NA>   336776  2512 0.746     1
 ```
 
-The following returns a list of levels less than or equal to 0.01%. It should be noted that the top argument has a generous specification of 500. If you use the default value of 10, values below 0.01% would not be included in the list:
+The following example returns a list where the level’s relative
+percentage is 0.01% or less. Note that the value of the `top` argument
+is set to a large value such as 500. If the default value of 10 was
+used, values below 0.01% would not be included in the list:
 
 ``` r
 flights %>%
@@ -322,45 +378,68 @@ flights %>%
 #> 10 dest      LGA    336776     1 0.000297   105
 ```
 
-In the analytical model, it is also possible to consider removing the small percentage of observations in the observations or joining them together.
+In the analytics model, you can also consider removing levels where the
+relative frequency is very small in the observations or, if possible,
+combining them together.
 
 #### Diagnosing outliers with `diagnose_outlier()`
 
-`diagnose_outlier()` diagnoses the outliers of the numeric (continuous and discrete) variables of the data frame. The usage is the same as `diagnose()`.
+`diagnose_outlier()` diagnoses the outliers of the numeric (continuous
+and discrete) variables of the data frame. The usage is the same as
+`diagnose()`.
 
-The variables of the `tbl_df` object returned by `diagnose_outlier()` are as follows.
+The variables of the `tbl_df` object returned by `diagnose_outlier()`
+are as follows.
 
--   `outliers_cnt` : Count of outliers
--   `outliers_ratio` : Percent of outliers
--   `outliers_mean` : Arithmetic Average of outliers
--   `with_mean` : Arithmetic Average of with outliers
--   `without_mean` : Arithmetic Average of without outliers
+  - `outliers_cnt` : number of outliers
+  - `outliers_ratio` : percent of outliers
+  - `outliers_mean` : arithmetic average of outliers
+  - `with_mean` : arithmetic average of with outliers
+  - `without_mean` : arithmetic average of without outliers
 
-`diagnose_outlier()` can diagnose anomalies of all numeric variables of `flights` as follows:
+`diagnose_outlier()` can diagnose outliers of all numerical variables on
+`flights` as follows:
 
 ``` r
 diagnose_outlier(flights)
 #> # A tibble: 14 x 6
-#>    variables outliers_cnt outliers_ratio outliers_mean with_mean
-#>    <chr>            <int>          <dbl>         <dbl>     <dbl>
-#>  1 year                 0       0                NaN     2013   
-#>  2 month                0       0                NaN        6.55
-#>  3 day                  0       0                NaN       15.7 
-#>  4 dep_time             0       0                NaN     1349.  
-#>  5 sched_de…            0       0                NaN     1344.  
-#>  6 dep_delay        43216      12.8               93.1     12.6 
-#>  7 arr_time             0       0                NaN     1502.  
-#>  8 sched_ar…            0       0                NaN     1536.  
-#>  9 arr_delay        27880       8.28             121.       6.90
-#> 10 flight               1       0.000297        8500     1972.  
-#> 11 air_time          5448       1.62             400.     151.  
-#> 12 distance           715       0.212           4955.    1040.  
-#> 13 hour                 0       0                NaN       13.2 
-#> 14 minute               0       0                NaN       26.2 
-#> # … with 1 more variable: without_mean <dbl>
+#>    variables    outliers_cnt outliers_ratio outliers_mean with_mean without_mean
+#>    <chr>               <int>          <dbl>         <dbl>     <dbl>        <dbl>
+#>  1 year                    0       0                NaN     2013        2013    
+#>  2 month                   0       0                NaN        6.55        6.55 
+#>  3 day                     0       0                NaN       15.7        15.7  
+#>  4 dep_time                0       0                NaN     1349.       1349.   
+#>  5 sched_dep_t…            0       0                NaN     1344.       1344.   
+#>  6 dep_delay           43216      12.8               93.1     12.6         0.444
+#>  7 arr_time                0       0                NaN     1502.       1502.   
+#>  8 sched_arr_t…            0       0                NaN     1536.       1536.   
+#>  9 arr_delay           27880       8.28             121.       6.90       -3.69 
+#> 10 flight                  1       0.000297        8500     1972.       1972.   
+#> 11 air_time             5448       1.62             400.     151.        146.   
+#> 12 distance              715       0.212           4955.    1040.       1032.   
+#> 13 hour                    0       0                NaN       13.2        13.2  
+#> 14 minute                  0       0                NaN       26.2        26.2
 ```
 
-The following is a list of numeric variables with anomalies greater than 5%.:
+Numeric variables that contained outliers are easily found with
+`filter()`.:
+
+``` r
+diagnose_outlier(flights) %>% 
+  filter(outliers_cnt > 0) 
+#> # A tibble: 5 x 6
+#>   variables outliers_cnt outliers_ratio outliers_mean with_mean without_mean
+#>   <chr>            <int>          <dbl>         <dbl>     <dbl>        <dbl>
+#> 1 dep_delay        43216      12.8               93.1     12.6         0.444
+#> 2 arr_delay        27880       8.28             121.       6.90       -3.69 
+#> 3 flight               1       0.000297        8500     1972.       1972.   
+#> 4 air_time          5448       1.62             400.     151.        146.   
+#> 5 distance           715       0.212           4955.    1040.       1032.
+```
+
+The following example finds a numeric variable with an outlier ratio of
+5% or more, and then returns the result of dividing mean of outliers by
+total mean in descending order:
 
 ``` r
 diagnose_outlier(flights) %>% 
@@ -375,20 +454,24 @@ diagnose_outlier(flights) %>%
 #> 2 dep_delay          12.8           93.1     12.6         0.444  7.37
 ```
 
-If the outlier is larger than the average of all observations, it may be desirable to replace or remove the outlier in the data analysis process.
+In cases where the mean of the outliers is large relative to the overall
+average, it may be desirable to impute or remove the outliers.
 
 #### Visualization of outliers using `plot_outlier()`
 
-`plot_outlier()` visualizes outliers of numarical variables(continious and discrete) of data.frame. Usage is the same `diagnose()`.
+`plot_outlier()` visualizes outliers of numerical variables(continuous
+and discrete) of data.frame. Usage is the same `diagnose()`.
 
 The plot derived from the numerical data diagnosis is as follows.
 
--   With outliers box plot
--   Without outliers box plot
--   With outliers histogram
--   Without outliers histogram
+  - With outliers box plot
+  - Without outliers box plot
+  - With outliers histogram
+  - Without outliers histogram
 
-Use the function of the dplyr package and `plot_outlier()` and `diagnose_outlier()` to visualize anomaly values of all numeric variables with an outlier ratio of 0.5% or more.:
+The following example uses `diagnose_outlier()`, `plot_outlier()`, and
+`dplyr` packages to visualize all numerical variables with an outlier
+ratio of 0.5% or higher.
 
 ``` r
 flights %>%
@@ -398,17 +481,26 @@ flights %>%
                  unlist())
 ```
 
-![](man/figures/README-plot_outlier_pipe-1.png)![](man/figures/README-plot_outlier_pipe-2.png)![](man/figures/README-plot_outlier_pipe-3.png)
+![](man/figures/README-plot_outlier_pipe-1.png)<!-- -->![](man/figures/README-plot_outlier_pipe-2.png)<!-- -->![](man/figures/README-plot_outlier_pipe-3.png)<!-- -->
 
-You should look at the visualization results and decide whether to remove or replace the outliers. In some cases, it is important to consider removing the variables that contain anomalies from the data analysis model.
+Analysts should look at the results of the visualization to decide
+whether to remove or replace outliers. In some cases, you should
+consider removing variables with outliers from the data analysis model.
 
-In the visualization results, `arr_delay` has similar distributions to the normal distribution of the observed values. In the case of linear models, we can also consider removing or replacing anomalies. And `air_time` shows a roughly similar distribution before and after removing anomalies.
+Looking at the results of the visualization, `arr_delay` shows that the
+observed values without outliers are similar to the normal distribution.
+In the case of a linear model, we might consider removing or imputing
+outliers. And `air_time` has a similar shape before and after removing
+outliers.
 
 ### Exploratory Data Analysis
 
 #### datasets
 
-To illustrate the basic use of EDA in the dlookr package, I use a `Carseats` datasets. `Carseats` in the `ISLR` package is simulation dataset that sells children's car seats at 400 stores. This data is a data.frame created for the purpose of predicting sales volume.
+To illustrate the basic use of EDA in the dlookr package, I use a
+`Carseats` dataset. `Carseats` in the `ISLR` package is a simulated data
+set containing sales of child car seats at 400 different stores. This
+data is a data.frame created for the purpose of predicting sales volume.
 
 ``` r
 library(ISLR)
@@ -427,32 +519,40 @@ str(Carseats)
 #>  $ US         : Factor w/ 2 levels "No","Yes": 2 2 2 2 1 2 1 2 1 2 ...
 ```
 
-The contents of individual variables are as follows. (Refer to ISLR::Carseats Man page)
+The contents of individual variables are as follows. (Refer to
+ISLR::Carseats Man page)
 
--   Sales
-    -   Unit sales (in thousands) at each location
--   CompPrice
-    -   Price charged by competitor at each location
--   Income
-    -   Community income level (in thousands of dollars)
--   Advertising
-    -   Local advertising budget for company at each location (in thousands of dollars)
--   Population
-    -   Population size in region (in thousands)
--   Price
-    -   Price company charges for car seats at each site
--   ShelveLoc
-    -   A factor with levels Bad, Good and Medium indicating the quality of the shelving location for the car seats at each site
--   Age
-    -   Average age of the local population
--   Education
-    -   Education level at each location
--   Urban
-    -   A factor with levels No and Yes to indicate whether the store is in an urban or rural location
--   US
-    -   A factor with levels No and Yes to indicate whether the store is in the US or not
+  - Sales
+      - Unit sales (in thousands) at each location
+  - CompPrice
+      - Price charged by competitor at each location
+  - Income
+      - Community income level (in thousands of dollars)
+  - Advertising
+      - Local advertising budget for company at each location (in
+        thousands of dollars)
+  - Population
+      - Population size in region (in thousands)
+  - Price
+      - Price company charges for car seats at each site
+  - ShelveLoc
+      - A factor with levels Bad, Good and Medium indicating the quality
+        of the shelving location for the car seats at each site
+  - Age
+      - Average age of the local population
+  - Education
+      - Education level at each location
+  - Urban
+      - A factor with levels No and Yes to indicate whether the store is
+        in an urban or rural location
+  - US
+      - A factor with levels No and Yes to indicate whether the store is
+        in the US or not
 
-When data analysis is performed, data containing missing values is often encountered. However, Carseats is complete data without missing. Therefore, the missing values are generated as follows. And I created a data.frame object named carseats.
+When data analysis is performed, data containing missing values is
+frequently encountered. However, ‘Carseats’ is complete data without
+missing values. So the following script created the missing values and
+saved them as `carseats`.
 
 ``` r
 carseats <- ISLR::Carseats
@@ -470,32 +570,42 @@ carseats[sample(seq(NROW(carseats)), 10), "Urban"] <- NA
 
 ##### Calculating descriptive statistics using `describe()`
 
-`describe()` computes descriptive statistics for numerical data. The descriptive statistics help determine the distribution of numerical variables. Like function of dplyr, the first argument is the tibble (or data frame). The second and subsequent arguments refer to variables within that data frame.
+`describe()` computes descriptive statistics for numerical data. The
+descriptive statistics help determine the distribution of numerical
+variables. Like function of dplyr, the first argument is the tibble (or
+data frame). The second and subsequent arguments refer to variables
+within that data frame.
 
-The variables of the `tbl_df` object returned by `describe()` are as follows.
+The variables of the `tbl_df` object returned by `describe()` are as
+follows.
 
--   `n` : number of observations excluding missing values
--   `na` : number of missing values
--   `mean` : arithmetic average
--   `sd` : standard devation
--   `se_mean` : standrd error mean. sd/sqrt(n)
--   `IQR` : interquartile range (Q3-Q1)
--   `skewness` : skewness
--   `kurtosis` : kurtosis
--   `p25` : Q1. 25% percentile
--   `p50` : median. 50% percentile
--   `p75` : Q3. 75% percentile
--   `p01`, `p05`, `p10`, `p20`, `p30` : 1%, 5%, 20%, 30% percentiles
--   `p40`, `p60`, `p70`, `p80` : 40%, 60%, 70%, 80% percentiles
--   `p90`, `p95`, `p99`, `p100` : 90%, 95%, 99%, 100% percentiles
+  - `n` : number of observations excluding missing values
+  - `na` : number of missing values
+  - `mean` : arithmetic average
+  - `sd` : standard deviation
+  - `se_mean` : standard error mean. sd/sqrt(n)
+  - `IQR` : interquartile range (Q3-Q1)
+  - `skewness` : skewness
+  - `kurtosis` : kurtosis
+  - `p25` : Q1. 25% percentile
+  - `p50` : median. 50% percentile
+  - `p75` : Q3. 75% percentile
+  - `p01`, `p05`, `p10`, `p20`, `p30` : 1%, 5%, 20%, 30% percentiles
+  - `p40`, `p60`, `p70`, `p80` : 40%, 60%, 70%, 80% percentiles
+  - `p90`, `p95`, `p99`, `p100` : 90%, 95%, 99%, 100% percentiles
 
-For example, we can computes the statistics of all numerical variables in `carseats`:
+For example, we can computes the statistics of all numerical variables
+in `carseats`:
 
 ``` r
 describe(carseats)
+#> Warning: The `x` argument of `as_tibble.matrix()` must have unique column names if `.name_repair` is omitted as of tibble 2.0.0.
+#> Using compatibility `.name_repair`.
+#> This warning is displayed once every 8 hours.
+#> Call `lifecycle::last_warnings()` to see where this warning was generated.
 #> # A tibble: 8 x 26
 #>   variable     n    na   mean     sd se_mean    IQR skewness kurtosis   p00
-#>   <chr>    <dbl> <dbl>  <dbl>  <dbl>   <dbl>  <dbl>    <dbl>    <dbl> <dbl>
+#>   <chr>    <int> <int>  <dbl>  <dbl>   <dbl>  <dbl>    <dbl>    <dbl> <dbl>
 #> 1 Sales      400     0   7.50   2.82   0.141   3.93   0.186   -0.0809     0
 #> 2 CompPri…   400     0 125.    15.3    0.767  20     -0.0428   0.0417    77
 #> 3 Income     380    20  68.9   28.1    1.44   48.2    0.0449  -1.09      21
@@ -509,10 +619,17 @@ describe(carseats)
 #> #   p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>, p99 <dbl>, p100 <dbl>
 ```
 
--   `skewness` : The left-skewed distribution data, that is, the variables with large positive skewness should consider the log or sqrt transformations to follow the normal distribution. The variables `Advertising` seem to need to consider variable transformations.
--   `mean` and `sd`, `se_mean` : The`Population` with a large `standard error of the mean`(se\_mean) has low representativeness of the `arithmetic mean`(mean). The `standard deviation`(sd) is much larger than the arithmetic average.
+  - `skewness` : The left-skewed distribution data that is the variables
+    with large positive skewness should consider the log or sqrt
+    transformations to follow the normal distribution. The variables
+    `Advertising` seem to need to consider variable transformation.
+  - `mean` and `sd`, `se_mean` : The`Population` with a large `standard
+    error of the mean`(se\_mean) has low representativeness of the
+    `arithmetic mean`(mean). The `standard deviation`(sd) is much larger
+    than the arithmetic average.
 
-By using dplyr, You can sort by `left or right skewed size`(skewness).:
+The `describe()` function can be sorted by `left or right skewed
+size`(skewness) using `dplyr`.:
 
 ``` r
 carseats %>%
@@ -533,46 +650,66 @@ carseats %>%
 #> 8 CompPrice    -0.0428 125.   115    125    135
 ```
 
-The `describe()` function supports the `group_by()` function syntax of `dplyr`.
+The `describe()` function supports the `group_by()` function syntax of
+the `dplyr` package.
+
+``` r
+carseats %>%
+  group_by(US) %>% 
+  describe(Sales, Income) 
+#> # A tibble: 4 x 27
+#>   variable US        n    na  mean    sd se_mean   IQR skewness kurtosis   p00
+#>   <chr>    <fct> <dbl> <dbl> <dbl> <dbl>   <dbl> <dbl>    <dbl>    <dbl> <dbl>
+#> 1 Sales    No      142     0  6.82  2.60   0.218  3.44   0.323     0.808  0   
+#> 2 Sales    Yes     258     0  7.87  2.88   0.179  4.23   0.0760   -0.326  0.37
+#> 3 Income   No      130    12 65.8  28.2    2.48  50      0.100    -1.14  22   
+#> 4 Income   Yes     250     8 70.4  27.9    1.77  48      0.0199   -1.06  21   
+#> # … with 16 more variables: p01 <dbl>, p05 <dbl>, p10 <dbl>, p20 <dbl>,
+#> #   p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>, p60 <dbl>, p70 <dbl>,
+#> #   p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>, p99 <dbl>, p100 <dbl>
+```
 
 ``` r
 carseats %>%
   group_by(US, Urban) %>% 
   describe(Sales, Income) 
-#> Warning: Factor `Urban` contains implicit NA, consider using
-#> `forcats::fct_explicit_na`
 #> # A tibble: 12 x 28
-#>    variable US    Urban     n    na  mean    sd se_mean    IQR skewness
-#>    <chr>    <fct> <fct> <dbl> <dbl> <dbl> <dbl>   <dbl>  <dbl>    <dbl>
-#>  1 Sales    No    No       46     0  6.46  2.72   0.402  3.15   0.0889 
-#>  2 Sales    No    Yes      92     0  7.00  2.58   0.269  3.49   0.492  
-#>  3 Sales    No    <NA>      4     0  6.99  1.28   0.639  0.827  1.69   
-#>  4 Sales    Yes   No       69     0  8.23  2.65   0.319  4.1   -0.0212 
-#>  5 Sales    Yes   Yes     183     0  7.74  2.97   0.219  4.11   0.123  
-#>  6 Sales    Yes   <NA>      6     0  7.61  2.61   1.06   3.25   0.489  
-#>  7 Income   No    No       42     4 60.2  29.1    4.49  45.2    0.408  
-#>  8 Income   No    Yes      84     8 69.5  27.4    2.99  47     -0.0497 
-#>  9 Income   No    <NA>      4     0 48.2  24.7   12.3   40.8   -0.0496 
-#> 10 Income   Yes   No       65     4 70.5  29.9    3.70  48      0.0736 
-#> 11 Income   Yes   Yes     179     4 70.3  27.2    2.03  46.5    0.00490
-#> 12 Income   Yes   <NA>      6     0 75.3  34.3   14.0   47.2   -0.412  
-#> # … with 18 more variables: kurtosis <dbl>, p00 <dbl>, p01 <dbl>,
-#> #   p05 <dbl>, p10 <dbl>, p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>,
-#> #   p50 <dbl>, p60 <dbl>, p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>,
-#> #   p95 <dbl>, p99 <dbl>, p100 <dbl>
+#>    variable US    Urban     n    na  mean    sd se_mean    IQR skewness kurtosis
+#>    <chr>    <fct> <fct> <dbl> <dbl> <dbl> <dbl>   <dbl>  <dbl>    <dbl>    <dbl>
+#>  1 Sales    No    No       46     0  6.46  2.72   0.402  3.15   0.0889     1.53 
+#>  2 Sales    No    Yes      92     0  7.00  2.58   0.269  3.49   0.492      0.306
+#>  3 Sales    No    <NA>      4     0  6.99  1.28   0.639  0.827  1.69       3.16 
+#>  4 Sales    Yes   No       69     0  8.23  2.65   0.319  4.1   -0.0212    -0.777
+#>  5 Sales    Yes   Yes     183     0  7.74  2.97   0.219  4.11   0.123     -0.207
+#>  6 Sales    Yes   <NA>      6     0  7.61  2.61   1.06   3.25   0.489     -1.38 
+#>  7 Income   No    No       42     4 60.2  29.1    4.49  45.2    0.408     -1.00 
+#>  8 Income   No    Yes      84     8 69.5  27.4    2.99  47     -0.0497    -1.11 
+#>  9 Income   No    <NA>      4     0 48.2  24.7   12.3   40.8   -0.0496    -5.70 
+#> 10 Income   Yes   No       65     4 70.5  29.9    3.70  48      0.0736    -1.08 
+#> 11 Income   Yes   Yes     179     4 70.3  27.2    2.03  46.5    0.00490   -1.05 
+#> 12 Income   Yes   <NA>      6     0 75.3  34.3   14.0   47.2   -0.412     -1.55 
+#> # … with 17 more variables: p00 <dbl>, p01 <dbl>, p05 <dbl>, p10 <dbl>,
+#> #   p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>, p60 <dbl>,
+#> #   p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>, p99 <dbl>,
+#> #   p100 <dbl>
 ```
 
 ##### Test of normality on numeric variables using `normality()`
 
-`normality()` performs a normality test on numerical data. `Shapiro-Wilk normality test` is performed. If the number of observations is larger than 5000, 5000 observations are extracted by random simple sampling and then tested.
+`normality()` performs a normality test on numerical data. `Shapiro-Wilk
+normality test` is performed. When the number of observations is greater
+than 5000, it is tested after extracting 5000 samples by random simple
+sampling.
 
-The variables of `tbl_df` object returned by `normality()` are as follows.
+The variables of `tbl_df` object returned by `normality()` are as
+follows.
 
--   `statistic` : Statistics of the Shapiro-Wilk test
--   `p_value` : p-value of the Shapiro-Wilk test
--   `sample` : Number of sample observations performed Shapiro-Wilk test
+  - `statistic` : Statistics of the Shapiro-Wilk test
+  - `p_value` : p-value of the Shapiro-Wilk test
+  - `sample` : Number of sample observations performed Shapiro-Wilk test
 
-`normality()` performs the normality test for all numerical variables of `carseats` as follows.:
+`normality()` performs the normality test for all numerical variables of
+`carseats` as follows.:
 
 ``` r
 normality(carseats)
@@ -589,7 +726,8 @@ normality(carseats)
 #> 8 Education       0.924 2.43e-13    400
 ```
 
-You can use dplyr to sort non-normal distribution variables by p\_value.:
+You can use `dplyr` to sort variables that do not follow a normal
+distribution in order of `p_value`:
 
 ``` r
 carseats %>%
@@ -606,9 +744,11 @@ carseats %>%
 #> 5 Income          0.961 1.52e- 8    400
 ```
 
-In particular, the `Advertising` variable is considered to be the most out of the normal distribution.
+In particular, the `Advertising` variable is considered to be the most
+out of the normal distribution.
 
-The `normality()` function supports the `group_by()` function syntax in the `dplyr` package.
+The `normality()` function supports the `group_by()` function syntax in
+the `dplyr` package.
 
 ``` r
 carseats %>%
@@ -626,9 +766,13 @@ carseats %>%
 #> 6 Income   Medium    Yes       0.961 0.000948    135
 ```
 
-The `Income` variable does not follow the normal distribution. However, if the `US` is `No` and the `ShelveLoc` is `Good` or `Bad` at the significance level of 0.01, it follows the normal distribution.
+The `Income` variable does not follow the normal distribution. However,
+the case where `US` is `No` and `ShelveLoc` is `Good` and `Bad` at the
+significance level of 0.01, it follows the normal distribution.
 
-In the following, we perform `normality test of log(Income)` for each combination of `ShelveLoc` and `US` variables to inquire about normal distribution cases.
+The following example performs `normality test of log(Income)` for each
+combination of `ShelveLoc` and `US` categorical variables to search for
+variables that follow the normal distribution.
 
 ``` r
 carseats %>%
@@ -642,29 +786,35 @@ carseats %>%
 #> 1 log_income Bad       No        0.940  0.0737     34
 ```
 
-##### Normalization visualization of numerical variables using `plot_normality()`
+#### Visualization of normality of numerical variables using `plot_normality()`
 
 `plot_normality()` visualizes the normality of numeric data.
 
 The information that `plot_normality()` visualizes is as follows.
 
--   `Histogram of original data`
--   `Q-Q plot of original data`
--   `histogram of log transformed data`
--   `Histogram of square root transformed data`
+  - `Histogram of original data`
+  - `Q-Q plot of original data`
+  - `histogram of log transformed data`
+  - `Histogram of square root transformed data`
 
-Numerical data following a `power-law distribution` are often encountered in data analysis. Since the numerical data following the power distribution is transformed into the normal distribution by performing the log and sqrt transform, the histogram of the data for the log and sqrt transform is drawn.
+In the data analysis process, it often encounters numerical data that
+follows the `power-law distribution`. Since the numerical data that
+follows the `power-law distribution` is converted into a normal
+distribution by performing the `log` or `sqrt` transformation, so draw a
+histogram of the `log` and `sqrt` transformed data.
 
-`plot_normality()` can also specify several variables like `normality()` function.
+`plot_normality()` can also specify several variables like `normality()`
+function.
 
 ``` r
 # Select columns by name
 plot_normality(carseats, Sales, CompPrice)
 ```
 
-![](man/figures/README-plot_normality-1.png)![](man/figures/README-plot_normality-2.png)
+![](man/figures/README-plot_normality-1.png)<!-- -->![](man/figures/README-plot_normality-2.png)<!-- -->
 
-The `plot_normality()` function also supports the `group_by()` function syntax in the `dplyr` package.
+The `plot_normality()` function also supports the `group_by()` function
+syntax in the `dplyr` package.
 
 ``` r
 carseats %>%
@@ -673,13 +823,14 @@ carseats %>%
   plot_normality(Income)
 ```
 
-![](man/figures/README-plot_normality2-1.png)![](man/figures/README-plot_normality2-2.png)
+![](man/figures/README-plot_normality2-1.png)<!-- -->![](man/figures/README-plot_normality2-2.png)<!-- -->
 
-#### Bivariate data EDA
+#### EDA of bivariate data
 
 ##### Calculation of `correlation coefficient` using `correlate()`
 
-`Correlate()` finds the correlation coefficient of all combinations of `carseats` numerical variables as follows:
+`correlate()` calculates the correlation coefficient of all combinations
+of `carseats` numerical variables as follows:
 
 ``` r
 correlate(carseats)
@@ -699,7 +850,8 @@ correlate(carseats)
 #> # … with 46 more rows
 ```
 
-The following example performs a normality test only on combinations that include several selected variables.
+The following example performs a normality test only on combinations
+that include several selected variables.
 
 ``` r
 # Select columns by name
@@ -720,7 +872,9 @@ correlate(carseats, Sales, CompPrice, Income)
 #> # … with 11 more rows
 ```
 
-`correlate()` produces `two pairs of variable` combinations. So you can use the following `filter()` function to get the correlation coefficient for `a pair of variable` combinations:
+`correlate()` produces `two pairs of variables`. So the following
+example uses `filter()` to get the correlation coefficient for `a pair
+of variable` combinations:
 
 ``` r
 carseats %>%
@@ -734,7 +888,8 @@ carseats %>%
 #> 3 Income    CompPrice   -0.0761
 ```
 
-The `correlate()` function also supports the `group_by()` function syntax in the `dplyr` package.
+The `correlate()` also supports the `group_by()` function syntax in the
+`dplyr` package.
 
 ``` r
 carseats %>%
@@ -742,8 +897,6 @@ carseats %>%
   group_by(Urban, US) %>%
   correlate(Sales) %>%
   filter(abs(coef_corr) > 0.5)
-#> Warning: Factor `Urban` contains implicit NA, consider using
-#> `forcats::fct_explicit_na`
 #> # A tibble: 10 x 5
 #>    Urban US    var1  var2       coef_corr
 #>    <fct> <fct> <fct> <fct>          <dbl>
@@ -767,18 +920,21 @@ carseats %>%
 plot_correlate(carseats)
 ```
 
-![](man/figures/README-plot_correlate-1.png)
+![](man/figures/README-plot_correlate-1.png)<!-- -->
 
-`plot_correlate()` can also specify multiple variables, like the `correlate()` function. The following is a visualization of the correlation matrix including several selected variables.
+`plot_correlate()` can also specify multiple variables, like the
+`correlate()` function. The following is a visualization of the
+correlation matrix including several selected variables.
 
 ``` r
 # Select columns by name
 plot_correlate(carseats, Sales, Price)
 ```
 
-![](man/figures/README-plot_correlate2-1.png)
+![](man/figures/README-plot_correlate2-1.png)<!-- -->
 
-The `plot_correlate()` function also supports the `group_by()` function syntax in the `dplyr` package.
+The `plot_correlate()` function also supports the `group_by()` function
+syntax in the `dplyr` package.
 
 ``` r
 carseats %>%
@@ -787,15 +943,20 @@ carseats %>%
   plot_correlate(Sales)
 ```
 
-![](man/figures/README-plot_correlate3-1.png)![](man/figures/README-plot_correlate3-2.png)![](man/figures/README-plot_correlate3-3.png)![](man/figures/README-plot_correlate3-4.png)
+![](man/figures/README-plot_correlate3-1.png)<!-- -->![](man/figures/README-plot_correlate3-2.png)<!-- -->![](man/figures/README-plot_correlate3-3.png)<!-- -->![](man/figures/README-plot_correlate3-4.png)<!-- -->
 
 #### EDA based on target variable
 
 ##### Definition of target variable
 
-To perform EDA based on `target variable`, you need to create a`target_by class` object. `target_by()` creates a target\_by class with an object inheriting data.frame or data.frame. `target_by()` is similar to `group_by()` in `dplyr` which creates`grouped_df`. The difference is that you specify only one variable.
+To perform EDA based on `target variable`, you need to create a
+`target_by` class object. `target_by()` creates a `target_by` class with
+an object inheriting data.frame or data.frame. `target_by()` is similar
+to `group_by()` in `dplyr` which creates `grouped_df`. The difference is
+that you specify only one variable.
 
-The following is an example of specifying US as target variable in carseats data.frame.:
+The following is an example of specifying `US` as target variable in
+`carseats` data.frame.:
 
 ``` r
 categ <- target_by(carseats, US)
@@ -803,26 +964,31 @@ categ <- target_by(carseats, US)
 
 ##### EDA when target variable is categorical variable
 
-Let's do the EDA when the target variable is categorical. When the categorical variable US is the target variable, the relationship between the target variable and the predictor is examined.
+Let’s perform EDA when the target variable is a categorical variable.
+When the categorical variable `US` is the target variable, we examine
+the relationship between the target variable and the predictor.
 
 Cases where predictors are numeric variable:
 
-`relate()` shows the relationship between the target variable and the predictor. The following example shows the relationship between Sales and the target variable US. The predictor Sales is a numeric variable. In this case, the descriptive statistics are shown for each level of the target variable.
+`relate()` shows the relationship between the target variable and the
+predictor. The following example shows the relationship between `Sales`
+and the target variable `US`. The predictor `Sales` is a numeric
+variable. In this case, the descriptive statistics are shown for each
+level of the target variable.
 
 ``` r
-# If the variable of interest is a numarical variable
+# If the variable of interest is a numerical variable
 cat_num <- relate(categ, Sales)
 cat_num
 #> # A tibble: 3 x 27
-#>   variable US        n    na  mean    sd se_mean   IQR skewness kurtosis
-#>   <chr>    <fct> <dbl> <dbl> <dbl> <dbl>   <dbl> <dbl>    <dbl>    <dbl>
-#> 1 Sales    No      142     0  6.82  2.60   0.218  3.44   0.323    0.808 
-#> 2 Sales    Yes     258     0  7.87  2.88   0.179  4.23   0.0760  -0.326 
-#> 3 Sales    total   400     0  7.50  2.82   0.141  3.93   0.186   -0.0809
-#> # … with 17 more variables: p00 <dbl>, p01 <dbl>, p05 <dbl>, p10 <dbl>,
-#> #   p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>, p60 <dbl>,
-#> #   p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>, p99 <dbl>,
-#> #   p100 <dbl>
+#>   variable US        n    na  mean    sd se_mean   IQR skewness kurtosis   p00
+#>   <chr>    <fct> <dbl> <dbl> <dbl> <dbl>   <dbl> <dbl>    <dbl>    <dbl> <dbl>
+#> 1 Sales    No      142     0  6.82  2.60   0.218  3.44   0.323    0.808   0   
+#> 2 Sales    Yes     258     0  7.87  2.88   0.179  4.23   0.0760  -0.326   0.37
+#> 3 Sales    total   400     0  7.50  2.82   0.141  3.93   0.186   -0.0809  0   
+#> # … with 16 more variables: p01 <dbl>, p05 <dbl>, p10 <dbl>, p20 <dbl>,
+#> #   p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>, p60 <dbl>, p70 <dbl>,
+#> #   p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>, p99 <dbl>, p100 <dbl>
 summary(cat_num)
 #>    variable             US          n               na         mean      
 #>  Length:3           No   :1   Min.   :142.0   Min.   :0   Min.   :6.823  
@@ -875,17 +1041,23 @@ summary(cat_num)
 #>  Max.   :14.03   Max.   :16.27
 ```
 
-The `relate class` object created with`relate()` visualizes the relationship between the target variable and the predictor with `plot()`. The relationship between US and Sales is represented by a density plot.
+`plot()` visualizes the `relate` class object created by `relate()` as
+the relationship between the target variable and the predictor variable.
+The relationship between `US` and `Sales` is visualized by density plot.
 
 ``` r
 plot(cat_num)
 ```
 
-![](man/figures/README-target_by3-1.png)
+![](man/figures/README-target_by3-1.png)<!-- -->
 
 Cases where predictors are categorical variable:
 
-The following example shows the relationship between `ShelveLoc` and the target variable `US`. The predictor, ShelveLoc, is a categorical variable. In this case, we show the `contigency table` of two variables. The `summary()` function also performs an `independence test` on the contigency table.
+The following example shows the relationship between `ShelveLoc` and the
+target variable `US`. The predictor variable `ShelveLoc` is a
+categorical variable. In this case, it shows the `contingency table` of
+two variables. The `summary()` function performs `independence test` on
+the contingency table.
 
 ``` r
 # If the variable of interest is a categorical variable
@@ -903,29 +1075,37 @@ summary(cat_cat)
 #>  Chisq = 2.7397, df = 2, p-value = 0.2541
 ```
 
-`plot()` visualizes the relationship between the target variable and the predictor. The relationship between `US` and `ShelveLoc` is represented by a `mosaics plot`.
+`plot()` visualizes the relationship between the target variable and the
+predictor. The relationship between `US` and `ShelveLoc` is represented
+by a `mosaics plot`.
 
 ``` r
 plot(cat_cat)
 ```
 
-![](man/figures/README-target_by5-1.png)
+![](man/figures/README-target_by5-1.png)<!-- -->
 
 ##### EDA when target variable is numerical variable
 
-Let's do the EDA when the target variable is numeric. When the numeric variable Sales is the target variable, the relationship between the target variable and the predictor is examined.
+Let’s perform EDA when the target variable is numeric. When the numeric
+variable `Sales` is the target variable, we examine the relationship
+between the target variable and the predictor.
 
 ``` r
-# If the variable of interest is a numarical variable
+# If the variable of interest is a numerical variable
 num <- target_by(carseats, Sales)
 ```
 
 Cases where predictors are numeric variable:
 
-The following example shows the relationship between `Price` and the target variable `Sales`. Price, a predictor, is a numeric variable. In this case, we show the result of `simple regression model` of `target ~ predictor` relation. The `summary()` function represents the details of the model.
+The following example shows the relationship between `Price` and the
+target variable `Sales`. The predictor variable `Price` is a numeric
+variable. In this case, it shows the result of a `simple linear model`
+of the `target ~ predictor` formula. The `summary()` function expresses
+the details of the model.
 
 ``` r
-# If the variable of interest is a numarical variable
+# If the variable of interest is a numerical variable
 num_num <- relate(num, Price)
 num_num
 #> 
@@ -956,17 +1136,32 @@ summary(num_num)
 #> F-statistic: 98.25 on 1 and 398 DF,  p-value: < 2.2e-16
 ```
 
-`plot()` visualizes the relationship between the target variable and the predictor. The relationship between Sales and Price is repersented as a scatter plot. The plot on the left represents the scatter plot of Sales and Price and the confidence interval of the regression line and the regression line. The plot on the right represents the relationship between the original data and the predicted value of the linear model as a scatter plot. If there is a linear relationship between the two variables, the observations will converge on the red diagonal in the scatter plot.
+`plot()` visualizes the relationship between the target and predictor
+variables. The relationship between `Sales` and `Price` is visualized
+with a scatter plot. The figure on the left shows the scatter plot of
+`Sales` and `Price` and the confidence interval of the regression line
+and regression line. The figure on the right shows the relationship
+between the original data and the predicted values of the linear model
+as a scatter plot. If there is a linear relationship between the two
+variables, the scatter plot of the observations converges on the red
+diagonal line.
 
 ``` r
 plot(num_num)
+#> `geom_smooth()` using formula 'y ~ x'
 ```
 
-![](man/figures/README-target_by8-1.png)
+![](man/figures/README-target_by8-1.png)<!-- -->
 
 Cases where predictors are categorical variable:
 
-The following example shows the relationship between `ShelveLoc` and the target variable `Sales`. The predictor, ShelveLoc, is a categorical variable. It shows the result of performing `one-way ANOVA` of `target ~ predictor` relation. The results are represented in terms of an analysis of variance. The `summary()` function also shows the `regression coefficients` for each level of the predictor. In other words, it shows detailed information of `simple regression analysis` of `target ~ predictor` relation.
+The following example shows the relationship between `ShelveLoc` and the
+target variable `Sales`. The predictor `ShelveLoc` is a categorical
+variable and shows the result of `one-way ANOVA` of `target ~ predictor`
+relationship. The results are expressed in terms of ANOVA. The
+`summary()` function shows the `regression coefficients` for each level
+of the predictor. In other words, it shows detailed information about
+`simple regression analysis` of `target ~ predictor` relationship.
 
 ``` r
 # If the variable of interest is a categorical variable
@@ -1002,62 +1197,81 @@ summary(num_cat)
 #> F-statistic: 92.23 on 2 and 397 DF,  p-value: < 2.2e-16
 ```
 
-`plot()` visualizes the relationship between the target variable and the predictor. The relationship between `Sales` and `ShelveLoc` is represented by a `box plot`.
+`plot()` visualizes the relationship between the target variable and the
+predictor. The relationship between `Sales` and `ShelveLoc` is
+represented by a `box plot`.
 
 ``` r
 plot(num_cat)
 ```
 
-![](man/figures/README-target_by10-1.png)
+![](man/figures/README-target_by10-1.png)<!-- -->
 
 ### Data Transformation
 
-dlookr imputates missing values and outliers and resolves skewed data. It also provides the ability to bin continuous variables as categorical variables.
+dlookr imputes missing values and outliers and resolves skewed data. It
+also provides the ability to bin continuous variables as categorical
+variables.
 
-Here is a list of the data conversion functions and functions provided by dlookr:
+Here is a list of the data conversion functions and functions provided
+by dlookr:
 
--   `find_na()` finds a variable that contains the missing values variable, and `imputate_na()` imputates the missing values.
--   `find_outliers()` finds a variable that contains the outliers, and `imputate_outlier()` imputates the outlier.
--   `summary.imputation()` and `plot.imputation()` provide information and visualization of the imputated variables.
--   `find_skewness()` finds the variables of the skewed data, and `transform()` performs the resolving of the skewed data.
--   `transform()` also performs standardization of numeric variables.
--   `summary.transform()` and `plot.transform()` provide information and visualization of transformed variables.
--   `binning()` and `binning_by()` convert binational data into categorical data.
--   `print.bins()` and `summary.bins()` show and summarize the binning results.
--   `plot.bins()` and `plot.optimal_bins()` provide visualization of the binning result.
--   `transformation_report()` performs the data transform and reports the result.
+  - `find_na()` finds a variable that contains the missing values
+    variable, and `imputate_na()` imputes the missing values.
+  - `find_outliers()` finds a variable that contains the outliers, and
+    `imputate_outlier()` imputes the outlier.
+  - `summary.imputation()` and `plot.imputation()` provide information
+    and visualization of the imputed variables.
+  - `find_skewness()` finds the variables of the skewed data, and
+    `transform()` performs the resolving of the skewed data.
+  - `transform()` also performs standardization of numeric variables.
+  - `summary.transform()` and `plot.transform()` provide information and
+    visualization of transformed variables.
+  - `binning()` and `binning_by()` convert binational data into
+    categorical data.
+  - `print.bins()` and `summary.bins()` show and summarize the binning
+    results.
+  - `plot.bins()` and `plot.optimal_bins()` provide visualization of the
+    binning result.
+  - `transformation_report()` performs the data transform and reports
+    the result.
 
 #### Imputation of missing values
 
-##### Imputates the missing value with `imputate_na()`
+##### imputes the missing value with `imputate_na()`
 
-`imputate_na()` imputates the missing value in the variable. The predictor with missing values supports both numeric and categorical variables and supports the following methods.
+`imputate_na()` imputes the missing value contained in the variable. The
+predictor with missing values support both numeric and categorical
+variables, and supports the following `method`.
 
--   predictor is numerical variable
-    -   "mean" : arithmetic mean
-    -   "median" : median
-    -   "mode" : mode
-    -   "knn" : K-nearest neighbors
-        -   target variable must be specified
-    -   "rpart" : Recursive Partitioning and Regression Trees
-        -   target variable must be specified
-    -   "mice" : Multivariate Imputation by Chained Equations
-        -   target variable must be specified
-        -   random seed must be set
--   predictor is categorical variable
-    -   "mode" : mode
-    -   "rpart" : Recursive Partitioning and Regression Trees
-        -   target variable must be specified
-    -   "mice" : Multivariate Imputation by Chained Equations
-        -   target variable must be specified
-        -   random seed must be set
+  - predictor is numerical variable
+      - “mean” : arithmetic mean
+      - “median” : median
+      - “mode” : mode
+      - “knn” : K-nearest neighbors
+          - target variable must be specified
+      - “rpart” : Recursive Partitioning and Regression Trees
+          - target variable must be specified  
+      - “mice” : Multivariate Imputation by Chained Equations
+          - target variable must be specified  
+          - random seed must be set
+  - predictor is categorical variable
+      - “mode” : mode
+      - “rpart” : Recursive Partitioning and Regression Trees
+          - target variable must be specified  
+      - “mice” : Multivariate Imputation by Chained Equations
+          - target variable must be specified  
+          - random seed must be set
 
-`imputate_na()` imputates the missing value with "rpart" for the numeric variable, `Income`. `summary()` summarizes missing value imputation information, and `plot()` visualizes imputation information.
+In the following example, `imputate_na()` imputes the missing value of
+`Income`, a numeric variable of carseats, using the “rpart” method.
+`summary()` summarizes missing value imputation information, and
+`plot()` visualizes missing information.
 
 ``` r
 income <- imputate_na(carseats, Income, US, method = "rpart")
 
-# result of imputate
+# result of imputation
 income
 #>   [1]  73.00000  48.00000  35.00000 100.00000  64.00000 113.00000 105.00000
 #>   [8]  81.00000 110.00000 113.00000  78.00000  94.00000  35.00000  28.00000
@@ -1122,14 +1336,18 @@ income
 #> attr(,"method")
 #> [1] "rpart"
 #> attr(,"na_pos")
-#>  [1]  17  18  40  95 116 126 163 177 179 209 217 222 263 315 347 351 364
-#> [18] 373 374 397
+#>  [1]  17  18  40  95 116 126 163 177 179 209 217 222 263 315 347 351 364 373 374
+#> [20] 397
 #> attr(,"type")
 #> [1] "missing values"
+#> attr(,"message")
+#> [1] "complete imputation"
+#> attr(,"success")
+#> [1] TRUE
 #> attr(,"class")
 #> [1] "imputation" "numeric"
 
-# summary of imputate
+# summary of imputation
 summary(income)
 #> * Impute missing values based on Recursive Partitioning and Regression Trees
 #>  - method : rpart
@@ -1162,22 +1380,17 @@ summary(income)
 #> p99      119.210000 119.01000000
 #> p100     120.000000 120.00000000
 
-# viz of imputate
+# viz of imputation
 plot(income)
 ```
 
-![](man/figures/README-imputate_na-1.png)
+![](man/figures/README-imputate_na-1.png)<!-- -->
 
-The following imputates the categorical variable `urban` by the "mice" method.
+The following imputes the categorical variable `urban` by the “mice”
+method.
 
 ``` r
 library(mice)
-#> Loading required package: lattice
-#> 
-#> Attaching package: 'mice'
-#> The following objects are masked from 'package:base':
-#> 
-#>     cbind, rbind
 
 urban <- imputate_na(carseats, Urban, US, method = "mice")
 #> 
@@ -1208,32 +1421,31 @@ urban <- imputate_na(carseats, Urban, US, method = "mice")
 #>   5   4  Income  Urban
 #>   5   5  Income  Urban
 
-# result of imputate
+# result of imputation
 urban
-#>   [1] Yes Yes Yes Yes Yes No  Yes Yes No  No  No  Yes Yes Yes Yes No  Yes
-#>  [18] Yes No  Yes Yes No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes Yes
-#>  [35] Yes Yes No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes
-#>  [52] Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes
-#>  [69] Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes No 
-#>  [86] No  Yes No  Yes No  No  Yes Yes Yes Yes Yes No  Yes No  No  No  Yes
-#> [103] No  Yes Yes Yes No  Yes Yes No  Yes Yes No  Yes Yes Yes No  Yes Yes
-#> [120] Yes Yes Yes Yes No  Yes No  Yes Yes Yes No  Yes No  Yes Yes Yes No 
-#> [137] No  Yes Yes No  Yes Yes Yes Yes No  Yes Yes No  No  Yes No  No  No 
-#> [154] No  No  Yes Yes No  No  No  No  No  Yes No  No  Yes Yes Yes Yes Yes
-#> [171] Yes Yes Yes Yes No  Yes No  Yes No  Yes Yes Yes Yes Yes No  Yes No 
-#> [188] Yes Yes No  No  Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes No  Yes
-#> [205] Yes Yes Yes No  Yes No  No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes
-#> [222] Yes Yes Yes No  Yes Yes Yes No  No  No  No  Yes No  No  Yes Yes Yes
-#> [239] Yes Yes Yes Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes
-#> [256] Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes No  No  Yes Yes Yes Yes
-#> [273] Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes No  No  Yes No  Yes No 
-#> [290] Yes No  No  Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
-#> [307] Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No  No  No  Yes Yes Yes
-#> [324] Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes Yes Yes
-#> [341] Yes No  No  Yes No  Yes No  No  Yes No  No  No  Yes No  Yes Yes Yes
-#> [358] Yes Yes Yes No  No  Yes Yes Yes No  No  Yes No  Yes Yes Yes No  Yes
-#> [375] Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes
-#> [392] Yes Yes No  Yes Yes No  Yes Yes Yes
+#>   [1] Yes Yes Yes Yes Yes No  Yes Yes No  No  No  Yes Yes Yes Yes No  Yes Yes
+#>  [19] No  Yes Yes No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes Yes Yes Yes
+#>  [37] No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes
+#>  [55] No  Yes Yes Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes Yes Yes Yes No 
+#>  [73] Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes No  No  Yes No  Yes No 
+#>  [91] No  Yes Yes Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes
+#> [109] Yes No  Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes No 
+#> [127] Yes Yes Yes No  Yes No  Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes
+#> [145] No  Yes Yes No  No  Yes No  No  No  No  No  Yes Yes No  No  No  No  No 
+#> [163] Yes No  No  Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes No  Yes No  Yes
+#> [181] Yes Yes Yes Yes No  Yes No  Yes Yes No  No  Yes No  Yes Yes Yes Yes Yes
+#> [199] Yes Yes No  Yes No  Yes Yes Yes Yes No  Yes No  No  Yes Yes Yes Yes Yes
+#> [217] Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes No  No  No  No  Yes No 
+#> [235] No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes
+#> [253] Yes No  Yes Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes No  No  Yes Yes
+#> [271] Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes No  No  Yes No  Yes
+#> [289] No  Yes No  No  Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
+#> [307] Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No  No  No  Yes Yes Yes Yes
+#> [325] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No 
+#> [343] No  Yes No  Yes No  No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes
+#> [361] No  No  Yes Yes Yes No  No  Yes No  Yes Yes Yes No  Yes Yes Yes Yes No 
+#> [379] Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes No  Yes Yes
+#> [397] No  Yes Yes Yes
 #> attr(,"var_type")
 #> [1] categorical
 #> attr(,"method")
@@ -1242,9 +1454,13 @@ urban
 #>  [1]  33  36  84  94 113 132 151 292 313 339
 #> attr(,"type")
 #> [1] missing values
+#> attr(,"message")
+#> [1] complete imputation
+#> attr(,"success")
+#> [1] TRUE
 #> Levels: No Yes
 
-# summary of imputate
+# summary of imputation
 summary(urban)
 #> * Information of Imputation (before vs after)
 #>      original imputation original_percent imputation_percent
@@ -1252,15 +1468,18 @@ summary(urban)
 #> Yes       275        281            68.75              70.25
 #> <NA>       10          0             2.50               0.00
 
-# viz of imputate
+# viz of imputation
 plot(urban)
 ```
 
-![](man/figures/README-imputate_na2-1.png)
+![](man/figures/README-imputate_na2-1.png)<!-- -->
 
 ##### Collaboration with dplyr
 
-The following is an example of calculating the arithmetic mean of `US` variables by using the `Income` variable that imputates the missing value with `dplyr`.
+The following example imputes the missing value of the `Income`
+variable, and then calculates the arithmetic mean for each level of
+`US`. In this case, `dplyr` is used, and it is easily interpreted
+logically using pipes.
 
 ``` r
 # The mean before and after the imputation of the Income variable
@@ -1269,6 +1488,7 @@ carseats %>%
   group_by(US) %>%
   summarise(orig = mean(Income, na.rm = TRUE),
     imputation = mean(Income_imp))
+#> `summarise()` ungrouping output (override with `.groups` argument)
 #> # A tibble: 2 x 3
 #>   US     orig imputation
 #>   <fct> <dbl>      <dbl>
@@ -1278,22 +1498,28 @@ carseats %>%
 
 #### Imputation of outliers
 
-##### Imputates thr outliers with `imputate_outlier()`
+##### imputes thr outliers with `imputate_outlier()`
 
-`imputate_outlier()` imputates the outliers value. The predictor with outliers supports only numeric variables and supports the following methods.
+`imputate_outlier()` imputes the outliers value. The predictor with
+outliers supports only numeric variables and supports the following
+methods.
 
--   predictor is numerical variable
-    -   "mean" : arithmetic mean
-    -   "median" : median
-    -   "mode" : mode
-    -   "capping" : Imputate the upper outliers with 95 percentile, and Imputate the bottom outliers with 5 percentile.
+  - predictor is numerical variable
+      - “mean” : arithmetic mean
+      - “median” : median
+      - “mode” : mode
+      - “capping” : Imputate the upper outliers with 95 percentile, and
+        Imputate the bottom outliers with 5 percentile.
 
-`imputate_outlier()` imputates the outliers with the numeric variable `Price` as the "capping" method, as follows. `summary()` summarizes outliers imputation information, and `plot()` visualizes imputation information.
+`imputate_outlier()` imputes the outliers with the numeric variable
+`Price` as the “capping” method, as follows. `summary()` summarizes
+outliers imputation information, and `plot()` visualizes imputation
+information.
 
 ``` r
 price <- imputate_outlier(carseats, Price, method = "capping")
 
-# result of imputate
+# result of imputation
 price
 #>   [1] 120.00  83.00  80.00  97.00 128.00  72.00 108.00 120.00 124.00 124.00
 #>  [11] 100.00  94.00 136.00  86.00 118.00 144.00 110.00 131.00  68.00 121.00
@@ -1345,10 +1571,14 @@ price
 #> [1]  24  49 191 185  53
 #> attr(,"type")
 #> [1] "outliers"
+#> attr(,"message")
+#> [1] "complete imputation"
+#> attr(,"success")
+#> [1] TRUE
 #> attr(,"class")
 #> [1] "imputation" "numeric"
 
-# summary of imputate
+# summary of imputation
 summary(price)
 #> Impute outliers with capping
 #> 
@@ -1380,15 +1610,18 @@ summary(price)
 #> p99      166.0500000 164.0200000
 #> p100     191.0000000 173.0000000
 
-# viz of imputate
+# viz of imputation
 plot(price)
 ```
 
-![](man/figures/README-imputate_outlier-1.png)
+![](man/figures/README-imputate_outlier-1.png)<!-- -->
 
 ##### Collaboration with dplyr
 
-The following is an example of calculating the arithmetic mean of `US` variables by using the `Price` variable that imputates the outlier with `dplyr`.
+The following example imputes the outliers of the `Price` variable, and
+then calculates the arithmetic mean for each level of `US`. In this
+case, `dplyr` is used, and it is easily interpreted logically using
+pipes.
 
 ``` r
 # The mean before and after the imputation of the Price variable
@@ -1397,6 +1630,7 @@ carseats %>%
   group_by(US) %>%
   summarise(orig = mean(Price, na.rm = TRUE),
     imputation = mean(Price_imp, na.rm = TRUE))
+#> `summarise()` ungrouping output (override with `.groups` argument)
 #> # A tibble: 2 x 3
 #>   US     orig imputation
 #>   <fct> <dbl>      <dbl>
@@ -1408,22 +1642,24 @@ carseats %>%
 
 ##### Introduction to the use of `transform()`
 
-`transform()` performs data transformation. Only numeric variables are supported, and the following methods are provided.
+`transform()` performs data transformation. Only numeric variables are
+supported, and the following methods are provided.
 
--   Standardization
-    -   "zscore" : z-score transformation. (x - mu) / sigma
-    -   "minmax" : minmax transformation. (x - min) / (max - min)
--   Resolving Skewness
-    -   "log" : log transformation. log(x)
-    -   "log+1" : log transformation. log(x + 1). Used for values that contain 0.
-    -   "sqrt" : square root transformation.
-    -   "1/x" : 1 / x transformation
-    -   "x^2" : x square transformation
-    -   "x^3" : x^3 square transformation
+  - Standardization
+      - “zscore” : z-score transformation. (x - mu) / sigma
+      - “minmax” : minmax transformation. (x - min) / (max - min)
+  - Resolving Skewness
+      - “log” : log transformation. log(x)
+      - “log+1” : log transformation. log(x + 1). Used for values that
+        contain 0.
+      - “sqrt” : square root transformation.
+      - “1/x” : 1 / x transformation
+      - “x^2” : x square transformation
+      - “x^3” : x^3 square transformation
 
 ###### Standardization with `transform()`
 
-Use the methods "zscore" and "minmax" to perform standardization.
+Use the methods “zscore” and “minmax” to perform standardization.
 
 ``` r
 carseats %>% 
@@ -1433,11 +1669,12 @@ carseats %>%
   boxplot()
 ```
 
-![](man/figures/README-standardization-1.png)
+![](man/figures/README-standardization-1.png)<!-- -->
 
 ##### Resolving Skewness data with `transform()`
 
-`find_skewness()` calculates the skewness and finds the skewed data.
+`find_skewness()` searches for variables with skewed data. This function
+finds data skewed by search conditions and calculates skewness.
 
 ``` r
 # find index of skewed variables
@@ -1461,7 +1698,11 @@ find_skewness(carseats, value = TRUE, thres = 0.1)
 #>       0.185       0.637      -0.125
 ```
 
-The skewness of `Advertising` is 0.637, which is a little slanted to the left, so I use `transformation ()` to convert it to `log`. `summary()` summarizes the transformation information, and `plot()` visualizes the transformation information.
+The skewness of `Advertising` is 0.637. This means that the distribution
+of data is somewhat inclined to the left. So, for normal distribution,
+use `transform()` to convert to “log” method as follows. `summary()`
+summarizes transformation information, and `plot()` visualizes
+transformation information.
 
 ``` r
 Advertising_log = transform(carseats$Advertising, method = "log")
@@ -1504,9 +1745,10 @@ summary(Advertising_log)
 plot(Advertising_log)
 ```
 
-![](man/figures/README-resolving2-1.png)
+![](man/figures/README-resolving2-1.png)<!-- -->
 
-It seems that the raw data contains 0, as there is a -Inf in the log converted value. So this time we convert it to "log + 1".
+It seems that the raw data contains 0, as there is a -Inf in the log
+converted value. So this time, convert it to “log+1”.
 
 ``` r
 Advertising_log <- transform(carseats$Advertising, method = "log+1")
@@ -1549,21 +1791,23 @@ summary(Advertising_log)
 plot(Advertising_log)
 ```
 
-![](man/figures/README-resolving3-1.png)
+![](man/figures/README-resolving3-1.png)<!-- -->
 
 #### Binning
 
 ##### Binning of individual variables using `binning()`
 
-`binning()` transforms a numeric variable into a categorical variable by binning it. The following types of binning are supported.
+`binning()` transforms a numeric variable into a categorical variable by
+binning it. The following types of binning are supported.
 
--   "quantile" : categorize using quantile to include the same frequencies
--   "equal" : categorize to have equal length segments
--   "pretty" : categorized into moderately good segments
--   "kmeans" : categorization using K-means clustering
--   "bclust" : categorization using bagged clustering technique
+  - “quantile” : categorize using quantile to include the same
+    frequencies
+  - “equal” : categorize to have equal length segments
+  - “pretty” : categorized into moderately good segments
+  - “kmeans” : categorization using K-means clustering
+  - “bclust” : categorization using bagged clustering technique
 
-The following example illustrates some ways to `Income` binning using `binning()`.:
+Here are some examples of how to bin `Income` using `binning()`.:
 
 ``` r
 # Binning the carat variable. default type argument is "quantile"
@@ -1576,8 +1820,8 @@ bin
 #>     [21,30]     (30,39]     (39,48]     (48,62]     (62,69]     (69,78] 
 #>          40          37          38          40          42          33 
 #>   (78,86.6] (86.6,96.6]  (96.6,109]   (109,120]        <NA> 
-#>          36          38          38          38          20
-# Summarise bins class object
+#>          36          38          39          37          20
+# Summarize bins class object
 summary(bin)
 #>         levels freq   rate
 #> 1      [21,30]   40 0.1000
@@ -1588,14 +1832,14 @@ summary(bin)
 #> 6      (69,78]   33 0.0825
 #> 7    (78,86.6]   36 0.0900
 #> 8  (86.6,96.6]   38 0.0950
-#> 9   (96.6,109]   38 0.0950
-#> 10   (109,120]   38 0.0950
+#> 9   (96.6,109]   39 0.0975
+#> 10   (109,120]   37 0.0925
 #> 11        <NA>   20 0.0500
 # Plot bins class object
 plot(bin)
 ```
 
-![](man/figures/README-binning-1.png)
+![](man/figures/README-binning-1.png)<!-- -->
 
 ``` r
 # Using labels argument
@@ -1644,8 +1888,7 @@ carseats %>%
  summarise(freq = n()) %>%
  arrange(desc(freq)) %>%
  head(10)
-#> Warning: Factor `Income_bin` contains implicit NA, consider using
-#> `forcats::fct_explicit_na`
+#> `summarise()` regrouping output by 'ShelveLoc' (override with `.groups` argument)
 #> # A tibble: 10 x 3
 #> # Groups:   ShelveLoc [1]
 #>    ShelveLoc Income_bin   freq
@@ -1664,9 +1907,12 @@ carseats %>%
 
 ##### Optimal Binning with `binning_by()`
 
-`binning_by()` converts a numeric variable into a categorical variable by optimal binning. This method is often used when developing a `scorecard model`.
+`binning_by()` transforms a numeric variable into a categorical variable
+by optimal binning. This method is often used when developing a
+`scorecard model`.
 
-The following `binning_by()` example optimally binning `Advertising` if `US` is a target variable with a binary class.
+The following `binning_by()` example optimally binning `Advertising`
+considering the target variable `US` with a binary class.
 
 ``` r
 # optimal binning
@@ -1677,13 +1923,13 @@ bin
 #> binned type: optimal
 #> number of bins: 3
 #> x
-#> (-1,0]  (0,6] (6,29] 
+#> [-1,0]  (0,6] (6,29] 
 #>    144     69    187
 
 # summary optimal_bins class
 summary(bin)
 #>   levels freq   rate
-#> 1 (-1,0]  144 0.3600
+#> 1 [-1,0]  144 0.3600
 #> 2  (0,6]   69 0.1725
 #> 3 (6,29]  187 0.4675
 
@@ -1693,62 +1939,66 @@ attr(bin, "iv")
 
 # information value table
 attr(bin, "ivtable")
-#>   Cutpoint CntRec CntGood CntBad CntCumRec CntCumGood CntCumBad PctRec
-#> 1     <= 0    144      19    125       144         19       125 0.3600
-#> 2     <= 6     69      54     15       213         73       140 0.1725
-#> 3      > 6    187     185      2       400        258       142 0.4675
-#> 4  Missing      0       0      0       400        258       142 0.0000
-#> 5    Total    400     258    142        NA         NA        NA 1.0000
-#>   GoodRate BadRate    Odds  LnOdds     WoE     IV
-#> 1   0.1319  0.8681  0.1520 -1.8839 -2.4810 2.0013
-#> 2   0.7826  0.2174  3.6000  1.2809  0.6838 0.0709
-#> 3   0.9893  0.0107 92.5000  4.5272  3.9301 2.7627
-#> 4      NaN     NaN     NaN     NaN     NaN    NaN
-#> 5   0.6450  0.3550  1.8169  0.5971  0.0000 4.8349
+#>   Cutpoint CntRec CntGood CntBad CntCumRec CntCumGood CntCumBad PctRec GoodRate
+#> 1     <= 0    144      19    125       144         19       125 0.3600   0.1319
+#> 2     <= 6     69      54     15       213         73       140 0.1725   0.7826
+#> 3      > 6    187     185      2       400        258       142 0.4675   0.9893
+#> 4  Missing      0       0      0       400        258       142 0.0000      NaN
+#> 5    Total    400     258    142        NA         NA        NA 1.0000   0.6450
+#>   BadRate    Odds  LnOdds     WoE     IV
+#> 1  0.8681  0.1520 -1.8839 -2.4810 2.0013
+#> 2  0.2174  3.6000  1.2809  0.6838 0.0709
+#> 3  0.0107 92.5000  4.5272  3.9301 2.7627
+#> 4     NaN     NaN     NaN     NaN    NaN
+#> 5  0.3550  1.8169  0.5971  0.0000 4.8349
 
 # visualize optimal_bins class
 plot(bin, sub = "bins of Advertising variable")
 ```
 
-![](man/figures/README-binning_by-1.png)
+![](man/figures/README-binning_by-1.png)<!-- -->
 
 ### Reporting
 
 #### Create a diagnostic report using `diagnose_report()`
 
-`diagnose_report()` performs data diagnosis of all variables of object inherited from data.frame(`tbl_df`, `tbl`, etc) or data.frame.
+`diagnose_report()` performs data diagnosis of all variables of object
+inherited from data.frame(`tbl_df`, `tbl`, etc) or data.frame.
 
-\`diagnose\_report() writes the report in two formats:
+\`diagnose\_report() generates the report in two formats:
 
--   Latex based pdf file
--   html file
+  - Latex based pdf file
+  - html file
 
 The contents of the report are as follows.:
 
--   Diagnose Data
-    -   Overview of Diagnosis
-        -   List of all variables quality
-        -   Diagnosing Missing Data
-        -   Diagnosis of unique data(Text and Category)
-        -   Diagnosis of unique data(Numerical)
-    -   Detailed data diagnosis
-        -   Diagnosis of categorical variables
-        -   Diagnosis of numerical variables
-        -   List of numerical diagnosis (zero)
-        -   List of numerical diagnosis (minus)
--   Diagnose Outliers
-    -   Overview of Diagnosis
-        -   Diagnosis of numerical variable outliers
-        -   Detailed outliers diagnosis
+  - Diagnose Data
+      - Overview of Diagnosis
+          - List of all variables quality
+          - Diagnosing Missing Data
+          - Diagnosis of unique data(Text and Category)
+          - Diagnosis of unique data(Numerical)
+      - Detailed data diagnosis
+          - Diagnosis of categorical variables
+          - Diagnosis of numerical variables
+          - List of numerical diagnosis (zero)
+          - List of numerical diagnosis (minus)
+  - Diagnose Outliers
+      - Overview of Diagnosis
+          - Diagnosis of numerical variable outliers
+          - Detailed outliers diagnosis
 
-The follwing creates a quality diagnostic report for flights, a `tbl_df` class object. The file format is pdf and file name is `DataDiagnosis_Report.pdf`.
+The following generates a quality diagnostic report for flights, a
+`tbl_df` class object. The file format is pdf and file name is
+`DataDiagnosis_Report.pdf`.
 
 ``` r
 flights %>%
   diagnose_report()
 ```
 
-The following script creates an html report named `DataDiagnosis_Report.html`.
+The following generates an html report named
+`DataDiagnosis_Report.html`.
 
 ``` r
 flights %>%
@@ -1762,40 +2012,44 @@ flights %>%
   diagnose_report(output_format = "html", output_file = "Diagn.html")
 ```
 
-The `Data Diagnostic Report` is an automated report intended to aid in the data diahnosis process. It judged whether the data is supplemented or reacquired by referring to the report results.
+The `Data Diagnostic Report` is an automated report intended to aid in
+the data diahnosis process. It judged whether the data is supplemented
+or reacquired by referring to the report results.
 
 #### Creating an EDA report using `eda_report()`
 
-`eda_report()` performs EDA on all variables of the data frame or object (`tbl_df`,`tbl`, etc.) that inherits the data frame.
+`eda_report()` performs EDA on all variables of the data frame or object
+(`tbl_df`,`tbl`, etc.) that inherits the data frame.
 
-`eda_report()` creates an EDA report in two forms:
+`eda_report()` generates an EDA report in two forms:
 
--   pdf file based on Latex
--   html file
+  - pdf file based on Latex
+  - html file
 
 The contents of the report are as follows.:
 
--   introduction
-    -   Information of Dataset
-    -   Information of Variables
-    -   Numerical Variables
--   Univariate Analysis
-    -   Descriptive Statistics
-    -   Normality Test of Numerical Variables
-        -   Statistics and Visualization of (Sample) Data
--   Relationship Between Variables
-    -   Correlation Coefficient
-        -   Correlation Coefficient by Variable Combination
-        -   Correlation Plot of Numerical Variables
--   Target based Analysis
-    -   Gruoped Descriptive Statistics
-        -   Gruoped Numerical Variables
-        -   Gruoped Categorical Variables
-    -   Gruoped Relationship Between Variables
-        -   Grouped Correlation Coefficient
-        -   Grouped Correlation Plot of Numerical Variables
+  - introduction
+      - Information of Dataset
+      - Information of Variables
+      - Numerical Variables
+  - Univariate Analysis
+      - Descriptive Statistics
+      - Normality Test of Numerical Variables
+          - Statistics and Visualization of (Sample) Data
+  - Relationship Between Variables
+      - Correlation Coefficient
+          - Correlation Coefficient by Variable Combination
+          - Correlation Plot of Numerical Variables
+  - Target based Analysis
+      - Gruoped Descriptive Statistics
+          - Gruoped Numerical Variables
+          - Gruoped Categorical Variables
+      - Gruoped Relationship Between Variables
+          - Grouped Correlation Coefficient
+          - Grouped Correlation Plot of Numerical Variables
 
-The following will create an EDA report for `carseats`. The file format is pdf, and the file name is `EDA_Report.pdf`.
+The following will generates an EDA report for `carseats`. The file
+format is pdf, and the file name is `EDA_Report.pdf`.
 
 ``` r
 carseats %>%
@@ -1809,44 +2063,50 @@ carseats %>%
   eda_report(target = Sales, output_format = "html", output_file = "EDA.html")
 ```
 
-The EDA report is an automated report to assist in the EDA process. Design the data analysis scenario with reference to the report results.
+The EDA report is an automated report to assist in the EDA process.
+Design the data analysis scenario with reference to the report results.
 
 #### Creating a data transformation report using `transformation_report()`
 
-`transformation_report()` creates a data transformation report for all the variables in the data frame or objects that inherit the data frame (`tbl_df`, `tbl`, etc.).
+`transformation_report()` generates a data transformation report for all
+the variables in the data frame or objects that inherit the data frame
+(`tbl_df`, `tbl`, etc.).
 
-`transformation_report()` creates a data transformation report in two forms:
+`transformation_report()` generates a data transformation report in two
+forms:
 
--   pdf file based on Latex
--   html file
+  - pdf file based on Latex
+  - html file
 
 The contents of the report are as follows.:
 
--   Imputation
-    -   Missing Values
-        -   Missing values imputation information
-        -   (variable names)
-    -   Outliers
-        -   Outliers imputation information
-        -   (variable names)
--   Resolving Skewness
-    -   Skewed variables information
-        -   (variable names)
--   Binning
-    -   Numerical Variables for Binning
-    -   Binning
-        -   (variable names)
-    -   Optimal Binning
-        -   (variable names)
+  - Imputation
+      - Missing Values
+          - Missing values imputation information
+          - (variable names)
+      - Outliers
+          - Outliers imputation information
+          - (variable names)
+  - Resolving Skewness
+      - Skewed variables information
+          - (variable names)
+  - Binning
+      - Numerical Variables for Binning
+      - Binning
+          - (variable names)
+      - Optimal Binning
+          - (variable names)
 
-The following creates a data transformation report for `carseats`. The file format is pdf, and the file name is `Transformation_Report.pdf`.
+The following generates a data transformation report for `carseats`. The
+file format is pdf, and the file name is `Transformation_Report.pdf`.
 
 ``` r
 carseats %>%
   transformation_report(target = US)
 ```
 
-The following generates a report in html format called `transformation.html`.
+The following generates a report in html format called
+`transformation.html`.
 
 ``` r
 carseats %>%
@@ -1854,7 +2114,9 @@ carseats %>%
     output_file = "transformation.html")
 ```
 
-Data transformation reports are automated reports to assist in the data transformation process. Design data conversion scenarios by referring to the report results.
+Data transformation reports are automated reports to assist in the data
+transformation process. Design data conversion scenarios by referring to
+the report results.
 
 #### Look at the report
 
@@ -1864,37 +2126,67 @@ Data transformation reports are automated reports to assist in the data transfor
 
 The cover of the report is shown in the following figure.:
 
+<div class="figure" style="text-align: center">
+
 <img src="vignettes/img/eda_title_pdf.png" alt="EDA report cover" width="70%" />
+
 <p class="caption">
+
 EDA report cover
+
 </p>
+
+</div>
 
 ##### The argenda of the report
 
-The report's argenda is shown in the following figure.:
+The report’s agenda is shown in the following figure.:
+
+<div class="figure" style="text-align: center">
 
 <img src="vignettes/img/eda_agenda_pdf.png" alt="EDA Report Contents" width="70%" />
+
 <p class="caption">
+
 EDA Report Contents
+
 </p>
+
+</div>
 
 ##### Appearance of table
 
-Most information is represented in the report as a table. An example of a table is shown in the following figure.:
+Most information is represented in the report as a table. An example of
+a table is shown in the following figure.:
+
+<div class="figure" style="text-align: center">
 
 <img src="vignettes/img/diag_intro_pdf.png" alt="Sample data diagnostic report table" width="70%" />
+
 <p class="caption">
+
 Sample data diagnostic report table
+
 </p>
+
+</div>
 
 ##### Appearance of plot
 
-In EDA reports, information on linear relationships includes tables and visualization results. The result is shown in the following figure.:
+In EDA reports, information on linear relationships includes tables and
+visualization results. The result is shown in the following figure.:
+
+<div class="figure" style="text-align: center">
 
 <img src="vignettes/img/eda_lm_pdf.png" alt="Linear relationship information in EDA reports" width="70%" />
+
 <p class="caption">
+
 Linear relationship information in EDA reports
+
 </p>
+
+</div>
 
 #### version of html file
 
@@ -1902,66 +2194,98 @@ Linear relationship information in EDA reports
 
 The title and contents of the report are shown in the following figure.:
 
+<div class="figure" style="text-align: center">
+
 <img src="vignettes/img/eda_agenda_html.png" alt="EDA report titles and table of contents" width="70%" />
+
 <p class="caption">
+
 EDA report titles and table of contents
+
 </p>
+
+</div>
 
 ##### Appearance of table
 
-Much information is represented in tables in the report. An example of a table in an html file is shown in the following figure.:
+Much information is represented in tables in the report. An example of a
+table in an html file is shown in the following figure.:
 
-<img src="vignettes/img/eda_table_html.png" alt="EDA report table example (Web)" width="70%" />
+<div class="figure" style="text-align: center">
+
+<img src="vignettes/img/eda_table_html.png" alt="EDA report table example (web)" width="70%" />
+
 <p class="caption">
-EDA report table example (Web)
+
+EDA report table example (web)
+
 </p>
+
+</div>
 
 ##### Appearance of plot
 
-In EDA reports, normality test information includes visualization results. The result of the html file is shown in the following figure.:
+In EDA reports, normality test information includes visualization
+results. The result of the html file is shown in the following figure.:
 
-<img src="vignettes/img/eda_normality_html.png" alt="EDA Report Normality Test Information (Web)" width="70%" />
+<div class="figure" style="text-align: center">
+
+<img src="vignettes/img/eda_normality_html.png" alt="EDA Report Normality Test Information (web)" width="70%" />
+
 <p class="caption">
-EDA Report Normality Test Information (Web)
+
+EDA Report Normality Test Information (web)
+
 </p>
 
-Supports table of DBMS
-----------------------
+</div>
+
+## Supports table of DBMS
 
 ### Functions that supports tables of DBMS
 
-The DBMS table diagnostic/EDA function supports In-database mode that performs SQL operations on the DBMS side. If the size of the data is large, using In-database mode is faster.
+The DBMS table diagnostic/EDA function supports In-database mode that
+performs SQL operations on the DBMS side. If the size of the data is
+large, using In-database mode is faster.
 
-It is difficult to obtain anomaly or to implement the sampling-based algorithm in SQL of DBMS. So some functions do not yet support In-database mode. In this case, it is performed in In-memory mode in which table data is brought to R side and calculated. In this case, if the data size is large, the execution speed may be slow. It supports the collect\_size argument, which allows you to import the specified number of samples of data into R.
+It is difficult to obtain anomaly or to implement the sampling-based
+algorithm in SQL of DBMS. So some functions do not yet support
+In-database mode. In this case, it is performed in In-memory mode in
+which table data is brought to R side and calculated. In this case, if
+the data size is large, the execution speed may be slow. It supports the
+collect\_size argument, which allows you to import the specified number
+of samples of data into R.
 
--   In-database support fuctions
-    -   `diagonse()`
-    -   `diagnose_category()`
--   In-database not support fuctions
-    -   `diagnose_numeric()`
-    -   `diagnose_outlier()`
-    -   `plot_outlier()`
-    -   `diagnose_report()`
-    -   `normality()`
-    -   `plot_normality()`
-    -   `correlate()`
-    -   `plot_correlate()`
-    -   `describe()`
-    -   `eda_report()`
+  - In-database support functions
+      - `diagonse()`
+      - `diagnose_category()`
+  - In-database not support functions
+      - `diagnose_numeric()`
+      - `diagnose_outlier()`  
+      - `plot_outlier()`  
+      - `diagnose_report()`
+      - `normality()`
+      - `plot_normality()`  
+      - `correlate()`  
+      - `plot_correlate()`
+      - `describe()`
+      - `eda_report()`
 
 #### How to use functions
 
--   Function calls using the In-database mode
-    -   in\_database = TRUE
--   Function calls using the In-memory mode
-    -   in\_database = FALSE
--   Diagnosis and EDA using sample data from DBMS
-    -   collect\_size = <sample size>
-    -   only In-memory mode
+  - Function calls using the In-database mode
+      - in\_database = TRUE
+  - Function calls using the In-memory mode
+      - in\_database = FALSE
+  - Diagnosis and EDA using sample data from DBMS
+      - collect\_size = <sample size>
+      - only In-memory mode
 
 ### Preparing table data
 
-Copy the `carseats` data frame to the SQLite DBMS and create it as a table named `TB_CARSEATS`. Mysql/MariaDB, PostgreSQL, Oracle DBMS, etc. are also available for your environment.
+Copy the `carseats` data frame to the SQLite DBMS and create it as a
+table named `TB_CARSEATS`. Mysql/MariaDB, PostgreSQL, Oracle DBMS, etc.
+are also available for your environment.
 
 ``` r
 if (!require(DBI)) install.packages('DBI')
@@ -1987,7 +2311,9 @@ copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
 
 #### Diagnose data quality of variables in the DBMS
 
-Use `dplyr::tbl()` to create a tbl\_dbi object, then use it as a data frame object. That is, the data argument of all diagonose function is specified as tbl\_dbi object instead of data frame object.
+Use `dplyr::tbl()` to create a tbl\_dbi object, then use it as a data
+frame object. That is, the data argument of all diagnose function is
+specified as tbl\_dbi object instead of data frame object.
 
 ``` r
 # Diagnosis of all columns
@@ -1995,19 +2321,19 @@ con_sqlite %>%
   tbl("TB_CARSEATS") %>% 
   diagnose()
 #> # A tibble: 11 x 6
-#>    variables  types  missing_count missing_percent unique_count unique_rate
-#>    <chr>      <chr>          <dbl>           <dbl>        <int>       <dbl>
-#>  1 Sales      double             0            0             336      0.84  
-#>  2 CompPrice  double             0            0              73      0.182 
-#>  3 Income     double            20            5              99      0.248 
-#>  4 Advertisi… double             0            0              28      0.07  
-#>  5 Population double             0            0             275      0.688 
-#>  6 Price      double             0            0             101      0.252 
-#>  7 ShelveLoc  chara…             0            0               3      0.0075
-#>  8 Age        double             0            0              56      0.14  
-#>  9 Education  double             0            0               9      0.0225
-#> 10 Urban      chara…             5            1.25            3      0.0075
-#> 11 US         chara…             0            0               2      0.005
+#>    variables   types     missing_count missing_percent unique_count unique_rate
+#>    <chr>       <chr>             <dbl>           <dbl>        <int>       <dbl>
+#>  1 Sales       double                0            0             336      0.84  
+#>  2 CompPrice   double                0            0              73      0.182 
+#>  3 Income      double               20            5              99      0.248 
+#>  4 Advertising double                0            0              28      0.07  
+#>  5 Population  double                0            0             275      0.688 
+#>  6 Price       double                0            0             101      0.252 
+#>  7 ShelveLoc   character             0            0               3      0.0075
+#>  8 Age         double                0            0              56      0.14  
+#>  9 Education   double                0            0               9      0.0225
+#> 10 Urban       character             5            1.25            3      0.0075
+#> 11 US          character             0            0               2      0.005
 
 # Positions values select columns, and In-memory mode
 con_sqlite %>% 
@@ -2064,10 +2390,9 @@ con_sqlite %>%
   diagnose_outlier()  %>%
   filter(outliers_ratio > 1)
 #> # A tibble: 1 x 6
-#>   variables outliers_cnt outliers_ratio outliers_mean with_mean
-#>   <chr>            <int>          <dbl>         <dbl>     <dbl>
-#> 1 Price                5           1.25          100.      116.
-#> # … with 1 more variable: without_mean <dbl>
+#>   variables outliers_cnt outliers_ratio outliers_mean with_mean without_mean
+#>   <chr>            <int>          <dbl>         <dbl>     <dbl>        <dbl>
+#> 1 Price                5           1.25          100.      116.         116.
 ```
 
 #### Plot outlier information of numerical data diagnosis in the DBMS
@@ -2085,13 +2410,16 @@ con_sqlite %>%
                  pull())
 ```
 
-![](man/figures/README-plot_outlier_dbi-1.png)
+![](man/figures/README-plot_outlier_dbi-1.png)<!-- -->
 
 #### Reporting the information of data diagnosis for table of thr DBMS
 
-The following shows several examples of creating an data diagnosis report for a DBMS table.
+The following shows several examples of creating an data diagnosis
+report for a DBMS table.
 
-Using the `collect_size` argument, you can perform data diagonosis with the corresponding number of sample data. If the number of data is very large, use `collect_size`.
+Using the `collect_size` argument, you can perform data diagnosis with
+the corresponding number of sample data. If the number of data is very
+large, use `collect_size`.
 
 ``` r
 # create pdf file. file name is DataDiagnosis_Report.pdf
@@ -2109,7 +2437,9 @@ con_sqlite %>%
 
 #### Calculating descriptive statistics of numerical column of table in the DBMS
 
-Use `dplyr::tbl()` to create a tbl\_dbi object, then use it as a data frame object. That is, the data argument of all EDA function is specified as tbl\_dbi object instead of data frame object.
+Use `dplyr::tbl()` to create a tbl\_dbi object, then use it as a data
+frame object. That is, the data argument of all EDA function is
+specified as tbl\_dbi object instead of data frame object.
 
 ``` r
 # extract only those with 'Urban' variable level is "Yes",
@@ -2120,15 +2450,15 @@ con_sqlite %>%
   group_by(ShelveLoc, US) %>%
   describe(Sales)
 #> # A tibble: 3 x 27
-#>   variable ShelveLoc     n    na  mean    sd se_mean   IQR skewness
-#>   <chr>    <chr>     <dbl> <dbl> <dbl> <dbl>   <dbl> <dbl>    <dbl>
-#> 1 Sales    Bad          73     0  5.54  2.38   0.279  3.59    0.120
-#> 2 Sales    Good         57     0 10.4   2.64   0.349  3.78   -0.235
-#> 3 Sales    Medium      149     0  7.37  2.15   0.176  3.05    0.229
-#> # … with 18 more variables: kurtosis <dbl>, p00 <dbl>, p01 <dbl>,
-#> #   p05 <dbl>, p10 <dbl>, p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>,
-#> #   p50 <dbl>, p60 <dbl>, p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>,
-#> #   p95 <dbl>, p99 <dbl>, p100 <dbl>
+#>   variable ShelveLoc     n    na  mean    sd se_mean   IQR skewness kurtosis
+#>   <chr>    <chr>     <dbl> <dbl> <dbl> <dbl>   <dbl> <dbl>    <dbl>    <dbl>
+#> 1 Sales    Bad          73     0  5.54  2.38   0.279  3.59    0.120  -0.0143
+#> 2 Sales    Good         57     0 10.4   2.64   0.349  3.78   -0.235  -0.181 
+#> 3 Sales    Medium      149     0  7.37  2.15   0.176  3.05    0.229  -0.310 
+#> # … with 17 more variables: p00 <dbl>, p01 <dbl>, p05 <dbl>, p10 <dbl>,
+#> #   p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>, p60 <dbl>,
+#> #   p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>, p99 <dbl>,
+#> #   p100 <dbl>
 ```
 
 #### Test of normality on numeric columns using in the DBMS
@@ -2164,7 +2494,7 @@ con_sqlite %>%
   plot_normality(Income)
 ```
 
-![](man/figures/README-plot_normality_dbi-1.png)![](man/figures/README-plot_normality_dbi-2.png)
+![](man/figures/README-plot_normality_dbi-1.png)<!-- -->![](man/figures/README-plot_normality_dbi-2.png)<!-- -->
 
 #### Compute the correlation coefficient between two columns of table in DBMS
 
@@ -2202,17 +2532,21 @@ con_sqlite %>%
   filter(ShelveLoc == "Good") %>%
   group_by(Urban, US) %>%
   plot_correlate(Sales)
-#> Warning: Passed a group with no more than five observations.
-#> (Urban == NA and US == Yes)
-#> Warning in cor(df[idx, names(df)[idx_numeric]], use =
-#> "pairwise.complete.obs"): the standard deviation is zero
+#> Warning in cor(df[idx, names(df)[idx_numeric]], use = "pairwise.complete.obs", :
+#> the standard deviation is zero
 ```
 
-![](man/figures/README-plot_correlation_dbi-1.png)![](man/figures/README-plot_correlation_dbi-2.png)![](man/figures/README-plot_correlation_dbi-3.png)![](man/figures/README-plot_correlation_dbi-4.png)
+![](man/figures/README-plot_correlation_dbi-1.png)<!-- -->![](man/figures/README-plot_correlation_dbi-2.png)<!-- -->![](man/figures/README-plot_correlation_dbi-3.png)<!-- -->
+
+    #> Warning: Passed a group with no more than five observations.
+    #> (Urban == NA and US == Yes)
+
+![](man/figures/README-plot_correlation_dbi-4.png)<!-- -->
 
 #### EDA based on target variable
 
-The following is an EDA where the target column is character and the predictor column is a numeric type.
+The following is an EDA where the target column is character and the
+predictor column is a numeric type.
 
 ``` r
 # If the target variable is a categorical variable
@@ -2222,15 +2556,14 @@ categ <- target_by(con_sqlite %>% tbl("TB_CARSEATS") , US)
 cat_num <- relate(categ, Sales)
 cat_num
 #> # A tibble: 3 x 27
-#>   variable US        n    na  mean    sd se_mean   IQR skewness kurtosis
-#>   <chr>    <fct> <dbl> <dbl> <dbl> <dbl>   <dbl> <dbl>    <dbl>    <dbl>
-#> 1 Sales    No      142     0  6.82  2.60   0.218  3.44   0.323    0.808 
-#> 2 Sales    Yes     258     0  7.87  2.88   0.179  4.23   0.0760  -0.326 
-#> 3 Sales    total   400     0  7.50  2.82   0.141  3.93   0.186   -0.0809
-#> # … with 17 more variables: p00 <dbl>, p01 <dbl>, p05 <dbl>, p10 <dbl>,
-#> #   p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>, p60 <dbl>,
-#> #   p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>, p99 <dbl>,
-#> #   p100 <dbl>
+#>   variable US        n    na  mean    sd se_mean   IQR skewness kurtosis   p00
+#>   <chr>    <fct> <dbl> <dbl> <dbl> <dbl>   <dbl> <dbl>    <dbl>    <dbl> <dbl>
+#> 1 Sales    No      142     0  6.82  2.60   0.218  3.44   0.323    0.808   0   
+#> 2 Sales    Yes     258     0  7.87  2.88   0.179  4.23   0.0760  -0.326   0.37
+#> 3 Sales    total   400     0  7.50  2.82   0.141  3.93   0.186   -0.0809  0   
+#> # … with 16 more variables: p01 <dbl>, p05 <dbl>, p10 <dbl>, p20 <dbl>,
+#> #   p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>, p60 <dbl>, p70 <dbl>,
+#> #   p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>, p99 <dbl>, p100 <dbl>
 summary(cat_num)
 #>    variable             US          n               na         mean      
 #>  Length:3           No   :1   Min.   :142.0   Min.   :0   Min.   :6.823  
@@ -2287,13 +2620,16 @@ summary(cat_num)
 plot(cat_num)
 ```
 
-![](man/figures/README-plot_target_by_dbi-1.png)
+![](man/figures/README-plot_target_by_dbi-1.png)<!-- -->
 
 #### Reporting the information of EDA for table of the DBMS
 
-The following shows several examples of creating an EDA report for a DBMS table.
+The following shows several examples of creating an EDA report for a
+DBMS table.
 
-Using the `collect_size` argument, you can perform EDA with the corresponding number of sample data. If the number of data is very large, use `collect_size`.
+Using the `collect_size` argument, you can perform EDA with the
+corresponding number of sample data. If the number of data is very
+large, use `collect_size`.
 
 ``` r
 # create html file. file name is EDA.html
