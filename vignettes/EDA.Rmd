@@ -474,11 +474,11 @@ carseats %>%
   eda_report(target = Sales)
 ```
 
-The following example generates an HTML-formatted report named `EDA.html`.
+The following example generates an HTML-formatted report named `EDA_carseats.html`.
 
 ```{r, eval=FALSE}
 carseats %>%
-  eda_report(target = Sales, output_format = "html", output_file = "EDA.html")
+  eda_report(target = Sales, output_format = "html", output_file = "EDA_carseats.html")
 ```
 
 The EDA report is an automated report to assist in the EDA process. Design the data analysis scenario with reference to the report results.
@@ -748,20 +748,20 @@ con_sqlite %>%
   tbl("TB_CARSEATS") %>% 
   eda_report(US)
 
-# create pdf file. file name is EDA.pdf
+# create pdf file. file name is EDA_TB_CARSEATS.pdf
 con_sqlite %>% 
   tbl("TB_CARSEATS") %>% 
-  eda_report("US", output_file = "EDA.pdf")
+  eda_report("US", output_file = "EDA_TB_CARSEATS.pdf")
 
 # create html file. file name is EDA_Report.html
 con_sqlite %>% 
   tbl("TB_CARSEATS") %>% 
   eda_report("US", output_format = "html")
 
-# create html file. file name is EDA.html
+# create html file. file name is EDA_TB_CARSEATS.html
 con_sqlite %>% 
   tbl("TB_CARSEATS") %>% 
-  eda_report(US, output_format = "html", output_file = "EDA.html")
+  eda_report(US, output_format = "html", output_file = "EDA_TB_CARSEATS.html")
 
 ## target variable is numerical variable
 # reporting the EDA information, and collect size is 350

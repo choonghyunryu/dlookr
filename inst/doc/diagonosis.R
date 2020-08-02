@@ -17,9 +17,9 @@ diagnose(flights)
 ## ----diagnoses----------------------------------------------------------------
 # Select columns by name
 diagnose(flights, year, month, day)
-# Select all columns between year and day (inclusive)
+# Select all columns between year and day (include)
 diagnose(flights, year:day)
-# Select all columns except those from year to day (inclusive)
+# Select all columns except those from year to day (exclude)
 diagnose(flights, -(year:day))
 
 ## ----diagnose_pipe------------------------------------------------------------

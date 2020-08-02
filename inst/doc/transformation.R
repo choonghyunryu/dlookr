@@ -24,13 +24,13 @@ carseats[sample(seq(NROW(carseats)), 10), "Urban"] <- NA
 ## ----imputate_na, fig.align='center', fig.width = 6, fig.height = 4-----------
 income <- imputate_na(carseats, Income, US, method = "rpart")
 
-# result of imputate
+# result of imputation
 income
 
-# summary of imputate
+# summary of imputation
 summary(income)
 
-# viz of imputate
+# viz of imputation
 plot(income)
 
 ## ----imputate_na2, fig.align='center', fig.width = 6, fig.height = 4----------
@@ -38,13 +38,13 @@ library(mice)
 
 urban <- imputate_na(carseats, Urban, US, method = "mice")
 
-# result of imputate
+# result of imputation
 urban
 
-# summary of imputate
+# summary of imputation
 summary(urban)
 
-# viz of imputate
+# viz of imputation
 plot(urban)
 
 ## ----imputate_na3-------------------------------------------------------------
@@ -58,13 +58,13 @@ carseats %>%
 ## ----imputate_outlier, fig.align='center', fig.width = 6, fig.height = 4------
 price <- imputate_outlier(carseats, Price, method = "capping")
 
-# result of imputate
+# result of imputation
 price
 
-# summary of imputate
+# summary of imputation
 summary(price)
 
-# viz of imputate
+# viz of imputation
 plot(price)
 
 ## ----imputate_outlier2--------------------------------------------------------
@@ -120,7 +120,7 @@ plot(Advertising_log)
 bin <- binning(carseats$Income)
 # Print bins class object
 bin
-# Summarise bins class object
+# Summarize bins class object
 summary(bin)
 # Plot bins class object
 plot(bin)
@@ -170,7 +170,7 @@ plot(bin, sub = "bins of Advertising variable")
 ## ---- eval=FALSE--------------------------------------------------------------
 #  carseats %>%
 #    transformation_report(target = US, output_format = "html",
-#      output_file = "transformation.html")
+#      output_file = "transformation_carseats.html")
 
 ## ----trans_title_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Data transformation report cover"----
 knitr::include_graphics('img/trans_title_pdf.png')
@@ -184,7 +184,7 @@ knitr::include_graphics('img/trans_content_pdf.png')
 ## ----trans_agenda_html, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="Data transformation report titles and table of contents"----
 knitr::include_graphics('img/trans_agenda_html.png')
 
-## ----trans_table_html, echo=FALSE, out.width='50%', fig.align='center', fig.pos="!h", fig.cap="Report table example (Web)"----
+## ----trans_table_html, echo=FALSE, out.width='50%', fig.align='center', fig.pos="!h", fig.cap="Report table example (web)"----
 knitr::include_graphics('img/trans_table_html.png')
 
 ## ----trans_viz_html, echo=FALSE, out.width='75%', fig.align='center', fig.pos="!h", fig.cap="Data transformation report Binning information (web)"----

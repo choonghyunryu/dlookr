@@ -83,17 +83,17 @@ eda_report <- function(.data, ...) {
 #' # create pdf file. file name is EDA_Report.pdf
 #' eda_report(carseats, US)
 #' 
-#' # create pdf file. file name is EDA.pdf
-#' eda_report(carseats, "US", output_file = "EDA.pdf")
+#' # create pdf file. file name is EDA_carseats.pdf
+#' eda_report(carseats, "US", output_file = "EDA_carseats.pdf")
 #' 
-#' # create pdf file. file name is EDA.pdf and not browse
-#' eda_report(carseats, "US", output_dir = ".", output_file = "EDA.pdf", browse = FALSE)
+#' # create pdf file. file name is EDA_carseats.pdf and not browse
+#' eda_report(carseats, "US", output_dir = ".", output_file = "EDA_carseats.pdf", browse = FALSE)
 #' 
 #' # create html file. file name is EDA_Report.html
 #' eda_report(carseats, "US", output_format = "html")
 #' 
-#' # create html file. file name is EDA.html
-#' eda_report(carseats, US, output_format = "html", output_file = "EDA.html")
+#' # create html file. file name is EDA_carseats.html
+#' eda_report(carseats, US, output_format = "html", output_file = "EDA_carseats.html")
 #'
 #'
 #' ## target variable is numerical variable

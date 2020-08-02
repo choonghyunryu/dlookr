@@ -2056,11 +2056,12 @@ carseats %>%
   eda_report(target = Sales)
 ```
 
-The following generates an HTML-formatted report named `EDA.html`.
+The following generates an HTML-formatted report named
+`EDA_carseats.html`.
 
 ``` r
 carseats %>%
-  eda_report(target = Sales, output_format = "html", output_file = "EDA.html")
+  eda_report(target = Sales, output_format = "html", output_file = "EDA_carseats.html")
 ```
 
 The EDA report is an automated report to assist in the EDA process.
@@ -2106,12 +2107,12 @@ carseats %>%
 ```
 
 The following generates a report in html format called
-`transformation.html`.
+`transformation_carseats.html`.
 
 ``` r
 carseats %>%
   transformation_report(target = US, output_format = "html", 
-    output_file = "transformation.html")
+    output_file = "transformation_carseats.html")
 ```
 
 Data transformation reports are automated reports to assist in the data
@@ -2632,10 +2633,10 @@ corresponding number of sample data. If the number of data is very
 large, use `collect_size`.
 
 ``` r
-# create html file. file name is EDA.html
+# create html file. file name is EDA_TB_CARSEATS.html
 con_sqlite %>% 
   tbl("TB_CARSEATS") %>% 
-  eda_report(US, output_format = "html", output_file = "EDA.html")
+  eda_report(US, output_format = "html", output_file = "EDA_TB_CARSEATS.html")
 
 ## target variable is numerical variable
 # reporting the EDA information, and collect size is 350

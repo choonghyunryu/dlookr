@@ -27,9 +27,9 @@ describe(carseats)
 ## ----describes2---------------------------------------------------------------
 # Select columns by name
 describe(carseats, Sales, CompPrice, Income)
-# Select all columns between year and day (inclusive)
+# Select all columns between year and day (include)
 describe(carseats, Sales:Income)
-# Select all columns except those from year to day (inclusive)
+# Select all columns except those from year to day (exclude)
 describe(carseats, -(Sales:Income))
 
 ## ----describe_pipe------------------------------------------------------------
@@ -100,10 +100,10 @@ correlate(carseats)
 # Select columns by name
 correlate(carseats, Sales, CompPrice, Income)
 
-# Select all columns between year and day (inclusive)
+# Select all columns between year and day (include)
 correlate(carseats, Sales:Income)
 
-# Select all columns except those from year to day (inclusive)
+# Select all columns except those from year to day (exclude)
 correlate(carseats, -(Sales:Income))
 
 ## ----correlate3---------------------------------------------------------------
@@ -135,7 +135,7 @@ carseats %>%
 categ <- target_by(carseats, US)
 
 ## ----target_by2---------------------------------------------------------------
-# If the variable of interest is a numarical variable
+# If the variable of interest is a numerical variable
 cat_num <- relate(categ, Sales)
 cat_num
 summary(cat_num)
@@ -153,11 +153,11 @@ summary(cat_cat)
 plot(cat_cat)
 
 ## ----target_by6---------------------------------------------------------------
-# If the variable of interest is a numarical variable
+# If the variable of interest is a numerical variable
 num <- target_by(carseats, Sales)
 
 ## ----target_by7---------------------------------------------------------------
-# If the variable of interest is a numarical variable
+# If the variable of interest is a numerical variable
 num_num <- relate(num, Price)
 num_num
 summary(num_num)
@@ -183,7 +183,7 @@ plot(num_cat)
 
 ## ---- eval=FALSE--------------------------------------------------------------
 #  carseats %>%
-#    eda_report(target = Sales, output_format = "html", output_file = "EDA.html")
+#    eda_report(target = Sales, output_format = "html", output_file = "EDA_carseats.html")
 
 ## ----eda_title_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="EDA report cover"----
 knitr::include_graphics('img/eda_title_pdf.png')
@@ -369,20 +369,20 @@ plot(cat_num)
 #    tbl("TB_CARSEATS") %>%
 #    eda_report(US)
 #  
-#  # create pdf file. file name is EDA.pdf
+#  # create pdf file. file name is EDA_TB_CARSEATS.pdf
 #  con_sqlite %>%
 #    tbl("TB_CARSEATS") %>%
-#    eda_report("US", output_file = "EDA.pdf")
+#    eda_report("US", output_file = "EDA_TB_CARSEATS.pdf")
 #  
 #  # create html file. file name is EDA_Report.html
 #  con_sqlite %>%
 #    tbl("TB_CARSEATS") %>%
 #    eda_report("US", output_format = "html")
 #  
-#  # create html file. file name is EDA.html
+#  # create html file. file name is EDA_TB_CARSEATS.html
 #  con_sqlite %>%
 #    tbl("TB_CARSEATS") %>%
-#    eda_report(US, output_format = "html", output_file = "EDA.html")
+#    eda_report(US, output_format = "html", output_file = "EDA_TB_CARSEATS.html")
 #  
 #  ## target variable is numerical variable
 #  # reporting the EDA information, and collect size is 350

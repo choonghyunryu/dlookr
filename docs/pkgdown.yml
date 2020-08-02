@@ -1,0 +1,45 @@
+pandoc: '2.8'
+pkgdown: 1.5.1
+pkgdown_sha: ~
+articles:
+  EDA: EDA.html
+  diagonosis: diagonosis.html
+  transformation: transformation.html
+reference:
+- title: Tools for Data Diagnosis, Exploration, Transformation
+  desc:  dlookr provides data diagnosis, data exploration and transformation of variables during data analysis.
+- subtitle: Data quality diagnosis
+  contents:
+  - starts_with("diagnose")
+  - starts_with("plot_outlier")
+- subtitle: Exploratory Data Analysis
+  contents:
+  - starts_with("describe")
+  - starts_with("normality")  
+  - end_with("normality")    
+  - starts_with("correlate")  
+  - end_with("correlate")  
+  - starts_with("target_by")    
+  - relate
+  - end_with("relate") 
+  - starts_with("compare")   
+  - starts_with("univar_")  
+  - eda_report
+- subtitle: Data Transformation
+  contents:
+  - find_na
+  - find_outliers
+  - find_skewness
+  - starts_with("imputate_")  
+  - end_with("imputation")   
+  - transform
+  - end_with("transform")  
+  - starts_with("binning")    
+  - end_with("bins")   
+  - transformation_report
+- subtitle: Miscellaneous
+  contents:
+  - find_class
+  - starts_with("get_")  
+last_built: 2020-08-02T11:20Z
+

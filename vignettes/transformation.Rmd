@@ -383,12 +383,12 @@ carseats %>%
   transformation_report(target = US)
 ```
 
-The following generates a report in html format called `transformation.html`.
+The following generates a report in html format called `transformation_carseats.html`.
 
 ```{r, eval=FALSE}
 carseats %>%
   transformation_report(target = US, output_format = "html", 
-    output_file = "transformation.html")
+    output_file = "transformation_carseats.html")
 ```
 
 Data transformation reports are automated reports to assist in the data transformation process. Design data conversion scenarios by referring to the report results.

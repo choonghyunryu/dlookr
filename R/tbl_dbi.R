@@ -1565,20 +1565,20 @@ diagnose_report.tbl_dbi <- function(.data, output_format = c("pdf", "html"),
 #'   tbl("TB_CARSEATS") %>% 
 #'   eda_report(US)
 #' 
-#' # create pdf file. file name is EDA.pdf
+#' # create pdf file. file name is EDA_TB_CARSEATS.pdf
 #' con_sqlite %>% 
 #'   tbl("TB_CARSEATS") %>% 
-#'   eda_report("US", output_file = "EDA.pdf")
+#'   eda_report("US", output_file = "EDA_TB_CARSEATS.pdf")
 #' 
 #' # create html file. file name is EDA_Report.html
 #' con_sqlite %>% 
 #'   tbl("TB_CARSEATS") %>% 
 #'   eda_report("US", output_format = "html")
 #' 
-#' # create html file. file name is EDA.html
+#' # create html file. file name is EDA_TB_CARSEATS.html
 #' con_sqlite %>% 
 #'   tbl("TB_CARSEATS") %>% 
-#'   eda_report(US, output_format = "html", output_file = "EDA.html")
+#'   eda_report(US, output_format = "html", output_file = "EDA_TB_CARSEATS.html")
 #'
 #' ## target variable is numerical variable
 #' # reporting the EDA information, and collect size is 350
