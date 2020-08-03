@@ -8,8 +8,6 @@
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/dlookr)](https://cran.r-project.org/package=dlookr)
 [![Total
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/dlookr)](https://cran.r-project.org/package=dlookr)
-[![Travis build
-status](https://travis-ci.com/choonghyunryu/dlookr.svg?branch=master)](https://travis-ci.com/choonghyunryu/dlookr)
 <!-- badges: end -->
 
 ## Overview
