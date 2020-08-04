@@ -73,8 +73,8 @@ browseVignettes(package = "dlookr")
 To illustrate basic use of the dlookr package, use the `flights` data
 from the `nycflights13` package. Once loading `nycflights13` library,
 the `flights` data frame is available. The `flights` data frame contains
-departure and arrival information on all flights departing from NYC in
-2013.
+departure and arrival information on all flights departing from
+NYC(i.e. JFK, LGA or EWR) in 2013.
 
 ``` r
 library(nycflights13)
