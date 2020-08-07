@@ -8,3 +8,6 @@
 ^README\.md$
 ^README-.*\.png$
 \.DS_Store$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
