@@ -22,6 +22,10 @@ dlookr 0.3.14
 
 * Add a new function plot.univar_nuemeric() to visualize box plot and histogram by attribute of "univar_nuemeric" class. (@Roberto Passera)
 
+* Add a new function plot_pareto_na() to visualize pareto chart for variables with missing value.
+
+* Add a new function plot_hclust_na() to visualize distribution of missing value by combination of variables. (@Luca Zavarella)
+
 * Corrected sentence and typo in manuals and vignettes
 
  

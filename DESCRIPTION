@@ -45,7 +45,8 @@ Imports: dplyr,
     rpart,
     cli,
     car,
-    broom
+    broom,
+    forcats
 Suggests: ISLR,
     nycflights13,
     randomForest,
