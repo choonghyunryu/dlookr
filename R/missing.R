@@ -19,21 +19,21 @@
 #' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 #' 
 #' # Visualize pareto chart for variables with missing value.
-#' plot_hclust_na(carseats)
-#' plot_hclust_na(airquality)
+#' plot_na_hclust(carseats)
+#' plot_na_hclust(airquality)
 #'   
 #' 
 #' # Visualize pareto chart for variables with missing value.
-#' plot_hclust_na(mice::boys)
+#' plot_na_hclust(mice::boys)
 #' 
 #' # Change the main title.
-#' plot_hclust_na(mice::boys, main = "Distribution of missing value")
+#' plot_na_hclust(mice::boys, main = "Distribution of missing value")
 #' 
 #' @importFrom reshape2 melt
 #' @import ggplot2
 #' @export
 #' 
-plot_hclust_na <- function (x, main = NULL, col.left = "#009E73", col.right = "#56B4E9")
+plot_na_hclust <- function (x, main = NULL, col.left = "#009E73", col.right = "#56B4E9")
 {
   N <- nrow(x)
   
@@ -122,7 +122,7 @@ plot_hclust_na <- function (x, main = NULL, col.left = "#009E73", col.right = "#
 #' The default values are Good: [0, 0.05], OK: (0.05, 0.4], Bad: (0.4, 0.8], Remove: (0.8, 1].
 #' @param main character. Main title.
 #' @param col character. The color of line for display the cumulative percentage.
-#' @param print.out logical. If this value is TRUE, aggregate information about missing values is displayed on the console.
+#' @param plot logical. If this value is TRUE then visualize plot. else if FALSE, return aggregate information about missing values.
 #' @examples
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
@@ -136,8 +136,8 @@ plot_hclust_na <- function (x, main = NULL, col.left = "#009E73", col.right = "#
 #'   arrange(desc(missing_count))
 #' 
 #' # Visualize pareto chart for variables with missing value.
-#' plot_pareto_na(carseats)
-#' plot_pareto_na(airquality)
+#' plot_na_pareto(carseats)
+#' plot_na_pareto(airquality)
 #'   
 #' # Diagnose the data with missing_count using diagnose() function
 #' mice::boys %>% 
@@ -145,22 +145,23 @@ plot_hclust_na <- function (x, main = NULL, col.left = "#009E73", col.right = "#
 #'   arrange(desc(missing_count))
 #' 
 #' # Visualize pareto chart for variables with missing value.
-#' plot_pareto_na(mice::boys, col = "darkorange")
+#' plot_na_pareto(mice::boys, col = "darkorange")
 #' 
 #' # Visualize only variables containing missing values
-#' plot_pareto_na(mice::boys, only_na = TRUE)
+#' plot_na_pareto(mice::boys, only_na = TRUE)
 #' 
 #' # Display the relative frequency 
-#' plot_pareto_na(mice::boys, relative = TRUE)
+#' plot_na_pareto(mice::boys, relative = TRUE)
 #' 
 #' # Change the grade
-#' plot_pareto_na(mice::boys, grade = list(High = 0.1, Middle = 0.6, Low = 1))
+#' plot_na_pareto(mice::boys, grade = list(High = 0.1, Middle = 0.6, Low = 1))
 #' 
 #' # Change the main title.
-#' plot_pareto_na(mice::boys, main = "Pareto Chart for mice::boys")
+#' plot_na_pareto(mice::boys, relative = TRUE, only_na = TRUE, 
+#' main = "Pareto Chart for mice::boys")
 #' 
-#' # Print out the aggregate information about missing values.
-#' plot_pareto_na(mice::boys, relative = TRUE, only_na = TRUE, print.out = TRUE)
+#' # Return the aggregate information about missing values.
+#' plot_na_pareto(mice::boys, only_na = TRUE, plot = FALSE)
 #' 
 #' @importFrom purrr map_int
 #' @importFrom tibble enframe
@@ -168,9 +169,9 @@ plot_hclust_na <- function (x, main = NULL, col.left = "#009E73", col.right = "#
 #' @importFrom forcats fct_reorder
 #' @import ggplot2
 #' @export
-plot_pareto_na <- function (x, only_na = FALSE, relative = FALSE, main = NULL, col = "black",
+plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, col = "black",
                             grade = list(Good = 0.05, OK = 0.4, Bad = 0.8, Remove = 1),
-                            print.out = FALSE)
+                            plot = TRUE)
 {
   if (sum(is.na(x)) == 0) {
     stop("Data have no missing value.")
@@ -205,8 +206,8 @@ plot_pareto_na <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
   
   scaleRight <- max(info_na$cumulative) / info_na$frequency[1]
   
-  if (print.out) {
-    print(info_na)
+  if (!plot) {
+    return(info_na)
   }
   
   ggplot(info_na, aes(x = variable)) +
@@ -217,6 +218,75 @@ plot_pareto_na <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
                colour = col, size = 1.5) +
     scale_y_continuous(sec.axis = sec_axis(~.*scaleRight, name = "Cumulative (%)")) +
     labs(title = main, x = xlab, y = ylab) + 
-    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
           legend.position = "top")
 }
+
+plot_na_intersect <- function (x, only_na = TRUE, main = NULL)
+{
+  #library(ggpubr)
+  
+  N <- nrow(x)
+  
+  if (only_na) {
+    na_obs <- x %>% 
+      apply(1, function(x) any(is.na(x))) %>% 
+      which()
+    
+    x <- x[na_obs, ]
+  } 
+
+  
+  na_variable <- x %>% 
+    apply(2, function(x) any(is.na(x))) 
+  na_variable <- names(na_variable[na_variable == TRUE])
+  
+  x <- x %>% 
+    select_at(vars(all_of(na_variable))) %>% 
+    is.na() %>% 
+    as.data.frame() %>% 
+    group_by_at(na_variable) %>% 
+    tally() %>% 
+    arrange(desc(n))
+  
+  dframe <- reshape2::melt(t(x))
+  dframe <- dframe[dframe$value != 0, ]
+  
+  dframe <- dframe %>% 
+    filter(!Var1 %in% c("n"))
+  
+  tmp <- apply(x, 1, sum)
+  x$n <- x$n / (tmp - x$n) 
+  
+  marginal <- data.frame(Var2 = seq(x$n), n = x$n)
+  
+  dframe <- dframe %>% 
+    left_join(marginal) 
+  
+  if (is.null(main)) 
+    main = "Missing information for intersection of variables"
+  
+  body <- ggplot(dframe, aes(x = Var1, y = Var2)) + 
+    geom_tile(aes(fill = value), color = "black", size = 0.5) + 
+    coord_fixed() + 
+    scale_fill_gradient(low = "grey", high = "red") +
+    #labs(x = "Variables", 
+    #     y = "Case of Intersection", title = main) +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+          axis.text.y = element_text(size = 10),
+          plot.title = element_text(size = 11),
+          legend.position = "none")
+  
+  right <- ggplot(dframe, aes(x = Var2, y = n)) +
+    geom_col() +
+    coord_flip()
+  
+  body + right 
+}  
+
+#plot_na_intersect(mice::boys) 
+#plot_na_intersect(mice::boys, only_na = FALSE)
+#plot_na_intersect(carseats) 
+#plot_na_intersect(naniar::riskfactors) 
+#plot_na_intersect(naniar::riskfactors, only_na = FALSE) 
+  
