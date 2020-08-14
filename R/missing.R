@@ -224,7 +224,9 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
 
 plot_na_intersect <- function (x, only_na = TRUE, main = NULL)
 {
-  #library(ggpubr)
+  if (sum(is.na(x)) == 0) {
+    stop("Data have no missing value.")
+  }
   
   N <- nrow(x)
   
@@ -235,11 +237,17 @@ plot_na_intersect <- function (x, only_na = TRUE, main = NULL)
     
     x <- x[na_obs, ]
   } 
-
+  
   
   na_variable <- x %>% 
     apply(2, function(x) any(is.na(x))) 
   na_variable <- names(na_variable[na_variable == TRUE])
+  
+  max_char <- max(nchar(na_variable))
+  
+  marginal_var <- purrr::map_int(x[, na_variable], function(x) sum(is.na(x))) %>% 
+    tibble::enframe(name = "Var1", value = "n_var") %>% 
+    mutate(Var1 = seq(Var1))
   
   x <- x %>% 
     select_at(vars(all_of(na_variable))) %>% 
@@ -249,44 +257,81 @@ plot_na_intersect <- function (x, only_na = TRUE, main = NULL)
     tally() %>% 
     arrange(desc(n))
   
-  dframe <- reshape2::melt(t(x))
-  dframe <- dframe[dframe$value != 0, ]
+  n_obs <- data.frame(Var2 = seq(nrow(x)), n_obs = x$n)
   
-  dframe <- dframe %>% 
+  dframe <- reshape2::melt(t(x))
+  dframe <- dframe[dframe$value != 0, ] %>% 
     filter(!Var1 %in% c("n"))
   
-  tmp <- apply(x, 1, sum)
-  x$n <- x$n / (tmp - x$n) 
+  marginal_obs <- apply(x, 1, sum) %>% 
+    tibble::enframe(name = "Var2", value = "n_obs") %>% 
+    mutate(Var2 = seq(Var2)) 
   
-  marginal <- data.frame(Var2 = seq(x$n), n = x$n)
-  
-  dframe <- dframe %>% 
-    left_join(marginal) 
+  breaks <- pretty(marginal_obs$n_obs)
   
   if (is.null(main)) 
     main = "Missing information for intersection of variables"
   
+  dframe$Var1 <- as.numeric(dframe$Var1) 
+  
   body <- ggplot(dframe, aes(x = Var1, y = Var2)) + 
     geom_tile(aes(fill = value), color = "black", size = 0.5) + 
-    coord_fixed() + 
     scale_fill_gradient(low = "grey", high = "red") +
-    #labs(x = "Variables", 
-    #     y = "Case of Intersection", title = main) +
+    scale_x_continuous(breaks = seq(length(na_variable)), 
+                       labels = na_variable,
+                       limits = c(0, length(na_variable)) + 0.5) +
+    xlab("Variables") +
     theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
-          axis.text.y = element_text(size = 10),
-          plot.title = element_text(size = 11),
+          axis.title.y = element_blank(), axis.text.y = element_blank(),
+          axis.ticks.y = element_blank(),
           legend.position = "none")
   
-  right <- ggplot(dframe, aes(x = Var2, y = n)) +
-    geom_col() +
-    coord_flip()
+  top <- ggplot(marginal_var, aes(x = Var1, y = n_var)) +
+    geom_col(fill = "#56B4E9") +
+    scale_y_continuous(position = "right") + 
+    scale_x_continuous(breaks = seq(marginal_var$Var1), 
+                       labels = marginal_var$n_var,
+                       limits = c(0, length(na_variable)) + 0.5) +
+    ylab("Frequency") +
+    theme(axis.ticks.x = element_blank(), axis.title.x = element_blank(),
+          axis.title.y = element_blank(), axis.text.y = element_blank(),
+          axis.ticks.y = element_blank())
   
-  body + right 
+  formula <- paste0("%", max_char, "s")
+  breaks_label <- sprintf(formula, breaks)
+  print(breaks_label)
+  
+  right <- ggplot(marginal_obs, aes(x = Var2, y = n_obs)) +
+    geom_col(fill = "#56B4E9") +
+    coord_flip() +
+    scale_x_continuous(breaks = seq(marginal_obs$Var2), 
+                       labels = marginal_obs$n_obs) +    
+    scale_y_continuous(breaks = breaks, 
+                       labels = breaks_label,
+                       limits = range(c(0, breaks))) +    
+    ylab("Frequency") +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+          axis.ticks.y = element_blank(), axis.title.y = element_blank())
+  
+  blank <- ggplot() + 
+    geom_blank(aes(1, 1)) +
+    theme(
+      plot.background = element_blank(), 
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(), 
+      panel.border = element_blank(),
+      panel.background = element_blank(),
+      
+      axis.title.x = element_blank(),
+      axis.title.y = element_blank(),
+      axis.text.x = element_blank(), 
+      axis.text.y = element_blank(),
+      axis.ticks = element_blank(),
+      axis.line = element_blank()
+    )
+  
+  library("gridExtra")
+  grid.arrange(top, blank, body, right,
+               ncol = 2, nrow = 2, widths = c(5, 1), heights = c(1, 5))
 }  
 
-#plot_na_intersect(mice::boys) 
-#plot_na_intersect(mice::boys, only_na = FALSE)
-#plot_na_intersect(carseats) 
-#plot_na_intersect(naniar::riskfactors) 
-#plot_na_intersect(naniar::riskfactors, only_na = FALSE) 
-  
