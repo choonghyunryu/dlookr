@@ -222,13 +222,14 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
           legend.position = "top")
 }
 
-plot_na_intersect <- function (x, only_na = TRUE, main = NULL)
+plot_na_intersect <- function (x, only_na = TRUE, n_intersacts = NULL, 
+                               n_vars = NULL, main = NULL)
 {
+  N <- nrow(x)
+  
   if (sum(is.na(x)) == 0) {
     stop("Data have no missing value.")
   }
-  
-  N <- nrow(x)
   
   if (only_na) {
     na_obs <- x %>% 
@@ -238,16 +239,24 @@ plot_na_intersect <- function (x, only_na = TRUE, main = NULL)
     x <- x[na_obs, ]
   } 
   
+  marginal_var <- purrr::map_int(x, function(x) sum(is.na(x))) %>% 
+    tibble::enframe(name = "name_var", value = "n_var") %>% 
+    filter(n_var > 0) %>% 
+    arrange(desc(n_var)) %>% 
+    mutate(Var1 = seq(name_var))
   
-  na_variable <- x %>% 
-    apply(2, function(x) any(is.na(x))) 
-  na_variable <- names(na_variable[na_variable == TRUE])
+  N_var_na <- nrow(marginal_var)
   
-  max_char <- max(nchar(na_variable))
+  if (!is.null(n_vars)) {
+    marginal_var <- marginal_var %>% 
+      head(n = n_vars)
+  }
   
-  marginal_var <- purrr::map_int(x[, na_variable], function(x) sum(is.na(x))) %>% 
-    tibble::enframe(name = "Var1", value = "n_var") %>% 
-    mutate(Var1 = seq(Var1))
+  na_variable <- marginal_var$name_var
+  
+  if (length(na_variable) == 1) {
+    stop("Supported only when the number of variables including missing values is 2 or more.")
+  }  
   
   x <- x %>% 
     select_at(vars(all_of(na_variable))) %>% 
@@ -257,37 +266,59 @@ plot_na_intersect <- function (x, only_na = TRUE, main = NULL)
     tally() %>% 
     arrange(desc(n))
   
-  n_obs <- data.frame(Var2 = seq(nrow(x)), n_obs = x$n)
+  N_na <- sum(x$n[which(apply(select(x, -n), 1, sum) > 0)])
   
-  dframe <- reshape2::melt(t(x))
-  dframe <- dframe[dframe$value != 0, ] %>% 
-    filter(!Var1 %in% c("n"))
+  if (!is.null(n_intersacts)) {
+    if (n_intersacts < nrow (x)) {
+      x <- x[seq(n_intersacts), ]
+      x <- x[, which(apply(x, 2, function(x) sum(x) > 0))]
+      
+      marginal_var <- marginal_var %>% 
+        filter(name_var %in% names(x)) %>% 
+        mutate(Var1 = seq(name_var))
+      
+      na_variable <- setdiff(names(x), "n")
+    }  
+  }
   
-  marginal_obs <- apply(x, 1, sum) %>% 
-    tibble::enframe(name = "Var2", value = "n_obs") %>% 
-    mutate(Var2 = seq(Var2)) 
+  dframe <- reshape2::melt(t(x)) %>% 
+    filter(value > 0) %>% 
+    filter(!Var1 %in% c("n")) %>% 
+    mutate(Var1 = as.numeric(Var1))
+  
+  flag <- x %>% 
+    select(-n) %>% 
+    apply(1, function(x) factor(ifelse(sum(x), "#F8766D", "#00BFC4")))
+  
+  marginal_obs <- data.frame(Var2 = seq(x$n), n_obs = x$n)
+  
+  N_complete <- N - N_na
   
   breaks <- pretty(marginal_obs$n_obs)
   
   if (is.null(main)) 
     main = "Missing information for intersection of variables"
   
-  dframe$Var1 <- as.numeric(dframe$Var1) 
-  
+  # Create center plot
   body <- ggplot(dframe, aes(x = Var1, y = Var2)) + 
     geom_tile(aes(fill = value), color = "black", size = 0.5) + 
     scale_fill_gradient(low = "grey", high = "red") +
     scale_x_continuous(breaks = seq(length(na_variable)), 
                        labels = na_variable,
                        limits = c(0, length(na_variable)) + 0.5) +
+    scale_y_continuous(breaks = seq(nrow(marginal_obs)), 
+                       labels = marginal_obs$Var2,
+                       limits = c(0, nrow(marginal_obs)) + 0.5) +    
     xlab("Variables") +
-    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1,
+                                     family = "mono"),
           axis.title.y = element_blank(), axis.text.y = element_blank(),
           axis.ticks.y = element_blank(),
           legend.position = "none")
   
+  # Create plot of top
   top <- ggplot(marginal_var, aes(x = Var1, y = n_var)) +
-    geom_col(fill = "#56B4E9") +
+    geom_col(fill = "#F8766D") +
     scale_y_continuous(position = "right") + 
     scale_x_continuous(breaks = seq(marginal_var$Var1), 
                        labels = marginal_var$n_var,
@@ -297,41 +328,54 @@ plot_na_intersect <- function (x, only_na = TRUE, main = NULL)
           axis.title.y = element_blank(), axis.text.y = element_blank(),
           axis.ticks.y = element_blank())
   
-  formula <- paste0("%", max_char, "s")
-  breaks_label <- sprintf(formula, breaks)
-  print(breaks_label)
+  # for display the axis label
+  max_char <- max(nchar(na_variable))
   
+  formula <- paste0("%", max_char , "s")
+  breaks_label <- sprintf(formula, breaks)
+  
+  # Create plot of right
   right <- ggplot(marginal_obs, aes(x = Var2, y = n_obs)) +
-    geom_col(fill = "#56B4E9") +
+    geom_col(fill = flag) +
     coord_flip() +
     scale_x_continuous(breaks = seq(marginal_obs$Var2), 
-                       labels = marginal_obs$n_obs) +    
+                       labels = marginal_obs$n_obs,
+                       limits = c(0, nrow(marginal_obs)) + 0.5) +    
     scale_y_continuous(breaks = breaks, 
                        labels = breaks_label,
                        limits = range(c(0, breaks))) +    
     ylab("Frequency") +
-    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
-          axis.ticks.y = element_blank(), axis.title.y = element_blank())
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, 
+                                     family = "mono"),
+          axis.ticks.y = element_blank(), axis.title.y = element_blank(),
+          legend.position = "none")
   
-  blank <- ggplot() + 
-    geom_blank(aes(1, 1)) +
-    theme(
-      plot.background = element_blank(), 
-      panel.grid.major = element_blank(),
-      panel.grid.minor = element_blank(), 
-      panel.border = element_blank(),
-      panel.background = element_blank(),
-      
-      axis.title.x = element_blank(),
-      axis.title.y = element_blank(),
-      axis.text.x = element_blank(), 
-      axis.text.y = element_blank(),
-      axis.ticks = element_blank(),
-      axis.line = element_blank()
+  legend_txt <- paste(c("#Missing Vars:", "#Missing Obs:", "#Complete Obs:"), 
+                      c(N_var_na, N_na, N_complete))
+  legend_df <- data.frame(x = c(0.1, 0.1, 0.1), y = c(0.1, 0.3, 0.5), 
+                          txt = factor(legend_txt, labels = legend_txt))
+  
+  # Create information plot
+  blank <- ggplot(data = legend_df, aes(x, y, label = txt)) + 
+    geom_label(fill = c("#00BFC4", "#F8766D", "#F8766D"), colour = "white", 
+               fontface = "bold", size = 3, hjust = 0) + 
+    xlim(c(0, 1)) +
+    ylim(c(0, 0.6)) +
+    theme(legend.position = "none",
+          plot.background = element_blank(), 
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(), 
+          panel.border = element_blank(),
+          panel.background = element_blank(),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.x = element_blank(), 
+          axis.text.y = element_blank(),
+          axis.ticks = element_blank(),
+          axis.line = element_blank()
     )
   
   library("gridExtra")
   grid.arrange(top, blank, body, right,
-               ncol = 2, nrow = 2, widths = c(5, 1), heights = c(1, 5))
+               ncol = 2, nrow = 2, widths = c(8, 2), heights = c(1, 5))
 }  
-
