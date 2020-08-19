@@ -222,6 +222,65 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
           legend.position = "top")
 }
 
+
+
+#' Plot the combination variables that is include missing value
+#'
+#' @description
+#' Visualize the combinations of missing value across cases.
+#'
+#' @details 
+#' The visualization consists of four parts.
+#' The bottom left, which is the most basic, visualizes the case of cross(intersction)-combination. 
+#' The x-axis is the variable including the missing value, and the y-axis represents the case of a combination of variables.
+#' And on the marginal of the two axes, the frequency of the case is expressed as a bar graph. 
+#' Finally, the visualization at the top right expresses the number of variables including missing values in the data set, 
+#' and the number of observations including missing values and complete cases .
+#' 
+#' @param x data frames, or objects to be coerced to one.
+#' @param only_na logical. The default value is FALSE. 
+#' If TRUE, only variables containing missing values are selected for visualization. 
+#' If FALSE, all variables are included.
+#' @param n_intersacts integer. Specifies the number of combinations of variables including missing values. 
+#' The combination of variables containing many missing values is chosen first.
+#' @param n_vars integer. Specifies the number of variables that contain missing values to be visualized. 
+#' The default value is NULL, which visualizes variables containing all missing values. 
+#' If this value is greater than the number of variables containing missing values, 
+#' all variables containing missing values are visualized. Variables containing many missing values are chosen first.
+#' @param main character. Main title.
+#' @examples
+#' # Generate data for the example
+#' carseats <- ISLR::Carseats
+#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
+#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+#' 
+#' # Visualize the combination variables that is include missing value.
+#' plot_na_intersect(carseats)
+#'   
+#' # Diagnose the data with missing_count using diagnose() function
+#' mice::boys %>% 
+#'   diagnose %>% 
+#'   arrange(desc(missing_count))
+#' 
+#' # Visualize the combination variables that is include missing value
+#' plot_na_intersect(mice::boys)
+#' 
+#' # Visualize only variables containing missing values
+#' plot_na_intersect(mice::boys, only_na = TRUE)
+#' 
+#' # Using n_vars argument
+#' plot_na_intersect(mice::boys, n_vars = 5) 
+#' 
+#' # Using n_intersacts argument
+#' plot_na_intersect(mice::boys, only_na = FALSE, n_intersacts = 7)
+#' 
+#' @importFrom purrr map_int
+#' @importFrom tibble enframe
+#' @importFrom gridExtra grid.arrange
+#' @importFrom reshape2 melt
+#' @import ggplot2
+#' @import dplyr
+#' @export
 plot_na_intersect <- function (x, only_na = TRUE, n_intersacts = NULL, 
                                n_vars = NULL, main = NULL)
 {
@@ -375,7 +434,7 @@ plot_na_intersect <- function (x, only_na = TRUE, n_intersacts = NULL,
           axis.line = element_blank()
     )
   
-  library("gridExtra")
-  grid.arrange(top, blank, body, right,
-               ncol = 2, nrow = 2, widths = c(8, 2), heights = c(1, 5))
+  gridExtra::grid.arrange(top, blank, body, right,
+               ncol = 2, nrow = 2, widths = c(8, 2), heights = c(1, 5),
+               top = main)
 }  
