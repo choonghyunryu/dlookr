@@ -4,23 +4,23 @@ dlookr 0.3.14
 
 * plot_correlate() add the non-parametric correlation coefficient, like "spearman"" and "kendall" (@Roberto Passera)
 
-* Add a new function plot.univar_nuemeric() to visualize box plot and histogram by attribute of "univar_nuemeric" class. (@Roberto Passera)
+* Add a new function plot.univar_numeric() to visualize box plot and histogram by attribute of "univar_numeric" class. (@Roberto Passera)
 
 * relate() fixed error when using character type as a categorical variable (@jgduenasl, #14).
 
 * Add a new function plot.compare_category() to visualize mosaics plot by attribute of "compare_category" class. (@Roberto Passera)
 
-* Add a new function compare_nuemeric() to compute information to examine the relationship between numerical variables. and print.compare_nuemeric(), summary.compare_nuemeric() is print and summary for "compare_nuemeric" class. (@Roberto Passera)
+* Add a new function compare_numeric() to compute information to examine the relationship between numerical variables. and print.compare_numeric(), summary.compare_numeric() is print and summary for "compare_numeric" class. (@Roberto Passera)
 
-* Add a new function plot.compare_nuemeric() to visualize scatter plot included boxplots by attribute of "compare_nuemeric" class. (@Roberto Passera)
+* Add a new function plot.compare_numeric() to visualize scatter plot included boxplots by attribute of "compare_numeric" class. (@Roberto Passera)
 
 * Add a new function univar_category() to compute information to examine the indivisual categorical variables. and print.univar_category(), summary.univar_category() is print and summary for "univar_category" class. (@Roberto Passera)
 
 * Add a new function plot.univar_category() to visualize bar plot by attribute of "univar_category" class. (@Roberto Passera)
 
-* Add a new function univar_nuemeric() to compute information to examine the indivisual numerical variables. and print.univar_nuemeric(), summary.univar_nuemeric() is print and summary for "univar_nuemeric" class. (@Roberto Passera)
+* Add a new function univar_numeric() to compute information to examine the indivisual numerical variables. and print.univar_numeric(), summary.univar_numeric() is print and summary for "univar_numeric" class. (@Roberto Passera)
 
-* Add a new function plot.univar_nuemeric() to visualize box plot and histogram by attribute of "univar_nuemeric" class. (@Roberto Passera)
+* Add a new function plot.univar_numeric() to visualize box plot and histogram by attribute of "univar_numeric" class. (@Roberto Passera)
 
 * Add a new function plot_na_pareto() to visualize pareto chart for variables with missing value.
 

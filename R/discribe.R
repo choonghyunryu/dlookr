@@ -126,7 +126,9 @@ describe_impl <- function(df, vars) {
     
     cnt_complete <- sum(complete.cases(x))
     
-    numsum <- as_tibble(matrix(NA, ncol = length(vname) + 2, nrow = 1))
+    numsum <- matrix(NA, ncol = length(vname) + 2, nrow = 1,
+                     dimnames = list(NULL, paste0("C", seq(length(vname) + 2))))
+    numsum <- as_tibble(numsum)
     
     if (cnt_complete >= 4) {
       result <- RcmdrMisc::numSummary(x, statistics = stats,
