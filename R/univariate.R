@@ -469,7 +469,9 @@ summary.univar_numeric <- function(object, stand = c("robust", "minmax", "zscore
         robust(df[, x],  medians[x], iqrs[x])
       }
       
-      df <- purrr::map_dfc(seq(n_var), get_robust)
+      suppressMessages(
+        df <- purrr::map_dfc(seq(n_var), get_robust)
+      )  
       names(df) <- variables
     }
   
@@ -704,7 +706,9 @@ plot.univar_numeric <- function(x, indiv = FALSE, viz = c("hist", "boxplot"),
         robust(df[, x],  medians[x], iqrs[x])
       }
       
-      df <- purrr::map_dfc(seq(medians), get_robust)
+      suppressMessages(
+        df <- purrr::map_dfc(seq(medians), get_robust)
+      )  
       names(df) <- variables
       
       value <- "Robust Normalization"
