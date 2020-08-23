@@ -212,6 +212,9 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
   
   ggplot(info_na, aes(x = variable)) +
     geom_bar(aes(y = frequency, fill = grade), stat = "identity") +
+    geom_text(aes(y = frequency, 
+                  label = paste(round(ratio * 100, 1), "%")),
+              position = position_dodge(width = 0.9), vjust = -0.25) + 
     geom_path(aes(y = cumulative / scaleRight, group = 1), 
               colour = col, size = 0.4) +
     geom_point(aes(y = cumulative / scaleRight, group = 1), 
@@ -221,7 +224,6 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
     theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
           legend.position = "top")
 }
-
 
 
 #' Plot the combination variables that is include missing value
