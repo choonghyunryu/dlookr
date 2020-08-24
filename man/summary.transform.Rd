@@ -15,7 +15,7 @@
 print and summary method for "transform" class.
 }
 \details{
-summary.transform compares the distribution of data before and after data conversion.
+summary.transform compares the distribution of data before and after data transformation.
 }
 \examples{
 # Generate data for the example
@@ -36,5 +36,5 @@ summary(advertising_log)
 plot(advertising_log)
 }
 \seealso{
-\code{\link{transform}}, \code{\link{summary.transform}}.
+\code{\link{transform}}, \code{\link{plot.transform}}.
 }

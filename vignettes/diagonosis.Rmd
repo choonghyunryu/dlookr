@@ -249,6 +249,86 @@ Analysts should look at the results of the visualization to decide whether to re
 
 Looking at the results of the visualization, `arr_delay` shows that the observed values without outliers are similar to the normal distribution. In the case of a linear model, we might consider removing or imputing outliers. And `air_time` has a similar shape before and after removing outliers.
 
+### Visualization for missing values
+It is important to look at the missing values of individual variables, but it is also important to look at the relationship between the variables including the missing values.
+
+dlookr provides a visualization tool that looks at the relationship of variables including missing values.
+
+#### visualize pareto chart using `plot_na_pareto()`
+
+`plot_na_pareto()` draws a pareto chart by collecting variables including missing values.
+
+```{r plot_na_pareto1, fig.align='center', fig.width = 6, fig.height = 4}
+mice::boys %>% 
+  plot_na_pareto(col = "darkorange")
+```
+
+The default value of the `only_na` argument is FALSE, which includes variables that do not contain missing values, but if this value is set to TRUE, only variables containing missing values are visualized. The variable `age` was excluded from this plot.
+
+```{r plot_na_pareto2, fig.align='center', fig.width = 6, fig.height = 4}
+mice::boys %>% 
+  plot_na_pareto(only_na = TRUE, main = "Pareto Chart for mice::boys")
+```
+
+The rating of the variable is expressed as a proportion of missing values. It is calculated as the ratio of missing values.
+ If it is [0, 0.05), it is `Good`, if it is [0.05, 0.4) it is `OK`, if it is [0.4, 0.8) it is `Bad`, and if it is [0.8, 1.0] it is `Remove`. 
+You can override this grade using the `grade` argument as follows:
+
+```{r plot_na_pareto3, fig.align='center', fig.width = 6, fig.height = 4}
+mice::boys %>% 
+  plot_na_pareto(grade = list(High = 0.1, Middle = 0.6, Low = 1), relative = TRUE)
+```
+
+If the `plot` argument is set to FALSE, information about missing values is returned instead of plotting.
+
+```{r plot_na_pareto4, fig.align='center', fig.width = 6, fig.height = 4}
+plot_na_pareto(mice::boys, only_na = TRUE, plot = FALSE)
+```
+
+#### visualize combination chart using `plot_na_hclust()`
+
+It is important to look at the relationship between variables, including missing values. `plot_na_hclust()` visualizes the relationship of variables that contain missing values. This function rearranges the positions of variables using hierarchical clustering. Then, the expression of the missing value is visualized by grouping similar variables.
+
+```{r plot_na_hclust, fig.align='center', fig.width = 6, fig.height = 4}
+mice::boys %>% 
+  plot_na_hclust(main = "Distribution of missing value")
+```
+
+
+#### visualize combination chart using `plot_na_intersect()`
+
+`plot_na_intersect()` visualize the combinations of missing value across cases.
+
+The visualization consists of four parts. The bottom left, which is the most basic, visualizes the case of cross(intersection)-combination. The x-axis is the variable including the missing value, and the y-axis represents the case of a combination of variables. And on the marginal of the two axes, the frequency of the case is expressed as a bar graph. 
+Finally, the visualization at the top right expresses the number of variables including missing values in the data set, and the number of observations including missing values and complete cases .
+
+This example visualize the combination variables that is include missing value.
+
+```{r plot_na_hclust1, fig.align='center', fig.width = 6, fig.height = 4}
+mice::boys %>% 
+  plot_na_intersect()
+```
+
+This example visualize the combination variables that is include missing value and complete case.
+
+```{r plot_na_hclust2, fig.align='center', fig.width = 6, fig.height = 4}
+mice::boys %>% 
+  plot_na_intersect(only_na = FALSE)
+```
+
+If the `n_vars` argument is used, only the top `n` variables containing many missing values are visualized.
+
+```{r plot_na_hclust3, fig.align='center', fig.width = 6, fig.height = 4}
+mice::boys %>%
+  plot_na_intersect(n_vars = 5)
+```
+
+If you use the `n_intersacts` argument, only the top n numbers of variable combinations(intersection) including missing values are visualized.
+
+```{r plot_na_hclust4, fig.align='center', fig.width = 6, fig.height = 4}
+mice::boys %>%
+  plot_na_intersect(only_na = FALSE, n_intersacts = 7)
+```
 
 ### Create a diagnostic report using `diagnose_report()`
 `diagnose_report()` performs data diagnosis of all variables of object inherited from data.frame(`tbl_df`, `tbl`, etc) or data.frame.

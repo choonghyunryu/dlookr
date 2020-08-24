@@ -73,6 +73,41 @@ flights %>%
                  select(variables) %>% 
                  unlist())
 
+## ----plot_na_pareto1, fig.align='center', fig.width = 6, fig.height = 4-------
+mice::boys %>% 
+  plot_na_pareto(col = "darkorange")
+
+## ----plot_na_pareto2, fig.align='center', fig.width = 6, fig.height = 4-------
+mice::boys %>% 
+  plot_na_pareto(only_na = TRUE, main = "Pareto Chart for mice::boys")
+
+## ----plot_na_pareto3, fig.align='center', fig.width = 6, fig.height = 4-------
+mice::boys %>% 
+  plot_na_pareto(grade = list(High = 0.1, Middle = 0.6, Low = 1), relative = TRUE)
+
+## ----plot_na_pareto4, fig.align='center', fig.width = 6, fig.height = 4-------
+plot_na_pareto(mice::boys, only_na = TRUE, plot = FALSE)
+
+## ----plot_na_hclust, fig.align='center', fig.width = 6, fig.height = 4--------
+mice::boys %>% 
+  plot_na_hclust(main = "Distribution of missing value")
+
+## ----plot_na_hclust1, fig.align='center', fig.width = 6, fig.height = 4-------
+mice::boys %>% 
+  plot_na_intersect()
+
+## ----plot_na_hclust2, fig.align='center', fig.width = 6, fig.height = 4-------
+mice::boys %>% 
+  plot_na_intersect(only_na = FALSE)
+
+## ----plot_na_hclust3, fig.align='center', fig.width = 6, fig.height = 4-------
+mice::boys %>%
+  plot_na_intersect(n_vars = 5)
+
+## ----plot_na_hclust4, fig.align='center', fig.width = 6, fig.height = 4-------
+mice::boys %>%
+  plot_na_intersect(only_na = FALSE, n_intersacts = 7)
+
 ## ----diagnose_report, eval=FALSE----------------------------------------------
 #  flights %>%
 #    diagnose_report()

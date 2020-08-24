@@ -233,7 +233,7 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
 #'
 #' @details 
 #' The visualization consists of four parts.
-#' The bottom left, which is the most basic, visualizes the case of cross(intersction)-combination. 
+#' The bottom left, which is the most basic, visualizes the case of cross(intersection)-combination. 
 #' The x-axis is the variable including the missing value, and the y-axis represents the case of a combination of variables.
 #' And on the marginal of the two axes, the frequency of the case is expressed as a bar graph. 
 #' Finally, the visualization at the top right expresses the number of variables including missing values in the data set, 
@@ -242,7 +242,7 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
 #' @param x data frames, or objects to be coerced to one.
 #' @param only_na logical. The default value is FALSE. 
 #' If TRUE, only variables containing missing values are selected for visualization. 
-#' If FALSE, all variables are included.
+#' If FALSE, included complete case.
 #' @param n_intersacts integer. Specifies the number of combinations of variables including missing values. 
 #' The combination of variables containing many missing values is chosen first.
 #' @param n_vars integer. Specifies the number of variables that contain missing values to be visualized. 
@@ -267,8 +267,8 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
 #' # Visualize the combination variables that is include missing value
 #' plot_na_intersect(mice::boys)
 #' 
-#' # Visualize only variables containing missing values
-#' plot_na_intersect(mice::boys, only_na = TRUE)
+#' # Visualize variables containing missing values and complete case
+#' plot_na_intersect(mice::boys, only_na = FALSE)
 #' 
 #' # Using n_vars argument
 #' plot_na_intersect(mice::boys, n_vars = 5) 

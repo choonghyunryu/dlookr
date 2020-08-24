@@ -110,9 +110,9 @@ transform <- function(x, method = c("zscore", "minmax", "log", "log+1", "sqrt",
 #' @param object an object of class "transform", usually, a result of a call to transform().
 #' @param ... further arguments passed to or from other methods.
 #' @details
-#' summary.transform compares the distribution of data before and after data conversion.
+#' summary.transform compares the distribution of data before and after data transformation.
 #'
-#' @seealso \code{\link{transform}}, \code{\link{summary.transform}}.
+#' @seealso \code{\link{transform}}, \code{\link{plot.transform}}.
 #' @examples
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats

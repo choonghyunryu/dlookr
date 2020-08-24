@@ -17,7 +17,7 @@ plot_na_intersect(
 
 \item{only_na}{logical. The default value is FALSE. 
 If TRUE, only variables containing missing values are selected for visualization. 
-If FALSE, all variables are included.}
+If FALSE, included complete case.}
 
 \item{n_intersacts}{integer. Specifies the number of combinations of variables including missing values. 
 The combination of variables containing many missing values is chosen first.}
@@ -34,7 +34,7 @@ Visualize the combinations of missing value across cases.
 }
 \details{
 The visualization consists of four parts.
-The bottom left, which is the most basic, visualizes the case of cross(intersction)-combination. 
+The bottom left, which is the most basic, visualizes the case of cross(intersection)-combination. 
 The x-axis is the variable including the missing value, and the y-axis represents the case of a combination of variables.
 And on the marginal of the two axes, the frequency of the case is expressed as a bar graph. 
 Finally, the visualization at the top right expresses the number of variables including missing values in the data set, 
@@ -57,8 +57,8 @@ mice::boys \%>\%
 # Visualize the combination variables that is include missing value
 plot_na_intersect(mice::boys)
 
-# Visualize only variables containing missing values
-plot_na_intersect(mice::boys, only_na = TRUE)
+# Visualize variables containing missing values and complete case
+plot_na_intersect(mice::boys, only_na = FALSE)
 
 # Using n_vars argument
 plot_na_intersect(mice::boys, n_vars = 5) 
