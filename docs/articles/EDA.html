@@ -73,7 +73,7 @@
       <h1 data-toc-skip>Exploratory Data Analysis</h1>
                         <h4 class="author">Choonghyun Ryu</h4>
             
-            <h4 class="date">2020-08-07</h4>
+            <h4 class="date">2020-08-25</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/choonghyunryu/dlookr/blob/master/vignettes/EDA.Rmd"><code>vignettes/EDA.Rmd</code></a></small>
       <div class="hidden name"><code>EDA.Rmd</code></div>
@@ -268,10 +268,6 @@ str(Carseats)
 </ul>
 <p>For example, <code><a href="../reference/describe.data.frame.html">describe()</a></code> can computes the statistics of all numerical variables in <code>carseats</code>:</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r">describe(carseats)
-Warning: The `x` argument of `as_tibble.matrix()` must have unique column names if `.name_repair` is omitted as of tibble 2.0.0.
-Using compatibility `.name_repair`.
-This warning is displayed once every 8 hours.
-Call `lifecycle::last_warnings()` to see where this warning was generated.
 # A tibble: 8 x 26
   variable     n    na   mean    sd se_mean   IQR skewness kurtosis   p00    p01
   &lt;chr&gt;    &lt;int&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;

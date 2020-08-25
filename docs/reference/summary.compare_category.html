@@ -204,15 +204,15 @@ It is also advantageous to specify FALSE if you want to manipulate the results.<
 #&gt; <span style='color: #555555;'># A tibble: 9 x 6</span><span>
 #&gt;   ShelveLoc Urban     n   rate var1_rate var2_rate
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Bad       No       21 0.052</span><span style='text-decoration: underline;'>5</span><span>   0.219       0.181
-#&gt; </span><span style='color: #555555;'>2</span><span> Bad       Yes      74 0.185    0.771       0.265
-#&gt; </span><span style='color: #555555;'>3</span><span> Bad       </span><span style='color: #BB0000;'>NA</span><span>        1 0.002</span><span style='text-decoration: underline;'>5</span><span>   0.010</span><span style='text-decoration: underline;'>4</span><span>      0.2  
-#&gt; </span><span style='color: #555555;'>4</span><span> Good      No       27 0.067</span><span style='text-decoration: underline;'>5</span><span>   0.318       0.233
-#&gt; </span><span style='color: #555555;'>5</span><span> Good      Yes      56 0.14     0.659       0.201
-#&gt; </span><span style='color: #555555;'>6</span><span> Good      </span><span style='color: #BB0000;'>NA</span><span>        2 0.005    0.023</span><span style='text-decoration: underline;'>5</span><span>      0.4  
-#&gt; </span><span style='color: #555555;'>7</span><span> Medium    No       68 0.17     0.311       0.586
-#&gt; </span><span style='color: #555555;'>8</span><span> Medium    Yes     149 0.372    0.680       0.534
-#&gt; </span><span style='color: #555555;'>9</span><span> Medium    </span><span style='color: #BB0000;'>NA</span><span>        2 0.005    0.009</span><span style='text-decoration: underline;'>13</span><span>     0.4  
+#&gt; </span><span style='color: #555555;'>1</span><span> Bad       No       21 0.052</span><span style='text-decoration: underline;'>5</span><span>    0.219      0.181
+#&gt; </span><span style='color: #555555;'>2</span><span> Bad       Yes      74 0.185     0.771      0.265
+#&gt; </span><span style='color: #555555;'>3</span><span> Bad       </span><span style='color: #BB0000;'>NA</span><span>        1 0.002</span><span style='text-decoration: underline;'>5</span><span>    0.010</span><span style='text-decoration: underline;'>4</span><span>     0.2  
+#&gt; </span><span style='color: #555555;'>4</span><span> Good      No       28 0.07      0.329      0.241
+#&gt; </span><span style='color: #555555;'>5</span><span> Good      Yes      56 0.14      0.659      0.201
+#&gt; </span><span style='color: #555555;'>6</span><span> Good      </span><span style='color: #BB0000;'>NA</span><span>        1 0.002</span><span style='text-decoration: underline;'>5</span><span>    0.011</span><span style='text-decoration: underline;'>8</span><span>     0.2  
+#&gt; </span><span style='color: #555555;'>7</span><span> Medium    No       67 0.168     0.306      0.578
+#&gt; </span><span style='color: #555555;'>8</span><span> Medium    Yes     149 0.372     0.680      0.534
+#&gt; </span><span style='color: #555555;'>9</span><span> Medium    </span><span style='color: #BB0000;'>NA</span><span>        3 0.007</span><span style='text-decoration: underline;'>5</span><span>    0.013</span><span style='text-decoration: underline;'>7</span><span>     0.6  
 #&gt; 
 #&gt; $`ShelveLoc vs US`
 #&gt; </span><span style='color: #555555;'># A tibble: 6 x 6</span><span>
@@ -229,12 +229,12 @@ It is also advantageous to specify FALSE if you want to manipulate the results.<
 #&gt; </span><span style='color: #555555;'># A tibble: 6 x 6</span><span>
 #&gt;   Urban US        n   rate var1_rate var2_rate
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> No    No       45 0.112      0.388    0.317 
-#&gt; </span><span style='color: #555555;'>2</span><span> No    Yes      71 0.178      0.612    0.275 
-#&gt; </span><span style='color: #555555;'>3</span><span> Yes   No       95 0.238      0.341    0.669 
-#&gt; </span><span style='color: #555555;'>4</span><span> Yes   Yes     184 0.46       0.659    0.713 
-#&gt; </span><span style='color: #555555;'>5</span><span> </span><span style='color: #BB0000;'>NA</span><span>    No        2 0.005      0.4      0.014</span><span style='text-decoration: underline;'>1</span><span>
-#&gt; </span><span style='color: #555555;'>6</span><span> </span><span style='color: #BB0000;'>NA</span><span>    Yes       3 0.007</span><span style='text-decoration: underline;'>5</span><span>     0.6      0.011</span><span style='text-decoration: underline;'>6</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> No    No       44 0.11       0.379   0.310  
+#&gt; </span><span style='color: #555555;'>2</span><span> No    Yes      72 0.18       0.621   0.279  
+#&gt; </span><span style='color: #555555;'>3</span><span> Yes   No       95 0.238      0.341   0.669  
+#&gt; </span><span style='color: #555555;'>4</span><span> Yes   Yes     184 0.46       0.659   0.713  
+#&gt; </span><span style='color: #555555;'>5</span><span> </span><span style='color: #BB0000;'>NA</span><span>    No        3 0.007</span><span style='text-decoration: underline;'>5</span><span>     0.6     0.021</span><span style='text-decoration: underline;'>1</span><span> 
+#&gt; </span><span style='color: #555555;'>6</span><span> </span><span style='color: #BB0000;'>NA</span><span>    Yes       2 0.005      0.4     0.007</span><span style='text-decoration: underline;'>75</span><span>
 #&gt; </div><div class='input'>
 <span class='co'># Compare the two categorical variables</span>
 <span class='no'>two_var</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='compare_category.data.frame.html'>compare_category</a></span>(<span class='no'>carseats</span>, <span class='no'>ShelveLoc</span>, <span class='no'>Urban</span>)
@@ -244,15 +244,15 @@ It is also advantageous to specify FALSE if you want to manipulate the results.<
 #&gt; </span><span style='color: #555555;'># A tibble: 9 x 6</span><span>
 #&gt;   ShelveLoc Urban     n   rate var1_rate var2_rate
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Bad       No       21 0.052</span><span style='text-decoration: underline;'>5</span><span>   0.219       0.181
-#&gt; </span><span style='color: #555555;'>2</span><span> Bad       Yes      74 0.185    0.771       0.265
-#&gt; </span><span style='color: #555555;'>3</span><span> Bad       </span><span style='color: #BB0000;'>NA</span><span>        1 0.002</span><span style='text-decoration: underline;'>5</span><span>   0.010</span><span style='text-decoration: underline;'>4</span><span>      0.2  
-#&gt; </span><span style='color: #555555;'>4</span><span> Good      No       27 0.067</span><span style='text-decoration: underline;'>5</span><span>   0.318       0.233
-#&gt; </span><span style='color: #555555;'>5</span><span> Good      Yes      56 0.14     0.659       0.201
-#&gt; </span><span style='color: #555555;'>6</span><span> Good      </span><span style='color: #BB0000;'>NA</span><span>        2 0.005    0.023</span><span style='text-decoration: underline;'>5</span><span>      0.4  
-#&gt; </span><span style='color: #555555;'>7</span><span> Medium    No       68 0.17     0.311       0.586
-#&gt; </span><span style='color: #555555;'>8</span><span> Medium    Yes     149 0.372    0.680       0.534
-#&gt; </span><span style='color: #555555;'>9</span><span> Medium    </span><span style='color: #BB0000;'>NA</span><span>        2 0.005    0.009</span><span style='text-decoration: underline;'>13</span><span>     0.4  
+#&gt; </span><span style='color: #555555;'>1</span><span> Bad       No       21 0.052</span><span style='text-decoration: underline;'>5</span><span>    0.219      0.181
+#&gt; </span><span style='color: #555555;'>2</span><span> Bad       Yes      74 0.185     0.771      0.265
+#&gt; </span><span style='color: #555555;'>3</span><span> Bad       </span><span style='color: #BB0000;'>NA</span><span>        1 0.002</span><span style='text-decoration: underline;'>5</span><span>    0.010</span><span style='text-decoration: underline;'>4</span><span>     0.2  
+#&gt; </span><span style='color: #555555;'>4</span><span> Good      No       28 0.07      0.329      0.241
+#&gt; </span><span style='color: #555555;'>5</span><span> Good      Yes      56 0.14      0.659      0.201
+#&gt; </span><span style='color: #555555;'>6</span><span> Good      </span><span style='color: #BB0000;'>NA</span><span>        1 0.002</span><span style='text-decoration: underline;'>5</span><span>    0.011</span><span style='text-decoration: underline;'>8</span><span>     0.2  
+#&gt; </span><span style='color: #555555;'>7</span><span> Medium    No       67 0.168     0.306      0.578
+#&gt; </span><span style='color: #555555;'>8</span><span> Medium    Yes     149 0.372     0.680      0.534
+#&gt; </span><span style='color: #555555;'>9</span><span> Medium    </span><span style='color: #BB0000;'>NA</span><span>        3 0.007</span><span style='text-decoration: underline;'>5</span><span>    0.013</span><span style='text-decoration: underline;'>7</span><span>     0.6  
 #&gt; </div><div class='input'>
 <span class='co'># Summary the all case : Return a invisible copy of an object.</span>
 <span class='no'>stat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>all_var</span>)</div><div class='output co'>#&gt; </span><span style='color: #00BBBB;'>──</span><span> </span><span style='color: #00BBBB;'>Contingency tables</span><span> </span><span style='color: #00BBBB;'>─────────────────────────────</span><span> </span><span style='color: #00BBBB;'>Number of table is 3</span><span> </span><span style='color: #00BBBB;'>──</span><span>
@@ -260,8 +260,8 @@ It is also advantageous to specify FALSE if you want to manipulate the results.<
 #&gt;          Urban
 #&gt; ShelveLoc  No Yes
 #&gt;    Bad     21  74
-#&gt;    Good    27  56
-#&gt;    Medium  68 149
+#&gt;    Good    28  56
+#&gt;    Medium  67 149
 #&gt; 
 #&gt; $`ShelveLoc vs US`
 #&gt;          US
@@ -273,7 +273,7 @@ It is also advantageous to specify FALSE if you want to manipulate the results.<
 #&gt; $`Urban vs US`
 #&gt;      US
 #&gt; Urban  No Yes
-#&gt;   No   45  71
+#&gt;   No   44  72
 #&gt;   Yes  95 184
 #&gt; 
 #&gt; </span><span style='color: #00BBBB;'>──</span><span> </span><span style='color: #00BBBB;'>Relative contingency tables</span><span> </span><span style='color: #00BBBB;'>────────────────────</span><span> </span><span style='color: #00BBBB;'>Number of table is 3</span><span> </span><span style='color: #00BBBB;'>──</span><span>
@@ -281,8 +281,8 @@ It is also advantageous to specify FALSE if you want to manipulate the results.<
 #&gt;          Urban
 #&gt; ShelveLoc         No        Yes
 #&gt;    Bad    0.05316456 0.18734177
-#&gt;    Good   0.06835443 0.14177215
-#&gt;    Medium 0.17215190 0.37721519
+#&gt;    Good   0.07088608 0.14177215
+#&gt;    Medium 0.16962025 0.37721519
 #&gt; 
 #&gt; $`ShelveLoc vs US`
 #&gt;          US
@@ -294,22 +294,22 @@ It is also advantageous to specify FALSE if you want to manipulate the results.<
 #&gt; $`Urban vs US`
 #&gt;      US
 #&gt; Urban        No       Yes
-#&gt;   No  0.1139241 0.1797468
+#&gt;   No  0.1113924 0.1822785
 #&gt;   Yes 0.2405063 0.4658228
 #&gt; 
 #&gt; </span><span style='color: #00BBBB;'>──</span><span> </span><span style='color: #00BBBB;'>Chi-squared contingency table tests</span><span> </span><span style='color: #00BBBB;'>────────────</span><span> </span><span style='color: #00BBBB;'>Number of table is 3</span><span> </span><span style='color: #00BBBB;'>──</span><span>
 #&gt;   variable_1 variable_2 statistic   p.value df
-#&gt; 1  ShelveLoc      Urban 3.2212132 0.1997664  2
+#&gt; 1  ShelveLoc      Urban 3.3362045 0.1886046  2
 #&gt; 2  ShelveLoc         US 2.7396674 0.2541492  2
-#&gt; 3      Urban         US 0.6115814 0.4341930  1</div><div class='input'>
+#&gt; 3      Urban         US 0.3842925 0.5353149  1</div><div class='input'>
 <span class='co'># Summary by returned object</span>
 <span class='no'>stat</span></div><div class='output co'>#&gt; $table
 #&gt; $table$`ShelveLoc vs Urban`
 #&gt;          Urban
 #&gt; ShelveLoc  No Yes
 #&gt;    Bad     21  74
-#&gt;    Good    27  56
-#&gt;    Medium  68 149
+#&gt;    Good    28  56
+#&gt;    Medium  67 149
 #&gt; 
 #&gt; $table$`ShelveLoc vs US`
 #&gt;          US
@@ -321,7 +321,7 @@ It is also advantageous to specify FALSE if you want to manipulate the results.<
 #&gt; $table$`Urban vs US`
 #&gt;      US
 #&gt; Urban  No Yes
-#&gt;   No   45  71
+#&gt;   No   44  72
 #&gt;   Yes  95 184
 #&gt; 
 #&gt; 
@@ -330,8 +330,8 @@ It is also advantageous to specify FALSE if you want to manipulate the results.<
 #&gt;          Urban
 #&gt; ShelveLoc         No        Yes
 #&gt;    Bad    0.05316456 0.18734177
-#&gt;    Good   0.06835443 0.14177215
-#&gt;    Medium 0.17215190 0.37721519
+#&gt;    Good   0.07088608 0.14177215
+#&gt;    Medium 0.16962025 0.37721519
 #&gt; 
 #&gt; $relative$`ShelveLoc vs US`
 #&gt;          US
@@ -343,23 +343,23 @@ It is also advantageous to specify FALSE if you want to manipulate the results.<
 #&gt; $relative$`Urban vs US`
 #&gt;      US
 #&gt; Urban        No       Yes
-#&gt;   No  0.1139241 0.1797468
+#&gt;   No  0.1113924 0.1822785
 #&gt;   Yes 0.2405063 0.4658228
 #&gt; 
 #&gt; 
 #&gt; $chisq
 #&gt;   variable_1 variable_2 statistic   p.value df
-#&gt; 1  ShelveLoc      Urban 3.2212132 0.1997664  2
+#&gt; 1  ShelveLoc      Urban 3.3362045 0.1886046  2
 #&gt; 2  ShelveLoc         US 2.7396674 0.2541492  2
-#&gt; 3      Urban         US 0.6115814 0.4341930  1
+#&gt; 3      Urban         US 0.3842925 0.5353149  1
 #&gt; </div><div class='input'>
 <span class='co'># component of table </span>
 <span class='no'>stat</span>$<span class='no'>table</span></div><div class='output co'>#&gt; $`ShelveLoc vs Urban`
 #&gt;          Urban
 #&gt; ShelveLoc  No Yes
 #&gt;    Bad     21  74
-#&gt;    Good    27  56
-#&gt;    Medium  68 149
+#&gt;    Good    28  56
+#&gt;    Medium  67 149
 #&gt; 
 #&gt; $`ShelveLoc vs US`
 #&gt;          US
@@ -371,33 +371,33 @@ It is also advantageous to specify FALSE if you want to manipulate the results.<
 #&gt; $`Urban vs US`
 #&gt;      US
 #&gt; Urban  No Yes
-#&gt;   No   45  71
+#&gt;   No   44  72
 #&gt;   Yes  95 184
 #&gt; </div><div class='input'>
 <span class='co'># component of chi-square test </span>
 <span class='no'>stat</span>$<span class='no'>chisq</span></div><div class='output co'>#&gt;   variable_1 variable_2 statistic   p.value df
-#&gt; 1  ShelveLoc      Urban 3.2212132 0.1997664  2
+#&gt; 1  ShelveLoc      Urban 3.3362045 0.1886046  2
 #&gt; 2  ShelveLoc         US 2.7396674 0.2541492  2
-#&gt; 3      Urban         US 0.6115814 0.4341930  1</div><div class='input'>
+#&gt; 3      Urban         US 0.3842925 0.5353149  1</div><div class='input'>
 <span class='co'># component of chi-square test </span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>all_var</span>, <span class='st'>"chisq"</span>)</div><div class='output co'>#&gt; </span><span style='color: #00BBBB;'>──</span><span> </span><span style='color: #00BBBB;'>Chi-squared contingency table tests</span><span> </span><span style='color: #00BBBB;'>────────────</span><span> </span><span style='color: #00BBBB;'>Number of table is 3</span><span> </span><span style='color: #00BBBB;'>──</span><span>
 #&gt;   variable_1 variable_2 statistic   p.value df
-#&gt; 1  ShelveLoc      Urban 3.2212132 0.1997664  2
+#&gt; 1  ShelveLoc      Urban 3.3362045 0.1886046  2
 #&gt; 2  ShelveLoc         US 2.7396674 0.2541492  2
-#&gt; 3      Urban         US 0.6115814 0.4341930  1</div><div class='input'>
+#&gt; 3      Urban         US 0.3842925 0.5353149  1</div><div class='input'>
 <span class='co'># component of chi-square test (first, third case)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>all_var</span>, <span class='st'>"chisq"</span>, <span class='kw'>pos</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>3</span>))</div><div class='output co'>#&gt; </span><span style='color: #00BBBB;'>──</span><span> </span><span style='color: #00BBBB;'>Chi-squared contingency table tests</span><span> </span><span style='color: #00BBBB;'>────────────</span><span> </span><span style='color: #00BBBB;'>Number of table is 2</span><span> </span><span style='color: #00BBBB;'>──</span><span>
 #&gt;   variable_1 variable_2 statistic   p.value df
-#&gt; 1  ShelveLoc      Urban 3.2212132 0.1997664  2
-#&gt; 2      Urban         US 0.6115814 0.4341930  1</div><div class='input'>
+#&gt; 1  ShelveLoc      Urban 3.3362045 0.1886046  2
+#&gt; 2      Urban         US 0.3842925 0.5353149  1</div><div class='input'>
 <span class='co'># component of relative frequency table </span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>all_var</span>, <span class='st'>"relative"</span>)</div><div class='output co'>#&gt; </span><span style='color: #00BBBB;'>──</span><span> </span><span style='color: #00BBBB;'>Relative contingency tables</span><span> </span><span style='color: #00BBBB;'>────────────────────</span><span> </span><span style='color: #00BBBB;'>Number of table is 3</span><span> </span><span style='color: #00BBBB;'>──</span><span>
 #&gt; $`ShelveLoc vs Urban`
 #&gt;          Urban
 #&gt; ShelveLoc         No        Yes
 #&gt;    Bad    0.05316456 0.18734177
-#&gt;    Good   0.06835443 0.14177215
-#&gt;    Medium 0.17215190 0.37721519
+#&gt;    Good   0.07088608 0.14177215
+#&gt;    Medium 0.16962025 0.37721519
 #&gt; 
 #&gt; $`ShelveLoc vs US`
 #&gt;          US
@@ -409,7 +409,7 @@ It is also advantageous to specify FALSE if you want to manipulate the results.<
 #&gt; $`Urban vs US`
 #&gt;      US
 #&gt; Urban        No       Yes
-#&gt;   No  0.1139241 0.1797468
+#&gt;   No  0.1113924 0.1822785
 #&gt;   Yes 0.2405063 0.4658228
 #&gt; </div><div class='input'>
 <span class='co'># component of table without missing values </span>
@@ -418,8 +418,8 @@ It is also advantageous to specify FALSE if you want to manipulate the results.<
 #&gt;          Urban
 #&gt; ShelveLoc  No Yes
 #&gt;    Bad     21  74
-#&gt;    Good    27  56
-#&gt;    Medium  68 149
+#&gt;    Good    28  56
+#&gt;    Medium  67 149
 #&gt; 
 #&gt; $`ShelveLoc vs US`
 #&gt;          US
@@ -431,7 +431,7 @@ It is also advantageous to specify FALSE if you want to manipulate the results.<
 #&gt; $`Urban vs US`
 #&gt;      US
 #&gt; Urban  No Yes
-#&gt;   No   45  71
+#&gt;   No   44  72
 #&gt;   Yes  95 184
 #&gt; </div><div class='input'>
 <span class='co'># component of table include marginal value </span>
@@ -440,8 +440,8 @@ It is also advantageous to specify FALSE if you want to manipulate the results.<
 #&gt;          Urban
 #&gt; ShelveLoc  No Yes &lt;Total&gt;
 #&gt;   Bad      21  74      95
-#&gt;   Good     27  56      83
-#&gt;   Medium   68 149     217
+#&gt;   Good     28  56      84
+#&gt;   Medium   67 149     216
 #&gt;   &lt;Total&gt; 116 279     395
 #&gt; 
 #&gt; $`ShelveLoc vs US`
@@ -455,15 +455,15 @@ It is also advantageous to specify FALSE if you want to manipulate the results.<
 #&gt; $`Urban vs US`
 #&gt;          US
 #&gt; Urban      No Yes &lt;Total&gt;
-#&gt;   No       45  71     116
+#&gt;   No       44  72     116
 #&gt;   Yes      95 184     279
-#&gt;   &lt;Total&gt; 140 255     395
+#&gt;   &lt;Total&gt; 139 256     395
 #&gt; </div><div class='input'><span class='no'>margin</span></div><div class='output co'>#&gt; $`ShelveLoc vs Urban`
 #&gt;          Urban
 #&gt; ShelveLoc  No Yes &lt;Total&gt;
 #&gt;   Bad      21  74      95
-#&gt;   Good     27  56      83
-#&gt;   Medium   68 149     217
+#&gt;   Good     28  56      84
+#&gt;   Medium   67 149     216
 #&gt;   &lt;Total&gt; 116 279     395
 #&gt; 
 #&gt; $`ShelveLoc vs US`
@@ -477,39 +477,39 @@ It is also advantageous to specify FALSE if you want to manipulate the results.<
 #&gt; $`Urban vs US`
 #&gt;          US
 #&gt; Urban      No Yes &lt;Total&gt;
-#&gt;   No       45  71     116
+#&gt;   No       44  72     116
 #&gt;   Yes      95 184     279
-#&gt;   &lt;Total&gt; 140 255     395
+#&gt;   &lt;Total&gt; 139 256     395
 #&gt; </div><div class='input'>
 <span class='co'># component of chi-square test </span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>two_var</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"chisq"</span>)</div><div class='output co'>#&gt; </span><span style='color: #00BBBB;'>──</span><span> </span><span style='color: #00BBBB;'>Chi-squared contingency table tests</span><span> </span><span style='color: #00BBBB;'>────────────</span><span> </span><span style='color: #00BBBB;'>Number of table is 1</span><span> </span><span style='color: #00BBBB;'>──</span><span>
 #&gt;   variable_1 variable_2 statistic   p.value df
-#&gt; 1  ShelveLoc      Urban  3.221213 0.1997664  2</div><div class='input'>
+#&gt; 1  ShelveLoc      Urban  3.336205 0.1886046  2</div><div class='input'>
 <span class='co'># verbose is FALSE </span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>all_var</span>, <span class='st'>"chisq"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;   variable_1 variable_2 statistic   p.value df
-#&gt; 1  ShelveLoc      Urban 3.2212132 0.1997664  2
+#&gt; 1  ShelveLoc      Urban 3.3362045 0.1886046  2
 #&gt; 2  ShelveLoc         US 2.7396674 0.2541492  2
-#&gt; 3      Urban         US 0.6115814 0.4341930  1</div><div class='input'>
+#&gt; 3      Urban         US 0.3842925 0.5353149  1</div><div class='input'>
 <span class='co'>#' # Using pipes &amp; dplyr -------------------------</span>
 <span class='co'># If you want to use dplyr, set verbose to FALSE</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>all_var</span>, <span class='st'>"chisq"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>p.value</span> <span class='kw'>&lt;</span> <span class='fl'>0.26</span>)</div><div class='output co'>#&gt;   variable_1 variable_2 statistic   p.value df
-#&gt; 1  ShelveLoc      Urban  3.221213 0.1997664  2
+#&gt; 1  ShelveLoc      Urban  3.336205 0.1886046  2
 #&gt; 2  ShelveLoc         US  2.739667 0.2541492  2</div><div class='input'>
 <span class='co'># Extract component from list by index</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>all_var</span>, <span class='st'>"table"</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span>
   <span class='st'>"[["</span>(<span class='fl'>1</span>)</div><div class='output co'>#&gt;          Urban
 #&gt; ShelveLoc  No Yes
 #&gt;    Bad     21  74
-#&gt;    Good    27  56
-#&gt;    Medium  68 149</div><div class='input'>
+#&gt;    Good    28  56
+#&gt;    Medium  67 149</div><div class='input'>
 <span class='co'># Extract component from list by name</span>
   <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>all_var</span>, <span class='st'>"table"</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span>
   <span class='st'>"[["</span>(<span class='st'>"ShelveLoc vs Urban"</span>)</div><div class='output co'>#&gt;          Urban
 #&gt; ShelveLoc  No Yes
 #&gt;    Bad     21  74
-#&gt;    Good    27  56
-#&gt;    Medium  68 149</div><div class='input'>  
+#&gt;    Good    28  56
+#&gt;    Medium  67 149</div><div class='input'>  
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
