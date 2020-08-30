@@ -205,7 +205,7 @@ plot.transform <- function(x, ...) {
     filter(key == "original") %>%
     ggplot(aes(x = value)) +
     geom_density(na.rm = TRUE) +
-    ggtitle("Oraginal Data") +
+    ggtitle("Original Data") +
     theme(plot.title = element_text(hjust = 0.5))
 
   fig2 <- df %>%
