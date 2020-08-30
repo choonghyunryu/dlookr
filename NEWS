@@ -30,6 +30,8 @@ dlookr 0.3.14
 
 * Corrected sentence and typo in manuals and vignettes
 
+* plot.transform() fixed miss typo in title of plot (@MarioPrado1148, #26).
+ 
  
 dlookr 0.3.13
 ----------------------------------------------------------------
