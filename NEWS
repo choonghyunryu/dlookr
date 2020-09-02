@@ -26,6 +26,8 @@ dlookr 0.3.14
 
 * Add a new function plot_na_intersect() to visualize the patterns of missing value, or rather the combinations of missing value across cases. (@Luca Zavarella)
 
+* Add a new vignette `Introduce dlookr`.
+
 * relate() fixed error when using character type as a categorical variable (@jgduenasl, #14).
 
 * Corrected sentence and typo in manuals and vignettes

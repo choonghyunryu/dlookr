@@ -1,0 +1,161 @@
+---
+title: "Introduce dlookr"
+author: "Choonghyun Ryu"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduce dlookr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r environment, echo = FALSE, message = FALSE, warning=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "")
+options(tibble.print_min = 4L, tibble.print_max = 4L)
+
+library(dlookr)
+library(dplyr)
+library(ggplot2)
+```
+
+## Preface
+After you have acquired the data, you should do the following:
+
+* Diagnose data quality.
+    + If there is a problem with data quality,
+    + The data must be corrected or re-acquired.
+* Explore data to understand the data and find scenarios for performing the analysis.
+* Derive new variables or perform variable transformations.
+
+The dlookr package makes these steps fast and easy:
+
+* Performs a data diagnosis or automatically generates a data diagnosis report.
+* Discover data in a variety of ways, and automatically generate EDA(exploratory data analysis) report.
+* Impute missing values and outliers, resolve skewed data, and binaries continuous variables into categorical variables. And generates an automated report to support it.
+
+dlookr increases synergy with `dplyr`. Particularly in data exploration and data wrangle, it increases the efficiency of the `tidyverse` package group.
+
+## Supported data structures
+Data diagnosis supports the following data structures.
+
+* data frame : data.frame class.
+* data table : tbl_df class.
+* table of DBMS : table of the DBMS through tbl_dbi.
+  + Use dplyr as the back-end interface for any DBI-compatible database.
+  
+  
+## List of supported tasks of data analytics
+
+### Diagnose Data
+
+#### Overall Diagnose Data
+Tasks | Descriptions | Functions | Support DBI
+:-----|:--------|:---|:---:
+diagnose data quality of variables | The scope of data quality diagnosis is information on missing values and unique value information | `diagnose()` | O
+diagnose data quality of categorical variables | frequency, ratio, rank by levels of each variables | `diagnose_category()` | O
+diagnose data quality of numerical variables | descriptive statistics, number of zero, minus, outliers | `diagnose_category()` | O
+diagnose data quality for outlier  | number of outliers, ratio, mean of outliers, mean with outliers, mean without outliers | `diagnose_outlier()` | O
+plot outliers information of numerical data  | box plot and histogram whith ourlers, without outliers | `plot_outlier()` | O
+
+#### Visualize Missing Values
+Tasks | Descriptions | Functions | Support DBI
+:-----|:--------|:---|:---:
+pareto chart for missing value | visualize pareto chart for variables with missing value. | `plot_na_pareto()` | X
+combination chart for missing value | visualize distribution of missing value by combination of variables. | `plot_na_hclust()` | X
+plot the combination variables that is include missing value | visualize the combinations of missing value across cases.. | `plot_na_intersect()` | X
+
+
+#### Reporting
+Types | Descriptions | Functions | Support DBI
+:-----|:-------|:---|:---:
+reporting the information of data diagnosis into pdf file | report the information for diagnosing the quality of the data. | `diagnose_report()` | O
+reporting the information of data diagnosis into html file | report the information for diagnosing the quality of the data. | `diagnose_report()` | O
+
+### EDA
+
+#### Univariate EDA
+Types | Tasks | Descriptions | Functions | Support DBI
+:---|:---|:-------|:---|:---:
+categorical | summaries | frequency tables | `univar_category()` | X
+categorical | summaries | chi-squared test  | `summary.univar_category()` | X
+categorical | visualize | bar charts | `plot.univar_category()` | X
+numerical | summaries | descriptive statistics | `describe()` | O
+numerical | summaries | descriptive statistics | `univar_numeric()` | X
+numerical | summaries | descriptive statistics of standardized variable | `summary.univar_numeric()` | X
+numerical | visualize | histogram, box plot | `plot.univar_numeric()` | X
+
+#### Bivariate EDA
+Types | Tasks | Descriptions | Functions | Support DBI
+:---|:---|:-------|:---|:---:
+categorical | summaries | frequency tables cross cases | `compare_category()` | X
+categorical | summaries | contingency tables, chi-squared test | `summary.compare_category()` | X
+categorical | visualize | mosaics plot | `plot.compare_category()` | X
+numerical | summaries | correlation coefficient, linear model summaries | `compare_numeric()` | X
+numerical | summaries | correlation coefficient, linear model summaries with threshold  | `summary.compare_numeric()` | X
+numerical | visualize | scatter plot with marginal box plot | `plot.compare_numeric()` | X
+numerical | Correlate | correlation coefficient | `correlate()` | O
+numerical | Correlate | visualization of a correlation matrix | `plot_correlate()` | O
+
+#### Normality Test
+Types | Tasks | Descriptions | Functions | Support DBI
+:---|:---|:-------|:---|:---:
+numerical | summaries | Shapiro-Wilk normality test | `normality()` | O
+numerical | summaries | normality diagnosis plot (histogram, Q-Q plots) | `plot_normality()` | O
+
+#### Relationship between target variable and predictors
+Target Variable | Predictor | Descriptions | Functions | Support DBI
+:---|:---|:-------|:---|:---:
+categorical | categorical | contingency tables | `relate()` | O
+categorical | categorical | mosaics plot | `plot.relate()` | O
+categorical | numerical | descriptive statistic for each levels and total observation | `relate()` | O
+categorical | numerical | density plot | `plot.relate()` | O
+numerical | categorical | ANOVA test | `relate()` | O
+numerical | categorical | scatter plot | `plot.relate()` | O
+numerical | numerical | simple linear model | `relate()` | O
+numerical | numerical | box plot | `plot.relate()` | O
+
+#### Reporting
+Types | Descriptions | Functions | Support DBI
+:-----|:--------|:---|:---:
+reporting the information of EDA into pdf file | reporting the information of EDA. | `eda_report()` | O
+reporting the information of EDA into html file | reporting the information of EDA. | `eda_report()` | O
+
+
+### Transform Data
+
+#### Find Variables
+Types | Descriptions | Functions | Support DBI
+:---|:-------|:---|:---:
+missing values  | find the variable that contains the missing value in the object that inherits the data.frame | `find_na()` | X
+outliers | find the numerical variable that contains outliers in the object that inherits the data.frame | `find_outliers()` | X
+outliers | find the numerical variable that skewed variable that inherits the data.frame | `find_skewness()` | X
+
+#### Imputation
+Types | Descriptions | Functions | Support DBI
+:---|:-------|:---|:---:
+missing values  | missing values are imputed with some representative values and statistical methods. | `imputate_na()` | X
+outliers | outliers are imputed with some representative values and statistical methods. | `imputate_outlier()` | X
+summaries | calculate descriptive statistics of the original and imputed values. | `summary.imputation()` | X
+visualize | the imputation of a numerical variable is a density plot, and the imputation of a categorical variable is a bar plot. | `plot.imputation()` | X
+
+#### Binning
+Types | Descriptions | Functions | Support DBI
+:---|:-------|:---|:---:
+binning | converts a numeric variable to a categorization variable | `binning()` | X
+summaries | calculate frequency and relative frequency for each levels(bins) | `summary.bins()` | X
+visualize | visualize two plots on a single screen. The plot at the top is a histogram representing the frequency of the level. The plot at the bottom is a bar chart representing the frequency of the level. | `plot.bins()` | X
+optimal binning | categorizes a numeric characteristic into bins for ulterior usage in scoring modeling | `binning_by()` | X
+visualize | generates plots for understand distribution, bad rate, and weight of evidence after running smbinning | `plot.optimal_bins()` | X
+
+#### Transformation
+Types | Descriptions | Functions | Support DBI
+:---|:-------|:---|:---:
+transformation | performs variable transformation for standardization and resolving skewness of numerical variables. | `transform()` | X
+summaries | compares the distribution of data before and after data transformation | `summary.bins()` | X
+visualize | visualize two kinds of plot by attribute of 'transform' class. The transformation of a numerical variable is a density plot. | `plot.transform` | X
+
+#### Reporting
+Types | Descriptions | Functions | Support DBI
+:-----|:--------|:---|:---:
+eporting the information of transformation into pdf file | reporting the information of transformation | `transformation_report()` | X
+eporting the information of transformation into html file | eporting the information of transformation | `transformation_report()` | X
