@@ -80,6 +80,9 @@ the quality of the DBMS table through tbl_dbi" />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../articles/introduce.html">Introduce dlookr</a>
+</li>
+<li>
   <a href="../articles/diagonosis.html">Data Diagnosis</a>
 </li>
 <li>
@@ -226,7 +229,7 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 <span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>5</span>), <span class='st'>"Urban"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
 
 <span class='co'># connect DBMS</span>
-<span class='no'>con_sqlite</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://dbi.r-dbi.org/reference/dbConnect.html'>dbConnect</a></span>(<span class='kw pkg'>RSQLite</span><span class='kw ns'>::</span><span class='fu'><a href='https://rsqlite.r-dbi.org/reference/SQLite.html'>SQLite</a></span>(), <span class='st'>":memory:"</span>)
+<span class='no'>con_sqlite</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/DBI/man/dbConnect.html'>dbConnect</a></span>(<span class='kw pkg'>RSQLite</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/RSQLite/man/SQLite.html'>SQLite</a></span>(), <span class='st'>":memory:"</span>)
 
 <span class='co'># copy carseats to the DBMS with a table named TB_CARSEATS</span>
 <span class='fu'><a href='https://dplyr.tidyverse.org/reference/copy_to.html'>copy_to</a></span>(<span class='no'>con_sqlite</span>, <span class='no'>carseats</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"TB_CARSEATS"</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
@@ -237,7 +240,7 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='diagnose_report.data.frame.html'>diagnose_report</a></span>()</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpTzm58B/DataDiagnosis_Report.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...........................                                                     |  33%
+#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpfZ88jM/DataDiagnosis_Report.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...........................                                                     |  33%
 #&gt;   ordinary text without R code
 #&gt; 
 #&gt;   |                                                                                        |.....................................................                           |  67%
@@ -246,7 +249,7 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 #&gt;  $ child: chr "01_Diagnose.Rnw"
 #&gt; </div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpTzm58B/01_Diagnose.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...                                                                             |   4%
+#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpfZ88jM/01_Diagnose.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...                                                                             |   4%
 #&gt;   ordinary text without R code
 #&gt; 
 #&gt;   |                                                                                        |......                                                                          |   8%
@@ -363,13 +366,13 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 #&gt;   |                                                                                        |................................................................................| 100%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpTzm58B/DataDiagnosis_Report.tex</span></div><div class='input'>
+#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpfZ88jM/DataDiagnosis_Report.tex</span></div><div class='input'>
 <span class='co'># create pdf file. file name is Diagn.pdf, and collect size is 350</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='diagnose_report.data.frame.html'>diagnose_report</a></span>(<span class='kw'>collect_size</span> <span class='kw'>=</span> <span class='fl'>350</span>, <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"Diagn.pdf"</span>)</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpTzm58B/DataDiagnosis_Report.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...........................                                                     |  33%
+#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpfZ88jM/DataDiagnosis_Report.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...........................                                                     |  33%
 #&gt;   ordinary text without R code
 #&gt; 
 #&gt;   |                                                                                        |.....................................................                           |  67%
@@ -378,7 +381,7 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 #&gt;  $ child: chr "01_Diagnose.Rnw"
 #&gt; </div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpTzm58B/01_Diagnose.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...                                                                             |   4%
+#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpfZ88jM/01_Diagnose.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...                                                                             |   4%
 #&gt;   ordinary text without R code
 #&gt; 
 #&gt;   |                                                                                        |......                                                                          |   8%
@@ -495,7 +498,7 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 #&gt;   |                                                                                        |................................................................................| 100%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpTzm58B/Diagn.tex</span></div><div class='input'>
+#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpfZ88jM/Diagn.tex</span></div><div class='input'>
 <span class='co'># create html file. file name is Diagnosis_Report.html</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
@@ -633,8 +636,8 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 #&gt; </div><div class='output co'>#&gt;   |                                                                                        |................................................................................| 100%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: Diagnosis_Report.knit.md</span></div><div class='output co'>#&gt; /usr/local/bin/pandoc +RTS -K512m -RTS Diagnosis_Report.utf8.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpTzm58B/Diagnosis_Report.html --email-obfuscation none --self-contained --standalone --section-divs --table-of-contents --toc-depth 3 --template /Library/Frameworks/R.framework/Versions/4.0/Resources/library/prettydoc/resources/templates/cayman.html --highlight-style pygments --number-sections --include-in-header /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpTzm58B/rmarkdown-str4cac2f3e449f.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmd/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmd/lua/latex-div.lua --css /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpTzm58B/Diagnosis_Report_files/style.css </div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Output created: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpTzm58B/Diagnosis_Report.html</span></div><div class='input'>
+#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: Diagnosis_Report.knit.md</span></div><div class='output co'>#&gt; /usr/local/bin/pandoc +RTS -K512m -RTS Diagnosis_Report.utf8.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpfZ88jM/Diagnosis_Report.html --email-obfuscation none --self-contained --standalone --section-divs --table-of-contents --toc-depth 3 --template /Library/Frameworks/R.framework/Versions/4.0/Resources/library/prettydoc/resources/templates/cayman.html --highlight-style pygments --number-sections --include-in-header /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpfZ88jM/rmarkdown-str115231a76d6e0.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmd/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmd/lua/latex-div.lua --css /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpfZ88jM/Diagnosis_Report_files/style.css </div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Output created: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpfZ88jM/Diagnosis_Report.html</span></div><div class='input'>
 <span class='co'># create html file. file name is Diagn.html</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
@@ -772,8 +775,8 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 #&gt; </div><div class='output co'>#&gt;   |                                                                                        |................................................................................| 100%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: Diagnosis_Report.knit.md</span></div><div class='output co'>#&gt; /usr/local/bin/pandoc +RTS -K512m -RTS Diagnosis_Report.utf8.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpTzm58B/Diagn.html --email-obfuscation none --self-contained --standalone --section-divs --table-of-contents --toc-depth 3 --template /Library/Frameworks/R.framework/Versions/4.0/Resources/library/prettydoc/resources/templates/cayman.html --highlight-style pygments --number-sections --include-in-header /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpTzm58B/rmarkdown-str4cac776d3b7c.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmd/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmd/lua/latex-div.lua --css /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpTzm58B/Diagn_files/style.css </div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Output created: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpTzm58B/Diagn.html</span></div><div class='input'># }
+#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: Diagnosis_Report.knit.md</span></div><div class='output co'>#&gt; /usr/local/bin/pandoc +RTS -K512m -RTS Diagnosis_Report.utf8.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpfZ88jM/Diagn.html --email-obfuscation none --self-contained --standalone --section-divs --table-of-contents --toc-depth 3 --template /Library/Frameworks/R.framework/Versions/4.0/Resources/library/prettydoc/resources/templates/cayman.html --highlight-style pygments --number-sections --include-in-header /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpfZ88jM/rmarkdown-str115232293f049.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmd/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmd/lua/latex-div.lua --css /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpfZ88jM/Diagn_files/style.css </div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Output created: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpfZ88jM/Diagn.html</span></div><div class='input'># }
 
 </div></pre>
   </div>

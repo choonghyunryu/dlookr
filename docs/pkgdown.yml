@@ -4,6 +4,7 @@ pkgdown_sha: ~
 articles:
   EDA: EDA.html
   diagonosis: diagonosis.html
+  introduce: introduce.html
   transformation: transformation.html
-last_built: 2020-08-25T14:06Z
+last_built: 2020-09-02T03:57Z
 
