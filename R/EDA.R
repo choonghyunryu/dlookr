@@ -87,7 +87,7 @@ eda_report <- function(.data, ...) {
 #' eda_report(carseats, "US", output_file = "EDA_carseats.pdf")
 #' 
 #' # create pdf file. file name is EDA_carseats.pdf and not browse
-#' eda_report(carseats, "US", output_dir = ".", output_file = "EDA_carseats.pdf", browse = FALSE)
+#' # eda_report(carseats, "US", output_dir = ".", output_file = "EDA_carseats.pdf", browse = FALSE)
 #' 
 #' # create html file. file name is EDA_Report.html
 #' eda_report(carseats, "US", output_format = "html")
@@ -128,7 +128,6 @@ eda_report <- function(.data, ...) {
 #' @importFrom rmarkdown render
 #' @importFrom grDevices cairo_pdf
 #' @importFrom xtable xtable
-#' @importFrom moments skewness kurtosis
 #' @importFrom prettydoc html_pretty
 #' @importFrom kableExtra kable_styling
 #' @importFrom utils browseURL
@@ -147,6 +146,7 @@ eda_report.data.frame <- function(.data, target = NULL, output_format = c("pdf",
   
   assign("edaData", as.data.frame(.data), .dlookrEnv)
   assign("targetVariable", vars, .dlookrEnv)
+  assign("font_family", font_family, .dlookrEnv)
   
   path <- output_dir
   if (length(grep("ko_KR", Sys.getenv("LANG"))) == 1) {

@@ -261,7 +261,6 @@ find_outliers <- function(.data, index = TRUE, rate = FALSE) {
 #'   diagnose()
 #' }
 #' @importFrom purrr map_lgl map_dbl
-#' @importFrom moments skewness
 #' @export
 find_skewness <- function(.data, index = TRUE, value = FALSE, thres = NULL) {
   numeric_flag <- sapply(seq(.data),
@@ -270,7 +269,7 @@ find_skewness <- function(.data, index = TRUE, value = FALSE, thres = NULL) {
   if (value) {
     idx <- .data %>%
       .[, numeric_flag] %>%
-      map_dbl(moments::skewness) %>%
+      map_dbl(skewness) %>%
       round(3)
     if (!is.null(thres)) idx <- idx[abs(idx) >= thres & !is.na(idx)]
   } else {
@@ -278,7 +277,7 @@ find_skewness <- function(.data, index = TRUE, value = FALSE, thres = NULL) {
 
     idx <- .data %>%
       .[, numeric_flag] %>%
-      map_lgl(function(x) abs(moments::skewness(x)) >= thres) %>%
+      map_lgl(function(x) abs(skewness(x)) >= thres) %>%
       which()
 
     idx <- which(numeric_flag)[idx]
@@ -287,6 +286,54 @@ find_skewness <- function(.data, index = TRUE, value = FALSE, thres = NULL) {
   }
 
   idx
+}
+
+
+#' Skewness of the data
+#'
+#' @description
+#' This function calculated skewness of given data.
+#'
+#' @param x a numeric vector.
+#' @param na.rm logical. Determine whether to remove missing values and calculate them. 
+#' The default is TRUE.
+#' @return numeric. calculated skewness.
+#' @seealso \code{\link{kurtosis}}, \code{\link{find_skewness}}.
+#' @examples
+#' set.seed(123)
+#' skewness(rnorm(100))
+#' @export
+skewness <- function(x,  na.rm = TRUE) {
+  if (na.rm) 
+    x <- x[!is.na(x)]
+  
+  n <- length(x)
+  
+  (sum((x - mean(x)) ^ 3) / n) / (sum((x - mean(x)) ^ 2) / n) ^ (3 / 2)
+}
+
+
+#' Kurtosis of the data
+#'
+#' @description
+#' This function calculated kurtosis of given data.
+#'
+#' @param x a numeric vector.
+#' @param na.rm logical. Determine whether to remove missing values and calculate them. 
+#' The default is TRUE.
+#' @return numeric. calculated kurtosis
+#' @seealso \code{\link{skewness}}.
+#' @examples
+#' set.seed(123)
+#' kurtosis(rnorm(100))
+#' @export
+kurtosis <- function(x,  na.rm = FALSE) {
+  if (na.rm) 
+    x <- x[!is.na(x)]
+  
+  n <- length(x)
+  
+  n * sum((x - mean(x)) ^ 4) / (sum((x - mean(x)) ^ 2) ^ 2)
 }
 
 

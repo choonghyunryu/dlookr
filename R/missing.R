@@ -29,6 +29,7 @@
 #' # Change the main title.
 #' plot_na_hclust(mice::boys, main = "Distribution of missing value")
 #' 
+#' @importFrom stats hclust dist order.dendrogram as.dendrogram reorder
 #' @importFrom reshape2 melt
 #' @import ggplot2
 #' @export
@@ -166,7 +167,6 @@ plot_na_hclust <- function (x, main = NULL, col.left = "#009E73", col.right = "#
 #' @importFrom purrr map_int
 #' @importFrom tibble enframe
 #' @importFrom dplyr rename
-#' @importFrom forcats fct_reorder
 #' @import ggplot2
 #' @export
 plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, col = "black",
@@ -179,23 +179,25 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
   
   info_na <- purrr::map_int(x, function(x) sum(is.na(x))) %>% 
     tibble::enframe() %>% 
-    dplyr::rename(variable = name, frequency = value) %>% 
-    arrange(desc(frequency), variable) %>% 
-    mutate(ratio = frequency / nrow(x)) %>% 
+    dplyr::rename(variable = name, frequencies = value) %>% 
+    arrange(desc(frequencies), variable) %>% 
+    mutate(ratio = frequencies / nrow(x)) %>% 
     mutate(grade = cut(ratio, breaks = c(-1, unlist(grade)), labels = names(grade))) %>% 
-    mutate(cumulative = cumsum(frequency) / sum(frequency) * 100) %>% 
-    mutate(variable = forcats::fct_reorder(variable, frequency, .desc = TRUE)) 
+    mutate(cumulative = cumsum(frequencies) / sum(frequencies) * 100) %>% 
+    #mutate(variable = forcats::fct_reorder(variable, frequencies, .desc = TRUE)) 
+    arrange(desc(frequencies)) %>% 
+    mutate(variable = factor(variable, levels = variable))
   
   if (only_na) {
     info_na <- info_na %>% 
-      filter(frequency > 0)
+      filter(frequencies > 0)
     xlab <- "Variable Names with Missing Value"
   } else {
     xlab <- "All Variable Names"
   }
   
   if (relative) {
-    info_na$frequency <- info_na$frequency / nrow(x)
+    info_na$frequencies <- info_na$frequencies / nrow(x)
     ylab <- "Relative Frequency of Missing Values"
   } else {
     ylab <- "Frequency of Missing Values"
@@ -204,15 +206,15 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
   if (is.null(main)) 
     main = "Pareto chart of variables with missing values"
   
-  scaleRight <- max(info_na$cumulative) / info_na$frequency[1]
+  scaleRight <- max(info_na$cumulative) / info_na$frequencies[1]
   
   if (!plot) {
     return(info_na)
   }
   
   ggplot(info_na, aes(x = variable)) +
-    geom_bar(aes(y = frequency, fill = grade), stat = "identity") +
-    geom_text(aes(y = frequency, 
+    geom_bar(aes(y = frequencies, fill = grade), stat = "identity") +
+    geom_text(aes(y = frequencies, 
                   label = paste(round(ratio * 100, 1), "%")),
               position = position_dodge(width = 0.9), vjust = -0.25) + 
     geom_path(aes(y = cumulative / scaleRight, group = 1), 
@@ -260,6 +262,8 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
 #' plot_na_intersect(carseats)
 #'   
 #' # Diagnose the data with missing_count using diagnose() function
+#' library(dplyr)
+#' 
 #' mice::boys %>% 
 #'   diagnose %>% 
 #'   arrange(desc(missing_count))
@@ -280,6 +284,7 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
 #' @importFrom tibble enframe
 #' @importFrom gridExtra grid.arrange
 #' @importFrom reshape2 melt
+#' @importFrom utils head
 #' @import ggplot2
 #' @import dplyr
 #' @export

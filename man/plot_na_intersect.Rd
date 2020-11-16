@@ -50,6 +50,8 @@ carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 plot_na_intersect(carseats)
   
 # Diagnose the data with missing_count using diagnose() function
+library(dplyr)
+
 mice::boys \%>\% 
   diagnose \%>\% 
   arrange(desc(missing_count))

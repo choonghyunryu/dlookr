@@ -64,7 +64,9 @@ font_family <- get("font_family", .dlookrEnv)
 
 if (length(targetVariable) == 0) targetVariable <- NULL
 
-ggplot2::theme_update(text = element_text(family = font_family))
+if (!is.null(font_family)) {
+  ggplot2::theme_update(text = element_text(family = font_family))
+}
 ```
 
 ```{r check_variables, echo=FALSE, warning=FALSE, message=FALSE, comment=""}

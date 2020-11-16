@@ -729,8 +729,8 @@ diagnose_report <- function(.data, output_format, output_file, output_dir, ...) 
 #' # create pdf file. file name is Diagn.pdf
 #' diagnose_report(carseats, output_file = "Diagn.pdf")
 #' # create pdf file. file name is ./Diagn.pdf and not browse
-#' diagnose_report(carseats, output_dir = ".", output_file = "Diagn.pdf", 
-#'   browse = FALSE)
+#' # diagnose_report(carseats, output_dir = ".", output_file = "Diagn.pdf", 
+#' #   browse = FALSE)
 #' # create html file. file name is Diagnosis_Report.html
 #' diagnose_report(carseats, output_format = "html")
 #' # create html file. file name is Diagn.html

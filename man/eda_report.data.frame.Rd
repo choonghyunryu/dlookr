@@ -110,7 +110,7 @@ eda_report(carseats, US)
 eda_report(carseats, "US", output_file = "EDA_carseats.pdf")
 
 # create pdf file. file name is EDA_carseats.pdf and not browse
-eda_report(carseats, "US", output_dir = ".", output_file = "EDA_carseats.pdf", browse = FALSE)
+# eda_report(carseats, "US", output_dir = ".", output_file = "EDA_carseats.pdf", browse = FALSE)
 
 # create html file. file name is EDA_Report.html
 eda_report(carseats, "US", output_format = "html")

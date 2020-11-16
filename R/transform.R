@@ -307,7 +307,6 @@ plot.transform <- function(x, ...) {
 #' @importFrom grDevices cairo_pdf
 #' @importFrom gridExtra grid.arrange
 #' @importFrom xtable xtable
-#' @importFrom moments skewness kurtosis
 #' @importFrom knitr kable
 #' @importFrom prettydoc html_pretty
 #' @importFrom kableExtra kable_styling
