@@ -192,7 +192,7 @@ The number of observations supported by the stats::shapiro.test function is 3 to
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span> Sales           0.995 2.54</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>    400
 #&gt; </span><span style='color: #555555;'>2</span><span> CompPrice       0.998 9.77</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>    400
-#&gt; </span><span style='color: #555555;'>3</span><span> Income          0.961 1.57</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 8</span><span>    400
+#&gt; </span><span style='color: #555555;'>3</span><span> Income          0.963 2.92</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 8</span><span>    400
 #&gt; </span><span style='color: #555555;'>4</span><span> Advertising     0.874 1.49</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>-17</span><span>    400
 #&gt; </span><span style='color: #555555;'>5</span><span> Population      0.952 4.08</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>-10</span><span>    400
 #&gt; </span><span style='color: #555555;'>6</span><span> Price           0.996 3.90</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>    400
@@ -207,7 +207,7 @@ The number of observations supported by the stats::shapiro.test function is 3 to
 #&gt;   vars        statistic  p_value sample
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span> CompPrice       0.998 9.77</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>    400
-#&gt; </span><span style='color: #555555;'>2</span><span> Income          0.961 1.57</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 8</span><span>    400
+#&gt; </span><span style='color: #555555;'>2</span><span> Income          0.963 2.92</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 8</span><span>    400
 #&gt; </span><span style='color: #555555;'>3</span><span> Advertising     0.874 1.49</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>-17</span><span>    400
 #&gt; </span><span style='color: #555555;'>4</span><span> Population      0.952 4.08</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>-10</span><span>    400
 #&gt; </span><span style='color: #555555;'>5</span><span> Age             0.957 1.86</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 9</span><span>    400
@@ -217,8 +217,8 @@ The number of observations supported by the stats::shapiro.test function is 3 to
 #&gt; </span><span style='color: #555555;'>1</span><span> Sales     0.995   0.254    400</div><div class='input'><span class='fu'>normality</span>(<span class='no'>carseats</span>, <span class='no'>Sales</span>, <span class='no'>Price</span>, <span class='kw'>sample</span> <span class='kw'>=</span> <span class='fl'>300</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 4</span><span>
 #&gt;   vars  statistic p_value sample
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Sales     0.992  0.084</span><span style='text-decoration: underline;'>3</span><span>    300
-#&gt; </span><span style='color: #555555;'>2</span><span> Price     0.996  0.690     300</div><div class='input'>
+#&gt; </span><span style='color: #555555;'>1</span><span> Sales     0.994   0.239    300
+#&gt; </span><span style='color: #555555;'>2</span><span> Price     0.996   0.618    300</div><div class='input'>
 <span class='co'># Using dplyr::grouped_dt</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
@@ -253,7 +253,7 @@ The number of observations supported by the stats::shapiro.test function is 3 to
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span> Sales           0.995 2.54</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>    400
 #&gt; </span><span style='color: #555555;'>2</span><span> CompPrice       0.998 9.77</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>    400
-#&gt; </span><span style='color: #555555;'>3</span><span> Income          0.961 1.57</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 8</span><span>    400
+#&gt; </span><span style='color: #555555;'>3</span><span> Income          0.963 2.92</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 8</span><span>    400
 #&gt; </span><span style='color: #555555;'>4</span><span> Advertising     0.874 1.49</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>-17</span><span>    400
 #&gt; </span><span style='color: #555555;'>5</span><span> Population      0.952 4.08</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>-10</span><span>    400
 #&gt; </span><span style='color: #555555;'>6</span><span> Price           0.996 3.90</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>    400
@@ -285,8 +285,8 @@ The number of observations supported by the stats::shapiro.test function is 3 to
 #&gt; </span><span style='color: #555555;'> 2</span><span> Sales       Good      Yes       0.983 5.67</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>     61
 #&gt; </span><span style='color: #555555;'> 3</span><span> CompPrice   Good      No        0.970 6.58</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>     24
 #&gt; </span><span style='color: #555555;'> 4</span><span> CompPrice   Good      Yes       0.984 5.98</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>     61
-#&gt; </span><span style='color: #555555;'> 5</span><span> Income      Good      No        0.900 2.18</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 2</span><span>     24
-#&gt; </span><span style='color: #555555;'> 6</span><span> Income      Good      Yes       0.962 8.25</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 2</span><span>     61
+#&gt; </span><span style='color: #555555;'> 5</span><span> Income      Good      No        0.902 3.31</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 2</span><span>     24
+#&gt; </span><span style='color: #555555;'> 6</span><span> Income      Good      Yes       0.955 3.03</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 2</span><span>     61
 #&gt; </span><span style='color: #555555;'> 7</span><span> Advertising Good      No        0.209 2.19</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>-10</span><span>     24
 #&gt; </span><span style='color: #555555;'> 8</span><span> Advertising Good      Yes       0.976 2.65</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>     61
 #&gt; </span><span style='color: #555555;'> 9</span><span> Population  Good      No        0.976 8.14</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>     24
@@ -306,11 +306,11 @@ The number of observations supported by the stats::shapiro.test function is 3 to
 #&gt;   variable ShelveLoc US    statistic p_value sample
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span> Sales    Bad       No        0.985   0.968     23
-#&gt; </span><span style='color: #555555;'>2</span><span> Sales    Bad       Yes       0.985   0.772     50
-#&gt; </span><span style='color: #555555;'>3</span><span> Sales    Good      No        0.959   0.576     18
+#&gt; </span><span style='color: #555555;'>2</span><span> Sales    Bad       Yes       0.983   0.686     50
+#&gt; </span><span style='color: #555555;'>3</span><span> Sales    Good      No        0.959   0.617     17
 #&gt; </span><span style='color: #555555;'>4</span><span> Sales    Good      Yes       0.970   0.385     39
-#&gt; </span><span style='color: #555555;'>5</span><span> Sales    Medium    No        0.983   0.655     54
-#&gt; </span><span style='color: #555555;'>6</span><span> Sales    Medium    Yes       0.991   0.811     93</div><div class='input'>
+#&gt; </span><span style='color: #555555;'>5</span><span> Sales    Medium    No        0.981   0.541     54
+#&gt; </span><span style='color: #555555;'>6</span><span> Sales    Medium    Yes       0.991   0.797     94</div><div class='input'>
 <span class='co'># Test log(Income) variables by 'ShelveLoc' and 'US',</span>
 <span class='co'># and extract only p.value greater than 0.01.</span>
 <span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
@@ -320,7 +320,7 @@ The number of observations supported by the stats::shapiro.test function is 3 to
  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>p_value</span> <span class='kw'>&gt;</span> <span class='fl'>0.01</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 6</span><span>
 #&gt;   variable   ShelveLoc US    statistic p_value sample
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> log_income Bad       No        0.945  0.087</span><span style='text-decoration: underline;'>3</span><span>     34</div><div class='input'># }
+#&gt; </span><span style='color: #555555;'>1</span><span> log_income Bad       No        0.941  0.081</span><span style='text-decoration: underline;'>5</span><span>     34</div><div class='input'># }
 
 </div></span></pre>
   </div>

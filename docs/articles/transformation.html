@@ -70,13 +70,14 @@
 
       
 
-      </header><script src="transformation_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="transformation_files/header-attrs-2.4.6/header-attrs.js"></script><link href="transformation_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="transformation_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Data Transformation</h1>
                         <h4 class="author">Choonghyun Ryu</h4>
             
-            <h4 class="date">2020-09-03</h4>
+            <h4 class="date">2020-11-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/choonghyunryu/dlookr/blob/master/vignettes/transformation.Rmd"><code>vignettes/transformation.Rmd</code></a></small>
       <div class="hidden name"><code>transformation.Rmd</code></div>
@@ -390,7 +391,7 @@ p100     120.000000 120.00000000
 
 # viz of imputation
 plot(income)</pre></body></html></div>
-<p><img src="transformation_files/figure-html/imputate_na-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="transformation_files/figure-html/imputate_na-1.png" width="600px" style="display: block; margin: auto;"></p>
 <p>The following imputes the categorical variable <code>urban</code> by the “mice” method.</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r">library(mice)
 
@@ -472,7 +473,7 @@ Yes       275        279            68.75              69.75
 
 # viz of imputation
 plot(urban)</pre></body></html></div>
-<p><img src="transformation_files/figure-html/imputate_na2-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="transformation_files/figure-html/imputate_na2-1.png" width="600px" style="display: block; margin: auto;"></p>
 </div>
 <div id="collaboration-with-dplyr" class="section level3">
 <h3 class="hasAnchor">
@@ -606,7 +607,7 @@ p100     191.0000000 173.0000000
 
 # viz of imputation
 plot(price)</pre></body></html></div>
-<p><img src="transformation_files/figure-html/imputate_outlier-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="transformation_files/figure-html/imputate_outlier-1.png" width="600px" style="display: block; margin: auto;"></p>
 </div>
 <div id="collaboration-with-dplyr-1" class="section level3">
 <h3 class="hasAnchor">
@@ -663,7 +664,7 @@ carseats %&gt;%
     <span class="kw">Sales_minmax</span> <span class="kw">=</span> <span class="fu"><a href="../reference/transform.html">transform</a></span>(<span class="no">carseats</span>$<span class="no">Sales</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"minmax"</span>)) <span class="kw">%&gt;%</span>
   <span class="fu">select</span>(<span class="no">Income_minmax</span>, <span class="no">Sales_minmax</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span>()</pre></body></html></div>
-<p><img src="transformation_files/figure-html/standardization-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="transformation_files/figure-html/standardization-1.png" width="600px" style="display: block; margin: auto;"></p>
 </div>
 <div id="resolving-skewness-data-with-transform" class="section level3">
 <h3 class="hasAnchor">
@@ -681,7 +682,7 @@ find_skewness(carseats, index = FALSE)
 # compute the skewness
 find_skewness(carseats, value = TRUE)
       Sales   CompPrice      Income Advertising  Population       Price 
-      0.185      -0.043          NA       0.637      -0.051      -0.125 
+      0.185      -0.043       0.045       0.637      -0.051      -0.125 
         Age   Education 
      -0.077       0.044 
 
@@ -728,7 +729,7 @@ p99       23.0100000      3.1359198
 p100      29.0000000      3.3672958
 # viz of transformation
 plot(Advertising_log)</pre></body></html></div>
-<p><img src="transformation_files/figure-html/resolving2-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="transformation_files/figure-html/resolving2-1.png" width="600px" style="display: block; margin: auto;"></p>
 <p>It seems that the raw data contains 0, as there is a -Inf in the log converted value. So this time, convert it to “log+1”.</p>
 <div class="sourceCode" id="cb11"><html><body><pre class="r">Advertising_log &lt;- transform(carseats$Advertising, method = "log+1")
 
@@ -768,7 +769,7 @@ p99       23.0100000     3.17846205
 p100      29.0000000     3.40119738
 # viz of transformation
 plot(Advertising_log)</pre></body></html></div>
-<p><img src="transformation_files/figure-html/resolving3-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="transformation_files/figure-html/resolving3-1.png" width="600px" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div id="binning" class="section level2">
@@ -814,7 +815,7 @@ summary(bin)
 11        &lt;NA&gt;   20 0.0500
 # Plot bins class object
 plot(bin)</pre></body></html></div>
-<p><img src="transformation_files/figure-html/binning-1.png" width="576"></p>
+<p><img src="transformation_files/figure-html/binning-1.png" width="600px"></p>
 <div class="sourceCode" id="cb13"><html><body><pre class="r"># Using labels argument
 bin &lt;- binning(carseats$Income, nbins = 4,
               labels = c("LQ1", "UQ1", "LQ3", "UQ3"))
@@ -917,7 +918,7 @@ attr(bin, "ivtable")
 
 # visualize optimal_bins class
 plot(bin, sub = "bins of Advertising variable")</pre></body></html></div>
-<p><img src="transformation_files/figure-html/binning_by-1.png" width="576"></p>
+<p><img src="transformation_files/figure-html/binning_by-1.png" width="600px"></p>
 </div>
 </div>
 <div id="creating-a-data-transformation-report-using-transformation_report" class="section level2">

@@ -225,16 +225,16 @@ The default values are Good: [0, 0.05], OK: (0.05, 0.4], Bad: (0.4, 0.8], Remove
 <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"Pareto Chart for mice::boys"</span>)</div><div class='img'><img src='plot_na_pareto-7.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Return the aggregate information about missing values.</span>
 <span class='fu'>plot_na_pareto</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span>, <span class='kw'>only_na</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 8 x 5</span><span>
-#&gt;   variable frequency   ratio grade cumulative
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> tv             522 0.698   Bad         32.2
-#&gt; </span><span style='color: #555555;'>2</span><span> gen            503 0.672   Bad         63.2
-#&gt; </span><span style='color: #555555;'>3</span><span> phb            503 0.672   Bad         94.2
-#&gt; </span><span style='color: #555555;'>4</span><span> hc              46 0.061</span><span style='text-decoration: underline;'>5</span><span>  OK          97.0
-#&gt; </span><span style='color: #555555;'>5</span><span> bmi             21 0.028</span><span style='text-decoration: underline;'>1</span><span>  Good        98.3
-#&gt; </span><span style='color: #555555;'>6</span><span> hgt             20 0.026</span><span style='text-decoration: underline;'>7</span><span>  Good        99.6
-#&gt; </span><span style='color: #555555;'>7</span><span> wgt              4 0.005</span><span style='text-decoration: underline;'>35</span><span> Good        99.8
-#&gt; </span><span style='color: #555555;'>8</span><span> reg              3 0.004</span><span style='text-decoration: underline;'>01</span><span> Good       100  </div><div class='input'>
+#&gt;   variable frequencies   ratio grade cumulative
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> tv               522 0.698   Bad         32.2
+#&gt; </span><span style='color: #555555;'>2</span><span> gen              503 0.672   Bad         63.2
+#&gt; </span><span style='color: #555555;'>3</span><span> phb              503 0.672   Bad         94.2
+#&gt; </span><span style='color: #555555;'>4</span><span> hc                46 0.061</span><span style='text-decoration: underline;'>5</span><span>  OK          97.0
+#&gt; </span><span style='color: #555555;'>5</span><span> bmi               21 0.028</span><span style='text-decoration: underline;'>1</span><span>  Good        98.3
+#&gt; </span><span style='color: #555555;'>6</span><span> hgt               20 0.026</span><span style='text-decoration: underline;'>7</span><span>  Good        99.6
+#&gt; </span><span style='color: #555555;'>7</span><span> wgt                4 0.005</span><span style='text-decoration: underline;'>35</span><span> Good        99.8
+#&gt; </span><span style='color: #555555;'>8</span><span> reg                3 0.004</span><span style='text-decoration: underline;'>01</span><span> Good       100  </div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

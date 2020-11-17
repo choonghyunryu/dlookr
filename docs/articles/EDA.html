@@ -70,13 +70,14 @@
 
       
 
-      </header><script src="EDA_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="EDA_files/header-attrs-2.4.6/header-attrs.js"></script><link href="EDA_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="EDA_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Exploratory Data Analysis</h1>
                         <h4 class="author">Choonghyun Ryu</h4>
             
-            <h4 class="date">2020-09-03</h4>
+            <h4 class="date">2020-11-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/choonghyunryu/dlookr/blob/master/vignettes/EDA.Rmd"><code>vignettes/EDA.Rmd</code></a></small>
       <div class="hidden name"><code>EDA.Rmd</code></div>
@@ -475,13 +476,13 @@ carseats %&gt;%
 <p><code><a href="../reference/plot_normality.data.frame.html">plot_normality()</a></code> can also specify several variables like <code><a href="../reference/normality.data.frame.html">normality()</a></code> function.</p>
 <div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="co"># Select columns by name</span>
 <span class="fu"><a href="../reference/plot_normality.data.frame.html">plot_normality</a></span>(<span class="no">carseats</span>, <span class="no">Sales</span>, <span class="no">CompPrice</span>)</pre></body></html></div>
-<p><img src="EDA_files/figure-html/plot_normality-1.png" width="576" style="display: block; margin: auto;"><img src="EDA_files/figure-html/plot_normality-2.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="EDA_files/figure-html/plot_normality-1.png" width="600px" style="display: block; margin: auto;"><img src="EDA_files/figure-html/plot_normality-2.png" width="600px" style="display: block; margin: auto;"></p>
 <p>The <code><a href="../reference/plot_normality.data.frame.html">plot_normality()</a></code> function also supports the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> function syntax in the <code>dplyr</code> package.</p>
 <div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">ShelveLoc</span> <span class="kw">==</span> <span class="st">"Good"</span>) <span class="kw">%&gt;%</span>
   <span class="fu">group_by</span>(<span class="no">US</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/plot_normality.data.frame.html">plot_normality</a></span>(<span class="no">Income</span>)</pre></body></html></div>
-<p><img src="EDA_files/figure-html/plot_normality2-1.png" width="576" style="display: block; margin: auto;"><img src="EDA_files/figure-html/plot_normality2-2.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="EDA_files/figure-html/plot_normality2-1.png" width="600px" style="display: block; margin: auto;"><img src="EDA_files/figure-html/plot_normality2-2.png" width="600px" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div id="eda-of-bivariate-data" class="section level2">
@@ -565,17 +566,17 @@ correlate(carseats, -(Sales:Income))
 </h3>
 <p><code><a href="../reference/plot_correlate.data.frame.html">plot_correlate()</a></code> visualizes the correlation matrix.</p>
 <div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="fu"><a href="../reference/plot_correlate.data.frame.html">plot_correlate</a></span>(<span class="no">carseats</span>)</pre></body></html></div>
-<p><img src="EDA_files/figure-html/plot_correlate-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="EDA_files/figure-html/plot_correlate-1.png" width="600px" style="display: block; margin: auto;"></p>
 <p><code><a href="../reference/plot_correlate.data.frame.html">plot_correlate()</a></code> can also specify multiple variables, like the <code><a href="../reference/correlate.data.frame.html">correlate()</a></code> function. The following is a visualization of the correlation matrix including several selected variables.</p>
 <div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="co"># Select columns by name</span>
 <span class="fu"><a href="../reference/plot_correlate.data.frame.html">plot_correlate</a></span>(<span class="no">carseats</span>, <span class="no">Sales</span>, <span class="no">Price</span>)</pre></body></html></div>
-<p><img src="EDA_files/figure-html/plot_correlate2-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="EDA_files/figure-html/plot_correlate2-1.png" width="600px" style="display: block; margin: auto;"></p>
 <p>The <code><a href="../reference/plot_correlate.data.frame.html">plot_correlate()</a></code> function also supports the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> function syntax in the <code>dplyr</code> package.</p>
 <div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">ShelveLoc</span> <span class="kw">==</span> <span class="st">"Good"</span>) <span class="kw">%&gt;%</span>
   <span class="fu">group_by</span>(<span class="no">Urban</span>, <span class="no">US</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/plot_correlate.data.frame.html">plot_correlate</a></span>(<span class="no">Sales</span>)</pre></body></html></div>
-<p><img src="EDA_files/figure-html/plot_correlate3-1.png" width="576" style="display: block; margin: auto;"><img src="EDA_files/figure-html/plot_correlate3-2.png" width="576" style="display: block; margin: auto;"><img src="EDA_files/figure-html/plot_correlate3-3.png" width="576" style="display: block; margin: auto;"><img src="EDA_files/figure-html/plot_correlate3-4.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="EDA_files/figure-html/plot_correlate3-1.png" width="600px" style="display: block; margin: auto;"><img src="EDA_files/figure-html/plot_correlate3-2.png" width="600px" style="display: block; margin: auto;"><img src="EDA_files/figure-html/plot_correlate3-3.png" width="600px" style="display: block; margin: auto;"><img src="EDA_files/figure-html/plot_correlate3-4.png" width="600px" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div id="eda-based-on-target-variable" class="section level2">
@@ -660,7 +661,7 @@ summary(cat_num)
  Max.   :14.03   Max.   :16.27  </pre></body></html></div>
 <p><code><a href="https://rdrr.io/r/base/plot.html">plot()</a></code> visualizes the <code>relate</code> class object created by <code><a href="../reference/relate.html">relate()</a></code> as the relationship between the target variable and the predictor variable. The relationship between <code>US</code> and <code>Sales</code> is visualized by density plot.</p>
 <div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">cat_num</span>)</pre></body></html></div>
-<p><img src="EDA_files/figure-html/target_by3-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="EDA_files/figure-html/target_by3-1.png" width="600px" style="display: block; margin: auto;"></p>
 </div>
 <div id="cases-where-predictors-are-categorical-variable" class="section level4">
 <h4 class="hasAnchor">
@@ -681,7 +682,7 @@ Test for independence of all factors:
     Chisq = 2.7397, df = 2, p-value = 0.2541</pre></body></html></div>
 <p><code><a href="https://rdrr.io/r/base/plot.html">plot()</a></code> visualizes the relationship between the target variable and the predictor. The relationship between <code>US</code> and <code>ShelveLoc</code> is represented by a <code>mosaics plot</code>.</p>
 <div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">cat_cat</span>)</pre></body></html></div>
-<p><img src="EDA_files/figure-html/target_by5-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="EDA_files/figure-html/target_by5-1.png" width="600px" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div id="eda-when-target-variable-is-numerical-variable" class="section level3">
@@ -726,13 +727,13 @@ F-statistic: 98.25 on 1 and 398 DF,  p-value: &lt; 2.2e-16</pre></body></html></
 <p><code><a href="https://rdrr.io/r/base/plot.html">plot()</a></code> visualizes the relationship between the target and predictor variables. The relationship between <code>Sales</code> and <code>Price</code> is visualized with a scatter plot. The figure on the left shows the scatter plot of <code>Sales</code> and <code>Price</code> and the confidence interval of the regression line and regression line. The figure on the right shows the relationship between the original data and the predicted values of the linear model as a scatter plot. If there is a linear relationship between the two variables, the scatter plot of the observations converges on the red diagonal line.</p>
 <div class="sourceCode" id="cb29"><html><body><pre class="r">plot(num_num)
 `geom_smooth()` using formula 'y ~ x'</pre></body></html></div>
-<p><img src="EDA_files/figure-html/target_by8-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="EDA_files/figure-html/target_by8-1.png" width="600px" style="display: block; margin: auto;"></p>
 <p>The scatter plot of the data with a large number of observations is output as overlapping points. This makes it difficult to judge the relationship between the two variables. It also takes a long time to perform the visualization. In this case, the above problem can be solved by <code>hexabin plot</code>.</p>
 <p>In <code><a href="https://rdrr.io/r/base/plot.html">plot()</a></code>, the <code>hex_thres</code> argument provides a basis for drawing <code>hexabin plot</code>. If the number of observations is greater than <code>hex_thres</code>, draw a <code>hexabin plot</code>.</p>
 <p>The following example visualizes the <code>hexabin plot</code> rather than the scatter plot by specifying 350 for the <code>hex_thres</code> argument. This is because the number of observations is 400.</p>
 <div class="sourceCode" id="cb30"><html><body><pre class="r">plot(num_num, hex_thres = 350)
 `geom_smooth()` using formula 'y ~ x'</pre></body></html></div>
-<p><img src="EDA_files/figure-html/target_by8_2-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="EDA_files/figure-html/target_by8_2-1.png" width="600px" style="display: block; margin: auto;"></p>
 </div>
 <div id="cases-where-predictors-are-categorical-variable-1" class="section level4">
 <h4 class="hasAnchor">
@@ -771,7 +772,7 @@ Multiple R-squared:  0.3172,    Adjusted R-squared:  0.3138
 F-statistic: 92.23 on 2 and 397 DF,  p-value: &lt; 2.2e-16</pre></body></html></div>
 <p><code><a href="https://rdrr.io/r/base/plot.html">plot()</a></code> visualizes the relationship between the target variable and the predictor. The relationship between <code>Sales</code> and <code>ShelveLoc</code> is represented by a <code>box plot</code>.</p>
 <div class="sourceCode" id="cb32"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">num_cat</span>)</pre></body></html></div>
-<p><img src="EDA_files/figure-html/target_by10-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="EDA_files/figure-html/target_by10-1.png" width="600px" style="display: block; margin: auto;"></p>
 </div>
 </div>
 </div>
@@ -1108,7 +1109,7 @@ con_sqlite %&gt;%
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">ShelveLoc</span>, <span class="no">US</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/plot_normality.data.frame.html">plot_normality</a></span>(<span class="no">Sales</span>)</pre></body></html></div>
-<p><img src="EDA_files/figure-html/plot_normality_dbi-1.png" width="576" style="display: block; margin: auto;"><img src="EDA_files/figure-html/plot_normality_dbi-2.png" width="576" style="display: block; margin: auto;"><img src="EDA_files/figure-html/plot_normality_dbi-3.png" width="576" style="display: block; margin: auto;"><img src="EDA_files/figure-html/plot_normality_dbi-4.png" width="576" style="display: block; margin: auto;"><img src="EDA_files/figure-html/plot_normality_dbi-5.png" width="576" style="display: block; margin: auto;"><img src="EDA_files/figure-html/plot_normality_dbi-6.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="EDA_files/figure-html/plot_normality_dbi-1.png" width="600px" style="display: block; margin: auto;"><img src="EDA_files/figure-html/plot_normality_dbi-2.png" width="600px" style="display: block; margin: auto;"><img src="EDA_files/figure-html/plot_normality_dbi-3.png" width="600px" style="display: block; margin: auto;"><img src="EDA_files/figure-html/plot_normality_dbi-4.png" width="600px" style="display: block; margin: auto;"><img src="EDA_files/figure-html/plot_normality_dbi-5.png" width="600px" style="display: block; margin: auto;"><img src="EDA_files/figure-html/plot_normality_dbi-6.png" width="600px" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb39"><html><body><pre class="r">
 <span class="co"># extract only those with 'ShelveLoc' variable level is "Good",</span>
 <span class="co"># and plot 'Income' by 'US'</span>
@@ -1117,7 +1118,7 @@ con_sqlite %&gt;%
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">ShelveLoc</span> <span class="kw">==</span> <span class="st">"Good"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">US</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/plot_normality.data.frame.html">plot_normality</a></span>(<span class="no">Income</span>)</pre></body></html></div>
-<p><img src="EDA_files/figure-html/plot_normality_dbi-7.png" width="576" style="display: block; margin: auto;"><img src="EDA_files/figure-html/plot_normality_dbi-8.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="EDA_files/figure-html/plot_normality_dbi-7.png" width="600px" style="display: block; margin: auto;"><img src="EDA_files/figure-html/plot_normality_dbi-8.png" width="600px" style="display: block; margin: auto;"></p>
 </div>
 <div id="compute-the-correlation-coefficient-between-two-columns-of-table-in-dbms" class="section level3">
 <h3 class="hasAnchor">
@@ -1200,10 +1201,10 @@ con_sqlite %&gt;%
   plot_correlate(Sales)
 Warning in cor(df[idx, names(df)[idx_numeric]], use = "pairwise.complete.obs", :
 the standard deviation is zero</pre></body></html></div>
-<p><img src="EDA_files/figure-html/plot_correlation_dbi-1.png" width="576" style="display: block; margin: auto;"><img src="EDA_files/figure-html/plot_correlation_dbi-2.png" width="576" style="display: block; margin: auto;"><img src="EDA_files/figure-html/plot_correlation_dbi-3.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="EDA_files/figure-html/plot_correlation_dbi-1.png" width="600px" style="display: block; margin: auto;"><img src="EDA_files/figure-html/plot_correlation_dbi-2.png" width="600px" style="display: block; margin: auto;"><img src="EDA_files/figure-html/plot_correlation_dbi-3.png" width="600px" style="display: block; margin: auto;"></p>
 <pre><code>Warning: Passed a group with no more than five observations.
 (Urban == NA and US == Yes)</code></pre>
-<p><img src="EDA_files/figure-html/plot_correlation_dbi-4.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="EDA_files/figure-html/plot_correlation_dbi-4.png" width="600px" style="display: block; margin: auto;"></p>
 </div>
 <div id="eda-based-on-target-variable-1" class="section level3">
 <h3 class="hasAnchor">
@@ -1275,7 +1276,7 @@ summary(cat_num)
  3rd Qu.:13.97   3rd Qu.:16.27  
  Max.   :14.03   Max.   :16.27  </pre></body></html></div>
 <div class="sourceCode" id="cb44"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">cat_num</span>)</pre></body></html></div>
-<p><img src="EDA_files/figure-html/plot_target_by_dbi-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="EDA_files/figure-html/plot_target_by_dbi-1.png" width="600px" style="display: block; margin: auto;"></p>
 </div>
 <div id="reporting-the-information-of-eda-for-table-of-the-dbms" class="section level3">
 <h3 class="hasAnchor">
