@@ -86,12 +86,12 @@ if (!is.null(targetVariable)) {
 
 # if all elements of a numerical variable are NA,
 # remove from correlation coefficient calculation
-idx.numeric <- idx.numeric[apply(edaData[, idx.numeric], 2,
+idx.numeric <- idx.numeric[apply(as.data.frame(edaData[, idx.numeric]), 2,
                                  function(x) !all(is.na(x)))]
 
 # if all elements of the numerical variable are the same value,
 # remove from the correlation coefficient calculation
-idx.numeric <- idx.numeric[apply(edaData[, idx.numeric], 2,
+idx.numeric <- idx.numeric[apply(as.data.frame(edaData[, idx.numeric]), 2,
                                  function(x) diff(range(x, na.rm = TRUE)) > 0)]
 ```
 

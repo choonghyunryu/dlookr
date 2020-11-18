@@ -1,3 +1,8 @@
+dlookr 0.3.15
+----------------------------------------------------------------
+* eda_report() fixed error when data have a only 1 complated numeric variable (@EvanLuff, #27).
+
+
 dlookr 0.3.14
 ----------------------------------------------------------------
 * correlate() add the non-parametric correlation coefficient, like "spearman" and "kendall" (@Roberto Passera)
