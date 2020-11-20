@@ -31,6 +31,8 @@
 #'       \item "1/x" : 1 / x transformation
 #'       \item "x^2" : x square transformation
 #'       \item "x^3" : x^3 square transformation
+#'       \item "box-cox" : Box-Box transformation
+#'       \item "Yeo–Johnson" : Yeo–Johnson transformation
 #'     }
 #'   }
 #' }
@@ -63,8 +65,10 @@
 #' @import tibble
 #' @importFrom methods is
 #' @importFrom stats sd
+#' @importFrom forecast BoxCox.lambda BoxCox
+#'  
 transform <- function(x, method = c("zscore", "minmax", "log", "log+1", "sqrt",
-  "1/x", "x^2", "x^3")) {
+  "1/x", "x^2", "x^3", "Box-Cox", "Yeo–Johnson")) {
   method <- match.arg(method)
 
   if (!is(x)[1] %in% c("integer", "numeric")) {
@@ -78,6 +82,19 @@ transform <- function(x, method = c("zscore", "minmax", "log", "log+1", "sqrt",
   get_minmax <- function(x) {
     (x - min(x, na.rm = TRUE)) / diff(range(x, na.rm = TRUE))
   }
+  
+  get_boxcox <- function(x) {
+    forecast::BoxCox(x, lambda = "auto")
+  }  
+  
+  get_yjohnson <- function(x) {
+    lambda <- forecast::BoxCox.lambda(x)
+    lambda <- rep(lambda, length(x))
+    
+    ifelse(x >= 0, ifelse(lambda != 0, ((x + 1) ^ lambda - 1) / lambda, log(x + 1)),
+                   ifelse(lambda != 2, -((-1 * x + 1) ^ (2 - lambda) - 1) / (2 - lambda),
+                          -1 * log(x + 1)))
+  }    
 
   if (method == "zscore")
     result <- get_zscore(x)
@@ -95,7 +112,11 @@ transform <- function(x, method = c("zscore", "minmax", "log", "log+1", "sqrt",
     result <- x^2
   else if (method == "x^3")
     result <- x^3
-
+  else if (method == "Box-Cox") 
+    result <- get_boxcox(x)
+  else if (method == "Yeo–Johnson") 
+    result <- get_yjohnson(x)
+    
   attr(result, "method") <- method
   attr(result, "origin") <- x
 
@@ -151,7 +172,8 @@ summary.transform <- function(object, ...) {
 
   if (method %in% c("zscore", "minmax")) {
     cat(sprintf("* Standardization with %s\n\n", method))
-  } else if (method %in% c("log", "log+1", "sqrt", "1/x", "x^2", "x^3")) {
+  } else if (method %in% c("log", "log+1", "sqrt", "1/x", "x^2", "x^3", 
+                           "Box-Cox", "Yeo–Johnson")) {
     cat(sprintf("* Resolving Skewness with %s\n\n", method))
   }
 

@@ -2,6 +2,10 @@ dlookr 0.3.15
 ----------------------------------------------------------------
 * eda_report() fixed error when data have a only 1 complated numeric variable (@EvanLuff, #27).
 
+* transform(), summary.transform(), plot.transform() supports Box-Cox transform. (@lucazav, #21).
+
+* transform(), summary.transform(), plot.transform() supports Yeo-Johnson transform. (@zhjx19, #21).
+
 
 dlookr 0.3.14
 ----------------------------------------------------------------
