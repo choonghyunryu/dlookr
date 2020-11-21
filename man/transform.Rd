@@ -7,7 +7,7 @@
 transform(
   x,
   method = c("zscore", "minmax", "log", "log+1", "sqrt", "1/x", "x^2", "x^3",
-    "Box-Cox", "Yeo–Johnson")
+    "Box-Cox", "Yeo-Johnson")
 )
 }
 \arguments{
@@ -34,8 +34,8 @@ Attributes of transform class is as follows.
       \item "1/x" : 1 / x transformation
       \item "x^2" : x square transformation
       \item "x^3" : x^3 square transformation
-      \item "box-cox" : Box-Box transformation
-      \item "Yeo–Johnson" : Yeo–Johnson transformation
+      \item "Box-Cox" : Box-Box transformation
+      \item "Yeo-Johnson" : Yeo-Johnson transformation
     }
   }
 }

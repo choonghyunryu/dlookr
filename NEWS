@@ -6,6 +6,8 @@ dlookr 0.3.15
 
 * transform(), summary.transform(), plot.transform() supports Yeo-Johnson transform. (@zhjx19, #21).
 
+* plot_normality() supports log+1, 1/x, x^2, x^3, Box-Cox, Yeo-Johnson transform. (@lucazav, #21).
+
 
 dlookr 0.3.14
 ----------------------------------------------------------------

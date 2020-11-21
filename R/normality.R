@@ -222,14 +222,27 @@ normality_group_impl <- function(df, vars, sample) {
 #' Since the plot is drawn for each variable, if you specify more than
 #' one variable in the ... argument, the specified number of plots are drawn.
 #'
+#' The argument values that left and right can have are as follows.:
+#' 
+#' \itemize{
+#'   \item "log" : log transformation. log(x)
+#'   \item "log+1" : log transformation. log(x + 1). Used for values that contain 0.
+#'   \item "sqrt" : square root transformation.
+#'   \item "1/x" : 1 / x transformation
+#'   \item "x^2" : x square transformation
+#'   \item "x^3" : x^3 square transformation
+#'   \item "Box-Cox" : Box-Box transformation
+#'   \item "Yeo-Johnson" : Yeo-Johnson transformation
+#' }
+#' 
 #' @section Distribution information:
 #' The plot derived from the numerical data visualization is as follows.
 #'
 #' \itemize{
-#' \item histogram by original data
-#' \item q-q plot by original data
-#' \item histogram by log transfer data
-#' \item histogram by square root transfer data
+#'   \item histogram by original data
+#'   \item q-q plot by original data
+#'   \item histogram by log transfer data
+#'   \item histogram by square root transfer data
 #' }
 #'
 #' @param .data a data.frame or a \code{\link{tbl_df}}.
@@ -243,6 +256,10 @@ normality_group_impl <- function(df, vars, sample) {
 #' They support unquoting and splicing.
 #' 
 #' See vignette("EDA") for an introduction to these concepts.
+#' @param left character. Specifies the data transformation method to draw the histogram in the 
+#' lower left corner. The default is "log".
+#' @param right character. Specifies the data transformation method to draw the histogram in the 
+#' lower right corner. The default is "sqrt".
 #'
 #' @seealso \code{\link{plot_normality.tbl_dbi}}, \code{\link{plot_outlier.data.frame}}.
 #' @export
@@ -261,12 +278,16 @@ normality_group_impl <- function(df, vars, sample) {
 #' plot_normality(carseats, -Income, -Price)
 #' plot_normality(carseats, 1)
 #'
+#' # Change the method of transformation
+#' plot_normality(carseats, Income, right = "1/x")
+#' plot_normality(carseats, Income, left = "Box-Cox", right = "Yeo–Johnson")
+#' 
 #' # Using dplyr::grouped_df
 #' library(dplyr)
 #'
 #' gdata <- group_by(carseats, ShelveLoc, US)
-#' plot_normality(carseats)
-#' plot_normality(carseats, "Sales")
+#' plot_normality(gdata)
+#' plot_normality(gdata, "Sales")
 #'
 #' # Using pipes ---------------------------------
 #' # Visualization of all numerical variables
@@ -292,27 +313,34 @@ normality_group_impl <- function(df, vars, sample) {
 #' carseats %>%
 #'  filter(ShelveLoc == "Good") %>%
 #'  group_by(US) %>%
-#'  plot_normality(Income)
+#'  plot_normality(Income, right = "Box-Cox")
 #' }
 #' @method plot_normality data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
 #' @importFrom tibble is_tibble
 #' @export
-plot_normality.data.frame <- function(.data, ...) {
+plot_normality.data.frame <- function(.data, ..., left = c("log", "sqrt", "log+1", "1/x", "x^2", 
+                                                           "x^3", "Box-Cox", "Yeo-Johnson"),
+                                      right = c("sqrt", "log", "log+1", "1/x", "x^2", 
+                                                "x^3", "Box-Cox", "Yeo-Johnson")) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
-  plot_normality_impl(.data, vars)
+  
+  left <- match.arg(left)
+  right <- match.arg(right)
+  
+  plot_normality_impl(.data, vars, left, right)
 }
 
 #' @importFrom stats qqline qqnorm
-plot_normality_impl <- function(df, vars) {
+plot_normality_impl <- function(df, vars, left, right) {
   if (length(vars) == 0) vars <- names(df)
 
   if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
 
   idx_numeric <- find_class(df[, vars], type = "numerical")
 
-  plot_normality <- function(df, var) {
+  plot_normality <- function(df, var, left, right) {
     x <- pull(df, var)
 
     op <- par(no.readonly = TRUE)
@@ -326,13 +354,16 @@ plot_normality_impl <- function(df, vars) {
     qqnorm(x2, main = "origin: Q-Q plot")
     qqline(x2)
 
-    hist(log(x), col = "lightblue", las = 1, main = "log")
-    hist(sqrt(x), col = "lightblue", las = 1, main = "sqrt")
+    trans_left <- get_transform(x, left)
+    trans_right <- get_transform(x, right)
+    
+    hist(trans_left, col = "lightblue", las = 1, main = paste(left, "transformation"))
+    hist(trans_right, col = "lightblue", las = 1, main = paste(right, "transformation"))
 
     title(sprintf("Normality Diagnosis Plot (%s)", var), outer = TRUE)
   }
 
-  tmp <- lapply(vars[idx_numeric], function(x) plot_normality(df, x))
+  tmp <- lapply(vars[idx_numeric], function(x) plot_normality(df, x, left, right))
 }
 
 
@@ -341,21 +372,28 @@ plot_normality_impl <- function(df, vars) {
 #' @importFrom rlang quos
 #' @importFrom tibble is_tibble
 #' @export
-plot_normality.grouped_df <- function(.data, ...) {
+plot_normality.grouped_df <- function(.data, ..., left = c("log", "sqrt", "log+1", "1/x", "x^2", 
+                                                           "x^3", "Box-Cox", "Yeo-Johnson"),
+                                      right = c("sqrt", "log", "log+1", "1/x", "x^2", 
+                                                "x^3", "Box-Cox", "Yeo-Johnson")) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
-  plot_normality_group_impl(.data, vars)
+  
+  left <- match.arg(left)
+  right <- match.arg(right)
+  
+  plot_normality_group_impl(.data, vars, left, right)
 }
 
 #' @importFrom stats qqline qqnorm
 #' @importFrom graphics text
-plot_normality_group_impl <- function(df, vars) {
+plot_normality_group_impl <- function(df, vars, left, right) {
   if (length(vars) == 0) vars <- names(df)
 
   if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
 
   idx_numeric <- find_class(df[, vars], type = "numerical")
 
-  call_plot <- function(var) {
+  call_plot <- function(var, left, right) {
     plot_normality <- function(pos, df, var) {
       if (utils::packageVersion("dplyr") >= "0.8.0") {
         x <- unlist(df[(attr(df, "groups") %>% 
@@ -379,16 +417,25 @@ plot_normality_group_impl <- function(df, vars) {
       qqnorm(x, main = "origin: Q-Q plot")
       qqline(x)
 
-      finite_cnt <- sum(is.finite(log(x)))
+      trans_left <- get_transform(x, left)
+      trans_right <- get_transform(x, right)
       
-      if (finite_cnt == 0) {
-        plot(0, axes = FALSE, type = "n", xlab = "", ylab ="")
-        text(1, 0, "All log transfomed data is infinite", cex = 1.1)
+      finite_left_cnt <- sum(is.finite(trans_left))
+      finite_right_cnt <- sum(is.finite(trans_right))
+      
+      if (finite_left_cnt == 0) {
+        plot(0, axes = FALSE, type = "n", xlab = "", ylab = "")
+        text(1, 0, "All transfomed data is infinite", cex = 1.1)
       } else {
-        hist(log(x), col = "lightblue", las = 1, main = "log")
+        hist(trans_left, col = "lightblue", las = 1, main = paste(left, "transformation"))
       }
       
-      hist(sqrt(x), col = "lightblue", las = 1, main = "sqrt")
+      if (finite_right_cnt == 0) {
+        plot(0, axes = FALSE, type = "n", xlab = "", ylab = "")
+        text(1, 0, "All transfomed data is infinite", cex = 1.1)
+      } else {
+        hist(trans_right, col = "lightblue", las = 1, main = paste(right, "transformation"))
+      }
 
       title(sprintf("Normality Diagnosis Plot\n(%s by %s)", var, label),
             outer = TRUE)
@@ -403,5 +450,40 @@ plot_normality_group_impl <- function(df, vars) {
     lapply(seq(cnt), plot_normality, df, var)
   }
 
-  tmp <- lapply(vars[idx_numeric], function(x) call_plot(x))
+  tmp <- lapply(vars[idx_numeric], function(x) call_plot(x, left, right))
+}
+
+#' @importFrom forecast BoxCox.lambda BoxCox
+get_transform <- function(x, method) {
+  get_boxcox <- function(x) {
+    forecast::BoxCox(x, lambda = "auto")
+  }  
+  
+  get_yjohnson <- function(x) {
+    lambda <- forecast::BoxCox.lambda(x)
+    lambda <- rep(lambda, length(x))
+    
+    ifelse(x >= 0, ifelse(lambda != 0, ((x + 1) ^ lambda - 1) / lambda, log(x + 1)),
+           ifelse(lambda != 2, -((-1 * x + 1) ^ (2 - lambda) - 1) / (2 - lambda),
+                  -1 * log(x + 1)))
+  } 
+  
+  if (method == "log")
+    result <- log(x)
+  else if (method == "log+1")
+    result <- log(x + 1)
+  else if (method == "sqrt")
+    result <- sqrt(x)
+  else if (method == "1/x")
+    result <- 1/x
+  else if (method == "x^2")
+    result <- x^2
+  else if (method == "x^3")
+    result <- x^3
+  else if (method == "Box-Cox") 
+    result <- get_boxcox(x)
+  else if (method == "Yeo-Johnson") 
+    result <- get_yjohnson(x)
+  
+  result
 }

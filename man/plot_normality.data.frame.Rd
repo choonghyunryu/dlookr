@@ -7,7 +7,12 @@
 \usage{
 plot_normality(.data, ...)
 
-\method{plot_normality}{data.frame}(.data, ...)
+\method{plot_normality}{data.frame}(
+  .data,
+  ...,
+  left = c("log", "sqrt", "log+1", "1/x", "x^2", "x^3", "Box-Cox", "Yeo-Johnson"),
+  right = c("sqrt", "log", "log+1", "1/x", "x^2", "x^3", "Box-Cox", "Yeo-Johnson")
+)
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}
@@ -22,6 +27,12 @@ represent column positions.
 They support unquoting and splicing.
 
 See vignette("EDA") for an introduction to these concepts.}
+
+\item{left}{character. Specifies the data transformation method to draw the histogram in the 
+lower left corner. The default is "log".}
+
+\item{right}{character. Specifies the data transformation method to draw the histogram in the 
+lower right corner. The default is "sqrt".}
 }
 \description{
 The plot_normality() visualize distribution information
@@ -31,16 +42,29 @@ for normality test of the numerical data.
 The scope of the visualization is the provide a distribution information.
 Since the plot is drawn for each variable, if you specify more than
 one variable in the ... argument, the specified number of plots are drawn.
+
+The argument values that left and right can have are as follows.:
+
+\itemize{
+  \item "log" : log transformation. log(x)
+  \item "log+1" : log transformation. log(x + 1). Used for values that contain 0.
+  \item "sqrt" : square root transformation.
+  \item "1/x" : 1 / x transformation
+  \item "x^2" : x square transformation
+  \item "x^3" : x^3 square transformation
+  \item "Box-Cox" : Box-Box transformation
+  \item "Yeo-Johnson" : Yeo-Johnson transformation
+}
 }
 \section{Distribution information}{
 
 The plot derived from the numerical data visualization is as follows.
 
 \itemize{
-\item histogram by original data
-\item q-q plot by original data
-\item histogram by log transfer data
-\item histogram by square root transfer data
+  \item histogram by original data
+  \item q-q plot by original data
+  \item histogram by log transfer data
+  \item histogram by square root transfer data
 }
 }
 
@@ -59,12 +83,16 @@ plot_normality(carseats, Income, Price)
 plot_normality(carseats, -Income, -Price)
 plot_normality(carseats, 1)
 
+# Change the method of transformation
+plot_normality(carseats, Income, right = "1/x")
+plot_normality(carseats, Income, left = "Box-Cox", right = "Yeo–Johnson")
+
 # Using dplyr::grouped_df
 library(dplyr)
 
 gdata <- group_by(carseats, ShelveLoc, US)
-plot_normality(carseats)
-plot_normality(carseats, "Sales")
+plot_normality(gdata)
+plot_normality(gdata, "Sales")
 
 # Using pipes ---------------------------------
 # Visualization of all numerical variables
@@ -90,7 +118,7 @@ carseats \%>\%
 carseats \%>\%
  filter(ShelveLoc == "Good") \%>\%
  group_by(US) \%>\%
- plot_normality(Income)
+ plot_normality(Income, right = "Box-Cox")
 }
 }
 \seealso{

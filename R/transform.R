@@ -31,8 +31,8 @@
 #'       \item "1/x" : 1 / x transformation
 #'       \item "x^2" : x square transformation
 #'       \item "x^3" : x^3 square transformation
-#'       \item "box-cox" : Box-Box transformation
-#'       \item "Yeo–Johnson" : Yeo–Johnson transformation
+#'       \item "Box-Cox" : Box-Box transformation
+#'       \item "Yeo-Johnson" : Yeo-Johnson transformation
 #'     }
 #'   }
 #' }
@@ -68,7 +68,7 @@
 #' @importFrom forecast BoxCox.lambda BoxCox
 #'  
 transform <- function(x, method = c("zscore", "minmax", "log", "log+1", "sqrt",
-  "1/x", "x^2", "x^3", "Box-Cox", "Yeo–Johnson")) {
+  "1/x", "x^2", "x^3", "Box-Cox", "Yeo-Johnson")) {
   method <- match.arg(method)
 
   if (!is(x)[1] %in% c("integer", "numeric")) {
@@ -114,7 +114,7 @@ transform <- function(x, method = c("zscore", "minmax", "log", "log+1", "sqrt",
     result <- x^3
   else if (method == "Box-Cox") 
     result <- get_boxcox(x)
-  else if (method == "Yeo–Johnson") 
+  else if (method == "Yeo-Johnson") 
     result <- get_yjohnson(x)
     
   attr(result, "method") <- method
@@ -173,7 +173,7 @@ summary.transform <- function(object, ...) {
   if (method %in% c("zscore", "minmax")) {
     cat(sprintf("* Standardization with %s\n\n", method))
   } else if (method %in% c("log", "log+1", "sqrt", "1/x", "x^2", "x^3", 
-                           "Box-Cox", "Yeo–Johnson")) {
+                           "Box-Cox", "Yeo-Johnson")) {
     cat(sprintf("* Resolving Skewness with %s\n\n", method))
   }
 
