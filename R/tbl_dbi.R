@@ -806,6 +806,19 @@ normality.tbl_dbi <- function(.data, ..., sample = 5000,
 #' Since the plot is drawn for each variable, if you specify more than
 #' one variable in the ... argument, the specified number of plots are drawn.
 #'
+#' The argument values that left and right can have are as follows.:
+#' 
+#' \itemize{
+#'   \item "log" : log transformation. log(x)
+#'   \item "log+1" : log transformation. log(x + 1). Used for values that contain 0.
+#'   \item "sqrt" : square root transformation.
+#'   \item "1/x" : 1 / x transformation
+#'   \item "x^2" : x square transformation
+#'   \item "x^3" : x^3 square transformation
+#'   \item "Box-Cox" : Box-Box transformation
+#'   \item "Yeo-Johnson" : Yeo-Johnson transformation
+#' }
+#'
 #' @section Distribution information:
 #' The plot derived from the numerical data visualization is as follows.
 #'
@@ -825,13 +838,17 @@ normality.tbl_dbi <- function(.data, ..., sample = 5000,
 #' These arguments are automatically quoted and evaluated in a context where column names
 #' represent column positions.
 #' They support unquoting and splicing.
+#' 
+#' See vignette("EDA") for an introduction to these concepts.
 #' @param in_database Specifies whether to perform in-database operations. 
 #' If TRUE, most operations are performed in the DBMS. if FALSE, 
 #' table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.
 #' @param collect_size a integer. The number of data samples from the DBMS to R. 
 #' Applies only if in_database = FALSE.
-#' 
-#' See vignette("EDA") for an introduction to these concepts.
+#' @param left character. Specifies the data transformation method to draw the histogram in the 
+#' lower left corner. The default is "log".
+#' @param right character. Specifies the data transformation method to draw the histogram in the 
+#' lower right corner. The default is "sqrt".
 #'
 #' @seealso \code{\link{plot_normality.data.frame}}, \code{\link{plot_outlier.tbl_dbi}}.
 #' @export
@@ -873,6 +890,12 @@ normality.tbl_dbi <- function(.data, ..., sample = 5000,
 #'   group_by(ShelveLoc, US) %>%
 #'   plot_normality(Sales)
 #'
+#' # Plot using left and right arguments
+#' con_sqlite %>% 
+#'   tbl("TB_CARSEATS") %>% 
+#'   group_by(ShelveLoc, US) %>%
+#'   plot_normality(Sales, left = "Box-Cox", right = "log")
+#'
 #' # extract only those with 'ShelveLoc' variable level is "Good",
 #' # and plot 'Income' by 'US'
 #' con_sqlite %>% 
@@ -882,8 +905,15 @@ normality.tbl_dbi <- function(.data, ..., sample = 5000,
 #'   plot_normality(Income)
 #' }
 #' 
-plot_normality.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = Inf) {
+plot_normality.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = Inf, 
+                                   left = c("log", "sqrt", "log+1", "1/x", "x^2", 
+                                            "x^3", "Box-Cox", "Yeo-Johnson"),
+                                   right = c("sqrt", "log", "log+1", "1/x", "x^2", 
+                                             "x^3", "Box-Cox", "Yeo-Johnson")) {
   vars <- tidyselect::vars_select(colnames(.data), !!! rlang::quos(...))
+  
+  left <- match.arg(left)
+  right <- match.arg(right)
   
   if (in_database) {
     stop("It does not yet support in-database mode. Use in_database = FALSE.")
@@ -891,11 +921,11 @@ plot_normality.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
     if (class(.data$ops)[1] != "op_group_by") {
       .data %>% 
         dplyr::collect(n = collect_size) %>%
-        plot_normality_impl(vars)
+        plot_normality_impl(vars, left, right)
     } else {
       .data %>% 
         dplyr::collect(n = collect_size) %>%
-        plot_normality_group_impl(vars)
+        plot_normality_group_impl(vars, left, right)
     }
   }
 }

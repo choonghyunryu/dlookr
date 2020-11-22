@@ -4,7 +4,14 @@
 \alias{plot_normality.tbl_dbi}
 \title{Plot distribution information of numerical data}
 \usage{
-\method{plot_normality}{tbl_dbi}(.data, ..., in_database = FALSE, collect_size = Inf)
+\method{plot_normality}{tbl_dbi}(
+  .data,
+  ...,
+  in_database = FALSE,
+  collect_size = Inf,
+  left = c("log", "sqrt", "log+1", "1/x", "x^2", "x^3", "Box-Cox", "Yeo-Johnson"),
+  right = c("sqrt", "log", "log+1", "1/x", "x^2", "x^3", "Box-Cox", "Yeo-Johnson")
+)
 }
 \arguments{
 \item{.data}{a tbl_dbi.}
@@ -16,16 +23,22 @@ If the first expression is negative, plot_normality() will automatically
 start with all variables.
 These arguments are automatically quoted and evaluated in a context where column names
 represent column positions.
-They support unquoting and splicing.}
+They support unquoting and splicing.
+
+See vignette("EDA") for an introduction to these concepts.}
 
 \item{in_database}{Specifies whether to perform in-database operations. 
 If TRUE, most operations are performed in the DBMS. if FALSE, 
 table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.}
 
 \item{collect_size}{a integer. The number of data samples from the DBMS to R. 
-Applies only if in_database = FALSE.
+Applies only if in_database = FALSE.}
 
-See vignette("EDA") for an introduction to these concepts.}
+\item{left}{character. Specifies the data transformation method to draw the histogram in the 
+lower left corner. The default is "log".}
+
+\item{right}{character. Specifies the data transformation method to draw the histogram in the 
+lower right corner. The default is "sqrt".}
 }
 \description{
 The plot_normality() visualize distribution information
@@ -36,6 +49,19 @@ the DBMS table through tbl_dbi.
 The scope of the visualization is the provide a distribution information.
 Since the plot is drawn for each variable, if you specify more than
 one variable in the ... argument, the specified number of plots are drawn.
+
+The argument values that left and right can have are as follows.:
+
+\itemize{
+  \item "log" : log transformation. log(x)
+  \item "log+1" : log transformation. log(x + 1). Used for values that contain 0.
+  \item "sqrt" : square root transformation.
+  \item "1/x" : 1 / x transformation
+  \item "x^2" : x square transformation
+  \item "x^3" : x^3 square transformation
+  \item "Box-Cox" : Box-Box transformation
+  \item "Yeo-Johnson" : Yeo-Johnson transformation
+}
 }
 \section{Distribution information}{
 
@@ -86,6 +112,12 @@ con_sqlite \%>\%
   tbl("TB_CARSEATS") \%>\% 
   group_by(ShelveLoc, US) \%>\%
   plot_normality(Sales)
+
+# Plot using left and right arguments
+con_sqlite \%>\% 
+  tbl("TB_CARSEATS") \%>\% 
+  group_by(ShelveLoc, US) \%>\%
+  plot_normality(Sales, left = "Box-Cox", right = "log")
 
 # extract only those with 'ShelveLoc' variable level is "Good",
 # and plot 'Income' by 'US'
