@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.15</span>
       </span>
     </div>
 
@@ -77,7 +77,7 @@
       <h1 data-toc-skip>Data quality diagnosis</h1>
                         <h4 class="author">Choonghyun Ryu</h4>
             
-            <h4 class="date">2020-11-18</h4>
+            <h4 class="date">2020-11-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/choonghyunryu/dlookr/blob/master/vignettes/diagonosis.Rmd"><code>vignettes/diagonosis.Rmd</code></a></small>
       <div class="hidden name"><code>diagonosis.Rmd</code></div>
@@ -663,7 +663,7 @@ con_sqlite %&gt;%
   &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;           &lt;dbl&gt;        &lt;int&gt;       &lt;dbl&gt;
 1 Sales       double             0               0          336       0.84 
 2 CompPrice   double             0               0           73       0.182
-3 Income      double            20               5           99       0.248
+3 Income      double            20               5           98       0.245
 4 Advertising double             0               0           28       0.07 
 # … with 7 more rows
 
@@ -675,7 +675,7 @@ con_sqlite %&gt;%
   variables types   missing_count missing_percent unique_count unique_rate
   &lt;chr&gt;     &lt;chr&gt;           &lt;int&gt;           &lt;dbl&gt;        &lt;int&gt;       &lt;dbl&gt;
 1 Sales     numeric             0               0          336       0.84 
-2 Income    numeric            20               5           99       0.248
+2 Income    numeric            20               5           98       0.245
 3 Age       numeric             0               0           56       0.14 
   
 # Positions values select columns, and In-memory mode and collect size is 200
@@ -685,10 +685,10 @@ con_sqlite %&gt;%
 # A tibble: 8 x 6
   variables   types   missing_count missing_percent unique_count unique_rate
   &lt;chr&gt;       &lt;chr&gt;           &lt;int&gt;           &lt;dbl&gt;        &lt;int&gt;       &lt;dbl&gt;
-1 Sales       numeric             0             0            182       0.91 
-2 CompPrice   numeric             0             0             65       0.325
-3 Income      numeric            11             5.5           83       0.415
-4 Advertising numeric             0             0             23       0.115
+1 Sales       numeric             0               0          182       0.91 
+2 CompPrice   numeric             0               0           65       0.325
+3 Income      numeric             8               4           84       0.42 
+4 Advertising numeric             0               0           23       0.115
 # … with 4 more rows</pre></body></html></div>
 </div>
 <div id="diagnose-data-quality-of-categorical-variables-in-the-dbms" class="section level3">
@@ -712,8 +712,8 @@ con_sqlite %&gt;%
 # A tibble: 5 x 6
   variables levels     N  freq ratio  rank
   &lt;chr&gt;     &lt;chr&gt;  &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt;
-1 Urban     Yes      400   279 69.8      1
-2 Urban     No       400   116 29.0      2
+1 Urban     Yes      400   278 69.5      1
+2 Urban     No       400   117 29.2      2
 3 Urban     &lt;NA&gt;     400     5  1.25     3
 4 US        Yes      400   258 64.5      1
 # … with 1 more row</pre></body></html></div>
@@ -730,7 +730,7 @@ con_sqlite %&gt;%
   &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt;   &lt;int&gt;
 1 Sales           0   5.39   7.50   7.49   9.32  16.3     1     0       2
 2 CompPrice      77 115    125.   125    135    175       0     0       2
-3 Income         21  42.8   68.2   69     90    120       0     0       0
+3 Income         21  42     68.4   69     91    120       0     0       0
 4 Advertising     0   0      6.64   5     12     29     144     0       0
 # … with 4 more rows
   
@@ -742,7 +742,7 @@ con_sqlite %&gt;%
   variables   min    Q1  mean median    Q3   max  zero minus outlier
 * &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt;   &lt;int&gt;
 1 Sales         0  5.26  7.42   7.50  9.10  14.9     1     0       0
-2 Income       21 48    71.0   73    91    120       0     0       0</pre></body></html></div>
+2 Income       21 47.8  70.7   72    92.2  120       0     0       0</pre></body></html></div>
 </div>
 <div id="diagnose-outlier-of-numerical-variables-in-the-dbms" class="section level3">
 <h3 class="hasAnchor">

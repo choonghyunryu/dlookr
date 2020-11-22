@@ -73,7 +73,7 @@ of numerical variables." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.15</span>
       </span>
     </div>
 
@@ -127,7 +127,8 @@ of numerical variables.</p>
 
     <pre class="usage"><span class='fu'>transform</span>(
   <span class='no'>x</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"zscore"</span>, <span class='st'>"minmax"</span>, <span class='st'>"log"</span>, <span class='st'>"log+1"</span>, <span class='st'>"sqrt"</span>, <span class='st'>"1/x"</span>, <span class='st'>"x^2"</span>, <span class='st'>"x^3"</span>)
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"zscore"</span>, <span class='st'>"minmax"</span>, <span class='st'>"log"</span>, <span class='st'>"log+1"</span>, <span class='st'>"sqrt"</span>, <span class='st'>"1/x"</span>, <span class='st'>"x^2"</span>, <span class='st'>"x^3"</span>,
+    <span class='st'>"Box-Cox"</span>, <span class='st'>"Yeo-Johnson"</span>)
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -159,6 +160,8 @@ Attributes of transform class is as follows.</p><ul>
 <li><p>"1/x" : 1 / x transformation</p></li>
 <li><p>"x^2" : x square transformation</p></li>
 <li><p>"x^3" : x^3 square transformation</p></li>
+<li><p>"Box-Cox" : Box-Box transformation</p></li>
+<li><p>"Yeo-Johnson" : Yeo-Johnson transformation</p></li>
 </ul></li>
 </ul></li>
 </ul>
