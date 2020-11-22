@@ -280,7 +280,7 @@ normality_group_impl <- function(df, vars, sample) {
 #'
 #' # Change the method of transformation
 #' plot_normality(carseats, Income, right = "1/x")
-#' plot_normality(carseats, Income, left = "Box-Cox", right = "Yeo–Johnson")
+#' plot_normality(carseats, Income, left = "Box-Cox", right = "Yeo-Johnson")
 #' 
 #' # Using dplyr::grouped_df
 #' library(dplyr)
