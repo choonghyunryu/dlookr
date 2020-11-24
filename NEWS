@@ -8,6 +8,8 @@ dlookr 0.3.15
 
 * plot_normality() supports log+1, 1/x, x^2, x^3, Box-Cox, Yeo-Johnson transform. (@lucazav, #21).
 
+* Add a new function entropy() to compute Shannon's entropy.
+
 
 dlookr 0.3.14
 ----------------------------------------------------------------

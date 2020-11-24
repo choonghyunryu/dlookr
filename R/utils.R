@@ -367,3 +367,24 @@ get_os <- function() {
   tolower(os)
 }
 
+
+#' Calculate the entropy
+#'
+#' @description
+#' Calculate the Shannon's entropy.
+#' 
+#' @param x a numeric vector.
+#'
+#' @return numeric. entropy
+#'
+#' @examples
+#' set.seed(123)
+#' x <- sample(1:10, 20, replace = TRUE)
+#' 
+#' entropy(x)
+#'
+#' @export
+entropy <- function(x) {
+  x <- x / sum(x)
+  -sum(ifelse(x > 0, x * log2(x), 0))
+}
