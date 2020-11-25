@@ -388,3 +388,60 @@ entropy <- function(x) {
   x <- x / sum(x)
   -sum(ifelse(x > 0, x * log2(x), 0))
 }
+
+
+#' Finding percentile
+#'
+#' @description
+#' Find the numerical variable that skewed variable
+#' that inherits the data.frame or data.frame.
+#'
+#' @param x numeric. a numeric vector.
+#' @param value numeric. a scalar to find percentile value from vector x.
+#' @param from numeric. Start interval in logic to find percentile value. default to 0.
+#' @param to numeric. End interval in logic to find percentile value. default to 1.
+#' @param eps numeric. Threshold value for calculating the approximate value in recursive 
+#' calling logic to find the percentile value. (epsilon). default to 1e-06.
+#' @return list.
+#' Components of list. is as follows.
+#' \itemize{
+#' \item percentile : numeric. Percentile position of value. It has a value between [0, 100].
+#' \item is_outlier : logical. Whether value is an outlier.
+#' }
+#' @examples
+#' \dontrun{
+#' carat <- ggplot2::diamonds$carat
+#' 
+#' quantile(carat)
+#' 
+#' get_percentile(carat, value = 0.5)
+#' get_percentile(carat, value = median(diamonds$carat))
+#' get_percentile(carat, value = 1)
+#' get_percentile(carat, value = 7)
+#' }
+#' @importFrom stats quantile
+#' @export
+get_percentile <- function(x, value, from = 0, to = 1, eps = 1e-06) {
+  N <- 5
+  coef <- 1.5
+  
+  breaks <- seq(from, to, length.out = N)
+  percentile <- quantile(x, probs = breaks)
+  
+  iqr <- diff(percentile[c(2, 4)])
+  outlier <- as.logical(value < (percentile[2L] - coef * iqr) | value > (percentile[4L] + coef * iqr))
+  
+  cutoff <- as.numeric(sub("%", "", names(percentile))) / 100
+  
+  for (i in seq(N)) {
+    if (value >= percentile[i]) from <- max(from, cutoff[i])
+    if (value <= percentile[i]) to <- min(to, cutoff[i])
+  }
+  
+  if ((to - from) <= eps) {
+    result <- mean(from, to) * 100
+    return(list(percentile = result, is_outlier = outlier))
+  } else {
+    get_percentile(x, value, from = from, to = to)
+  }
+}

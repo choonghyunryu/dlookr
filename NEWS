@@ -10,6 +10,8 @@ dlookr 0.3.15
 
 * Add a new function entropy() to compute Shannon's entropy.
 
+* Add a new function get_percentile() to compute percentile posotion.
+
 
 dlookr 0.3.14
 ----------------------------------------------------------------
