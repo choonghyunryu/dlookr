@@ -12,6 +12,8 @@ dlookr 0.3.15
 
 * Add a new function get_percentile() to compute percentile posotion.
 
+* plot_na_pareto() changed the legend that show the all levels and display the more informations."
+
 
 dlookr 0.3.14
 ----------------------------------------------------------------

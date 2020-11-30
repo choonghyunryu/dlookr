@@ -58,7 +58,7 @@ mice::boys \%>\%
   arrange(desc(missing_count))
 
 # Visualize pareto chart for variables with missing value.
-plot_na_pareto(mice::boys, col = "darkorange")
+plot_na_pareto(mice::boys, col = "blue")
 
 # Visualize only variables containing missing values
 plot_na_pareto(mice::boys, only_na = TRUE)

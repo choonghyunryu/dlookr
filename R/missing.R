@@ -146,7 +146,7 @@ plot_na_hclust <- function (x, main = NULL, col.left = "#009E73", col.right = "#
 #'   arrange(desc(missing_count))
 #' 
 #' # Visualize pareto chart for variables with missing value.
-#' plot_na_pareto(mice::boys, col = "darkorange")
+#' plot_na_pareto(mice::boys, col = "blue")
 #' 
 #' # Visualize only variables containing missing values
 #' plot_na_pareto(mice::boys, only_na = TRUE)
@@ -212,6 +212,8 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
     return(info_na)
   }
   
+  labels_grade <- paste0(names(grade),paste0("\n(<=", unlist(grade) * 100, "%)"))
+  
   ggplot(info_na, aes(x = variable)) +
     geom_bar(aes(y = frequencies, fill = grade), stat = "identity") +
     geom_text(aes(y = frequencies, 
@@ -224,7 +226,11 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
     scale_y_continuous(sec.axis = sec_axis(~.*scaleRight, name = "Cumulative (%)")) +
     labs(title = main, x = xlab, y = ylab) + 
     theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
-          legend.position = "top")
+          legend.position = "top") +
+    scale_fill_manual(values = RColorBrewer::brewer.pal(length(labels_grade), "YlOrRd"), 
+                      drop = FALSE,
+                      name = "Missing Grade", 
+                      labels = labels_grade)
 }
 
 
