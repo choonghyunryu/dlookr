@@ -393,8 +393,7 @@ entropy <- function(x) {
 #' Finding percentile
 #'
 #' @description
-#' Find the numerical variable that skewed variable
-#' that inherits the data.frame or data.frame.
+#' Find the percentile of the value specified in numeric vector.
 #'
 #' @param x numeric. a numeric vector.
 #' @param value numeric. a scalar to find percentile value from vector x.

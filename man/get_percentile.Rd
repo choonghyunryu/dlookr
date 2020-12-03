@@ -27,8 +27,7 @@ Components of list. is as follows.
 }
 }
 \description{
-Find the numerical variable that skewed variable
-that inherits the data.frame or data.frame.
+Find the percentile of the value specified in numeric vector.
 }
 \examples{
 \dontrun{
