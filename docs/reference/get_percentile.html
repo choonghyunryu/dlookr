@@ -40,8 +40,7 @@
 
 
 <meta property="og:title" content="Finding percentile — get_percentile" />
-<meta property="og:description" content="Find the numerical variable that skewed variable
-that inherits the data.frame or data.frame." />
+<meta property="og:description" content="Find the percentile of the value specified in numeric vector." />
 
 
 
@@ -121,8 +120,7 @@ that inherits the data.frame or data.frame." />
     </div>
 
     <div class="ref-description">
-    <p>Find the numerical variable that skewed variable
-that inherits the data.frame or data.frame.</p>
+    <p>Find the percentile of the value specified in numeric vector.</p>
     </div>
 
     <pre class="usage"><span class='fu'>get_percentile</span>(<span class='no'>x</span>, <span class='no'>value</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>to</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>eps</span> <span class='kw'>=</span> <span class='fl'>1e-06</span>)</pre>
@@ -164,7 +162,7 @@ Components of list. is as follows.</p><ul>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>carat</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='no'><a href='https://ggplot2.tidyverse.org/reference/diamonds.html'>diamonds</a></span>$<span class='no'>carat</span>
+<span class='no'>carat</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/ggplot2/man/diamonds.html'>diamonds</a></span>$<span class='no'>carat</span>
 
 <span class='fu'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span>(<span class='no'>carat</span>)
 
