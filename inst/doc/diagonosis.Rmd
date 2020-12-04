@@ -260,7 +260,7 @@ dlookr provides a visualization tool that looks at the relationship of variables
 
 ```{r plot_na_pareto1, fig.align='center', fig.width = 6, fig.height = 4}
 mice::boys %>% 
-  plot_na_pareto(col = "darkorange")
+  plot_na_pareto(col = "blue")
 ```
 
 The default value of the `only_na` argument is FALSE, which includes variables that do not contain missing values, but if this value is set to TRUE, only variables containing missing values are visualized. The variable `age` was excluded from this plot.

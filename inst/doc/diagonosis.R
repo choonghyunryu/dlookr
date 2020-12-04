@@ -75,7 +75,7 @@ flights %>%
 
 ## ----plot_na_pareto1, fig.align='center', fig.width = 6, fig.height = 4-------
 mice::boys %>% 
-  plot_na_pareto(col = "darkorange")
+  plot_na_pareto(col = "blue")
 
 ## ----plot_na_pareto2, fig.align='center', fig.width = 6, fig.height = 4-------
 mice::boys %>% 
