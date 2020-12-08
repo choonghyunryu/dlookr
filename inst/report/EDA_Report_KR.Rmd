@@ -183,15 +183,28 @@ if (length(idx.numeric) == 0) {
                 round(y$statistic, 5),  y$p.value))
     cat("\n<br>\n")
 
-    skew <- c(skewness(x, na.rm = TRUE),
-              skewness(log(x), na.rm = TRUE),
-              skewness(sqrt(x), na.rm = TRUE))
+    if (sum(x < 0) > 0) {
+      type <- c("original", "log+a transformation", "Box-Cox transformation")
   
-    kurt <- c(kurtosis(x, na.rm = TRUE),
-              kurtosis(log(x), na.rm = TRUE),
-              kurtosis(sqrt(x), na.rm = TRUE))
+      skew <- c(skewness(x, na.rm = TRUE),
+                skewness(get_transform(x, "log+a"), na.rm = TRUE),
+                skewness(get_transform(x, "Box-Cox"), na.rm = TRUE))
   
-    type <- c("원본", "log 변환", "sqrt 변환")
+      kurt <- c(kurtosis(x, na.rm = TRUE),
+                kurtosis(get_transform(x, "log+a"), na.rm = TRUE),
+                kurtosis(get_transform(x, "Box-Cox"), na.rm = TRUE))          
+    } else {
+      type <- c("original", "log transformation", "sqrt transformation")
+      
+      skew <- c(skewness(x, na.rm = TRUE),
+                skewness(log(x), na.rm = TRUE),
+                skewness(sqrt(x), na.rm = TRUE))
+  
+      kurt <- c(kurtosis(x, na.rm = TRUE),
+                kurtosis(log(x), na.rm = TRUE),
+                kurtosis(sqrt(x), na.rm = TRUE))      
+    }
+    
     stats <- data.frame(type = type, skewness = skew, kurtosis = kurt)
 
     cap <- "skewness and kurtosis"
@@ -200,12 +213,13 @@ if (length(idx.numeric) == 0) {
       cat()
     
     cat("\n<br>\n")
-    par(mfrow = c(2, 2), mar = c(2, 4, 2, 2))
-    hist(x, col = "lightblue", las = 1, main = "origin")
-    qqnorm(x, main = "origin: Q-Q plot")
-    qqline(x)
-    hist(log(x), col = "lightblue", las = 1, main = "log")
-    hist(sqrt(x), col = "lightblue", las = 1, main = "sqrt")
+
+    x <- data.frame(x)
+    
+    if (sum(x < 0) > 0)
+      plot_normality(x, x, left = "log+a", right = "Box-Cox")
+    else
+      plot_normality(x, x)
   
     cat("\n<hr>\n<br>\n")
   }
@@ -255,7 +269,7 @@ if (length(idx.numeric) > 2) {
 # 목적변수 기반의 분석
 ## 목적변수 그룹별 기술통계
 ### 목적변수 대응 수치형 변수
-```{r numeric_variables, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=4, fig.width=8, results='asis'}
+```{r numeric_variables, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=5, fig.width=7, results='asis'}
 if (!is.null(targetVariable)) {
   if (factor_flag) {
     if (length(idx.numeric) == 0) {

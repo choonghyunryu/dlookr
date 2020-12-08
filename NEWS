@@ -2,17 +2,21 @@ dlookr 0.3.15
 ----------------------------------------------------------------
 * eda_report() fixed error when data have a only 1 complated numeric variable (@EvanLuff, #27).
 
+* eda_report() fixed error when transform numeric variables that include minus values (@Roberto Passera).
+
 * transform(), summary.transform(), plot.transform() supports Box-Cox transform. (@lucazav, #21).
 
 * transform(), summary.transform(), plot.transform() supports Yeo-Johnson transform. (@zhjx19, #21).
 
-* plot_normality() supports log+1, 1/x, x^2, x^3, Box-Cox, Yeo-Johnson transform. (@lucazav, #21).
+* plot_normality() supports log+1, log+a, 1/x, x^2, x^3, Box-Cox, Yeo-Johnson transform. (@lucazav, #21).
 
 * Add a new function entropy() to compute Shannon's entropy.
 
-* Add a new function get_percentile() to compute percentile posotion.
+* Add a new function get_percentile() to compute percentile position.
 
-* plot_na_pareto() changed the legend that show the all levels and display the more informations."
+* Add a new function get_transform() to transform numeric variable.
+
+* plot_na_pareto() changed the legend that show the all levels and display the more informations.
 
 
 dlookr 0.3.14

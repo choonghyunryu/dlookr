@@ -454,8 +454,44 @@ plot_normality_group_impl <- function(df, vars, left, right) {
   tmp <- lapply(vars[idx_numeric], function(x) call_plot(x, left, right))
 }
 
+
+#' Transform a numeric vector
+#'
+#' @description The get_transform() gets transformation of numeric variable.
+#'
+#' @param x numeric. numeric for transform
+#' @param method character. transformation method of numeric variable
+#' @return numeric. transformed numeric vector.
+#' 
+#' @details The supported transformation method is follow.: 
+#' \itemize{
+#'   \item "log" : log transformation. log(x)
+#'   \item "log+1" : log transformation. log(x + 1). Used for values that contain 0.
+#'   \item "log+a" : log transformation. log(x + 1 - min(x)). Used for values that contain 0.   
+#'   \item "sqrt" : square root transformation.
+#'   \item "1/x" : 1 / x transformation
+#'   \item "x^2" : x square transformation
+#'   \item "x^3" : x^3 square transformation
+#'   \item "Box-Cox" : Box-Box transformation
+#'   \item "Yeo-Johnson" : Yeo-Johnson transformation
+#' }
+#' 
+#' @seealso \code{\link{plot_normality}}.
+#' @export
+#' @examples
+#' \dontrun{
+#' # log+a transform 
+#' get_transform(iris$Sepal.Length, "log+a")
+#'
+#' # log transform 
+#' get_transform(iris$Sepal.Length, "Box-Cox")
+#' 
+#' # log transform 
+#' get_transform(iris$Sepal.Length, "Yeo-Johnson")
+#' }
 #' @importFrom forecast BoxCox.lambda BoxCox
-get_transform <- function(x, method) {
+get_transform <- function(x, method = c("log", "sqrt", "log+1", "log+a", "1/x", 
+                                        "x^2", "x^3", "Box-Cox", "Yeo-Johnson")) {
   get_boxcox <- function(x) {
     forecast::BoxCox(x, lambda = "auto")
   }  

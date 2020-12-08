@@ -92,10 +92,13 @@ The dataset that generated the EDA Report is an '\Sexpr{class(edaData)[1]}' obje
 cap <- "Information of Variables"
 
 vars <- edaData %>%
-  diagnose()
+  diagnose() %>% 
+  mutate(missing_percent = round(missing_percent, 2),
+         unique_rate = round(unique_rate, 3))
 
-knitr::kable(vars, caption = cap, booktabs = TRUE) %>%
+knitr::kable(vars, caption = cap, booktabs = TRUE, longtable = TRUE) %>%
   kable_styling(latex_options = c("striped", "hold_position")) %>%
+  kable_styling(latex_options = c("repeat_header")) %>% 
   cat()
 
 target_nm <- if (is.null(targetVariable)) "NULL" else targetVariable
@@ -162,15 +165,28 @@ if (length(idx.numeric) == 0) {
     cat(sprintf("\\noindent statistic : %s,  p-value : %G\\\\\n",
                 round(y$statistic, 5),  y$p.value))
 
-    skew <- c(skewness(x, na.rm = TRUE),
-              skewness(log(x), na.rm = TRUE),
-              skewness(sqrt(x), na.rm = TRUE))
-
-    kurt <- c(kurtosis(x, na.rm = TRUE),
-              kurtosis(log(x), na.rm = TRUE),
-              kurtosis(sqrt(x), na.rm = TRUE))
-
-    type <- c("original", "log transformation", "sqrt transformation")
+    if (sum(x < 0) > 0) {
+      type <- c("original", "log+a transformation", "Box-Cox transformation")
+  
+      skew <- c(skewness(x, na.rm = TRUE),
+                skewness(get_transform(x, "log+a"), na.rm = TRUE),
+                skewness(get_transform(x, "Box-Cox"), na.rm = TRUE))
+  
+      kurt <- c(kurtosis(x, na.rm = TRUE),
+                kurtosis(get_transform(x, "log+a"), na.rm = TRUE),
+                kurtosis(get_transform(x, "Box-Cox"), na.rm = TRUE))          
+    } else {
+      type <- c("original", "log transformation", "sqrt transformation")
+      
+      skew <- c(skewness(x, na.rm = TRUE),
+                skewness(log(x), na.rm = TRUE),
+                skewness(sqrt(x), na.rm = TRUE))
+  
+      kurt <- c(kurtosis(x, na.rm = TRUE),
+                kurtosis(log(x), na.rm = TRUE),
+                kurtosis(sqrt(x), na.rm = TRUE))      
+    }
+    
     stats <- data.frame(type = type, skewness = skew, kurtosis = kurt)
 
     tab_cap <- paste("skewness and kurtosis :", cap)
@@ -186,12 +202,12 @@ if (length(idx.numeric) == 0) {
     cat("\n")
 
     cairo_pdf(filename = sprintf("./figure/norm%s.pdf", i), width = 6, height = 4)
-    par(mfrow = c(2, 2), mar = c(2, 4, 2, 2))
-    hist(x, col = "lightblue", las = 1, main = "origin")
-    qqnorm(x, main = "origin: Q-Q plot")
-    qqline(x)
-    hist(log(x), col = "lightblue", las = 1, main = "log")
-    hist(sqrt(x), col = "lightblue", las = 1, main = "sqrt")
+    x <- data.frame(x)
+    
+    if (sum(x < 0) > 0)
+      plot_normality(x, x, left = "log+a", right = "Box-Cox")
+    else
+      plot_normality(x, x)
     dev.off()
 
     cap <- change_under(names(edaData)[i])
