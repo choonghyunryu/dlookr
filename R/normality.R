@@ -227,6 +227,7 @@ normality_group_impl <- function(df, vars, sample) {
 #' \itemize{
 #'   \item "log" : log transformation. log(x)
 #'   \item "log+1" : log transformation. log(x + 1). Used for values that contain 0.
+#'   \item "log+a" : log transformation. log(x + 1 - min(x)). Used for values that contain 0.   
 #'   \item "sqrt" : square root transformation.
 #'   \item "1/x" : 1 / x transformation
 #'   \item "x^2" : x square transformation
@@ -320,9 +321,9 @@ normality_group_impl <- function(df, vars, sample) {
 #' @importFrom rlang quos
 #' @importFrom tibble is_tibble
 #' @export
-plot_normality.data.frame <- function(.data, ..., left = c("log", "sqrt", "log+1", "1/x", "x^2", 
+plot_normality.data.frame <- function(.data, ..., left = c("log", "sqrt", "log+1", "log+a", "1/x", "x^2", 
                                                            "x^3", "Box-Cox", "Yeo-Johnson"),
-                                      right = c("sqrt", "log", "log+1", "1/x", "x^2", 
+                                      right = c("sqrt", "log", "log+1", "log+a", "1/x", "x^2", 
                                                 "x^3", "Box-Cox", "Yeo-Johnson")) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
   
@@ -372,9 +373,9 @@ plot_normality_impl <- function(df, vars, left, right) {
 #' @importFrom rlang quos
 #' @importFrom tibble is_tibble
 #' @export
-plot_normality.grouped_df <- function(.data, ..., left = c("log", "sqrt", "log+1", "1/x", "x^2", 
+plot_normality.grouped_df <- function(.data, ..., left = c("log", "sqrt", "log+1", "log+a", "1/x", "x^2", 
                                                            "x^3", "Box-Cox", "Yeo-Johnson"),
-                                      right = c("sqrt", "log", "log+1", "1/x", "x^2", 
+                                      right = c("sqrt", "log", "log+1", "log+a", "1/x", "x^2", 
                                                 "x^3", "Box-Cox", "Yeo-Johnson")) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
   
@@ -472,6 +473,8 @@ get_transform <- function(x, method) {
     result <- log(x)
   else if (method == "log+1")
     result <- log(x + 1)
+  else if (method == "log+a")
+    result <- log(x + 1 - min(x))  
   else if (method == "sqrt")
     result <- sqrt(x)
   else if (method == "1/x")

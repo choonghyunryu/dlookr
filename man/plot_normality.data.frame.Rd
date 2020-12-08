@@ -10,8 +10,10 @@ plot_normality(.data, ...)
 \method{plot_normality}{data.frame}(
   .data,
   ...,
-  left = c("log", "sqrt", "log+1", "1/x", "x^2", "x^3", "Box-Cox", "Yeo-Johnson"),
-  right = c("sqrt", "log", "log+1", "1/x", "x^2", "x^3", "Box-Cox", "Yeo-Johnson")
+  left = c("log", "sqrt", "log+1", "log+a", "1/x", "x^2", "x^3", "Box-Cox",
+    "Yeo-Johnson"),
+  right = c("sqrt", "log", "log+1", "log+a", "1/x", "x^2", "x^3", "Box-Cox",
+    "Yeo-Johnson")
 )
 }
 \arguments{
@@ -48,6 +50,7 @@ The argument values that left and right can have are as follows.:
 \itemize{
   \item "log" : log transformation. log(x)
   \item "log+1" : log transformation. log(x + 1). Used for values that contain 0.
+  \item "log+a" : log transformation. log(x + 1 - min(x)). Used for values that contain 0.   
   \item "sqrt" : square root transformation.
   \item "1/x" : 1 / x transformation
   \item "x^2" : x square transformation
