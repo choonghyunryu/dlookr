@@ -510,7 +510,7 @@ get_transform <- function(x, method = c("log", "sqrt", "log+1", "log+a", "1/x",
   else if (method == "log+1")
     result <- log(x + 1)
   else if (method == "log+a")
-    result <- log(x + 1 - min(x))  
+    result <- log(x + 1 - min(x, na.rm = TRUE))  
   else if (method == "sqrt")
     result <- sqrt(x)
   else if (method == "1/x")

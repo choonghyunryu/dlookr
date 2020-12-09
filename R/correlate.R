@@ -334,8 +334,15 @@ plot_correlate_impl <- function(df, vars, method) {
     row.names(M2) <- vars
   }
 
-  corrplot::corrplot(M2, method = "ellipse", diag = FALSE,
-    tl.srt = 45, type = "upper", mar = c(0, 0, 1, 0))
+  if (nrow(M2) >= 20) {
+    corrplot::corrplot(M2, is.corr = FALSE, tl.cex = 0.5, tl.srt = 45, 
+                       method = "color", tl.col="black",
+                       mar = c(0, 0, 1, 0))
+  } else {
+    corrplot::corrplot(M2, method = "ellipse", diag = FALSE, tl.cex = 0.7, 
+                       tl.col="black", tl.srt = 45, type = "upper", 
+                       mar = c(0, 0, 1, 0)) 
+  }
 }
 
 

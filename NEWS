@@ -4,6 +4,10 @@ dlookr 0.3.15
 
 * eda_report() fixed error when transform numeric variables that include minus values (@Roberto Passera).
 
+* eda_report() change the correlation plot and normality test(log+1: include 0, log+a/Box-Cox: include minus).
+
+* plot_correlate() change the correlation plot that support 2 case plots(number of variabe >=20, <20).
+
 * transform(), summary.transform(), plot.transform() supports Box-Cox transform. (@lucazav, #21).
 
 * transform(), summary.transform(), plot.transform() supports Yeo-Johnson transform. (@zhjx19, #21).

@@ -134,7 +134,7 @@ if (length(idx.numeric) == 0) {
       cat("\n")
       cat("\\subsubsection{", cap, "}\n")
 
-    cat("\nnormality test : Shapiro-Wilk normality test\n\n")
+    cat("\\noindent * normality test : Shapiro-Wilk normality test\n\n")
 
     x <- if (NROW(edaData) > 5000) {
       sample(pull(edaData, i), size = 5000, replace = TRUE)
@@ -162,10 +162,12 @@ if (length(idx.numeric) == 0) {
 
     y <- shapiro.test(x)
 
-    cat(sprintf("\\noindent statistic : %s,  p-value : %G\\\\\n",
+    cat(sprintf("\\noindent - statistic : %s,  p-value : %G\\\\\n",
                 round(y$statistic, 5),  y$p.value))
 
-    if (sum(x < 0) > 0) {
+    if (is.factor(x)) x <- as.numeric(x)
+    
+    if (sum(x < 0, na.rm = TRUE) > 0) {
       type <- c("original", "log+a transformation", "Box-Cox transformation")
   
       skew <- c(skewness(x, na.rm = TRUE),
@@ -176,15 +178,27 @@ if (length(idx.numeric) == 0) {
                 kurtosis(get_transform(x, "log+a"), na.rm = TRUE),
                 kurtosis(get_transform(x, "Box-Cox"), na.rm = TRUE))          
     } else {
-      type <- c("original", "log transformation", "sqrt transformation")
-      
-      skew <- c(skewness(x, na.rm = TRUE),
-                skewness(log(x), na.rm = TRUE),
-                skewness(sqrt(x), na.rm = TRUE))
-  
-      kurt <- c(kurtosis(x, na.rm = TRUE),
-                kurtosis(log(x), na.rm = TRUE),
-                kurtosis(sqrt(x), na.rm = TRUE))      
+      if (any(x == 0, na.rm = TRUE)) {
+        type <- c("original", "log+1 transformation", "sqrt transformation")
+        
+        skew <- c(skewness(x, na.rm = TRUE),
+                  skewness(get_transform(x, "log+1"), na.rm = TRUE),
+                  skewness(sqrt(x), na.rm = TRUE))
+        
+        kurt <- c(kurtosis(x, na.rm = TRUE),
+                  kurtosis(get_transform(x, "log+1"), na.rm = TRUE),
+                  kurtosis(sqrt(x), na.rm = TRUE))         
+      } else {
+        type <- c("original", "log transformation", "sqrt transformation")
+        
+        skew <- c(skewness(x, na.rm = TRUE),
+                  skewness(log(x), na.rm = TRUE),
+                  skewness(sqrt(x), na.rm = TRUE))
+        
+        kurt <- c(kurtosis(x, na.rm = TRUE),
+                  kurtosis(log(x), na.rm = TRUE),
+                  kurtosis(sqrt(x), na.rm = TRUE)) 
+      }     
     }
     
     stats <- data.frame(type = type, skewness = skew, kurtosis = kurt)
@@ -193,10 +207,11 @@ if (length(idx.numeric) == 0) {
 
     cat("\\\\")
 
-    print(xtable(stats, caption = tab_cap, digits = 4),
-          floating = FALSE, booktabs = TRUE,
-          include.rownames = FALSE,
-          caption.placement = "top", table.placement = "!htb")
+    kable(stats, digits = 4, caption = tab_cap, 
+          label = paste0("numeric_variables", i),
+          booktabs = TRUE, escape = FALSE) %>%
+      kable_styling(latex_options = c("striped", "hold_position")) %>%
+      cat()
 
     cat("\\\\")
     cat("\n")
@@ -204,10 +219,14 @@ if (length(idx.numeric) == 0) {
     cairo_pdf(filename = sprintf("./figure/norm%s.pdf", i), width = 6, height = 4)
     x <- data.frame(x)
     
-    if (sum(x < 0) > 0)
+    if (sum(x < 0, na.rm = TRUE) > 0)
       plot_normality(x, x, left = "log+a", right = "Box-Cox")
-    else
-      plot_normality(x, x)
+    else {
+      if (any(x == 0, na.rm = TRUE)) 
+        plot_normality(x, x, left = "log+1", right = "sqrt")
+      else
+        plot_normality(x, x)
+    }
     dev.off()
 
     cap <- change_under(names(edaData)[i])

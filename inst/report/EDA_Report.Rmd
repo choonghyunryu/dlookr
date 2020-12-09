@@ -182,7 +182,9 @@ if (length(idx.numeric) == 0) {
                 round(y$statistic, 5),  y$p.value))
     cat("\n<br>\n")
   
-    if (sum(x < 0) > 0) {
+    if (is.factor(x)) x <- as.numeric(x)
+    
+    if (sum(x < 0, na.rm = TRUE) > 0) {
       type <- c("original", "log+a transformation", "Box-Cox transformation")
   
       skew <- c(skewness(x, na.rm = TRUE),
@@ -193,15 +195,27 @@ if (length(idx.numeric) == 0) {
                 kurtosis(get_transform(x, "log+a"), na.rm = TRUE),
                 kurtosis(get_transform(x, "Box-Cox"), na.rm = TRUE))          
     } else {
-      type <- c("original", "log transformation", "sqrt transformation")
-      
-      skew <- c(skewness(x, na.rm = TRUE),
-                skewness(log(x), na.rm = TRUE),
-                skewness(sqrt(x), na.rm = TRUE))
-  
-      kurt <- c(kurtosis(x, na.rm = TRUE),
-                kurtosis(log(x), na.rm = TRUE),
-                kurtosis(sqrt(x), na.rm = TRUE))      
+      if (any(x == 0, na.rm = TRUE)) {
+        type <- c("original", "log+1 transformation", "sqrt transformation")
+        
+        skew <- c(skewness(x, na.rm = TRUE),
+                  skewness(get_transform(x, "log+1"), na.rm = TRUE),
+                  skewness(sqrt(x), na.rm = TRUE))
+        
+        kurt <- c(kurtosis(x, na.rm = TRUE),
+                  kurtosis(get_transform(x, "log+1"), na.rm = TRUE),
+                  kurtosis(sqrt(x), na.rm = TRUE))         
+      } else {
+        type <- c("original", "log transformation", "sqrt transformation")
+        
+        skew <- c(skewness(x, na.rm = TRUE),
+                  skewness(log(x), na.rm = TRUE),
+                  skewness(sqrt(x), na.rm = TRUE))
+        
+        kurt <- c(kurtosis(x, na.rm = TRUE),
+                  kurtosis(log(x), na.rm = TRUE),
+                  kurtosis(sqrt(x), na.rm = TRUE)) 
+      }  
     }
       
     stats <- data.frame(type = type, skewness = skew, kurtosis = kurt)
@@ -215,11 +229,15 @@ if (length(idx.numeric) == 0) {
     
     x <- data.frame(x)
     
-    if (sum(x < 0) > 0)
+    if (sum(x < 0, na.rm = TRUE) > 0)
       plot_normality(x, x, left = "log+a", right = "Box-Cox")
-    else
-      plot_normality(x, x)
-    
+    else {
+      if (any(x == 0, na.rm = TRUE)) 
+        plot_normality(x, x, left = "log+1", right = "sqrt")
+      else
+        plot_normality(x, x)
+    }
+      
     cat("\n<hr>\n<br>\n")
   }
 }  
@@ -255,7 +273,7 @@ if (length(idx.numeric) > 2) {
 
 
 ### Correlation Plot of Numerical Variables
-```{r plot_correlations, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=4, fig.width=6}
+```{r plot_correlations, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=8, fig.width=8}
 if (length(idx.numeric) > 2) {
   edaData %>%
     plot_correlate()
@@ -268,7 +286,7 @@ if (length(idx.numeric) > 2) {
 # Target based Analysis
 ## Grouped Descriptive Statistics
 ### Grouped Numerical Variables
-```{r numeric_variables, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=5, fig.width=7, results='asis'}
+```{r numeric_variables, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=6, fig.width=7, results='asis'}
 if (!is.null(targetVariable)) {
   if (factor_flag) {
     if (length(idx.numeric) == 0) {
@@ -576,7 +594,7 @@ if (!is.null(targetVariable)) {
 
 
 ### Grouped Correlation Plot of Numerical Variables
-```{r plot_group_correlations, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=4, fig.width=6}
+```{r plot_group_correlations, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=8, fig.width=8}
 if (!is.null(targetVariable)) {
   if (factor_flag) {
     if (length(idx.numeric) > 2) {
