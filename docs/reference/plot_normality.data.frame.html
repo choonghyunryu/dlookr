@@ -131,8 +131,10 @@ for normality test of the numerical data.</p>
 <span class='fu'>plot_normality</span>(
   <span class='no'>.data</span>,
   <span class='no'>...</span>,
-  <span class='kw'>left</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"log"</span>, <span class='st'>"sqrt"</span>, <span class='st'>"log+1"</span>, <span class='st'>"1/x"</span>, <span class='st'>"x^2"</span>, <span class='st'>"x^3"</span>, <span class='st'>"Box-Cox"</span>, <span class='st'>"Yeo-Johnson"</span>),
-  <span class='kw'>right</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sqrt"</span>, <span class='st'>"log"</span>, <span class='st'>"log+1"</span>, <span class='st'>"1/x"</span>, <span class='st'>"x^2"</span>, <span class='st'>"x^3"</span>, <span class='st'>"Box-Cox"</span>, <span class='st'>"Yeo-Johnson"</span>)
+  <span class='kw'>left</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"log"</span>, <span class='st'>"sqrt"</span>, <span class='st'>"log+1"</span>, <span class='st'>"log+a"</span>, <span class='st'>"1/x"</span>, <span class='st'>"x^2"</span>, <span class='st'>"x^3"</span>, <span class='st'>"Box-Cox"</span>,
+    <span class='st'>"Yeo-Johnson"</span>),
+  <span class='kw'>right</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sqrt"</span>, <span class='st'>"log"</span>, <span class='st'>"log+1"</span>, <span class='st'>"log+a"</span>, <span class='st'>"1/x"</span>, <span class='st'>"x^2"</span>, <span class='st'>"x^3"</span>, <span class='st'>"Box-Cox"</span>,
+    <span class='st'>"Yeo-Johnson"</span>)
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -175,6 +177,7 @@ one variable in the ... argument, the specified number of plots are drawn.</p>
 <ul>
 <li><p>"log" : log transformation. log(x)</p></li>
 <li><p>"log+1" : log transformation. log(x + 1). Used for values that contain 0.</p></li>
+<li><p>"log+a" : log transformation. log(x + 1 - min(x)). Used for values that contain 0.</p></li>
 <li><p>"sqrt" : square root transformation.</p></li>
 <li><p>"1/x" : 1 / x transformation</p></li>
 <li><p>"x^2" : x square transformation</p></li>
