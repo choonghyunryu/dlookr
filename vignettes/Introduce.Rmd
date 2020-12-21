@@ -79,6 +79,7 @@ Types | Tasks | Descriptions | Functions | Support DBI
 categorical | summaries | frequency tables | `univar_category()` | X
 categorical | summaries | chi-squared test  | `summary.univar_category()` | X
 categorical | visualize | bar charts | `plot.univar_category()` | X
+categorical | visualize | bar charts | `plot_bar_category()` | X
 numerical | summaries | descriptive statistics | `describe()` | O
 numerical | summaries | descriptive statistics | `univar_numeric()` | X
 numerical | summaries | descriptive statistics of standardized variable | `summary.univar_numeric()` | X
@@ -90,6 +91,7 @@ Types | Tasks | Descriptions | Functions | Support DBI
 categorical | summaries | frequency tables cross cases | `compare_category()` | X
 categorical | summaries | contingency tables, chi-squared test | `summary.compare_category()` | X
 categorical | visualize | mosaics plot | `plot.compare_category()` | X
+categorical | visualize | bar charts | `plot_bar_category()` | X
 numerical | summaries | correlation coefficient, linear model summaries | `compare_numeric()` | X
 numerical | summaries | correlation coefficient, linear model summaries with threshold  | `summary.compare_numeric()` | X
 numerical | visualize | scatter plot with marginal box plot | `plot.compare_numeric()` | X

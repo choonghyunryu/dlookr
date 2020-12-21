@@ -37,7 +37,7 @@ describe <- function(.data, ...) {
 #'
 #' }
 #'
-#' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param .data a data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
 #' Positive values select variables; negative values to drop variables.
@@ -98,6 +98,7 @@ describe <- function(.data, ...) {
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
 #' @export
+#' @rdname describe.data.frame
 describe.data.frame <- function(.data, ...) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
   describe_impl(.data, vars)
@@ -165,7 +166,7 @@ describe_impl <- function(df, vars) {
     tidyr::unnest(cols = c(statistic))
 }
 
-
+#' @rdname describe.data.frame
 #' @method describe grouped_df
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos

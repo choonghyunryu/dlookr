@@ -3,14 +3,31 @@
 \name{plot_bar_category}
 \alias{plot_bar_category}
 \alias{plot_bar_category.data.frame}
+\alias{plot_bar_category.grouped_df}
 \title{Plot bar chart  of categorical variables}
 \usage{
 plot_bar_category(.data, ...)
 
-\method{plot_bar_category}{data.frame}(.data, ..., top = 10, add_character = TRUE)
+\method{plot_bar_category}{data.frame}(
+  .data,
+  ...,
+  top = 10,
+  add_character = TRUE,
+  title = "Frequency by levels of category",
+  each = FALSE
+)
+
+\method{plot_bar_category}{grouped_df}(
+  .data,
+  ...,
+  top = 10,
+  add_character = TRUE,
+  title = "Frequency by levels of category",
+  each = FALSE
+)
 }
 \arguments{
-\item{.data}{a data.frame or a \code{\link{tbl_df}}.}
+\item{.data}{a data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.}
 
 \item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
@@ -26,6 +43,11 @@ Default is 10.}
 
 \item{add_character}{logical. Decide whether to include text variables in the
 diagnosis of categorical data. The default value is TRUE, which also includes character variables.}
+
+\item{title}{an character. a main title for the plot.}
+
+\item{each}{an logical. Specifies whether to draw multiple plots on one screen. 
+The default is FALSE, which draws multiple plots on one screen..}
 }
 \description{
 The plot_bar_category() to visualizes the distribution of 
@@ -67,5 +89,14 @@ carseats \%>\%
 # Visualize only factor, not character
 carseats \%>\%
   plot_bar_category(add_character = FALSE) 
+  
+# Using groupd_df  ------------------------------
+carseats \%>\% 
+  group_by(ShelveLoc) \%>\% 
+  plot_bar_category()
+  
+carseats \%>\% 
+  group_by(ShelveLoc) \%>\% 
+  plot_bar_category(each = TRUE)  
   
 }
