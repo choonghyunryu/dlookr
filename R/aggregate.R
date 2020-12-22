@@ -4,7 +4,7 @@ plot_bar_category <- function(.data, ...) {
   UseMethod("plot_bar_category", .data)
 }
 
-#' Plot bar chart  of categorical variables 
+#' Plot bar chart of categorical variables 
 #'
 #' @description The plot_bar_category() to visualizes the distribution of 
 #' categorical data by level or relationship to specific numerical data by level.
@@ -15,7 +15,7 @@ plot_bar_category <- function(.data, ...) {
 #' the distribution of categorical data more easily than a frequency table.
 #'
 #' @param .data a data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.
-#' @param ... one or more unquoted expressions separated by commas.
+#' @param \dots one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
 #' Positive values select variables; negative values to drop variables.
 #' If the first expression is negative, plot_bar_category() will automatically
@@ -23,15 +23,14 @@ plot_bar_category <- function(.data, ...) {
 #' These arguments are automatically quoted and evaluated in a context where
 #' column names represent column positions.
 #' They support unquoting and splicing.
-#'
 #' @param top an integer. Specifies the upper top rank to extract.
 #' Default is 10.
 #' @param add_character logical. Decide whether to include text variables in the
 #' diagnosis of categorical data. The default value is TRUE, which also includes character variables.
-#' @param title an character. a main title for the plot.
-#' @param each an logical. Specifies whether to draw multiple plots on one screen. 
-#' The default is FALSE, which draws multiple plots on one screen..
-#' @export
+#' @param title character. a main title for the plot.
+#' @param each logical. Specifies whether to draw multiple plots on one screen. 
+#' The default is FALSE, which draws multiple plots on one screen.
+#' 
 #' @examples
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
@@ -153,7 +152,7 @@ plot_bar_category_impl <- function(df, vars, top, add_character, title, each) {
       
       data %>% 
         arrange(rank) %>% 
-      ggplot(aes(x = levels, y = n)) +
+        ggplot(aes(x = levels, y = n)) +
         geom_bar(aes(fill = flag), stat = "identity") +
         scale_colour_manual(values = def_colors,
                             aesthetics = c("colour", "fill")) +
@@ -165,11 +164,12 @@ plot_bar_category_impl <- function(df, vars, top, add_character, title, each) {
         ggtitle(title) +        
         xlab(xlab) + 
         ylab(ylab) + 
-        theme(legend.position = "nome")
+        theme(legend.position = "none")
     })
 
   if (each) {
-    plist
+    for (i in seq(plist))
+      do.call("print", plist[i])
   } else {
     n <- length(plist)
     n_row <- floor(sqrt(n))
@@ -182,6 +182,7 @@ plot_bar_category_impl <- function(df, vars, top, add_character, title, each) {
 }
 
 
+#' @method plot_bar_category grouped_df
 #' @rdname plot_bar_category.data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
@@ -301,11 +302,12 @@ plot_bar_category_group_impl <- function(df, vars, top, add_character, title, ea
         ggtitle(title) +
         xlab(xlab) + 
         ylab(ylab) + 
-        theme(legend.position = "nome")
+        theme(legend.position = "none")
     })
   
   if (each) {
-    plist
+    for (i in seq(plist))
+      do.call("print", plist[i])
   } else {
     n <- length(plist)
     n_row <- floor(sqrt(n))
@@ -314,6 +316,195 @@ plot_bar_category_group_impl <- function(df, vars, top, add_character, title, ea
     
     do.call("grid.arrange", c(plist, nrow = n_row, top = title, 
                               bottom = xlab, right = group_key))
+  }
+}
+
+#' @rdname plot_qq_numeric.data.frame
+#' @export
+plot_qq_numeric <- function(.data, ...) {
+  UseMethod("plot_qq_numeric", .data)
+}
+
+#' Plot Q-Q plot  of numerical variables 
+#'
+#' @description The plot_qq_numeric() to visualizes the Q-Q plot of numeric data or 
+#' relationship to specific categorical data.
+#' 
+#' @details The The Q-Q plot helps determine whether the distribution of a numeric variable 
+#' is normally distributed. plot_qq_numeric() shows Q-Q plots of several numeric variables 
+#' on one screen. This function can also display a Q-Q plot for each level of a specific 
+#' categorical variable.
+#'
+#' @param .data data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.
+#' @param \dots one or more unquoted expressions separated by commas.
+#' You can treat variable names like they are positions.
+#' Positive values select variables; negative values to drop variables.
+#' If the first expression is negative, plot_bar_category() will automatically
+#' start with all variables.
+#' These arguments are automatically quoted and evaluated in a context where
+#' column names represent column positions.
+#' They support unquoting and splicing.
+#'
+#' @param col_point character. a color of points in Q-Q plot.
+#' @param col_line character. a color of line in Q-Q plot.
+#' @param title character. a main title for the plot. 
+#' @param each logical. Specifies whether to draw multiple plots on one screen. 
+#' The default is FALSE, which draws multiple plots on one screen.
+#' @examples
+#' # Generate data for the example
+#' carseats <- ISLR::Carseats
+#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
+#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+#'
+#' # Visualization of all numerical variables
+#' plot_qq_numeric(carseats)
+#'
+#' # Select the variable to diagnose
+#' plot_qq_numeric(carseats, "Sales", "Income")
+#' plot_qq_numeric(carseats, -Sales, -Income)
+#'
+#' # Using pipes ---------------------------------
+#' library(dplyr)
+#'
+#' # Plot of all numerical variables
+#' carseats %>%
+#'   plot_qq_numeric()
+#'   
+#' # Using groupd_df  ------------------------------
+#' carseats %>% 
+#'   group_by(ShelveLoc) %>% 
+#'   plot_qq_numeric()
+#'   
+#' carseats %>% 
+#'   group_by(ShelveLoc) %>% 
+#'   plot_qq_numeric(each = TRUE)  
+#'   
+#' @method plot_qq_numeric data.frame
+#' @importFrom purrr map
+#' @importFrom gridExtra grid.arrange
+#' @export
+#' @rdname plot_qq_numeric.data.frame 
+#' 
+plot_qq_numeric.data.frame <- function(.data, ..., col_point = "black", col_line = "red",
+                                         title = "Q-Q plot by numerical variables",
+                                         each = FALSE) {
+  vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
+  
+  plot_qq_numeric_impl(.data, vars, col_point, col_line, title, each)
+}
+
+plot_qq_numeric_impl <- function(df, vars, col_point, col_line, title, each) {
+  if (length(vars) == 0) vars <- names(df)
+  
+  if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
+  
+  nm_numeric <- find_class(df[, vars], type = "numerical", index = FALSE)
+  
+  if (length(nm_numeric) == 0) {
+    message("There is no numerical variable in the data or variable list.\n")
+    return(NULL)
+  }
+  
+  plist <- purrr::map(nm_numeric, function(var) {
+    if (each) {
+      xlab <- "" 
+      ylab <- "theoretical"
+    } else {
+      xlab <- ""
+      ylab <- ""
+      title <- ""
+    }
+      
+    df %>% 
+      mutate(variables = var) %>% 
+      ggplot(aes_string(sample = var)) +
+      stat_qq(col = col_point) + 
+      stat_qq_line(col = col_line) +
+      facet_wrap(~ variables) + 
+      ggtitle(title) +        
+      xlab(xlab) + 
+      ylab(ylab) +       
+      theme(legend.position = "none")
+    }
+  )
+  
+  if (each) {
+    for (i in seq(plist))
+      do.call("print", plist[i])
+  } else {
+    n <- length(plist)
+    n_row <- floor(sqrt(n))
+    
+    do.call("grid.arrange", c(plist, nrow = n_row, top = title))
+  }  
+}
+
+
+#' @method plot_qq_numeric grouped_df
+#' @rdname plot_qq_numeric.data.frame
+#' @importFrom tidyselect vars_select
+#' @importFrom rlang quos
+#' @importFrom tibble is_tibble
+#' @export
+#' 
+plot_qq_numeric.grouped_df <- function(.data, ..., col_point = "black", col_line = "red",
+                                         title = "Q-Q plot by numerical variables",
+                                         each = FALSE) {
+  vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
+  
+  plot_qq_numeric_group_impl(.data, vars, col_point, col_line, title, each)
+}
+
+plot_qq_numeric_group_impl <- function(df, vars, col_point, col_line, title, each) {
+  group_key <- attr(df, "groups") %>% 
+    select(!tidyselect::matches("\\.rows")) %>% 
+    names()
+  
+  n_levels <- attr(df, "group") %>% nrow() 
+  
+  if (length(vars) == 0) vars <- names(df)
+  
+  if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
+  
+  nm_numeric <- find_class(df[, vars], type = "numerical", index = FALSE)
+  
+  if (length(nm_numeric) == 0) {
+    message("There is no numerical variable in the data or variable list.\n")
+    return(NULL)
+  }
+  
+  plist <- purrr::map(nm_numeric, function(var) {
+    if (each) {
+      xlab <- "" 
+      ylab <- "Frequency"
+    } else {
+      xlab <- ""
+      ylab <- ""
+      title <- ""
+    }
+    
+    df %>% 
+      mutate(variables = var) %>% 
+      ggplot(aes_string(sample = var)) +
+      stat_qq(col = col_point) + 
+      stat_qq_line(col = col_line) +
+      facet_grid(reformulate("variables", group_key)) + 
+      ggtitle(title) +        
+      xlab(xlab) + 
+      ylab(ylab) +       
+      theme(legend.position = "none")
+    }
+  )
+  
+  if (each) {
+    for (i in seq(plist))
+      do.call("print", plist[i])
+  } else {
+    n <- length(plist)
+    n_row <- floor(sqrt(n))
+    
+    do.call("grid.arrange", c(plist, nrow = n_row, top = title, 
+                              right = group_key))
   }
 }
 

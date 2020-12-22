@@ -4,7 +4,7 @@
 \alias{plot_bar_category}
 \alias{plot_bar_category.data.frame}
 \alias{plot_bar_category.grouped_df}
-\title{Plot bar chart  of categorical variables}
+\title{Plot bar chart of categorical variables}
 \usage{
 plot_bar_category(.data, ...)
 
@@ -29,7 +29,7 @@ plot_bar_category(.data, ...)
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.}
 
-\item{...}{one or more unquoted expressions separated by commas.
+\item{\dots}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
 Positive values select variables; negative values to drop variables.
 If the first expression is negative, plot_bar_category() will automatically
@@ -44,10 +44,10 @@ Default is 10.}
 \item{add_character}{logical. Decide whether to include text variables in the
 diagnosis of categorical data. The default value is TRUE, which also includes character variables.}
 
-\item{title}{an character. a main title for the plot.}
+\item{title}{character. a main title for the plot.}
 
-\item{each}{an logical. Specifies whether to draw multiple plots on one screen. 
-The default is FALSE, which draws multiple plots on one screen..}
+\item{each}{logical. Specifies whether to draw multiple plots on one screen. 
+The default is FALSE, which draws multiple plots on one screen.}
 }
 \description{
 The plot_bar_category() to visualizes the distribution of 

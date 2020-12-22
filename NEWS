@@ -24,6 +24,8 @@ dlookr 0.3.15
 
 * Add a new function plot_bar_category() to visualizes the distribution of categorical data by level or relationship to specific numerical data by level.
 
+* Add a new function plot_qq_numeric() to visualizes the Q-Q plot of numeric data or relationship to specific categorical data.
+
 
 dlookr 0.3.14
 ----------------------------------------------------------------
