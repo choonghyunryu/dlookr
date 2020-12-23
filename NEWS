@@ -26,6 +26,8 @@ dlookr 0.3.15
 
 * Add a new function plot_qq_numeric() to visualizes the Q-Q plot of numeric data or relationship to specific categorical data.
 
+* Add a new function plot_box_numeric() to visualizes the box plot of numeric data or relationship to specific categorical data.
+
 
 dlookr 0.3.14
 ----------------------------------------------------------------
