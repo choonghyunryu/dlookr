@@ -84,6 +84,8 @@ numerical | summaries | descriptive statistics | `describe()` | O
 numerical | summaries | descriptive statistics | `univar_numeric()` | X
 numerical | summaries | descriptive statistics of standardized variable | `summary.univar_numeric()` | X
 numerical | visualize | histogram, box plot | `plot.univar_numeric()` | X
+numerical | visualize | Q-Q plots | `plot_qq_numeric()` | X
+numerical | visualize | box plot | `plot_box_numeric()` | X
 
 #### Bivariate EDA
 Types | Tasks | Descriptions | Functions | Support DBI
@@ -91,7 +93,6 @@ Types | Tasks | Descriptions | Functions | Support DBI
 categorical | summaries | frequency tables cross cases | `compare_category()` | X
 categorical | summaries | contingency tables, chi-squared test | `summary.compare_category()` | X
 categorical | visualize | mosaics plot | `plot.compare_category()` | X
-categorical | visualize | bar charts | `plot_bar_category()` | X
 numerical | summaries | correlation coefficient, linear model summaries | `compare_numeric()` | X
 numerical | summaries | correlation coefficient, linear model summaries with threshold  | `summary.compare_numeric()` | X
 numerical | visualize | scatter plot with marginal box plot | `plot.compare_numeric()` | X
@@ -111,10 +112,13 @@ categorical | categorical | contingency tables | `relate()` | O
 categorical | categorical | mosaics plot | `plot.relate()` | O
 categorical | numerical | descriptive statistic for each levels and total observation | `relate()` | O
 categorical | numerical | density plot | `plot.relate()` | O
+categorical | categorical | bar charts | `plot_bar_category()` | X
 numerical | categorical | ANOVA test | `relate()` | O
 numerical | categorical | scatter plot | `plot.relate()` | O
 numerical | numerical | simple linear model | `relate()` | O
 numerical | numerical | box plot | `plot.relate()` | O
+categorical | numerical | Q-Q plots | `plot_qq_numeric()` | X
+categorical | numerical | box plot | `plot_box_numeric()` | X
 
 #### Reporting
 Types | Descriptions | Functions | Support DBI
