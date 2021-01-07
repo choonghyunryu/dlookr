@@ -51,80 +51,80 @@ Data diagnosis supports the following data structures.
 #### Overall Diagnose Data
 Tasks | Descriptions | Functions | Support DBI
 :-----|:--------|:---|:---:
-diagnose data quality of variables | The scope of data quality diagnosis is information on missing values and unique value information | `diagnose()` | O
-diagnose data quality of categorical variables | frequency, ratio, rank by levels of each variables | `diagnose_category()` | O
-diagnose data quality of numerical variables | descriptive statistics, number of zero, minus, outliers | `diagnose_category()` | O
-diagnose data quality for outlier  | number of outliers, ratio, mean of outliers, mean with outliers, mean without outliers | `diagnose_outlier()` | O
-plot outliers information of numerical data  | box plot and histogram whith ourlers, without outliers | `plot_outlier()` | O
+diagnose data quality of variables | The scope of data quality diagnosis is information on missing values and unique value information | `diagnose()` | x
+diagnose data quality of categorical variables | frequency, ratio, rank by levels of each variables | `diagnose_category()` | x
+diagnose data quality of numerical variables | descriptive statistics, number of zero, minus, outliers | `diagnose_category()` | x
+diagnose data quality for outlier  | number of outliers, ratio, mean of outliers, mean with outliers, mean without outliers | `diagnose_outlier()` | x
+plot outliers information of numerical data  | box plot and histogram whith ourlers, without outliers | `plot_outlier()` | x
 
 #### Visualize Missing Values
 Tasks | Descriptions | Functions | Support DBI
 :-----|:--------|:---|:---:
-pareto chart for missing value | visualize pareto chart for variables with missing value. | `plot_na_pareto()` | X
-combination chart for missing value | visualize distribution of missing value by combination of variables. | `plot_na_hclust()` | X
-plot the combination variables that is include missing value | visualize the combinations of missing value across cases.. | `plot_na_intersect()` | X
+pareto chart for missing value | visualize pareto chart for variables with missing value. | `plot_na_pareto()` | 
+combination chart for missing value | visualize distribution of missing value by combination of variables. | `plot_na_hclust()` | 
+plot the combination variables that is include missing value | visualize the combinations of missing value across cases.. | `plot_na_intersect()` | 
 
 
 #### Reporting
 Types | Descriptions | Functions | Support DBI
 :-----|:-------|:---|:---:
-reporting the information of data diagnosis into pdf file | report the information for diagnosing the quality of the data. | `diagnose_report()` | O
-reporting the information of data diagnosis into html file | report the information for diagnosing the quality of the data. | `diagnose_report()` | O
+reporting the information of data diagnosis into pdf file | report the information for diagnosing the quality of the data. | `diagnose_report()` | x
+reporting the information of data diagnosis into html file | report the information for diagnosing the quality of the data. | `diagnose_report()` | x
 
 ### EDA
 
 #### Univariate EDA
 Types | Tasks | Descriptions | Functions | Support DBI
 :---|:---|:-------|:---|:---:
-categorical | summaries | frequency tables | `univar_category()` | X
-categorical | summaries | chi-squared test  | `summary.univar_category()` | X
-categorical | visualize | bar charts | `plot.univar_category()` | X
-categorical | visualize | bar charts | `plot_bar_category()` | X
-numerical | summaries | descriptive statistics | `describe()` | O
-numerical | summaries | descriptive statistics | `univar_numeric()` | X
-numerical | summaries | descriptive statistics of standardized variable | `summary.univar_numeric()` | X
-numerical | visualize | histogram, box plot | `plot.univar_numeric()` | X
-numerical | visualize | Q-Q plots | `plot_qq_numeric()` | X
-numerical | visualize | box plot | `plot_box_numeric()` | X
+categorical | summaries | frequency tables | `univar_category()` | 
+categorical | summaries | chi-squared test  | `summary.univar_category()` | 
+categorical | visualize | bar charts | `plot.univar_category()` | 
+categorical | visualize | bar charts | `plot_bar_category()` | 
+numerical | summaries | descriptive statistics | `describe()` | x
+numerical | summaries | descriptive statistics | `univar_numeric()` | 
+numerical | summaries | descriptive statistics of standardized variable | `summary.univar_numeric()` | 
+numerical | visualize | histogram, box plot | `plot.univar_numeric()` | 
+numerical | visualize | Q-Q plots | `plot_qq_numeric()` | 
+numerical | visualize | box plot | `plot_box_numeric()` | 
 
 #### Bivariate EDA
 Types | Tasks | Descriptions | Functions | Support DBI
 :---|:---|:-------|:---|:---:
-categorical | summaries | frequency tables cross cases | `compare_category()` | X
-categorical | summaries | contingency tables, chi-squared test | `summary.compare_category()` | X
-categorical | visualize | mosaics plot | `plot.compare_category()` | X
-numerical | summaries | correlation coefficient, linear model summaries | `compare_numeric()` | X
-numerical | summaries | correlation coefficient, linear model summaries with threshold  | `summary.compare_numeric()` | X
-numerical | visualize | scatter plot with marginal box plot | `plot.compare_numeric()` | X
-numerical | Correlate | correlation coefficient | `correlate()` | O
-numerical | Correlate | visualization of a correlation matrix | `plot_correlate()` | O
+categorical | summaries | frequency tables cross cases | `compare_category()` | 
+categorical | summaries | contingency tables, chi-squared test | `summary.compare_category()` | 
+categorical | visualize | mosaics plot | `plot.compare_category()` | 
+numerical | summaries | correlation coefficient, linear model summaries | `compare_numeric()` | 
+numerical | summaries | correlation coefficient, linear model summaries with threshold  | `summary.compare_numeric()` | 
+numerical | visualize | scatter plot with marginal box plot | `plot.compare_numeric()` | 
+numerical | Correlate | correlation coefficient | `correlate()` | x
+numerical | Correlate | visualization of a correlation matrix | `plot_correlate()` | x
 
 #### Normality Test
 Types | Tasks | Descriptions | Functions | Support DBI
 :---|:---|:-------|:---|:---:
-numerical | summaries | Shapiro-Wilk normality test | `normality()` | O
-numerical | summaries | normality diagnosis plot (histogram, Q-Q plots) | `plot_normality()` | O
+numerical | summaries | Shapiro-Wilk normality test | `normality()` | x
+numerical | summaries | normality diagnosis plot (histogram, Q-Q plots) | `plot_normality()` | x
 
 #### Relationship between target variable and predictors
 Target Variable | Predictor | Descriptions | Functions | Support DBI
 :---|:---|:-------|:---|:---:
-categorical | categorical | contingency tables | `relate()` | O
-categorical | categorical | mosaics plot | `plot.relate()` | O
-categorical | numerical | descriptive statistic for each levels and total observation | `relate()` | O
-categorical | numerical | density plot | `plot.relate()` | O
-categorical | categorical | bar charts | `plot_bar_category()` | X
-numerical | categorical | ANOVA test | `relate()` | O
-numerical | categorical | scatter plot | `plot.relate()` | O
-numerical | numerical | simple linear model | `relate()` | O
-numerical | numerical | box plot | `plot.relate()` | O
-categorical | numerical | Q-Q plots | `plot_qq_numeric()` | X
-categorical | numerical | box plot | `plot_box_numeric()` | X
+categorical | categorical | contingency tables | `relate()` | x
+categorical | categorical | mosaics plot | `plot.relate()` | x
+categorical | numerical | descriptive statistic for each levels and total observation | `relate()` | x
+categorical | numerical | density plot | `plot.relate()` | x
+categorical | categorical | bar charts | `plot_bar_category()` | 
+numerical | categorical | ANOVA test | `relate()` | x
+numerical | categorical | scatter plot | `plot.relate()` | x
+numerical | numerical | simple linear model | `relate()` | x
+numerical | numerical | box plot | `plot.relate()` | x
+categorical | numerical | Q-Q plots | `plot_qq_numeric()` | 
+categorical | numerical | box plot | `plot_box_numeric()` | 
 
 #### Reporting
 Types | Descriptions | Functions | Support DBI
 :-----|:--------|:---|:---:
-reporting the information of EDA into pdf file | reporting the information of EDA. | `eda_report()` | O
-reporting the information of EDA into html file | reporting the information of EDA. | `eda_report()` | O
+reporting the information of EDA into pdf file | reporting the information of EDA. | `eda_report()` | x
+reporting the information of EDA into html file | reporting the information of EDA. | `eda_report()` | x
 
 
 ### Transform Data
@@ -132,36 +132,36 @@ reporting the information of EDA into html file | reporting the information of E
 #### Find Variables
 Types | Descriptions | Functions | Support DBI
 :---|:-------|:---|:---:
-missing values  | find the variable that contains the missing value in the object that inherits the data.frame | `find_na()` | X
-outliers | find the numerical variable that contains outliers in the object that inherits the data.frame | `find_outliers()` | X
-outliers | find the numerical variable that skewed variable that inherits the data.frame | `find_skewness()` | X
+missing values  | find the variable that contains the missing value in the object that inherits the data.frame | `find_na()` | 
+outliers | find the numerical variable that contains outliers in the object that inherits the data.frame | `find_outliers()` | 
+outliers | find the numerical variable that skewed variable that inherits the data.frame | `find_skewness()` | 
 
 #### Imputation
 Types | Descriptions | Functions | Support DBI
 :---|:-------|:---|:---:
-missing values  | missing values are imputed with some representative values and statistical methods. | `imputate_na()` | X
-outliers | outliers are imputed with some representative values and statistical methods. | `imputate_outlier()` | X
-summaries | calculate descriptive statistics of the original and imputed values. | `summary.imputation()` | X
-visualize | the imputation of a numerical variable is a density plot, and the imputation of a categorical variable is a bar plot. | `plot.imputation()` | X
+missing values  | missing values are imputed with some representative values and statistical methods. | `imputate_na()` | 
+outliers | outliers are imputed with some representative values and statistical methods. | `imputate_outlier()` | 
+summaries | calculate descriptive statistics of the original and imputed values. | `summary.imputation()` | 
+visualize | the imputation of a numerical variable is a density plot, and the imputation of a categorical variable is a bar plot. | `plot.imputation()` | 
 
 #### Binning
 Types | Descriptions | Functions | Support DBI
 :---|:-------|:---|:---:
-binning | converts a numeric variable to a categorization variable | `binning()` | X
-summaries | calculate frequency and relative frequency for each levels(bins) | `summary.bins()` | X
-visualize | visualize two plots on a single screen. The plot at the top is a histogram representing the frequency of the level. The plot at the bottom is a bar chart representing the frequency of the level. | `plot.bins()` | X
-optimal binning | categorizes a numeric characteristic into bins for ulterior usage in scoring modeling | `binning_by()` | X
-visualize | generates plots for understand distribution, bad rate, and weight of evidence after running smbinning | `plot.optimal_bins()` | X
+binning | converts a numeric variable to a categorization variable | `binning()` | 
+summaries | calculate frequency and relative frequency for each levels(bins) | `summary.bins()` | 
+visualize | visualize two plots on a single screen. The plot at the top is a histogram representing the frequency of the level. The plot at the bottom is a bar chart representing the frequency of the level. | `plot.bins()` | 
+optimal binning | categorizes a numeric characteristic into bins for ulterior usage in scoring modeling | `binning_by()` | 
+visualize | generates plots for understand distribution, bad rate, and weight of evidence after running smbinning | `plot.optimal_bins()` | 
 
 #### Transformation
 Types | Descriptions | Functions | Support DBI
 :---|:-------|:---|:---:
-transformation | performs variable transformation for standardization and resolving skewness of numerical variables. | `transform()` | X
-summaries | compares the distribution of data before and after data transformation | `summary.bins()` | X
-visualize | visualize two kinds of plot by attribute of 'transform' class. The transformation of a numerical variable is a density plot. | `plot.transform` | X
+transformation | performs variable transformation for standardization and resolving skewness of numerical variables. | `transform()` | 
+summaries | compares the distribution of data before and after data transformation | `summary.bins()` | 
+visualize | visualize two kinds of plot by attribute of 'transform' class. The transformation of a numerical variable is a density plot. | `plot.transform` | 
 
 #### Reporting
 Types | Descriptions | Functions | Support DBI
 :-----|:--------|:---|:---:
-eporting the information of transformation into pdf file | reporting the information of transformation | `transformation_report()` | X
-eporting the information of transformation into html file | eporting the information of transformation | `transformation_report()` | X
+eporting the information of transformation into pdf file | reporting the information of transformation | `transformation_report()` | 
+eporting the information of transformation into html file | eporting the information of transformation | `transformation_report()` | 
