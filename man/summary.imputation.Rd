@@ -16,7 +16,7 @@ imputate_outlier().}
 print and summary method for "imputation" class.
 }
 \details{
-summary.imputation tries to be smart about formatting two kinds of imputation.
+summary.imputation() tries to be smart about formatting two kinds of imputation.
 }
 \examples{
 \donttest{

@@ -5,7 +5,7 @@
 #' statistical methods.
 #'
 #' @details
-#' imputate_na () creates an imputation class.
+#' imputate_na() creates an imputation class.
 #' The `imputation` class includes missing value position, imputed value,
 #' and method of missing value imputation, etc.
 #' The `imputation` class compares the imputed value with the original value
@@ -479,7 +479,7 @@ imputate_outlier_impl <- function(df, xvar, method, no_attrs = FALSE) {
 #' imputate_outlier().
 #' @param ... further arguments passed to or from other methods.
 #' @details
-#' summary.imputation tries to be smart about formatting two kinds of imputation.
+#' summary.imputation() tries to be smart about formatting two kinds of imputation.
 #'
 #' @seealso \code{\link{imputate_na}}, \code{\link{imputate_outlier}}, \code{\link{summary.imputation}}.
 #' @examples

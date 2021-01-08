@@ -60,7 +60,7 @@ Missing values are imputed with some representative values and
 statistical methods.
 }
 \details{
-imputate_na () creates an imputation class.
+imputate_na() creates an imputation class.
 The `imputation` class includes missing value position, imputed value,
 and method of missing value imputation, etc.
 The `imputation` class compares the imputed value with the original value

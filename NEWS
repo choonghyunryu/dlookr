@@ -28,6 +28,12 @@ dlookr 0.3.15
 
 * Add a new function plot_box_numeric() to visualizes the box plot of numeric data or relationship to specific categorical data.
 
+* Add a new function overview() to describe overview of data.
+
+* Add a new function summary.overview() to summarizes the data information from the overview class object created with overview().
+
+* Add a new function plot.overview() to visualizes the data information from the overview class object created with overview().
+
 
 dlookr 0.3.14
 ----------------------------------------------------------------
