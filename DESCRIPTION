@@ -46,8 +46,7 @@ Imports: dplyr,
     car,
     broom,
     reshape2,
-    forecast,
-    cli
+    forecast
 Suggests: ISLR,
     nycflights13,
     randomForest,
