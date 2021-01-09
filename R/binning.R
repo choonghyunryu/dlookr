@@ -512,3 +512,4 @@ plot.optimal_bins <- function(x, type = c("dist", "goodrate", "badrate", "WoE"),
       smbinning.plot(mat, option = "WoE", sub = sub)
   }
 }
+
