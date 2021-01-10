@@ -4,12 +4,12 @@
 \alias{plot.overview}
 \title{Visualize Information for an "overview" Object}
 \usage{
-\method{plot}{overview}(x, sort_type = c("none", "name", "type"), ...)
+\method{plot}{overview}(x, order_type = c("none", "name", "type"))
 }
 \arguments{
 \item{x}{an object of class "overview", usually, a result of a call to overview().}
 
-\item{...}{arguments to be passed to methods, such as graphical parameters (see par).}
+\item{order_type}{character. method of order of bars(variables).}
 }
 \description{
 Visualize a plot by attribute of `overview` class.
@@ -30,10 +30,10 @@ summary(ov)
 plot(ov)
 
 # sort by name of variables
-plot(ov, sort_type = "name")
+plot(ov, order_type = "name")
 
 # sort by data type of variables
-plot(ov, sort_type = "type")
+plot(ov, order_type = "type")
 }
 
 }

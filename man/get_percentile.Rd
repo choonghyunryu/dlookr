@@ -4,7 +4,7 @@
 \alias{get_percentile}
 \title{Finding percentile}
 \usage{
-get_percentile(x, value, from = 0, to = 1, eps = 0.000001)
+get_percentile(x, value, from = 0, to = 1, eps = 1e-06)
 }
 \arguments{
 \item{x}{numeric. a numeric vector.}

@@ -92,7 +92,7 @@ Here is a list of the data conversion functions and functions provided by dlookr
 
 * `find_na()` finds a variable that contains the missing values variable, and `imputate_na()` imputes the missing values.
 * `find_outliers()` finds a variable that contains the outliers, and `imputate_outlier()` imputes the outlier.
-* `summary.imputation()` and `plot.imputation()` provide information and visualization of the imputated variables.
+* `summary.imputation()` and `plot.imputation()` provide information and visualization of the imputed variables.
 * `find_skewness()` finds the variables of the skewed data, and `transform()` performs the resolving of the skewed data.
 * `transform()` also performs standardization of numeric variables.
 * `summary.transform()` and `plot.transform()` provide information and visualization of transformed variables.
@@ -346,7 +346,7 @@ attr(bin, "iv")
 attr(bin, "ivtable")
 
 # visualize optimal_bins class
-plot(bin, sub = "bins of Advertising variable")
+plot(bin)
 ```
 
 ## Creating a data transformation report using `transformation_report()`

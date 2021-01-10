@@ -333,10 +333,7 @@ plot.bins <- function(x, ...) {
 #' @param y character. name of binary response variable(0, 1). 
 #' The variable must contain only the integers 0 and 1 as element. 
 #' However, in the case of factor having two levels, it is performed while type conversion is performed in the calculation process.
-#' It does not support that the variable name is "default" 
-#' and that the dot is included in the variable name.
-#' @param x character. name of continuous characteristic variable. At least 5 different values.
-#' Inf is not allowed. It does not support that the variable name that the dot is included in the variable name.
+#' @param x character. name of continuous characteristic variable. At least 5 different values. and Inf is not allowed.
 #' @param p numeric. percentage of records per bin. Default 5\% (0.05).
 #' This parameter only accepts values greater that 0.00 (0\%) and lower than 0.50 (50\%).
 #' @param ordered logical. whether to build an ordered factor or not.
@@ -353,7 +350,7 @@ plot.bins <- function(x, ...) {
 #' \item iv : numeric. information value
 #' \item target : integer. binary response variable
 #' }
-#' @seealso \code{\link{binning}}, \code{\link{smbinning}}.
+#' @seealso \code{\link{binning}}, \code{\link{plot.optimal_bins}}.
 #' @examples
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
@@ -365,9 +362,11 @@ plot.bins <- function(x, ...) {
 #' bin
 #' # summary optimal_bins class
 #' summary(bin)
-#' # visualize optimal_bins class
-#' plot(bin, sub = "bins of Advertising variable")
-#' @importFrom smbinning smbinning
+#' # visualize all information for optimal_bins class
+#' plot(bin)
+#' 
+#' # visualize WoE information for optimal_bins class
+#' plot(bin, type = "WoE")
 #' @export
 binning_by <- function(df, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
   df <- as.data.frame(df)
@@ -400,22 +399,10 @@ binning_by <- function(df, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
     warning("The character y has been changed to a numeric vector consisting of 0 and 1.")
   }
 
-  tab <- which(names(df) %in% "table")
-
-  if (length(tab) > 0) {
-    if (x == "table") {
-      x <- "table_elbat_x"
-      names(df)[tab] <- x
-    } else if (y == "table") {
-      y <- "table_elbat_y"
-      names(df)[tab] <- y
-    }
-  }
-
-  smb <- smbinning::smbinning(as.data.frame(df), y, x)
+  smb <- ivtable(as.data.frame(df), y, x)
 
   if (!is.character(smb)) {
-    breaks <- smb$bands
+    breaks <- smb$cufoff
     tab <- table(breaks)
 
     dup <- as.numeric(names(tab)[which(tab == 2)])
@@ -452,18 +439,14 @@ binning_by <- function(df, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
 #' Visualize Distribution for an "optimal_bins" Object
 #'
 #' @description
-#' It generates plots for understand distribution, bad rate, and weight of evidence after
-#' running smbinning and saving its output.
+#' It generates plots for understand distribution, frequency, bad rate, and weight of evidence using optimal_bins.
 #'
 #' See vignette("transformation") for an introduction to these concepts.
 #'
 #' @param x an object of class "optimal_bins", usually, a result of a call to binning_by().
-#' @param type character. options for visualization. Distribution ("dist"), Good Rate ("goodrate"),
-#' Bad Rate ("badrate"), and Weight of Evidence ("WoE").
-#' @param sub character. sub title for the chart (optional).
-#' @param ... arguments to be passed to methods, such as graphical parameters (see par).
-#' only applies to the first graph that is implemented with the boxplot() function.
-#' @seealso \code{\link{binning_by}}, \code{\link{plot.bins}}, \code{\link{smbinning.plot}}.
+#' @param type character. options for visualization. Distribution ("dist"), Relateive Frequency ("freq"),
+#' Bad Rate ("badrate"), and Weight of Evidence ("WoE"). and default "all" draw all plot.
+#' @seealso \code{\link{binning_by}}, \code{\link{plot.bins}}.
 #' @examples
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
@@ -483,33 +466,259 @@ binning_by <- function(df, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
 #' # information value table
 #' attr(bin, "ivtable")
 #'
-#' # visualize optimal_bins class
-#' plot(bin, sub = "bins of Advertising variable")
-#' @importFrom graphics boxplot mtext
-#' @importFrom smbinning smbinning.plot
+#' # visualize all information for optimal_bins class
+#' plot(bin)
+#' 
+#' # visualize WoE information for optimal_bins class
+#' plot(bin, type = "WoE")
+#' 
+#' @import ggplot2
+#' @importFrom gridExtra grid.arrange
 #' @export
 #' @method plot optimal_bins
-plot.optimal_bins <- function(x, type = c("dist", "goodrate", "badrate", "WoE"),
-                              sub = "", ...) {
+plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "badrate", "WoE")) {
   if (is.character(x)) {
     cat("binn is the optimal_bins object that can not be binned : \n",
         x, "\n", sep = "")
   } else {
-    op <- par(no.readonly = TRUE)
-    on.exit(op)
-
-    par(mfrow = c(2, 2), mar = c(3, 2, 2, 1))
-
-    mat <- list(ivtable = attr(x, "ivtable"))
-
-    boxplot(attr(x, "raw") ~ attr(x, "target"),
-            horizontal = TRUE, frame = FALSE, col = "lightgray",
-            main = "Distribution", ...)
-    mtext(sub, 3)
-    smbinning.plot(mat, option = "dist", sub = sub)
-    smbinning.plot(mat, option = "badrate", sub = sub)
-    if (!any(is.infinite(attr(x, "ivtable")$WoE)))
-      smbinning.plot(mat, option = "WoE", sub = sub)
-  }
+    ivt <- attr(x, "ivtable")
+    
+    if (ivt[ivt$Cutpoint %in% "Missing", "CntRec"] == 0) {
+      ivt <- ivt %>% 
+        filter(!Cutpoint %in% "Missing")
+    }
+    
+    type <- match.arg(type)
+    
+    if (type %in% c("all", "dist")) {
+      p_dist <- data.frame(indicator = attr(x, "raw"), target = as.character(attr(x, "target"))) %>% 
+        ggplot(aes(x = target, y= indicator, group = target)) +
+        geom_boxplot(fill = "slategrey", color = "darkslategrey", width = 0.3) +
+        coord_flip() +
+        ggtitle("Distribution of indicator by target")
+    }
+    
+    if (type %in% c("all", "freq")) {
+      p_freq <- ivt %>% 
+        filter(!Cutpoint %in% "Total") %>% 
+        ggplot(aes(x = Cutpoint, y = PctRec, fill = Cutpoint)) +
+        geom_bar(stat = "identity", width = 0.5) +
+        scale_fill_brewer() +    
+        geom_text(aes(label = round(PctRec * 100, 1), y = PctRec + 0.05)) +
+        xlab("") +
+        ylab("") +
+        ggtitle("Percentage of frequency by bins") +
+        theme(legend.position = "none")
+    }
+    
+    if (type %in% c("all", "badrate")) {
+      p_badrate <- ivt %>% 
+        filter(!Cutpoint %in% "Total") %>% 
+        ggplot(aes(x = Cutpoint, y = BadRate, fill = Cutpoint)) +
+        geom_bar(stat = "identity", width = 0.5) +
+        scale_fill_brewer() +
+        geom_text(aes(label = round(BadRate * 100, 1), y = BadRate + 0.05)) +
+        xlab("") +
+        ylab("") +
+        ggtitle("Bad Rate (%) by bins") +
+        theme(legend.position = "none")
+    }
+    
+    if (type %in% c("all", "WoE")) {
+      p_woe <- ivt %>% 
+        filter(!Cutpoint %in% "Total") %>% 
+        ggplot(aes(x = Cutpoint, y = WoE, fill = Cutpoint)) +
+        geom_bar(stat = "identity", width = 0.5) +
+        scale_fill_brewer() +
+        geom_text(aes(label = round(WoE, 2), y = WoE + 0.05)) +
+        xlab("") +
+        ylab("") +
+        ggtitle("Weight of Evidence by bins") +
+        theme(legend.position = "none")
+    }
+    
+    if (type %in% c("all")) {
+      gridExtra::grid.arrange(p_dist, p_freq, p_badrate, p_woe, nrow = 2, ncol = 2) 
+    } else if (type %in% c("dist")) {
+      p_dist
+    } else if (type %in% c("freq")) {
+      p_freq
+    } else if (type %in% c("badrate")) {
+      p_badrate
+    } else if (type %in% c("WoE")) {
+      p_woe
+    }
+  }  
 }
 
+
+#' @importFrom tibble is_tibble
+#' @importFrom partykit ctree ctree_control width
+#' @importFrom tidyselect vars_select
+#' @importFrom rlang quos
+#' @import dplyr
+ivtable <- function (.data, y, x, p = 0.05) 
+{
+  y <- tidyselect::vars_select(names(.data), !! enquo(y))
+  x <- tidyselect::vars_select(names(.data), !! enquo(x))
+  
+  if (tibble::is_tibble(.data)) {
+    .data <- as.data.frame(.data)
+  }
+  
+  uniq_y <- length(unique(.data[, y]))
+  type_y <- class(.data[, y])[1]
+  type_x <- class(.data[, x])[1]
+  
+  if (!is.data.frame(.data)) 
+    stop("Data is not a data.frame.")
+  
+  if (!type_x %in% c("integer", "numeric")) 
+    stop("x is not numeric value.")
+  
+  if (uniq_y != 2) {
+    stop("The number of levels of the y variable is not 2.")
+  }
+  
+  if (type_y %in% c("integer", "numeric")) {
+    if (!all(unique(.data[, y]) %in% c(0, 1))) {
+      stop("If y is a numeric variable, it can have only values of 0 and 1.")
+    }
+  }
+  
+  if (type_y %in% c("factor", "ordered")) {
+    .data[, y] <- as.integer(.data[, y]) - 1
+    warning("The factor y has been changed to a numeric vector consisting of 0 and 1.")
+  }
+  
+  if (type_y %in% c("character")) {
+    .data[, y] <- as.integer(factor(.data[, y]))- 1
+    warning("The character y has been changed to a numeric vector consisting of 0 and 1.")
+  }
+  
+  if (any(is.infinite(.data[, x]))) 
+    stop("x with an Inf. Replace by NA.")
+  
+  if (p <= 0 | p > 0.5)
+    stop("p must be, 0 < p <= 0.5")
+  
+  if (length(unique(.data[, x])) < 5) 
+    stop("x must be number of unique values greater then 4.")
+  
+  ctree <- ctree(formula(paste(y, "~", x)), data = .data, na.action = na.exclude,
+                 control = ctree_control(minbucket = ceiling(round(p * nrow(.data)))))
+  
+  bins <- width(ctree)
+  if (bins < 2) {
+    return("No significant splits")
+  }
+  
+  cutvct <- seq(ctree) %>%
+    map_dbl(function(x) {
+      breaks <- ctree[x]$node$split$breaks
+      ifelse(is.null(breaks), NA, breaks)
+    }) %>% 
+    sort() 
+  max_cutpoint <- max(cutvct)
+  
+  x_idx <- which(names(.data) %in% x)
+  y_idx <- which(names(.data) %in% y)
+  
+  ivt <- cutvct %>%
+    map_dfr(function(cutpoint) {
+      .data %>% 
+        select(x = all_of(x_idx), y = all_of(y_idx)) %>% 
+        filter(!is.na(x) & !is.na(y)) %>% 
+        mutate(Cutpoint = paste0("<= ", cutpoint)) %>% 
+        mutate(CntCumRec = ifelse(x <= cutpoint & y %in% c(0, 1), 1, 0)) %>% 
+        mutate(CntCumGood = ifelse(x <= cutpoint & y == 1, 1, 0)) %>% 
+        mutate(CntCumBad = ifelse(x <= cutpoint & y == 0, 1, 0)) %>% 
+        group_by(Cutpoint) %>% 
+        summarise(CntRec = NA,
+                  CntGood = NA,
+                  CntBad = NA,
+                  CntCumRec = sum(CntCumRec),
+                  CntCumGood = sum(CntCumGood),
+                  CntCumBad = sum(CntCumBad), .groups = 'drop')
+    }) %>% 
+    bind_rows(
+      .data %>%
+        select(x = all_of(x_idx), y = all_of(y_idx)) %>%
+        filter(!is.na(x) & !is.na(y)) %>% 
+        mutate(Cutpoint = paste0("> ", max_cutpoint)) %>% 
+        mutate(CntCumRec = ifelse(y %in% c(0, 1), 1, 0)) %>% 
+        mutate(CntCumGood = ifelse(y == 1, 1, 0)) %>% 
+        mutate(CntCumBad = ifelse(y == 0, 1, 0)) %>% 
+        group_by(Cutpoint) %>% 
+        summarise(CntRec = NA,
+                  CntGood = NA,
+                  CntBad = NA,
+                  CntCumRec = sum(CntCumRec),
+                  CntCumGood = sum(CntCumGood),
+                  CntCumBad = sum(CntCumBad), .groups = 'drop')
+    ) %>% 
+    mutate(CntRec = CntCumRec - lag(CntCumRec, default = 0)) %>% 
+    mutate(CntGood = CntCumGood - lag(CntCumGood, default = 0)) %>% 
+    mutate(CntBad = CntCumBad - lag(CntCumBad, default = 0)) %>% 
+    bind_rows(
+      .data %>% 
+        select(x = all_of(x_idx), y = all_of(y_idx)) %>% 
+        filter(!is.na(y)) %>% 
+        mutate(Cutpoint = "Missing") %>% 
+        mutate(CntRec = ifelse(is.na(x) & y %in% c(0, 1), 1, 0)) %>% 
+        mutate(CntGood = ifelse(is.na(x) & y == 1, 1, 0)) %>% 
+        mutate(CntBad = ifelse(is.na(x) & y == 0, 1, 0)) %>% 
+        mutate(CntCumGood = ifelse(y == 1, 1, 0)) %>% 
+        mutate(CntCumBad = ifelse(y == 0, 1, 0)) %>%                
+        group_by(Cutpoint) %>% 
+        summarise(CntRec = sum(CntRec),
+                  CntGood = sum(CntGood),
+                  CntBad = sum(CntBad),
+                  CntCumRec = n(),
+                  CntCumGood = sum(CntCumGood),
+                  CntCumBad = sum(CntCumBad), .groups = 'drop')
+    )
+  
+  ivt <- bind_rows(
+    ivt,
+    ivt %>% 
+      mutate(Cutpoint = "Total") %>% 
+      group_by(Cutpoint) %>% 
+      summarise(CntRec = sum(CntRec),
+                CntGood = sum(CntGood),
+                CntBad = sum(CntBad),
+                CntCumRec = NA,
+                CntCumGood = NA,
+                CntCumBad = NA, .groups = 'drop')
+  )
+  
+  ivt$PctRec <- ivt$CntRec / pull(ivt[ivt$Cutpoint %in% "Total", "CntRec"])
+  ivt$GoodRate <- ivt$CntGood / ivt$CntRec
+  ivt$BadRate <- ivt$CntBad / ivt$CntRec
+  ivt$Odds <- ivt$GoodRate / ivt$BadRate
+  ivt$LnOdds <- log(ivt$Odds)
+  
+  G <- pull(ivt[ivt$Cutpoint %in% "Total", "CntGood"])
+  B <- pull(ivt[ivt$Cutpoint %in% "Total", "CntBad"])
+  LnGB <- log(G/B)
+  ivt$WoE <- log(ivt$CntGood/ivt$CntBad) - LnGB
+  
+  ivt$IV <- ivt$WoE * (ivt$CntGood / G - ivt$CntBad / B)
+  
+  n <- nrow(ivt)
+  
+  tmp <- sum(ifelse(is.finite(ivt$IV[1:(n - 1)]), ivt$IV[1:(n - 1)], 0))
+  iv <- ivt$IV[n] <- round(tmp, 4)
+  
+  ivt$GoodRate <- round(ivt$GoodRate, 4)
+  ivt$BadRate <- round(ivt$BadRate, 4)
+  ivt$Odds <- round(ivt$Odds, 4)
+  ivt$LnOdds <- round(ivt$LnOdds, 4)
+  ivt$WoE <- round(ivt$WoE, 4)
+  ivt$IV <- round(ivt$IV, 4)                     
+  
+  min_max <- range(.data[, x], na.rm = TRUE)
+  cufoff <- c(min_max[1], cutvct, min_max[2])
+  
+  list(ivtable = as.data.frame(ivt), iv = iv, cufoff = cufoff)
+}

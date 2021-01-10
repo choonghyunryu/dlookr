@@ -11,12 +11,9 @@ binning_by(df, y, x, p = 0.05, ordered = TRUE, labels = NULL)
 
 \item{y}{character. name of binary response variable(0, 1). 
 The variable must contain only the integers 0 and 1 as element. 
-However, in the case of factor having two levels, it is performed while type conversion is performed in the calculation process.
-It does not support that the variable name is "default" 
-and that the dot is included in the variable name.}
+However, in the case of factor having two levels, it is performed while type conversion is performed in the calculation process.}
 
-\item{x}{character. name of continuous characteristic variable. At least 5 different values.
-Inf is not allowed. It does not support that the variable name that the dot is included in the variable name.}
+\item{x}{character. name of continuous characteristic variable. At least 5 different values. and Inf is not allowed.}
 
 \item{p}{numeric. percentage of records per bin. Default 5\% (0.05).
 This parameter only accepts values greater that 0.00 (0\%) and lower than 0.50 (50\%).}
@@ -77,9 +74,12 @@ bin <- binning_by(carseats, "US", "Advertising")
 bin
 # summary optimal_bins class
 summary(bin)
-# visualize optimal_bins class
-plot(bin, sub = "bins of Advertising variable")
+# visualize all information for optimal_bins class
+plot(bin)
+
+# visualize WoE information for optimal_bins class
+plot(bin, type = "WoE")
 }
 \seealso{
-\code{\link{binning}}, \code{\link{smbinning}}.
+\code{\link{binning}}, \code{\link{plot.optimal_bins}}.
 }

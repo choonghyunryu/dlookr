@@ -4,22 +4,16 @@
 \alias{plot.optimal_bins}
 \title{Visualize Distribution for an "optimal_bins" Object}
 \usage{
-\method{plot}{optimal_bins}(x, type = c("dist", "goodrate", "badrate", "WoE"), sub = "", ...)
+\method{plot}{optimal_bins}(x, type = c("all", "dist", "freq", "badrate", "WoE"))
 }
 \arguments{
 \item{x}{an object of class "optimal_bins", usually, a result of a call to binning_by().}
 
-\item{type}{character. options for visualization. Distribution ("dist"), Good Rate ("goodrate"),
-Bad Rate ("badrate"), and Weight of Evidence ("WoE").}
-
-\item{sub}{character. sub title for the chart (optional).}
-
-\item{...}{arguments to be passed to methods, such as graphical parameters (see par).
-only applies to the first graph that is implemented with the boxplot() function.}
+\item{type}{character. options for visualization. Distribution ("dist"), Relateive Frequency ("freq"),
+Bad Rate ("badrate"), and Weight of Evidence ("WoE"). and default "all" draw all plot.}
 }
 \description{
-It generates plots for understand distribution, bad rate, and weight of evidence after
-running smbinning and saving its output.
+It generates plots for understand distribution, frequency, bad rate, and weight of evidence using optimal_bins.
 
 See vignette("transformation") for an introduction to these concepts.
 }
@@ -42,9 +36,13 @@ attr(bin, "iv")
 # information value table
 attr(bin, "ivtable")
 
-# visualize optimal_bins class
-plot(bin, sub = "bins of Advertising variable")
+# visualize all information for optimal_bins class
+plot(bin)
+
+# visualize WoE information for optimal_bins class
+plot(bin, type = "WoE")
+
 }
 \seealso{
-\code{\link{binning_by}}, \code{\link{plot.bins}}, \code{\link{smbinning.plot}}.
+\code{\link{binning_by}}, \code{\link{plot.bins}}.
 }

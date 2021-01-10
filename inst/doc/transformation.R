@@ -161,7 +161,7 @@ attr(bin, "iv")
 attr(bin, "ivtable")
 
 # visualize optimal_bins class
-plot(bin, sub = "bins of Advertising variable")
+plot(bin)
 
 ## ----trans_report, eval=FALSE-------------------------------------------------
 #  carseats %>%

@@ -51,6 +51,9 @@ Data diagnosis supports the following data structures.
 #### Overall Diagnose Data
 Tasks | Descriptions | Functions | Support DBI
 :-----|:--------|:---|:---:
+describe overview of data | Inquire basic information to understand the data in general | `overview()` | 
+summary overview object  | summary described overview of data  | `summary.overview()` | 
+plot overview object | plot described overview of data | `plot.overview()` | 
 diagnose data quality of variables | The scope of data quality diagnosis is information on missing values and unique value information | `diagnose()` | x
 diagnose data quality of categorical variables | frequency, ratio, rank by levels of each variables | `diagnose_category()` | x
 diagnose data quality of numerical variables | descriptive statistics, number of zero, minus, outliers | `diagnose_category()` | x

@@ -201,7 +201,7 @@ summary.overview <- function(object, ...)  {
 #' Visualize the data type, number of observations, and number of missing values for each variable.
 #'
 #' @param x an object of class "overview", usually, a result of a call to overview().
-#' @param ... arguments to be passed to methods, such as graphical parameters (see par).
+#' @param order_type character. method of order of bars(variables).
 #' @seealso \code{\link{overview}}, \code{\link{summary.overview}}.
 #' @examples
 #' \donttest{
@@ -218,17 +218,17 @@ summary.overview <- function(object, ...)  {
 #' plot(ov)
 #'
 #' # sort by name of variables
-#' plot(ov, sort_type = "name")
+#' plot(ov, order_type = "name")
 #' 
 #' # sort by data type of variables
-#' plot(ov, sort_type = "type")
+#' plot(ov, order_type = "type")
 #' }
 #' 
 #' @method plot overview
 #' @import ggplot2
 #' @import dplyr
 #' @export
-plot.overview <- function(x, sort_type = c("none", "name", "type"), ...)  {
+plot.overview <- function(x, order_type = c("none", "name", "type"))  {
   info_class <- attr(x, "info_class")
   na_col <- attr(x, "na_col")
   
@@ -237,12 +237,12 @@ plot.overview <- function(x, sort_type = c("none", "name", "type"), ...)  {
   raw <- raw %>% 
     mutate(variable = factor(variable, levels = variable))
   
-  sort_type <- match.arg(sort_type)
+  order_type <- match.arg(order_type)
   
-  if (sort_type == "name") {
+  if (order_type == "name") {
     raw <- raw %>% 
       mutate(variable = as.character(variable))
-  } else if (sort_type == "type") {
+  } else if (order_type == "type") {
     odr <- raw %>% 
       mutate(variable = as.character(variable)) %>% 
       arrange(class, variable) %>% 
