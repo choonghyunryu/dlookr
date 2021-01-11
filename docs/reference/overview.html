@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Optimal Binning for Scoring Modeling — binning_by • dlookr</title>
+<title>Describe overview of data — overview • dlookr</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,8 @@
 
 
 
-<meta property="og:title" content="Optimal Binning for Scoring Modeling — binning_by" />
-<meta property="og:description" content="The binning_by() finding intervals for numerical variable
-using optical binning. Optimal binning categorizes a numeric characteristic
-into bins for ulterior usage in scoring modeling." />
+<meta property="og:title" content="Describe overview of data — overview" />
+<meta property="og:description" content="Inquire basic information to understand the data in general." />
 
 
 
@@ -116,109 +114,130 @@ into bins for ulterior usage in scoring modeling." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Optimal Binning for Scoring Modeling</h1>
-    <small class="dont-index">Source: <a href='https://github.com/choonghyunryu/dlookr/blob/master/R/binning.R'><code>R/binning.R</code></a></small>
-    <div class="hidden name"><code>binning_by.Rd</code></div>
+    <h1>Describe overview of data</h1>
+    <small class="dont-index">Source: <a href='https://github.com/choonghyunryu/dlookr/blob/master/R/overview.R'><code>R/overview.R</code></a></small>
+    <div class="hidden name"><code>overview.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The binning_by() finding intervals for numerical variable
-using optical binning. Optimal binning categorizes a numeric characteristic
-into bins for ulterior usage in scoring modeling.</p>
+    <p>Inquire basic information to understand the data in general.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>binning_by</span>(<span class='no'>df</span>, <span class='no'>y</span>, <span class='no'>x</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>ordered</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>overview</span>(<span class='no'>.data</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>df</th>
-      <td><p>a data frame.</p></td>
-    </tr>
-    <tr>
-      <th>y</th>
-      <td><p>character. name of binary response variable(0, 1). 
-The variable must contain only the integers 0 and 1 as element. 
-However, in the case of factor having two levels, it is performed while type conversion is performed in the calculation process.</p></td>
-    </tr>
-    <tr>
-      <th>x</th>
-      <td><p>character. name of continuous characteristic variable. At least 5 different values. and Inf is not allowed.</p></td>
-    </tr>
-    <tr>
-      <th>p</th>
-      <td><p>numeric. percentage of records per bin. Default 5% (0.05).
-This parameter only accepts values greater that 0.00 (0%) and lower than 0.50 (50%).</p></td>
-    </tr>
-    <tr>
-      <th>ordered</th>
-      <td><p>logical. whether to build an ordered factor or not.</p></td>
-    </tr>
-    <tr>
-      <th>labels</th>
-      <td><p>character. the label names to use for each of the bins.</p></td>
+      <th>.data</th>
+      <td><p>a data.frame or a <code>tbl_df</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>an object of "optimal_bins" class.
-Attributes of "optimal_bins" class is as follows.</p><ul>
-<li><p>class : "optimal_bins".</p></li>
-<li><p>type : binning type, "optimal".</p></li>
-<li><p>breaks : numeric. the number of intervals into which x is to be cut.</p></li>
-<li><p>levels : character. levels of binned value.</p></li>
-<li><p>raw : numeric. raw data, x argument value.</p></li>
-<li><p>ivtable : data.frame. information value table</p></li>
-<li><p>iv : numeric. information value</p></li>
-<li><p>target : integer. binary response variable</p></li>
+    <p>An object of overview class. 
+The overview class contains data.frame and two attributes. data.frame has the following 3 variables.:
+data.frame is as follow.:</p><ul>
+<li><p>division : division of information.</p><ul>
+<li><p>size : indicators of related to data capacity</p></li>
+<li><p>missing : indicators of related to missing value</p></li>
+<li><p>data_type : indicators of related to data type</p></li>
+</ul></li>
+<li><p>metrics : name of metrics.</p><ul>
+<li><p>observations : number of observations (number of rows)</p></li>
+<li><p>variables : number of variables (number of columns)</p></li>
+<li><p>values : number of values (number of cells. rows * columns)</p></li>
+<li><p>memory_size : an estimate of the memory that is being used to store an R object.</p></li>
+<li><p>complete_obs : number of complete cases(observations). i.e., have no missing values.</p></li>
+<li><p>missing_obs : number of observations that has missing values.</p></li>
+<li><p>missing_vars : number of variables that has missing values.</p></li>
+<li><p>missing_values : number of values(cells) that has missing values.</p></li>
+<li><p>numerics : number of variables that is data type is numeric.</p></li>
+<li><p>integers : number of variables that is data type is integer.</p></li>
+<li><p>factors : number of variables that is data type is factor.</p></li>
+<li><p>characters : number of variables that is data type is character.</p></li>
+<li><p>others : number of variables that is not above.</p></li>
+</ul></li>
+<li><p>value : value of metrics.</p></li>
+</ul>
+
+<p>Attributes of overview class is as follows.:</p><ul>
+<li><p>na_col : the data type of predictor to replace missing value.</p></li>
+<li><p>info_class : data.frame. variable name and class name that describe the data type of variables.</p><ul>
+<li><p>data.frame has a two variables.</p><ul>
+<li><p>variable : variable names</p></li>
+<li><p>class : data type</p></li>
+</ul></li>
+</ul></li>
 </ul>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function is useful when used with the mutate/transmute
-function of the dplyr package. And this function is implemented using
-smbinning() function of smbinning package.</p>
-    <h2 class="hasAnchor" id="attributes-of-optimal-bins-class"><a class="anchor" href="#attributes-of-optimal-bins-class"></a>attributes of "optimal_bins" class</h2>
-
-    
-
-<p>Attributes of the "optimal_bins" class that is as follows.</p><ul>
-<li><p>class : "optimal_bins".</p></li>
-<li><p>levels : character. factor or ordered factor levels</p></li>
-<li><p>type : character. binning method</p></li>
-<li><p>breaks : numeric. breaks for binning</p></li>
-<li><p>raw : numeric. before the binned the raw data</p></li>
-<li><p>ivtable : data.frame. information value table</p></li>
-<li><p>iv : numeric. information value</p></li>
-<li><p>target : integer. binary response variable</p></li>
-</ul>
-
-<p>See vignette("transformation") for an introduction to these concepts.</p>
+    <p>overview() creates an overview class.
+The `overview` class includes general information such as the size of the data, the degree of missing values, 
+and the data types of variables.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='binning.html'>binning</a></code>, <code><a href='plot.optimal_bins.html'>plot.optimal_bins</a></code>.</p></div>
+    <div class='dont-index'><p><code><a href='summary.overview.html'>summary.overview</a></code>, <code><a href='plot.overview.html'>plot.overview</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Generate data for the example</span>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='co'># Generate data for the example</span>
 <span class='no'>carseats</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ISLR</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/ISLR/man/Carseats.html'>Carseats</a></span>
 <span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>20</span>), <span class='st'>"Income"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
 <span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>5</span>), <span class='st'>"Urban"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
 
-<span class='co'># optimal binning</span>
-<span class='no'>bin</span> <span class='kw'>&lt;-</span> <span class='fu'>binning_by</span>(<span class='no'>carseats</span>, <span class='st'>"US"</span>, <span class='st'>"Advertising"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The factor y has been changed to a numeric vector consisting of 0 and 1.</span></div><div class='input'><span class='no'>bin</span></div><div class='output co'>#&gt; binned type: optimal
-#&gt; number of bins: 3
-#&gt; x
-#&gt; [-1,0]  (0,6] (6,29] 
-#&gt;    144     69    187 </div><div class='input'><span class='co'># summary optimal_bins class</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>bin</span>)</div><div class='output co'>#&gt;   levels freq   rate
-#&gt; 1 [-1,0]  144 0.3600
-#&gt; 2  (0,6]   69 0.1725
-#&gt; 3 (6,29]  187 0.4675</div><div class='input'><span class='co'># visualize all information for optimal_bins class</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bin</span>)</div><div class='img'><img src='binning_by-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># visualize WoE information for optimal_bins class</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bin</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"WoE"</span>)</div><div class='img'><img src='binning_by-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='no'>ov</span> <span class='kw'>&lt;-</span> <span class='fu'>overview</span>(<span class='no'>carseats</span>)
+<span class='no'>ov</span></div><div class='output co'>#&gt;     division        metrics value
+#&gt; 1       size   observations   400
+#&gt; 2       size      variables    11
+#&gt; 3       size         values  4400
+#&gt; 4       size    memory_size 59648
+#&gt; 5    missing   complete_obs   376
+#&gt; 6    missing    missing_obs    24
+#&gt; 7    missing   missing_vars     2
+#&gt; 8    missing missing_values    25
+#&gt; 9  data_type       numerics     8
+#&gt; 10 data_type       integers     0
+#&gt; 11 data_type        factors     3
+#&gt; 12 data_type     characters     0
+#&gt; 13 data_type         others     0</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>ov</span>)</div><div class='output co'>#&gt; ── Data Scale ──────────────────────────────────────────────
+#&gt; ● Number of observations           :     400
+#&gt; ● Number of variables              :      11
+#&gt; ● Number of values                 :   4,400
+#&gt; ● Size of located memory(bytes)    :  59,648
+#&gt; 
+#&gt; ── Missing Data ────────────────────────────────────────────
+#&gt; ● Number of completed observations :     376
+#&gt; ● Number of observations with N/A  :      24
+#&gt; ● Number of variables with N/A     :       2
+#&gt; ● Number of N/A                    :      25
+#&gt; 
+#&gt; ── Data Type ───────────────────────────────────────────────
+#&gt; ● Number of numeric variables      :       8
+#&gt; ● Number of integer variables      :       0
+#&gt; ● Number of factors variables      :       3
+#&gt; ● Number of character variables    :       0
+#&gt; ● Number of other variables        :       0
+#&gt; 
+#&gt; ── Individual variables ────────────────────────────────────
+#&gt;      Variables Data Type
+#&gt; 1        Sales   numeric
+#&gt; 2    CompPrice   numeric
+#&gt; 3       Income   numeric
+#&gt; 4  Advertising   numeric
+#&gt; 5   Population   numeric
+#&gt; 6        Price   numeric
+#&gt; 7    ShelveLoc    factor
+#&gt; 8          Age   numeric
+#&gt; 9    Education   numeric
+#&gt; 10       Urban    factor
+#&gt; 11          US    factor</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>ov</span>)</div><div class='img'><img src='overview-1.png' alt='' width='700' height='433' /></div><div class='input'># }
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

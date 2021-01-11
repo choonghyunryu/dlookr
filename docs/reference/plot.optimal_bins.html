@@ -40,8 +40,7 @@
 
 
 <meta property="og:title" content="Visualize Distribution for an "optimal_bins" Object — plot.optimal_bins" />
-<meta property="og:description" content="It generates plots for understand distribution, bad rate, and weight of evidence after
-running smbinning and saving its output.
+<meta property="og:description" content="It generates plots for understand distribution, frequency, bad rate, and weight of evidence using optimal_bins.
 See vignette(&quot;transformation&quot;) for an introduction to these concepts." />
 
 
@@ -122,13 +121,12 @@ See vignette(&quot;transformation&quot;) for an introduction to these concepts."
     </div>
 
     <div class="ref-description">
-    <p>It generates plots for understand distribution, bad rate, and weight of evidence after
-running smbinning and saving its output.</p>
+    <p>It generates plots for understand distribution, frequency, bad rate, and weight of evidence using optimal_bins.</p>
 <p>See vignette("transformation") for an introduction to these concepts.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for optimal_bins</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"dist"</span>, <span class='st'>"goodrate"</span>, <span class='st'>"badrate"</span>, <span class='st'>"WoE"</span>), <span class='kw'>sub</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"dist"</span>, <span class='st'>"freq"</span>, <span class='st'>"badrate"</span>, <span class='st'>"WoE"</span>))</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -139,23 +137,14 @@ running smbinning and saving its output.</p>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>character. options for visualization. Distribution ("dist"), Good Rate ("goodrate"),
-Bad Rate ("badrate"), and Weight of Evidence ("WoE").</p></td>
-    </tr>
-    <tr>
-      <th>sub</th>
-      <td><p>character. sub title for the chart (optional).</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>arguments to be passed to methods, such as graphical parameters (see par).
-only applies to the first graph that is implemented with the boxplot() function.</p></td>
+      <td><p>character. options for visualization. Distribution ("dist"), Relateive Frequency ("freq"),
+Bad Rate ("badrate"), and Weight of Evidence ("WoE"). and default "all" draw all plot.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='binning_by.html'>binning_by</a></code>, <code><a href='plot.bins.html'>plot.bins</a></code>, <code>smbinning.plot</code>.</p></div>
+    <div class='dont-index'><p><code><a href='binning_by.html'>binning_by</a></code>, <code><a href='plot.bins.html'>plot.bins</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Generate data for the example</span>
@@ -177,20 +166,23 @@ only applies to the first graph that is implemented with the boxplot() function.
 <span class='co'># information value</span>
 <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>bin</span>, <span class='st'>"iv"</span>)</div><div class='output co'>#&gt; [1] 4.8349</div><div class='input'>
 <span class='co'># information value table</span>
-<span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>bin</span>, <span class='st'>"ivtable"</span>)</div><div class='output co'>#&gt;   Cutpoint CntRec CntGood CntBad CntCumRec CntCumGood CntCumBad PctRec GoodRate BadRate
-#&gt; 1     &lt;= 0    144      19    125       144         19       125 0.3600   0.1319  0.8681
-#&gt; 2     &lt;= 6     69      54     15       213         73       140 0.1725   0.7826  0.2174
-#&gt; 3      &gt; 6    187     185      2       400        258       142 0.4675   0.9893  0.0107
-#&gt; 4  Missing      0       0      0       400        258       142 0.0000      NaN     NaN
-#&gt; 5    Total    400     258    142        NA         NA        NA 1.0000   0.6450  0.3550
-#&gt;      Odds  LnOdds     WoE     IV
-#&gt; 1  0.1520 -1.8839 -2.4810 2.0013
-#&gt; 2  3.6000  1.2809  0.6838 0.0709
-#&gt; 3 92.5000  4.5272  3.9301 2.7627
-#&gt; 4     NaN     NaN     NaN    NaN
-#&gt; 5  1.8169  0.5971  0.0000 4.8349</div><div class='input'>
-<span class='co'># visualize optimal_bins class</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bin</span>, <span class='kw'>sub</span> <span class='kw'>=</span> <span class='st'>"bins of Advertising variable"</span>)</div><div class='img'><img src='plot.optimal_bins-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>bin</span>, <span class='st'>"ivtable"</span>)</div><div class='output co'>#&gt;   Cutpoint CntRec CntGood CntBad CntCumRec CntCumGood CntCumBad PctRec GoodRate
+#&gt; 1     &lt;= 0    144      19    125       144         19       125 0.3600   0.1319
+#&gt; 2     &lt;= 6     69      54     15       213         73       140 0.1725   0.7826
+#&gt; 3      &gt; 6    187     185      2       400        258       142 0.4675   0.9893
+#&gt; 4  Missing      0       0      0       400        258       142 0.0000      NaN
+#&gt; 5    Total    400     258    142        NA         NA        NA 1.0000   0.6450
+#&gt;   BadRate    Odds  LnOdds     WoE     IV
+#&gt; 1  0.8681  0.1520 -1.8839 -2.4810 2.0013
+#&gt; 2  0.2174  3.6000  1.2809  0.6838 0.0709
+#&gt; 3  0.0107 92.5000  4.5272  3.9301 2.7627
+#&gt; 4     NaN     NaN     NaN     NaN    NaN
+#&gt; 5  0.3550  1.8169  0.5971  0.0000 4.8349</div><div class='input'>
+<span class='co'># visualize all information for optimal_bins class</span>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bin</span>)</div><div class='img'><img src='plot.optimal_bins-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># visualize WoE information for optimal_bins class</span>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bin</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"WoE"</span>)</div><div class='img'><img src='plot.optimal_bins-2.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
