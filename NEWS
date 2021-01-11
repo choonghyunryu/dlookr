@@ -36,6 +36,10 @@ dlookr 0.3.15
 
 * Add a new function plot.overview() to visualizes the data information from the overview class object created with overview().
 
+* Add a new function kld() to computes the Kullback-Leibler divergence between two probability distributions.
+
+* Add a new function jsd() to computes the Jensen-Shannon divergence between two probability distributions.
+
 
 dlookr 0.3.14
 ----------------------------------------------------------------

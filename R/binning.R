@@ -703,12 +703,28 @@ ivtable <- function (.data, y, x, p = 0.05)
   LnGB <- log(G/B)
   ivt$WoE <- log(ivt$CntGood/ivt$CntBad) - LnGB
   
+  ivt$GoodRate <- ifelse(is.finite(ivt$GoodRate), ivt$GoodRate, 0)
+  ivt$BadRate <- ifelse(is.finite(ivt$BadRate), ivt$BadRate, 0)
+  ivt$Odds <- ifelse(is.finite(ivt$Odds), ivt$Odds, 0)
+  ivt$LnOdds <- ifelse(is.finite(ivt$LnOdds), ivt$LnOdds, 0)
+  ivt$WoE <- ifelse(is.finite(ivt$WoE), ivt$WoE, 0)
+  
+  # Information Value
   ivt$IV <- ivt$WoE * (ivt$CntGood / G - ivt$CntBad / B)
   
   n <- nrow(ivt)
   
-  tmp <- sum(ifelse(is.finite(ivt$IV[1:(n - 1)]), ivt$IV[1:(n - 1)], 0))
-  iv <- ivt$IV[n] <- round(tmp, 4)
+  ivt$IV[1:(n - 1)] <- ifelse(is.finite(ivt$IV[1:(n - 1)]), ivt$IV[1:(n - 1)], 0)
+  iv <- ivt$IV[n] <- round(sum(ivt$IV[1:(n - 1)]), 4)
+  
+  # Jensen-Shannon Divergence
+  P <- ivt$CntGood / pull(ivt[ivt$Cutpoint %in% "Total", "CntGood"])
+  Q <- ivt$CntBad / pull(ivt[ivt$Cutpoint %in% "Total", "CntBad"])
+  
+  ivt$JS <- jsd(P, Q)
+  
+  ivt$JS[1:(n - 1)] <- ifelse(is.finite(ivt$JS[1:(n - 1)]), ivt$JS[1:(n - 1)], 0)
+  js <- ivt$JS[n] <- round(sum(ivt$JS[1:(n - 1)]), 4)
   
   ivt$GoodRate <- round(ivt$GoodRate, 4)
   ivt$BadRate <- round(ivt$BadRate, 4)
@@ -716,9 +732,10 @@ ivtable <- function (.data, y, x, p = 0.05)
   ivt$LnOdds <- round(ivt$LnOdds, 4)
   ivt$WoE <- round(ivt$WoE, 4)
   ivt$IV <- round(ivt$IV, 4)                     
+  ivt$JS <- round(ivt$JS, 4)  
   
   min_max <- range(.data[, x], na.rm = TRUE)
   cufoff <- c(min_max[1], cutvct, min_max[2])
   
-  list(ivtable = as.data.frame(ivt), iv = iv, cufoff = cufoff)
+  list(ivtable = as.data.frame(ivt), iv = iv, js = js, cufoff = cufoff)
 }
