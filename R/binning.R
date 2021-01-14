@@ -75,17 +75,22 @@
 #' bin <- binning(x, approxy.lab = FALSE)
 #' bin
 #'
+#' # extract binned results
+#' extract(bin)
+#' 
 #' # -------------------------
 #' # Using pipes & dplyr
 #' # -------------------------
 #' library(dplyr)
 #'
 #' carseats %>%
-#'  mutate(Income_bin = binning(carseats$Income)) %>%
+#'  mutate(Income_bin = binning(carseats$Income) %>% 
+#'                      extract()) %>%
 #'  group_by(ShelveLoc, Income_bin) %>%
 #'  summarise(freq = n()) %>%
 #'  arrange(desc(freq)) %>%
 #'  head(10)
+#'  
 #' @importFrom classInt classIntervals
 #' @importFrom grDevices nclass.Sturges
 #' @importFrom stats na.omit quantile
@@ -233,6 +238,7 @@ binning <- function(x, nbins,
 #'
 #' # Summarise bins class object
 #' summary(bin)
+#' 
 #' @method summary bins
 #' @export
 summary.bins <- function(object, ...) {
@@ -282,6 +288,7 @@ print.bins <- function(x, ...) {
 #' plot(bin)
 #' bin <- binning(carseats$Income, nbins = 5, type = "bclust")
 #' plot(bin)
+#' 
 #' @export
 #' @method plot bins
 #' @importFrom graphics plot
@@ -353,23 +360,33 @@ plot.bins <- function(x, ...) {
 #' @seealso \code{\link{binning}}, \code{\link{plot.optimal_bins}}.
 #' @examples
 #' # Generate data for the example
+#' library(dplyr)
+#' 
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 #' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 #'
-#' # optimal binning
+#' # optimal binning using character
 #' bin <- binning_by(carseats, "US", "Advertising")
+#' 
+#' # optimal binning using name
+#' bin <- binning_by(carseats, US, Advertising)
 #' bin
 #' # summary optimal_bins class
 #' summary(bin)
+#' 
 #' # visualize all information for optimal_bins class
 #' plot(bin)
 #' 
 #' # visualize WoE information for optimal_bins class
 #' plot(bin, type = "WoE")
 #' 
-#' # visualize all information with typographic
-#' plot(bin, typographic = TRUE)
+#' # visualize all information without typographic
+#' plot(bin, typographic = FALSE)
+#' 
+#' # extract binned results
+#' extract(bin) %>% 
+#'   head(20)
 #' 
 #' @export
 #' @importFrom tibble is_tibble
@@ -484,20 +501,37 @@ binning_by <- function(.data, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
 }
 
 
-#' Visualize Distribution for an "optimal_bins" Object
+#' Summarizing Performance for Optimal Bins
 #'
-#' @description
-#' It generates plots for understand distribution, frequency, bad rate, and weight of evidence using optimal_bins.
-#'
-#' See vignette("transformation") for an introduction to these concepts.
-#'
-#' @param x an object of class "optimal_bins", usually, a result of a call to binning_by().
-#' @param type character. options for visualization. Distribution ("dist"), Relateive Frequency ("freq"),
-#' Positive Rate ("posrate"), and Weight of Evidence ("WoE"). and default "all" draw all plot.
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' @seealso \code{\link{binning_by}}, \code{\link{plot.bins}}.
+#' @description summary method for "optimal_bins". summary metrics to evaluate the performance 
+#' of binomial classification model.
+#' @param object an object of class "optimal_bins", usually, a result of a call to binning_by().
+#' @details
+#' print() to print only binning table information of "optimal_bins" objects.
+#' summary.performance_bin() includes general metrics and result of significance tests life follows.:
+#' \itemize{
+#'   \item Binning Table : Metrics by bins.
+#'   \itemize{
+#'     \item CntRec, CntPos, CntNeg, RatePos, RateNeg, Odds, WoE, IV, JSD, AUC.
+#'   }
+#'   \item General Metrics.
+#'   \itemize{
+#'     \item Gini index.
+#'     \item Jeffrey's Information Value.
+#'     \item Jensen-Shannon Divergence.
+#'     \item Kolmogorov-Smirnov Statistics.
+#'     \item Herfindahl-Hirschman Index.
+#'     \item normalized Herfindahl-Hirschman Index.
+#'     \item Cramer's V.
+#'   } 
+#'   \item Table of Significance Tests.
+#' }
+#' @return NULL.
+#' @seealso \code{\link{binning_by}}, \code{\link{plot.optimal_bins}}.
 #' @examples
 #' # Generate data for the example
+#' library(dplyr)
+#' 
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 #' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
@@ -509,11 +543,58 @@ binning_by <- function(.data, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
 #' # summary optimal_bins class
 #' summary(bin)
 #'
-#' # information value
-#' attr(bin, "iv")
+#' # performance table
+#' attr(bin, "performance")
 #'
-#' # information value table
-#' attr(bin, "ivtable")
+#' # visualize all information for optimal_bins class
+#' plot(bin)
+#' 
+#' # visualize WoE information for optimal_bins class
+#' plot(bin, type = "WoE")
+#' 
+#' # visualize all information without typographic
+#' plot(bin, typographic = FALSE)
+#' 
+#' # extract binned results
+#' extract(bin) %>% 
+#'   head(20)
+#' 
+#' @method summary optimal_bins
+#' @export
+summary.optimal_bins <- function(object, ...) {
+  perf <- attr(bin, "performance")
+  
+  summary(perf)
+}
+
+#' Visualize Distribution for an "optimal_bins" Object
+#'
+#' @description
+#' It generates plots for understand distribution, frequency, bad rate, and weight of evidence using optimal_bins.
+#'
+#' See vignette("transformation") for an introduction to these concepts.
+#'
+#' @param x an object of class "optimal_bins", usually, a result of a call to binning_by().
+#' @param type character. options for visualization. Distribution ("dist"), Relateive Frequency ("freq"),
+#' Positive Rate ("posrate"), and Weight of Evidence ("WoE"). and default "all" draw all plot.
+#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. Default is TRUE.
+#' @seealso \code{\link{binning_by}}, \code{\link{summary.optimal_bins}}.
+#' @examples
+#' # Generate data for the example
+#' library(dplyr)
+#' 
+#' carseats <- ISLR::Carseats
+#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
+#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+#'
+#' # optimal binning
+#' bin <- binning_by(carseats, "US", "Advertising")
+#' bin
+#'
+#' # performance table
+#' 
+#' # summary optimal_bins class
+#' summary(bin)
 #'
 #' # visualize all information for optimal_bins class
 #' plot(bin)
@@ -522,14 +603,18 @@ binning_by <- function(.data, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
 #' plot(bin, type = "WoE")
 #' 
 #' # visualize all information with typographic
-#' plot(bin, typographic = TRUE)
+#' plot(bin)
+#' 
+#' # extract binned results
+#' extract(bin) %>% 
+#'   head(20)
 #' 
 #' @import ggplot2
 #' @importFrom gridExtra grid.arrange
 #' @export
 #' @method plot optimal_bins
 plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE"), 
-                              typographic = FALSE) {
+                              typographic = TRUE) {
   if (is.character(x)) {
     cat("binn is the optimal_bins object that can not be binned : \n",
         x, "\n", sep = "")
@@ -629,6 +714,60 @@ plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE
       p_woe
     }
   }  
+}
+
+
+#' @export
+extract <- function(x) {
+  UseMethod("extract", x)
+}
+
+#' Extract bins from "bins"
+#'
+#' @description The extract() extract binned variable from "bins", "optimal_bins" class object.
+#' 
+#' @details The "bins" and "optimal_bins" class objects use the summary() and plot() functions to diagnose 
+#' the performance of binned results. This function is used to extract the binned result if you are satisfied 
+#' with the result.
+#'
+#' @param x a bins class or optimal_bins class
+#' 
+#' @return factor.
+#' @seealso \code{\link{binning}}, \code{\link{binning_by}}.
+#' @export
+#' @examples
+#' # Generate data for the example
+#' library(dplyr)
+#' 
+#' carseats <- ISLR::Carseats
+#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
+#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+#'
+#' # optimal binning
+#' bin <- binning_by(carseats, "US", "Advertising")
+#' bin
+#'
+#' # summary optimal_bins class
+#' summary(bin)
+#'
+#' # visualize all information for optimal_bins class
+#' plot(bin)
+#' 
+#' # extract binning result
+#' extract(bin) %>% 
+#'   head(20)
+#' 
+#' @export
+#' @rdname extract.bins
+#' @export
+#' @method extract bins
+extract.bins <- function(x) {
+  object <- unclass(x)
+  
+  idx <- as.integer(object)
+  levels <- attr(object,"levels")
+  
+  factor(levels[idx], levels = levels)
 }
 
 
@@ -992,7 +1131,7 @@ summary.performance_bin <- function(x) {
 #'
 #' @param x an object of class "performance_bin", usually, a result of a call to performance_bin().
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is FALSE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @seealso \code{\link{performance_bin}}, \code{\link{summary.performance_bin}}, \code{\link{binning_by}}, 
 #' \code{\link{plot.optimal_bins}}.
 #' @examples
@@ -1020,14 +1159,14 @@ summary.performance_bin <- function(x) {
 #' perf
 #' summary(perf)
 #' plot(perf)
-#' plot(perf, typographic = TRUE)
+#' plot(perf, typographic = FALSE)
 #' 
 #' @import ggplot2
 #' @import hrbrthemes
 #' @import dplyr
 #' @export
 #' @method plot performance_bin
-plot.performance_bin <- function(x, typographic = FALSE) {
+plot.performance_bin <- function(x, typographic = TRUE) {
   scaleFactor <- 
     x %>% 
     filter(!Bin %in% "Total") %>% 

@@ -51,6 +51,7 @@ bin
 
 # Summarise bins class object
 summary(bin)
+
 }
 \seealso{
 \code{\link{binning}}

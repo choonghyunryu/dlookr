@@ -34,6 +34,7 @@ bin <- binning(carseats$Income, nbins = 5, type = "kmeans")
 plot(bin)
 bin <- binning(carseats$Income, nbins = 5, type = "bclust")
 plot(bin)
+
 }
 \seealso{
 \code{\link{binning}}, \code{\link{print.bins}}, \code{\link{summary.bins}}.

@@ -4,13 +4,13 @@
 \alias{plot.performance_bin}
 \title{Visualize Performance for an "performance_bin" Object}
 \usage{
-\method{plot}{performance_bin}(x, typographic = FALSE)
+\method{plot}{performance_bin}(x, typographic = TRUE)
 }
 \arguments{
 \item{x}{an object of class "performance_bin", usually, a result of a call to performance_bin().}
 
 \item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-The default is FALSE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
+The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
 }
 \description{
 It generates plots for understand frequency, WoE by bins using performance_bin.
@@ -40,7 +40,7 @@ perf <- performance_bin(carseats$US_2, carseats$Advertising_bin, na.rm = TRUE)
 perf
 summary(perf)
 plot(perf)
-plot(perf, typographic = TRUE)
+plot(perf, typographic = FALSE)
 
 }
 \seealso{

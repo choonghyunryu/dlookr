@@ -65,23 +65,33 @@ See vignette("transformation") for an introduction to these concepts.
 
 \examples{
 # Generate data for the example
+library(dplyr)
+
 carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 
-# optimal binning
+# optimal binning using character
 bin <- binning_by(carseats, "US", "Advertising")
+
+# optimal binning using name
+bin <- binning_by(carseats, US, Advertising)
 bin
 # summary optimal_bins class
 summary(bin)
+
 # visualize all information for optimal_bins class
 plot(bin)
 
 # visualize WoE information for optimal_bins class
 plot(bin, type = "WoE")
 
-# visualize all information with typographic
-plot(bin, typographic = TRUE)
+# visualize all information without typographic
+plot(bin, typographic = FALSE)
+
+# extract binned results
+extract(bin) \%>\% 
+  head(20)
 
 }
 \seealso{

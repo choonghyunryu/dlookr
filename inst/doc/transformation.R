@@ -115,7 +115,7 @@ summary(Advertising_log)
 # viz of transformation
 plot(Advertising_log)
 
-## ----binning, fig.width = 6, fig.height = 5-----------------------------------
+## ----binning, fig.width = 8, fig.height = 6-----------------------------------
 # Binning the carat variable. default type argument is "quantile"
 bin <- binning(carseats$Income)
 # Print bins class object
@@ -134,34 +134,44 @@ binning(carseats$Income, nbins = 5, type = "pretty")
 binning(carseats$Income, nbins = 5, type = "kmeans")
 binning(carseats$Income, nbins = 5, type = "bclust")
 
+# Extract the binned results
+extract(bin)
+
 # -------------------------
 # Using pipes & dplyr
 # -------------------------
 library(dplyr)
 
 carseats %>%
- mutate(Income_bin = binning(carseats$Income)) %>%
+ mutate(Income_bin = binning(carseats$Income) %>% 
+                     extract()) %>%
  group_by(ShelveLoc, Income_bin) %>%
  summarise(freq = n()) %>%
  arrange(desc(freq)) %>%
  head(10)
 
-## ----binning_by, fig.width = 6, fig.height = 5--------------------------------
-# optimal binning
+## ----binning_by, fig.width = 10, fig.height = 7, dpi=300----------------------
+library(dplyr)
+
+# optimal binning using character
 bin <- binning_by(carseats, "US", "Advertising")
+
+# optimal binning using name
+bin <- binning_by(carseats, US, Advertising)
 bin
 
 # summary optimal_bins class
 summary(bin)
 
-# information value 
-attr(bin, "iv")
-
-# information value table
-attr(bin, "ivtable")
+# performance table
+attr(bin, "performance")
 
 # visualize optimal_bins class
 plot(bin)
+
+# extract binned results
+extract(bin) %>% 
+  head(20)
 
 ## ----trans_report, eval=FALSE-------------------------------------------------
 #  carseats %>%

@@ -4,7 +4,7 @@
 \alias{plot.optimal_bins}
 \title{Visualize Distribution for an "optimal_bins" Object}
 \usage{
-\method{plot}{optimal_bins}(x, type = c("all", "dist", "freq", "posrate", "WoE"), typographic = FALSE)
+\method{plot}{optimal_bins}(x, type = c("all", "dist", "freq", "posrate", "WoE"), typographic = TRUE)
 }
 \arguments{
 \item{x}{an object of class "optimal_bins", usually, a result of a call to binning_by().}
@@ -12,7 +12,7 @@
 \item{type}{character. options for visualization. Distribution ("dist"), Relateive Frequency ("freq"),
 Positive Rate ("posrate"), and Weight of Evidence ("WoE"). and default "all" draw all plot.}
 
-\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization.}
+\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. Default is TRUE.}
 }
 \description{
 It generates plots for understand distribution, frequency, bad rate, and weight of evidence using optimal_bins.
@@ -21,6 +21,8 @@ See vignette("transformation") for an introduction to these concepts.
 }
 \examples{
 # Generate data for the example
+library(dplyr)
+
 carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
@@ -29,14 +31,10 @@ carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 bin <- binning_by(carseats, "US", "Advertising")
 bin
 
+# performance table
+
 # summary optimal_bins class
 summary(bin)
-
-# information value
-attr(bin, "iv")
-
-# information value table
-attr(bin, "ivtable")
 
 # visualize all information for optimal_bins class
 plot(bin)
@@ -45,9 +43,13 @@ plot(bin)
 plot(bin, type = "WoE")
 
 # visualize all information with typographic
-plot(bin, typographic = TRUE)
+plot(bin)
+
+# extract binned results
+extract(bin) \%>\% 
+  head(20)
 
 }
 \seealso{
-\code{\link{binning_by}}, \code{\link{plot.bins}}.
+\code{\link{binning_by}}, \code{\link{summary.optimal_bins}}.
 }

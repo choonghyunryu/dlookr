@@ -99,17 +99,22 @@ bin
 bin <- binning(x, approxy.lab = FALSE)
 bin
 
+# extract binned results
+extract(bin)
+
 # -------------------------
 # Using pipes & dplyr
 # -------------------------
 library(dplyr)
 
 carseats \%>\%
- mutate(Income_bin = binning(carseats$Income)) \%>\%
+ mutate(Income_bin = binning(carseats$Income) \%>\% 
+                     extract()) \%>\%
  group_by(ShelveLoc, Income_bin) \%>\%
  summarise(freq = n()) \%>\%
  arrange(desc(freq)) \%>\%
  head(10)
+ 
 }
 \seealso{
 \code{\link{binning_by}}, \code{\link{print.bins}}, \code{\link{summary.bins}}.
