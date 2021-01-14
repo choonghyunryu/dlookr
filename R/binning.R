@@ -329,7 +329,7 @@ plot.bins <- function(x, ...) {
 #'
 #' See vignette("transformation") for an introduction to these concepts.
 #'
-#' @param df a data frame.
+#' @param .data a data frame.
 #' @param y character. name of binary response variable(0, 1). 
 #' The variable must contain only the integers 0 and 1 as element. 
 #' However, in the case of factor having two levels, it is performed while type conversion is performed in the calculation process.
@@ -367,74 +367,122 @@ plot.bins <- function(x, ...) {
 #' 
 #' # visualize WoE information for optimal_bins class
 #' plot(bin, type = "WoE")
+#' 
+#' # visualize all information with typographic
+#' plot(bin, typographic = TRUE)
+#' 
 #' @export
-binning_by <- function(df, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
-  df <- as.data.frame(df)
-
-  uniq_y <- length(unique(df[, y]))
-  type_y <- class(df[, y])[1]
-  type_x <- class(df[, x])[1]
-
-  if (!type_x %in% c("integer", "numeric")) {
-    stop("The variable x is not numerical type.")
+#' @importFrom tibble is_tibble
+#' @importFrom partykit ctree ctree_control width
+#' @importFrom tidyselect vars_select
+#' @importFrom rlang quos
+#' @import dplyr
+binning_by <- function(.data, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
+  y <- tidyselect::vars_select(names(.data), !! enquo(y))
+  x <- tidyselect::vars_select(names(.data), !! enquo(x))
+  
+  if (tibble::is_tibble(.data)) {
+    .data <- as.data.frame(.data)
   }
-
+  
+  uniq_y <- length(unique(.data[, y]))
+  type_y <- class(.data[, y])[1]
+  type_x <- class(.data[, x])[1]
+  
+  if (!is.data.frame(.data)) 
+    stop("Data is not a data.frame.")
+  
+  if (!type_x %in% c("integer", "numeric")) 
+    stop("x is not numeric value.")
+  
   if (uniq_y != 2) {
     stop("The number of levels of the y variable is not 2.")
   }
-
+  
   if (type_y %in% c("integer", "numeric")) {
-    if (!all(unique(df[, y]) %in% c(0, 1))) {
-      stop("If y is a numeric variable, it can have only values of 0 and 1.")
+    if (!all(unique(.data[, y]) %in% c(0, 1))) {
+      stop("If y is a numeric variable, it can have only values of 0 and 1. (1: positive, 0: Negative)")
     }
   }
-
+  
   if (type_y %in% c("factor", "ordered")) {
-    df[, y] <- as.integer(df[, y]) - 1
-    warning("The factor y has been changed to a numeric vector consisting of 0 and 1.")
+    yval <- levels(.data[, y])
+    
+    .data[, y] <- as.integer(.data[, y]) - 1
+    msg <- sprintf("'%s' changed to 1 (positive) and '%s' changed to 0 (negative).", yval[2], yval[1])
+    warning(paste("The factor y has been changed to a numeric vector consisting of 0 and 1.", msg, sep = "\n"))    
   }
-
+  
   if (type_y %in% c("character")) {
-    df[, y] <- as.integer(factor(df[, y]))- 1
-    warning("The character y has been changed to a numeric vector consisting of 0 and 1.")
+    yval <- levels(factor(.data[, y]))
+    
+    .data[, y] <- as.integer(factor(.data[, y]))- 1
+    msg <- sprintf("'%s' changed to 1 (positive) and '%s' changed to 0 (negative).", yval[2], yval[1])
+    warning(paste("The character y has been changed to a numeric vector consisting of 0 and 1.", msg, sep = "\n"))    
   }
-
-  smb <- ivtable(as.data.frame(df), y, x)
-
-  if (!is.character(smb)) {
-    breaks <- smb$cufoff
-    tab <- table(breaks)
-
-    dup <- as.numeric(names(tab)[which(tab == 2)])
-    if (length(dup) > 0) {
-      breaks <- unique(c(ifelse(min(breaks) == dup, dup - 1, dup + 1), breaks))
-    }
-
-    fct <- cut(df[, x], breaks = breaks, labels = labels, include.lowest = TRUE)
-
-    if (ordered == TRUE)
-      fct <- ordered(fct)
-
-    results <- fct
-    attr(results, "type") <- "optimal"
-    attr(results, "breaks") <- breaks
-    attr(results, "levels") <- levels(fct)
-    attr(results, "raw") <- df[, x]
-    class(results) <- append("bins", class(results))
-
-    attr(results, "ivtable") <- smb$ivtable
-    attr(results, "iv") <- smb$iv
-    attr(results, "target") <- df[, y]
-
+  
+  if (any(is.infinite(.data[, x]))) 
+    stop("x with an Inf. Replace by NA. or Remove the Inf.")
+  
+  if (p <= 0 | p > 0.5)
+    stop("p must be, 0 < p <= 0.5")
+  
+  if (length(unique(.data[, x])) < 5) 
+    stop("x must be number of unique values greater then 4.")
+  
+  ctree <- partykit::ctree(formula(paste(y, "~", x)), data = .data, na.action = na.exclude,
+                 control = partykit::ctree_control(minbucket = ceiling(round(p * nrow(.data)))))
+  
+  bins <- width(ctree)
+  if (bins < 2) {
+    msg <- "No significant splits"
+    
+    results <- msg
     class(results) <- append("optimal_bins", class(results))
-  } else {
-    results <- smb
-    class(results) <- append("optimal_bins", class(results))
-    warning(smb, "\n")
+    
+    warning(msg, "\n")
+    return(results)
   }
-
+  
+  cutvct <- seq(ctree) %>%
+    map_dbl(function(x) {
+      breaks <- ctree[x]$node$split$breaks
+      ifelse(is.null(breaks), NA, breaks)
+    }) %>% 
+    sort() 
+  
+  min_max <- range(.data[, x], na.rm = TRUE)
+  cufoff <- c(min_max[1], cutvct, min_max[2])
+  
+  breaks <- cufoff
+  tab <- table(breaks)
+  
+  dup <- as.numeric(names(tab)[which(tab == 2)])
+  if (length(dup) > 0) {
+    breaks <- unique(c(ifelse(min(breaks) == dup, dup - 1, dup + 1), breaks))
+  }
+  
+  fct <- cut(.data[, x], breaks = breaks, labels = labels, include.lowest = TRUE)
+  
+  if (ordered == TRUE)
+    fct <- ordered(fct)
+  
+  perf <- performance_bin(.data[, y], fct)
+  
+  results <- fct
+  attr(results, "type") <- "optimal"
+  attr(results, "breaks") <- breaks
+  attr(results, "levels") <- levels(fct)
+  attr(results, "raw") <- .data[, x]
+  class(results) <- append("bins", class(results))
+  attr(results, "performance") <- perf
+  attr(results, "target") <- .data[, y]
+  
+  class(results) <- append("optimal_bins", class(results))
+  
   results
 }
+
 
 #' Visualize Distribution for an "optimal_bins" Object
 #'
@@ -445,7 +493,8 @@ binning_by <- function(df, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
 #'
 #' @param x an object of class "optimal_bins", usually, a result of a call to binning_by().
 #' @param type character. options for visualization. Distribution ("dist"), Relateive Frequency ("freq"),
-#' Bad Rate ("badrate"), and Weight of Evidence ("WoE"). and default "all" draw all plot.
+#' Positive Rate ("posrate"), and Weight of Evidence ("WoE"). and default "all" draw all plot.
+#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' @seealso \code{\link{binning_by}}, \code{\link{plot.bins}}.
 #' @examples
 #' # Generate data for the example
@@ -472,21 +521,20 @@ binning_by <- function(df, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
 #' # visualize WoE information for optimal_bins class
 #' plot(bin, type = "WoE")
 #' 
+#' # visualize all information with typographic
+#' plot(bin, typographic = TRUE)
+#' 
 #' @import ggplot2
 #' @importFrom gridExtra grid.arrange
 #' @export
 #' @method plot optimal_bins
-plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "badrate", "WoE")) {
+plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE"), 
+                              typographic = FALSE) {
   if (is.character(x)) {
     cat("binn is the optimal_bins object that can not be binned : \n",
         x, "\n", sep = "")
   } else {
-    ivt <- attr(x, "ivtable")
-    
-    if (ivt[ivt$Cutpoint %in% "Missing", "CntRec"] == 0) {
-      ivt <- ivt %>% 
-        filter(!Cutpoint %in% "Missing")
-    }
+    ivt <- attr(x, "performance") 
     
     type <- match.arg(type)
     
@@ -496,45 +544,77 @@ plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "badrate", "WoE
         geom_boxplot(fill = "slategrey", color = "darkslategrey", width = 0.3) +
         coord_flip() +
         ggtitle("Distribution of indicator by target")
+      
+      if (typographic) {
+        p_dist <- p_dist +
+          theme_ipsum() +
+          theme(
+            axis.title.y = element_text(size = 12),
+            axis.title.x = element_text(size = 12)
+          )
+      }
     }
     
     if (type %in% c("all", "freq")) {
       p_freq <- ivt %>% 
-        filter(!Cutpoint %in% "Total") %>% 
-        ggplot(aes(x = Cutpoint, y = PctRec, fill = Cutpoint)) +
+        filter(!Bin %in% "Total") %>% 
+        mutate(Bin = factor(Bin, levels = attr(x, "levels"))) %>% 
+        mutate(PctRec = round(CntRec / sum(CntRec) * 100, 1)) %>% 
+        mutate(add_pos = max(PctRec) * 0.1) %>% 
+        ggplot(aes(x = Bin, y = PctRec, fill = Bin)) +
         geom_bar(stat = "identity", width = 0.5) +
         scale_fill_brewer() +    
-        geom_text(aes(label = round(PctRec * 100, 1), y = PctRec + 0.05)) +
+        geom_text(aes(label = PctRec, y = PctRec + add_pos)) +
         xlab("") +
         ylab("") +
-        ggtitle("Percentage of frequency by bins") +
+        ggtitle("Percentage of frequency with bins") +
         theme(legend.position = "none")
+      
+      if (typographic) {
+        p_freq <- p_freq +
+          theme_ipsum() 
+      }
     }
     
-    if (type %in% c("all", "badrate")) {
+    if (type %in% c("all", "posrate")) {
       p_badrate <- ivt %>% 
-        filter(!Cutpoint %in% "Total") %>% 
-        ggplot(aes(x = Cutpoint, y = BadRate, fill = Cutpoint)) +
+        filter(!Bin %in% "Total") %>% 
+        mutate(Bin = factor(Bin, levels = attr(x, "levels"))) %>% 
+        mutate(PctPos = round(RatePos * 100, 1)) %>%         
+        mutate(add_pos = max(PctPos) * 0.1) %>%         
+        ggplot(aes(x = Bin, y = PctPos, fill = Bin)) +
         geom_bar(stat = "identity", width = 0.5) +
         scale_fill_brewer() +
-        geom_text(aes(label = round(BadRate * 100, 1), y = BadRate + 0.05)) +
+        geom_text(aes(label = PctPos, y = PctPos + add_pos)) +
         xlab("") +
         ylab("") +
-        ggtitle("Bad Rate (%) by bins") +
+        ggtitle("Percentage of positive with bins") +
         theme(legend.position = "none")
+      
+      if (typographic) {
+        p_badrate <- p_badrate +
+          theme_ipsum()
+      }
     }
     
     if (type %in% c("all", "WoE")) {
       p_woe <- ivt %>% 
-        filter(!Cutpoint %in% "Total") %>% 
-        ggplot(aes(x = Cutpoint, y = WoE, fill = Cutpoint)) +
+        filter(!Bin %in% "Total") %>% 
+        mutate(Bin = factor(Bin, levels = attr(x, "levels"))) %>%       
+        mutate(add_pos = max(WoE) * 0.1) %>%  
+        ggplot(aes(x = Bin, y = WoE, fill = Bin)) +
         geom_bar(stat = "identity", width = 0.5) +
         scale_fill_brewer() +
-        geom_text(aes(label = round(WoE, 2), y = WoE + 0.05)) +
+        geom_text(aes(label = round(WoE, 2), y = WoE + add_pos)) +
         xlab("") +
         ylab("") +
         ggtitle("Weight of Evidence by bins") +
         theme(legend.position = "none")
+      
+      if (typographic) {
+        p_woe <- p_woe +
+          theme_ipsum() 
+      }
     }
     
     if (type %in% c("all")) {
@@ -543,7 +623,7 @@ plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "badrate", "WoE
       p_dist
     } else if (type %in% c("freq")) {
       p_freq
-    } else if (type %in% c("badrate")) {
+    } else if (type %in% c("posrate")) {
       p_badrate
     } else if (type %in% c("WoE")) {
       p_woe
@@ -552,190 +632,442 @@ plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "badrate", "WoE
 }
 
 
-#' @importFrom tibble is_tibble
-#' @importFrom partykit ctree ctree_control width
-#' @importFrom tidyselect vars_select
-#' @importFrom rlang quos
+#' Diagnose Performance Binned Variable
+#'
+#' @description The performance_bin() calculates metrics to evaluate the performance of binned variable for 
+#' binomial classification model.
+#'
+#' @details This function is useful when used with the mutate/transmute
+#' function of the dplyr package.
+#' 
+#' @param y character or numeric, integer, factor. a binary response variable (0, 1). 
+#' The variable must contain only the integers 0 and 1 as element. 
+#' However, in the case of factor/character having two levels, it is performed while type conversion is performed in the calculation process.
+#' @param x integer or factor, character. At least 2 different values. and Inf is not allowed.
+#' @param na.rm logical. a logical indicating whether missing values should be removed.
+#' @return an object of "performance_bin" class. vaue of data.frame is as follows.
+#' \itemize{
+#' \item Bin : character. bins.
+#' \item CntRec : integer. frequency by bins.
+#' \item CntPos : integer. frequency of positive  by bins.
+#' \item CntNeg : integer. frequency of negative  by bins.
+#' \item CntCumPos : integer. cumulate frequency of positive  by bins.
+#' \item CntCumNeg : integer. cumulate frequency of negative  by bins.
+#' \item RatePos : integer. relative frequency of positive  by bins.
+#' \item RateNeg : integer. relative frequency of negative  by bins.
+#' \item RateCumPos : numeric. cumulate relative frequency of positive  by bins.
+#' \item RateCumNeg : numeric. cumulate relative frequency of negative  by bins.
+#' \item Odds : numeric. odd ratio.
+#' \item LnOdds : numeric. loged odd ratio.
+#' \item WoE : numeric. weight of evidence.
+#' \item IV : numeric. Jeffrey's Information Value.
+#' \item JSD : numeric. Jensen-Shannon Divergence.
+#' \item AUC : numeric. AUC. area under curve.
+#' }
+#' Attributes of "performance_bin" class is as follows.
+#' \itemize{
+#' \item names : character. variable name of data.frame with "Binning Table".
+#' \item class : character. name of class. "performance_bin" "data.frame".
+#' \item row.names : character. row name of data.frame with "Binning Table".
+#' \item IV : numeric. Jeffrey's Information Value.
+#' \item JSD : numeric. Jensen-Shannon Divergence.
+#' \item KS : numeric. Kolmogorov-Smirnov Statistics.
+#' \item gini : numeric. Gini index.
+#' \item HHI : numeric. Herfindahl-Hirschman Index.
+#' \item HHI_norm : numeric.normalized Herfindahl-Hirschman Index.
+#' \item Cramer_V : numeric. Cramer's V.
+#' \item chisq_test : data.frame. table of significance tests. name is as follows.
+#' \itemize{
+#'   \item Bin A : character. first bins.
+#'   \item Bin B : character. second bins.
+#'   \item statistics : numeric. statistics of Chi-square test.
+#'   \item p_value : numeric. p-value of Chi-square test.
+#'   }
+#' }
+#' @seealso \code{\link{summary.performance_bin}}, \code{\link{plot.performance_bin}}, \code{\link{binning_by}}.
+#' @examples
+#' # Generate data for the example
+#' carseats <- ISLR::Carseats
+#' 
+#' set.seed(123)
+#' carseats[sample(seq(NROW(carseats)), 20), "Advertising"] <- NA
+#' 
+#' # Change the target variable to 0(negative) and 1(positive).
+#' carseats$US_2 <- ifelse(carseats$US %in% "Yes", 1, 0)
+#' 
+#' # Binnig from Advertising to Advertising_bin.
+#' breaks <- c(-1,  0,  6, 29)
+#' carseats$Advertising_bin <- cut(carseats$Advertising, breaks)
+#' 
+#' # Diagnose performance binned variable
+#' perf <- performance_bin(carseats$US_2, carseats$Advertising_bin) 
+#' perf
+#' summary(perf)
+#' plot(perf)
+#' 
+#' # Diagnose performance binned variable without NA
+#' perf <- performance_bin(carseats$US_2, carseats$Advertising_bin, na.rm = TRUE) 
+#' perf
+#' summary(perf)
+#' plot(perf)
+#' 
+#' @export
 #' @import dplyr
-ivtable <- function (.data, y, x, p = 0.05) 
-{
-  y <- tidyselect::vars_select(names(.data), !! enquo(y))
-  x <- tidyselect::vars_select(names(.data), !! enquo(x))
-  
-  if (tibble::is_tibble(.data)) {
-    .data <- as.data.frame(.data)
-  }
-  
-  uniq_y <- length(unique(.data[, y]))
-  type_y <- class(.data[, y])[1]
-  type_x <- class(.data[, x])[1]
-  
-  if (!is.data.frame(.data)) 
-    stop("Data is not a data.frame.")
-  
-  if (!type_x %in% c("integer", "numeric")) 
-    stop("x is not numeric value.")
+#' 
+performance_bin <- function (y, x, na.rm = FALSE) {
+  uniq_y <- length(unique(y))
+  type_y <- class(y)[1]
+  type_x <- class(x)[1]
   
   if (uniq_y != 2) {
     stop("The number of levels of the y variable is not 2.")
   }
   
   if (type_y %in% c("integer", "numeric")) {
-    if (!all(unique(.data[, y]) %in% c(0, 1))) {
-      stop("If y is a numeric variable, it can have only values of 0 and 1.")
+    if (!all(unique(y) %in% c(0, 1))) {
+      stop("If y is a numeric variable, it can have only values of 0 and 1. (1: positive, 0: Negative)")
     }
   }
   
   if (type_y %in% c("factor", "ordered")) {
-    .data[, y] <- as.integer(.data[, y]) - 1
-    warning("The factor y has been changed to a numeric vector consisting of 0 and 1.")
+    yval <- levels(y)
+    
+    y <- as.integer(y) - 1
+    msg <- sprintf("'%s' changed to 1 (positive) and '%s' changed to 0 (negative).", yval[2], yval[1])
+    warning(paste("The factor y has been changed to a numeric vector consisting of 0 and 1.", msg, sep = "\n"))
   }
   
   if (type_y %in% c("character")) {
-    .data[, y] <- as.integer(factor(.data[, y]))- 1
-    warning("The character y has been changed to a numeric vector consisting of 0 and 1.")
+    yval <- levels(factor(y))
+    
+    y <- as.integer(factor(y))- 1
+    msg <- sprintf("'%s' changed to 1 (positive) and '%s' changed to 0 (negative).", yval[2], yval[1])
+    warning(paste("The character y has been changed to a numeric vector consisting of 0 and 1.", msg, sep = "\n"))
   }
   
-  if (any(is.infinite(.data[, x]))) 
-    stop("x with an Inf. Replace by NA.")
+  if (any(is.infinite(x))) 
+    stop("x with an Inf. Replace by NA. or Remove the Inf.")
   
-  if (p <= 0 | p > 0.5)
-    stop("p must be, 0 < p <= 0.5")
+  if (length(unique(x)) < 2) 
+    stop("No significant bins. x must be number of unique values greater then 1.")
   
-  if (length(unique(.data[, x])) < 5) 
-    stop("x must be number of unique values greater then 4.")
+  .data <- data.frame(Bin = x, y = y) 
   
-  ctree <- ctree(formula(paste(y, "~", x)), data = .data, na.action = na.exclude,
-                 control = ctree_control(minbucket = ceiling(round(p * nrow(.data)))))
-  
-  bins <- width(ctree)
-  if (bins < 2) {
-    return("No significant splits")
+  if (na.rm == TRUE) {
+    .data <- .data %>% 
+      filter(!is.na(Bin)) 
   }
   
-  cutvct <- seq(ctree) %>%
-    map_dbl(function(x) {
-      breaks <- ctree[x]$node$split$breaks
-      ifelse(is.null(breaks), NA, breaks)
-    }) %>% 
-    sort() 
-  max_cutpoint <- max(cutvct)
-  
-  x_idx <- which(names(.data) %in% x)
-  y_idx <- which(names(.data) %in% y)
-  
-  ivt <- cutvct %>%
-    map_dfr(function(cutpoint) {
-      .data %>% 
-        select(x = all_of(x_idx), y = all_of(y_idx)) %>% 
-        filter(!is.na(x) & !is.na(y)) %>% 
-        mutate(Cutpoint = paste0("<= ", cutpoint)) %>% 
-        mutate(CntCumRec = ifelse(x <= cutpoint & y %in% c(0, 1), 1, 0)) %>% 
-        mutate(CntCumGood = ifelse(x <= cutpoint & y == 1, 1, 0)) %>% 
-        mutate(CntCumBad = ifelse(x <= cutpoint & y == 0, 1, 0)) %>% 
-        group_by(Cutpoint) %>% 
-        summarise(CntRec = NA,
-                  CntGood = NA,
-                  CntBad = NA,
-                  CntCumRec = sum(CntCumRec),
-                  CntCumGood = sum(CntCumGood),
-                  CntCumBad = sum(CntCumBad), .groups = 'drop')
-    }) %>% 
+  tab_metric <- .data %>% 
+    filter(!is.na(y)) %>% 
+    mutate(Bin =  factor(Bin)) %>% 
+    group_by(Bin) %>% 
+    summarise(CntRec = n(),
+              CntPos = sum(ifelse(y == 1, 1, 0), na.rm = TRUE),
+              CntNeg = sum(ifelse(y == 0, 1, 0), na.rm = TRUE),
+              CntCumPos = NA,
+              CntCumNeg = NA, .groups = 'drop') %>% 
+    mutate(CntCumPos = cumsum(CntPos),
+           CntCumNeg = cumsum(CntNeg)) %>% 
     bind_rows(
       .data %>%
-        select(x = all_of(x_idx), y = all_of(y_idx)) %>%
-        filter(!is.na(x) & !is.na(y)) %>% 
-        mutate(Cutpoint = paste0("> ", max_cutpoint)) %>% 
-        mutate(CntCumRec = ifelse(y %in% c(0, 1), 1, 0)) %>% 
-        mutate(CntCumGood = ifelse(y == 1, 1, 0)) %>% 
-        mutate(CntCumBad = ifelse(y == 0, 1, 0)) %>% 
-        group_by(Cutpoint) %>% 
-        summarise(CntRec = NA,
-                  CntGood = NA,
-                  CntBad = NA,
-                  CntCumRec = sum(CntCumRec),
-                  CntCumGood = sum(CntCumGood),
-                  CntCumBad = sum(CntCumBad), .groups = 'drop')
-    ) %>% 
-    mutate(CntRec = CntCumRec - lag(CntCumRec, default = 0)) %>% 
-    mutate(CntGood = CntCumGood - lag(CntCumGood, default = 0)) %>% 
-    mutate(CntBad = CntCumBad - lag(CntCumBad, default = 0)) %>% 
-    bind_rows(
-      .data %>% 
-        select(x = all_of(x_idx), y = all_of(y_idx)) %>% 
         filter(!is.na(y)) %>% 
-        mutate(Cutpoint = "Missing") %>% 
-        mutate(CntRec = ifelse(is.na(x) & y %in% c(0, 1), 1, 0)) %>% 
-        mutate(CntGood = ifelse(is.na(x) & y == 1, 1, 0)) %>% 
-        mutate(CntBad = ifelse(is.na(x) & y == 0, 1, 0)) %>% 
-        mutate(CntCumGood = ifelse(y == 1, 1, 0)) %>% 
-        mutate(CntCumBad = ifelse(y == 0, 1, 0)) %>%                
-        group_by(Cutpoint) %>% 
-        summarise(CntRec = sum(CntRec),
-                  CntGood = sum(CntGood),
-                  CntBad = sum(CntBad),
-                  CntCumRec = n(),
-                  CntCumGood = sum(CntCumGood),
-                  CntCumBad = sum(CntCumBad), .groups = 'drop')
-    )
+        mutate(Bin = "Total") %>% 
+        group_by(Bin) %>% 
+        summarise(CntRec = n(),
+                  CntPos = sum(ifelse(y == 1, 1, 0), na.rm = TRUE),
+                  CntNeg = sum(ifelse(y == 0, 1, 0), na.rm = TRUE),
+                  .groups = 'drop')
+    ) 
   
-  ivt <- bind_rows(
-    ivt,
-    ivt %>% 
-      mutate(Cutpoint = "Total") %>% 
-      group_by(Cutpoint) %>% 
-      summarise(CntRec = sum(CntRec),
-                CntGood = sum(CntGood),
-                CntBad = sum(CntBad),
-                CntCumRec = NA,
-                CntCumGood = NA,
-                CntCumBad = NA, .groups = 'drop')
-  )
+  tab_metric <- tab_metric %>% 
+    mutate(RatePos = CntPos / (sum(CntPos) / 2),
+           RateNeg = CntNeg / (sum(CntNeg) / 2),
+           RateCumPos = ifelse(!Bin %in% "Total", cumsum(RatePos), NA),
+           RateCumNeg = ifelse(!Bin %in% "Total", cumsum(RateNeg), NA),
+           Odds = CntPos / CntNeg,
+           Odds = ifelse(is.infinite(Odds), NA, Odds),
+           LnOdds = log(Odds),
+           WoE = log(RatePos / RateNeg),
+           WoE = ifelse(is.infinite(WoE), NA, WoE),
+           IV = (RatePos - RateNeg) * WoE,
+           JSD = jsd(RatePos,  RateNeg),
+           JSD = ifelse(is.nan(JSD), NA, JSD))
   
-  ivt$PctRec <- ivt$CntRec / pull(ivt[ivt$Cutpoint %in% "Total", "CntRec"])
-  ivt$GoodRate <- ivt$CntGood / ivt$CntRec
-  ivt$BadRate <- ivt$CntBad / ivt$CntRec
-  ivt$Odds <- ivt$GoodRate / ivt$BadRate
-  ivt$LnOdds <- log(ivt$Odds)
-  
-  G <- pull(ivt[ivt$Cutpoint %in% "Total", "CntGood"])
-  B <- pull(ivt[ivt$Cutpoint %in% "Total", "CntBad"])
-  LnGB <- log(G/B)
-  ivt$WoE <- log(ivt$CntGood/ivt$CntBad) - LnGB
-  
-  ivt$GoodRate <- ifelse(is.finite(ivt$GoodRate), ivt$GoodRate, 0)
-  ivt$BadRate <- ifelse(is.finite(ivt$BadRate), ivt$BadRate, 0)
-  ivt$Odds <- ifelse(is.finite(ivt$Odds), ivt$Odds, 0)
-  ivt$LnOdds <- ifelse(is.finite(ivt$LnOdds), ivt$LnOdds, 0)
-  ivt$WoE <- ifelse(is.finite(ivt$WoE), ivt$WoE, 0)
+  tab_metric <- tab_metric %>% 
+    mutate(RatePos = ifelse(Bin %in% "Total", 0, RatePos),
+           REV = rev(cumsum(rev(RatePos))),
+           AUC = (1 - REV) * RateNeg + RatePos * RateNeg / 2) %>% 
+    mutate(RatePos = ifelse(Bin %in% "Total", 1, RatePos),
+           WoE = ifelse(Bin %in% "Total", NA, WoE),
+           IV = ifelse(Bin %in% "Total", sum(IV), IV),
+           JSD = ifelse(Bin %in% "Total", sum(JSD), JSD),
+           AUC = ifelse(Bin %in% "Total", 0, AUC),
+           AUC = ifelse(Bin %in% "Total", sum(AUC), AUC)) %>% 
+    select(-REV) 
   
   # Information Value
-  ivt$IV <- ivt$WoE * (ivt$CntGood / G - ivt$CntBad / B)
-  
-  n <- nrow(ivt)
-  
-  ivt$IV[1:(n - 1)] <- ifelse(is.finite(ivt$IV[1:(n - 1)]), ivt$IV[1:(n - 1)], 0)
-  iv <- ivt$IV[n] <- round(sum(ivt$IV[1:(n - 1)]), 4)
+  IV <- tab_metric %>% 
+    filter(Bin == "Total") %>% 
+    select(IV) %>% 
+    pull()
   
   # Jensen-Shannon Divergence
-  P <- ivt$CntGood / pull(ivt[ivt$Cutpoint %in% "Total", "CntGood"])
-  Q <- ivt$CntBad / pull(ivt[ivt$Cutpoint %in% "Total", "CntBad"])
+  JSD <- tab_metric %>% 
+    filter(Bin == "Total") %>% 
+    select(JSD) %>% 
+    pull()
   
-  ivt$JS <- jsd(P, Q)
+  # Kolmogorov-Smirnov statistics
+  KS <- max(abs(tab_metric$RateCumPos - tab_metric$RateCumNeg), na.rm = TRUE)
   
-  ivt$JS[1:(n - 1)] <- ifelse(is.finite(ivt$JS[1:(n - 1)]), ivt$JS[1:(n - 1)], 0)
-  js <- ivt$JS[n] <- round(sum(ivt$JS[1:(n - 1)]), 4)
+  # Gini Coefficient 
+  gini <- 2 * max(tab_metric$AUC, na.rm = TRUE) - 1
   
-  ivt$GoodRate <- round(ivt$GoodRate, 4)
-  ivt$BadRate <- round(ivt$BadRate, 4)
-  ivt$Odds <- round(ivt$Odds, 4)
-  ivt$LnOdds <- round(ivt$LnOdds, 4)
-  ivt$WoE <- round(ivt$WoE, 4)
-  ivt$IV <- round(ivt$IV, 4)                     
-  ivt$JS <- round(ivt$JS, 4)  
+  ## Herfindahl-Hirschman Index
+  hhi <- tab_metric %>%
+    filter(!Bin %in% "Total") %>% 
+    select(CntRec) %>% 
+    pull() %>% 
+    prop.table() %>% 
+    "^"(2) %>% 
+    sum()
   
-  min_max <- range(.data[, x], na.rm = TRUE)
-  cufoff <- c(min_max[1], cutvct, min_max[2])
+  ## normalized Herfindahl-Hirschman Index
+  n <- tab_metric %>%
+    filter(!Bin %in% "Total") %>% 
+    nrow()
   
-  list(ivtable = as.data.frame(ivt), iv = iv, js = js, cufoff = cufoff)
+  hhi_norm <- (hhi - 1 / n) / (1 - 1 / n)
+  
+  # Cramer's V
+  tab <- table(x, y)
+  chisq_hat <- suppressWarnings(chisq.test(tab, correct = FALSE)$statistic)
+  n <- sum(tab)
+  V <- as.numeric(sqrt(chisq_hat / (n * (min(dim(tab)) - 1))))
+  
+  # Rounding
+  tab_metric[, -1] <- round(tab_metric[, -1] , 5) 
+  
+  # Chi Square Test
+  bins <- setdiff(tab_metric$Bin, c("Total"))
+  bins <- data.frame(A = bins, B = lead(bins)) %>% 
+    filter(!is.na(A) & !is.na(B))
+  
+  chisq_test <- seq(nrow(bins)) %>% 
+    map_dfr(function(x) {
+      a <- .data[.data$Bin %in% bins[x, "A"], "y"]
+      b <- .data[.data$Bin %in% bins[x, "B"], "y"]
+      chisq <- suppressWarnings(chisq.test(rbind(table(a), table(b)), correct = FALSE))
+      list(`Bin A` = bins[x, "A"], `Bin B` = bins[x, "B"], statistics = chisq$statistic,
+           p_value = chisq$p.value)
+    })
+  
+  list(metrics_table = data.frame(tab_metric), IV = IV, KS = KS, JSD = JSD, gini = gini, HHI = hhi, 
+       HHI_norm = hhi_norm, Cramer_V = V, chisq_test = as.data.frame(chisq_test), cutoff = NULL)
+  
+  results <- data.frame(tab_metric)
+  attr(results, "IV") <- IV
+  attr(results, "KS") <- KS
+  attr(results, "gini") <- gini
+  attr(results, "HHI") <- hhi
+  attr(results, "HHI_norm") <- hhi_norm  
+  attr(results, "Cramer_V") <- V  
+  attr(results, "chisq_test") <- as.data.frame(chisq_test)  
+  attr(results, "cutoff") <- NULL  
+  class(results) <- append("performance_bin", class(results))
+  
+  results
+}
+
+
+#' Summarizing Performance for Binned Variable
+#'
+#' @description summary method for "performance_bin". summary metrics to evaluate the performance 
+#' of binomial classification model.
+#' @param x an object of class "performance_bin", usually, a result of a call to performance_bin().
+#' @details
+#' print() to print only binning table information of "performance_bin" objects.
+#' summary.performance_bin() includes general metrics and result of significance tests life follows.:
+#' \itemize{
+#'   \item Binning Table : Metrics by bins.
+#'   \itemize{
+#'     \item CntRec, CntPos, CntNeg, RatePos, RateNeg, Odds, WoE, IV, JSD, AUC.
+#'   }
+#'   \item General Metrics.
+#'   \itemize{
+#'     \item Gini index.
+#'     \item Jeffrey's Information Value.
+#'     \item Jensen-Shannon Divergence.
+#'     \item Kolmogorov-Smirnov Statistics.
+#'     \item Herfindahl-Hirschman Index.
+#'     \item normalized Herfindahl-Hirschman Index.
+#'     \item Cramer's V.
+#'   } 
+#'   \item Table of Significance Tests.
+#' }
+#' @return NULL.
+#' @seealso \code{\link{performance_bin}}, \code{\link{plot.performance_bin}}, \code{\link{binning_by}}, 
+#' \code{\link{summary.optimal_bins}}.
+#' @examples
+#' # Generate data for the example
+#' carseats <- ISLR::Carseats
+#' 
+#' set.seed(123)
+#' carseats[sample(seq(NROW(carseats)), 20), "Advertising"] <- NA
+#' 
+#' # Change the target variable to 0(negative) and 1(positive).
+#' carseats$US_2 <- ifelse(carseats$US %in% "Yes", 1, 0)
+#' 
+#' # Binnig from Advertising to Advertising_bin.
+#' breaks <- c(-1,  0,  6, 29)
+#' carseats$Advertising_bin <- cut(carseats$Advertising, breaks)
+#' 
+#' # Diagnose performance binned variable
+#' perf <- performance_bin(carseats$US_2, carseats$Advertising_bin) 
+#' perf
+#' summary(perf)
+#' plot(perf)
+#' 
+#' # Diagnose performance binned variable without NA
+#' perf <- performance_bin(carseats$US_2, carseats$Advertising_bin, na.rm = TRUE) 
+#' perf
+#' summary(perf)
+#' plot(perf)
+#' 
+#' @method summary performance_bin
+#' @export
+#' 
+summary.performance_bin <- function(x) {
+  cli::cat_rule(
+    left = "Binning Table",
+    right = "Several Metrics",
+    width = 60
+  )
+  
+  x %>% 
+    select(-CntCumPos, -CntCumNeg, -RateCumPos, -RateCumNeg, -LnOdds) %>% 
+    print()
+  
+  cat("\n")  
+  
+  nms <- c("Gini index", 
+           "IV (Jeffrey)",
+           "JS (Jensen-Shannon) Divergence",
+           "Kolmogorov-Smirnov Statistics",
+           "HHI (Herfindahl-Hirschman Index)", 
+           "HHI (normalized)",
+           "Cramer's V") 
+  nms <- format(nms)
+  
+  vls <- c(attr(x, "gini"), max(x[, "IV"]), max(x[, "JSD"]),
+           attr(x, "KS"), attr(x, "HHI"), attr(x, "HHI_norm"), attr(x, "Cramer_V"))
+  
+  cli::cat_rule(
+    left = "General Metrics",
+    right = "",
+    width = 60
+  )
+  
+  info_scale <- paste0(nms, " :  ", round(vls, 5))
+  cli::cat_bullet(info_scale)
+  cat("\n")
+  
+  cli::cat_rule(
+    left = "Significance Tests",
+    right = "Chisquare Test",
+    width = 60
+  )
+  
+  attr(x, "chisq_test") %>% 
+    print()
+  cat("\n")  
+}
+
+
+#' Visualize Performance for an "performance_bin" Object
+#'
+#' @description
+#' It generates plots for understand frequency, WoE by bins using performance_bin.
+#'
+#' @param x an object of class "performance_bin", usually, a result of a call to performance_bin().
+#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+#' The default is FALSE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' @seealso \code{\link{performance_bin}}, \code{\link{summary.performance_bin}}, \code{\link{binning_by}}, 
+#' \code{\link{plot.optimal_bins}}.
+#' @examples
+#' # Generate data for the example
+#' carseats <- ISLR::Carseats
+#' 
+#' set.seed(123)
+#' carseats[sample(seq(NROW(carseats)), 20), "Advertising"] <- NA
+#' 
+#' # Change the target variable to 0(negative) and 1(positive).
+#' carseats$US_2 <- ifelse(carseats$US %in% "Yes", 1, 0)
+#' 
+#' # Binnig from Advertising to Advertising_bin.
+#' breaks <- c(-1,  0,  6, 29)
+#' carseats$Advertising_bin <- cut(carseats$Advertising, breaks)
+#' 
+#' # Diagnose performance binned variable
+#' perf <- performance_bin(carseats$US_2, carseats$Advertising_bin) 
+#' perf
+#' summary(perf)
+#' plot(perf)
+#' 
+#' # Diagnose performance binned variable without NA
+#' perf <- performance_bin(carseats$US_2, carseats$Advertising_bin, na.rm = TRUE) 
+#' perf
+#' summary(perf)
+#' plot(perf)
+#' plot(perf, typographic = TRUE)
+#' 
+#' @import ggplot2
+#' @import hrbrthemes
+#' @import dplyr
+#' @export
+#' @method plot performance_bin
+plot.performance_bin <- function(x, typographic = FALSE) {
+  scaleFactor <- 
+    x %>% 
+    filter(!Bin %in% "Total") %>% 
+    select(Bin, CntPos, CntNeg, WoE) %>% 
+    mutate(Bin = factor(Bin, levels = Bin)) %>% 
+    tidyr::gather("target", "freq", -Bin, -WoE)  %>% 
+    summarise(diff_prim = diff(range(freq, na.rm = TRUE)),
+              diff_sec = diff(range(WoE, na.rm = TRUE)),
+              min_prim = min(freq, na.rm = TRUE),
+              min_sec = min(WoE, na.rm = TRUE)) %>% 
+    transmute(b = diff_prim / diff_sec,
+              a = b * (min_prim - min_sec)) 
+  
+  p <- x %>% 
+    filter(!Bin %in% "Total") %>% 
+    select(Bin, CntPos, CntNeg, WoE) %>% 
+    mutate(Bin = factor(Bin, levels = Bin)) %>% 
+    tidyr::gather("target", "freq", -Bin, -WoE) %>% 
+    ggplot(aes(x = Bin)) +  
+    geom_bar(aes(y = freq, fill = target), stat = "identity", width = 0.6) +
+    geom_point(aes(y = scaleFactor$a + WoE * scaleFactor$b, group = 1), size = 2) +
+    geom_line(aes(y = scaleFactor$a + WoE * scaleFactor$b, group = 1)) +
+    labs(title = "Frequency and WoE by Bins", y = "Bin frequency") +
+    scale_y_continuous(
+      # Features of the first axis
+      name = "Bin frequency",
+      # Add a second axis and specify its features
+      sec.axis = sec_axis(~(. - scaleFactor$a) / scaleFactor$b, name = "WoE")
+    ) 
+  
+  if (!typographic) {
+    p +
+      scale_fill_discrete(labels = c("Negative", "Positive")) 
+  } else {
+    p +
+      theme_ipsum() +
+      scale_fill_ipsum(labels = c("Negative", "Positive")) +
+      theme(
+        axis.title.y = element_text(size = 13),
+        axis.title.y.right = element_text(size = 13)
+      )
+  }
 }

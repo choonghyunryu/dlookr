@@ -40,6 +40,8 @@ dlookr 0.3.15
 
 * Add a new function jsd() to computes the Jensen-Shannon divergence between two probability distributions.
 
+* Add a new function performance_bin(), summary.performance_bin(), plot.performance_bin() to diagnose the binned variable for binomial classification model.
+
 
 dlookr 0.3.14
 ----------------------------------------------------------------

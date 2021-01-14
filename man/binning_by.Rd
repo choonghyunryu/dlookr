@@ -4,10 +4,10 @@
 \alias{binning_by}
 \title{Optimal Binning for Scoring Modeling}
 \usage{
-binning_by(df, y, x, p = 0.05, ordered = TRUE, labels = NULL)
+binning_by(.data, y, x, p = 0.05, ordered = TRUE, labels = NULL)
 }
 \arguments{
-\item{df}{a data frame.}
+\item{.data}{a data frame.}
 
 \item{y}{character. name of binary response variable(0, 1). 
 The variable must contain only the integers 0 and 1 as element. 
@@ -79,6 +79,10 @@ plot(bin)
 
 # visualize WoE information for optimal_bins class
 plot(bin, type = "WoE")
+
+# visualize all information with typographic
+plot(bin, typographic = TRUE)
+
 }
 \seealso{
 \code{\link{binning}}, \code{\link{plot.optimal_bins}}.
