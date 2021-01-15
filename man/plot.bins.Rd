@@ -4,7 +4,7 @@
 \alias{plot.bins}
 \title{Visualize Distribution for a "bins" object}
 \usage{
-\method{plot}{bins}(x, ...)
+\method{plot}{bins}(x, typographic = TRUE, ...)
 }
 \arguments{
 \item{x}{an object of class "bins", usually, a result of a call to binning().}

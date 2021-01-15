@@ -17,6 +17,8 @@ usually, a result of a call to binning().}
 
 \item{x}{an object of class "bins" and "optimal_bins",
 usually, a result of a call to binning().}
+
+\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. Default is TRUE.}
 }
 \value{
 The function summary.bins() computes and returns a data.frame of summary statistics of the

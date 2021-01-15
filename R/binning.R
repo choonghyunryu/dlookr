@@ -250,6 +250,7 @@ summary.bins <- function(object, ...) {
 
 #' @param x an object of class "bins" and "optimal_bins",
 #' usually, a result of a call to binning().
+#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. Default is TRUE.
 #' @param ... further arguments passed to or from other methods.
 #' @rdname summary.bins
 #' @method print bins
@@ -291,23 +292,52 @@ print.bins <- function(x, ...) {
 #' 
 #' @export
 #' @method plot bins
-#' @importFrom graphics plot
-plot.bins <- function(x, ...) {
-  op <- par(no.readonly = TRUE)
-  on.exit(par(op))
-
+#' @importFrom gridExtra grid.arrange
+plot.bins <- function(x, typographic = TRUE, ...) {
   brks <- attr(x, "breaks")
-
-  par(mfrow = c(2, 1), mar = c(3, 4, 3, 1))
-  hist(attr(x, "raw"), breaks = brks, col = "lightblue",
-    main = sprintf("Histogram of original data using '%s' method",
-      attr(x, "type")),
-    xlab = "original data", ...)
-
-  plot(factor(x), col = "lightgrey",
-    ylab = "Frequency",
-    main = sprintf("Bar plot of levles frequency using '%s' method",
-      attr(x, "type")), ...)
+  type <- attr(x, "type")
+  levels <- attr(x, "levels")
+  
+  bins <- factor(bin)
+  n <- seq(levels)
+  
+  deltas <- diff(brks)
+  height <- table(bins) / deltas / length(bins)
+  data_top <- data.frame(x_start = brks[-length(brks)], x_end = brks[-1],
+                         height = height)
+  
+  p_top <- data_top %>% 
+    ggplot() + 
+    geom_rect(aes(xmin = x_start, xmax = x_end,
+                  ymin = 0, ymax = height), 
+              fill = "#69b3a2", alpha = 0.8, color = "black") +
+    xlim(min(brks), max(brks)) +
+    labs(title = sprintf("Density of original data using '%s' method", type),
+         y = "Density")
+  
+  if (typographic) {
+    p_top <- p_top +
+      theme_ipsum() 
+  }
+  
+  data_bottom <- data.frame(bins = seq(levels), freq = as.integer(table(bins)) / length(bins))
+  
+  p_bottom <- data_bottom %>% 
+    ggplot(aes(x = bins, y = freq)) + 
+    geom_bar(stat = "identity", fill = "#404080", width = 0.8,
+             alpha = 0.8, color = "black") +
+    labs(title = sprintf("Relative frequency by bins using '%s' method", type),
+         x = "", y = "Relative Frequency") +
+    scale_x_continuous(breaks = seq(levels), 
+                       labels = levels,
+                       limits = c(0.5, length(levels) + 0.5))
+  
+  if (typographic) {
+    p_bottom <- p_bottom +
+      theme_ipsum() 
+  }
+  
+  gridExtra::grid.arrange(p_top, p_bottom, nrow = 2, ncol = 1) 
 }
 
 
