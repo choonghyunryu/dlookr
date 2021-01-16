@@ -4,11 +4,14 @@
 \alias{plot.imputation}
 \title{Visualize Information for an "imputation" Object}
 \usage{
-\method{plot}{imputation}(x, ...)
+\method{plot}{imputation}(x, typographic = TRUE, ...)
 }
 \arguments{
 \item{x}{an object of class "imputation", usually, a result of a call to imputate_na()
 or imputate_outlier().}
+
+\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
 
 \item{...}{arguments to be passed to methods, such as graphical parameters (see par).
 only applies when the model argument is TRUE, and is used for ... of the plot.lm() function.}

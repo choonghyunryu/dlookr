@@ -233,7 +233,7 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL,
 
   get_mice <- function(x, y, seed = NULL, print_flag = TRUE) {
     if (is.null(seed))
-      seed <- sample(seq(1e5), size = 1)
+      seed <<- sample(seq(1e5), size = 1)
 
     if (!na_flag) {
       data <- pull(df, x)
@@ -602,6 +602,8 @@ summary.imputation <- function(object, ...) {
 #'
 #' @param x an object of class "imputation", usually, a result of a call to imputate_na()
 #' or imputate_outlier().
+#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
 #' only applies when the model argument is TRUE, and is used for ... of the plot.lm() function.
 #' @seealso \code{\link{imputate_na}}, \code{\link{imputate_outlier}}, \code{\link{summary.imputation}}.
@@ -636,42 +638,66 @@ summary.imputation <- function(object, ...) {
 #' @import ggplot2
 #' @importFrom tidyr gather
 #' @export
-plot.imputation <- function(x, ...) {
+plot.imputation <- function(x, typographic = TRUE, ...) {
   type <- attr(x, "type")
   var_type <- attr(x, "var_type")
   method <- attr(x, "method")
-
+  
   original <- x
-
+  
   if (type == "missing values") {
     na_pos <- attr(x, "na_pos")
     seed <- attr(x, "seed")
-
+    
     original[na_pos] <- NA
   } else if (type == "outliers") {
     outlier_pos <- attr(x, "outlier_pos")
     outliers <- attr(x, "outliers")
-
+    
     original[outlier_pos] <- outliers
   }
-
+  
   if (method == "mice") {
     method <- sprintf("%s (seed = %s)", method, seed)
   }
-
+  
   if (var_type == "numerical") {
-    suppressWarnings({data.frame(original = original, imputation = x) %>%
-        tidyr::gather() %>%
-        ggplot(aes(x = value, color = key)) +
-        geom_density(na.rm = TRUE) +
-        ggtitle(sprintf("imputation method : %s", method)) +
-        theme(plot.title = element_text(hjust = 0.5))})
+    suppressWarnings({p <- data.frame(original = original, imputation = x) %>%
+      tidyr::gather() %>%
+      ggplot(aes(x = value, color = key)) +
+      geom_density(na.rm = TRUE) +
+      labs(title = sprintf("imputation method : %s", method))})
+    
+    if (typographic) {
+      p <- p +
+        theme_ipsum() +
+        scale_color_ipsum() +
+        theme(
+          axis.title.x = element_text(size = 13),
+          axis.title.y = element_text(size = 13)
+        )
+    }
+    
+    p
   } else if (var_type == "categorical") {
-    suppressWarnings({data.frame(original = original, imputation = x) %>%
-        tidyr::gather() %>%
-        ggplot(aes(x = value, fill = key)) +
-        geom_bar(position = "dodge") +
-        ggtitle(sprintf("imputation method : %s", method)) +
-        theme(plot.title = element_text(hjust = 0.5))})
+    suppressWarnings({p <- data.frame(original = original, imputation = x) %>%
+      tidyr::gather() %>%
+      ggplot(aes(x = value, fill = key)) +
+      geom_bar(position = "dodge") +
+      labs(title = sprintf("imputation method : %s", method),
+            x = "level", y = "frequency")})
+    
+    if (typographic) {
+      p <- p +
+        theme_ipsum() +
+        scale_fill_ipsum() +
+        theme(
+          axis.title.x = element_text(size = 13),
+          axis.title.y = element_text(size = 13)
+        )  
+    }
+    
+    p
   }
 }
+

@@ -850,8 +850,15 @@ print.compare_numeric <- function(x, ...) {
 #' @param prompt logical. The default value is FALSE. If there are multiple visualizations to be output, if this argument value is TRUE, a prompt is output each time. 
 #' @param na.rm logical. Specifies whether to include NA when plotting mosaics plot. 
 #' The default is FALSE, so plot NA.  
+#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
-#' However, it does not support all parameters.
+#' However, it only support las parameter. las is numeric in {0,1}; the style of axis labels.
+#' \itemize{
+#'   \item 0 : always parallel to the axis [default],
+#'   \item 1 : always horizontal to the axis,
+#' }
+#'    
 #' @seealso \code{\link{compare_category}}, \code{\link{print.compare_category}}, \code{\link{summary.compare_category}}.
 #' @examples
 #' # Generate data for the example
@@ -880,48 +887,111 @@ print.compare_numeric <- function(x, ...) {
 #' # plot all pair of variables by prompt
 #' plot(all_var, prompt = TRUE)
 #' 
+#' # plot a pair of variables without NA
+#' plot(two_var, na.rm = TRUE)
+#' 
 #' # plot a pair of variables
 #' plot(two_var, las = 1)
 #' 
+#' # plot a pair of variables not focuses on typographic elements
+#' plot(two_var, typographic = FALSE)
+#' 
 #' @method plot compare_category
 #' @export
-plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE, ...) {
+plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE, typographic = TRUE, ...) {
+  
   variables <- attr(x, "variables")
   combination <- attr(x, "combination")
   
   n <- nrow(combination)
   
+  arg_par <- list(...)
+  
+  las <- 0
+  if (length(arg_par) > 0 & any(names(arg_par) %in% "las")) {
+    las <- arg_par$las
+  } 
+  
   for (i in seq(n)) {
-    rnames <- unique(pull(x[[i]][, 1]))
-    cnames <- unique(pull(x[[i]][, 2]))
-      
     xvar <- combination[i, 1]
     yvar <- combination[i, 2]  
-      
-    value <- expand.grid(rnames, cnames)
-    names(value) <- c(xvar, yvar)
-      
-    suppressMessages(value <- value %>% 
-                       left_join(x[[i]] %>% select(1:3)) %>% 
-                       mutate(n = ifelse(is.na(n), 0, n)))
-      
-    tab <- matrix(value$n, nrow = length(rnames), ncol = length(cnames),
-                  dimnames = list(rnames, cnames))
-      
-    oldClass(tab) <- c("table")
-      
-    dimnames(tab)[[1]] <- ifelse(is.na(dimnames(tab)[[1]]), "NA", 
-                                 dimnames(tab)[[1]])
-    dimnames(tab)[[2]] <- ifelse(is.na(dimnames(tab)[[2]]), "NA", 
-                                   dimnames(tab)[[2]])
-      
+    
     if (prompt & n > 1) {
       invisible(readline(prompt="Hit <Return> to see next plot:"))
     }
+    
+    data <- x[[i]] %>% 
+      select(a = xvar, b = yvar, n) 
+    
+    if (na.rm) {
+      data <- data %>% 
+        filter(!is.na(a) & !is.na(b))
+    }
+    
+    first <- data[1, 1] %>% pull %>% as.character
+    y <- data %>% 
+      filter(a %in% first) %>% 
+      select(b, n)
+    
+    y_lab <- y$b %>% rev() %>% as.character()
+    y <- y$n %>% rev()
+    
+    y_cumsum <- cumsum(y)
+    y_center <- y / 2
+    
+    y_pos <- numeric(length(y))
+    for (j in seq(y)) {
+      if (j == 1) {
+        y_pos[j] <- y_center[j]
+      } else {
+        y_pos[j] <- y_cumsum[j-1] + y_center[j]
+      }
+      y_pos[j] <- y_pos[j] / sum(y)
+    }
+    
+    suppressWarnings({
+      p <- data %>% 
+        group_by(a) %>% 
+        mutate(x_width = sum(n)) %>% 
+        ggplot(aes(x = factor(a), y = n)) +
+        geom_col(aes(width = x_width, fill = factor(b)),
+                 color = "white", size = 2, 
+                 position = position_fill(reverse = FALSE)) +
+        facet_grid(~ a, space = "free", scales = "free", switch = "x") +
+        scale_x_discrete(name = xvar) +
+        scale_y_continuous(name = yvar, breaks = y_pos, labels = y_lab) +
+        labs(title = sprintf("Mosaics plot by '%s' vs '%s'", xvar, yvar)) +
+        theme(legend.position = "none",
+              axis.text.x = element_blank(),
+              axis.ticks.x = element_blank(),
+              strip.background = element_blank(),
+              panel.spacing = unit(0, "pt")) 
+    })
+    
+    if (typographic) {
+      p <- p +
+        theme_ipsum() +
+        scale_fill_ipsum(na.value = "grey80") +
+        theme(legend.position = "none",
+              panel.grid.major.x = element_blank(),
+              axis.text.x = element_blank(),
+              axis.text.y = element_text(size = 12),
+              axis.title.x = element_text(size = 12),
+              axis.title.y = element_text(size = 12),
+              panel.spacing = unit(0, "pt"))
+      if (las == 0) {
+        p <-  p +
+          theme(axis.text.y = element_text(angle = 90, hjust = 0.5))
+      }  
       
-    plot(tab, col = RColorBrewer::brewer.pal(8, "Dark2"),
-         xlab = xvar, ylab = yvar,
-         main = sprintf("Mosaics plot by '%s' vs '%s'", xvar, yvar), ...)
+    } else {
+      if (las == 0) {
+        p <-  p +
+          theme(axis.text.y = element_text(angle = 90, hjust = 0.5))
+      }  
+    }
+    
+    print(p)
   } 
 }
 
