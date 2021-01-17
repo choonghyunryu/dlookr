@@ -293,12 +293,14 @@ print.bins <- function(x, ...) {
 #' @export
 #' @method plot bins
 #' @importFrom gridExtra grid.arrange
+#' @import hrbrthemes
+#' @import ggplot2
 plot.bins <- function(x, typographic = TRUE, ...) {
   brks <- attr(x, "breaks")
   type <- attr(x, "type")
   levels <- attr(x, "levels")
   
-  bins <- factor(bin)
+  bins <- factor(x)
   n <- seq(levels)
   
   deltas <- diff(brks)
@@ -640,6 +642,7 @@ summary.optimal_bins <- function(object, ...) {
 #'   head(20)
 #' 
 #' @import ggplot2
+#' @import hrbrthemes
 #' @importFrom gridExtra grid.arrange
 #' @export
 #' @method plot optimal_bins

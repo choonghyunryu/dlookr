@@ -262,6 +262,9 @@ compare_category_impl <- function(df, vars) {
 #'
 #' library(dplyr)
 #' 
+#' carseats <- carseats %>% 
+#'   select(CompPrice, Sales, Price)
+#' 
 #' # Compare the all numerical variables
 #' all_var <- compare_numeric(carseats)
 #' 
@@ -305,7 +308,7 @@ compare_category_impl <- function(df, vars) {
 #' 
 #' # verbose is FALSE 
 #' summary(all_var, verbose = FALSE)
-#'
+#'   
 #' # plot all pair of variables
 #' plot(all_var)
 #' 
@@ -1018,6 +1021,10 @@ plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE, typographic 
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 #' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 #'
+#' library(dplyr)
+#' carseats <- carseats %>% 
+#'   select(CompPrice, Sales, Price)
+#'   
 #' # Compare the all numerical variables
 #' all_var <- compare_numeric(carseats)
 #' 
@@ -1042,7 +1049,9 @@ plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE, typographic 
 #' # plot a pair of variables not focuses on typographic elements
 #' plot(two_var, typographic = FALSE)
 #' 
-#' @importFrom car scatterplot
+#' @importFrom gridExtra grid.arrange
+#' @importFrom grid textGrob gpar
+#' @import ggplot2
 #' @method plot compare_numeric
 #' @export
 plot.compare_numeric <- function(x, prompt = FALSE, typographic = TRUE, ...) {
@@ -1151,7 +1160,7 @@ plot.compare_numeric <- function(x, prompt = FALSE, typographic = TRUE, ...) {
     title <- sprintf("Scatterplots with %s and %s", xvar, yvar)
     gridExtra::grid.arrange(box_left, p_scatter, blank, box_bottom, ncol = 2, nrow = 2,
                             widths = c(1, 25), heights=c(20, 1),
-                            top = textGrob(title, gp = gpar(fontfamily = "Arial Narrow", just = "left",
+                            top = grid::textGrob(title, gp = grid::gpar(fontfamily = "Arial Narrow", just = "left",
                                                             fontsize = 18, font = 2)))
   } 
 }

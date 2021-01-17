@@ -27,6 +27,10 @@ carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 
+library(dplyr)
+carseats <- carseats \%>\% 
+  select(CompPrice, Sales, Price)
+  
 # Compare the all numerical variables
 all_var <- compare_numeric(carseats)
 

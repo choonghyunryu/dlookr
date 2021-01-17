@@ -374,7 +374,7 @@ if (!is.null(targetVariable)) {
   if (n_levles == 2) {
     # Optimal Binning for Scoring Modeling
     results <- lapply(var_numeric, function(x)
-      binning_by(df = edaData, y = targetVariable, x = x, p = 0.05))
+      binning_by(.data = edaData, y = targetVariable, x = x, p = 0.05))
     
     # could also use tapply here
     for (i in 1:length(var_numeric)) {
@@ -391,7 +391,9 @@ if (!is.null(targetVariable)) {
       
       cat("\n")
 
-      tab <- attr(result, "ivtable")
+      tab <- attr(result, "performance") %>% 
+        select(-CntCumPos, -CntCumNeg, -RateCumPos, -RateCumNeg)
+            
       kable(tab, digits = 2, format = "html",
         format.args = list(big.mark = ",")) %>% 
         kable_styling(full_width = FALSE, font_size = 10, position = "left") %>% 

@@ -270,6 +270,8 @@ normality_group_impl <- function(df, vars, sample) {
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 #' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+#' 
+#' carseats <- carseats[, c("Income", "Price", "ShelveLoc", "Sales", "Urban", "US")]
 #'
 #' # Visualization of all numerical variables
 #' plot_normality(carseats)

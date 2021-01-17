@@ -73,6 +73,9 @@ carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 
 library(dplyr)
 
+carseats <- carseats \%>\% 
+  select(CompPrice, Sales, Price)
+
 # Compare the all numerical variables
 all_var <- compare_numeric(carseats)
 
@@ -116,7 +119,7 @@ summary(all_var, thres_rs = 0.05)
 
 # verbose is FALSE 
 summary(all_var, verbose = FALSE)
-
+  
 # plot all pair of variables
 plot(all_var)
 

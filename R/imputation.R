@@ -636,6 +636,7 @@ summary.imputation <- function(object, ...) {
 #' }
 #' @method plot imputation
 #' @import ggplot2
+#' @import hrbrthemes
 #' @importFrom tidyr gather
 #' @export
 plot.imputation <- function(x, typographic = TRUE, ...) {
