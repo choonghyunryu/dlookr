@@ -69,6 +69,8 @@ advertising_log
 summary(advertising_log)
 plot(advertising_log)
 
+plot(advertising_log, typographic = FALSE)
+
 # Using dplyr ----------------------------------
 library(dplyr)
 

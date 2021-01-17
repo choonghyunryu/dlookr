@@ -34,6 +34,8 @@ advertising_log <- transform(carseats$Advertising, method = "log")
 advertising_log
 summary(advertising_log)
 plot(advertising_log)
+
+plot(advertising_log, typographic = FALSE)
 }
 \seealso{
 \code{\link{transform}}, \code{\link{plot.transform}}.

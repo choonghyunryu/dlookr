@@ -55,6 +55,8 @@
 #' summary(advertising_log)
 #' plot(advertising_log)
 #'
+#' plot(advertising_log, typographic = FALSE)
+#' 
 #' # Using dplyr ----------------------------------
 #' library(dplyr)
 #'
@@ -151,6 +153,8 @@ transform <- function(x, method = c("zscore", "minmax", "log", "log+1", "sqrt",
 #' advertising_log
 #' summary(advertising_log)
 #' plot(advertising_log)
+#' 
+#' plot(advertising_log, typographic = FALSE)
 #' @method summary transform
 #' @importFrom tidyr gather
 #' @export
@@ -191,6 +195,8 @@ summary.transform <- function(object, ...) {
 #' The transformation of a numerical variable is a density plot.
 #'
 #' @param x an object of class "transform", usually, a result of a call to transform().
+#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
 #' @seealso \code{\link{transform}}, \code{\link{summary.transform}}.
 #' @examples
@@ -210,12 +216,15 @@ summary.transform <- function(object, ...) {
 #' advertising_log
 #' summary(advertising_log)
 #' plot(advertising_log)
+#' 
+#' plot(advertising_log, typographic = FALSE)
 #' @method plot transform
 #' @import ggplot2
+#' @import hrbrthemes
 #' @importFrom tidyr gather
 #' @importFrom gridExtra grid.arrange
 #' @export
-plot.transform <- function(x, ...) {
+plot.transform <- function(x, typographic = TRUE, ...) {
   origin <- attr(x, "origin")
   method <- attr(x, "method")
 
@@ -226,18 +235,29 @@ plot.transform <- function(x, ...) {
   fig1 <- df %>%
     filter(key == "original") %>%
     ggplot(aes(x = value)) +
-    geom_density(na.rm = TRUE) +
+    geom_density(fill = "#69b3a2", color = "black", alpha = 0.7, na.rm = TRUE) +
     ggtitle("Original Data") +
     theme(plot.title = element_text(hjust = 0.5))
 
   fig2 <- df %>%
     filter(key == "transformation") %>%
     ggplot(aes(x = value)) +
-    geom_density(na.rm = TRUE) +
+    geom_density(fill = "#69b3a2", color = "black", alpha = 0.7, na.rm = TRUE) +
     ggtitle(sprintf("Transformation Data with '%s'", method))+
     theme(plot.title = element_text(hjust = 0.5))
 
-  gridExtra::grid.arrange(fig1, fig2, ncol = 2)
+  if (typographic) {
+    fig1 <- fig1 +
+      theme_ipsum() +
+      theme(axis.title.x = element_text(size = 13),
+            axis.title.y = element_text(size = 13))
+    
+    fig2 <- fig2 +
+      theme_ipsum() +
+      theme(axis.title.x = element_text(size = 13),
+            axis.title.y = element_text(size = 13))
+  }  
+  suppressWarnings(gridExtra::grid.arrange(fig1, fig2, ncol = 2))
 }
 
 
