@@ -315,6 +315,9 @@ compare_category_impl <- function(df, vars) {
 #' # plot all pair of variables by prompt
 #' plot(all_var, prompt = TRUE)
 #' 
+#' # plot a pair of variables not focuses on typographic elements
+#' plot(two_var, typographic = FALSE)
+#' 
 #' @method compare_numeric data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
@@ -1002,7 +1005,10 @@ plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE, typographic 
 #' Visualize scatter plot included box plots by attribute of compare_numeric class.
 #'
 #' @param x an object of class "compare_numeric", usually, a result of a call to compare_numeric().
-#' @param prompt logical. The default value is FALSE. If there are multiple visualizations to be output, if this argument value is TRUE, a prompt is output each time. 
+#' @param prompt logical. The default value is FALSE. If there are multiple visualizations to be output, 
+#' if this argument value is TRUE, a prompt is output each time. 
+#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
 #' However, it does not support.
 #' @seealso \code{\link{compare_numeric}}, \code{\link{print.compare_numeric}}, \code{\link{summary.compare_numeric}}.
@@ -1033,30 +1039,166 @@ plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE, typographic 
 #' # plot all pair of variables by prompt
 #' plot(all_var, prompt = TRUE)
 #' 
+#' # plot a pair of variables not focuses on typographic elements
+#' plot(two_var, typographic = FALSE)
+#' 
 #' @importFrom car scatterplot
 #' @method plot compare_numeric
 #' @export
-plot.compare_numeric <- function(x, prompt = FALSE, ...) {
+plot.compare_numeric <- function(x, prompt = FALSE, typographic = TRUE, ...) {
   variables <- attr(x, "variables")
   combination <- attr(x, "combination")
   
   n <- nrow(combination)
   
   df <- attr(x, "raw")
-    
+  
   for (i in seq(n)) {
     xvar <- combination[i, 1]
     yvar <- combination[i, 2]  
-      
-    datas <- df[ , c(xvar, yvar)]
+    
+    datas <<- df[ , c(xvar, yvar)]
     str_formula <- formula(sprintf("%s ~ %s", xvar, yvar))
-      
+    
     if (prompt & n > 1) {
       invisible(readline(prompt="Hit <Return> to see next plot:"))
     }
+    
+    blank <- ggplot() + geom_blank(aes(1, 1)) +
+      theme(
+        plot.background = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        panel.border = element_blank(),
+        panel.background = element_blank(),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        axis.text.x = element_blank(), 
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.line = element_blank()
+      )
+    
+    p_scatter <- datas %>% 
+      ggplot(aes_string(x = xvar, y = yvar)) +
+      geom_point(color = "#FF9900") +
+      stat_minmax_ellipse(geom = "polygon", alpha = 0.3, fill = "steelblue", color = "steelblue") + 
+      stat_minmax_ellipse(level = 0.5, geom = "polygon", alpha = 0.5, 
+                   fill = "steelblue", color = "steelblue") + 
+      stat_smooth(method = "lm", formula = y ~ x) 
+    
+    box_bottom <- datas %>% 
+      ggplot(aes_string(x = xvar)) + 
+      geom_boxplot(size = 0.3, fill = "steelblue", alpha = 0.3) +
+      ylab("") +
+      theme(
+        axis.title.x = element_blank(),
+        axis.text.x = element_blank(), 
+        axis.text.y = element_text(color = "transparent"),
+        axis.ticks = element_blank(),
+        panel.grid = element_blank(),
+        axis.line = element_blank(),
+        panel.background = element_rect(fill = "transparent",colour = NA),
+        plot.background = element_rect(fill = "transparent",colour = NA))
+    
+    box_left <- datas %>% 
+      ggplot(aes_string(x = yvar)) + 
+      geom_boxplot(size = 0.3, fill = "steelblue", alpha = 0.3) + 
+      ylab("") +
+      coord_flip() +
+      theme(
+        axis.title.y = element_blank(),
+        axis.text.y = element_blank(), 
+        axis.text.x = element_text(color = "transparent"),
+        axis.ticks = element_blank(),
+        panel.grid = element_blank(),
+        axis.line = element_blank(),
+        panel.background = element_rect(fill = "transparent",colour = NA),
+        plot.background = element_rect(fill = "transparent",colour = NA))
+    
+    if (typographic) {
+      p_scatter <- p_scatter +
+        theme_ipsum() +
+        theme(
+          axis.title.x = element_text(size = 11),
+          axis.title.y = element_text(size = 13)
+        )
       
-    car::scatterplot(str_formula, data = datas, ellipse = TRUE,
-                     col = "orange", pch = 16,
-                     main = sprintf("Scatterplots with %s and %s", xvar, yvar))
+      box_bottom <- box_bottom  +
+        theme_ipsum() +
+        theme(axis.title.x = element_blank(),
+              axis.text.x = element_blank(),
+              axis.text.y = element_text(color = "transparent"),
+              panel.grid.major = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.border = element_blank(),
+              panel.background = element_blank(),
+              plot.margin = margin(0, 30, 0, 30))
+      
+      box_left <- box_left  +
+        theme_ipsum() +
+        theme(axis.title.x = element_text(color = "transparent"),
+              axis.text.x = element_text(color = "transparent"),
+              axis.title.y = element_blank(),
+              axis.text.y = element_blank(),
+              panel.grid.major = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.border = element_blank(),
+              panel.background = element_blank(),              
+              plot.margin = margin(30, 0, 30, 0))
+    }
+    
+    title <- sprintf("Scatterplots with %s and %s", xvar, yvar)
+    gridExtra::grid.arrange(box_left, p_scatter, blank, box_bottom, ncol = 2, nrow = 2,
+                            widths = c(1, 25), heights=c(20, 1),
+                            top = textGrob(title, gp = gpar(fontfamily = "Arial Narrow", just = "left",
+                                                            fontsize = 18, font = 2)))
   } 
 }
+
+StatMinMaxEllipse <- ggproto("StatClipEllipse", Stat,
+                             required_aes = c("x", "y"),
+                             compute_group = function(data, scales, type = "t", level = 0.95,
+                                                      segments = 51, na.rm = FALSE) {
+                               min_x <- min(data$x)
+                               max_x <- max(data$x)
+                               min_y <- min(data$y)
+                               max_y <- max(data$y)
+                               
+                               xx <- ggplot2:::calculate_ellipse(data = data, vars = c("x", "y"), type = type,
+                                                                 level = level, segments = segments)
+                               xx %>% mutate(x=pmax(x, min_x)) %>% 
+                                 mutate(x=pmin(x, max_x)) %>% 
+                                 mutate(y=pmax(y, min_y)) %>% 
+                                 mutate(y=pmin(y, max_y)) 
+                             }
+)
+
+stat_minmax_ellipse <- function(mapping = NULL, data = NULL,
+                                geom = "path", position = "identity",
+                                ...,
+                                type = "t",
+                                level = 0.95,
+                                segments = 51,
+                                na.rm = FALSE,
+                                show.legend = NA,
+                                inherit.aes = TRUE) {
+  layer(
+    data = data,
+    mapping = mapping,
+    stat = StatMinMaxEllipse,
+    geom = geom,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(
+      type = type,
+      level = level,
+      segments = segments,
+      na.rm = na.rm,
+      ...
+    )
+  )
+}
+
+

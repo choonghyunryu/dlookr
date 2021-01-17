@@ -126,6 +126,9 @@ plot(two_var)
 # plot all pair of variables by prompt
 plot(all_var, prompt = TRUE)
 
+# plot a pair of variables not focuses on typographic elements
+plot(two_var, typographic = FALSE)
+
 }
 \seealso{
 \code{\link{correlate}}, \code{\link{summary.compare_numeric}}, \code{\link{print.compare_numeric}}, \code{\link{plot.compare_numeric}}.

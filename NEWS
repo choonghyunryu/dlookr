@@ -44,8 +44,7 @@ dlookr 0.3.15
 
 * Add a new function summary.optimal_bins() to summarise the binned variable for optimal binning.
 
-* plot.bins(), plot.compare_category() changed the look & feel that draw the viz from high-level graphic function to ggplot2.
-
+* plot.bins(), plot.compare_category(), plot.compare_numeric() changed the look & feel that draw the viz from high-level graphic function to ggplot2.
 
 
 dlookr 0.3.14

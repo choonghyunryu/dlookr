@@ -154,7 +154,11 @@ binning | converts a numeric variable to a categorization variable | `binning()`
 summaries | calculate frequency and relative frequency for each levels(bins) | `summary.bins()` | 
 visualize | visualize two plots on a single screen. The plot at the top is a histogram representing the frequency of the level. The plot at the bottom is a bar chart representing the frequency of the level. | `plot.bins()` | 
 optimal binning | categorizes a numeric characteristic into bins for ulterior usage in scoring modeling | `binning_by()` | 
-visualize | generates plots for understand distribution, bad rate, and weight of evidence after running smbinning | `plot.optimal_bins()` | 
+summaries | summary metrics to evaluate the performance of binomial classification model | `summary.optimal_bins()` | 
+visualize | generates plots for understand distribution, bad rate, and weight of evidence after running binning_by() | `plot.optimal_bins()` | 
+evaluate | calculates metrics to evaluate the performance of binned variable for binomial classification model | `performance_bin()` | 
+summaries | summary metrics to evaluate the performance of binomial classification model after performance_bin() | `summary.performance_bin()` | 
+visualize | It generates plots for understand frequency, WoE by bins using performance_bin after running binning_by() | `plot.performance_bin()` | 
 
 #### Transformation
 Types | Descriptions | Functions | Support DBI
