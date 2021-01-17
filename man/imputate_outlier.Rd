@@ -56,10 +56,10 @@ carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 
-# Replace the outliers of the Price variable with median
+# Replace the outliers of the Price variable with median.
 imputate_outlier(carseats, Price, method = "median")
 
-# Replace the outliers of the Price variable with capping
+# Replace the outliers of the Price variable with capping.
 imputate_outlier(carseats, Price, method = "capping")
 
 ## using dplyr -------------------------------------
@@ -72,7 +72,7 @@ carseats \%>\%
   summarise(orig = mean(Price, na.rm = TRUE),
     imputation = mean(Price_imp, na.rm = TRUE))
 
-# If the variable of interest is a numerical variable
+# If the variable of interest is a numerical variables
 price <- imputate_outlier(carseats, Price)
 price
 summary(price)

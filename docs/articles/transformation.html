@@ -56,7 +56,7 @@
 </li>
 <li>
   <a href="https://github.com/choonghyunryu/dlookr/">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -70,14 +70,13 @@
 
       
 
-      </header><script src="transformation_files/header-attrs-2.4.6/header-attrs.js"></script><link href="transformation_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="transformation_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="transformation_files/header-attrs-2.6.4/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Data Transformation</h1>
                         <h4 class="author">Choonghyun Ryu</h4>
             
-            <h4 class="date">2021-01-10</h4>
+            <h4 class="date">2021-01-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/choonghyunryu/dlookr/blob/master/vignettes/transformation.Rmd"><code>vignettes/transformation.Rmd</code></a></small>
       <div class="hidden name"><code>transformation.Rmd</code></div>
@@ -431,10 +430,10 @@ urban
  [37] No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes
  [55] No  Yes Yes Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes Yes Yes Yes No 
  [73] Yes No  No  No  Yes No  Yes Yes Yes Yes Yes No  No  No  Yes No  Yes No 
- [91] No  Yes Yes No  Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes
-[109] Yes No  Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes No 
-[127] Yes Yes Yes No  Yes No  Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes
-[145] No  Yes Yes No  No  Yes Yes No  No  No  No  Yes Yes No  No  No  No  No 
+ [91] No  Yes Yes Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes
+[109] Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes No 
+[127] Yes Yes Yes No  Yes Yes Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes
+[145] No  Yes Yes No  No  Yes No  No  No  No  No  Yes Yes No  No  No  No  No 
 [163] Yes No  No  Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes No  Yes No  Yes
 [181] Yes Yes Yes Yes No  Yes No  Yes Yes No  No  Yes No  Yes Yes Yes Yes Yes
 [199] Yes Yes No  Yes No  Yes Yes Yes Yes No  Yes No  No  Yes Yes Yes Yes Yes
@@ -455,6 +454,8 @@ attr(,"method")
 [1] mice
 attr(,"na_pos")
  [1]  33  36  84  94 113 132 151 292 313 339
+attr(,"seed")
+[1] 24283
 attr(,"type")
 [1] missing values
 attr(,"message")
@@ -465,10 +466,14 @@ Levels: No Yes
 
 # summary of imputation
 summary(urban)
+* Impute missing values based on Multivariate Imputation by Chained Equations
+ - method : mice
+ - random seed : 24283
+
 * Information of Imputation (before vs after)
      original imputation original_percent imputation_percent
-No        115        121            28.75              30.25
-Yes       275        279            68.75              69.75
+No        115        119            28.75              29.75
+Yes       275        281            68.75              70.25
 &lt;NA&gt;       10          0             2.50               0.00
 
 # viz of imputation
@@ -842,14 +847,45 @@ binning(carseats$Income, nbins = 5, type = "kmeans")
 binned type: kmeans
 number of bins: 5
 x
-    [21,49]   (49,70.5] (70.5,86.5]  (86.5,104]   (104,120]        &lt;NA&gt; 
-        115          86          65          65          49          20 
+  [21,36.5] (36.5,55.5] (55.5,75.5] (75.5,97.5]  (97.5,120]        &lt;NA&gt; 
+         66          62          91          86          75          20 
 binning(carseats$Income, nbins = 5, type = "bclust")
 binned type: bclust
 number of bins: 5
 x
-  [21,46.5] (46.5,64.5] (64.5,78.5] (78.5,95.5]  (95.5,120]        &lt;NA&gt; 
-        109          58          63          71          79          20 
+  [21,42.5] (42.5,59.5] (59.5,86.5]  (86.5,106]   (106,120]        &lt;NA&gt; 
+         95          45         126          74          40          20 
+
+# Extract the binned results
+extract(bin)
+  [1] LQ3  UQ1  LQ1  UQ3  UQ1  UQ3  UQ3  LQ3  UQ3  UQ3  LQ3  UQ3  LQ1  LQ1  UQ3 
+ [16] UQ3  &lt;NA&gt; &lt;NA&gt; UQ3  LQ3  LQ3  LQ1  UQ1  LQ1  UQ3  LQ1  UQ3  UQ3  LQ3  UQ3 
+ [31] UQ3  UQ1  LQ1  LQ1  UQ1  LQ3  LQ3  LQ1  LQ3  &lt;NA&gt; UQ3  UQ1  UQ1  LQ1  LQ3 
+ [46] UQ1  LQ3  UQ3  UQ1  UQ3  LQ1  LQ3  LQ1  UQ1  UQ3  LQ3  LQ3  LQ3  UQ3  LQ3 
+ [61] UQ3  LQ1  UQ1  LQ3  UQ1  LQ1  UQ3  UQ1  UQ1  UQ1  LQ3  UQ1  UQ1  LQ3  UQ1 
+ [76] UQ3  LQ3  LQ3  UQ1  UQ1  UQ3  LQ3  LQ3  LQ1  LQ1  UQ3  LQ3  UQ1  LQ1  UQ1 
+ [91] LQ1  UQ1  UQ3  LQ1  &lt;NA&gt; LQ1  LQ1  LQ3  LQ3  UQ1  UQ1  UQ3  LQ1  LQ3  UQ3 
+[106] UQ3  LQ1  UQ3  LQ3  UQ1  UQ1  UQ3  UQ3  LQ1  LQ3  &lt;NA&gt; LQ3  UQ1  LQ3  UQ3 
+[121] UQ3  LQ3  UQ3  UQ3  UQ3  &lt;NA&gt; UQ1  UQ1  UQ3  UQ3  LQ3  UQ1  LQ3  UQ3  LQ1 
+[136] UQ3  LQ3  LQ1  UQ3  UQ1  UQ1  LQ1  LQ3  LQ3  UQ1  UQ1  LQ3  UQ1  UQ3  UQ3 
+[151] LQ3  UQ1  LQ3  LQ1  UQ1  LQ3  LQ1  UQ1  LQ3  UQ1  LQ1  LQ1  &lt;NA&gt; UQ1  UQ1 
+[166] UQ1  UQ1  LQ3  LQ3  LQ1  LQ1  UQ3  UQ3  LQ3  LQ1  LQ3  &lt;NA&gt; LQ3  &lt;NA&gt; LQ1 
+[181] UQ3  LQ3  UQ1  LQ3  LQ1  UQ3  UQ1  LQ1  LQ1  UQ3  LQ1  LQ1  LQ1  LQ3  UQ3 
+[196] UQ3  LQ1  UQ1  LQ3  LQ3  UQ3  LQ3  LQ3  LQ3  LQ3  LQ1  UQ1  UQ3  &lt;NA&gt; LQ1 
+[211] LQ1  UQ3  UQ1  LQ3  UQ3  LQ3  &lt;NA&gt; UQ1  UQ1  LQ3  UQ3  &lt;NA&gt; UQ3  UQ1  LQ3 
+[226] LQ1  LQ1  UQ1  LQ3  UQ3  UQ1  UQ1  LQ3  LQ3  UQ1  LQ1  LQ1  LQ1  LQ1  UQ3 
+[241] LQ3  UQ1  UQ1  LQ1  LQ1  UQ1  UQ1  UQ3  UQ1  UQ1  UQ3  UQ3  UQ3  LQ1  UQ3 
+[256] LQ3  LQ1  UQ1  LQ1  LQ1  UQ3  LQ1  &lt;NA&gt; LQ1  LQ1  LQ1  UQ3  LQ3  UQ1  UQ1 
+[271] LQ1  UQ1  LQ1  UQ3  UQ3  UQ3  UQ1  UQ1  UQ3  UQ1  LQ3  UQ1  UQ3  UQ3  UQ1 
+[286] LQ1  UQ3  UQ1  LQ1  LQ3  UQ3  LQ3  UQ1  LQ3  LQ3  LQ1  UQ1  LQ3  UQ1  LQ1 
+[301] LQ3  UQ3  LQ3  UQ1  UQ3  LQ1  LQ1  UQ3  LQ3  UQ3  UQ1  UQ1  UQ3  LQ3  &lt;NA&gt;
+[316] LQ1  LQ1  LQ1  LQ3  UQ1  LQ3  LQ1  UQ1  UQ3  UQ1  UQ1  LQ1  LQ1  UQ1  UQ1 
+[331] UQ1  UQ1  LQ1  UQ1  UQ3  LQ3  LQ1  LQ1  LQ1  UQ1  LQ1  UQ3  UQ3  LQ1  LQ3 
+[346] UQ1  &lt;NA&gt; LQ1  UQ3  LQ1  &lt;NA&gt; UQ3  UQ3  UQ1  LQ1  UQ3  UQ3  LQ3  UQ3  UQ1 
+[361] LQ3  LQ1  UQ1  &lt;NA&gt; LQ1  LQ1  UQ1  UQ3  LQ1  UQ3  LQ1  LQ3  &lt;NA&gt; &lt;NA&gt; UQ1 
+[376] UQ1  UQ1  UQ1  LQ3  UQ3  UQ1  UQ1  LQ1  UQ3  LQ1  LQ3  UQ3  LQ3  LQ3  LQ1 
+[391] LQ3  UQ1  LQ1  UQ1  UQ1  UQ3  &lt;NA&gt; LQ1  LQ3  LQ1 
+Levels: LQ1 UQ1 LQ3 UQ3
 
 # -------------------------
 # Using pipes &amp; dplyr
@@ -857,7 +893,8 @@ x
 library(dplyr)
 
 carseats %&gt;%
- mutate(Income_bin = binning(carseats$Income)) %&gt;%
+ mutate(Income_bin = binning(carseats$Income) %&gt;% 
+                     extract()) %&gt;%
  group_by(ShelveLoc, Income_bin) %&gt;%
  summarise(freq = n()) %&gt;%
  arrange(desc(freq)) %&gt;%
@@ -866,7 +903,7 @@ carseats %&gt;%
 # A tibble: 10 x 3
 # Groups:   ShelveLoc [1]
   ShelveLoc Income_bin  freq
-  &lt;fct&gt;     &lt;ord&gt;      &lt;int&gt;
+  &lt;fct&gt;     &lt;fct&gt;      &lt;int&gt;
 1 Medium    [21,30]       25
 2 Medium    (62,69]       24
 3 Medium    (48,62]       23
@@ -879,10 +916,17 @@ carseats %&gt;%
 </h3>
 <p><code><a href="../reference/binning_by.html">binning_by()</a></code> transforms a numeric variable into a categorical variable by optimal binning. This method is often used when developing a <code>scorecard model</code>.</p>
 <p>The following <code><a href="../reference/binning_by.html">binning_by()</a></code> example optimally binning <code>Advertising</code> considering the target variable <code>US</code> with a binary class.</p>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"># optimal binning
+<div class="sourceCode" id="cb14"><html><body><pre class="r">library(dplyr)
+
+# optimal binning using character
 bin &lt;- binning_by(carseats, "US", "Advertising")
-Warning in binning_by(carseats, "US", "Advertising"): The factor y has been
-changed to a numeric vector consisting of 0 and 1.
+Warning in binning_by(carseats, "US", "Advertising"): The factor y has been changed to a numeric vector consisting of 0 and 1.
+'Yes' changed to 1 (positive) and 'No' changed to 0 (negative).
+
+# optimal binning using name
+bin &lt;- binning_by(carseats, US, Advertising)
+Warning in binning_by(carseats, US, Advertising): The factor y has been changed to a numeric vector consisting of 0 and 1.
+'Yes' changed to 1 (positive) and 'No' changed to 0 (negative).
 bin
 binned type: optimal
 number of bins: 3
@@ -892,33 +936,55 @@ x
 
 # summary optimal_bins class
 summary(bin)
-  levels freq   rate
-1 [-1,0]  144 0.3600
-2  (0,6]   69 0.1725
-3 (6,29]  187 0.4675
+── Binning Table ──────────────────────── Several Metrics ──
+     Bin CntRec CntPos CntNeg RatePos RateNeg    Odds      WoE      IV     JSD
+1 [-1,0]    144     19    125 0.07364 0.88028  0.1520 -2.48101 2.00128 0.20093
+2  (0,6]     69     54     15 0.20930 0.10563  3.6000  0.68380 0.07089 0.00869
+3 (6,29]    187    185      2 0.71705 0.01408 92.5000  3.93008 2.76272 0.21861
+4  Total    400    258    142 1.00000 1.00000  1.8169       NA 4.83489 0.42823
+      AUC
+1 0.03241
+2 0.01883
+3 0.00903
+4 0.06028
 
-# information value 
-attr(bin, "iv")
-[1] 4.8349
+── General Metrics ─────────────────────────────────────────
+● Gini index                       :  -0.87944
+● IV (Jeffrey)                     :  4.83489
+● JS (Jensen-Shannon) Divergence   :  0.42823
+● Kolmogorov-Smirnov Statistics    :  0.80664
+● HHI (Herfindahl-Hirschman Index) :  0.37791
+● HHI (normalized)                 :  0.06687
+● Cramer's V                       :  0.81863
 
-# information value table
-attr(bin, "ivtable")
-  Cutpoint CntRec CntGood CntBad CntCumRec CntCumGood CntCumBad PctRec GoodRate
-1     &lt;= 0    144      19    125       144         19       125 0.3600   0.1319
-2     &lt;= 6     69      54     15       213         73       140 0.1725   0.7826
-3      &gt; 6    187     185      2       400        258       142 0.4675   0.9893
-4  Missing      0       0      0       400        258       142 0.0000      NaN
-5    Total    400     258    142        NA         NA        NA 1.0000   0.6450
-  BadRate    Odds  LnOdds     WoE     IV
-1  0.8681  0.1520 -1.8839 -2.4810 2.0013
-2  0.2174  3.6000  1.2809  0.6838 0.0709
-3  0.0107 92.5000  4.5272  3.9301 2.7627
-4     NaN     NaN     NaN     NaN    NaN
-5  0.3550  1.8169  0.5971  0.0000 4.8349
+── Significance Tests ──────────────────── Chisquare Test ──
+   Bin A  Bin B statistics      p_value
+1 [-1,0]  (0,6]   87.67064 7.731349e-21
+2  (0,6] (6,29]   34.73349 3.780706e-09
+
+# performance table
+attr(bin, "performance")
+     Bin CntRec CntPos CntNeg CntCumPos CntCumNeg RatePos RateNeg RateCumPos
+1 [-1,0]    144     19    125        19       125 0.07364 0.88028    0.07364
+2  (0,6]     69     54     15        73       140 0.20930 0.10563    0.28295
+3 (6,29]    187    185      2       258       142 0.71705 0.01408    1.00000
+4  Total    400    258    142        NA        NA 1.00000 1.00000         NA
+  RateCumNeg    Odds   LnOdds      WoE      IV     JSD     AUC
+1    0.88028  0.1520 -1.88387 -2.48101 2.00128 0.20093 0.03241
+2    0.98592  3.6000  1.28093  0.68380 0.07089 0.00869 0.01883
+3    1.00000 92.5000  4.52721  3.93008 2.76272 0.21861 0.00903
+4         NA  1.8169  0.59713       NA 4.83489 0.42823 0.06028
 
 # visualize optimal_bins class
 plot(bin)</pre></body></html></div>
 <p><img src="transformation_files/figure-html/binning_by-1.png" width="600px"></p>
+<div class="sourceCode" id="cb15"><html><body><pre class="r">
+# extract binned results
+extract(bin) %&gt;% 
+  head(20)
+ [1] (6,29] (6,29] (6,29] (0,6]  (0,6]  (6,29] [-1,0] (6,29] [-1,0] [-1,0]
+[11] (6,29] (0,6]  (0,6]  (6,29] (6,29] (0,6]  [-1,0] (6,29] [-1,0] (6,29]
+Levels: [-1,0] (0,6] (6,29]</pre></body></html></div>
 </div>
 </div>
 <div id="creating-a-data-transformation-report-using-transformation_report" class="section level2">
@@ -975,10 +1041,10 @@ plot(bin)</pre></body></html></div>
 </li>
 </ul>
 <p>The following generates a data transformation report for <code>carseats</code>. The file format is pdf, and the file name is <code>Transformation_Report.pdf</code>.</p>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/transformation_report.html">transformation_report</a></span>(<span class="kw">target</span> <span class="kw">=</span> <span class="no">US</span>)</pre></body></html></div>
 <p>The following generates a report in html format called <code>transformation_carseats.html</code>.</p>
-<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/transformation_report.html">transformation_report</a></span>(<span class="kw">target</span> <span class="kw">=</span> <span class="no">US</span>, <span class="kw">output_format</span> <span class="kw">=</span> <span class="st">"html"</span>,
     <span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"transformation_carseats.html"</span>)</pre></body></html></div>
 <p>Data transformation reports are automated reports to assist in the data transformation process. Design data conversion scenarios by referring to the report results.</p>

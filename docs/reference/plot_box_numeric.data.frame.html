@@ -98,7 +98,7 @@ relationship to specific categorical data." />
 </li>
 <li>
   <a href="https://github.com/choonghyunryu/dlookr/">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -190,12 +190,8 @@ categorical variable.</p>
 <span class='co'># Select the variable to diagnose</span>
 <span class='fu'>plot_box_numeric</span>(<span class='no'>carseats</span>, <span class='st'>"Sales"</span>, <span class='st'>"Income"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 20 rows containing non-finite values (stat_boxplot).</span></div><div class='img'><img src='plot_box_numeric.data.frame-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot_box_numeric</span>(<span class='no'>carseats</span>, -<span class='no'>Sales</span>, -<span class='no'>Income</span>)</div><div class='img'><img src='plot_box_numeric.data.frame-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Using pipes ---------------------------------</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+
 <span class='co'># Plot of all numerical variables</span>
 <span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>plot_box_numeric</span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 20 rows containing non-finite values (stat_boxplot).</span></div><div class='img'><img src='plot_box_numeric.data.frame-4.png' alt='' width='700' height='433' /></div><div class='input'>

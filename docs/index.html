@@ -63,7 +63,7 @@
 </li>
 <li>
   <a href="https://github.com/choonghyunryu/dlookr/">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -125,7 +125,7 @@
 <li>Data Transformation</li>
 <li>Data diagnosis and EDA for table of DBMS</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb4"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/browseVignettes.html">browseVignettes</a></span>(<span class="kw">package</span> <span class="kw">=</span> <span class="st">"dlookr"</span>)</pre></div>
+<div class="sourceCode" id="cb4"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/browseVignettes.html">browseVignettes</a></span>(<span class="kw">package</span> <span class="kw">=</span> <span class="st">"dlookr"</span>)</pre></div>
 <div id="data-quality-diagnosis" class="section level3">
 <h3 class="hasAnchor">
 <a href="#data-quality-diagnosis" class="anchor"></a>Data quality diagnosis</h3>
@@ -598,10 +598,6 @@
 </ul>
 <p>For example, we can computes the statistics of all numerical variables in <code>carseats</code>:</p>
 <div class="sourceCode" id="cb20"><pre class="r"><span class="fu"><a href="reference/describe.data.frame.html">describe</a></span>(<span class="no">carseats</span>)
-<span class="co">#&gt; Warning: The `x` argument of `as_tibble.matrix()` must have unique column names if `.name_repair` is omitted as of tibble 2.0.0.</span>
-<span class="co">#&gt; Using compatibility `.name_repair`.</span>
-<span class="co">#&gt; This warning is displayed once every 8 hours.</span>
-<span class="co">#&gt; Call `lifecycle::last_warnings()` to see where this warning was generated.</span>
 <span class="co">#&gt; # A tibble: 8 x 26</span>
 <span class="co">#&gt;   variable     n    na   mean     sd se_mean    IQR skewness kurtosis   p00</span>
 <span class="co">#&gt;   &lt;chr&gt;    &lt;int&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;</span>
@@ -620,7 +616,7 @@
 <li>
 <code>skewness</code> : The left-skewed distribution data that is the variables with large positive skewness should consider the log or sqrt transformations to follow the normal distribution. The variables <code>Advertising</code> seem to need to consider variable transformation.</li>
 <li>
-<code>mean</code> and <code>sd</code>, <code>se_mean</code> : The<code>Population</code> with a large <code>standard     error of the mean</code>(se_mean) has low representativeness of the <code>arithmetic mean</code>(mean). The <code>standard deviation</code>(sd) is much larger than the arithmetic average.</li>
+<code>mean</code> and <code>sd</code>, <code>se_mean</code> : The<code>Population</code> with a large <code>standard error of the mean</code>(se_mean) has low representativeness of the <code>arithmetic mean</code>(mean). The <code>standard deviation</code>(sd) is much larger than the arithmetic average.</li>
 </ul>
 <p>The <code><a href="reference/describe.data.frame.html">describe()</a></code> function can be sorted by <code>left or right skewed size</code>(skewness) using <code>dplyr</code>.:</p>
 <div class="sourceCode" id="cb21"><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
@@ -1521,7 +1517,7 @@
 <span class="co"># compute the skewness</span>
 <span class="fu"><a href="reference/find_skewness.html">find_skewness</a></span>(<span class="no">carseats</span>, <span class="kw">value</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
 <span class="co">#&gt;       Sales   CompPrice      Income Advertising  Population       Price </span>
-<span class="co">#&gt;       0.185      -0.043          NA       0.637      -0.051      -0.125 </span>
+<span class="co">#&gt;       0.185      -0.043       0.045       0.637      -0.051      -0.125 </span>
 <span class="co">#&gt;         Age   Education </span>
 <span class="co">#&gt;      -0.077       0.044</span>
 
@@ -1690,13 +1686,45 @@
 <span class="co">#&gt;   [21,34.5] (34.5,55.5] (55.5,77.5] (77.5,96.5]  (96.5,120]        &lt;NA&gt; </span>
 <span class="co">#&gt;          57          71          98          78          76          20</span>
 
+<span class="co"># Extract the binned results</span>
+<span class="fu">extract</span>(<span class="no">bin</span>)
+<span class="co">#&gt;   [1] LQ3  UQ1  LQ1  UQ3  UQ1  UQ3  UQ3  LQ3  UQ3  UQ3  LQ3  UQ3  LQ1  LQ1  UQ3 </span>
+<span class="co">#&gt;  [16] UQ3  &lt;NA&gt; &lt;NA&gt; UQ3  LQ3  LQ3  LQ1  UQ1  LQ1  UQ3  LQ1  UQ3  UQ3  LQ3  UQ3 </span>
+<span class="co">#&gt;  [31] UQ3  UQ1  LQ1  LQ1  UQ1  LQ3  LQ3  LQ1  LQ3  &lt;NA&gt; UQ3  UQ1  UQ1  LQ1  LQ3 </span>
+<span class="co">#&gt;  [46] UQ1  LQ3  UQ3  UQ1  UQ3  LQ1  LQ3  LQ1  UQ1  UQ3  LQ3  LQ3  LQ3  UQ3  LQ3 </span>
+<span class="co">#&gt;  [61] UQ3  LQ1  UQ1  LQ3  UQ1  LQ1  UQ3  UQ1  UQ1  UQ1  LQ3  UQ1  UQ1  LQ3  UQ1 </span>
+<span class="co">#&gt;  [76] UQ3  LQ3  LQ3  UQ1  UQ1  UQ3  LQ3  LQ3  LQ1  LQ1  UQ3  LQ3  UQ1  LQ1  UQ1 </span>
+<span class="co">#&gt;  [91] LQ1  UQ1  UQ3  LQ1  &lt;NA&gt; LQ1  LQ1  LQ3  LQ3  UQ1  UQ1  UQ3  LQ1  LQ3  UQ3 </span>
+<span class="co">#&gt; [106] UQ3  LQ1  UQ3  LQ3  UQ1  UQ1  UQ3  UQ3  LQ1  LQ3  &lt;NA&gt; LQ3  UQ1  LQ3  UQ3 </span>
+<span class="co">#&gt; [121] UQ3  LQ3  UQ3  UQ3  UQ3  &lt;NA&gt; UQ1  UQ1  UQ3  UQ3  LQ3  UQ1  LQ3  UQ3  LQ1 </span>
+<span class="co">#&gt; [136] UQ3  LQ3  LQ1  UQ3  UQ1  UQ1  LQ1  LQ3  LQ3  UQ1  UQ1  LQ3  UQ1  UQ3  UQ3 </span>
+<span class="co">#&gt; [151] LQ3  UQ1  LQ3  LQ1  UQ1  LQ3  LQ1  UQ1  LQ3  UQ1  LQ1  LQ1  &lt;NA&gt; UQ1  UQ1 </span>
+<span class="co">#&gt; [166] UQ1  UQ1  LQ3  LQ3  LQ1  LQ1  UQ3  UQ3  LQ3  LQ1  LQ3  &lt;NA&gt; LQ3  &lt;NA&gt; LQ1 </span>
+<span class="co">#&gt; [181] UQ3  LQ3  UQ1  LQ3  LQ1  UQ3  UQ1  LQ1  LQ1  UQ3  LQ1  LQ1  LQ1  LQ3  UQ3 </span>
+<span class="co">#&gt; [196] UQ3  LQ1  UQ1  LQ3  LQ3  UQ3  LQ3  LQ3  LQ3  LQ3  LQ1  UQ1  UQ3  &lt;NA&gt; LQ1 </span>
+<span class="co">#&gt; [211] LQ1  UQ3  UQ1  LQ3  UQ3  LQ3  &lt;NA&gt; UQ1  UQ1  LQ3  UQ3  &lt;NA&gt; UQ3  UQ1  LQ3 </span>
+<span class="co">#&gt; [226] LQ1  LQ1  UQ1  LQ3  UQ3  UQ1  UQ1  LQ3  LQ3  UQ1  LQ1  LQ1  LQ1  LQ1  UQ3 </span>
+<span class="co">#&gt; [241] LQ3  UQ1  UQ1  LQ1  LQ1  UQ1  UQ1  UQ3  UQ1  UQ1  UQ3  UQ3  UQ3  LQ1  UQ3 </span>
+<span class="co">#&gt; [256] LQ3  LQ1  UQ1  LQ1  LQ1  UQ3  LQ1  &lt;NA&gt; LQ1  LQ1  LQ1  UQ3  LQ3  UQ1  UQ1 </span>
+<span class="co">#&gt; [271] LQ1  UQ1  LQ1  UQ3  UQ3  UQ3  UQ1  UQ1  UQ3  UQ1  LQ3  UQ1  UQ3  UQ3  UQ1 </span>
+<span class="co">#&gt; [286] LQ1  UQ3  UQ1  LQ1  LQ3  UQ3  LQ3  UQ1  LQ3  LQ3  LQ1  UQ1  LQ3  UQ1  LQ1 </span>
+<span class="co">#&gt; [301] LQ3  UQ3  LQ3  UQ1  UQ3  LQ1  LQ1  UQ3  LQ3  UQ3  UQ1  UQ1  UQ3  LQ3  &lt;NA&gt;</span>
+<span class="co">#&gt; [316] LQ1  LQ1  LQ1  LQ3  UQ1  LQ3  LQ1  UQ1  UQ3  UQ1  UQ1  LQ1  LQ1  UQ1  UQ1 </span>
+<span class="co">#&gt; [331] UQ1  UQ1  LQ1  UQ1  UQ3  LQ3  LQ1  LQ1  LQ1  UQ1  LQ1  UQ3  UQ3  LQ1  LQ3 </span>
+<span class="co">#&gt; [346] UQ1  &lt;NA&gt; LQ1  UQ3  LQ1  &lt;NA&gt; UQ3  UQ3  UQ1  LQ1  UQ3  UQ3  LQ3  UQ3  UQ1 </span>
+<span class="co">#&gt; [361] LQ3  LQ1  UQ1  &lt;NA&gt; LQ1  LQ1  UQ1  UQ3  LQ1  UQ3  LQ1  LQ3  &lt;NA&gt; &lt;NA&gt; UQ1 </span>
+<span class="co">#&gt; [376] UQ1  UQ1  UQ1  LQ3  UQ3  UQ1  UQ1  LQ1  UQ3  LQ1  LQ3  UQ3  LQ3  LQ3  LQ1 </span>
+<span class="co">#&gt; [391] LQ3  UQ1  LQ1  UQ1  UQ1  UQ3  &lt;NA&gt; LQ1  LQ3  LQ1 </span>
+<span class="co">#&gt; Levels: LQ1 UQ1 LQ3 UQ3</span>
+
 <span class="co"># -------------------------</span>
 <span class="co"># Using pipes &amp; dplyr</span>
 <span class="co"># -------------------------</span>
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
 
 <span class="no">carseats</span> <span class="kw">%&gt;%</span>
- <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">Income_bin</span> <span class="kw">=</span> <span class="fu"><a href="reference/binning.html">binning</a></span>(<span class="no">carseats</span>$<span class="no">Income</span>)) <span class="kw">%&gt;%</span>
+ <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">Income_bin</span> <span class="kw">=</span> <span class="fu"><a href="reference/binning.html">binning</a></span>(<span class="no">carseats</span>$<span class="no">Income</span>) <span class="kw">%&gt;%</span>
+                     <span class="fu">extract</span>()) <span class="kw">%&gt;%</span>
  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">ShelveLoc</span>, <span class="no">Income_bin</span>) <span class="kw">%&gt;%</span>
  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="kw">freq</span> <span class="kw">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span>()) <span class="kw">%&gt;%</span>
  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span>(<span class="no">freq</span>)) <span class="kw">%&gt;%</span>
@@ -1705,7 +1733,7 @@
 <span class="co">#&gt; # A tibble: 10 x 3</span>
 <span class="co">#&gt; # Groups:   ShelveLoc [1]</span>
 <span class="co">#&gt;    ShelveLoc Income_bin   freq</span>
-<span class="co">#&gt;    &lt;fct&gt;     &lt;ord&gt;       &lt;int&gt;</span>
+<span class="co">#&gt;    &lt;fct&gt;     &lt;fct&gt;       &lt;int&gt;</span>
 <span class="co">#&gt;  1 Medium    [21,30]        25</span>
 <span class="co">#&gt;  2 Medium    (62,69]        24</span>
 <span class="co">#&gt;  3 Medium    (48,62]        23</span>
@@ -1723,10 +1751,15 @@
 </h5>
 <p><code><a href="reference/binning_by.html">binning_by()</a></code> transforms a numeric variable into a categorical variable by optimal binning. This method is often used when developing a <code>scorecard model</code>.</p>
 <p>The following <code><a href="reference/binning_by.html">binning_by()</a></code> example optimally binning <code>Advertising</code> considering the target variable <code>US</code> with a binary class.</p>
-<div class="sourceCode" id="cb58"><pre class="r"><span class="co"># optimal binning</span>
+<div class="sourceCode" id="cb58"><pre class="r"><span class="co"># optimal binning using character</span>
 <span class="no">bin</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/binning_by.html">binning_by</a></span>(<span class="no">carseats</span>, <span class="st">"US"</span>, <span class="st">"Advertising"</span>)
-<span class="co">#&gt; Warning in binning_by(carseats, "US", "Advertising"): The factor y has been</span>
-<span class="co">#&gt; changed to a numeric vector consisting of 0 and 1.</span>
+<span class="co">#&gt; Warning in binning_by(carseats, "US", "Advertising"): The factor y has been changed to a numeric vector consisting of 0 and 1.</span>
+<span class="co">#&gt; 'Yes' changed to 1 (positive) and 'No' changed to 0 (negative).</span>
+
+<span class="co"># optimal binning using name</span>
+<span class="no">bin</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/binning_by.html">binning_by</a></span>(<span class="no">carseats</span>, <span class="no">US</span>, <span class="no">Advertising</span>)
+<span class="co">#&gt; Warning in binning_by(carseats, US, Advertising): The factor y has been changed to a numeric vector consisting of 0 and 1.</span>
+<span class="co">#&gt; 'Yes' changed to 1 (positive) and 'No' changed to 0 (negative).</span>
 <span class="no">bin</span>
 <span class="co">#&gt; binned type: optimal</span>
 <span class="co">#&gt; number of bins: 3</span>
@@ -1736,33 +1769,91 @@
 
 <span class="co"># summary optimal_bins class</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">bin</span>)
-<span class="co">#&gt;   levels freq   rate</span>
-<span class="co">#&gt; 1 [-1,0]  144 0.3600</span>
-<span class="co">#&gt; 2  (0,6]   69 0.1725</span>
-<span class="co">#&gt; 3 (6,29]  187 0.4675</span>
+<span class="co">#&gt; ── Binning Table ──────────────────────── Several Metrics ──</span>
+<span class="co">#&gt;      Bin CntRec CntPos CntNeg RatePos RateNeg    Odds      WoE      IV     JSD</span>
+<span class="co">#&gt; 1 [-1,0]    144     19    125 0.07364 0.88028  0.1520 -2.48101 2.00128 0.20093</span>
+<span class="co">#&gt; 2  (0,6]     69     54     15 0.20930 0.10563  3.6000  0.68380 0.07089 0.00869</span>
+<span class="co">#&gt; 3 (6,29]    187    185      2 0.71705 0.01408 92.5000  3.93008 2.76272 0.21861</span>
+<span class="co">#&gt; 4  Total    400    258    142 1.00000 1.00000  1.8169       NA 4.83489 0.42823</span>
+<span class="co">#&gt;       AUC</span>
+<span class="co">#&gt; 1 0.03241</span>
+<span class="co">#&gt; 2 0.01883</span>
+<span class="co">#&gt; 3 0.00903</span>
+<span class="co">#&gt; 4 0.06028</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; ── General Metrics ─────────────────────────────────────────</span>
+<span class="co">#&gt; ● Gini index                       :  -0.87944</span>
+<span class="co">#&gt; ● IV (Jeffrey)                     :  4.83489</span>
+<span class="co">#&gt; ● JS (Jensen-Shannon) Divergence   :  0.42823</span>
+<span class="co">#&gt; ● Kolmogorov-Smirnov Statistics    :  0.80664</span>
+<span class="co">#&gt; ● HHI (Herfindahl-Hirschman Index) :  0.37791</span>
+<span class="co">#&gt; ● HHI (normalized)                 :  0.06687</span>
+<span class="co">#&gt; ● Cramer's V                       :  0.81863</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; ── Significance Tests ──────────────────── Chisquare Test ──</span>
+<span class="co">#&gt;    Bin A  Bin B statistics      p_value</span>
+<span class="co">#&gt; 1 [-1,0]  (0,6]   87.67064 7.731349e-21</span>
+<span class="co">#&gt; 2  (0,6] (6,29]   34.73349 3.780706e-09</span>
 
-<span class="co"># information value </span>
-<span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span>(<span class="no">bin</span>, <span class="st">"iv"</span>)
-<span class="co">#&gt; [1] 4.8349</span>
-
-<span class="co"># information value table</span>
-<span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span>(<span class="no">bin</span>, <span class="st">"ivtable"</span>)
-<span class="co">#&gt;   Cutpoint CntRec CntGood CntBad CntCumRec CntCumGood CntCumBad PctRec GoodRate</span>
-<span class="co">#&gt; 1     &lt;= 0    144      19    125       144         19       125 0.3600   0.1319</span>
-<span class="co">#&gt; 2     &lt;= 6     69      54     15       213         73       140 0.1725   0.7826</span>
-<span class="co">#&gt; 3      &gt; 6    187     185      2       400        258       142 0.4675   0.9893</span>
-<span class="co">#&gt; 4  Missing      0       0      0       400        258       142 0.0000      NaN</span>
-<span class="co">#&gt; 5    Total    400     258    142        NA         NA        NA 1.0000   0.6450</span>
-<span class="co">#&gt;   BadRate    Odds  LnOdds     WoE     IV</span>
-<span class="co">#&gt; 1  0.8681  0.1520 -1.8839 -2.4810 2.0013</span>
-<span class="co">#&gt; 2  0.2174  3.6000  1.2809  0.6838 0.0709</span>
-<span class="co">#&gt; 3  0.0107 92.5000  4.5272  3.9301 2.7627</span>
-<span class="co">#&gt; 4     NaN     NaN     NaN     NaN    NaN</span>
-<span class="co">#&gt; 5  0.3550  1.8169  0.5971  0.0000 4.8349</span>
+<span class="co"># performance table</span>
+<span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span>(<span class="no">bin</span>, <span class="st">"performance"</span>)
+<span class="co">#&gt;      Bin CntRec CntPos CntNeg CntCumPos CntCumNeg RatePos RateNeg RateCumPos</span>
+<span class="co">#&gt; 1 [-1,0]    144     19    125        19       125 0.07364 0.88028    0.07364</span>
+<span class="co">#&gt; 2  (0,6]     69     54     15        73       140 0.20930 0.10563    0.28295</span>
+<span class="co">#&gt; 3 (6,29]    187    185      2       258       142 0.71705 0.01408    1.00000</span>
+<span class="co">#&gt; 4  Total    400    258    142        NA        NA 1.00000 1.00000         NA</span>
+<span class="co">#&gt;   RateCumNeg    Odds   LnOdds      WoE      IV     JSD     AUC</span>
+<span class="co">#&gt; 1    0.88028  0.1520 -1.88387 -2.48101 2.00128 0.20093 0.03241</span>
+<span class="co">#&gt; 2    0.98592  3.6000  1.28093  0.68380 0.07089 0.00869 0.01883</span>
+<span class="co">#&gt; 3    1.00000 92.5000  4.52721  3.93008 2.76272 0.21861 0.00903</span>
+<span class="co">#&gt; 4         NA  1.8169  0.59713       NA 4.83489 0.42823 0.06028</span>
 
 <span class="co"># visualize optimal_bins class</span>
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">bin</span>, <span class="kw">sub</span> <span class="kw">=</span> <span class="st">"bins of Advertising variable"</span>)</pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">bin</span>)</pre></div>
 <p><img src="reference/figures/README-binning_by-1.png"><!-- --></p>
+<div class="sourceCode" id="cb59"><pre class="r"><span class="co"># extract binned results</span>
+<span class="fu">extract</span>(<span class="no">bin</span>)
+<span class="co">#&gt;   [1] (6,29] (6,29] (6,29] (0,6]  (0,6]  (6,29] [-1,0] (6,29] [-1,0] [-1,0]</span>
+<span class="co">#&gt;  [11] (6,29] (0,6]  (0,6]  (6,29] (6,29] (0,6]  [-1,0] (6,29] [-1,0] (6,29]</span>
+<span class="co">#&gt;  [21] (0,6]  (6,29] (0,6]  [-1,0] (6,29] [-1,0] (6,29] [-1,0] [-1,0] (6,29]</span>
+<span class="co">#&gt;  [31] [-1,0] (6,29] (6,29] (6,29] [-1,0] (6,29] [-1,0] (0,6]  [-1,0] [-1,0]</span>
+<span class="co">#&gt;  [41] [-1,0] [-1,0] [-1,0] (6,29] (0,6]  [-1,0] (6,29] [-1,0] [-1,0] [-1,0]</span>
+<span class="co">#&gt;  [51] (6,29] [-1,0] (0,6]  (6,29] (6,29] (0,6]  [-1,0] [-1,0] (6,29] (0,6] </span>
+<span class="co">#&gt;  [61] (6,29] [-1,0] [-1,0] (6,29] (6,29] [-1,0] [-1,0] (6,29] (6,29] [-1,0]</span>
+<span class="co">#&gt;  [71] (6,29] (6,29] [-1,0] (6,29] (0,6]  (6,29] (6,29] (6,29] (0,6]  [-1,0]</span>
+<span class="co">#&gt;  [81] (6,29] [-1,0] (0,6]  (6,29] [-1,0] [-1,0] (6,29] (6,29] (6,29] (0,6] </span>
+<span class="co">#&gt;  [91] [-1,0] (6,29] [-1,0] [-1,0] (0,6]  (6,29] (6,29] (0,6]  (6,29] (0,6] </span>
+<span class="co">#&gt; [101] (6,29] [-1,0] [-1,0] [-1,0] [-1,0] (6,29] [-1,0] [-1,0] (0,6]  [-1,0]</span>
+<span class="co">#&gt; [111] (6,29] (6,29] (0,6]  (6,29] (6,29] [-1,0] [-1,0] [-1,0] (0,6]  (6,29]</span>
+<span class="co">#&gt; [121] (6,29] (6,29] (0,6]  [-1,0] [-1,0] [-1,0] (0,6]  (0,6]  (0,6]  (6,29]</span>
+<span class="co">#&gt; [131] (6,29] (0,6]  (6,29] (0,6]  [-1,0] (6,29] [-1,0] [-1,0] (6,29] (6,29]</span>
+<span class="co">#&gt; [141] (6,29] [-1,0] [-1,0] (6,29] [-1,0] (6,29] [-1,0] (6,29] [-1,0] (6,29]</span>
+<span class="co">#&gt; [151] (6,29] (6,29] [-1,0] (6,29] (6,29] [-1,0] [-1,0] (6,29] (0,6]  [-1,0]</span>
+<span class="co">#&gt; [161] [-1,0] (0,6]  [-1,0] [-1,0] [-1,0] (6,29] (6,29] [-1,0] [-1,0] (6,29]</span>
+<span class="co">#&gt; [171] (6,29] (6,29] (6,29] (0,6]  [-1,0] [-1,0] (6,29] [-1,0] (6,29] (0,6] </span>
+<span class="co">#&gt; [181] (6,29] [-1,0] (0,6]  (0,6]  (6,29] (6,29] [-1,0] [-1,0] [-1,0] (6,29]</span>
+<span class="co">#&gt; [191] (6,29] (6,29] [-1,0] (6,29] (6,29] (0,6]  (0,6]  [-1,0] (0,6]  (0,6] </span>
+<span class="co">#&gt; [201] [-1,0] [-1,0] (0,6]  [-1,0] [-1,0] (0,6]  [-1,0] [-1,0] [-1,0] (6,29]</span>
+<span class="co">#&gt; [211] (0,6]  (6,29] (6,29] (0,6]  (0,6]  (6,29] [-1,0] [-1,0] (6,29] (6,29]</span>
+<span class="co">#&gt; [221] (6,29] [-1,0] (0,6]  (6,29] [-1,0] [-1,0] [-1,0] (6,29] (6,29] [-1,0]</span>
+<span class="co">#&gt; [231] [-1,0] [-1,0] (6,29] (6,29] (6,29] (6,29] (6,29] (6,29] [-1,0] [-1,0]</span>
+<span class="co">#&gt; [241] [-1,0] [-1,0] [-1,0] (6,29] [-1,0] [-1,0] (6,29] [-1,0] [-1,0] [-1,0]</span>
+<span class="co">#&gt; [251] (6,29] (0,6]  [-1,0] (0,6]  (6,29] (6,29] [-1,0] (6,29] [-1,0] (6,29]</span>
+<span class="co">#&gt; [261] (6,29] (0,6]  (6,29] (0,6]  (0,6]  (6,29] (6,29] (6,29] [-1,0] [-1,0]</span>
+<span class="co">#&gt; [271] [-1,0] [-1,0] [-1,0] (6,29] (0,6]  (6,29] (6,29] (6,29] (0,6]  (6,29]</span>
+<span class="co">#&gt; [281] (6,29] (6,29] [-1,0] [-1,0] (6,29] (6,29] (6,29] (0,6]  [-1,0] (6,29]</span>
+<span class="co">#&gt; [291] (6,29] [-1,0] (6,29] [-1,0] (0,6]  (6,29] (6,29] (6,29] [-1,0] (6,29]</span>
+<span class="co">#&gt; [301] (0,6]  [-1,0] (6,29] (6,29] (6,29] (6,29] (0,6]  [-1,0] (6,29] (6,29]</span>
+<span class="co">#&gt; [311] (6,29] (6,29] (0,6]  (0,6]  (6,29] (6,29] (0,6]  [-1,0] (6,29] (6,29]</span>
+<span class="co">#&gt; [321] (6,29] (0,6]  (6,29] (6,29] (0,6]  (6,29] [-1,0] (6,29] (0,6]  (6,29]</span>
+<span class="co">#&gt; [331] [-1,0] (6,29] (6,29] (6,29] (6,29] (6,29] (0,6]  [-1,0] [-1,0] (0,6] </span>
+<span class="co">#&gt; [341] [-1,0] [-1,0] (6,29] (6,29] [-1,0] [-1,0] [-1,0] [-1,0] (6,29] (6,29]</span>
+<span class="co">#&gt; [351] (6,29] (6,29] (6,29] (6,29] (0,6]  [-1,0] [-1,0] (0,6]  (6,29] (6,29]</span>
+<span class="co">#&gt; [361] (6,29] (6,29] [-1,0] (0,6]  (6,29] [-1,0] (6,29] [-1,0] (6,29] (6,29]</span>
+<span class="co">#&gt; [371] (6,29] [-1,0] [-1,0] [-1,0] (6,29] (0,6]  (6,29] [-1,0] (0,6]  [-1,0]</span>
+<span class="co">#&gt; [381] (6,29] (6,29] (6,29] [-1,0] (6,29] (6,29] [-1,0] (6,29] (6,29] (6,29]</span>
+<span class="co">#&gt; [391] (6,29] [-1,0] (6,29] (6,29] (6,29] (6,29] (0,6]  (6,29] (6,29] [-1,0]</span>
+<span class="co">#&gt; Levels: [-1,0] (0,6] (6,29]</span></pre></div>
 </div>
 </div>
 </div>
@@ -1813,13 +1904,13 @@
 </li>
 </ul>
 <p>The following generates a quality diagnostic report for flights, a <code>tbl_df</code> class object. The file format is pdf and file name is <code>DataDiagnosis_Report.pdf</code>.</p>
-<div class="sourceCode" id="cb59"><pre class="r"><span class="no">flights</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb60"><pre class="r"><span class="no">flights</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/diagnose_report.data.frame.html">diagnose_report</a></span>()</pre></div>
 <p>The following generates an html report named <code>DataDiagnosis_Report.html</code>.</p>
-<div class="sourceCode" id="cb60"><pre class="r"><span class="no">flights</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb61"><pre class="r"><span class="no">flights</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/diagnose_report.data.frame.html">diagnose_report</a></span>(<span class="kw">output_format</span> <span class="kw">=</span> <span class="st">"html"</span>)</pre></div>
 <p>The following generates an HTML report named <code>Diagn.html</code>.</p>
-<div class="sourceCode" id="cb61"><pre class="r"><span class="no">flights</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb62"><pre class="r"><span class="no">flights</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/diagnose_report.data.frame.html">diagnose_report</a></span>(<span class="kw">output_format</span> <span class="kw">=</span> <span class="st">"html"</span>, <span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"Diagn.html"</span>)</pre></div>
 <p>The <code>Data Diagnostic Report</code> is an automated report intended to aid in the data diahnosis process. It judged whether the data is supplemented or reacquired by referring to the report results.</p>
 </div>
@@ -1880,10 +1971,10 @@
 </li>
 </ul>
 <p>The following will generates an EDA report for <code>carseats</code>. The file format is pdf, and the file name is <code>EDA_Report.pdf</code>.</p>
-<div class="sourceCode" id="cb62"><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb63"><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/eda_report.data.frame.html">eda_report</a></span>(<span class="kw">target</span> <span class="kw">=</span> <span class="no">Sales</span>)</pre></div>
 <p>The following generates an HTML-formatted report named <code>EDA_carseats.html</code>.</p>
-<div class="sourceCode" id="cb63"><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb64"><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/eda_report.data.frame.html">eda_report</a></span>(<span class="kw">target</span> <span class="kw">=</span> <span class="no">Sales</span>, <span class="kw">output_format</span> <span class="kw">=</span> <span class="st">"html"</span>, <span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"EDA_carseats.html"</span>)</pre></div>
 <p>The EDA report is an automated report to assist in the EDA process. Design the data analysis scenario with reference to the report results.</p>
 </div>
@@ -1941,10 +2032,10 @@
 </li>
 </ul>
 <p>The following generates a data transformation report for <code>carseats</code>. The file format is pdf, and the file name is <code>Transformation_Report.pdf</code>.</p>
-<div class="sourceCode" id="cb64"><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb65"><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/transformation_report.html">transformation_report</a></span>(<span class="kw">target</span> <span class="kw">=</span> <span class="no">US</span>)</pre></div>
 <p>The following generates a report in html format called <code>transformation_carseats.html</code>.</p>
-<div class="sourceCode" id="cb65"><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb66"><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/transformation_report.html">transformation_report</a></span>(<span class="kw">target</span> <span class="kw">=</span> <span class="no">US</span>, <span class="kw">output_format</span> <span class="kw">=</span> <span class="st">"html"</span>,
     <span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"transformation_carseats.html"</span>)</pre></div>
 <p>Data transformation reports are automated reports to assist in the data transformation process. Design data conversion scenarios by referring to the report results.</p>
@@ -1961,11 +2052,9 @@
 <a href="#the-cover-of-the-report" class="anchor"></a>The cover of the report</h5>
 <p>The cover of the report is shown in the following figure.:</p>
 <div class="figure" style="text-align: center">
-<p><img src="articles/img/eda_title_pdf.png" alt="EDA report cover" width="70%"></p>
-<p class="caption">
+<img src="articles/img/eda_title_pdf.png" alt="EDA report cover" width="70%"><p class="caption">
+EDA report cover
 </p>
-<p>EDA report cover</p>
-
 </div>
 </div>
 <div id="the-argenda-of-the-report" class="section level5">
@@ -1973,11 +2062,9 @@
 <a href="#the-argenda-of-the-report" class="anchor"></a>The argenda of the report</h5>
 <p>The report’s agenda is shown in the following figure.:</p>
 <div class="figure" style="text-align: center">
-<p><img src="articles/img/eda_agenda_pdf.png" alt="EDA Report Contents" width="70%"></p>
-<p class="caption">
+<img src="articles/img/eda_agenda_pdf.png" alt="EDA Report Contents" width="70%"><p class="caption">
+EDA Report Contents
 </p>
-<p>EDA Report Contents</p>
-
 </div>
 </div>
 <div id="appearance-of-table" class="section level5">
@@ -1985,11 +2072,9 @@
 <a href="#appearance-of-table" class="anchor"></a>Appearance of table</h5>
 <p>Most information is represented in the report as a table. An example of a table is shown in the following figure.:</p>
 <div class="figure" style="text-align: center">
-<p><img src="articles/img/diag_intro_pdf.png" alt="Sample data diagnostic report table" width="70%"></p>
-<p class="caption">
+<img src="articles/img/diag_intro_pdf.png" alt="Sample data diagnostic report table" width="70%"><p class="caption">
+Sample data diagnostic report table
 </p>
-<p>Sample data diagnostic report table</p>
-
 </div>
 </div>
 <div id="appearance-of-plot" class="section level5">
@@ -1997,11 +2082,9 @@
 <a href="#appearance-of-plot" class="anchor"></a>Appearance of plot</h5>
 <p>In EDA reports, information on linear relationships includes tables and visualization results. The result is shown in the following figure.:</p>
 <div class="figure" style="text-align: center">
-<p><img src="articles/img/eda_lm_pdf.png" alt="Linear relationship information in EDA reports" width="70%"></p>
-<p class="caption">
+<img src="articles/img/eda_lm_pdf.png" alt="Linear relationship information in EDA reports" width="70%"><p class="caption">
+Linear relationship information in EDA reports
 </p>
-<p>Linear relationship information in EDA reports</p>
-
 </div>
 </div>
 </div>
@@ -2013,11 +2096,9 @@
 <a href="#the-argenda-of-the-report-1" class="anchor"></a>The argenda of the report</h5>
 <p>The title and contents of the report are shown in the following figure.:</p>
 <div class="figure" style="text-align: center">
-<p><img src="articles/img/eda_agenda_html.png" alt="EDA report titles and table of contents" width="70%"></p>
-<p class="caption">
+<img src="articles/img/eda_agenda_html.png" alt="EDA report titles and table of contents" width="70%"><p class="caption">
+EDA report titles and table of contents
 </p>
-<p>EDA report titles and table of contents</p>
-
 </div>
 </div>
 <div id="appearance-of-table-1" class="section level5">
@@ -2025,11 +2106,9 @@
 <a href="#appearance-of-table-1" class="anchor"></a>Appearance of table</h5>
 <p>Much information is represented in tables in the report. An example of a table in an html file is shown in the following figure.:</p>
 <div class="figure" style="text-align: center">
-<p><img src="articles/img/eda_table_html.png" alt="EDA report table example (web)" width="70%"></p>
-<p class="caption">
+<img src="articles/img/eda_table_html.png" alt="EDA report table example (web)" width="70%"><p class="caption">
+EDA report table example (web)
 </p>
-<p>EDA report table example (web)</p>
-
 </div>
 </div>
 <div id="appearance-of-plot-1" class="section level5">
@@ -2037,11 +2116,9 @@
 <a href="#appearance-of-plot-1" class="anchor"></a>Appearance of plot</h5>
 <p>In EDA reports, normality test information includes visualization results. The result of the html file is shown in the following figure.:</p>
 <div class="figure" style="text-align: center">
-<p><img src="articles/img/eda_normality_html.png" alt="EDA Report Normality Test Information (web)" width="70%"></p>
-<p class="caption">
+<img src="articles/img/eda_normality_html.png" alt="EDA Report Normality Test Information (web)" width="70%"><p class="caption">
+EDA Report Normality Test Information (web)
 </p>
-<p>EDA Report Normality Test Information (web)</p>
-
 </div>
 </div>
 </div>
@@ -2113,7 +2190,7 @@
 <h3 class="hasAnchor">
 <a href="#preparing-table-data" class="anchor"></a>Preparing table data</h3>
 <p>Copy the <code>carseats</code> data frame to the SQLite DBMS and create it as a table named <code>TB_CARSEATS</code>. Mysql/MariaDB, PostgreSQL, Oracle DBMS, etc. are also available for your environment.</p>
-<div class="sourceCode" id="cb66"><pre class="r"><span class="kw">if</span> (!<span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="no">DBI</span>)) <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">'DBI'</span>)
+<div class="sourceCode" id="cb67"><pre class="r"><span class="kw">if</span> (!<span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="no">DBI</span>)) <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">'DBI'</span>)
 <span class="kw">if</span> (!<span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="no">RSQLite</span>)) <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">'RSQLite'</span>)
 <span class="kw">if</span> (!<span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="no">dplyr</span>)) <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">'dplyr'</span>)
 <span class="kw">if</span> (!<span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="no">dbplyr</span>)) <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">'dbplyr'</span>)
@@ -2138,7 +2215,7 @@
 <h4 class="hasAnchor">
 <a href="#diagnose-data-quality-of-variables-in-the-dbms" class="anchor"></a>Diagnose data quality of variables in the DBMS</h4>
 <p>Use <code><a href="https://dplyr.tidyverse.org/reference/tbl.html">dplyr::tbl()</a></code> to create a tbl_dbi object, then use it as a data frame object. That is, the data argument of all diagnose function is specified as tbl_dbi object instead of data frame object.</p>
-<div class="sourceCode" id="cb67"><pre class="r"><span class="co"># Diagnosis of all columns</span>
+<div class="sourceCode" id="cb68"><pre class="r"><span class="co"># Diagnosis of all columns</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/diagnose.data.frame.html">diagnose</a></span>()
@@ -2171,7 +2248,7 @@
 <div id="diagnose-data-quality-of-categorical-variables-in-the-dbms" class="section level4">
 <h4 class="hasAnchor">
 <a href="#diagnose-data-quality-of-categorical-variables-in-the-dbms" class="anchor"></a>Diagnose data quality of categorical variables in the DBMS</h4>
-<div class="sourceCode" id="cb68"><pre class="r"><span class="co"># Positions values select variables, and In-memory mode and collect size is 200</span>
+<div class="sourceCode" id="cb69"><pre class="r"><span class="co"># Positions values select variables, and In-memory mode and collect size is 200</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/diagnose_category.data.frame.html">diagnose_category</a></span>(<span class="fl">7</span>, <span class="kw">in_database</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">collect_size</span> <span class="kw">=</span> <span class="fl">200</span>)
@@ -2185,7 +2262,7 @@
 <div id="diagnose-data-quality-of-numerical-variables-in-the-dbms" class="section level4">
 <h4 class="hasAnchor">
 <a href="#diagnose-data-quality-of-numerical-variables-in-the-dbms" class="anchor"></a>Diagnose data quality of numerical variables in the DBMS</h4>
-<div class="sourceCode" id="cb69"><pre class="r"><span class="co"># Diagnosis of all numerical variables</span>
+<div class="sourceCode" id="cb70"><pre class="r"><span class="co"># Diagnosis of all numerical variables</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/diagnose_numeric.data.frame.html">diagnose_numeric</a></span>()
@@ -2204,7 +2281,7 @@
 <div id="diagnose-outlier-of-numerical-variables-in-the-dbms" class="section level4">
 <h4 class="hasAnchor">
 <a href="#diagnose-outlier-of-numerical-variables-in-the-dbms" class="anchor"></a>Diagnose outlier of numerical variables in the DBMS</h4>
-<div class="sourceCode" id="cb70"><pre class="r"><span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb71"><pre class="r"><span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/diagnose_outlier.data.frame.html">diagnose_outlier</a></span>()  <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">outliers_ratio</span> <span class="kw">&gt;</span> <span class="fl">1</span>)
@@ -2216,7 +2293,7 @@
 <div id="plot-outlier-information-of-numerical-data-diagnosis-in-the-dbms" class="section level4">
 <h4 class="hasAnchor">
 <a href="#plot-outlier-information-of-numerical-data-diagnosis-in-the-dbms" class="anchor"></a>Plot outlier information of numerical data diagnosis in the DBMS</h4>
-<div class="sourceCode" id="cb71"><pre class="r"><span class="co"># Visualization of numerical variables with a ratio of</span>
+<div class="sourceCode" id="cb72"><pre class="r"><span class="co"># Visualization of numerical variables with a ratio of</span>
 <span class="co"># outliers greater than 1%</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
@@ -2233,7 +2310,7 @@
 <a href="#reporting-the-information-of-data-diagnosis-for-table-of-thr-dbms" class="anchor"></a>Reporting the information of data diagnosis for table of thr DBMS</h4>
 <p>The following shows several examples of creating an data diagnosis report for a DBMS table.</p>
 <p>Using the <code>collect_size</code> argument, you can perform data diagnosis with the corresponding number of sample data. If the number of data is very large, use <code>collect_size</code>.</p>
-<div class="sourceCode" id="cb72"><pre class="r"><span class="co"># create pdf file. file name is DataDiagnosis_Report.pdf</span>
+<div class="sourceCode" id="cb73"><pre class="r"><span class="co"># create pdf file. file name is DataDiagnosis_Report.pdf</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/diagnose_report.data.frame.html">diagnose_report</a></span>()
@@ -2251,7 +2328,7 @@
 <h4 class="hasAnchor">
 <a href="#calculating-descriptive-statistics-of-numerical-column-of-table-in-the-dbms" class="anchor"></a>Calculating descriptive statistics of numerical column of table in the DBMS</h4>
 <p>Use <code><a href="https://dplyr.tidyverse.org/reference/tbl.html">dplyr::tbl()</a></code> to create a tbl_dbi object, then use it as a data frame object. That is, the data argument of all EDA function is specified as tbl_dbi object instead of data frame object.</p>
-<div class="sourceCode" id="cb73"><pre class="r"><span class="co"># extract only those with 'Urban' variable level is "Yes",</span>
+<div class="sourceCode" id="cb74"><pre class="r"><span class="co"># extract only those with 'Urban' variable level is "Yes",</span>
 <span class="co"># and find 'Sales' statistics by 'ShelveLoc' and 'US'</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
@@ -2272,7 +2349,7 @@
 <div id="test-of-normality-on-numeric-columns-using-in-the-dbms" class="section level4">
 <h4 class="hasAnchor">
 <a href="#test-of-normality-on-numeric-columns-using-in-the-dbms" class="anchor"></a>Test of normality on numeric columns using in the DBMS</h4>
-<div class="sourceCode" id="cb74"><pre class="r"><span class="co"># Test log(Income) variables by 'ShelveLoc' and 'US',</span>
+<div class="sourceCode" id="cb75"><pre class="r"><span class="co"># Test log(Income) variables by 'ShelveLoc' and 'US',</span>
 <span class="co"># and extract only p.value greater than 0.01.</span>
 
 <span class="co"># SQLite extension functions for log transformation</span>
@@ -2292,7 +2369,7 @@
 <div id="normalization-visualization-of-numerical-column-in-the-dbms" class="section level4">
 <h4 class="hasAnchor">
 <a href="#normalization-visualization-of-numerical-column-in-the-dbms" class="anchor"></a>Normalization visualization of numerical column in the DBMS</h4>
-<div class="sourceCode" id="cb75"><pre class="r"><span class="co"># extract only those with 'ShelveLoc' variable level is "Good",</span>
+<div class="sourceCode" id="cb76"><pre class="r"><span class="co"># extract only those with 'ShelveLoc' variable level is "Good",</span>
 <span class="co"># and plot 'Income' by 'US'</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
@@ -2304,7 +2381,7 @@
 <div id="compute-the-correlation-coefficient-between-two-columns-of-table-in-dbms" class="section level4">
 <h4 class="hasAnchor">
 <a href="#compute-the-correlation-coefficient-between-two-columns-of-table-in-dbms" class="anchor"></a>Compute the correlation coefficient between two columns of table in DBMS</h4>
-<div class="sourceCode" id="cb76"><pre class="r"><span class="co"># extract only those with 'ShelveLoc' variable level is "Good",</span>
+<div class="sourceCode" id="cb77"><pre class="r"><span class="co"># extract only those with 'ShelveLoc' variable level is "Good",</span>
 <span class="co"># and compute the correlation coefficient of 'Sales' variable</span>
 <span class="co"># by 'Urban' and 'US' variables.</span>
 <span class="co"># And the correlation coefficient is negative and smaller than 0.5</span>
@@ -2328,7 +2405,7 @@
 <div id="visualize-correlation-plot-of-numerical-columns-in-the-dbms" class="section level4">
 <h4 class="hasAnchor">
 <a href="#visualize-correlation-plot-of-numerical-columns-in-the-dbms" class="anchor"></a>Visualize correlation plot of numerical columns in the DBMS</h4>
-<div class="sourceCode" id="cb77"><pre class="r"><span class="co"># Extract only those with 'ShelveLoc' variable level is "Good",</span>
+<div class="sourceCode" id="cb78"><pre class="r"><span class="co"># Extract only those with 'ShelveLoc' variable level is "Good",</span>
 <span class="co"># and visualize correlation plot of 'Sales' variable by 'Urban'</span>
 <span class="co"># and 'US' variables.</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
@@ -2339,15 +2416,15 @@
 <span class="co">#&gt; Warning in cor(df[idx, names(df)[idx_numeric]], use = "pairwise.complete.obs", :</span>
 <span class="co">#&gt; the standard deviation is zero</span></pre></div>
 <p><img src="reference/figures/README-plot_correlation_dbi-1.png"><!-- --><img src="reference/figures/README-plot_correlation_dbi-2.png"><!-- --><img src="reference/figures/README-plot_correlation_dbi-3.png"><!-- --></p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Passed a group with no more than five observations.</span></span>
-<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Urban == NA and US == Yes)</span></span></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Passed a group with no more than five observations.</span></span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Urban == NA and US == Yes)</span></span></code></pre></div>
 <p><img src="reference/figures/README-plot_correlation_dbi-4.png"><!-- --></p>
 </div>
 <div id="eda-based-on-target-variable-1" class="section level4">
 <h4 class="hasAnchor">
 <a href="#eda-based-on-target-variable-1" class="anchor"></a>EDA based on target variable</h4>
 <p>The following is an EDA where the target column is character and the predictor column is a numeric type.</p>
-<div class="sourceCode" id="cb79"><pre class="r"><span class="co"># If the target variable is a categorical variable</span>
+<div class="sourceCode" id="cb80"><pre class="r"><span class="co"># If the target variable is a categorical variable</span>
 <span class="no">categ</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/target_by.data.frame.html">target_by</a></span>(<span class="no">con_sqlite</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) , <span class="no">US</span>)
 
 <span class="co"># If the variable of interest is a numarical variable</span>
@@ -2412,7 +2489,7 @@
 <span class="co">#&gt;  Mean   :13.86   Mean   :15.81  </span>
 <span class="co">#&gt;  3rd Qu.:13.97   3rd Qu.:16.27  </span>
 <span class="co">#&gt;  Max.   :14.03   Max.   :16.27</span></pre></div>
-<div class="sourceCode" id="cb80"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">cat_num</span>)</pre></div>
+<div class="sourceCode" id="cb81"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">cat_num</span>)</pre></div>
 <p><img src="reference/figures/README-plot_target_by_dbi-1.png"><!-- --></p>
 </div>
 <div id="reporting-the-information-of-eda-for-table-of-the-dbms" class="section level4">
@@ -2420,7 +2497,7 @@
 <a href="#reporting-the-information-of-eda-for-table-of-the-dbms" class="anchor"></a>Reporting the information of EDA for table of the DBMS</h4>
 <p>The following shows several examples of creating an EDA report for a DBMS table.</p>
 <p>Using the <code>collect_size</code> argument, you can perform EDA with the corresponding number of sample data. If the number of data is very large, use <code>collect_size</code>.</p>
-<div class="sourceCode" id="cb81"><pre class="r"><span class="co"># create html file. file name is EDA_TB_CARSEATS.html</span>
+<div class="sourceCode" id="cb82"><pre class="r"><span class="co"># create html file. file name is EDA_TB_CARSEATS.html</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/eda_report.data.frame.html">eda_report</a></span>(<span class="no">US</span>, <span class="kw">output_format</span> <span class="kw">=</span> <span class="st">"html"</span>, <span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"EDA_TB_CARSEATS.html"</span>)

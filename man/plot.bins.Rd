@@ -25,13 +25,17 @@ carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 # Binning the carat variable. default type argument is "quantile"
 bin <- binning(carseats$Income, nbins = 5)
 plot(bin)
-# Using another type argument
+
+# Using another type arguments
 bin <- binning(carseats$Income, nbins = 5, type = "equal")
 plot(bin)
+
 bin <- binning(carseats$Income, nbins = 5, type = "pretty")
 plot(bin)
+
 bin <- binning(carseats$Income, nbins = 5, type = "kmeans")
 plot(bin)
+
 bin <- binning(carseats$Income, nbins = 5, type = "bclust")
 plot(bin)
 

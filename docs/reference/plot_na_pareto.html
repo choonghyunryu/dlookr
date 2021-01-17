@@ -97,7 +97,7 @@
 </li>
 <li>
   <a href="https://github.com/choonghyunryu/dlookr/">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -178,44 +178,40 @@ The default values are Good: [0, 0.05], OK: (0.05, 0.4], Bad: (0.4, 0.8], Remove
 <span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>5</span>), <span class='st'>"Urban"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
 
 <span class='co'># Diagnose the data with missing_count using diagnose() function</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'><span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+<span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
   <span class='no'>diagnose</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span>(<span class='no'>missing_count</span>))</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 11 x 6</span><span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span>(<span class='no'>missing_count</span>))</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 11 x 6</span><span>
 #&gt;    variables   types   missing_count missing_percent unique_count unique_rate
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> Income      numeric            20            5              99      0.248 
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> Urban       factor              5            1.25            3      0.007</span><span style='text-decoration: underline;'>5</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> Sales       numeric             0            0             336      0.84  
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> CompPrice   numeric             0            0              73      0.182 
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> Advertising numeric             0            0              28      0.07  
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> Population  numeric             0            0             275      0.688 
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> Price       numeric             0            0             101      0.252 
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> ShelveLoc   factor              0            0               3      0.007</span><span style='text-decoration: underline;'>5</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> Age         numeric             0            0              56      0.14  
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> Education   numeric             0            0               9      0.022</span><span style='text-decoration: underline;'>5</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>11</span><span> US          factor              0            0               2      0.005 </div><div class='input'>
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> Income      numeric            20            5              98      0.245 
+#&gt; </span><span style='color: #555555;'> 2</span><span> Urban       factor              5            1.25            3      0.007</span><span style='text-decoration: underline;'>5</span><span>
+#&gt; </span><span style='color: #555555;'> 3</span><span> Sales       numeric             0            0             336      0.84  
+#&gt; </span><span style='color: #555555;'> 4</span><span> CompPrice   numeric             0            0              73      0.182 
+#&gt; </span><span style='color: #555555;'> 5</span><span> Advertising numeric             0            0              28      0.07  
+#&gt; </span><span style='color: #555555;'> 6</span><span> Population  numeric             0            0             275      0.688 
+#&gt; </span><span style='color: #555555;'> 7</span><span> Price       numeric             0            0             101      0.252 
+#&gt; </span><span style='color: #555555;'> 8</span><span> ShelveLoc   factor              0            0               3      0.007</span><span style='text-decoration: underline;'>5</span><span>
+#&gt; </span><span style='color: #555555;'> 9</span><span> Age         numeric             0            0              56      0.14  
+#&gt; </span><span style='color: #555555;'>10</span><span> Education   numeric             0            0               9      0.022</span><span style='text-decoration: underline;'>5</span><span>
+#&gt; </span><span style='color: #555555;'>11</span><span> US          factor              0            0               2      0.005 </div><div class='input'>
 <span class='co'># Visualize pareto chart for variables with missing value.</span>
 <span class='fu'>plot_na_pareto</span>(<span class='no'>carseats</span>)</div><div class='img'><img src='plot_na_pareto-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot_na_pareto</span>(<span class='no'>airquality</span>)</div><div class='img'><img src='plot_na_pareto-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Diagnose the data with missing_count using diagnose() function</span>
 <span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span> <span class='kw'>%&gt;%</span>
   <span class='no'>diagnose</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span>(<span class='no'>missing_count</span>))</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 9 x 6</span><span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span>(<span class='no'>missing_count</span>))</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 9 x 6</span><span>
 #&gt;   variables types   missing_count missing_percent unique_count unique_rate
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> tv        integer           522          69.8             19     0.025</span><span style='text-decoration: underline;'>4</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> gen       ordered           503          67.2              6     0.008</span><span style='text-decoration: underline;'>02</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> phb       ordered           503          67.2              7     0.009</span><span style='text-decoration: underline;'>36</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> hc        numeric            46           6.15           205     0.274  
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> bmi       numeric            21           2.81           504     0.674  
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> hgt       numeric            20           2.67           483     0.646  
-#&gt; </span><span style='color: #BCBCBC;'>7</span><span> wgt       numeric             4           0.535          524     0.701  
-#&gt; </span><span style='color: #BCBCBC;'>8</span><span> reg       factor              3           0.401            6     0.008</span><span style='text-decoration: underline;'>02</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>9</span><span> age       numeric             0           0              683     0.913  </div><div class='input'>
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> tv        integer           522          69.8             19     0.025</span><span style='text-decoration: underline;'>4</span><span> 
+#&gt; </span><span style='color: #555555;'>2</span><span> gen       ordered           503          67.2              6     0.008</span><span style='text-decoration: underline;'>02</span><span>
+#&gt; </span><span style='color: #555555;'>3</span><span> phb       ordered           503          67.2              7     0.009</span><span style='text-decoration: underline;'>36</span><span>
+#&gt; </span><span style='color: #555555;'>4</span><span> hc        numeric            46           6.15           205     0.274  
+#&gt; </span><span style='color: #555555;'>5</span><span> bmi       numeric            21           2.81           504     0.674  
+#&gt; </span><span style='color: #555555;'>6</span><span> hgt       numeric            20           2.67           483     0.646  
+#&gt; </span><span style='color: #555555;'>7</span><span> wgt       numeric             4           0.535          524     0.701  
+#&gt; </span><span style='color: #555555;'>8</span><span> reg       factor              3           0.401            6     0.008</span><span style='text-decoration: underline;'>02</span><span>
+#&gt; </span><span style='color: #555555;'>9</span><span> age       numeric             0           0              683     0.913  </div><div class='input'>
 <span class='co'># Visualize pareto chart for variables with missing value.</span>
 <span class='fu'>plot_na_pareto</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"blue"</span>)</div><div class='img'><img src='plot_na_pareto-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Visualize only variables containing missing values</span>
@@ -228,17 +224,17 @@ The default values are Good: [0, 0.05], OK: (0.05, 0.4], Bad: (0.4, 0.8], Remove
 <span class='fu'>plot_na_pareto</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>only_na</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
 <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"Pareto Chart for mice::boys"</span>)</div><div class='img'><img src='plot_na_pareto-7.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Return the aggregate information about missing values.</span>
-<span class='fu'>plot_na_pareto</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span>, <span class='kw'>only_na</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 8 x 5</span><span>
+<span class='fu'>plot_na_pareto</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span>, <span class='kw'>only_na</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 8 x 5</span><span>
 #&gt;   variable frequencies   ratio grade cumulative
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> tv               522 0.698   Bad         32.2
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> gen              503 0.672   Bad         63.2
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> phb              503 0.672   Bad         94.2
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> hc                46 0.061</span><span style='text-decoration: underline;'>5</span><span>  OK          97.0
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> bmi               21 0.028</span><span style='text-decoration: underline;'>1</span><span>  Good        98.3
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> hgt               20 0.026</span><span style='text-decoration: underline;'>7</span><span>  Good        99.6
-#&gt; </span><span style='color: #BCBCBC;'>7</span><span> wgt                4 0.005</span><span style='text-decoration: underline;'>35</span><span> Good        99.8
-#&gt; </span><span style='color: #BCBCBC;'>8</span><span> reg                3 0.004</span><span style='text-decoration: underline;'>01</span><span> Good       100  </div><div class='input'>
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> tv               522 0.698   Bad         32.2
+#&gt; </span><span style='color: #555555;'>2</span><span> gen              503 0.672   Bad         63.2
+#&gt; </span><span style='color: #555555;'>3</span><span> phb              503 0.672   Bad         94.2
+#&gt; </span><span style='color: #555555;'>4</span><span> hc                46 0.061</span><span style='text-decoration: underline;'>5</span><span>  OK          97.0
+#&gt; </span><span style='color: #555555;'>5</span><span> bmi               21 0.028</span><span style='text-decoration: underline;'>1</span><span>  Good        98.3
+#&gt; </span><span style='color: #555555;'>6</span><span> hgt               20 0.026</span><span style='text-decoration: underline;'>7</span><span>  Good        99.6
+#&gt; </span><span style='color: #555555;'>7</span><span> wgt                4 0.005</span><span style='text-decoration: underline;'>35</span><span> Good        99.8
+#&gt; </span><span style='color: #555555;'>8</span><span> reg                3 0.004</span><span style='text-decoration: underline;'>01</span><span> Good       100  </div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

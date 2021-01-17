@@ -29,7 +29,7 @@ carseats$US_2 <- ifelse(carseats$US \%in\% "Yes", 1, 0)
 breaks <- c(-1,  0,  6, 29)
 carseats$Advertising_bin <- cut(carseats$Advertising, breaks)
 
-# Diagnose performance binned variable
+# Diagnose performance binned variable.
 perf <- performance_bin(carseats$US_2, carseats$Advertising_bin) 
 perf
 summary(perf)

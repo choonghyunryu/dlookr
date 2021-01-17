@@ -97,7 +97,7 @@
 </li>
 <li>
   <a href="https://github.com/choonghyunryu/dlookr/">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -162,9 +162,7 @@ The default value is FALSE, which returns individual values.</p></td>
 <span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='no'>event</span> / <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>event</span>)
 <span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='no'>no_event</span> / <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>no_event</span>)
 
-<span class='fu'>kld</span>(<span class='no'>p</span>, <span class='no'>q</span>)</div><div class='output co'>#&gt; [1]  1.00670753  0.57712559  0.28087582  0.09174581  0.02372228 -0.05609955
-#&gt; [7] -0.01479923</div><div class='input'><span class='fu'>kld</span>(<span class='no'>p</span>, <span class='no'>q</span>, <span class='kw'>base</span> <span class='kw'>=</span> <span class='st'>"log2"</span>)</div><div class='output co'>#&gt; [1]  1.45237196  0.83261623  0.40521815  0.13236123  0.03422402 -0.08093455
-#&gt; [7] -0.02135077</div><div class='input'><span class='fu'>kld</span>(<span class='no'>p</span>, <span class='no'>q</span>, <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] 1.909278</div><div class='input'>
+<span class='fu'>kld</span>(<span class='no'>p</span>, <span class='no'>q</span>)</div><div class='output co'>#&gt; [1]  1.00670753  0.57712559  0.28087582  0.09174581  0.02372228 -0.05609955 -0.01479923</div><div class='input'><span class='fu'>kld</span>(<span class='no'>p</span>, <span class='no'>q</span>, <span class='kw'>base</span> <span class='kw'>=</span> <span class='st'>"log2"</span>)</div><div class='output co'>#&gt; [1]  1.45237196  0.83261623  0.40521815  0.13236123  0.03422402 -0.08093455 -0.02135077</div><div class='input'><span class='fu'>kld</span>(<span class='no'>p</span>, <span class='no'>q</span>, <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] 1.909278</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

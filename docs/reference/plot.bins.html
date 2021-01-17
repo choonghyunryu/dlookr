@@ -99,7 +99,7 @@ The plot at the bottom is a bar chart representing the frequency of the level." 
 </li>
 <li>
   <a href="https://github.com/choonghyunryu/dlookr/">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -128,7 +128,7 @@ The plot at the bottom is a bar chart representing the frequency of the level.</
     </div>
 
     <pre class="usage"><span class='co'># S3 method for bins</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -155,12 +155,17 @@ The plot at the bottom is a bar chart representing the frequency of the level.</
 
 <span class='co'># Binning the carat variable. default type argument is "quantile"</span>
 <span class='no'>bin</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='binning.html'>binning</a></span>(<span class='no'>carseats</span>$<span class='no'>Income</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>5</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bin</span>)</div><div class='img'><img src='plot.bins-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Using another type argument</span>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bin</span>)</div><div class='img'><img src='plot.bins-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Using another type arguments</span>
 <span class='no'>bin</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='binning.html'>binning</a></span>(<span class='no'>carseats</span>$<span class='no'>Income</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"equal"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bin</span>)</div><div class='img'><img src='plot.bins-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>bin</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='binning.html'>binning</a></span>(<span class='no'>carseats</span>$<span class='no'>Income</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pretty"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bin</span>)</div><div class='img'><img src='plot.bins-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>bin</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='binning.html'>binning</a></span>(<span class='no'>carseats</span>$<span class='no'>Income</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"kmeans"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bin</span>)</div><div class='img'><img src='plot.bins-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>bin</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='binning.html'>binning</a></span>(<span class='no'>carseats</span>$<span class='no'>Income</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"bclust"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bin</span>)</div><div class='img'><img src='plot.bins-5.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bin</span>)</div><div class='img'><img src='plot.bins-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>bin</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='binning.html'>binning</a></span>(<span class='no'>carseats</span>$<span class='no'>Income</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pretty"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bin</span>)</div><div class='img'><img src='plot.bins-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>bin</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='binning.html'>binning</a></span>(<span class='no'>carseats</span>$<span class='no'>Income</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"kmeans"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bin</span>)</div><div class='img'><img src='plot.bins-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>bin</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='binning.html'>binning</a></span>(<span class='no'>carseats</span>$<span class='no'>Income</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"bclust"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bin</span>)</div><div class='img'><img src='plot.bins-5.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

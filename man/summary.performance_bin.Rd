@@ -32,7 +32,7 @@ summary.performance_bin() includes general metrics and result of significance te
     \item Kolmogorov-Smirnov Statistics.
     \item Herfindahl-Hirschman Index.
     \item normalized Herfindahl-Hirschman Index.
-    \item Cramer's V.
+    \item Cramer's V Statistics.
   } 
   \item Table of Significance Tests.
 }

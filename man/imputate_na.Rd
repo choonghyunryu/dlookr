@@ -32,20 +32,20 @@ Attributes of imputation class is as follows.
 \item var_type : the data type of predictor to replace missing value.
 \item method : method of missing value imputation.
 \itemize{
-  \item predictor is numerical variable
+  \item predictor is numerical variable.
   \itemize{
-    \item "mean" : arithmetic mean
-    \item "median" : median
-    \item "mode" : mode
-    \item "knn" : K-nearest neighbors
-    \item "rpart" : Recursive Partitioning and Regression Trees
-    \item "mice" : Multivariate Imputation by Chained Equations
+    \item "mean" : arithmetic mean.
+    \item "median" : median.
+    \item "mode" : mode.
+    \item "knn" : K-nearest neighbors.
+    \item "rpart" : Recursive Partitioning and Regression Trees.
+    \item "mice" : Multivariate Imputation by Chained Equations.
   }
-  \item predictor is categorical variable
+  \item predictor is categorical variable.
   \itemize{
-    \item "mode" : mode
-    \item "rpart" : Recursive Partitioning and Regression Trees
-    \item "mice" : Multivariate Imputation by Chained Equations
+    \item "mode" : mode.
+    \item "rpart" : Recursive Partitioning and Regression Trees.
+    \item "mice" : Multivariate Imputation by Chained Equations.
   }
 }
 \item na_pos : position of missing value in predictor.

@@ -36,13 +36,13 @@ carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 # Compare the all categorical variables
 all_var <- compare_category(carseats)
 
-# Print compare class object
+# Print compare class objects
 all_var
   
 # Compare the two categorical variables
 two_var <- compare_category(carseats, ShelveLoc, Urban)
 
-# Print compare class object
+# Print compare class objects
 two_var
 
 # plot all pair of variables

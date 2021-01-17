@@ -102,7 +102,7 @@ all_var \%>\%
 # Compare the two numerical variables
 two_var <- compare_numeric(carseats, Price, CompPrice)
 
-# Print compare_numeric class object
+# Print compare_numeric class objects
 two_var
   
 # Summary the all case : Return a invisible copy of an object.

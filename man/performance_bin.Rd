@@ -46,7 +46,7 @@ Attributes of "performance_bin" class is as follows.
 \item gini : numeric. Gini index.
 \item HHI : numeric. Herfindahl-Hirschman Index.
 \item HHI_norm : numeric.normalized Herfindahl-Hirschman Index.
-\item Cramer_V : numeric. Cramer's V.
+\item Cramer_V : numeric. Cramer's V Statistics.
 \item chisq_test : data.frame. table of significance tests. name is as follows.
 \itemize{
   \item Bin A : character. first bins.

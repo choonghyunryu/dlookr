@@ -30,20 +30,20 @@
 #' \item var_type : the data type of predictor to replace missing value.
 #' \item method : method of missing value imputation.
 #' \itemize{
-#'   \item predictor is numerical variable
+#'   \item predictor is numerical variable.
 #'   \itemize{
-#'     \item "mean" : arithmetic mean
-#'     \item "median" : median
-#'     \item "mode" : mode
-#'     \item "knn" : K-nearest neighbors
-#'     \item "rpart" : Recursive Partitioning and Regression Trees
-#'     \item "mice" : Multivariate Imputation by Chained Equations
+#'     \item "mean" : arithmetic mean.
+#'     \item "median" : median.
+#'     \item "mode" : mode.
+#'     \item "knn" : K-nearest neighbors.
+#'     \item "rpart" : Recursive Partitioning and Regression Trees.
+#'     \item "mice" : Multivariate Imputation by Chained Equations.
 #'   }
-#'   \item predictor is categorical variable
+#'   \item predictor is categorical variable.
 #'   \itemize{
-#'     \item "mode" : mode
-#'     \item "rpart" : Recursive Partitioning and Regression Trees
-#'     \item "mice" : Multivariate Imputation by Chained Equations
+#'     \item "mode" : mode.
+#'     \item "rpart" : Recursive Partitioning and Regression Trees.
+#'     \item "mice" : Multivariate Imputation by Chained Equations.
 #'   }
 #' }
 #' \item na_pos : position of missing value in predictor.
@@ -350,10 +350,10 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL,
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 #' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 #'
-#' # Replace the outliers of the Price variable with median
+#' # Replace the outliers of the Price variable with median.
 #' imputate_outlier(carseats, Price, method = "median")
 #'
-#' # Replace the outliers of the Price variable with capping
+#' # Replace the outliers of the Price variable with capping.
 #' imputate_outlier(carseats, Price, method = "capping")
 #'
 #' ## using dplyr -------------------------------------
@@ -366,7 +366,7 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL,
 #'   summarise(orig = mean(Price, na.rm = TRUE),
 #'     imputation = mean(Price_imp, na.rm = TRUE))
 #'
-#' # If the variable of interest is a numerical variable
+#' # If the variable of interest is a numerical variables
 #' price <- imputate_outlier(carseats, Price)
 #' price
 #' summary(price)
@@ -490,13 +490,13 @@ imputate_outlier_impl <- function(df, xvar, method, no_attrs = FALSE) {
 #' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 #'
 #' # Impute missing values -----------------------------
-#' # If the variable of interest is a numerical variable
+#' # If the variable of interest is a numerical variables
 #' income <- imputate_na(carseats, Income, US, method = "rpart")
 #' income
 #' summary(income)
 #' plot(income)
 #'
-#' # If the variable of interest is a categorical variable
+#' # If the variable of interest is a categorical variables
 #' urban <- imputate_na(carseats, Urban, US, method = "mice")
 #' urban
 #' summary(urban)
@@ -615,13 +615,13 @@ summary.imputation <- function(object, ...) {
 #' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 #'
 #' # Impute missing values -----------------------------
-#' # If the variable of interest is a numerical variable
+#' # If the variable of interest is a numerical variables
 #' income <- imputate_na(carseats, Income, US, method = "rpart")
 #' income
 #' summary(income)
 #' plot(income)
 #'
-#' # If the variable of interest is a categorical variable
+#' # If the variable of interest is a categorical variables
 #' urban <- imputate_na(carseats, Urban, US, method = "mice")
 #' urban
 #' summary(urban)
@@ -679,7 +679,7 @@ plot.imputation <- function(x, typographic = TRUE, ...) {
         )
     }
     
-    p
+    suppressWarnings(p)
   } else if (var_type == "categorical") {
     suppressWarnings({p <- data.frame(original = original, imputation = x) %>%
       tidyr::gather() %>%
@@ -698,7 +698,7 @@ plot.imputation <- function(x, typographic = TRUE, ...) {
         )  
     }
     
-    p
+    suppressWarnings(p)
   }
 }
 

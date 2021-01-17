@@ -56,7 +56,7 @@
 </li>
 <li>
   <a href="https://github.com/choonghyunryu/dlookr/">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -70,14 +70,13 @@
 
       
 
-      </header><script src="diagonosis_files/header-attrs-2.4.6/header-attrs.js"></script><link href="diagonosis_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="diagonosis_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="diagonosis_files/header-attrs-2.6.4/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Data quality diagnosis</h1>
                         <h4 class="author">Choonghyun Ryu</h4>
             
-            <h4 class="date">2020-12-04</h4>
+            <h4 class="date">2021-01-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/choonghyunryu/dlookr/blob/master/vignettes/diagonosis.Rmd"><code>vignettes/diagonosis.Rmd</code></a></small>
       <div class="hidden name"><code>diagonosis.Rmd</code></div>
@@ -645,7 +644,7 @@ Data diagnosis report outlier diagnosis contents (html)
 <span class="no">carseats</span>[<span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">NROW</a></span>(<span class="no">carseats</span>)), <span class="fl">5</span>), <span class="st">"Urban"</span>] <span class="kw">&lt;-</span> <span class="fl">NA</span>
 
 <span class="co"># connect DBMS</span>
-<span class="no">con_sqlite</span> <span class="kw">&lt;-</span> <span class="kw pkg">DBI</span><span class="kw ns">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html">dbConnect</a></span>(<span class="kw pkg">RSQLite</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/RSQLite/man/SQLite.html">SQLite</a></span>(), <span class="st">":memory:"</span>)
+<span class="no">con_sqlite</span> <span class="kw">&lt;-</span> <span class="kw pkg">DBI</span><span class="kw ns">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html">dbConnect</a></span>(<span class="kw pkg">RSQLite</span><span class="kw ns">::</span><span class="fu"><a href="https://rsqlite.r-dbi.org/reference/SQLite.html">SQLite</a></span>(), <span class="st">":memory:"</span>)
 
 <span class="co"># copy carseats to the DBMS with a table named TB_CARSEATS</span>
 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/copy_to.html">copy_to</a></span>(<span class="no">con_sqlite</span>, <span class="no">carseats</span>, <span class="kw">name</span> <span class="kw">=</span> <span class="st">"TB_CARSEATS"</span>, <span class="kw">overwrite</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
@@ -685,10 +684,10 @@ con_sqlite %&gt;%
 # A tibble: 8 x 6
   variables   types   missing_count missing_percent unique_count unique_rate
   &lt;chr&gt;       &lt;chr&gt;           &lt;int&gt;           &lt;dbl&gt;        &lt;int&gt;       &lt;dbl&gt;
-1 Sales       numeric             0               0          182       0.91 
-2 CompPrice   numeric             0               0           65       0.325
-3 Income      numeric             8               4           82       0.41 
-4 Advertising numeric             0               0           23       0.115
+1 Sales       numeric             0             0            182       0.91 
+2 CompPrice   numeric             0             0             65       0.325
+3 Income      numeric            11             5.5           82       0.41 
+4 Advertising numeric             0             0             23       0.115
 # … with 4 more rows</pre></body></html></div>
 </div>
 <div id="diagnose-data-quality-of-categorical-variables-in-the-dbms" class="section level3">
@@ -712,8 +711,8 @@ con_sqlite %&gt;%
 # A tibble: 5 x 6
   variables levels     N  freq ratio  rank
   &lt;chr&gt;     &lt;chr&gt;  &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt;
-1 Urban     Yes      400   278 69.5      1
-2 Urban     No       400   117 29.2      2
+1 Urban     Yes      400   277 69.2      1
+2 Urban     No       400   118 29.5      2
 3 Urban     &lt;NA&gt;     400     5  1.25     3
 4 US        Yes      400   258 64.5      1
 # … with 1 more row</pre></body></html></div>
@@ -730,7 +729,7 @@ con_sqlite %&gt;%
   &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt;   &lt;int&gt;
 1 Sales           0   5.39   7.50   7.49   9.32  16.3     1     0       2
 2 CompPrice      77 115    125.   125    135    175       0     0       2
-3 Income         21  44     68.9   69     91    120       0     0       0
+3 Income         21  43.8   69.0   69     92    120       0     0       0
 4 Advertising     0   0      6.64   5     12     29     144     0       0
 # … with 4 more rows
   
@@ -742,7 +741,7 @@ con_sqlite %&gt;%
   variables   min    Q1  mean median    Q3   max  zero minus outlier
 * &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt;   &lt;int&gt;
 1 Sales         0  5.26  7.42   7.50  9.10  14.9     1     0       0
-2 Income       21 48    71.3   72.5  93    120       0     0       0</pre></body></html></div>
+2 Income       22 48    71.4   72    93    120       0     0       0</pre></body></html></div>
 </div>
 <div id="diagnose-outlier-of-numerical-variables-in-the-dbms" class="section level3">
 <h3 class="hasAnchor">

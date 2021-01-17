@@ -27,6 +27,7 @@ carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 
+# Reduced variables
 library(dplyr)
 carseats <- carseats \%>\% 
   select(CompPrice, Sales, Price)

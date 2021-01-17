@@ -25,7 +25,7 @@ The "pretty" chooses a number of breaks not necessarily equal
 to nbins using base::pretty function.
 The "kmeans" uses stats::kmeans function to generate the breaks.
 The "bclust" uses e1071::bclust function to generate the breaks using bagged clustering.
-"kmeans" and "bclust" was implemented by classInt::classIntervals function.}
+"kmeans" and "bclust" was implemented by classInt::classIntervals() function.}
 
 \item{ordered}{logical. whether to build an ordered factor or not.}
 

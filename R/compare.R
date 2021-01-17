@@ -63,7 +63,7 @@ compare_numeric <- function(.data, ...) {
 #' # Compare the all categorical variables
 #' all_var <- compare_category(carseats)
 #' 
-#' # Print compare_numeric class object
+#' # Print compare_numeric class objects
 #' all_var
 #' 
 #' # Compare the categorical variables that case of joint the US variable
@@ -73,7 +73,7 @@ compare_numeric <- function(.data, ...) {
 #' # Compare the two categorical variables
 #' two_var <- compare_category(carseats, ShelveLoc, Urban)
 #' 
-#' # Print compare_numeric class object
+#' # Print compare_numeric class objects
 #' two_var
 #' 
 #' # Filtering the case of US included NA 
@@ -84,7 +84,7 @@ compare_numeric <- function(.data, ...) {
 #' # Summary the all case : Return a invisible copy of an object.
 #' stat <- summary(all_var)
 #' 
-#' # Summary by returned object
+#' # Summary by returned objects
 #' stat
 #' 
 #' # component of table 
@@ -291,7 +291,7 @@ compare_category_impl <- function(df, vars) {
 #' # Compare the two numerical variables
 #' two_var <- compare_numeric(carseats, Price, CompPrice)
 #' 
-#' # Print compare_numeric class object
+#' # Print compare_numeric class objects
 #' two_var
 #'   
 #' # Summary the all case : Return a invisible copy of an object.
@@ -875,13 +875,13 @@ print.compare_numeric <- function(x, ...) {
 #' # Compare the all categorical variables
 #' all_var <- compare_category(carseats)
 #' 
-#' # Print compare class object
+#' # Print compare class objects
 #' all_var
 #'   
 #' # Compare the two categorical variables
 #' two_var <- compare_category(carseats, ShelveLoc, Urban)
 #' 
-#' # Print compare class object
+#' # Print compare class objects
 #' two_var
 #' 
 #' # plot all pair of variables
@@ -997,7 +997,7 @@ plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE, typographic 
       }  
     }
     
-    print(p)
+    suppressWarnings(print(p))
   } 
 }
 
@@ -1021,6 +1021,7 @@ plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE, typographic 
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 #' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 #'
+#' # Reduced variables
 #' library(dplyr)
 #' carseats <- carseats %>% 
 #'   select(CompPrice, Sales, Price)
@@ -1158,10 +1159,10 @@ plot.compare_numeric <- function(x, prompt = FALSE, typographic = TRUE, ...) {
     }
     
     title <- sprintf("Scatterplots with %s and %s", xvar, yvar)
-    gridExtra::grid.arrange(box_left, p_scatter, blank, box_bottom, ncol = 2, nrow = 2,
+    suppressWarnings(gridExtra::grid.arrange(box_left, p_scatter, blank, box_bottom, ncol = 2, nrow = 2,
                             widths = c(1, 25), heights=c(20, 1),
                             top = grid::textGrob(title, gp = grid::gpar(fontfamily = "Arial Narrow", just = "left",
-                                                            fontsize = 18, font = 2)))
+                                                            fontsize = 18, font = 2))))
   } 
 }
 

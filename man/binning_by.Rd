@@ -31,9 +31,9 @@ Attributes of "optimal_bins" class is as follows.
 \item breaks : numeric. the number of intervals into which x is to be cut.
 \item levels : character. levels of binned value.
 \item raw : numeric. raw data, x argument value.
-\item ivtable : data.frame. information value table
-\item iv : numeric. information value
-\item target : integer. binary response variable
+\item ivtable : data.frame. information value table.
+\item iv : numeric. information value.
+\item target : integer. binary response variable.
 }
 }
 \description{
@@ -77,6 +77,10 @@ bin <- binning_by(carseats, "US", "Advertising")
 # optimal binning using name
 bin <- binning_by(carseats, US, Advertising)
 bin
+
+# performance table
+attr(bin, "performance")
+
 # summary optimal_bins class
 summary(bin)
 

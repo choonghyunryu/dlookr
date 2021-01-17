@@ -7,7 +7,7 @@
 \method{extract}{bins}(x)
 }
 \arguments{
-\item{x}{a bins class or optimal_bins class}
+\item{x}{a bins class or optimal_bins class.}
 }
 \value{
 factor.

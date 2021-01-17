@@ -27,13 +27,11 @@ carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 
-# optimal binning
+# optimal binning using binning_by()
 bin <- binning_by(carseats, "US", "Advertising")
 bin
 
-# performance table
-
-# summary optimal_bins class
+# summary optimal_bins class.
 summary(bin)
 
 # visualize all information for optimal_bins class

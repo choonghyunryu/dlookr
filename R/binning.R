@@ -27,7 +27,7 @@
 #' to nbins using base::pretty function.
 #' The "kmeans" uses stats::kmeans function to generate the breaks.
 #' The "bclust" uses e1071::bclust function to generate the breaks using bagged clustering.
-#' "kmeans" and "bclust" was implemented by classInt::classIntervals function.
+#' "kmeans" and "bclust" was implemented by classInt::classIntervals() function.
 #' @param ordered logical. whether to build an ordered factor or not.
 #' @param labels character. the label names to use for each of the bins.
 #' @param approxy.lab logical. If TRUE, large number breaks are approximated to pretty numbers. 
@@ -280,13 +280,17 @@ print.bins <- function(x, ...) {
 #' # Binning the carat variable. default type argument is "quantile"
 #' bin <- binning(carseats$Income, nbins = 5)
 #' plot(bin)
-#' # Using another type argument
+#' 
+#' # Using another type arguments
 #' bin <- binning(carseats$Income, nbins = 5, type = "equal")
 #' plot(bin)
+#' 
 #' bin <- binning(carseats$Income, nbins = 5, type = "pretty")
 #' plot(bin)
+#' 
 #' bin <- binning(carseats$Income, nbins = 5, type = "kmeans")
 #' plot(bin)
+#' 
 #' bin <- binning(carseats$Income, nbins = 5, type = "bclust")
 #' plot(bin)
 #' 
@@ -339,7 +343,7 @@ plot.bins <- function(x, typographic = TRUE, ...) {
       theme_ipsum() 
   }
   
-  gridExtra::grid.arrange(p_top, p_bottom, nrow = 2, ncol = 1) 
+  suppressWarnings(gridExtra::grid.arrange(p_top, p_bottom, nrow = 2, ncol = 1)) 
 }
 
 
@@ -385,9 +389,9 @@ plot.bins <- function(x, typographic = TRUE, ...) {
 #' \item breaks : numeric. the number of intervals into which x is to be cut.
 #' \item levels : character. levels of binned value.
 #' \item raw : numeric. raw data, x argument value.
-#' \item ivtable : data.frame. information value table
-#' \item iv : numeric. information value
-#' \item target : integer. binary response variable
+#' \item ivtable : data.frame. information value table.
+#' \item iv : numeric. information value.
+#' \item target : integer. binary response variable.
 #' }
 #' @seealso \code{\link{binning}}, \code{\link{plot.optimal_bins}}.
 #' @examples
@@ -404,6 +408,10 @@ plot.bins <- function(x, typographic = TRUE, ...) {
 #' # optimal binning using name
 #' bin <- binning_by(carseats, US, Advertising)
 #' bin
+#' 
+#' # performance table
+#' attr(bin, "performance")
+#' 
 #' # summary optimal_bins class
 #' summary(bin)
 #' 
@@ -554,7 +562,7 @@ binning_by <- function(.data, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
 #'     \item Kolmogorov-Smirnov Statistics.
 #'     \item Herfindahl-Hirschman Index.
 #'     \item normalized Herfindahl-Hirschman Index.
-#'     \item Cramer's V.
+#'     \item Cramer's V Statistics.
 #'   } 
 #'   \item Table of Significance Tests.
 #' }
@@ -619,13 +627,11 @@ summary.optimal_bins <- function(object, ...) {
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 #' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 #'
-#' # optimal binning
+#' # optimal binning using binning_by()
 #' bin <- binning_by(carseats, "US", "Advertising")
 #' bin
-#'
-#' # performance table
 #' 
-#' # summary optimal_bins class
+#' # summary optimal_bins class.
 #' summary(bin)
 #'
 #' # visualize all information for optimal_bins class
@@ -736,15 +742,15 @@ plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE
     }
     
     if (type %in% c("all")) {
-      gridExtra::grid.arrange(p_dist, p_freq, p_badrate, p_woe, nrow = 2, ncol = 2) 
+      suppressWarnings(gridExtra::grid.arrange(p_dist, p_freq, p_badrate, p_woe, nrow = 2, ncol = 2)) 
     } else if (type %in% c("dist")) {
-      p_dist
+      suppressWarnings(p_dist)
     } else if (type %in% c("freq")) {
-      p_freq
+      suppressWarnings(p_freq)
     } else if (type %in% c("posrate")) {
-      p_badrate
+      suppressWarnings(p_badrate)
     } else if (type %in% c("WoE")) {
-      p_woe
+      suppressWarnings(p_woe)
     }
   }  
 }
@@ -763,7 +769,7 @@ extract <- function(x) {
 #' the performance of binned results. This function is used to extract the binned result if you are satisfied 
 #' with the result.
 #'
-#' @param x a bins class or optimal_bins class
+#' @param x a bins class or optimal_bins class.
 #' 
 #' @return factor.
 #' @seealso \code{\link{binning}}, \code{\link{binning_by}}.
@@ -847,7 +853,7 @@ extract.bins <- function(x) {
 #' \item gini : numeric. Gini index.
 #' \item HHI : numeric. Herfindahl-Hirschman Index.
 #' \item HHI_norm : numeric.normalized Herfindahl-Hirschman Index.
-#' \item Cramer_V : numeric. Cramer's V.
+#' \item Cramer_V : numeric. Cramer's V Statistics.
 #' \item chisq_test : data.frame. table of significance tests. name is as follows.
 #' \itemize{
 #'   \item Bin A : character. first bins.
@@ -1074,7 +1080,7 @@ performance_bin <- function (y, x, na.rm = FALSE) {
 #'     \item Kolmogorov-Smirnov Statistics.
 #'     \item Herfindahl-Hirschman Index.
 #'     \item normalized Herfindahl-Hirschman Index.
-#'     \item Cramer's V.
+#'     \item Cramer's V Statistics.
 #'   } 
 #'   \item Table of Significance Tests.
 #' }
@@ -1181,7 +1187,7 @@ summary.performance_bin <- function(x) {
 #' breaks <- c(-1,  0,  6, 29)
 #' carseats$Advertising_bin <- cut(carseats$Advertising, breaks)
 #' 
-#' # Diagnose performance binned variable
+#' # Diagnose performance binned variable.
 #' perf <- performance_bin(carseats$US_2, carseats$Advertising_bin) 
 #' perf
 #' summary(perf)
@@ -1231,15 +1237,15 @@ plot.performance_bin <- function(x, typographic = TRUE) {
     ) 
   
   if (!typographic) {
-    p +
-      scale_fill_discrete(labels = c("Negative", "Positive")) 
+    suppressWarnings({p +
+      scale_fill_discrete(labels = c("Negative", "Positive"))}) 
   } else {
-    p +
+    suppressWarnings({p +
       theme_ipsum() +
       scale_fill_ipsum(labels = c("Negative", "Positive")) +
       theme(
         axis.title.y = element_text(size = 13),
         axis.title.y.right = element_text(size = 13)
-      )
+      )})
   }
 }

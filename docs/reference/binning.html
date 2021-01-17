@@ -97,7 +97,7 @@
 </li>
 <li>
   <a href="https://github.com/choonghyunryu/dlookr/">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -152,7 +152,7 @@ The "pretty" chooses a number of breaks not necessarily equal
 to nbins using base::pretty function.
 The "kmeans" uses stats::kmeans function to generate the breaks.
 The "bclust" uses e1071::bclust function to generate the breaks using bagged clustering.
-"kmeans" and "bclust" was implemented by classInt::classIntervals function.</p></td>
+"kmeans" and "bclust" was implemented by classInt::classIntervals() function.</p></td>
     </tr>
     <tr>
       <th>ordered</th>
@@ -275,24 +275,48 @@ function of the dplyr package.</p>
 #&gt;                         8                         7                         7 
 #&gt; (11323927090,12271604926] 
 #&gt;                         7 </div><div class='input'>
+<span class='co'># extract binned results</span>
+<span class='fu'>extract</span>(<span class='no'>bin</span>)</div><div class='output co'>#&gt;  [1] (11323927090,12271604926] (4539682535,6596119923]  
+#&gt;  [3] (8390946494,9945326269]   (6596119923,8390946494]  
+#&gt;  [5] (4539682535,6596119923]   (9945326269,11323927090] 
+#&gt;  [7] [24691358,1786596118]     [24691358,1786596118]    
+#&gt;  [9] [24691358,1786596118]     (6596119923,8390946494]  
+#&gt; [11] (11323927090,12271604926] (1786596118,4539682535]  
+#&gt; [13] (9945326269,11323927090]  (8390946494,9945326269]  
+#&gt; [15] (6596119923,8390946494]   (1786596118,4539682535]  
+#&gt; [17] (4539682535,6596119923]   (6596119923,8390946494]  
+#&gt; [19] (6596119923,8390946494]   (9945326269,11323927090] 
+#&gt; [21] (11323927090,12271604926] (11323927090,12271604926]
+#&gt; [23] [24691358,1786596118]     (8390946494,9945326269]  
+#&gt; [25] [24691358,1786596118]     (8390946494,9945326269]  
+#&gt; [27] (8390946494,9945326269]   [24691358,1786596118]    
+#&gt; [29] (9945326269,11323927090]  (6596119923,8390946494]  
+#&gt; [31] [24691358,1786596118]     (9945326269,11323927090] 
+#&gt; [33] (6596119923,8390946494]   (4539682535,6596119923]  
+#&gt; [35] (11323927090,12271604926] (1786596118,4539682535]  
+#&gt; [37] (4539682535,6596119923]   (8390946494,9945326269]  
+#&gt; [39] (9945326269,11323927090]  (11323927090,12271604926]
+#&gt; [41] (1786596118,4539682535]   (11323927090,12271604926]
+#&gt; [43] (4539682535,6596119923]   (1786596118,4539682535]  
+#&gt; [45] (9945326269,11323927090]  (6596119923,8390946494]  
+#&gt; [47] (8390946494,9945326269]   (4539682535,6596119923]  
+#&gt; [49] (1786596118,4539682535]   (1786596118,4539682535]  
+#&gt; 7 Levels: [24691358,1786596118] ... (11323927090,12271604926]</div><div class='input'>
 <span class='co'># -------------------------</span>
 <span class='co'># Using pipes &amp; dplyr</span>
 <span class='co'># -------------------------</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+
 <span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>Income_bin</span> <span class='kw'>=</span> <span class='fu'>binning</span>(<span class='no'>carseats</span>$<span class='no'>Income</span>)) <span class='kw'>%&gt;%</span>
+ <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>Income_bin</span> <span class='kw'>=</span> <span class='fu'>binning</span>(<span class='no'>carseats</span>$<span class='no'>Income</span>) <span class='kw'>%&gt;%</span>
+                     <span class='fu'>extract</span>()) <span class='kw'>%&gt;%</span>
  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>ShelveLoc</span>, <span class='no'>Income_bin</span>) <span class='kw'>%&gt;%</span>
  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>freq</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span>()) <span class='kw'>%&gt;%</span>
  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span>(<span class='no'>freq</span>)) <span class='kw'>%&gt;%</span>
  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='message'>`summarise()` regrouping output by 'ShelveLoc' (override with `.groups` argument)</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 10 x 3</span><span>
 #&gt; </span><span style='color: #555555;'># Groups:   ShelveLoc [1]</span><span>
 #&gt;    ShelveLoc Income_bin  freq
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;ord&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> Medium    [21,30]       26
 #&gt; </span><span style='color: #555555;'> 2</span><span> Medium    (62,69]       23
 #&gt; </span><span style='color: #555555;'> 3</span><span> Medium    (48,62]       22
@@ -302,7 +326,8 @@ function of the dplyr package.</p>
 #&gt; </span><span style='color: #555555;'> 7</span><span> Medium    (107,120]     20
 #&gt; </span><span style='color: #555555;'> 8</span><span> Medium    (69,77]       19
 #&gt; </span><span style='color: #555555;'> 9</span><span> Medium    (77,84]       19
-#&gt; </span><span style='color: #555555;'>10</span><span> Medium    (84,96]       17</div></span></pre>
+#&gt; </span><span style='color: #555555;'>10</span><span> Medium    (84,96]       17</div><div class='input'> 
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

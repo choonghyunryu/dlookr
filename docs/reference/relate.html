@@ -98,7 +98,7 @@ the variable of interest (predictor) is briefly analyzed." />
 </li>
 <li>
   <a href="https://github.com/choonghyunryu/dlookr/">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -292,24 +292,24 @@ of the target variable and the data type of the variable of interest.</p>
 #&gt; -6.5224 -1.8442 -0.1459  1.6503  7.5108 
 #&gt; 
 #&gt; Coefficients:
-#&gt;              Estimate Std. Error t value            Pr(&gt;|t|)    
-#&gt; (Intercept) 13.641915   0.632812  21.558 &lt;0.0000000000000002 ***
-#&gt; Price       -0.053073   0.005354  -9.912 &lt;0.0000000000000002 ***
+#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    
+#&gt; (Intercept) 13.641915   0.632812  21.558   &lt;2e-16 ***
+#&gt; Price       -0.053073   0.005354  -9.912   &lt;2e-16 ***
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; 
 #&gt; Residual standard error: 2.532 on 398 degrees of freedom
 #&gt; Multiple R-squared:  0.198,	Adjusted R-squared:  0.196 
-#&gt; F-statistic: 98.25 on 1 and 398 DF,  p-value: &lt; 0.00000000000000022
+#&gt; F-statistic: 98.25 on 1 and 398 DF,  p-value: &lt; 2.2e-16
 #&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>num_num</span>)</div><div class='output co'>#&gt; <span class='message'>`geom_smooth()` using formula 'y ~ x'</span></div><div class='img'><img src='relate-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># If the variable of interest is a categorical variable</span>
 <span class='no'>num_cat</span> <span class='kw'>&lt;-</span> <span class='fu'>relate</span>(<span class='no'>num</span>, <span class='no'>ShelveLoc</span>)
 <span class='no'>num_cat</span></div><div class='output co'>#&gt; Analysis of Variance Table
 #&gt; 
 #&gt; Response: Sales
-#&gt;            Df Sum Sq Mean Sq F value                Pr(&gt;F)    
-#&gt; ShelveLoc   2 1009.5  504.77   92.23 &lt; 0.00000000000000022 ***
-#&gt; Residuals 397 2172.7    5.47                                  
+#&gt;            Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+#&gt; ShelveLoc   2 1009.5  504.77   92.23 &lt; 2.2e-16 ***
+#&gt; Residuals 397 2172.7    5.47                      
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>num_cat</span>)</div><div class='output co'>#&gt; 
 #&gt; Call:
@@ -320,16 +320,16 @@ of the target variable and the data type of the variable of interest.</p>
 #&gt; -7.3066 -1.6282 -0.0416  1.5666  6.1471 
 #&gt; 
 #&gt; Coefficients:
-#&gt;                 Estimate Std. Error t value             Pr(&gt;|t|)    
-#&gt; (Intercept)       5.5229     0.2388  23.131 &lt; 0.0000000000000002 ***
-#&gt; ShelveLocGood     4.6911     0.3484  13.464 &lt; 0.0000000000000002 ***
-#&gt; ShelveLocMedium   1.7837     0.2864   6.229         0.0000000012 ***
+#&gt;                 Estimate Std. Error t value Pr(&gt;|t|)    
+#&gt; (Intercept)       5.5229     0.2388  23.131  &lt; 2e-16 ***
+#&gt; ShelveLocGood     4.6911     0.3484  13.464  &lt; 2e-16 ***
+#&gt; ShelveLocMedium   1.7837     0.2864   6.229  1.2e-09 ***
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; 
 #&gt; Residual standard error: 2.339 on 397 degrees of freedom
 #&gt; Multiple R-squared:  0.3172,	Adjusted R-squared:  0.3138 
-#&gt; F-statistic: 92.23 on 2 and 397 DF,  p-value: &lt; 0.00000000000000022
+#&gt; F-statistic: 92.23 on 2 and 397 DF,  p-value: &lt; 2.2e-16
 #&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>num_cat</span>)</div><div class='img'><img src='relate-4.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

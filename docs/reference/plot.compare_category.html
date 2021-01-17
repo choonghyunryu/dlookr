@@ -97,7 +97,7 @@
 </li>
 <li>
   <a href="https://github.com/choonghyunryu/dlookr/">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -124,7 +124,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for compare_category</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>prompt</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>prompt</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,9 +143,17 @@
 The default is FALSE, so plot NA.</p></td>
     </tr>
     <tr>
+      <th>typographic</th>
+      <td><p>logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>arguments to be passed to methods, such as graphical parameters (see par).
-However, it does not support all parameters.</p></td>
+However, it only support las parameter. las is numeric in 0,1; the style of axis labels.</p><ul>
+<li><p>0 : always parallel to the axis [default],</p></li>
+<li><p>1 : always horizontal to the axis,</p></li>
+</ul></td>
     </tr>
     </table>
 
@@ -162,19 +170,20 @@ However, it does not support all parameters.</p></td>
 <span class='co'># Compare the all categorical variables</span>
 <span class='no'>all_var</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='compare_category.data.frame.html'>compare_category</a></span>(<span class='no'>carseats</span>)
 
-<span class='co'># Print compare class object</span>
+<span class='co'># Print compare class objects</span>
 <span class='no'>all_var</span></div><div class='output co'>#&gt; $`ShelveLoc vs Urban`
-#&gt; <span style='color: #555555;'># A tibble: 8 x 6</span><span>
+#&gt; <span style='color: #555555;'># A tibble: 9 x 6</span><span>
 #&gt;   ShelveLoc Urban     n   rate var1_rate var2_rate
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Bad       No       22 0.055     0.229      0.190
-#&gt; </span><span style='color: #555555;'>2</span><span> Bad       Yes      73 0.182     0.760      0.262
-#&gt; </span><span style='color: #555555;'>3</span><span> Bad       </span><span style='color: #BB0000;'>NA</span><span>        1 0.002</span><span style='text-decoration: underline;'>5</span><span>    0.010</span><span style='text-decoration: underline;'>4</span><span>     0.2  
-#&gt; </span><span style='color: #555555;'>4</span><span> Good      No       28 0.07      0.329      0.241
-#&gt; </span><span style='color: #555555;'>5</span><span> Good      Yes      57 0.142     0.671      0.204
-#&gt; </span><span style='color: #555555;'>6</span><span> Medium    No       66 0.165     0.301      0.569
-#&gt; </span><span style='color: #555555;'>7</span><span> Medium    Yes     149 0.372     0.680      0.534
-#&gt; </span><span style='color: #555555;'>8</span><span> Medium    </span><span style='color: #BB0000;'>NA</span><span>        4 0.01      0.018</span><span style='text-decoration: underline;'>3</span><span>     0.8  
+#&gt; </span><span style='color: #555555;'>1</span><span> Bad       No       22 0.055    0.229       0.188
+#&gt; </span><span style='color: #555555;'>2</span><span> Bad       Yes      73 0.182    0.760       0.263
+#&gt; </span><span style='color: #555555;'>3</span><span> Bad       </span><span style='color: #BB0000;'>NA</span><span>        1 0.002</span><span style='text-decoration: underline;'>5</span><span>   0.010</span><span style='text-decoration: underline;'>4</span><span>      0.2  
+#&gt; </span><span style='color: #555555;'>4</span><span> Good      No       28 0.07     0.329       0.239
+#&gt; </span><span style='color: #555555;'>5</span><span> Good      Yes      55 0.138    0.647       0.198
+#&gt; </span><span style='color: #555555;'>6</span><span> Good      </span><span style='color: #BB0000;'>NA</span><span>        2 0.005    0.023</span><span style='text-decoration: underline;'>5</span><span>      0.4  
+#&gt; </span><span style='color: #555555;'>7</span><span> Medium    No       67 0.168    0.306       0.573
+#&gt; </span><span style='color: #555555;'>8</span><span> Medium    Yes     150 0.375    0.685       0.540
+#&gt; </span><span style='color: #555555;'>9</span><span> Medium    </span><span style='color: #BB0000;'>NA</span><span>        2 0.005    0.009</span><span style='text-decoration: underline;'>13</span><span>     0.4  
 #&gt; 
 #&gt; $`ShelveLoc vs US`
 #&gt; </span><span style='color: #555555;'># A tibble: 6 x 6</span><span>
@@ -191,38 +200,43 @@ However, it does not support all parameters.</p></td>
 #&gt; </span><span style='color: #555555;'># A tibble: 6 x 6</span><span>
 #&gt;   Urban US        n   rate var1_rate var2_rate
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> No    No       44 0.11       0.379   0.310  
-#&gt; </span><span style='color: #555555;'>2</span><span> No    Yes      72 0.18       0.621   0.279  
-#&gt; </span><span style='color: #555555;'>3</span><span> Yes   No       95 0.238      0.341   0.669  
-#&gt; </span><span style='color: #555555;'>4</span><span> Yes   Yes     184 0.46       0.659   0.713  
+#&gt; </span><span style='color: #555555;'>1</span><span> No    No       45 0.112      0.385   0.317  
+#&gt; </span><span style='color: #555555;'>2</span><span> No    Yes      72 0.18       0.615   0.279  
+#&gt; </span><span style='color: #555555;'>3</span><span> Yes   No       94 0.235      0.338   0.662  
+#&gt; </span><span style='color: #555555;'>4</span><span> Yes   Yes     184 0.46       0.662   0.713  
 #&gt; </span><span style='color: #555555;'>5</span><span> </span><span style='color: #BB0000;'>NA</span><span>    No        3 0.007</span><span style='text-decoration: underline;'>5</span><span>     0.6     0.021</span><span style='text-decoration: underline;'>1</span><span> 
 #&gt; </span><span style='color: #555555;'>6</span><span> </span><span style='color: #BB0000;'>NA</span><span>    Yes       2 0.005      0.4     0.007</span><span style='text-decoration: underline;'>75</span><span>
 #&gt; </div><div class='input'>
 <span class='co'># Compare the two categorical variables</span>
 <span class='no'>two_var</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='compare_category.data.frame.html'>compare_category</a></span>(<span class='no'>carseats</span>, <span class='no'>ShelveLoc</span>, <span class='no'>Urban</span>)
 
-<span class='co'># Print compare class object</span>
+<span class='co'># Print compare class objects</span>
 <span class='no'>two_var</span></div><div class='output co'>#&gt; $`ShelveLoc vs Urban`
-#&gt; </span><span style='color: #555555;'># A tibble: 8 x 6</span><span>
+#&gt; </span><span style='color: #555555;'># A tibble: 9 x 6</span><span>
 #&gt;   ShelveLoc Urban     n   rate var1_rate var2_rate
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Bad       No       22 0.055     0.229      0.190
-#&gt; </span><span style='color: #555555;'>2</span><span> Bad       Yes      73 0.182     0.760      0.262
-#&gt; </span><span style='color: #555555;'>3</span><span> Bad       </span><span style='color: #BB0000;'>NA</span><span>        1 0.002</span><span style='text-decoration: underline;'>5</span><span>    0.010</span><span style='text-decoration: underline;'>4</span><span>     0.2  
-#&gt; </span><span style='color: #555555;'>4</span><span> Good      No       28 0.07      0.329      0.241
-#&gt; </span><span style='color: #555555;'>5</span><span> Good      Yes      57 0.142     0.671      0.204
-#&gt; </span><span style='color: #555555;'>6</span><span> Medium    No       66 0.165     0.301      0.569
-#&gt; </span><span style='color: #555555;'>7</span><span> Medium    Yes     149 0.372     0.680      0.534
-#&gt; </span><span style='color: #555555;'>8</span><span> Medium    </span><span style='color: #BB0000;'>NA</span><span>        4 0.01      0.018</span><span style='text-decoration: underline;'>3</span><span>     0.8  
+#&gt; </span><span style='color: #555555;'>1</span><span> Bad       No       22 0.055    0.229       0.188
+#&gt; </span><span style='color: #555555;'>2</span><span> Bad       Yes      73 0.182    0.760       0.263
+#&gt; </span><span style='color: #555555;'>3</span><span> Bad       </span><span style='color: #BB0000;'>NA</span><span>        1 0.002</span><span style='text-decoration: underline;'>5</span><span>   0.010</span><span style='text-decoration: underline;'>4</span><span>      0.2  
+#&gt; </span><span style='color: #555555;'>4</span><span> Good      No       28 0.07     0.329       0.239
+#&gt; </span><span style='color: #555555;'>5</span><span> Good      Yes      55 0.138    0.647       0.198
+#&gt; </span><span style='color: #555555;'>6</span><span> Good      </span><span style='color: #BB0000;'>NA</span><span>        2 0.005    0.023</span><span style='text-decoration: underline;'>5</span><span>      0.4  
+#&gt; </span><span style='color: #555555;'>7</span><span> Medium    No       67 0.168    0.306       0.573
+#&gt; </span><span style='color: #555555;'>8</span><span> Medium    Yes     150 0.375    0.685       0.540
+#&gt; </span><span style='color: #555555;'>9</span><span> Medium    </span><span style='color: #BB0000;'>NA</span><span>        2 0.005    0.009</span><span style='text-decoration: underline;'>13</span><span>     0.4  
 #&gt; </div><div class='input'>
 <span class='co'># plot all pair of variables</span>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>)</div><div class='img'><img src='plot.compare_category-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># plot a pair of variables</span>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>two_var</span>)</div><div class='img'><img src='plot.compare_category-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># plot all pair of variables by prompt</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>, <span class='kw'>prompt</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Hit &lt;Return&gt; to see next plot:</div><div class='output co'>#&gt; Hit &lt;Return&gt; to see next plot:</div><div class='img'><img src='plot.compare_category-5.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Hit &lt;Return&gt; to see next plot:</div><div class='img'><img src='plot.compare_category-6.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>, <span class='kw'>prompt</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.compare_category-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-6.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-7.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># plot a pair of variables without NA</span>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>two_var</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.compare_category-8.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># plot a pair of variables</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>two_var</span>, <span class='kw'>las</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='plot.compare_category-7.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>two_var</span>, <span class='kw'>las</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='plot.compare_category-9.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># plot a pair of variables not focuses on typographic elements</span>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>two_var</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot.compare_category-10.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
