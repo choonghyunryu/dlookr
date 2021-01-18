@@ -569,7 +569,7 @@ binning_by <- function(.data, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
 #'   \item Table of Significance Tests.
 #' }
 #' @return NULL.
-#' @seealso \code{\link{binning_by}}, \code{\link{plot.optimal_bins}}.
+#' @seealso \code{\link{binning_by}}, \code{\link{plot.optimal_bins}}
 #' @examples
 #' # Generate data for the example
 #' library(dplyr)
@@ -604,7 +604,7 @@ binning_by <- function(.data, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
 #' @method summary optimal_bins
 #' @export
 summary.optimal_bins <- function(object, ...) {
-  perf <- attr(bin, "performance")
+  perf <- attr(object, "performance")
   
   summary(perf)
 }
@@ -621,7 +621,7 @@ summary.optimal_bins <- function(object, ...) {
 #' Positive Rate ("posrate"), and Weight of Evidence ("WoE"). and default "all" draw all plot.
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
-#' @seealso \code{\link{binning_by}}, \code{\link{summary.optimal_bins}}.
+#' @seealso \code{\link{binning_by}}, \code{\link{summary.optimal_bins}}
 #' @examples
 #' # Generate data for the example
 #' library(dplyr)
@@ -670,15 +670,18 @@ plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE
         ggplot(aes(x = target, y= indicator, group = target)) +
         geom_boxplot(fill = "slategrey", color = "darkslategrey", width = 0.3) +
         coord_flip() +
-        ggtitle("Distribution of indicator by target")
+        ggtitle("Distribution of target")
       
       if (typographic) {
         p_dist <- p_dist +
-          theme_ipsum() +
-          theme(
-            axis.title.y = element_text(size = 12),
-            axis.title.x = element_text(size = 12)
-          )
+          theme_ipsum() 
+        
+        if (type %in% c("all")) {
+          p_dist <- p_dist +
+            theme(axis.title.y = element_text(size = 12),
+                  axis.title.x = element_text(size = 12),
+                  plot.margin = margin(10, 10, 10, 10))
+        } 
       }
     }
     
@@ -694,12 +697,17 @@ plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE
         geom_text(aes(label = PctRec, y = PctRec + add_pos)) +
         xlab("") +
         ylab("") +
-        ggtitle("Percentage of frequency with bins") +
+        ggtitle("Percentage of frequency") +
         theme(legend.position = "none")
       
       if (typographic) {
         p_freq <- p_freq +
           theme_ipsum() 
+        
+        if (type %in% c("all")) {
+          p_freq <- p_freq +
+            theme(plot.margin = margin(10, 10, 10, 10))
+        } 
       }
     }
     
@@ -715,12 +723,17 @@ plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE
         geom_text(aes(label = PctPos, y = PctPos + add_pos)) +
         xlab("") +
         ylab("") +
-        ggtitle("Percentage of positive with bins") +
+        ggtitle("Percentage of positive") +
         theme(legend.position = "none")
       
       if (typographic) {
         p_badrate <- p_badrate +
-          theme_ipsum()
+          theme_ipsum() 
+        
+        if (type %in% c("all")) {
+          p_badrate <- p_badrate +
+            theme(plot.margin = margin(10, 10, 10, 10))
+        } 
       }
     }
     
@@ -735,12 +748,17 @@ plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE
         geom_text(aes(label = round(WoE, 2), y = WoE + add_pos)) +
         xlab("") +
         ylab("") +
-        ggtitle("Weight of Evidence by bins") +
+        ggtitle("Weight of Evidence") +
         theme(legend.position = "none")
       
       if (typographic) {
         p_woe <- p_woe +
-          theme_ipsum() 
+          theme_ipsum()
+        
+        if (type %in% c("all")) {
+          p_woe <- p_woe +
+            theme(plot.margin = margin(10, 10, 10, 10))
+        }  
       }
     }
     

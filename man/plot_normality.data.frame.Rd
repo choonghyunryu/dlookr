@@ -13,7 +13,9 @@ plot_normality(.data, ...)
   left = c("log", "sqrt", "log+1", "log+a", "1/x", "x^2", "x^3", "Box-Cox",
     "Yeo-Johnson"),
   right = c("sqrt", "log", "log+1", "log+a", "1/x", "x^2", "x^3", "Box-Cox",
-    "Yeo-Johnson")
+    "Yeo-Johnson"),
+  col = "steelblue",
+  typographic = TRUE
 )
 }
 \arguments{
@@ -35,6 +37,10 @@ lower left corner. The default is "log".}
 
 \item{right}{character. Specifies the data transformation method to draw the histogram in the 
 lower right corner. The default is "sqrt".}
+
+\item{col}{a color to be used to fill the bars. The default is "steelblue".}
+
+\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization.}
 }
 \description{
 The plot_normality() visualize distribution information
@@ -85,12 +91,15 @@ plot_normality(carseats)
 
 # Select the variable to plot
 plot_normality(carseats, Income, Price)
-plot_normality(carseats, -Income, -Price)
+plot_normality(carseats, -Income, -Price, col = "gray")
 plot_normality(carseats, 1)
 
 # Change the method of transformation
 plot_normality(carseats, Income, right = "1/x")
 plot_normality(carseats, Income, left = "Box-Cox", right = "Yeo-Johnson")
+
+# Not allow typographic
+plot_normality(carseats, Income, typographic = FALSE)
 
 # Using dplyr::grouped_df
 library(dplyr)

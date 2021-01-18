@@ -261,7 +261,9 @@ normality_group_impl <- function(df, vars, sample) {
 #' lower left corner. The default is "log".
 #' @param right character. Specifies the data transformation method to draw the histogram in the 
 #' lower right corner. The default is "sqrt".
-#'
+#' @param col a color to be used to fill the bars. The default is "steelblue".
+#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+#' 
 #' @seealso \code{\link{plot_normality.tbl_dbi}}, \code{\link{plot_outlier.data.frame}}.
 #' @export
 #' @examples
@@ -278,12 +280,15 @@ normality_group_impl <- function(df, vars, sample) {
 #'
 #' # Select the variable to plot
 #' plot_normality(carseats, Income, Price)
-#' plot_normality(carseats, -Income, -Price)
+#' plot_normality(carseats, -Income, -Price, col = "gray")
 #' plot_normality(carseats, 1)
 #'
 #' # Change the method of transformation
 #' plot_normality(carseats, Income, right = "1/x")
 #' plot_normality(carseats, Income, left = "Box-Cox", right = "Yeo-Johnson")
+#' 
+#' # Not allow typographic
+#' plot_normality(carseats, Income, typographic = FALSE)
 #' 
 #' # Using dplyr::grouped_df
 #' library(dplyr)
@@ -326,47 +331,106 @@ normality_group_impl <- function(df, vars, sample) {
 plot_normality.data.frame <- function(.data, ..., left = c("log", "sqrt", "log+1", "log+a", "1/x", "x^2", 
                                                            "x^3", "Box-Cox", "Yeo-Johnson"),
                                       right = c("sqrt", "log", "log+1", "log+a", "1/x", "x^2", 
-                                                "x^3", "Box-Cox", "Yeo-Johnson")) {
+                                                "x^3", "Box-Cox", "Yeo-Johnson"),
+                                      col = "steelblue", typographic = TRUE) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
   
   left <- match.arg(left)
   right <- match.arg(right)
   
-  plot_normality_impl(.data, vars, left, right)
+  plot_normality_impl(.data, vars, left, right, col, typographic)
 }
 
 #' @importFrom stats qqline qqnorm
-plot_normality_impl <- function(df, vars, left, right) {
+plot_normality_impl <- function(df, vars, left, right, col = "steelblue", typographic = TRUE) {
   if (length(vars) == 0) vars <- names(df)
 
   if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
 
   idx_numeric <- find_class(df[, vars], type = "numerical")
 
-  plot_normality <- function(df, var, left, right) {
+  plot_normality <- function(df, var, left, right, col = "steelblue", typographic = TRUE) {
     x <- pull(df, var)
 
-    op <- par(no.readonly = TRUE)
-    par(mfrow = c(2, 2), oma = c(0, 0, 3, 0), mar = c(2, 4, 2, 2))
-    on.exit(par(op))
-
-    hist(x, col = "lightblue", las = 1, main = "origin")
+    main <- sprintf("Normality Diagnosis Plot (%s)", var) 
     
-    x2 <- x[which(!is.infinite(x))]
-    
-    qqnorm(x2, main = "origin: Q-Q plot")
-    qqline(x2)
-
-    trans_left <- get_transform(x, left)
-    trans_right <- get_transform(x, right)
-    
-    hist(trans_left, col = "lightblue", las = 1, main = paste(left, "transformation"))
-    hist(trans_right, col = "lightblue", las = 1, main = paste(right, "transformation"))
-
-    title(sprintf("Normality Diagnosis Plot (%s)", var), outer = TRUE)
+    plot_normality_raw(x, left, right, main, col, typographic)
   }
 
-  tmp <- lapply(vars[idx_numeric], function(x) plot_normality(df, x, left, right))
+  tmp <- lapply(vars[idx_numeric], function(x) plot_normality(df, x, left, right, col, typographic))
+}
+
+
+#' @import dplyr
+#' @import ggplot2
+#' @import hrbrthemes
+#' @importFrom gridExtra grid.arrange
+#' @importFrom grid textGrob gpar
+plot_normality_raw <- function(x, left = c("log", "sqrt", "log+1", "log+a", "1/x", "x^2", 
+                                           "x^3", "Box-Cox", "Yeo-Johnson"),
+                               right = c("sqrt", "log", "log+1", "log+a", "1/x", "x^2", 
+                                         "x^3", "Box-Cox", "Yeo-Johnson"),
+                               main = NULL, col = "steelblue", typographic = TRUE) {
+  left <- match.arg(left)
+  right <- match.arg(right)
+  
+  main <- ifelse(is.null(main), "Normality Diagnose Plot", main)
+  
+  df <- data.frame(x = x) %>% 
+    filter(!is.na(x))
+  
+  # calulate number of bins using Sturges' formula
+  n_bins <- round(log2(nrow(df)) + 1)
+  
+  top_left <- df %>% 
+    ggplot(aes(x)) +
+    geom_histogram(fill = col, color = "black", alpha = 0.8, bins = n_bins) +
+    labs(title = "origin", x = "", y = "")
+  
+  top_right <- df %>% 
+    filter(!is.infinite(x)) %>% 
+    ggplot(aes(sample = x, group = 1)) +
+    stat_qq(color = col) + 
+    stat_qq_line() +
+    labs(title = "origin: Q-Q plot", x = "", y = "")
+  
+  bottom_left <- df %>% 
+    mutate(x = get_transform(x, left)) %>% 
+    ggplot(aes(x)) +
+    geom_histogram(fill = col, color = "black", alpha = 0.8, bins = n_bins) +
+    labs(title = paste(left, "transformation"), x = "", y = "")
+  
+  bottom_right <- df %>% 
+    mutate(x = get_transform(x, right)) %>% 
+    ggplot(aes(x)) +
+    geom_histogram(fill = col, color = "black", alpha = 0.8, bins = n_bins) +
+    labs(title = paste(right, "transformation"), x = "", y = "")
+  
+  if (typographic) {
+    top_left <- top_left +
+      theme_ipsum() +
+      theme(plot.margin = margin(20, 30, 10, 30))
+    
+    top_right <- top_right +
+      theme_ipsum() +
+      theme(plot.margin = margin(20, 30, 10, 30))
+    
+    bottom_left <- bottom_left +
+      theme_ipsum() +
+      theme(plot.margin = margin(10, 30, 20, 30))
+    
+    bottom_right <- bottom_right +
+      theme_ipsum() +
+      theme(plot.margin = margin(10, 30, 20, 30))
+    
+    top <- grid::textGrob(main, gp = grid::gpar(fontfamily = "Arial Narrow", just = "left",
+                                                fontsize = 18, font = 2))
+  } else {
+    top <- main
+  }
+  
+  suppressWarnings(gridExtra::grid.arrange(top_left, top_right, bottom_left, bottom_right, 
+                                           ncol = 2, nrow = 2, top = top))
 }
 
 

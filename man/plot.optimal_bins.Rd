@@ -50,5 +50,5 @@ extract(bin) \%>\%
 
 }
 \seealso{
-\code{\link{binning_by}}, \code{\link{summary.optimal_bins}}.
+\code{\link{binning_by}}, \code{\link{summary.optimal_bins}}
 }

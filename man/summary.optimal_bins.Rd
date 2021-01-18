@@ -70,5 +70,5 @@ extract(bin) \%>\%
 
 }
 \seealso{
-\code{\link{binning_by}}, \code{\link{plot.optimal_bins}}.
+\code{\link{binning_by}}, \code{\link{plot.optimal_bins}}
 }
