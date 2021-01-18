@@ -11,7 +11,8 @@ plot_na_pareto(
   main = NULL,
   col = "black",
   grade = list(Good = 0.05, OK = 0.4, Bad = 0.8, Remove = 1),
-  plot = TRUE
+  plot = TRUE,
+  typographic = TRUE
 )
 }
 \arguments{
@@ -32,6 +33,9 @@ In case of FALSE, set it to frequency.}
 The default values are Good: [0, 0.05], OK: (0.05, 0.4], Bad: (0.4, 0.8], Remove: (0.8, 1].}
 
 \item{plot}{logical. If this value is TRUE then visualize plot. else if FALSE, return aggregate information about missing values.}
+
+\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
 }
 \description{
 Visualize pareto chart for variables with missing value.
@@ -75,5 +79,8 @@ main = "Pareto Chart for mice::boys")
 
 # Return the aggregate information about missing values.
 plot_na_pareto(mice::boys, only_na = TRUE, plot = FALSE)
+
+# Not support typographic elements
+plot_na_pareto(mice::boys, typographic = FALSE)
 
 }

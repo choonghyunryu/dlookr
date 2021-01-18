@@ -243,7 +243,7 @@ plot.transform <- function(x, typographic = TRUE, ...) {
     filter(key == "transformation") %>%
     ggplot(aes(x = value)) +
     geom_density(fill = "#69b3a2", color = "black", alpha = 0.7, na.rm = TRUE) +
-    ggtitle(sprintf("Transformation Data with '%s'", method))+
+    ggtitle(sprintf("Transformation with '%s'", method))+
     theme(plot.title = element_text(hjust = 0.5))
 
   if (typographic) {

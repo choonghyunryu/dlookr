@@ -9,6 +9,9 @@
 \arguments{
 \item{x}{an object of class "bins", usually, a result of a call to binning().}
 
+\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
+
 \item{...}{arguments to be passed to methods, such as graphical parameters (see par).}
 }
 \description{

@@ -9,7 +9,8 @@ plot_na_intersect(
   only_na = TRUE,
   n_intersacts = NULL,
   n_vars = NULL,
-  main = NULL
+  main = NULL,
+  typographic = TRUE
 )
 }
 \arguments{
@@ -28,6 +29,9 @@ If this value is greater than the number of variables containing missing values,
 all variables containing missing values are visualized. Variables containing many missing values are chosen first.}
 
 \item{main}{character. Main title.}
+
+\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
 }
 \description{
 Visualize the combinations of missing value across cases.
@@ -67,5 +71,8 @@ plot_na_intersect(mice::boys, n_vars = 5)
 
 # Using n_intersacts argument
 plot_na_intersect(mice::boys, only_na = FALSE, n_intersacts = 7)
+
+# Not support typographic elements
+plot_na_intersect(mice::boys, typographic = FALSE)
 
 }

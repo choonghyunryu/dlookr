@@ -7,7 +7,7 @@
 \usage{
 plot_outlier(.data, ...)
 
-\method{plot_outlier}{data.frame}(.data, ..., col = "lightblue")
+\method{plot_outlier}{data.frame}(.data, ..., col = "steelblue", typographic = TRUE)
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}
@@ -21,7 +21,10 @@ These arguments are automatically quoted and evaluated in a context
 where column names represent column positions.
 They support unquoting and splicing.}
 
-\item{col}{a color to be used to fill the bars. The default is "lightblue".}
+\item{col}{a color to be used to fill the bars. The default is "steelblue".}
+
+\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
 }
 \description{
 The plot_outlier() visualize outlier information
@@ -64,21 +67,28 @@ plot_outlier(carseats, 6)
 # Using the col argument
 plot_outlier(carseats, Sales, col = "gray")
 
+# Using the typographic argument
+plot_outlier(carseats, Sales, typographic = FALSE)
+
 # Using pipes ---------------------------------
 library(dplyr)
 
 # Visualization of all numerical variables
 carseats \%>\%
   plot_outlier()
+  
 # Positive values select variables
 carseats \%>\%
   plot_outlier(Sales, Price)
+  
 # Negative values to drop variables
 carseats \%>\%
   plot_outlier(-Sales, -Price)
+  
 # Positions values select variables
 carseats \%>\%
   plot_outlier(6)
+  
 # Positions values select variables
 carseats \%>\%
   plot_outlier(-1, -5)

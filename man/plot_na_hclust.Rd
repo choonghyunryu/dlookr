@@ -4,7 +4,13 @@
 \alias{plot_na_hclust}
 \title{Combination chart for missing value}
 \usage{
-plot_na_hclust(x, main = NULL, col.left = "#009E73", col.right = "#56B4E9")
+plot_na_hclust(
+  x,
+  main = NULL,
+  col.left = "#009E73",
+  col.right = "#56B4E9",
+  typographic = TRUE
+)
 }
 \arguments{
 \item{x}{data frames, or objects to be coerced to one.}
@@ -14,6 +20,9 @@ plot_na_hclust(x, main = NULL, col.left = "#009E73", col.right = "#56B4E9")
 \item{col.left}{character. The color of left legend that is frequency of NA. default is "#009E73".}
 
 \item{col.right}{character. The color of right legend that is percentage of NA. default is "#56B4E9".}
+
+\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
 }
 \description{
 Visualize distribution of missing value by combination of variables.
@@ -40,5 +49,8 @@ plot_na_hclust(mice::boys)
 
 # Change the main title.
 plot_na_hclust(mice::boys, main = "Distribution of missing value")
+
+# Not support typographic elements
+plot_na_hclust(mice::boys, typographic = FALSE)
 
 }

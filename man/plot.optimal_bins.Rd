@@ -12,7 +12,8 @@
 \item{type}{character. options for visualization. Distribution ("dist"), Relateive Frequency ("freq"),
 Positive Rate ("posrate"), and Weight of Evidence ("WoE"). and default "all" draw all plot.}
 
-\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. Default is TRUE.}
+\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
 }
 \description{
 It generates plots for understand distribution, frequency, bad rate, and weight of evidence using optimal_bins.

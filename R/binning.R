@@ -269,6 +269,8 @@ print.bins <- function(x, ...) {
 #' The plot at the top is a histogram representing the frequency of the level.
 #' The plot at the bottom is a bar chart representing the frequency of the level.
 #' @param x an object of class "bins", usually, a result of a call to binning().
+#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
 #' @seealso \code{\link{binning}}, \code{\link{print.bins}}, \code{\link{summary.bins}}.
 #' @examples
@@ -617,7 +619,8 @@ summary.optimal_bins <- function(object, ...) {
 #' @param x an object of class "optimal_bins", usually, a result of a call to binning_by().
 #' @param type character. options for visualization. Distribution ("dist"), Relateive Frequency ("freq"),
 #' Positive Rate ("posrate"), and Weight of Evidence ("WoE"). and default "all" draw all plot.
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. Default is TRUE.
+#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @seealso \code{\link{binning_by}}, \code{\link{summary.optimal_bins}}.
 #' @examples
 #' # Generate data for the example

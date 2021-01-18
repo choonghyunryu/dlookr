@@ -549,8 +549,9 @@ plot_outlier <- function(.data, ...) {
 #' These arguments are automatically quoted and evaluated in a context
 #' where column names represent column positions.
 #' They support unquoting and splicing.
-#' @param col a color to be used to fill the bars. The default is "lightblue".
-#'
+#' @param col a color to be used to fill the bars. The default is "steelblue".
+#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @seealso \code{\link{plot_outlier.tbl_dbi}}, \code{\link{diagnose_outlier.data.frame}}.
 #' @export
 #' @examples
@@ -571,21 +572,28 @@ plot_outlier <- function(.data, ...) {
 #' # Using the col argument
 #' plot_outlier(carseats, Sales, col = "gray")
 #' 
+#' # Using the typographic argument
+#' plot_outlier(carseats, Sales, typographic = FALSE)
+#' 
 #' # Using pipes ---------------------------------
 #' library(dplyr)
 #'
 #' # Visualization of all numerical variables
 #' carseats %>%
 #'   plot_outlier()
+#'   
 #' # Positive values select variables
 #' carseats %>%
 #'   plot_outlier(Sales, Price)
+#'   
 #' # Negative values to drop variables
 #' carseats %>%
 #'   plot_outlier(-Sales, -Price)
+#'   
 #' # Positions values select variables
 #' carseats %>%
 #'   plot_outlier(6)
+#'   
 #' # Positions values select variables
 #' carseats %>%
 #'   plot_outlier(-1, -5)
@@ -604,13 +612,13 @@ plot_outlier <- function(.data, ...) {
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
 #' @export
-plot_outlier.data.frame <- function(.data, ..., col = "lightblue") {
+plot_outlier.data.frame <- function(.data, ..., col = "steelblue", typographic = TRUE) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
-  plot_outlier_impl(.data, vars, col)
+  plot_outlier_impl(.data, vars, col, typographic)
 }
 
 #' @importFrom graphics boxplot hist title par
-plot_outlier_impl <- function(df, vars, col = "lightblue") {
+plot_outlier_impl <- function(df, vars, col = "steelblue", typographic = TRUE) {
   if (length(vars) == 0) vars <- names(df)
 
   if (length(vars) == 1 & !tibble::is_tibble(df)) 
@@ -618,22 +626,11 @@ plot_outlier_impl <- function(df, vars, col = "lightblue") {
 
   idx_numeric <- find_class(df[, vars], type = "numerical")
   
-  plot_outliers <- function(df, var, col) {
+  plot_outliers <- function(df, var, col, typographic) {
     x <- dplyr::pull(df, var)
+    main <- sprintf("Outlier Diagnosis Plot (%s)", var)
     
-    op <- par(no.readonly = TRUE)
-    par(mfrow = c(2, 2), oma = c(0, 0, 3, 0), mar = c(2, 4, 2, 2))
-    on.exit(par(op))
-
-    boxplot(x, main = "With outliers", col = col)
-    hist(x, main = "With outliers", xlab = NA, ylab = NA, col = col)
-
-    outlier <- boxplot.stats(x)$out
-    x <- ifelse(x %in% outlier, NA, x)
-    boxplot(x, main = "Without outliers", col = col)
-    hist(x, main = "Without outliers", xlab = NA, ylab = NA, col = col)
-
-    title(sprintf("Outlier Diagnosis Plot (%s)", var), outer = TRUE)
+    plot_outlier_raw(x, main, col, typographic)
   }
 
   if (length(idx_numeric) == 0) {
@@ -651,8 +648,79 @@ plot_outlier_impl <- function(df, vars, col = "lightblue") {
     }
     
     tmp <- lapply(vars[idx_numeric][!idx_na],
-                  function(x) plot_outliers(df, x, col))
+                  function(x) plot_outliers(df, x, col, typographic))
   }
+}
+
+#' @import ggplot2
+#' @import hrbrthemes
+#' @importFrom gridExtra grid.arrange
+#' @importFrom grid textGrob gpar
+plot_outlier_raw <- function(x, main = NULL, col = "steelblue", typographic = TRUE) {
+  main <- ifelse(is.null(main), "Outlier Diagnose Plot", main)
+  
+  df_all <- data.frame(x = x) %>% 
+    filter(!is.na(x))
+  
+  df_out <- data.frame(x = x) %>% 
+    filter(!is.na(x)) %>% 
+    filter(!x  %in% boxplot.stats(x)$out)
+  
+  # calulate number of bins using Sturges' formula
+  n_bins_all <- round(log2(nrow(df_all)) + 1)
+  n_bins_out <- round(log2(nrow(df_out)) + 1)
+  
+  top_left <- df_all %>% 
+    ggplot(aes(x)) +
+    geom_boxplot(fill = col, color = "black", alpha = 0.8) +
+    coord_flip(ylim = c(-0.7, 0.7)) + 
+    labs(title = "With outliers", x = "", y = "") +
+    theme(axis.text.x = element_blank(),
+          axis.ticks.x = element_blank())
+  
+  bottom_left <- df_out %>% 
+    ggplot(aes(x)) +
+    geom_boxplot(fill = col, color = "black", alpha = 0.8) +
+    coord_flip(ylim = c(-0.7, 0.7)) + 
+    labs(title = "With outliers", x = "", y = "") +
+    theme(axis.text.x = element_blank(),
+          axis.ticks.x = element_blank())
+  
+  top_right <- df_all %>% 
+    ggplot(aes(x)) +
+    geom_histogram(fill = col, color = "black", alpha = 0.8, bins = n_bins_all) +
+    labs(title = "With outliers", x = "", y = "")
+  
+  bottom_right <- df_out %>% 
+    ggplot(aes(x)) +
+    geom_histogram(fill = col, color = "black", alpha = 0.8, bins = n_bins_out) +
+    labs(title = "Without outliers", x = "", y = "")
+  
+  if (typographic) {
+    top_left <- top_left +
+      theme_ipsum() +
+      theme(axis.text.x = element_blank(),
+            axis.ticks.x = element_blank())
+    
+    top_right <- top_right +
+      theme_ipsum()
+    
+    bottom_left <- bottom_left +
+      theme_ipsum() +
+      theme(axis.text.x = element_blank(),
+            axis.ticks.x = element_blank())
+    
+    bottom_right <- bottom_right +
+      theme_ipsum()
+    
+    top <- grid::textGrob(main, gp = grid::gpar(fontfamily = "Arial Narrow", just = "left",
+                                                fontsize = 18, font = 2))
+  } else {
+    top <- main
+  }
+  
+  suppressWarnings(gridExtra::grid.arrange(top_left, top_right, bottom_left, bottom_right, 
+                                           ncol = 2, nrow = 2, widths = c(2, 3), top = top))
 }
 
 
