@@ -598,6 +598,8 @@ diagnose_outlier.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_si
 #' table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.
 #' @param collect_size a integer. The number of data samples from the DBMS to R. 
 #' Applies only if in_database = FALSE.
+#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' 
 #' @seealso \code{\link{plot_outlier.data.frame}}, \code{\link{diagnose_outlier.tbl_dbi}}.
 #' @export
@@ -639,6 +641,10 @@ diagnose_outlier.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_si
 #' # Positions values select variables
 #' carseats %>%
 #'   plot_outlier(-1, -5)
+#'   
+#' # Not allow the typographic elements
+#' carseats %>%
+#'   plot_outlier(-1, -5, typographic = FALSE)
 #'
 #' # Using pipes & dplyr -------------------------
 #' # Visualization of numerical variables with a ratio of
@@ -652,8 +658,8 @@ diagnose_outlier.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_si
 #'                  select(variables) %>%
 #'                  pull())
 #'       
-plot_outlier.tbl_dbi <- function(.data, ..., col = "lightblue", 
-  in_database = FALSE, collect_size = Inf) {
+plot_outlier.tbl_dbi <- function(.data, ..., col = "steelblue", 
+  in_database = FALSE, collect_size = Inf, typographic = TRUE) {
   vars <- tidyselect::vars_select(colnames(.data), !!! rlang::quos(...))
   
   if (in_database) {
@@ -661,7 +667,7 @@ plot_outlier.tbl_dbi <- function(.data, ..., col = "lightblue",
   } else {
     .data %>% 
       dplyr::collect(n = collect_size) %>%
-      plot_outlier_impl(vars, col)
+      plot_outlier_impl(vars, col, typographic)
   }
 }
 
@@ -849,7 +855,9 @@ normality.tbl_dbi <- function(.data, ..., sample = 5000,
 #' lower left corner. The default is "log".
 #' @param right character. Specifies the data transformation method to draw the histogram in the 
 #' lower right corner. The default is "sqrt".
-#'
+#' @param col a color to be used to fill the bars. The default is "steelblue".
+#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+#' 
 #' @seealso \code{\link{plot_normality.data.frame}}, \code{\link{plot_outlier.tbl_dbi}}.
 #' @export
 #' @examples
@@ -883,6 +891,11 @@ normality.tbl_dbi <- function(.data, ..., sample = 5000,
 #'   tbl("TB_CARSEATS") %>% 
 #'   plot_normality(1)
 #'
+#' # Not allow the typographic elements
+#' con_sqlite %>% 
+#'   tbl("TB_CARSEATS") %>% 
+#'   plot_normality(1, typographic = FALSE)
+#'   
 #' # Using pipes & dplyr -------------------------
 #' # Plot 'Sales' variable by 'ShelveLoc' and 'US'
 #' con_sqlite %>% 
@@ -909,7 +922,8 @@ plot_normality.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
                                    left = c("log", "sqrt", "log+1", "1/x", "x^2", 
                                             "x^3", "Box-Cox", "Yeo-Johnson"),
                                    right = c("sqrt", "log", "log+1", "1/x", "x^2", 
-                                             "x^3", "Box-Cox", "Yeo-Johnson")) {
+                                             "x^3", "Box-Cox", "Yeo-Johnson"),
+                                   col = "steelblue", typographic = TRUE) {
   vars <- tidyselect::vars_select(colnames(.data), !!! rlang::quos(...))
   
   left <- match.arg(left)
@@ -921,11 +935,11 @@ plot_normality.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
     if (class(.data$ops)[1] != "op_group_by") {
       .data %>% 
         dplyr::collect(n = collect_size) %>%
-        plot_normality_impl(vars, left, right)
+        plot_normality_impl(vars, left, right, col, typographic)
     } else {
       .data %>% 
         dplyr::collect(n = collect_size) %>%
-        plot_normality_group_impl(vars, left, right)
+        plot_normality_group_impl(vars, left, right, col, typographic)
     }
   }
 }
@@ -1342,7 +1356,7 @@ describe.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = Inf
 #' # If the target variable is a categorical variable
 #' categ <- target_by(con_sqlite %>% tbl("TB_CARSEATS") , US)
 #'
-#' # If the variable of interest is a numarical variable
+#' # If the variable of interest is a numerical variable
 #' cat_num <- relate(categ, Sales)
 #' cat_num
 #' summary(cat_num)
@@ -1359,7 +1373,7 @@ describe.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = Inf
 #' # and In-memory mode and collect size is 350
 #' num <- target_by(con_sqlite %>% tbl("TB_CARSEATS"), Sales, collect_size = 350)
 #'
-#' # If the variable of interest is a numarical column
+#' # If the variable of interest is a numerical column
 #' num_num <- relate(num, Price)
 #' num_num
 #' summary(num_num)

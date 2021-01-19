@@ -1126,6 +1126,8 @@ plot.compare_numeric <- function(x, prompt = FALSE, typographic = TRUE, ...) {
         panel.background = element_rect(fill = "transparent",colour = NA),
         plot.background = element_rect(fill = "transparent",colour = NA))
     
+    title <- sprintf("Scatterplots with %s and %s", xvar, yvar)
+    
     if (typographic) {
       p_scatter <- p_scatter +
         theme_ipsum() +
@@ -1156,13 +1158,13 @@ plot.compare_numeric <- function(x, prompt = FALSE, typographic = TRUE, ...) {
               panel.border = element_blank(),
               panel.background = element_blank(),              
               plot.margin = margin(30, 0, 30, 0))
+      
+      title <- grid::textGrob(title, gp = grid::gpar(fontfamily = "Arial Narrow", fontsize = 18, font = 2),
+                              x = unit(0.075, "npc"), just = "left")
     }
     
-    title <- sprintf("Scatterplots with %s and %s", xvar, yvar)
     suppressWarnings(gridExtra::grid.arrange(box_left, p_scatter, blank, box_bottom, ncol = 2, nrow = 2,
-                            widths = c(1, 25), heights=c(20, 1),
-                            top = grid::textGrob(title, gp = grid::gpar(fontfamily = "Arial Narrow", just = "left",
-                                                            fontsize = 18, font = 2))))
+                            widths = c(1, 25), heights=c(20, 1), top = title))
   } 
 }
 

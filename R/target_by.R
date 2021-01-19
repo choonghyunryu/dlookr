@@ -70,6 +70,9 @@ target_by <- function(.data, target, ...) {
 #' summary(num_cat)
 #' plot(num_cat)
 #'
+#' # Not allow typographic
+#' plot(num_cat, typographic = FALSE)
+#' 
 #' @method target_by data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang enquo
@@ -209,6 +212,10 @@ target_by_impl <- function(.data, target) {
 #' num_cat
 #' summary(num_cat)
 #' plot(num_cat)
+#' 
+#' # Not allow typographic
+#' plot(num_cat, typographic = FALSE)
+#' 
 #' @export
 relate <- function(.data, predictor) {
   UseMethod("relate", .data)
@@ -436,6 +443,10 @@ relate_impl <- function(.data, predictor) {
 #' num_cat
 #' summary(num_cat)
 #' plot(num_cat)
+#' 
+#' # Not allow typographic
+#' plot(num_cat, typographic = FALSE)
+#' 
 #' @method print relate
 #' @importFrom stats anova
 #' @export
@@ -471,6 +482,8 @@ print.relate <- function(x, ...) {
 #' The default value is 1000.
 #' @param pal Color palette to paint hexabin. Use only when the target and predictor are numeric variables.
 #' Applied only when the number of observations is greater than hex_thres.
+#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
 #' only applies when the model argument is TRUE, and is used for ... of the plot.lm() function.
 #' @seealso \code{\link{relate}}, \code{\link{print.relate}}.
@@ -511,68 +524,141 @@ print.relate <- function(x, ...) {
 #' num_cat
 #' summary(num_cat)
 #' plot(num_cat)
+#' 
+#' # Not allow typographic
+#' plot(num_cat, typographic = FALSE)
+#'  
 #' @method plot relate
 #' @import ggplot2
+#' @import hrbrthemes
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom gridExtra grid.arrange
 #' @importFrom stats complete.cases
 #' @importFrom graphics plot
 #' @export
-plot.relate <- function(x, model = FALSE, 
-  hex_thres = 1000, pal = RColorBrewer::brewer.pal(7,"YlOrRd"), ...) {
+plot.relate <- function(x, model = FALSE, hex_thres = 1000, pal = RColorBrewer::brewer.pal(7,"YlOrRd"), 
+                        typographic = TRUE,...) {
   type <- attr(x, "model")
   xvar <- attr(x, "predictor")
   yvar <- attr(x, "target")
-
+  
   if (type == "describe") {
-    ggplot(aes_string(x = xvar, color = yvar), data = attr(x, "raw")) +
+    p_desc <- ggplot(aes_string(x = xvar, color = yvar), data = attr(x, "raw")) +
       geom_density() +
       ggtitle(sprintf("%s's density plot by %s", yvar, xvar)) +
       theme_bw() +
       theme(plot.title = element_text(hjust = 0.5))
+    
+    if (typographic) {
+      p_desc <- p_desc +
+        theme_ipsum() +
+        scale_color_ipsum() +
+        theme(axis.title.x = element_text(size = 12),
+              axis.title.y = element_text(size = 12))
+    }
+    
+    suppressWarnings(p_desc)
   } else if (type == "crosstable") {
-    oldClass(x) <- c("xtabs", "table")
-
-    plot(t(x), col = RColorBrewer::brewer.pal(8, "Dark2"),
-      main = sprintf("%s's mosaics plot by %s", yvar, xvar))
+    data <- as.data.frame(x) %>% 
+      select(a = as.character(xvar), b = yvar, n = Freq) 
+    
+    first <- data[1, 1] %>% as.character
+    y <- data %>% 
+      filter(a %in% first) %>% 
+      select(b, n)
+    
+    y_lab <- y$b %>% rev() %>% as.character()
+    y <- y$n %>% rev()
+    
+    y_cumsum <- cumsum(y)
+    y_center <- y / 2
+    
+    y_pos <- numeric(length(y))
+    for (j in seq(y)) {
+      if (j == 1) {
+        y_pos[j] <- y_center[j]
+      } else {
+        y_pos[j] <- y_cumsum[j-1] + y_center[j]
+      }
+      y_pos[j] <- y_pos[j] / sum(y)
+    }
+    
+    p_cross <- data %>% 
+      group_by(a) %>% 
+      mutate(x_width = sum(n)) %>% 
+      ggplot(aes(x = factor(a), y = n)) +
+      geom_col(aes(width = x_width, fill = factor(b)),
+               color = "white", size = 2, 
+               position = position_fill(reverse = FALSE)) +
+      facet_grid(~ a, space = "free", scales = "free", switch = "x") +
+      scale_x_discrete(name = xvar) +
+      scale_y_continuous(name = yvar, breaks = y_pos, labels = y_lab) +
+      labs(title = sprintf("%s's mosaics plot by %s", yvar, xvar)) +
+      theme(legend.position = "none",
+            axis.text.x = element_blank(),
+            axis.ticks.x = element_blank(),
+            strip.background = element_blank(),
+            panel.spacing = unit(0, "pt"))
+    
+    if (typographic) {
+      p_cross <- p_cross +
+        theme_ipsum() +
+        scale_fill_ipsum(na.value = "grey80") +
+        theme(legend.position = "none",
+              panel.grid.major.x = element_blank(),
+              axis.text.x = element_blank(),
+              axis.text.y = element_text(size = 12),
+              axis.title.x = element_text(size = 12),
+              axis.title.y = element_text(size = 12),
+              panel.spacing = unit(0, "pt"))
+    }
+    
+    suppressWarnings(p_cross)
   } else if (type == "linear") {
     if (model) {
       op <- par(no.readonly = TRUE)
       on.exit(par(op))
-
+      
       oldClass(x) <- c("lm")
-
+      
       par(mfrow = c(2, 2))
       plot(x, which = 1, ...)
       plot(x, which = 2, ...)
       plot(x, which = 3, ...)
       plot(x, which = 5, ...)
     } else {
-      fig1 <- ggplot(aes_string(x = xvar, y = yvar), data = attr(x, "raw")) 
+      fig1 <- ggplot(aes_string(x = yvar, y = xvar), data = attr(x, "raw")) 
       if (NROW(attr(x, "raw")) >= hex_thres) {
         fig1 <- fig1 + 
           geom_hex(color = "grey") +
           scale_fill_gradientn(colours = pal) + 
           geom_density2d(colour = "black")
       } else {
-        fig1 <- fig1 + geom_point(alpha = 1/10)
+        fig1 <- fig1 + geom_point(alpha = 1/5)
       }
       
       fig1 <- fig1 +   
-        stat_smooth(method = lm) +
-        ggtitle(sprintf("%s's scatter plot by %s", yvar, xvar)) +
+        stat_smooth(method = lm, formula = 'y ~ x') +
         theme_bw() +
+        labs(title = sprintf("%s by %s", yvar, xvar)) +
         theme(plot.title = element_text(hjust = 0.5))
-
+      
+      if (typographic) {
+        fig1 <- fig1 +
+          theme_ipsum() +
+          theme(axis.title.x = element_text(size = 12),
+                axis.title.y = element_text(size = 12))
+      }
+      
       idx <- complete.cases(attr(x, "raw"))
       Predicted <- x$fitted.values
       Observed <- unlist(attr(x, "raw")[idx, 1])
-
+      
       df <- data.frame(Predicted, Observed)
-
+      
       min_x <- min(c(df$Predicted, df$Observed))
       max_x <- max(c(df$Predicted, df$Observed))
-
+      
       fig2 <- ggplot(aes(x = Observed, y = Predicted), data = df) 
       if (NROW(attr(x, "raw")) >= hex_thres) {
         fig2 <- fig2 + 
@@ -580,36 +666,55 @@ plot.relate <- function(x, model = FALSE,
           scale_fill_gradientn(colours = pal) + 
           geom_density2d(colour = "black")
       } else {
-        fig2 <- fig2 + geom_point(alpha = 1/10)
+        fig2 <- fig2 + geom_point(alpha = 1/5)
       }
       fig2 <- fig2 + 
         xlim(min_x, max_x) +
         ylim(min_x, max_x) +
         geom_abline(intercept = 0, slope = 1, color = "red", linetype = 2) +
-        ggtitle(sprintf("Predicted vs Observed (%s)", yvar)) +
         theme_bw() +
-        theme(plot.title = element_text(hjust = 0.5))
-
-      gridExtra::grid.arrange(fig1, fig2, ncol = 2)
+        labs(title = "Predicted vs Observed",
+             x = sprintf("Observed (%s)", yvar),
+             y = sprintf("Predicted (%s)", yvar))
+      theme(plot.title = element_text(hjust = 0.5))
+      
+      if (typographic) {
+        fig2 <- fig2 +
+          theme_ipsum() +
+          theme(axis.title.x = element_text(size = 12),
+                axis.title.y = element_text(size = 12))
+      }
+      
+      suppressWarnings(gridExtra::grid.arrange(fig1, fig2, ncol = 2))
     }
   } else if (type == "ANOVA") {
     if (model) {
       op <- par(no.readonly = TRUE)
       on.exit(par(op))
-
+      
       oldClass(x) <- c("lm")
-
+      
       par(mfrow = c(2, 2))
       plot(x, which = 1, ...)
       plot(x, which = 2, ...)
       plot(x, which = 3, ...)
       plot(x, which = 5, ...)
     } else {
-      ggplot(aes_string(x = xvar, y = yvar, fill = xvar), data = attr(x, "raw")) +
-        geom_boxplot() +
+      p_box <- ggplot(aes_string(x = xvar, y = yvar, fill = xvar), data = attr(x, "raw")) +
+        geom_boxplot(alpha = 0.7) +
         ggtitle(sprintf("%s's box plot by %s", yvar, xvar)) +
         theme_bw() +
         theme(plot.title = element_text(hjust = 0.5))
+      
+      if (typographic) {
+        p_box <- p_box +
+          theme_ipsum() +
+          scale_fill_ipsum() +
+          theme(axis.title.x = element_text(size = 12),
+                axis.title.y = element_text(size = 12))
+      }
+      
+      suppressWarnings(p_box)
     }
   }
 }

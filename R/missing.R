@@ -320,7 +320,7 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
 #' # Using n_intersacts argument
 #' plot_na_intersect(mice::boys, only_na = FALSE, n_intersacts = 7)
 #' 
-#' # Not support typographic elements
+#' # Not allow typographic elements
 #' plot_na_intersect(mice::boys, typographic = FALSE)
 #' 
 #' @importFrom purrr map_int
@@ -496,8 +496,9 @@ plot_na_intersect <- function (x, only_na = TRUE, n_intersacts = NULL,
             axis.text.x = element_text(color = "transparent"),
             plot.margin = margin(0, 10, 30, 0))
     
-    main <- grid::textGrob(main, gp = grid::gpar(fontfamily = "Arial Narrow", just = "left",
-                                                fontsize = 18, font = 2))
+    main <- grid::textGrob(main, gp = grid::gpar(fontfamily = "Arial Narrow", fontsize = 18, font = 2),
+                          x = unit(0.075, "npc"), just = "left")
+    
   } else {
     body <- body +
       theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1,

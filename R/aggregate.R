@@ -30,6 +30,8 @@ plot_bar_category <- function(.data, ...) {
 #' @param title character. a main title for the plot.
 #' @param each logical. Specifies whether to draw multiple plots on one screen. 
 #' The default is FALSE, which draws multiple plots on one screen.
+#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' 
 #' @examples
 #' # Generate data for the example
@@ -46,7 +48,13 @@ plot_bar_category <- function(.data, ...) {
 #' # Select the variable to diagnose
 #' plot_bar_category(carseats, "ShelveLoc", "Urban")
 #' plot_bar_category(carseats, -ShelveLoc, -Urban)
-#'
+#' 
+#' # Visualize the each plots
+#' plot_bar_category(carseats, each = TRUE)
+#' 
+#' # Not allow typographic argument
+#' plot_bar_category(carseats, typographic = FALSE)
+#' 
 #' # Using pipes ---------------------------------
 #' library(dplyr)
 #'
@@ -65,29 +73,37 @@ plot_bar_category <- function(.data, ...) {
 #' # Using groupd_df  ------------------------------
 #' carseats %>% 
 #'   group_by(ShelveLoc) %>% 
-#'   plot_bar_category()
+#'   plot_bar_category(top = 5)
 #'   
 #' carseats %>% 
 #'   group_by(ShelveLoc) %>% 
-#'   plot_bar_category(each = TRUE)  
+#'   plot_bar_category(each = TRUE, top = 5)  
 #'   
 #' @method plot_bar_category data.frame
-#' @importFrom purrr map
-#' @importFrom gridExtra grid.arrange
+#' @importFrom tidyselect vars_select
+#' @importFrom rlang quos
 #' @export
 #' @rdname plot_bar_category.data.frame 
 plot_bar_category.data.frame <- function(.data, ..., top = 10, add_character = TRUE,
                                          title = "Frequency by levels of category",
-                                         each = FALSE) {
+                                         each = FALSE, typographic = TRUE) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
   
-  plot_bar_category_impl(.data, vars, top, add_character, title, each)
+  plot_bar_category_impl(.data, vars, top, add_character, title, each, typographic)
 }
 
-plot_bar_category_impl <- function(df, vars, top, add_character, title, each) {
+#' @import ggplot2
+#' @import hrbrthemes
+#' @import dplyr
+#' @importFrom purrr map
+#' @importFrom gridExtra arrangeGrob grid.arrange
+#' @importFrom grid textGrob gpar
+#' @importFrom tibble is_tibble as_tibble
+#' @importFrom tidyselect all_of
+plot_bar_category_impl <- function(df, vars, top, add_character, title, each, typographic) {
   if (length(vars) == 0) vars <- names(df)
   
-  if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
+  if (length(vars) == 1 & !tibble::is_tibble(df)) df <- tibble::as_tibble(df)
   
   if (add_character)
     nm_factor <- find_class(df[, vars], type = "categorical2", index = FALSE)
@@ -101,7 +117,7 @@ plot_bar_category_impl <- function(df, vars, top, add_character, title, each) {
   
   get_tally <- function(data, var, top = 10) {
     raws <- data %>% 
-      select(levels = var) %>% 
+      select(levels = all_of(var)) %>% 
       group_by(levels) %>% 
       tally() %>% 
       mutate(na_flag = is.na(levels)) %>% 
@@ -133,24 +149,27 @@ plot_bar_category_impl <- function(df, vars, top, add_character, title, each) {
                            ifelse(menas == 0, "OtherTop", "Tops")))
   }
   
-  def_colors <- c("Tops" = "#ff7f0e", "OtherTop" = "#1f77b4",
-                  "Missing" = "grey50")
+  if (typographic) {
+    def_colors <- c("Tops" = "#d18975", "OtherTop" = "#8fd175",
+                    "Missing" = "grey50")
+  } else {
+    def_colors <- c("Tops" = "#ff7f0e", "OtherTop" = "#1f77b4",
+                    "Missing" = "grey50")    
+  }
   
   plist <- purrr::map(nm_factor, function(x) {
-      return(data.frame(variables = x, 
-                        get_tally(df, x, top)))
-    }) %>% 
+    return(data.frame(variables = x, 
+                      get_tally(df, x, top)))
+  }) %>% 
     lapply(function(data) {
       if (each) {
-        xlab <- "" 
         ylab <- "Frequency"
       } else {
-        xlab <- ""
         ylab <- ""
         title <- ""
       }
       
-      data %>% 
+      p <- data %>% 
         arrange(rank) %>% 
         ggplot(aes(x = levels, y = n)) +
         geom_bar(aes(fill = flag), stat = "identity") +
@@ -161,12 +180,28 @@ plot_bar_category_impl <- function(df, vars, top, add_character, title, each) {
         facet_wrap(~ variables) + 
         scale_x_discrete(limits = rev) + 
         coord_flip() +   
-        ggtitle(title) +        
-        xlab(xlab) + 
-        ylab(ylab) + 
-        theme(legend.position = "none")
+        labs(title = title, x = "", y = ylab) +     
+        theme(legend.position = "none",
+              axis.title.y = element_blank())
+      
+      if (typographic) {
+        p <- p + 
+          theme_ipsum() +
+          theme(legend.position = "none",
+                axis.title.x = element_text(size = 12))
+        
+        if (!each) {
+          p <- p +
+            theme(axis.text.x = element_text(size = 10),
+                  axis.text.y = element_text(size = 10),
+                  plot.margin = margin(0, 10, 0, 10)
+            )
+        }
+      }
+      
+      p
     })
-
+  
   if (each) {
     for (i in seq(plist))
       do.call("print", plist[i])
@@ -174,10 +209,13 @@ plot_bar_category_impl <- function(df, vars, top, add_character, title, each) {
     n <- length(plist)
     n_row <- floor(sqrt(n))
     
-    xlab = "Frequency"
+    if (typographic) {
+      title <- grid::textGrob(title, gp = grid::gpar(fontfamily = "Arial Narrow", fontsize = 18, font = 2),
+                              x = unit(0.075, "npc"), just = "left")
+    }
     
-    do.call("grid.arrange", c(plist, nrow = n_row, top = title, 
-                              bottom = xlab))
+    grobs <- gridExtra::arrangeGrob(grobs = plist, nrow = n_row)
+    suppressWarnings(gridExtra::grid.arrange(grobs, top = title))
   }  
 }
 
@@ -190,13 +228,13 @@ plot_bar_category_impl <- function(df, vars, top, add_character, title, each) {
 #' @export
 plot_bar_category.grouped_df <- function(.data, ..., top = 10, add_character = TRUE,
                                          title = "Frequency by levels of category",
-                                         each = FALSE) {
+                                         each = FALSE, typographic = TRUE) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
   
-  plot_bar_category_group_impl(.data, vars, top, add_character, title, each)
+  plot_bar_category_group_impl(.data, vars, top, add_character, title, each, typographic)
 }
 
-plot_bar_category_group_impl <- function(df, vars, top, add_character, title, each) {
+plot_bar_category_group_impl <- function(df, vars, top, add_character, title, each, typographic) {
   group_key <- attr(df, "groups") %>% 
     select(!tidyselect::matches("\\.rows")) %>% 
     names()
@@ -229,7 +267,7 @@ plot_bar_category_group_impl <- function(df, vars, top, add_character, title, ea
       names()
     
     raws <- data %>% 
-      select(group_key, var) %>% 
+      select(group_key, all_of(var)) %>% 
       group_by_at(new_group) %>% 
       tally() %>% 
       rename(levels = var) %>% 
@@ -263,8 +301,13 @@ plot_bar_category_group_impl <- function(df, vars, top, add_character, title, ea
                            ifelse(is.na(menas), "OtherTop", "Tops")))
   }
   
-  def_colors <- c("Tops" = "#ff7f0e", "OtherTop" = "#1f77b4",
-                  "Missing" = "grey50")
+  if (typographic) {
+    def_colors <- c("Tops" = "#d18975", "OtherTop" = "#8fd175",
+                    "Missing" = "grey50")
+  } else {
+    def_colors <- c("Tops" = "#ff7f0e", "OtherTop" = "#1f77b4",
+                    "Missing" = "grey50")    
+  }
   
   plist <- purrr::map(nm_factor, function(x) {
     return(data.frame(variables = x, 
@@ -278,19 +321,17 @@ plot_bar_category_group_impl <- function(df, vars, top, add_character, title, ea
         nrow()
       
       if (each) {
-        xlab <- "" 
         ylab <- "Frequency"
         title <- paste(title, "(", 
                        paste(group_key, unique(data$variables), sep = " by "), ")")
       } else {
-        xlab <- ""
         ylab <- ""
         title <- ""
       }
       
       center <- round(nrow(df) / (n_levels * n_col))
       
-      ggplot(data, aes(x = reorder(levels, rank), y = n)) +
+      p <- ggplot(data, aes(x = reorder(levels, rank), y = n)) +
         geom_bar(aes(fill = flag), stat = "identity") +
         scale_colour_manual(values = def_colors,
                             aesthetics = c("colour", "fill")) +
@@ -299,10 +340,26 @@ plot_bar_category_group_impl <- function(df, vars, top, add_character, title, ea
         facet_grid(reformulate("variables", group_key)) + 
         scale_x_discrete(limits = rev) + 
         coord_flip() +
-        ggtitle(title) +
-        xlab(xlab) + 
-        ylab(ylab) + 
-        theme(legend.position = "none")
+        labs(title = title, x = "", y = ylab) +     
+        theme(legend.position = "none",
+              axis.title.y = element_blank())
+      
+      if (typographic) {
+        p <- p + 
+          theme_ipsum() +
+          theme(legend.position = "none",
+                axis.title.x = element_text(size = 12))
+        
+        if (!each) {
+          p <- p +
+            theme(axis.text.x = element_text(size = 10),
+                  axis.text.y = element_text(size = 10),
+                  plot.margin = margin(0, 10, 0, 10)
+            )
+        }
+      }
+      
+      p
     })
   
   if (each) {
@@ -312,12 +369,19 @@ plot_bar_category_group_impl <- function(df, vars, top, add_character, title, ea
     n <- length(plist)
     n_row <- floor(sqrt(n))
     
-    xlab = "Frequency"
+    #do.call("grid.arrange", c(plist, nrow = n_row, top = title, 
+    #                          right = group_key))
     
-    do.call("grid.arrange", c(plist, nrow = n_row, top = title, 
-                              bottom = xlab, right = group_key))
+    if (typographic) {
+      title <- grid::textGrob(title, gp = grid::gpar(fontfamily = "Arial Narrow", fontsize = 18, font = 2),
+                              x = unit(0.075, "npc"), just = "left")
+    }
+    
+    grobs <- gridExtra::arrangeGrob(grobs = plist, nrow = n_row)
+    suppressWarnings(gridExtra::grid.arrange(grobs, top = title, right = group_key))
   }
 }
+
 
 ##----------------------------------------------------------------------------------
 

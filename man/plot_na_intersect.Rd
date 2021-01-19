@@ -72,7 +72,7 @@ plot_na_intersect(mice::boys, n_vars = 5)
 # Using n_intersacts argument
 plot_na_intersect(mice::boys, only_na = FALSE, n_intersacts = 7)
 
-# Not support typographic elements
+# Not allow typographic elements
 plot_na_intersect(mice::boys, typographic = FALSE)
 
 }

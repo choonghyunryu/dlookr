@@ -61,7 +61,7 @@ copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
 # If the target variable is a categorical variable
 categ <- target_by(con_sqlite \%>\% tbl("TB_CARSEATS") , US)
 
-# If the variable of interest is a numarical variable
+# If the variable of interest is a numerical variable
 cat_num <- relate(categ, Sales)
 cat_num
 summary(cat_num)
@@ -78,7 +78,7 @@ plot(cat_cat)
 # and In-memory mode and collect size is 350
 num <- target_by(con_sqlite \%>\% tbl("TB_CARSEATS"), Sales, collect_size = 350)
 
-# If the variable of interest is a numarical column
+# If the variable of interest is a numerical column
 num_num <- relate(num, Price)
 num_num
 summary(num_num)

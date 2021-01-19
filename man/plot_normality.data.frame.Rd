@@ -98,7 +98,7 @@ plot_normality(carseats, 1)
 plot_normality(carseats, Income, right = "1/x")
 plot_normality(carseats, Income, left = "Box-Cox", right = "Yeo-Johnson")
 
-# Not allow typographic
+# Not allow typographic elements
 plot_normality(carseats, Income, typographic = FALSE)
 
 # Using dplyr::grouped_df

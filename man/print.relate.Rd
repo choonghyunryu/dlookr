@@ -71,6 +71,10 @@ num_cat <- relate(num, ShelveLoc)
 num_cat
 summary(num_cat)
 plot(num_cat)
+
+# Not allow typographic
+plot(num_cat, typographic = FALSE)
+
 }
 \seealso{
 \code{\link{plot.relate}}.

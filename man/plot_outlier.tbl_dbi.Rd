@@ -7,9 +7,10 @@
 \method{plot_outlier}{tbl_dbi}(
   .data,
   ...,
-  col = "lightblue",
+  col = "steelblue",
   in_database = FALSE,
-  collect_size = Inf
+  collect_size = Inf,
+  typographic = TRUE
 )
 }
 \arguments{
@@ -32,6 +33,9 @@ table data is taken in R and operated in-memory. Not yet supported in_database =
 
 \item{collect_size}{a integer. The number of data samples from the DBMS to R. 
 Applies only if in_database = FALSE.}
+
+\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
 }
 \description{
 The plot_outlier() visualize outlier information
@@ -95,6 +99,10 @@ con_sqlite \%>\%
 # Positions values select variables
 carseats \%>\%
   plot_outlier(-1, -5)
+  
+# Not allow the typographic elements
+carseats \%>\%
+  plot_outlier(-1, -5, typographic = FALSE)
 
 # Using pipes & dplyr -------------------------
 # Visualization of numerical variables with a ratio of

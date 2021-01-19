@@ -9,6 +9,7 @@
   model = FALSE,
   hex_thres = 1000,
   pal = RColorBrewer::brewer.pal(7, "YlOrRd"),
+  typographic = TRUE,
   ...
 )
 }
@@ -26,6 +27,9 @@ The default value is 1000.}
 
 \item{pal}{Color palette to paint hexabin. Use only when the target and predictor are numeric variables.
 Applied only when the number of observations is greater than hex_thres.}
+
+\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
 
 \item{...}{arguments to be passed to methods, such as graphical parameters (see par).
 only applies when the model argument is TRUE, and is used for ... of the plot.lm() function.}
@@ -70,6 +74,10 @@ num_cat <- relate(num, ShelveLoc)
 num_cat
 summary(num_cat)
 plot(num_cat)
+
+# Not allow typographic
+plot(num_cat, typographic = FALSE)
+ 
 }
 \seealso{
 \code{\link{relate}}, \code{\link{print.relate}}.

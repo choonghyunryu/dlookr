@@ -572,7 +572,7 @@ plot_outlier <- function(.data, ...) {
 #' # Using the col argument
 #' plot_outlier(carseats, Sales, col = "gray")
 #' 
-#' # Using the typographic argument
+#' # Not allow typographic argument
 #' plot_outlier(carseats, Sales, typographic = FALSE)
 #' 
 #' # Using pipes ---------------------------------
@@ -713,8 +713,8 @@ plot_outlier_raw <- function(x, main = NULL, col = "steelblue", typographic = TR
     bottom_right <- bottom_right +
       theme_ipsum()
     
-    top <- grid::textGrob(main, gp = grid::gpar(fontfamily = "Arial Narrow", just = "left",
-                                                fontsize = 18, font = 2))
+    top <- grid::textGrob(main, gp = grid::gpar(fontfamily = "Arial Narrow", fontsize = 18, font = 2),
+                          x = unit(0.075, "npc"), just = "left")
   } else {
     top <- main
   }

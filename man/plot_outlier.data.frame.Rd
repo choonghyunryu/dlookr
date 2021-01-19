@@ -67,7 +67,7 @@ plot_outlier(carseats, 6)
 # Using the col argument
 plot_outlier(carseats, Sales, col = "gray")
 
-# Using the typographic argument
+# Not allow typographic argument
 plot_outlier(carseats, Sales, typographic = FALSE)
 
 # Using pipes ---------------------------------

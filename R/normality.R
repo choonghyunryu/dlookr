@@ -287,7 +287,7 @@ normality_group_impl <- function(df, vars, sample) {
 #' plot_normality(carseats, Income, right = "1/x")
 #' plot_normality(carseats, Income, left = "Box-Cox", right = "Yeo-Johnson")
 #' 
-#' # Not allow typographic
+#' # Not allow typographic elements
 #' plot_normality(carseats, Income, typographic = FALSE)
 #' 
 #' # Using dplyr::grouped_df
@@ -382,6 +382,16 @@ plot_normality_raw <- function(x, left = c("log", "sqrt", "log+1", "log+a", "1/x
   # calulate number of bins using Sturges' formula
   n_bins <- round(log2(nrow(df)) + 1)
   
+  null_theme <- theme(
+    axis.title = element_text(color = "transparent"),
+    axis.text = element_text(color = "transparent"), 
+    axis.ticks = element_line(color = "transparent"),
+    panel.grid = element_line(color = "transparent"),
+    axis.line = element_blank(),
+    panel.background = element_rect(fill = "transparent",colour = NA),
+    plot.background = element_rect(fill = "transparent",colour = NA)
+  )
+  
   top_left <- df %>% 
     ggplot(aes(x)) +
     geom_histogram(fill = col, color = "black", alpha = 0.8, bins = n_bins) +
@@ -394,17 +404,45 @@ plot_normality_raw <- function(x, left = c("log", "sqrt", "log+1", "log+a", "1/x
     stat_qq_line() +
     labs(title = "origin: Q-Q plot", x = "", y = "")
   
-  bottom_left <- df %>% 
-    mutate(x = get_transform(x, left)) %>% 
-    ggplot(aes(x)) +
-    geom_histogram(fill = col, color = "black", alpha = 0.8, bins = n_bins) +
-    labs(title = paste(left, "transformation"), x = "", y = "")
+  suppressWarnings(df_left <- df %>% 
+                     mutate(x = get_transform(x, left)))
   
-  bottom_right <- df %>% 
-    mutate(x = get_transform(x, right)) %>% 
-    ggplot(aes(x)) +
-    geom_histogram(fill = col, color = "black", alpha = 0.8, bins = n_bins) +
-    labs(title = paste(right, "transformation"), x = "", y = "")
+  non_finite_left <- FALSE
+  if (sum(is.finite(df_left$x)) == 0)
+    non_finite_left <- TRUE
+  
+  if (non_finite_left) {
+    bottom_left <- data.frame(x = 1, y = 1, msg = "All transfomed data is not finite") %>% 
+      ggplot(aes(x = x, y = y, label = msg)) +
+      geom_text() +
+      labs(title = paste(left, "transformation"), x = "", y = "") +
+      null_theme
+  } else {
+    bottom_left <- df_left %>% 
+      ggplot(aes(x)) +
+      geom_histogram(fill = col, color = "black", alpha = 0.8, bins = n_bins) +
+      labs(title = paste(left, "transformation"), x = "", y = "")
+  }
+  
+  suppressWarnings(df_right <- df %>% 
+                     mutate(x = get_transform(x, right)))
+  
+  non_finite_right <- FALSE
+  if (sum(is.finite(df_right$x)) == 0)
+    non_finite_right <- TRUE
+  
+  if (non_finite_right) {
+    bottom_right <- data.frame(x = 1, y = 1, msg = "All transfomed data is not finite") %>% 
+      ggplot(aes(x = x, y = y, label = msg)) +
+      geom_text() +
+      labs(title = paste(left, "transformation"), x = "", y = "") +
+      null_theme
+  } else {
+    bottom_right <- df_right %>% 
+      ggplot(aes(x)) +
+      geom_histogram(fill = col, color = "black", alpha = 0.8, bins = n_bins) +
+      labs(title = paste(right, "transformation"), x = "", y = "")
+  }
   
   if (typographic) {
     top_left <- top_left +
@@ -415,16 +453,31 @@ plot_normality_raw <- function(x, left = c("log", "sqrt", "log+1", "log+a", "1/x
       theme_ipsum() +
       theme(plot.margin = margin(20, 30, 10, 30))
     
-    bottom_left <- bottom_left +
-      theme_ipsum() +
-      theme(plot.margin = margin(10, 30, 20, 30))
+    if (non_finite_left) {
+      bottom_left <- bottom_left +
+        theme_ipsum(grid = FALSE) +
+        theme(plot.margin = margin(10, 30, 20, 30)) +
+        null_theme
+    } else {
+      bottom_left <- bottom_left +
+        theme_ipsum() +
+        theme(plot.margin = margin(10, 30, 20, 30))
+    }
     
-    bottom_right <- bottom_right +
-      theme_ipsum() +
-      theme(plot.margin = margin(10, 30, 20, 30))
+    if (non_finite_right) {
+      bottom_right <- bottom_right +
+        theme_ipsum(grid = FALSE) +
+        theme(plot.margin = margin(10, 30, 20, 30)) +
+        null_theme
+    } else {
+      bottom_right <- bottom_right +
+        theme_ipsum() +
+        theme(plot.margin = margin(10, 30, 20, 30))
+    }
     
-    top <- grid::textGrob(main, gp = grid::gpar(fontfamily = "Arial Narrow", just = "left",
-                                                fontsize = 18, font = 2))
+    top <- grid::textGrob(main, gp = grid::gpar(fontfamily = "Arial Narrow", fontsize = 18, font = 2),
+                           x = unit(0.075, "npc"), just = "left")
+    
   } else {
     top <- main
   }
@@ -432,7 +485,6 @@ plot_normality_raw <- function(x, left = c("log", "sqrt", "log+1", "log+a", "1/x
   suppressWarnings(gridExtra::grid.arrange(top_left, top_right, bottom_left, bottom_right, 
                                            ncol = 2, nrow = 2, top = top))
 }
-
 
 #' @method plot_normality grouped_df
 #' @importFrom tidyselect vars_select
@@ -442,30 +494,34 @@ plot_normality_raw <- function(x, left = c("log", "sqrt", "log+1", "log+a", "1/x
 plot_normality.grouped_df <- function(.data, ..., left = c("log", "sqrt", "log+1", "log+a", "1/x", "x^2", 
                                                            "x^3", "Box-Cox", "Yeo-Johnson"),
                                       right = c("sqrt", "log", "log+1", "log+a", "1/x", "x^2", 
-                                                "x^3", "Box-Cox", "Yeo-Johnson")) {
+                                                "x^3", "Box-Cox", "Yeo-Johnson"),
+                                      col = "steelblue", typographic = TRUE) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
   
   left <- match.arg(left)
   right <- match.arg(right)
   
-  plot_normality_group_impl(.data, vars, left, right)
+  plot_normality_group_impl(.data, vars, left, right, col, typographic)
 }
 
-#' @importFrom stats qqline qqnorm
-#' @importFrom graphics text
-plot_normality_group_impl <- function(df, vars, left, right) {
+
+#' @import dplyr
+#' @importFrom utils packageVersion
+#' @importFrom tidyselect matches
+#' @importFrom tibble is_tibble as_tibble
+plot_normality_group_impl <- function(df, vars, left, right, col = "steelblue", typographic = TRUE) {
   if (length(vars) == 0) vars <- names(df)
-
-  if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
-
+  
+  if (length(vars) == 1 & !tibble::is_tibble(df)) df <- tibble::as_tibble(df)
+  
   idx_numeric <- find_class(df[, vars], type = "numerical")
-
-  call_plot <- function(var, left, right) {
-    plot_normality <- function(pos, df, var) {
+  
+  call_plot <- function(var, left, right, col = "steelblue", typographic = TRUE) {
+    plot_normality <- function(pos, df, var, col = "steelblue", typographic = TRUE) {
       if (utils::packageVersion("dplyr") >= "0.8.0") {
         x <- unlist(df[(attr(df, "groups") %>% 
-                         select(tidyselect::matches("\\.rows")) %>% 
-                         pull)[[pos]], var])
+                          select(tidyselect::matches("\\.rows")) %>% 
+                          pull)[[pos]], var])
         
         label <- attr(df, "groups") %>% select(-tidyselect::matches("\\.rows"))
       } else {
@@ -473,51 +529,23 @@ plot_normality_group_impl <- function(df, vars, left, right) {
         
         label <- attr(df, "labels")
       }  
-
+      
       label <- paste(names(label), "==", unlist(label[pos, ]), collapse = ",")
       
-      op <- par(no.readonly = TRUE)
-      par(mfrow = c(2, 2), oma = c(0, 0, 3, 0), mar = c(2, 4, 2, 2))
-      on.exit(par(op))
-
-      hist(x, col = "lightblue", las = 1, main = "origin")
-      qqnorm(x, main = "origin: Q-Q plot")
-      qqline(x)
-
-      trans_left <- get_transform(x, left)
-      trans_right <- get_transform(x, right)
-      
-      finite_left_cnt <- sum(is.finite(trans_left))
-      finite_right_cnt <- sum(is.finite(trans_right))
-      
-      if (finite_left_cnt == 0) {
-        plot(0, axes = FALSE, type = "n", xlab = "", ylab = "")
-        text(1, 0, "All transfomed data is infinite", cex = 1.1)
-      } else {
-        hist(trans_left, col = "lightblue", las = 1, main = paste(left, "transformation"))
-      }
-      
-      if (finite_right_cnt == 0) {
-        plot(0, axes = FALSE, type = "n", xlab = "", ylab = "")
-        text(1, 0, "All transfomed data is infinite", cex = 1.1)
-      } else {
-        hist(trans_right, col = "lightblue", las = 1, main = paste(right, "transformation"))
-      }
-
-      title(sprintf("Normality Diagnosis Plot\n(%s by %s)", var, label),
-            outer = TRUE)
+      main <- sprintf("Normality Diagnosis Plot\n(%s by %s)", var, label)
+      plot_normality_raw(x, left, right, main, col, typographic)
     }
-
+    
     if (utils::packageVersion("dplyr") >= "0.8.0") {
       cnt <- nrow(attr(df, "groups")) 
     } else {
       cnt <- nrow(attr(df, "labels"))
     } 
     
-    lapply(seq(cnt), plot_normality, df, var)
+    lapply(seq(cnt), plot_normality, df, var, col, typographic)
   }
-
-  tmp <- lapply(vars[idx_numeric], function(x) call_plot(x, left, right))
+  
+  tmp <- lapply(vars[idx_numeric], function(x) call_plot(x, left, right, col, typographic))
 }
 
 
