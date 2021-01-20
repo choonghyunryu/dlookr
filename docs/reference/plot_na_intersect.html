@@ -128,7 +128,8 @@
   <span class='kw'>only_na</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>n_intersacts</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>n_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+  <span class='kw'>main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -159,6 +160,11 @@ all variables containing missing values are visualized. Variables containing man
     <tr>
       <th>main</th>
       <td><p>character. Main title.</p></td>
+    </tr>
+    <tr>
+      <th>typographic</th>
+      <td><p>logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.</p></td>
     </tr>
     </table>
 
@@ -204,6 +210,8 @@ and the number of observations including missing values and complete cases .</p>
 <span class='fu'>plot_na_intersect</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span>, <span class='kw'>n_vars</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='img'><img src='plot_na_intersect-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Using n_intersacts argument</span>
 <span class='fu'>plot_na_intersect</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span>, <span class='kw'>only_na</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>n_intersacts</span> <span class='kw'>=</span> <span class='fl'>7</span>)</div><div class='img'><img src='plot_na_intersect-5.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Not allow typographic elements</span>
+<span class='fu'>plot_na_intersect</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot_na_intersect-6.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

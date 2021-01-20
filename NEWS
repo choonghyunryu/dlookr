@@ -47,7 +47,7 @@ dlookr 0.3.15
 * plot.bins(), plot.compare_category(), plot.compare_numeric(), plot_outlier(), 
 plot_normality() changed the look & feel that draw the viz from high-level graphic function to ggplot2.
 
-* plot.optimal_bins(), plot_na_hclust(), plot_na_pareto(), plot_na_intersect(), plot.relate(), plot_bar_category() append argemt typographic thst is whether to apply focuses on typographic elements.
+* plot.optimal_bins(), plot_na_hclust(), plot_na_pareto(), plot_na_intersect(), plot.relate(), plot_bar_category(), plot_qq_numeric(), plot_box_numeric() append argemt typographic thst is whether to apply focuses on typographic elements.
 
 
 dlookr 0.3.14

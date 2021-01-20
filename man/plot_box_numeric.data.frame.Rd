@@ -4,7 +4,7 @@
 \alias{plot_box_numeric}
 \alias{plot_box_numeric.data.frame}
 \alias{plot_box_numeric.grouped_df}
-\title{Plot Q-Q plot  of numerical variables}
+\title{Plot Box-Plot of numerical variables}
 \usage{
 plot_box_numeric(.data, ...)
 
@@ -12,14 +12,16 @@ plot_box_numeric(.data, ...)
   .data,
   ...,
   title = "Box plot by numerical variables",
-  each = FALSE
+  each = FALSE,
+  typographic = TRUE
 )
 
 \method{plot_box_numeric}{grouped_df}(
   .data,
   ...,
   title = "Box plot by numerical variables",
-  each = FALSE
+  each = FALSE,
+  typographic = TRUE
 )
 }
 \arguments{
@@ -38,6 +40,9 @@ They support unquoting and splicing.}
 
 \item{each}{logical. Specifies whether to draw multiple plots on one screen. 
 The default is FALSE, which draws multiple plots on one screen.}
+
+\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
 }
 \description{
 The plot_box_numeric() to visualizes the box plot of numeric data or 
@@ -61,6 +66,12 @@ plot_box_numeric(carseats)
 # Select the variable to diagnose
 plot_box_numeric(carseats, "Sales", "Income")
 plot_box_numeric(carseats, -Sales, -Income)
+
+# Visualize the each plots
+plot_box_numeric(carseats, "Sales", "Income", each = TRUE)
+
+# Not allow the typographic elements
+plot_box_numeric(carseats, typographic = FALSE)
 
 # Using pipes ---------------------------------
 library(dplyr)

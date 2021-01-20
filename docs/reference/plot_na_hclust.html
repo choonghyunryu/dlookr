@@ -123,7 +123,13 @@
     <p>Visualize distribution of missing value by combination of variables.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plot_na_hclust</span>(<span class='no'>x</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>col.left</span> <span class='kw'>=</span> <span class='st'>"#009E73"</span>, <span class='kw'>col.right</span> <span class='kw'>=</span> <span class='st'>"#56B4E9"</span>)</pre>
+    <pre class="usage"><span class='fu'>plot_na_hclust</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>col.left</span> <span class='kw'>=</span> <span class='st'>"#009E73"</span>,
+  <span class='kw'>col.right</span> <span class='kw'>=</span> <span class='st'>"#56B4E9"</span>,
+  <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,6 +149,11 @@
     <tr>
       <th>col.right</th>
       <td><p>character. The color of right legend that is percentage of NA. default is "#56B4E9".</p></td>
+    </tr>
+    <tr>
+      <th>typographic</th>
+      <td><p>logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.</p></td>
     </tr>
     </table>
 
@@ -166,6 +177,8 @@ for each combination of variables.</p>
 <span class='fu'>plot_na_hclust</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span>)</div><div class='img'><img src='plot_na_hclust-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Change the main title.</span>
 <span class='fu'>plot_na_hclust</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"Distribution of missing value"</span>)</div><div class='img'><img src='plot_na_hclust-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Not support typographic elements</span>
+<span class='fu'>plot_na_hclust</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot_na_hclust-5.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -40,7 +40,8 @@ lower right corner. The default is "sqrt".}
 
 \item{col}{a color to be used to fill the bars. The default is "steelblue".}
 
-\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization.}
+\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
 }
 \description{
 The plot_normality() visualize distribution information

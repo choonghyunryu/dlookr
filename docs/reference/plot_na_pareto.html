@@ -130,7 +130,8 @@
   <span class='kw'>main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
   <span class='kw'>grade</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>Good</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>OK</span> <span class='kw'>=</span> <span class='fl'>0.4</span>, <span class='kw'>Bad</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>Remove</span> <span class='kw'>=</span> <span class='fl'>1</span>),
-  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -168,6 +169,11 @@ The default values are Good: [0, 0.05], OK: (0.05, 0.4], Bad: (0.4, 0.8], Remove
       <th>plot</th>
       <td><p>logical. If this value is TRUE then visualize plot. else if FALSE, return aggregate information about missing values.</p></td>
     </tr>
+    <tr>
+      <th>typographic</th>
+      <td><p>logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.</p></td>
+    </tr>
     </table>
 
 
@@ -181,7 +187,7 @@ The default values are Good: [0, 0.05], OK: (0.05, 0.4], Bad: (0.4, 0.8], Remove
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
   <span class='no'>diagnose</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span>(<span class='no'>missing_count</span>))</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 11 x 6</span><span>
+  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/desc.html'>desc</a></span>(<span class='no'>missing_count</span>))</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 11 x 6</span><span>
 #&gt;    variables   types   missing_count missing_percent unique_count unique_rate
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> Income      numeric            20            5              98      0.245 
@@ -200,7 +206,7 @@ The default values are Good: [0, 0.05], OK: (0.05, 0.4], Bad: (0.4, 0.8], Remove
 <span class='co'># Diagnose the data with missing_count using diagnose() function</span>
 <span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span> <span class='kw'>%&gt;%</span>
   <span class='no'>diagnose</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span>(<span class='no'>missing_count</span>))</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 9 x 6</span><span>
+  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/desc.html'>desc</a></span>(<span class='no'>missing_count</span>))</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 9 x 6</span><span>
 #&gt;   variables types   missing_count missing_percent unique_count unique_rate
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span> tv        integer           522          69.8             19     0.025</span><span style='text-decoration: underline;'>4</span><span> 
@@ -235,6 +241,8 @@ The default values are Good: [0, 0.05], OK: (0.05, 0.4], Bad: (0.4, 0.8], Remove
 #&gt; </span><span style='color: #555555;'>6</span><span> hgt               20 0.026</span><span style='text-decoration: underline;'>7</span><span>  Good        99.6
 #&gt; </span><span style='color: #555555;'>7</span><span> wgt                4 0.005</span><span style='text-decoration: underline;'>35</span><span> Good        99.8
 #&gt; </span><span style='color: #555555;'>8</span><span> reg                3 0.004</span><span style='text-decoration: underline;'>01</span><span> Good       100  </div><div class='input'>
+<span class='co'># Not support typographic elements</span>
+<span class='fu'>plot_na_pareto</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot_na_pareto-8.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

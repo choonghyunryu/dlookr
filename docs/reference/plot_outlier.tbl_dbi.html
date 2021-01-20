@@ -131,9 +131,10 @@ of the DBMS table through tbl_dbi.</p>
 <span class='fu'><a href='plot_outlier.data.frame.html'>plot_outlier</a></span>(
   <span class='no'>.data</span>,
   <span class='no'>...</span>,
-  <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"lightblue"</span>,
+  <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"steelblue"</span>,
   <span class='kw'>in_database</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>collect_size</span> <span class='kw'>=</span> <span class='fl'>Inf</span>
+  <span class='kw'>collect_size</span> <span class='kw'>=</span> <span class='fl'>Inf</span>,
+  <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -168,6 +169,11 @@ table data is taken in R and operated in-memory. Not yet supported in_database =
       <th>collect_size</th>
       <td><p>a integer. The number of data samples from the DBMS to R. 
 Applies only if in_database = FALSE.</p></td>
+    </tr>
+    <tr>
+      <th>typographic</th>
+      <td><p>logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.</p></td>
     </tr>
     </table>
 
@@ -227,6 +233,9 @@ one variable in the ... argument, the specified number of plots are drawn.</p>
 <span class='co'># Positions values select variables</span>
 <span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='plot_outlier.data.frame.html'>plot_outlier</a></span>(-<span class='fl'>1</span>, -<span class='fl'>5</span>)</div><div class='img'><img src='plot_outlier.tbl_dbi-18.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.tbl_dbi-19.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.tbl_dbi-20.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.tbl_dbi-21.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.tbl_dbi-22.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.tbl_dbi-23.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Not allow the typographic elements</span>
+<span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='plot_outlier.data.frame.html'>plot_outlier</a></span>(-<span class='fl'>1</span>, -<span class='fl'>5</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot_outlier.tbl_dbi-24.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.tbl_dbi-25.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.tbl_dbi-26.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.tbl_dbi-27.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.tbl_dbi-28.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.tbl_dbi-29.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Using pipes &amp; dplyr -------------------------</span>
 <span class='co'># Visualization of numerical variables with a ratio of</span>
 <span class='co'># outliers greater than 1%</span>
@@ -237,7 +246,7 @@ one variable in the ... argument, the specified number of plots are drawn.</p>
                  <span class='fu'><a href='diagnose_outlier.data.frame.html'>diagnose_outlier</a></span>() <span class='kw'>%&gt;%</span>
                  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>outliers_ratio</span> <span class='kw'>&gt;</span> <span class='fl'>1</span>) <span class='kw'>%&gt;%</span>
                  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>variables</span>) <span class='kw'>%&gt;%</span>
-                 <span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span>())</div><div class='img'><img src='plot_outlier.tbl_dbi-24.png' alt='' width='700' height='433' /></div><div class='input'>      
+                 <span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span>())</div><div class='img'><img src='plot_outlier.tbl_dbi-30.png' alt='' width='700' height='433' /></div><div class='input'>      
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

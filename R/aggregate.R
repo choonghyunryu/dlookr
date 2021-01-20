@@ -391,7 +391,7 @@ plot_qq_numeric <- function(.data, ...) {
   UseMethod("plot_qq_numeric", .data)
 }
 
-#' Plot Q-Q plot  of numerical variables 
+#' Plot Q-Q plot of numerical variables 
 #'
 #' @description The plot_qq_numeric() to visualizes the Q-Q plot of numeric data or 
 #' relationship to specific categorical data.
@@ -416,6 +416,8 @@ plot_qq_numeric <- function(.data, ...) {
 #' @param title character. a main title for the plot. 
 #' @param each logical. Specifies whether to draw multiple plots on one screen. 
 #' The default is FALSE, which draws multiple plots on one screen.
+#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @examples
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
@@ -429,6 +431,9 @@ plot_qq_numeric <- function(.data, ...) {
 #' plot_qq_numeric(carseats, "Sales", "Income")
 #' plot_qq_numeric(carseats, -Sales, -Income)
 #'
+#' # Not allow the typographic elements
+#' plot_qq_numeric(carseats, "Sales", typographic = FALSE)
+#' 
 #' # Using pipes ---------------------------------
 #' library(dplyr)
 #'
@@ -446,20 +451,24 @@ plot_qq_numeric <- function(.data, ...) {
 #'   plot_qq_numeric(each = TRUE)  
 #'   
 #' @method plot_qq_numeric data.frame
+#' @import ggplot2
+#' @import hrbrthemes
+#' @import dplyr
 #' @importFrom purrr map
 #' @importFrom gridExtra grid.arrange
+#' @importFrom grid textGrob gpar
 #' @export
 #' @rdname plot_qq_numeric.data.frame 
 #' 
-plot_qq_numeric.data.frame <- function(.data, ..., col_point = "black", col_line = "red",
+plot_qq_numeric.data.frame <- function(.data, ..., col_point = "steelblue", col_line = "black",
                                          title = "Q-Q plot by numerical variables",
-                                         each = FALSE) {
+                                         each = FALSE, typographic = TRUE) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
   
-  plot_qq_numeric_impl(.data, vars, col_point, col_line, title, each)
+  plot_qq_numeric_impl(.data, vars, col_point, col_line, title, each, typographic)
 }
 
-plot_qq_numeric_impl <- function(df, vars, col_point, col_line, title, each) {
+plot_qq_numeric_impl <- function(df, vars, col_point, col_line, title, each, typographic) {
   if (length(vars) == 0) vars <- names(df)
   
   if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
@@ -471,6 +480,7 @@ plot_qq_numeric_impl <- function(df, vars, col_point, col_line, title, each) {
     return(NULL)
   }
   
+  suppressWarnings({
   plist <- purrr::map(nm_numeric, function(var) {
     if (each) {
       xlab <- "Theoretical" 
@@ -481,18 +491,33 @@ plot_qq_numeric_impl <- function(df, vars, col_point, col_line, title, each) {
       title <- ""
     }
       
-    df %>% 
+    p_qq <- df %>% 
       mutate(variables = var) %>% 
       ggplot(aes_string(sample = var)) +
       stat_qq(col = col_point) + 
       stat_qq_line(col = col_line) +
       facet_wrap(~ variables) + 
-      ggtitle(title) +        
-      xlab(xlab) + 
-      ylab(ylab) +       
+      labs(title = title, x = xlab, y = ylab) +        
       theme(legend.position = "none")
+    
+    if (typographic) {
+      p_qq <- p_qq + 
+        theme_ipsum() +
+        theme(legend.position = "none",
+              axis.title.x = element_text(size = 12),
+              axis.title.y = element_text(size = 12))
+      
+      if (!each) {
+        p_qq <- p_qq +
+          theme(axis.text.x = element_text(size = 10),
+                axis.text.y = element_text(size = 10),
+                plot.margin = margin(0, 10, 0, 10)
+          )
+      }
     }
-  )
+    
+    p_qq
+  })
   
   if (each) {
     for (i in seq(plist))
@@ -501,9 +526,15 @@ plot_qq_numeric_impl <- function(df, vars, col_point, col_line, title, each) {
     n <- length(plist)
     n_row <- floor(sqrt(n))
     
-    do.call("grid.arrange", c(plist, nrow = n_row, left = "Sample",
-                              bottom = "Theoretical", top = title))
-  }  
+    if (typographic) {
+      title <- grid::textGrob(title, gp = grid::gpar(fontfamily = "Arial Narrow", fontsize = 18, font = 2),
+                              x = unit(0.075, "npc"), just = "left")
+    }
+    
+    grobs <- gridExtra::arrangeGrob(grobs = plist, nrow = n_row)
+    suppressWarnings(gridExtra::grid.arrange(grobs, top = title))
+  }
+  }) # End of suppressWarnings()
 }
 
 #' @method plot_qq_numeric grouped_df
@@ -513,15 +544,21 @@ plot_qq_numeric_impl <- function(df, vars, col_point, col_line, title, each) {
 #' @importFrom tibble is_tibble
 #' @export
 #' 
-plot_qq_numeric.grouped_df <- function(.data, ..., col_point = "black", col_line = "red",
+plot_qq_numeric.grouped_df <- function(.data, ..., col_point = "steelblue", col_line = "black",
                                          title = "Q-Q plot by numerical variables",
-                                         each = FALSE) {
+                                         each = FALSE, typographic = TRUE) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
   
-  plot_qq_numeric_group_impl(.data, vars, col_point, col_line, title, each)
+  plot_qq_numeric_group_impl(.data, vars, col_point, col_line, title, each, typographic)
 }
 
-plot_qq_numeric_group_impl <- function(df, vars, col_point, col_line, title, each) {
+#' @import ggplot2
+#' @import hrbrthemes
+#' @import dplyr
+#' @importFrom purrr map
+#' @importFrom gridExtra grid.arrange
+#' @importFrom grid textGrob gpar
+plot_qq_numeric_group_impl <- function(df, vars, col_point, col_line, title, each, typographic) {
   group_key <- attr(df, "groups") %>% 
     select(!tidyselect::matches("\\.rows")) %>% 
     names()
@@ -539,6 +576,7 @@ plot_qq_numeric_group_impl <- function(df, vars, col_point, col_line, title, eac
     return(NULL)
   }
   
+  suppressWarnings({
   plist <- purrr::map(nm_numeric, function(var) {
     if (each) {
       xlab <- "Theoretical" 
@@ -550,18 +588,33 @@ plot_qq_numeric_group_impl <- function(df, vars, col_point, col_line, title, eac
       title = ""
     }
     
-    df %>% 
+    p_qq <- df %>% 
       mutate(variables = var) %>% 
       ggplot(aes_string(sample = var)) +
       stat_qq(col = col_point) + 
       stat_qq_line(col = col_line) +
       facet_grid(reformulate("variables", group_key)) + 
-      ggtitle(title) +        
-      xlab(xlab) + 
-      ylab(ylab) +       
+      labs(title = title, x = xlab, y = ylab) +        
       theme(legend.position = "none")
+    
+    if (typographic) {
+      p_qq <- p_qq + 
+        theme_ipsum() +
+        theme(legend.position = "none",
+              axis.title.x = element_text(size = 12),
+              axis.title.y = element_text(size = 12))
+      
+      if (!each) {
+        p_qq <- p_qq +
+          theme(axis.text.x = element_text(size = 10),
+                axis.text.y = element_text(size = 10),
+                plot.margin = margin(0, 10, 0, 10)
+          )
+      }
     }
-  )
+    
+    p_qq
+  })
   
   if (each) {
     for (i in seq(plist))
@@ -570,9 +623,15 @@ plot_qq_numeric_group_impl <- function(df, vars, col_point, col_line, title, eac
     n <- length(plist)
     n_row <- floor(sqrt(n))
     
-    do.call("grid.arrange", c(plist, nrow = n_row, top = title, left = "Sample",
-                              bottom = "Theoretical", right = group_key))
+    if (typographic) {
+      title <- grid::textGrob(title, gp = grid::gpar(fontfamily = "Arial Narrow", fontsize = 18, font = 2),
+                              x = unit(0.075, "npc"), just = "left")
+    }
+    
+    grobs <- gridExtra::arrangeGrob(grobs = plist, nrow = n_row)
+    suppressWarnings(gridExtra::grid.arrange(grobs, top = title, right = group_key))
   }
+  }) # End of suppressWarnings()
 }
 
 ##----------------------------------------------------------------------------------
@@ -583,7 +642,7 @@ plot_box_numeric <- function(.data, ...) {
   UseMethod("plot_box_numeric", .data)
 }
 
-#' Plot Q-Q plot  of numerical variables 
+#' Plot Box-Plot of numerical variables 
 #'
 #' @description The plot_box_numeric() to visualizes the box plot of numeric data or 
 #' relationship to specific categorical data.
@@ -606,6 +665,8 @@ plot_box_numeric <- function(.data, ...) {
 #' @param title character. a main title for the plot. 
 #' @param each logical. Specifies whether to draw multiple plots on one screen. 
 #' The default is FALSE, which draws multiple plots on one screen.
+#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @examples
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
@@ -619,6 +680,12 @@ plot_box_numeric <- function(.data, ...) {
 #' plot_box_numeric(carseats, "Sales", "Income")
 #' plot_box_numeric(carseats, -Sales, -Income)
 #'
+#' # Visualize the each plots
+#' plot_box_numeric(carseats, "Sales", "Income", each = TRUE)
+#' 
+#' # Not allow the typographic elements
+#' plot_box_numeric(carseats, typographic = FALSE)
+#' 
 #' # Using pipes ---------------------------------
 #' library(dplyr)
 #'
@@ -636,20 +703,24 @@ plot_box_numeric <- function(.data, ...) {
 #'   plot_box_numeric(each = TRUE)  
 #'   
 #' @method plot_box_numeric data.frame
+#' @import ggplot2
+#' @import hrbrthemes
+#' @import dplyr
 #' @importFrom purrr map
-#' @importFrom gridExtra grid.arrange
+#' @importFrom gridExtra grid.arrange arrangeGrob
+#' @importFrom grid textGrob gpar
 #' @export
 #' @rdname plot_box_numeric.data.frame 
 #' 
 plot_box_numeric.data.frame <- function(.data, ..., 
                                         title = "Box plot by numerical variables",
-                                        each = FALSE) {
+                                        each = FALSE, typographic = TRUE) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
   
-  plot_box_numeric_impl(.data, vars, title, each)
+  plot_box_numeric_impl(.data, vars, title, each, typographic)
 }
 
-plot_box_numeric_impl <- function(df, vars, title, each) {
+plot_box_numeric_impl <- function(df, vars, title, each, typographic) {
   if (length(vars) == 0) vars <- names(df)
   
   if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
@@ -661,6 +732,7 @@ plot_box_numeric_impl <- function(df, vars, title, each) {
     return(NULL)
   }
   
+  suppressWarnings({
   plist <- purrr::map(nm_numeric, function(var) {
     if (each) {
       xlab <- "" 
@@ -669,18 +741,35 @@ plot_box_numeric_impl <- function(df, vars, title, each) {
       title <- ""
     }
     
-    df %>% 
+    p_box <- df %>% 
       mutate(variables = var) %>% 
       ggplot(aes_string(var)) +
-      geom_boxplot() + 
+      geom_boxplot(fill = "steelblue", alpha = 0.8) + 
+      ylim(-0.7, 0.7) +
       facet_wrap(~ variables) + 
-      ggtitle(title) +        
-      xlab(xlab) + 
-      ylab(ylab) +       
+      labs(title = title, x = xlab) +        
       theme(legend.position = "none",
             axis.title.y = element_blank(),
             axis.text.y = element_blank(),
             axis.ticks.y = element_blank())
+    
+    if (typographic) {
+      p_box <- p_box + 
+        theme_ipsum() +
+        theme(legend.position = "none",
+              axis.title.x = element_text(size = 12),
+              axis.title.y = element_text(size = 12))
+      
+      if (!each) {
+        p_box <- p_box +
+          theme(axis.text.x = element_text(size = 10),
+                axis.text.y = element_text(size = 10),
+                plot.margin = margin(0, 10, 0, 10)
+          )
+      }
+    }
+    
+    p_box
   }
   )
   
@@ -691,8 +780,15 @@ plot_box_numeric_impl <- function(df, vars, title, each) {
     n <- length(plist)
     n_row <- floor(sqrt(n))
     
-    do.call("grid.arrange", c(plist, nrow = n_row, top = title))
+    if (typographic) {
+      title <- grid::textGrob(title, gp = grid::gpar(fontfamily = "Arial Narrow", fontsize = 18, font = 2),
+                              x = unit(0.075, "npc"), just = "left")
+    }
+    
+    grobs <- gridExtra::arrangeGrob(grobs = plist, nrow = n_row)
+    suppressWarnings(gridExtra::grid.arrange(grobs, top = title))
   }  
+  }) # End of suppressWarnings()
 }
 
 #' @method plot_box_numeric grouped_df
@@ -704,13 +800,13 @@ plot_box_numeric_impl <- function(df, vars, title, each) {
 #' 
 plot_box_numeric.grouped_df <- function(.data, ..., 
                                         title = "Box plot by numerical variables",
-                                        each = FALSE) {
+                                        each = FALSE, typographic = TRUE) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
   
-  plot_box_numeric_group_impl(.data, vars, title, each)
+  plot_box_numeric_group_impl(.data, vars, title, each, typographic)
 }
 
-plot_box_numeric_group_impl <- function(df, vars, title, each) {
+plot_box_numeric_group_impl <- function(df, vars, title, each, typographic) {
   group_key <- attr(df, "groups") %>% 
     select(!tidyselect::matches("\\.rows")) %>% 
     names()
@@ -728,6 +824,7 @@ plot_box_numeric_group_impl <- function(df, vars, title, each) {
     return(NULL)
   }
   
+  suppressWarnings({
   plist <- purrr::map(nm_numeric, function(var) {
     if (each) {
       xlab <- "" 
@@ -739,18 +836,37 @@ plot_box_numeric_group_impl <- function(df, vars, title, each) {
       title <- ""
     }
     
-    df %>% 
+    p_box <- df %>% 
       mutate(variables = var) %>% 
       ggplot(aes_string(var, fill = group_key)) +
-      geom_boxplot() + 
+      geom_boxplot(alpha = 0.7) + 
+      ylim(-0.7, 0.7) +
       facet_grid(reformulate("variables", group_key)) + 
-      ggtitle(title) +        
-      xlab(xlab) + 
-      ylab(ylab) +       
+      labs(title = title, x = xlab, y = ylab) +        
       theme(legend.position = "none",
             axis.title.y = element_blank(),
             axis.text.y = element_blank(),
             axis.ticks.y = element_blank())
+    
+    if (typographic) {
+      p_box <- p_box + 
+        theme_ipsum() +
+        scale_fill_ipsum() + 
+        theme(legend.position = "none",
+              axis.title.x = element_text(size = 12),
+              axis.title.y = element_text(size = 12))
+      
+      if (!each) {
+        p_box <- p_box +
+          theme(axis.text.x = element_text(size = 10),
+                axis.text.y = element_text(size = 10),
+                plot.margin = margin(0, 10, 0, 10),
+                panel.spacing = grid::unit(0, "lines")
+          )
+      }
+    }
+    
+    p_box
   }
   )
   
@@ -761,8 +877,14 @@ plot_box_numeric_group_impl <- function(df, vars, title, each) {
     n <- length(plist)
     n_row <- floor(sqrt(n))
     
-    do.call("grid.arrange", c(plist, nrow = n_row, top = title, 
-                              right = group_key))
+    if (typographic) {
+      title <- grid::textGrob(title, gp = grid::gpar(fontfamily = "Arial Narrow", fontsize = 18, font = 2),
+                              x = unit(0.075, "npc"), just = "left")
+    }
+    
+    grobs <- gridExtra::arrangeGrob(grobs = plist, nrow = n_row)
+    suppressWarnings(gridExtra::grid.arrange(grobs, top = title, right = group_key))
   }
+  }) # End of suppressWarnings()
 }
 

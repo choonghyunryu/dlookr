@@ -4,26 +4,28 @@
 \alias{plot_qq_numeric}
 \alias{plot_qq_numeric.data.frame}
 \alias{plot_qq_numeric.grouped_df}
-\title{Plot Q-Q plot  of numerical variables}
+\title{Plot Q-Q plot of numerical variables}
 \usage{
 plot_qq_numeric(.data, ...)
 
 \method{plot_qq_numeric}{data.frame}(
   .data,
   ...,
-  col_point = "black",
-  col_line = "red",
+  col_point = "steelblue",
+  col_line = "black",
   title = "Q-Q plot by numerical variables",
-  each = FALSE
+  each = FALSE,
+  typographic = TRUE
 )
 
 \method{plot_qq_numeric}{grouped_df}(
   .data,
   ...,
-  col_point = "black",
-  col_line = "red",
+  col_point = "steelblue",
+  col_line = "black",
   title = "Q-Q plot by numerical variables",
-  each = FALSE
+  each = FALSE,
+  typographic = TRUE
 )
 }
 \arguments{
@@ -46,6 +48,9 @@ They support unquoting and splicing.}
 
 \item{each}{logical. Specifies whether to draw multiple plots on one screen. 
 The default is FALSE, which draws multiple plots on one screen.}
+
+\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
 }
 \description{
 The plot_qq_numeric() to visualizes the Q-Q plot of numeric data or 
@@ -69,6 +74,9 @@ plot_qq_numeric(carseats)
 # Select the variable to diagnose
 plot_qq_numeric(carseats, "Sales", "Income")
 plot_qq_numeric(carseats, -Sales, -Income)
+
+# Not allow the typographic elements
+plot_qq_numeric(carseats, "Sales", typographic = FALSE)
 
 # Using pipes ---------------------------------
 library(dplyr)
