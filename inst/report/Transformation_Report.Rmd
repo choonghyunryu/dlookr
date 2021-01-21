@@ -16,21 +16,34 @@ options(warn = -1)
 ```
 
 ```{r environment, echo=FALSE, warning=FALSE, message=FALSE}
-library(xtable)
-library(magrittr)
 library(dlookr)
+library(magrittr)
 library(dplyr)
 library(ggplot2)
+library(grid)
 library(gridExtra)
-library(moments)
-library(mice)
 library(knitr)
 library(kableExtra)
+
+if (!requireNamespace("mice", quietly = TRUE)) {
+  stop("Package 'mice' needed for this function to work. Please install it.", 
+       call. = FALSE)
+}
+
+if (!requireNamespace("rpart", quietly = TRUE)) {
+  stop("Package 'rpart' needed for this function to work. Please install it.", 
+       call. = FALSE)
+}
+
+if (!requireNamespace("DMwR", quietly = TRUE)) {
+  stop("Package 'DMwR' needed for this function to work. Please install it.", 
+       call. = FALSE)
+}
 ```
 
 ```{r init, echo=FALSE, warning=FALSE, message=FALSE}
-library(smbinning)
-library(xtable)
+#library(smbinning)
+#library(xtable)
 
 edaData <- as.data.frame(get("edaData", .dlookrEnv))
 targetVariable <- get("targetVariable", .dlookrEnv)

@@ -56,6 +56,11 @@ plot_na_intersect(carseats)
 # Diagnose the data with missing_count using diagnose() function
 library(dplyr)
 
+if (!requireNamespace("mice", quietly = TRUE)) {
+  stop("Package \"mice\" needed for this function to work. Please install it.",
+  call. = FALSE)
+}
+
 mice::boys \%>\% 
   diagnose \%>\% 
   arrange(desc(missing_count))

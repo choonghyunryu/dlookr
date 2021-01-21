@@ -4,10 +4,12 @@
 \alias{summary.performance_bin}
 \title{Summarizing Performance for Binned Variable}
 \usage{
-\method{summary}{performance_bin}(x)
+\method{summary}{performance_bin}(object, ...)
 }
 \arguments{
-\item{x}{an object of class "performance_bin", usually, a result of a call to performance_bin().}
+\item{object}{an object of class "performance_bin", usually, a result of a call to performance_bin().}
+
+\item{...}{further arguments to be passed from or to other methods.}
 }
 \value{
 NULL.

@@ -24,8 +24,12 @@
 #' plot_na_hclust(carseats)
 #' plot_na_hclust(airquality)
 #'   
-#' 
 #' # Visualize pareto chart for variables with missing value.
+#' if (!requireNamespace("mice", quietly = TRUE)) {
+#'   stop("Package \"mice\" needed for this function to work. Please install it.",
+#'   call. = FALSE)
+#' }
+#' 
 #' plot_na_hclust(mice::boys)
 #' 
 #' # Change the main title.
@@ -35,7 +39,6 @@
 #' plot_na_hclust(mice::boys, typographic = FALSE)
 #' 
 #' @importFrom stats hclust dist order.dendrogram as.dendrogram reorder
-#' @importFrom reshape2 melt
 #' @import ggplot2
 #' @import hrbrthemes
 #' @export
@@ -90,7 +93,7 @@ plot_na_hclust <- function (x, main = NULL, col.left = "#009E73", col.right = "#
                            na_cnt = na_cnt,
                            na_pct = paste0(round(na_cnt / N * 100, 1), "%"))
   
-  dframe <- reshape2::melt(t(x))
+  dframe <- get_melt(x)
   dframe <- dframe[dframe$value != 0, ]
   
   if (is.null(main)) 
@@ -159,6 +162,11 @@ plot_na_hclust <- function (x, main = NULL, col.left = "#009E73", col.right = "#
 #' plot_na_pareto(airquality)
 #'   
 #' # Diagnose the data with missing_count using diagnose() function
+#' if (!requireNamespace("mice", quietly = TRUE)) {
+#'   stop("Package \"mice\" needed for this function to work. Please install it.",
+#'   call. = FALSE)
+#' }
+#' 
 #' mice::boys %>% 
 #'   diagnose %>% 
 #'   arrange(desc(missing_count))
@@ -234,6 +242,26 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
   }
   
   labels_grade <- paste0(names(grade),paste0("\n(<=", unlist(grade) * 100, "%)"))
+  n_pal <- length(labels_grade)
+  
+  if (n_pal <= 3) {
+    pals <- c("#FFEDA0", "#FEB24C", "#F03B20")
+  } else if (n_pal == 4) {
+    pals <- c("#FFFFB2", "#FECC5C", "#FD8D3C", "#E31A1C")
+  } else if (n_pal == 5) {
+    pals <- c("#FFFFB2", "#FECC5C", "#FD8D3C", "#F03B20", "#BD0026")
+  } else if (n_pal == 6) {
+    pals <- c("#FFFFB2", "#FED976", "#FEB24C", "#FD8D3C", "#F03B20", "#BD0026")
+  } else if (n_pal == 7) {    
+    pals <- c("#FFFFB2", "#FED976", "#FEB24C", "#FD8D3C", "#FC4E2A", "#E31A1C", 
+              "#B10026")
+  } else if (n_pal == 8) {
+    pals <- c("#FFFFCC", "#FFEDA0", "#FED976", "#FEB24C", "#FD8D3C", "#FC4E2A", 
+              "#E31A1C", "#B10026")
+  } else if (n_pal >= 9) {
+    pals <- c("#FFFFCC", "#FFEDA0", "#FED976", "#FEB24C", "#FD8D3C", "#FC4E2A", 
+              "#E31A1C", "#BD0026", "#800026")
+  }  
   
   p <- ggplot(info_na, aes(x = variable)) +
     geom_bar(aes(y = frequencies, fill = grade), color = "darkgray", stat = "identity") +
@@ -248,7 +276,7 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
     labs(title = main, x = xlab, y = ylab) + 
     theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
           legend.position = "top") +
-    scale_fill_manual(values = RColorBrewer::brewer.pal(length(labels_grade), "YlOrRd"), 
+    scale_fill_manual(values = pals, 
                       drop = FALSE,
                       name = "Missing Grade", 
                       labels = labels_grade)
@@ -304,6 +332,11 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
 #' # Diagnose the data with missing_count using diagnose() function
 #' library(dplyr)
 #' 
+#' if (!requireNamespace("mice", quietly = TRUE)) {
+#'   stop("Package \"mice\" needed for this function to work. Please install it.",
+#'   call. = FALSE)
+#' }
+#' 
 #' mice::boys %>% 
 #'   diagnose %>% 
 #'   arrange(desc(missing_count))
@@ -326,7 +359,6 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
 #' @importFrom purrr map_int
 #' @importFrom tibble enframe
 #' @importFrom gridExtra grid.arrange
-#' @importFrom reshape2 melt
 #' @importFrom utils head
 #' @import ggplot2
 #' @import hrbrthemes
@@ -391,7 +423,7 @@ plot_na_intersect <- function (x, only_na = TRUE, n_intersacts = NULL,
     }  
   }
   
-  dframe <- reshape2::melt(t(x)) %>% 
+  dframe <- get_melt(x) %>% 
     filter(value > 0) %>% 
     filter(!Var1 %in% c("n")) %>% 
     mutate(Var1 = as.numeric(Var1))

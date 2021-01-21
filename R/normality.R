@@ -584,7 +584,7 @@ plot_normality_group_impl <- function(df, vars, left, right, col = "steelblue", 
 #' # log transform 
 #' get_transform(iris$Sepal.Length, "Yeo-Johnson")
 #' }
-#' @importFrom forecast BoxCox.lambda BoxCox
+#' 
 get_transform <- function(x, method = c("log", "sqrt", "log+1", "log+a", "1/x", 
                                         "x^2", "x^3", "Box-Cox", "Yeo-Johnson")) {
   get_boxcox <- function(x) {
@@ -616,8 +616,14 @@ get_transform <- function(x, method = c("log", "sqrt", "log+1", "log+a", "1/x",
     result <- x^3
   else if (method == "Box-Cox") 
     result <- get_boxcox(x)
-  else if (method == "Yeo-Johnson") 
+  else if (method == "Yeo-Johnson") {
+    if (!requireNamespace("forecast", quietly = TRUE)) {
+      stop("Package \"forecast\" needed for this function to work. Please install it.",
+           call. = FALSE)
+    }
+    
     result <- get_yjohnson(x)
-  
+  }
+
   result
 }

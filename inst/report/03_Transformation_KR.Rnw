@@ -3,8 +3,23 @@
 <<init, echo=FALSE, warning=FALSE, message=FALSE>>=
 options(warn = -1)
 
-library(mice)
-library(smbinning)
+if (!requireNamespace("mice", quietly = TRUE)) {
+  stop("Package 'mice' needed for this function to work. Please install it.", 
+       call. = FALSE)
+} else {
+  library(mice)
+}
+
+if (!requireNamespace("rpart", quietly = TRUE)) {
+  stop("Package 'rpart' needed for this function to work. Please install it.", 
+       call. = FALSE)
+}
+
+if (!requireNamespace("DMwR", quietly = TRUE)) {
+  stop("Package 'DMwR' needed for this function to work. Please install it.", 
+       call. = FALSE)
+}
+
 library(knitr)
 library(kableExtra)
 
@@ -474,7 +489,7 @@ if (!is.null(targetVariable)) {
       cat("\\bloodp{", i, "}{",
         change_under(varname[i]), "}\n", sep = "")
 
-      cairo_pdf(paste("./figure/binns", i, ".pdf", sep = ""))
+      cairo_pdf(paste("./figure/binns", i, ".pdf", sep = ""), width = 7, height = 5)
       plot(result)
       dev.off()
     }

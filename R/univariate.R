@@ -338,7 +338,6 @@ univar_numeric_impl <- function(df, vars) {
 #' # Summary chi-squared test by returned object include NA
 #' summary(urban, na.rm = FALSE)
 #' 
-#' @importFrom broom glance
 #' @importFrom stats chisq.test
 #' @importFrom purrr map_dfr
 #' @method summary univar_category
@@ -361,7 +360,7 @@ summary.univar_category <- function(object, na.rm = TRUE, ...) {
     
     suppressWarnings(tabs%>% 
                        stats::chisq.test() %>% 
-                       broom::glance() %>% 
+                       get_tab_chisq() %>% 
                        select(-method))
   }
   

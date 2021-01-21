@@ -127,7 +127,6 @@ eda_report <- function(.data, ...) {
 #' @importFrom knitr knit2pdf
 #' @importFrom rmarkdown render
 #' @importFrom grDevices cairo_pdf
-#' @importFrom xtable xtable
 #' @importFrom prettydoc html_pretty
 #' @importFrom kableExtra kable_styling
 #' @importFrom utils browseURL

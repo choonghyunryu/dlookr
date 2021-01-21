@@ -150,7 +150,7 @@ carseats %>%
  arrange(desc(freq)) %>%
  head(10)
 
-## ----binning_by, fig.width = 10, fig.height = 7, dpi=300----------------------
+## ----binning_by, fig.width = 8, fig.height = 5, dpi=300-----------------------
 library(dplyr)
 
 # optimal binning using character
@@ -196,7 +196,4 @@ knitr::include_graphics('img/trans_agenda_html.png')
 
 ## ----trans_table_html, echo=FALSE, out.width='50%', fig.align='center', fig.pos="!h", fig.cap="Report table example (web)"----
 knitr::include_graphics('img/trans_table_html.png')
-
-## ----trans_viz_html, echo=FALSE, out.width='75%', fig.align='center', fig.pos="!h", fig.cap="Data transformation report Binning information (web)"----
-knitr::include_graphics('img/trans_viz_html.png')
 

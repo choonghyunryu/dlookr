@@ -287,8 +287,7 @@ if (NROW(diagn_numeric) > 0) {
       kable_styling(latex_options = c("hold_position")) %>%
       cat()
 
-      cairo_pdf(filename = sprintf("./figure/out%s.pdf", i), width = 6, height = 4,
-        family = "NanumGothic")
+      cairo_pdf(filename = sprintf("./figure/out%s.pdf", i), width = 6, height = 4)
       plot_outlier(edaData, variables[i])
       dev.off()
 
@@ -296,7 +295,7 @@ if (NROW(diagn_numeric) > 0) {
 
       cat("\\begin{figure}[!ht]\n")
       cat("\\centering\n")
-      cat(sprintf("\\includegraphics[width=1.0\\textwidth]{figure/out%s.pdf}\n", i))
+      cat(sprintf("\\includegraphics[width=0.7\\textwidth]{figure/out%s.pdf}\n", i))
       cat(sprintf("\\caption{%s}\n", cap_fig))
       cat("\\end{figure}\n")
 

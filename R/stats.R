@@ -78,3 +78,36 @@ jsd <- function(p, q, base = c("log", "log2", "log10"), margin = FALSE) {
   }
 }
 
+get_tab_lm <- function(x) {
+  info_lm <- summary(x)
+  
+  df <- data.frame(r.squared = info_lm$r.squared, 
+             adj.r.squared = info_lm$adj.r.squared,
+             sigma = info_lm$sigma,
+             statistic = info_lm$fstatistic[1],
+             p.value = anova(x)$'Pr(>F)'[1],
+             df = round(info_lm$fstatistic[2]),
+             logLik = as.numeric(logLik(x)),
+             AIC = AIC(x),
+             BIC = BIC(x),
+             deviance = deviance(x),
+             df.residual = x$df.residual,
+             nobs = length(x$residuals))
+  
+  row.names(df) <- NULL
+  
+  df
+}
+
+
+get_tab_chisq <- function(x) {
+  df <- data.frame(statistic = as.numeric(x$statistic),
+             p.value = x$p.value,
+             parameter = x$parameter,
+             method = x$method)
+  
+  row.names(df) <- NULL
+  
+  df
+}
+

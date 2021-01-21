@@ -105,7 +105,6 @@ imputate_na <- function(.data, xvar, yvar, method, seed, print_flag, no_attrs) {
 #' @method imputate_na data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang enquo
-#' @import mice
 #' @export
 imputate_na.data.frame <- function(.data, xvar, yvar = NULL,
   method = c("mean", "median", "mode", "rpart", "knn", "mice"), seed = NULL,
@@ -130,9 +129,6 @@ imputate_na.data.frame <- function(.data, xvar, yvar = NULL,
 
 #' @import tibble
 #' @import dplyr
-#' @importFrom mice mice
-#' @importFrom DMwR knnImputation
-#' @importFrom rpart rpart
 #' @importFrom stats predict
 #' @importFrom methods is
 imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL, 
@@ -198,7 +194,13 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL,
       return(rep(NA, length(data)))
     }
     
-    impute <- knnImputation(df[, complete_order])
+    if (requireNamespace("DMwR", quietly = TRUE)) {
+      impute <- DMwR::knnImputation(df[, complete_order])
+    } else {
+      stop("Package 'DMwR' needed for this function to work. Please install it.", 
+           call. = FALSE)
+    }
+  
     pred <- impute[, x]
 
     ifelse(is.na(data), pred, data)
@@ -220,9 +222,14 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL,
       return(rep(NA, length(data)))
     }
     
-    model <- rpart::rpart(sprintf("%s ~ .", x),
-      data = df[!is.na(pull(df, x)), setdiff(intersect(names(df), complete_flag), y)],
-      method = method, na.action = na.omit)
+    if (requireNamespace("rpart", quietly = TRUE)) {
+      model <- rpart::rpart(sprintf("%s ~ .", x),
+                            data = df[!is.na(pull(df, x)), setdiff(intersect(names(df), complete_flag), y)],
+                            method = method, na.action = na.omit)
+    } else {
+      stop("Package 'rpart' needed for this function to work. Please install it.", 
+           call. = FALSE)
+    }
 
     pred <- predict(model, df[is.na(pull(df, x)), !names(df) %in% y],
       type = pred_type)
@@ -394,8 +401,8 @@ imputate_outlier.data.frame <- function(.data, xvar,
 }
 
 #' @import dplyr
-#' @importFrom grDevices boxplot.stats
 #' @importFrom methods is
+#' @importFrom grDevices boxplot.stats
 imputate_outlier_impl <- function(df, xvar, method, no_attrs = FALSE) {
   if (!is(pull(df, xvar))[1] %in% c("integer", "numeric")) {
     stop(sprintf("Categorical variable(%s) not support imputate_outlier()",

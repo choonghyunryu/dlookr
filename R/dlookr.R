@@ -26,5 +26,11 @@ if (getRversion() >= "2.15.1") {
     "outliers_mean", "outliers_ratio", "p_value", "variable", "with_mean", "without_mean",
     "Q1", "Q3", "minus", "freq", "zero", "obs", "coef_corr", "method", "r.squared", 
     "Var1", "Var2", "pos_x", "pos_y", "na_pct", "n_var", "name_var", "n_obs", "ratio",
-    "txt", "name", "cumulative", "y", "frequencies"))
+    "txt", "name", "cumulative", "y", "frequencies", "A", "B", "a", "b", "AUC", "Bin", 
+    "CntCumNeg", "CntCumPos", "CntNeg", "CntPos", "CntRec", "Freq", "LnOdds", "Odds",
+    "PctPos", "PctRec", "REV", "RateCumNeg", "RateCumPos", "RateNeg", "RatePos", "WoE", 
+    "add_pos", "cnt", "datas", "diff_prim", "diff_sec", "flag", "indicator", "menas", 
+    "min_prim", "min_sec", "msg", "n_missing", "na.exclude", "na_flag", "object.size", 
+    "reformulate", "target", "x_end", "x_start", "x_width", "AIC", "BIC", "deviance", "logLik"))
 }
+

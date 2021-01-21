@@ -57,6 +57,11 @@ plot_na_pareto(carseats)
 plot_na_pareto(airquality)
   
 # Diagnose the data with missing_count using diagnose() function
+if (!requireNamespace("mice", quietly = TRUE)) {
+  stop("Package \"mice\" needed for this function to work. Please install it.",
+  call. = FALSE)
+}
+
 mice::boys \%>\% 
   diagnose \%>\% 
   arrange(desc(missing_count))

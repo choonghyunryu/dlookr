@@ -91,7 +91,6 @@
 #'  arrange(desc(freq)) %>%
 #'  head(10)
 #'  
-#' @importFrom classInt classIntervals
 #' @importFrom grDevices nclass.Sturges
 #' @importFrom stats na.omit quantile
 #' @export
@@ -151,12 +150,18 @@ binning <- function(x, nbins,
   } else if (type == "pretty") {
     breaks <- pretty(x = x, n = nbins)
   } else {
+    if (!requireNamespace("classInt", quietly = TRUE)) {
+      stop("Package \"classInt\" needed for this function to work. Please install it.",
+           call. = FALSE)
+    }
+    
     xx <- na.omit(x)
     if (type == "bclust") {
       ci <- classInt::classIntervals(var = xx, n = nbins, style = type, verbose = FALSE)
     } else {
       ci <- classInt::classIntervals(var = xx, n = nbins, style = type)
     }
+    
     breaks <- ci$brks
   }
 
@@ -208,6 +213,7 @@ binning <- function(x, nbins,
 #' @description summary method for "bins" and "optimal_bins".
 #' @param object an object of "bins" and "optimal_bins",
 #' usually, a result of a call to binning().
+#' @param ... further arguments to be passed from or to other methods.
 #' @details
 #' print.bins() prints the information of "bins" and "optimal_bins" objects nicely.
 #' This includes frequency of bins, binned type, and number of bins.
@@ -250,7 +256,6 @@ summary.bins <- function(object, ...) {
 
 #' @param x an object of class "bins" and "optimal_bins",
 #' usually, a result of a call to binning().
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. Default is TRUE.
 #' @param ... further arguments passed to or from other methods.
 #' @rdname summary.bins
 #' @method print bins
@@ -548,6 +553,7 @@ binning_by <- function(.data, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
 #' @description summary method for "optimal_bins". summary metrics to evaluate the performance 
 #' of binomial classification model.
 #' @param object an object of class "optimal_bins", usually, a result of a call to binning_by().
+#' @param ... further arguments to be passed from or to other methods.
 #' @details
 #' print() to print only binning table information of "optimal_bins" objects.
 #' summary.performance_bin() includes general metrics and result of significance tests life follows.:
@@ -621,6 +627,7 @@ summary.optimal_bins <- function(object, ...) {
 #' Positive Rate ("posrate"), and Weight of Evidence ("WoE"). and default "all" draw all plot.
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' @param ... further arguments to be passed from or to other methods.
 #' @seealso \code{\link{binning_by}}, \code{\link{summary.optimal_bins}}
 #' @examples
 #' # Generate data for the example
@@ -656,7 +663,7 @@ summary.optimal_bins <- function(object, ...) {
 #' @export
 #' @method plot optimal_bins
 plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE"), 
-                              typographic = TRUE) {
+                              typographic = TRUE, ...) {
   if (is.character(x)) {
     cat("binn is the optimal_bins object that can not be binned : \n",
         x, "\n", sep = "")
@@ -776,7 +783,7 @@ plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE
   }  
 }
 
-
+#' @rdname extract.bins
 #' @export
 extract <- function(x) {
   UseMethod("extract", x)
@@ -817,8 +824,6 @@ extract <- function(x) {
 #' extract(bin) %>% 
 #'   head(20)
 #' 
-#' @export
-#' @rdname extract.bins
 #' @export
 #' @method extract bins
 extract.bins <- function(x) {
@@ -1028,8 +1033,8 @@ performance_bin <- function (y, x, na.rm = FALSE) {
     filter(!Bin %in% "Total") %>% 
     select(CntRec) %>% 
     pull() %>% 
-    prop.table() %>% 
-    "^"(2) %>% 
+    prop.table() 
+  hhi <- hhi ^ 2 %>% 
     sum()
   
   ## normalized Herfindahl-Hirschman Index
@@ -1084,7 +1089,8 @@ performance_bin <- function (y, x, na.rm = FALSE) {
 #'
 #' @description summary method for "performance_bin". summary metrics to evaluate the performance 
 #' of binomial classification model.
-#' @param x an object of class "performance_bin", usually, a result of a call to performance_bin().
+#' @param object an object of class "performance_bin", usually, a result of a call to performance_bin().
+#' @param ... further arguments to be passed from or to other methods.
 #' @details
 #' print() to print only binning table information of "performance_bin" objects.
 #' summary.performance_bin() includes general metrics and result of significance tests life follows.:
@@ -1137,7 +1143,9 @@ performance_bin <- function (y, x, na.rm = FALSE) {
 #' @method summary performance_bin
 #' @export
 #' 
-summary.performance_bin <- function(x) {
+summary.performance_bin <- function(object, ...) {
+  x <- object
+  
   cli::cat_rule(
     left = "Binning Table",
     right = "Several Metrics",
@@ -1192,6 +1200,7 @@ summary.performance_bin <- function(x) {
 #' @param x an object of class "performance_bin", usually, a result of a call to performance_bin().
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' @param ... further arguments to be passed from or to other methods.
 #' @seealso \code{\link{performance_bin}}, \code{\link{summary.performance_bin}}, \code{\link{binning_by}}, 
 #' \code{\link{plot.optimal_bins}}.
 #' @examples
@@ -1226,7 +1235,7 @@ summary.performance_bin <- function(x) {
 #' @import dplyr
 #' @export
 #' @method plot performance_bin
-plot.performance_bin <- function(x, typographic = TRUE) {
+plot.performance_bin <- function(x, typographic = TRUE, ...) {
   scaleFactor <- 
     x %>% 
     filter(!Bin %in% "Total") %>% 

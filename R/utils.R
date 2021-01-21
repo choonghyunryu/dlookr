@@ -192,6 +192,7 @@ find_na <- function(.data, index = TRUE, rate = FALSE) {
 #'   diagnose()
 #' }
 #' @importFrom purrr map_lgl map_dbl
+#' @importFrom methods is
 #' @export
 #'
 find_outliers <- function(.data, index = TRUE, rate = FALSE) {
@@ -261,6 +262,7 @@ find_outliers <- function(.data, index = TRUE, rate = FALSE) {
 #'   diagnose()
 #' }
 #' @importFrom purrr map_lgl map_dbl
+#' @importFrom methods is
 #' @export
 find_skewness <- function(.data, index = TRUE, value = FALSE, thres = NULL) {
   numeric_flag <- sapply(seq(.data),
@@ -444,3 +446,39 @@ get_percentile <- function(x, value, from = 0, to = 1, eps = 1e-06) {
     get_percentile(x, value, from = from, to = to)
   }
 }
+
+
+# for replace reshape2::melt()
+#' @importFrom purrr map_dbl
+#' @importFrom tibble is_tibble
+get_melt <- function(x) {
+  if (is.data.frame(x)) {
+    if (tibble::is_tibble(x))
+      x <- as.data.frame(x)
+    
+    df <- data.frame(
+      Var1 = factor(rep(names(x), times = nrow(x)), levels = colnames(x)),
+      Var2 = as.integer(rep(row.names(x), each = ncol(x))),
+      value = numeric(nrow(x) * ncol(x))
+    ) 
+  } else if (is.matrix(x)) {
+    df <- data.frame(
+      Var1 = factor(rep(colnames(x), times = nrow(x)), levels = colnames(x)),
+      Var2 = as.integer(rep(row.names(x), each = ncol(x))),
+      value = numeric(nrow(x) * ncol(x))
+    ) 
+  }
+  
+  df$value <- seq(nrow(df)) %>% 
+    purrr::map_dbl(function(i) x[df$Var2[i], df$Var1[i]])
+  
+  df
+} 
+
+
+
+
+
+
+
+

@@ -69,7 +69,7 @@ flights %>%
 ## ----plot_outlier_pipe, fig.align='center', fig.width = 6, fig.height = 4-----
 flights %>%
   plot_outlier(diagnose_outlier(flights) %>% 
-                 filter(outliers_ratio >= 0.5) %>% 
+                 filter(outliers_ratio >= 5) %>% 
                  select(variables) %>% 
                  unlist())
 
@@ -95,10 +95,6 @@ mice::boys %>%
 ## ----plot_na_hclust1, fig.align='center', fig.width = 6, fig.height = 4-------
 mice::boys %>% 
   plot_na_intersect()
-
-## ----plot_na_hclust2, fig.align='center', fig.width = 6, fig.height = 4-------
-mice::boys %>% 
-  plot_na_intersect(only_na = FALSE)
 
 ## ----plot_na_hclust3, fig.align='center', fig.width = 6, fig.height = 4-------
 mice::boys %>%
@@ -203,17 +199,18 @@ con_sqlite %>%
   diagnose_outlier()  %>%
   filter(outliers_ratio > 1)
 
-## ----plot_outlier_dbi, fig.align='center', fig.width = 6, fig.height = 4------
-# Visualization of numerical variables with a ratio of
-# outliers greater than 1%
-con_sqlite %>% 
-  tbl("TB_CARSEATS") %>% 
-  plot_outlier(con_sqlite %>% 
-                 tbl("TB_CARSEATS") %>% 
-                 diagnose_outlier() %>%
-                 filter(outliers_ratio > 1) %>%
-                 select(variables) %>%
-                 pull())
+## ----plot_outlier_dbi, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE----
+#  # Visualization of numerical variables with a ratio of
+#  # outliers greater than 1%
+#  # the result is same as a data.frame, but not display here. reference above in document.
+#  con_sqlite %>%
+#    tbl("TB_CARSEATS") %>%
+#    plot_outlier(con_sqlite %>%
+#                   tbl("TB_CARSEATS") %>%
+#                   diagnose_outlier() %>%
+#                   filter(outliers_ratio > 1) %>%
+#                   select(variables) %>%
+#                   pull())
 
 ## ----dbi_diag_report, eval=FALSE----------------------------------------------
 #  # create pdf file. file name is DataDiagnosis_Report.pdf

@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r load_packages, echo=FALSE, warning=FALSE, message=FALSE}
-library(xtable)
+#library(xtable)
 library(magrittr)
 library(dlookr)
 library(dplyr)

@@ -65,9 +65,8 @@
 #'   lm(Sales ~ Advertising_log, data = .)
 #' @export
 #' @import tibble
-#' @importFrom methods is
 #' @importFrom stats sd
-#' @importFrom forecast BoxCox.lambda BoxCox
+#' @importFrom methods is
 #'  
 transform <- function(x, method = c("zscore", "minmax", "log", "log+1", "sqrt",
   "1/x", "x^2", "x^3", "Box-Cox", "Yeo-Johnson")) {
@@ -116,8 +115,14 @@ transform <- function(x, method = c("zscore", "minmax", "log", "log+1", "sqrt",
     result <- x^3
   else if (method == "Box-Cox") 
     result <- get_boxcox(x)
-  else if (method == "Yeo-Johnson") 
+  else if (method == "Yeo-Johnson")  {
+    if (!requireNamespace("forecast", quietly = TRUE)) {
+      stop("Package \"forecast\" needed for this function to work. Please install it.",
+           call. = FALSE)
+    }
+    
     result <- get_yjohnson(x)
+  }
     
   attr(result, "method") <- method
   attr(result, "origin") <- x
@@ -348,7 +353,6 @@ plot.transform <- function(x, typographic = TRUE, ...) {
 #' @importFrom rmarkdown render
 #' @importFrom grDevices cairo_pdf
 #' @importFrom gridExtra grid.arrange
-#' @importFrom xtable xtable
 #' @importFrom knitr kable
 #' @importFrom prettydoc html_pretty
 #' @importFrom kableExtra kable_styling

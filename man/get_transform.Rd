@@ -46,6 +46,7 @@ get_transform(iris$Sepal.Length, "Box-Cox")
 # log transform 
 get_transform(iris$Sepal.Length, "Yeo-Johnson")
 }
+
 }
 \seealso{
 \code{\link{plot_normality}}.

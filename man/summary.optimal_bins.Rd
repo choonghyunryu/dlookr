@@ -8,6 +8,8 @@
 }
 \arguments{
 \item{object}{an object of class "optimal_bins", usually, a result of a call to binning_by().}
+
+\item{...}{further arguments to be passed from or to other methods.}
 }
 \value{
 NULL.

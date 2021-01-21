@@ -1145,7 +1145,6 @@ diagonal line.
 
 ``` r
 plot(num_num)
-#> `geom_smooth()` using formula 'y ~ x'
 ```
 
 ![](man/figures/README-target_by8-1.png)<!-- -->
@@ -1424,9 +1423,9 @@ urban
 #>  [19] No  Yes Yes No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes Yes Yes Yes
 #>  [37] No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes
 #>  [55] No  Yes Yes Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes Yes Yes Yes No 
-#>  [73] Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes No  No  Yes No  Yes No 
-#>  [91] No  Yes Yes Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes
-#> [109] Yes No  Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes No 
+#>  [73] Yes No  No  No  Yes No  Yes Yes Yes Yes Yes No  No  No  Yes No  Yes No 
+#>  [91] No  Yes Yes No  Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes
+#> [109] Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes No 
 #> [127] Yes Yes Yes No  Yes No  Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes
 #> [145] No  Yes Yes No  No  Yes No  No  No  No  No  Yes Yes No  No  No  No  No 
 #> [163] Yes No  No  Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes No  Yes No  Yes
@@ -1436,8 +1435,8 @@ urban
 #> [235] No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes
 #> [253] Yes No  Yes Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes No  No  Yes Yes
 #> [271] Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes No  No  Yes No  Yes
-#> [289] No  Yes No  No  Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
-#> [307] Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No  No  No  Yes Yes Yes Yes
+#> [289] No  Yes No  Yes Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
+#> [307] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes No  No  No  Yes Yes Yes Yes
 #> [325] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No 
 #> [343] No  Yes No  Yes No  No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes
 #> [361] No  No  Yes Yes Yes No  No  Yes No  Yes Yes Yes No  Yes Yes Yes Yes No 
@@ -1449,6 +1448,8 @@ urban
 #> [1] mice
 #> attr(,"na_pos")
 #>  [1]  33  36  84  94 113 132 151 292 313 339
+#> attr(,"seed")
+#> [1] 67257
 #> attr(,"type")
 #> [1] missing values
 #> attr(,"message")
@@ -1459,11 +1460,15 @@ urban
 
 # summary of imputation
 summary(urban)
+#> * Impute missing values based on Multivariate Imputation by Chained Equations
+#>  - method : mice
+#>  - random seed : 67257
+#> 
 #> * Information of Imputation (before vs after)
 #>      original imputation original_percent imputation_percent
-#> No        115        119            28.75              29.75
-#> Yes       275        281            68.75              70.25
-#> <NA>       10          0             2.50               0.00
+#> No        115        120            28.75                 30
+#> Yes       275        280            68.75                 70
+#> <NA>       10          0             2.50                  0
 
 # viz of imputation
 plot(urban)
@@ -1871,8 +1876,8 @@ binning(carseats$Income, nbins = 5, type = "bclust")
 #> binned type: bclust
 #> number of bins: 5
 #> x
-#>   [21,34.5] (34.5,55.5] (55.5,77.5] (77.5,96.5]  (96.5,120]        <NA> 
-#>          57          71          98          78          76          20
+#>   [21,38.5] (38.5,56.5]   (56.5,85]    (85,106]   (106,120]        <NA> 
+#>          74          57         133          76          40          20
 
 # Extract the binned results
 extract(bin)
@@ -2449,7 +2454,7 @@ con_sqlite %>%
 #>   <chr>       <dbl>  <dbl>  <dbl>  <dbl>  <dbl> <dbl> <int> <int>   <int>
 #> 1 Sales           0   5.39   7.50   7.49   9.32  16.3     1     0       2
 #> 2 CompPrice      77 115    125.   125    135    175       0     0       2
-#> 3 Income         21  42     67.9   68.5   90    120       0     0       0
+#> 3 Income         21  42     68.4   69     91    120       0     0       0
 #> 4 Advertising     0   0      6.64   5     12     29     144     0       0
 #> 5 Population     10 139    265.   272    398.   509       0     0       0
 #> 6 Price          24 100    116.   117    131    191       0     0       5
@@ -2527,9 +2532,9 @@ con_sqlite %>%
 #> # A tibble: 3 x 27
 #>   variable ShelveLoc     n    na  mean    sd se_mean   IQR skewness kurtosis
 #>   <chr>    <chr>     <dbl> <dbl> <dbl> <dbl>   <dbl> <dbl>    <dbl>    <dbl>
-#> 1 Sales    Bad          73     0  5.54  2.38   0.279  3.59    0.120  -0.0143
-#> 2 Sales    Good         57     0 10.4   2.64   0.349  3.78   -0.235  -0.181 
-#> 3 Sales    Medium      149     0  7.37  2.15   0.176  3.05    0.229  -0.310 
+#> 1 Sales    Bad          74     0  5.52  2.37   0.276  3.53    0.142  0.00245
+#> 2 Sales    Good         57     0 10.4   2.64   0.349  3.78   -0.235 -0.181  
+#> 3 Sales    Medium      149     0  7.28  2.11   0.173  3.04    0.159 -0.457  
 #> # … with 17 more variables: p00 <dbl>, p01 <dbl>, p05 <dbl>, p10 <dbl>,
 #> #   p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>, p60 <dbl>,
 #> #   p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>, p99 <dbl>,
@@ -2554,7 +2559,7 @@ con_sqlite %>%
 #> # A tibble: 1 x 6
 #>   variable   ShelveLoc US    statistic p_value sample
 #>   <chr>      <chr>     <chr>     <dbl>   <dbl>  <dbl>
-#> 1 log_income Bad       No        0.945   0.103     34
+#> 1 log_income Bad       No        0.946  0.0998     34
 ```
 
 #### Normalization visualization of numerical column in the DBMS
@@ -2590,7 +2595,7 @@ con_sqlite %>%
 #>   <chr> <chr> <fct> <fct>          <dbl>
 #> 1 No    No    Sales Population    -0.530
 #> 2 No    No    Sales Price         -0.838
-#> 3 No    Yes   Sales Price         -0.545
+#> 3 No    Yes   Sales Price         -0.674
 #> 4 Yes   No    Sales Price         -0.833
 #> 5 Yes   No    Sales Age           -0.649
 #> 6 Yes   Yes   Sales Price         -0.604

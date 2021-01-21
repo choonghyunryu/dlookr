@@ -333,7 +333,6 @@ compare_numeric.data.frame <- function(.data, ...) {
 
 
 #' @import tibble
-#' @importFrom broom glance
 #' @importFrom utils combn
 compare_numeric_impl <- function(df, vars) {
   if (length(vars) == 0) vars <- names(df)
@@ -374,7 +373,7 @@ compare_numeric_impl <- function(df, vars) {
     agg_lm <- df %>% 
       select(x, y) %>% 
       lm(lm_formula, data = .) %>% 
-      broom::glance()
+      get_tab_lm()
     
     tibble::as_tibble(data.frame(var1 = x, var2 = y, agg_lm, stringsAsFactors = FALSE))
   }
@@ -585,7 +584,7 @@ summary.compare_category <- function(object, method = c("all", "table", "relativ
     
     suppressWarnings(chisq[j, ] <- contingency[[j]] %>% 
                        chisq.test() %>% 
-                       broom::glance() %>% 
+                       get_tab_chisq() %>% 
                        select(-method))
 
     j <- j + 1
@@ -1067,7 +1066,7 @@ plot.compare_numeric <- function(x, prompt = FALSE, typographic = TRUE, ...) {
     xvar <- combination[i, 1]
     yvar <- combination[i, 2]  
     
-    datas <<- df[ , c(xvar, yvar)]
+    datas <- df[ , c(xvar, yvar)]
     str_formula <- formula(sprintf("%s ~ %s", xvar, yvar))
     
     if (prompt & n > 1) {

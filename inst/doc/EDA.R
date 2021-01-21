@@ -121,14 +121,14 @@ carseats %>%
 ## ----plot_correlate, fig.align='center', fig.width = 6, fig.height = 4--------
 plot_correlate(carseats)
 
-## ----plot_correlate2, fig.align='center', fig.width = 6, fig.height = 4-------
+## ----plot_correlate2, fig.align='center', fig.width = 5, fig.height = 3-------
 # Select columns by name
 plot_correlate(carseats, Sales, Price)
 
-## ----plot_correlate3, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE----
+## ----plot_correlate3, fig.align='center', fig.width = 5, fig.height = 3, warning=FALSE----
 carseats %>%
   filter(ShelveLoc == "Good") %>%
-  group_by(Urban, US) %>%
+  group_by(Urban) %>%
   plot_correlate(Sales)
 
 ## ----target_by----------------------------------------------------------------
@@ -290,20 +290,15 @@ con_sqlite %>%
  normality(log_income) %>%
  filter(p_value > 0.01)
 
-## ----plot_normality_dbi, fig.align='center', fig.width = 6, fig.height = 4----
-# Plot 'Sales' variable by 'ShelveLoc' and 'US'
-con_sqlite %>% 
-  tbl("TB_CARSEATS") %>% 
-  group_by(ShelveLoc, US) %>%
-  plot_normality(Sales)
-
-# extract only those with 'ShelveLoc' variable level is "Good",
-# and plot 'Income' by 'US'
-con_sqlite %>% 
-  tbl("TB_CARSEATS") %>% 
-  filter(ShelveLoc == "Good") %>%
-  group_by(US) %>%
-  plot_normality(Income)
+## ----plot_normality_dbi, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE----
+#  # extract only those with 'ShelveLoc' variable level is "Good",
+#  # and plot 'Income' by 'US'
+#  # the result is same as a data.frame, but not display here. reference above in document.
+#  con_sqlite %>%
+#    tbl("TB_CARSEATS") %>%
+#    filter(ShelveLoc == "Good") %>%
+#    group_by(US) %>%
+#    plot_normality(Income)
 
 ## ----dbi_correlation----------------------------------------------------------
 # Correlation coefficient
@@ -339,15 +334,16 @@ con_sqlite %>%
   filter(coef_corr < 0) %>%
   filter(abs(coef_corr) > 0.5)
 
-## ----plot_correlation_dbi, fig.align='center', fig.width = 6, fig.height = 4----
-# Extract only those with 'ShelveLoc' variable level is "Good",
-# and visualize correlation plot of 'Sales' variable by 'Urban'
-# and 'US' variables.
-con_sqlite %>% 
-  tbl("TB_CARSEATS") %>% 
-  filter(ShelveLoc == "Good") %>%
-  group_by(Urban, US) %>%
-  plot_correlate(Sales)
+## ----plot_correlation_dbi, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE, eval=FALSE----
+#  # Extract only those with 'ShelveLoc' variable level is "Good",
+#  # and visualize correlation plot of 'Sales' variable by 'Urban'
+#  # and 'US' variables.
+#  # the result is same as a data.frame, but not display here. reference above in document.
+#  con_sqlite %>%
+#    tbl("TB_CARSEATS") %>%
+#    filter(ShelveLoc == "Good") %>%
+#    group_by(Urban) %>%
+#    plot_correlate(Sales)
 
 ## ----dbi_ctarget_by-----------------------------------------------------------
 # If the target variable is a categorical variable
@@ -358,8 +354,9 @@ cat_num <- relate(categ, Sales)
 cat_num
 summary(cat_num)
 
-## ----plot_target_by_dbi, fig.align='center', fig.align='center', fig.width = 6, fig.height = 4----
-plot(cat_num)
+## ----plot_target_by_dbi, fig.align='center', fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE----
+#  # the result is same as a data.frame, but not display here. reference above in document.
+#  plot(cat_num)
 
 ## ----dbi_diag_report, eval=FALSE----------------------------------------------
 #  ## target variable is categorical variable

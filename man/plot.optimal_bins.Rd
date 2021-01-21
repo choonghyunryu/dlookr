@@ -4,7 +4,12 @@
 \alias{plot.optimal_bins}
 \title{Visualize Distribution for an "optimal_bins" Object}
 \usage{
-\method{plot}{optimal_bins}(x, type = c("all", "dist", "freq", "posrate", "WoE"), typographic = TRUE)
+\method{plot}{optimal_bins}(
+  x,
+  type = c("all", "dist", "freq", "posrate", "WoE"),
+  typographic = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{an object of class "optimal_bins", usually, a result of a call to binning_by().}
@@ -14,6 +19,8 @@ Positive Rate ("posrate"), and Weight of Evidence ("WoE"). and default "all" dra
 
 \item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
+
+\item{...}{further arguments to be passed from or to other methods.}
 }
 \description{
 It generates plots for understand distribution, frequency, bad rate, and weight of evidence using optimal_bins.

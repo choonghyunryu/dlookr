@@ -4,7 +4,7 @@
 options(warn = -1)
 
 library(dplyr)
-library(xtable)
+#library(xtable)
 library(ggplot2)
 library(gridExtra)
 library(moments)
@@ -233,7 +233,7 @@ if (length(idx.numeric) == 0) {
 
     cat("\\begin{figure}[!ht]\n")
     cat("\\centering\n")
-    cat(sprintf("\\includegraphics[width=1.0\\textwidth]{figure/norm%s.pdf}\n", i))
+    cat(sprintf("\\includegraphics[width=0.8\\textwidth]{figure/norm%s.pdf}\n", i))
     cat(sprintf("\\caption{%s}\n", cap))
     cat("\\end{figure}\n")
 
@@ -370,7 +370,7 @@ if (!is.null(targetVariable)) {
 
         cat("\\begin{figure}[!ht]\n")
         cat("\\centering\n")
-        cat(sprintf("\\includegraphics[width=1.0\\textwidth]{figure/%s.pdf}\n", i))
+        cat(sprintf("\\includegraphics[width=0.8\\textwidth]{figure/%s.pdf}\n", i))
         cat(sprintf("\\caption{%s}\n", cap))
         cat("\\end{figure}\n")
 

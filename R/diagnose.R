@@ -87,7 +87,6 @@ diagnose <- function(.data, ...) {
 #' @method diagnose data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
-#' @importFrom methods is
 #' @export
 diagnose.data.frame <- function(.data, ...) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
@@ -95,6 +94,7 @@ diagnose.data.frame <- function(.data, ...) {
 }
 
 #' @import tibble
+#' @importFrom methods is
 #' @importFrom stats complete.cases
 diagn_std_impl <- function(df, vars) {
   if (length(vars) == 0) vars <- names(df)
@@ -700,18 +700,22 @@ plot_outlier_raw <- function(x, main = NULL, col = "steelblue", typographic = TR
     top_left <- top_left +
       theme_ipsum() +
       theme(axis.text.x = element_blank(),
-            axis.ticks.x = element_blank())
+            axis.ticks.x = element_blank(),
+            plot.margin = margin(10, 30, 10, 30))
     
     top_right <- top_right +
-      theme_ipsum()
+      theme_ipsum() +
+      theme(plot.margin = margin(10, 30, 10, 30))
     
     bottom_left <- bottom_left +
       theme_ipsum() +
       theme(axis.text.x = element_blank(),
-            axis.ticks.x = element_blank())
+            axis.ticks.x = element_blank(),
+            plot.margin = margin(10, 30, 10, 30))
     
     bottom_right <- bottom_right +
-      theme_ipsum()
+      theme_ipsum() +
+      theme(plot.margin = margin(10, 30, 10, 30))    
     
     top <- grid::textGrob(main, gp = grid::gpar(fontfamily = "Arial Narrow", fontsize = 18, font = 2),
                           x = unit(0.075, "npc"), just = "left")

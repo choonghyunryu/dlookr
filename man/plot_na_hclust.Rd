@@ -43,8 +43,12 @@ carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 plot_na_hclust(carseats)
 plot_na_hclust(airquality)
   
-
 # Visualize pareto chart for variables with missing value.
+if (!requireNamespace("mice", quietly = TRUE)) {
+  stop("Package \"mice\" needed for this function to work. Please install it.",
+  call. = FALSE)
+}
+
 plot_na_hclust(mice::boys)
 
 # Change the main title.

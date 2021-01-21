@@ -234,8 +234,8 @@ relate.target_df <- function(.data, predictor) {
   relate_impl(.data, vars)
 }
 
-#' @importFrom methods is
 #' @importFrom stats cor formula lm xtabs
+#' @importFrom methods is
 relate_impl <- function(.data, predictor) {
   relate_cat_by_num_impl <- function(.data, predictor) {
     indiv <- describe(.data, predictor)
@@ -531,13 +531,13 @@ print.relate <- function(x, ...) {
 #' @method plot relate
 #' @import ggplot2
 #' @import hrbrthemes
-#' @importFrom RColorBrewer brewer.pal
 #' @importFrom gridExtra grid.arrange
 #' @importFrom stats complete.cases
 #' @importFrom graphics plot
 #' @export
-plot.relate <- function(x, model = FALSE, hex_thres = 1000, pal = RColorBrewer::brewer.pal(7,"YlOrRd"), 
-                        typographic = TRUE,...) {
+plot.relate <- function(x, model = FALSE, hex_thres = 1000, 
+                        pal = c("#FFFFB2", "#FED976", "#FEB24C", "#FD8D3C", "#FC4E2A", "#E31A1C", "#B10026"), 
+                        typographic = TRUE, ...) {
   type <- attr(x, "model")
   xvar <- attr(x, "predictor")
   yvar <- attr(x, "target")

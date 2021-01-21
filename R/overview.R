@@ -202,6 +202,7 @@ summary.overview <- function(object, ...)  {
 #'
 #' @param x an object of class "overview", usually, a result of a call to overview().
 #' @param order_type character. method of order of bars(variables).
+#' @param ... further arguments to be passed from or to other methods.
 #' @seealso \code{\link{overview}}, \code{\link{summary.overview}}.
 #' @examples
 #' \donttest{
@@ -228,7 +229,7 @@ summary.overview <- function(object, ...)  {
 #' @import ggplot2
 #' @import dplyr
 #' @export
-plot.overview <- function(x, order_type = c("none", "name", "type"))  {
+plot.overview <- function(x, order_type = c("none", "name", "type"), ...)  {
   info_class <- attr(x, "info_class")
   na_col <- attr(x, "na_col")
   

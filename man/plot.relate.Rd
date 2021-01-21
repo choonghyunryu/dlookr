@@ -8,7 +8,7 @@
   x,
   model = FALSE,
   hex_thres = 1000,
-  pal = RColorBrewer::brewer.pal(7, "YlOrRd"),
+  pal = c("#FFFFB2", "#FED976", "#FEB24C", "#FD8D3C", "#FC4E2A", "#E31A1C", "#B10026"),
   typographic = TRUE,
   ...
 )

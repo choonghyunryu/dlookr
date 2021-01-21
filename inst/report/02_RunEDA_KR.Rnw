@@ -4,7 +4,7 @@
 options(warn = -1)
 
 library(dplyr)
-library(xtable)
+#library(xtable)
 library(ggplot2)
 library(gridExtra)
 library(moments)
