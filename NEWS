@@ -30,6 +30,8 @@ dlookr 0.3.15
 
 * Add a new function plot_box_numeric() to visualizes the box plot of numeric data or relationship to specific categorical data.
 
+* Add a new function plot_outlier.target_df() to visualizes the information of outliers by target variable.
+
 * Add a new function overview() to describe overview of data.
 
 * Add a new function summary.overview() to summarizes the data information from the overview class object created with overview().
@@ -48,6 +50,8 @@ dlookr 0.3.15
 plot_normality() changed the look & feel that draw the viz from high-level graphic function to ggplot2.
 
 * plot.optimal_bins(), plot_na_hclust(), plot_na_pareto(), plot_na_intersect(), plot.relate(), plot_bar_category(), plot_qq_numeric(), plot_box_numeric() append argemt typographic thst is whether to apply focuses on typographic elements.
+
+* modified visualization of report by diagnose_report(), eda_report(), transformation_report().
 
 
 dlookr 0.3.14

@@ -56,13 +56,13 @@ carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 
 # Visualization of all numerical variables
-plot_outlier(carseats)
+# plot_outlier(carseats)
 
 # Select the variable to diagnose
 plot_outlier(carseats, Sales, Price)
-plot_outlier(carseats, -Sales, -Price)
-plot_outlier(carseats, "Sales", "Price")
-plot_outlier(carseats, 6)
+# plot_outlier(carseats, -Sales, -Price)
+# plot_outlier(carseats, "Sales", "Price")
+# plot_outlier(carseats, 6)
 
 # Using the col argument
 plot_outlier(carseats, Sales, col = "gray")
@@ -74,20 +74,20 @@ plot_outlier(carseats, Sales, typographic = FALSE)
 library(dplyr)
 
 # Visualization of all numerical variables
-carseats \%>\%
-  plot_outlier()
+# carseats \%>\%
+#   plot_outlier()
   
 # Positive values select variables
 carseats \%>\%
   plot_outlier(Sales, Price)
   
 # Negative values to drop variables
-carseats \%>\%
-  plot_outlier(-Sales, -Price)
+# carseats \%>\%
+#   plot_outlier(-Sales, -Price)
   
 # Positions values select variables
-carseats \%>\%
-  plot_outlier(6)
+# carseats \%>\%
+#   plot_outlier(6)
   
 # Positions values select variables
 carseats \%>\%
@@ -96,12 +96,12 @@ carseats \%>\%
 # Using pipes & dplyr -------------------------
 # Visualization of numerical variables with a ratio of
 # outliers greater than 1\%
-carseats \%>\%
-  plot_outlier(carseats \%>\%
-      diagnose_outlier() \%>\%
-      filter(outliers_ratio > 1) \%>\%
-      select(variables) \%>\%
-      pull())
+# carseats \%>\%
+#   plot_outlier(carseats \%>\%
+#      diagnose_outlier() \%>\%
+#      filter(outliers_ratio > 1) \%>\%
+#      select(variables) \%>\%
+#      pull())
   
 }
 \seealso{

@@ -329,7 +329,7 @@ plot.transform <- function(x, typographic = TRUE, ...) {
 #' @param browse logical. choose whether to output the report results to the browser.
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Generate data for the example
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
@@ -338,12 +338,16 @@ plot.transform <- function(x, typographic = TRUE, ...) {
 #' # reporting the Binning information -------------------------
 #' # create pdf file. file name is Transformation_Report.pdf & No target variable
 #' transformation_report(carseats)
+#' 
 #' # create pdf file. file name is Transformation_Report.pdf
 #' transformation_report(carseats, US)
+#' 
 #' # create pdf file. file name is Transformation_carseats.pdf
 #' transformation_report(carseats, "US", output_file = "Transformation_carseats.pdf")
+#' 
 #' # create html file. file name is Transformation_Report.html
 #' transformation_report(carseats, "US", output_format = "html")
+#' 
 #' # create html file. file name is Transformation_carseats
 #' transformation_report(carseats, US, output_format = "html", 
 #'                       output_file = "Transformation_carseats.html")
@@ -361,7 +365,7 @@ plot.transform <- function(x, typographic = TRUE, ...) {
 #' @export
 transformation_report <- function(.data, target = NULL, output_format = c("pdf", "html"),
   output_file = NULL, output_dir = tempdir(), font_family = NULL, browse = TRUE) {
-  tryCatch(vars <- tidyselect::vars_select(names(.data), !!! rlang::enquo(target)),
+  tryCatch(vars <- tidyselect::vars_select(names(.data), !! rlang::enquo(target)),
     error = function(e) {
       pram <- as.character(substitute(target))
       stop(sprintf("Column %s is unknown", pram))

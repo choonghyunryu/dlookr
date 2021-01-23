@@ -183,7 +183,7 @@ if (length(idx.numeric) == 0) {
                 round(y$statistic, 5),  y$p.value))
     cat("\n<br>\n")
 
-    if (sum(x < 0) > 0) {
+    if (sum(x < 0, na.rm = TRUE) > 0) {
       type <- c("original", "log+a transformation", "Box-Cox transformation")
   
       skew <- c(skewness(x, na.rm = TRUE),
@@ -216,10 +216,14 @@ if (length(idx.numeric) == 0) {
 
     x <- data.frame(x)
     
-    if (sum(x < 0) > 0)
+    if (sum(x < 0, na.rm = TRUE) > 0) {
       plot_normality(x, x, left = "log+a", right = "Box-Cox")
-    else
-      plot_normality(x, x)
+    } else {
+      if (any(x == 0, na.rm = TRUE)) 
+        plot_normality(x, x, left = "log+1", right = "sqrt")
+      else
+        plot_normality(x, x)
+    }
   
     cat("\n<hr>\n<br>\n")
   }
@@ -269,6 +273,13 @@ if (length(idx.numeric) > 2) {
 # 목적변수 기반의 분석
 ## 목적변수 그룹별 기술통계
 ### 목적변수 대응 수치형 변수
+
+```{r create_target_by, echo=FALSE, warning=FALSE, message=FALSE}
+if (!is.null(targetVariable)) {
+  target_by_obj <- target_by(edaData, all_of(targetVariable))
+}  
+```
+
 ```{r numeric_variables, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=5, fig.width=7, results='asis'}
 if (!is.null(targetVariable)) {
   if (factor_flag) {
@@ -295,48 +306,9 @@ if (!is.null(targetVariable)) {
     
         cat("<br>")
     
-        fig1  <- ggplot(edaData, aes_string(x = targetVariable,
-                                            y = names(edaData)[i]))
-        fig2  <- ggplot(edaData, aes_string(x = names(edaData)[i]))
-    
-        tmpData <- edaData[!edaData[, names(edaData)[i]] %in%
-                             boxplot.stats(pull(edaData, names(edaData)[i]))$out,
-                           c(targetVariable, names(edaData)[i])]
-    
-        target2 <- if (!factor_flag) factor(pull(tmpData, targetVariable)) else
-          pull(tmpData, targetVariable)
-    
-        fig3  <- ggplot(tmpData, aes_string(x = targetVariable,
-                                            y = names(edaData)[i]))
-        fig4  <- ggplot(tmpData, aes_string(x = names(tmpData)[2]))
-    
         cat("<br>\n * 분포의 시각화<br>\n")
     
-        grid.arrange(fig1 + geom_boxplot(aes(fill = target)) +
-                       labs(x = targetVariable, y = names(edaData)[i],
-                            title = "boxplot with outliers") +
-                       guides(fill = guide_legend(title = "", nrow = rcnt, byrow = TRUE)) +
-                       theme(legend.position = "bottom",
-                            axis.text.x = element_text(angle = 45, hjust = 1)),
-                     fig2 + geom_density(aes(group = target, colour = target,
-                                             linetype = target)) +
-                       labs(x = names(edaData)[i],
-                            title = "density with outliers") +
-                       guides(col = guide_legend(nrow = rcnt, byrow = TRUE)) +
-                      theme(legend.position = "bottom"),
-                     fig3 + geom_boxplot(aes(fill = target2)) +
-                       labs(x = targetVariable, y = names(tmpData)[2],
-                            title = "boxplot without outliers") +
-                       guides(fill = guide_legend(title = "", nrow = rcnt, byrow = TRUE)) +
-                       theme(legend.position = "bottom",
-                             axis.text.x = element_text(angle = 45, hjust = 1)),
-                     fig4 + geom_density(aes(group = target2, colour = target2,
-                                             linetype = target2)) +
-                       labs(x = names(tmpData)[2],
-                            title = "density without outliers") +
-                      guides(col = guide_legend(nrow = rcnt, byrow = TRUE)) +
-                       theme(legend.position = "bottom"),
-                    nrow = 2, ncol = 2)
+        plot_outlier(target_by_obj, names(edaData)[i])
     
         cat("<br><br>\n<hr>")
       }
@@ -453,21 +425,8 @@ if (!is.null(targetVariable)) {
     
         cat("<br>\n * 도수의 시각화<br>\n")
     
-        fig  <- ggplot(edaData, aes_string(x = names(edaData)[i], fill = target))
-    
-        grid.arrange(fig + geom_bar(position="stack") +
-                       labs(x = "") +
-                       labs(title = "Stack Bar Chart") +
-                       guides(fill = guide_legend(title = "", nrow = rcnt, byrow = TRUE)) +
-                       theme(legend.position = "bottom",
-                             axis.text.x = element_text(angle = 45, hjust = 1)) ,
-                     fig + geom_bar(position="fill") +
-                       labs(x = "") +
-                       labs(title = "Fill Bar Chart") +
-                       guides(fill = guide_legend(title = "", nrow = rcnt, byrow = TRUE)) +
-                      theme(legend.position = "bottom",
-                             axis.text.x = element_text(angle = 45, hjust = 1)),
-                     nrow = 1, ncol = 2)
+        mosaics <- relate(target_by_obj, names(edaData)[i])
+        print(plot(mosaics))
     
         cat("<br><br>\n<hr>")
       }

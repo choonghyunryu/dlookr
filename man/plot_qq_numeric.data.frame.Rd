@@ -69,10 +69,10 @@ carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 
 # Visualization of all numerical variables
-plot_qq_numeric(carseats)
+# plot_qq_numeric(carseats)
 
 # Select the variable to diagnose
-plot_qq_numeric(carseats, "Sales", "Income")
+# plot_qq_numeric(carseats, "Sales", "Income")
 plot_qq_numeric(carseats, -Sales, -Income)
 
 # Not allow the typographic elements
@@ -82,8 +82,8 @@ plot_qq_numeric(carseats, "Sales", typographic = FALSE)
 library(dplyr)
 
 # Plot of all numerical variables
-carseats \%>\%
-  plot_qq_numeric()
+# carseats \%>\%
+#   plot_qq_numeric()
   
 # Using groupd_df  ------------------------------
 carseats \%>\% 

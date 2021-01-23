@@ -93,7 +93,7 @@ See vignette("EDA") for an introduction to these concepts.
 }
 
 \examples{
-\donttest{
+\dontrun{
 library(dplyr)
 
 # Generate data for the example

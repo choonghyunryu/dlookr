@@ -561,13 +561,13 @@ plot_outlier <- function(.data, ...) {
 #' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 #'
 #' # Visualization of all numerical variables
-#' plot_outlier(carseats)
+#' # plot_outlier(carseats)
 #'
 #' # Select the variable to diagnose
 #' plot_outlier(carseats, Sales, Price)
-#' plot_outlier(carseats, -Sales, -Price)
-#' plot_outlier(carseats, "Sales", "Price")
-#' plot_outlier(carseats, 6)
+#' # plot_outlier(carseats, -Sales, -Price)
+#' # plot_outlier(carseats, "Sales", "Price")
+#' # plot_outlier(carseats, 6)
 #'
 #' # Using the col argument
 #' plot_outlier(carseats, Sales, col = "gray")
@@ -579,20 +579,20 @@ plot_outlier <- function(.data, ...) {
 #' library(dplyr)
 #'
 #' # Visualization of all numerical variables
-#' carseats %>%
-#'   plot_outlier()
+#' # carseats %>%
+#' #   plot_outlier()
 #'   
 #' # Positive values select variables
 #' carseats %>%
 #'   plot_outlier(Sales, Price)
 #'   
 #' # Negative values to drop variables
-#' carseats %>%
-#'   plot_outlier(-Sales, -Price)
+#' # carseats %>%
+#' #   plot_outlier(-Sales, -Price)
 #'   
 #' # Positions values select variables
-#' carseats %>%
-#'   plot_outlier(6)
+#' # carseats %>%
+#' #   plot_outlier(6)
 #'   
 #' # Positions values select variables
 #' carseats %>%
@@ -601,12 +601,12 @@ plot_outlier <- function(.data, ...) {
 #' # Using pipes & dplyr -------------------------
 #' # Visualization of numerical variables with a ratio of
 #' # outliers greater than 1%
-#' carseats %>%
-#'   plot_outlier(carseats %>%
-#'       diagnose_outlier() %>%
-#'       filter(outliers_ratio > 1) %>%
-#'       select(variables) %>%
-#'       pull())
+#' # carseats %>%
+#' #   plot_outlier(carseats %>%
+#' #      diagnose_outlier() %>%
+#' #      filter(outliers_ratio > 1) %>%
+#' #      select(variables) %>%
+#' #      pull())
 #'   
 #' @method plot_outlier data.frame
 #' @importFrom tidyselect vars_select
@@ -728,6 +728,201 @@ plot_outlier_raw <- function(x, main = NULL, col = "steelblue", typographic = TR
 }
 
 
+#' Plot outlier information of target_df 
+#'
+#' @description The plot_outlier() visualize outlier information
+#' for diagnosing the quality of the numerical data with target_df class.
+#'
+#' @details The scope of the diagnosis is the provide a outlier information.
+#' Since the plot is drawn for each variable, if you specify more than
+#' one variable in the ... argument, the specified number of plots are drawn.
+#'
+#' @section Outlier diagnostic information:
+#' The plot derived from the numerical data diagnosis is as follows.
+#'
+#' \itemize{
+#' \item With outliers box plot by target variable
+#' \item Without outliers box plot by target variable
+#' \item With outliers density plot by target variable
+#' \item Without outliers density plot by target variable
+#' }
+#'
+#' @param .data a target_df. reference \code{\link{target_by}}.
+#' @param ... one or more unquoted expressions separated by commas.
+#' You can treat variable names like they are positions.
+#' Positive values select variables; negative values to drop variables.
+#' If the first expression is negative, plot_outlier() will automatically start
+#' with all variables.
+#' These arguments are automatically quoted and evaluated in a context
+#' where column names represent column positions.
+#' They support unquoting and splicing.
+#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' @seealso \code{\link{plot_outlier.data.frame}}.
+#' @export
+#' @examples
+#' # Generate data for the example
+#' carseats <- ISLR::Carseats
+#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
+#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+#'
+#' # the target variable is a categorical variable
+#' categ <- target_by(carseats, US)
+#' 
+#' plot_outlier(categ, Price)
+#' plot_outlier(categ, Price, typographic = FALSE)
+#' 
+#' # using dplyr
+#' library(dplyr)
+#' carseats %>% 
+#'   target_by(US) %>% 
+#'   plot_outlier(Price, CompPrice)
+#' 
+#' # Using DBMS tables ----------------------------------
+#' # connect DBMS
+#' con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+#' 
+#' # copy carseats to the DBMS with a table named TB_CARSEATS
+#' copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
+#'
+#' # If the target variable is a categorical variable
+#' categ <- target_by(con_sqlite %>% tbl("TB_CARSEATS") , US)
+#' 
+#' plot_outlier(categ, Price)
+#' 
+#' @method plot_outlier target_df
+#' @importFrom tidyselect vars_select
+#' @importFrom rlang quos
+#' @export
+plot_outlier.target_df <- function(.data, ..., typographic = TRUE) {
+  vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
+  plot_outlier_target_impl(.data, vars, typographic)
+}
+
+#' @import dplyr
+#' @import ggplot2
+#' @importFrom tibble is_tibble
+#' @importFrom gridExtra grid.arrange
+plot_outlier_target_impl <- function(df, vars, typographic = TRUE) {
+  if (utils::packageVersion("dplyr") >= "0.8.0") {
+    target <- setdiff(attr(df, "groups") %>% names(), ".rows")
+  } else {
+    target <- attr(df, "vars")
+  }
+  
+  if (length(target) > 1) {
+    message(sprintf("plot_outlier() only supports one group variable. \
+                   However, the call now has %d group variables.", length(target)))
+    invisible(NULL)
+  }
+  
+  if (utils::packageVersion("dplyr") >= "0.8.0") {
+    type_target <- df[, target] %>% pull %>% is %>% "["(1)
+  } else {
+    type_target <- is(df[, target])[1]
+  } 
+  
+  if (!type_target %in% c("ordered", "factor", "character")) {
+    message("target variabe is not in  (\"ordered\", \"factor\", \"character\")")
+    invisible(NULL)
+  }
+  
+  if (length(vars) == 0) {
+    vars <- names(df)
+  }
+  
+  vars <- setdiff(vars, target)
+  
+  if (length(vars) == 0) {
+    message("There is no variable in variable list or target and variable are the same.\n")
+    invisible(NULL)
+  }
+  
+  plot_outliers <- function(df, target, predictor, typographic = TRUE) {
+    data_with <- df %>% 
+      ungroup() %>% 
+      select(all_of(target), all_of(predictor)) %>% 
+      filter(!is.na(target))
+    
+    box_with <- ggplot(data_with, aes_string(x = target, y = predictor, fill = target)) +
+      geom_boxplot(alpha = 0.8) +
+      labs(title = "boxplot with outliers") +
+      theme(legend.position = "none")
+    
+    density_with <- ggplot(data_with, aes_string(x = predictor, colour = target)) +
+      geom_density() +
+      labs(title = "density with outliers") 
+    
+    flag <- !data_with[, predictor] %>% pull %in% boxplot.stats(data_with[, predictor] %>% pull)$out
+    data_without <- data_with[flag, ]
+    
+    box_without <- ggplot(data_without, aes_string(x = target, y = predictor, fill = target)) +
+      geom_boxplot(alpha = 0.8) +
+      labs(title = "boxplot without outliers") +
+      theme(legend.position = "none")
+    
+    density_without <- ggplot(data_without, aes_string(x = predictor, colour = target)) +
+      geom_density() +
+      labs(title = "density with outliers") 
+    
+    if (typographic) {
+      box_with <- box_with +
+        theme_ipsum() +
+        scale_fill_ipsum() + 
+        theme(legend.position = "none",
+              axis.title.x = element_text(size = 12),
+              axis.title.y = element_text(size = 12),
+              plot.margin = margin(10, 30, 10, 10))
+      
+      density_with <- density_with +
+        theme_ipsum() +
+        scale_color_ipsum() +
+        theme(axis.title.x = element_text(size = 12),
+              axis.title.y = element_text(size = 12),
+              plot.margin = margin(10, 30, 10, 10))
+      
+      box_without <- box_without +
+        theme_ipsum() +
+        scale_fill_ipsum() + 
+        theme(legend.position = "none",
+              axis.title.x = element_text(size = 12),
+              axis.title.y = element_text(size = 12),
+              plot.margin = margin(10, 30, 10, 10))
+      
+      density_without <- density_without +
+        theme_ipsum() +
+        scale_color_ipsum() +
+        theme(axis.title.x = element_text(size = 12),
+              axis.title.y = element_text(size = 12),
+              plot.margin = margin(10, 30, 10, 10))    
+    }
+    
+    suppressWarnings(gridExtra::grid.arrange(box_with, density_with, box_without, density_without, 
+                                             nrow = 2, ncol = 2))
+  }
+  
+  idx_numeric <- find_class(df[, vars], type = "numerical")
+  
+  if (length(idx_numeric) == 0) {
+    message("There is no numeric variable in the data or variable list.\n")
+    invisible(NULL)
+  } else if (length(idx_numeric) == 1 & all(is.na(df[, vars]))) {
+    message("All observed values for numeric variables are NA.\n")
+    invisible(NULL)
+  } else {
+    idx_na <- sapply(vars[idx_numeric],
+                     function(x) all(is.na(df[, x])))
+    if (sum(idx_na) > 0) {
+      name_null <- paste(vars[idx_numeric][idx_na], collapse = ",")
+      message(sprintf("All observations for the numerical variable %s are NA.", name_null))
+    }
+    
+    tmp <- lapply(vars[idx_numeric][!idx_na],
+                  function(x) plot_outliers(df, target, x, typographic))
+  }
+}
+
+
 #' @rdname diagnose_report.data.frame
 #' @export
 diagnose_report <- function(.data, output_format, output_file, output_dir, ...) {
@@ -790,7 +985,7 @@ diagnose_report <- function(.data, output_format, output_file, output_dir, ...) 
 #' @param ... arguments to be passed to methods.
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 #' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA

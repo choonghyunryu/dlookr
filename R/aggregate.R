@@ -46,7 +46,7 @@ plot_bar_category <- function(.data, ...) {
 #' plot_bar_category(carseats)
 #'
 #' # Select the variable to diagnose
-#' plot_bar_category(carseats, "ShelveLoc", "Urban")
+#' # plot_bar_category(carseats, "ShelveLoc", "Urban")
 #' plot_bar_category(carseats, -ShelveLoc, -Urban)
 #' 
 #' # Visualize the each plots
@@ -59,8 +59,8 @@ plot_bar_category <- function(.data, ...) {
 #' library(dplyr)
 #'
 #' # Plot of all categorical variables
-#' carseats %>%
-#'   plot_bar_category()
+#' #carseats %>%
+#' #   plot_bar_category()
 #'
 #' # Visualize just 7 levels of top frequency
 #' carseats %>%
@@ -425,10 +425,10 @@ plot_qq_numeric <- function(.data, ...) {
 #' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 #'
 #' # Visualization of all numerical variables
-#' plot_qq_numeric(carseats)
+#' # plot_qq_numeric(carseats)
 #'
 #' # Select the variable to diagnose
-#' plot_qq_numeric(carseats, "Sales", "Income")
+#' # plot_qq_numeric(carseats, "Sales", "Income")
 #' plot_qq_numeric(carseats, -Sales, -Income)
 #'
 #' # Not allow the typographic elements
@@ -438,8 +438,8 @@ plot_qq_numeric <- function(.data, ...) {
 #' library(dplyr)
 #'
 #' # Plot of all numerical variables
-#' carseats %>%
-#'   plot_qq_numeric()
+#' # carseats %>%
+#' #   plot_qq_numeric()
 #'   
 #' # Using groupd_df  ------------------------------
 #' carseats %>% 
@@ -674,10 +674,10 @@ plot_box_numeric <- function(.data, ...) {
 #' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 #'
 #' # Visualization of all numerical variables
-#' plot_box_numeric(carseats)
+#' # plot_box_numeric(carseats)
 #'
 #' # Select the variable to diagnose
-#' plot_box_numeric(carseats, "Sales", "Income")
+#' # plot_box_numeric(carseats, "Sales", "Income")
 #' plot_box_numeric(carseats, -Sales, -Income)
 #'
 #' # Visualize the each plots
@@ -690,8 +690,8 @@ plot_box_numeric <- function(.data, ...) {
 #' library(dplyr)
 #'
 #' # Plot of all numerical variables
-#' carseats %>%
-#'   plot_box_numeric()
+#' # carseats %>%
+#' #   plot_box_numeric()
 #'   
 #' # Using groupd_df  ------------------------------
 #' carseats %>% 

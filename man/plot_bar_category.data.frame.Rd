@@ -77,7 +77,7 @@ carseats$Test[1:30] <- NA
 plot_bar_category(carseats)
 
 # Select the variable to diagnose
-plot_bar_category(carseats, "ShelveLoc", "Urban")
+# plot_bar_category(carseats, "ShelveLoc", "Urban")
 plot_bar_category(carseats, -ShelveLoc, -Urban)
 
 # Visualize the each plots
@@ -90,8 +90,8 @@ plot_bar_category(carseats, typographic = FALSE)
 library(dplyr)
 
 # Plot of all categorical variables
-carseats \%>\%
-  plot_bar_category()
+#carseats \%>\%
+#   plot_bar_category()
 
 # Visualize just 7 levels of top frequency
 carseats \%>\%

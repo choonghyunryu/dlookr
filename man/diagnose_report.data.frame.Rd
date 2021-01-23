@@ -81,7 +81,7 @@ See vignette("diagonosis") for an introduction to these concepts.
 }
 
 \examples{
-\donttest{
+\dontrun{
 carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA

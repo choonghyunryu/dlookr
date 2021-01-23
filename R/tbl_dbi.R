@@ -619,9 +619,9 @@ diagnose_outlier.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_si
 #' 
 #' # Using pipes ---------------------------------
 #' # Visualization of all numerical variables
-#' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   plot_outlier()
+#' # con_sqlite %>% 
+#' #   tbl("TB_CARSEATS") %>% 
+#' #   plot_outlier()
 #'   
 #' # Positive values select variables
 #' con_sqlite %>% 
@@ -634,29 +634,31 @@ diagnose_outlier.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_si
 #'   plot_outlier(-Sales, -Price, collect_size = 200)
 #'   
 #' # Positions values select variables
-#' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   plot_outlier(6)
+#' # con_sqlite %>% 
+#' #   tbl("TB_CARSEATS") %>% 
+#' #   plot_outlier(6)
 #'   
 #' # Positions values select variables
-#' carseats %>%
-#'   plot_outlier(-1, -5)
+#' # con_sqlite %>% 
+#' #   tbl("TB_CARSEATS") %>% 
+#' #   plot_outlier(-1, -5)
 #'   
 #' # Not allow the typographic elements
-#' carseats %>%
+#'  con_sqlite %>% 
+#'   tbl("TB_CARSEATS") %>% 
 #'   plot_outlier(-1, -5, typographic = FALSE)
 #'
 #' # Using pipes & dplyr -------------------------
 #' # Visualization of numerical variables with a ratio of
 #' # outliers greater than 1%
-#' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   plot_outlier(con_sqlite %>% 
-#'                  tbl("TB_CARSEATS") %>% 
-#'                  diagnose_outlier() %>%
-#'                  filter(outliers_ratio > 1) %>%
-#'                  select(variables) %>%
-#'                  pull())
+#' # con_sqlite %>% 
+#' #   tbl("TB_CARSEATS") %>% 
+#' #   plot_outlier(con_sqlite %>% 
+#' #                  tbl("TB_CARSEATS") %>% 
+#' #                  diagnose_outlier() %>%
+#' #                  filter(outliers_ratio > 1) %>%
+#' #                  select(variables) %>%
+#' #                 pull())
 #'       
 plot_outlier.tbl_dbi <- function(.data, ..., col = "steelblue", 
   in_database = FALSE, collect_size = Inf, typographic = TRUE) {

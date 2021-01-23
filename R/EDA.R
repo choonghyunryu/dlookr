@@ -70,7 +70,7 @@ eda_report <- function(.data, ...) {
 #' @param ... arguments to be passed to methods.
 #' 
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' library(dplyr)
 #'
 #' # Generate data for the example
@@ -135,7 +135,7 @@ eda_report <- function(.data, ...) {
 eda_report.data.frame <- function(.data, target = NULL, output_format = c("pdf", "html"),
   output_file = NULL, output_dir = tempdir(), font_family = NULL, browse = TRUE, ...) {
   tryCatch(vars <- tidyselect::vars_select(names(.data),
-    !!! rlang::enquo(target)),
+    !! rlang::enquo(target)),
     error = function(e) {
       pram <- as.character(substitute(target))
       stop(sprintf("Column %s is unknown", pram))

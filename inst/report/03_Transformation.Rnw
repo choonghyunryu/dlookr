@@ -20,6 +20,7 @@ if (!requireNamespace("DMwR", quietly = TRUE)) {
        call. = FALSE)
 }
 
+library(grid)
 library(knitr)
 library(kableExtra)
 

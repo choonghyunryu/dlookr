@@ -161,7 +161,7 @@ target_by_impl <- function(.data, target) {
 #' \item p90, p95, p99, p100 : 90\%, 95\%, 99\%, 100\% percentiles
 #' }
 #'
-#' @param .data A target_df.
+#' @param .data a target_df.
 #' @param predictor variable of interest. predictor.
 #'
 #' See vignette("relate") for an introduction to these concepts.

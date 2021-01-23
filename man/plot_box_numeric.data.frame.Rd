@@ -61,10 +61,10 @@ carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 
 # Visualization of all numerical variables
-plot_box_numeric(carseats)
+# plot_box_numeric(carseats)
 
 # Select the variable to diagnose
-plot_box_numeric(carseats, "Sales", "Income")
+# plot_box_numeric(carseats, "Sales", "Income")
 plot_box_numeric(carseats, -Sales, -Income)
 
 # Visualize the each plots
@@ -77,8 +77,8 @@ plot_box_numeric(carseats, typographic = FALSE)
 library(dplyr)
 
 # Plot of all numerical variables
-carseats \%>\%
-  plot_box_numeric()
+# carseats \%>\%
+#   plot_box_numeric()
   
 # Using groupd_df  ------------------------------
 carseats \%>\% 

@@ -22,6 +22,7 @@ Imports:
     cli,
     corrplot,
     dplyr,
+    extrafont,
     ggplot2,
     grid,
     gridExtra,

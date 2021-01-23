@@ -19,6 +19,8 @@
 #' `browseVignettes(package = "dlookr")`
 #'
 #' @import dplyr
+#' @import extrafont
+#' @import ggplot2
 "_PACKAGE"
 
 if (getRversion() >= "2.15.1") {
@@ -34,3 +36,28 @@ if (getRversion() >= "2.15.1") {
     "reformulate", "target", "x_end", "x_start", "x_width", "AIC", "BIC", "deviance", "logLik"))
 }
 
+.onAttach <- function(libname, pkgname) {
+  #  Reference by hrbrthemes package's .onAttach
+  
+  if (.Platform$OS.type == "windows") { 
+    if (interactive()) packageStartupMessage("Registering Windows fonts with R for visualization")
+    
+    windowsFonts <- grDevices::windowsFonts
+    
+    extrafont::loadfonts("win", quiet = TRUE)
+  } else {
+    if (interactive()) packageStartupMessage("Registering PDF & PostScript fonts with R for visualization")
+    
+    pdfFonts <- grDevices::pdfFonts
+    postscriptFonts <- grDevices::postscriptFonts
+    
+    extrafont::loadfonts("pdf", quiet = TRUE)
+    extrafont::loadfonts("postscript", quiet = TRUE)
+  }
+  
+  fnt <- extrafont::fonttable()
+  if (!any(grepl("Arial[ ]Narrow", fnt$FamilyName))) {
+    packageStartupMessage("NOTE: Arial Narrow fonts are required to plotting.")
+    packageStartupMessage("      If Arial Narrow is not on your system, please see https://bit.ly/arialnarrow")
+  } 
+}

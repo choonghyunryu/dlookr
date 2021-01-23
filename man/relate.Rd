@@ -7,7 +7,7 @@
 relate(.data, predictor)
 }
 \arguments{
-\item{.data}{A target_df.}
+\item{.data}{a target_df.}
 
 \item{predictor}{variable of interest. predictor.
 
