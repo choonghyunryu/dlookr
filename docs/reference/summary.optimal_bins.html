@@ -135,6 +135,10 @@ of binomial classification model.</p>
       <th>object</th>
       <td><p>an object of class "optimal_bins", usually, a result of a call to binning_by().</p></td>
     </tr>
+    <tr>
+      <th>...</th>
+      <td><p>further arguments to be passed from or to other methods.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -223,7 +227,7 @@ summary.performance_bin() includes general metrics and result of significance te
 <span class='co'># visualize all information without typographic</span>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bin</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='summary.optimal_bins-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># extract binned results</span>
-<span class='fu'>extract</span>(<span class='no'>bin</span>) <span class='kw'>%&gt;%</span>
+<span class='fu'><a href='extract.bins.html'>extract</a></span>(<span class='no'>bin</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fl'>20</span>)</div><div class='output co'>#&gt;  [1] (6,29] (6,29] (6,29] (0,6]  (0,6]  (6,29] [-1,0] (6,29] [-1,0] [-1,0]
 #&gt; [11] (6,29] (0,6]  (0,6]  (6,29] (6,29] (0,6]  [-1,0] (6,29] [-1,0] (6,29]
 #&gt; Levels: [-1,0] (0,6] (6,29]</div><div class='input'>

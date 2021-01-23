@@ -190,7 +190,7 @@ The default is TRUE. if TRUE provides a base theme that focuses on typographic e
   <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/desc.html'>desc</a></span>(<span class='no'>missing_count</span>))</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 11 x 6</span><span>
 #&gt;    variables   types   missing_count missing_percent unique_count unique_rate
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> Income      numeric            20            5              98      0.245 
+#&gt; </span><span style='color: #555555;'> 1</span><span> Income      numeric            20            5              99      0.248 
 #&gt; </span><span style='color: #555555;'> 2</span><span> Urban       factor              5            1.25            3      0.007</span><span style='text-decoration: underline;'>5</span><span>
 #&gt; </span><span style='color: #555555;'> 3</span><span> Sales       numeric             0            0             336      0.84  
 #&gt; </span><span style='color: #555555;'> 4</span><span> CompPrice   numeric             0            0              73      0.182 
@@ -204,6 +204,11 @@ The default is TRUE. if TRUE provides a base theme that focuses on typographic e
 <span class='co'># Visualize pareto chart for variables with missing value.</span>
 <span class='fu'>plot_na_pareto</span>(<span class='no'>carseats</span>)</div><div class='img'><img src='plot_na_pareto-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot_na_pareto</span>(<span class='no'>airquality</span>)</div><div class='img'><img src='plot_na_pareto-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Diagnose the data with missing_count using diagnose() function</span>
+<span class='kw'>if</span> (!<span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"mice"</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)) {
+  <span class='fu'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span>(<span class='st'>"Package \"mice\" needed for this function to work. Please install it."</span>,
+  <span class='kw'>call.</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+}
+
 <span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span> <span class='kw'>%&gt;%</span>
   <span class='no'>diagnose</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/desc.html'>desc</a></span>(<span class='no'>missing_count</span>))</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 9 x 6</span><span>

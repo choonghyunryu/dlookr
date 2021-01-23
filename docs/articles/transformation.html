@@ -76,7 +76,7 @@
       <h1 data-toc-skip>Data Transformation</h1>
                         <h4 class="author">Choonghyun Ryu</h4>
             
-            <h4 class="date">2021-01-17</h4>
+            <h4 class="date">2021-01-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/choonghyunryu/dlookr/blob/master/vignettes/transformation.Rmd"><code>vignettes/transformation.Rmd</code></a></small>
       <div class="hidden name"><code>transformation.Rmd</code></div>
@@ -394,6 +394,14 @@ plot(income)</pre></body></html></div>
 <p>The following imputes the categorical variable <code>urban</code> by the “mice” method.</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r">library(mice)
 
+Attaching package: 'mice'
+The following object is masked from 'package:stats':
+
+    filter
+The following objects are masked from 'package:base':
+
+    cbind, rbind
+
 urban &lt;- imputate_na(carseats, Urban, US, method = "mice")
 
  iter imp variable
@@ -426,14 +434,14 @@ urban &lt;- imputate_na(carseats, Urban, US, method = "mice")
 # result of imputation
 urban
   [1] Yes Yes Yes Yes Yes No  Yes Yes No  No  No  Yes Yes Yes Yes No  Yes Yes
- [19] No  Yes Yes No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes Yes Yes Yes
+ [19] No  Yes Yes No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes No 
  [37] No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes
  [55] No  Yes Yes Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes Yes Yes Yes No 
  [73] Yes No  No  No  Yes No  Yes Yes Yes Yes Yes No  No  No  Yes No  Yes No 
- [91] No  Yes Yes Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes
+ [91] No  Yes Yes No  Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes
 [109] Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes No 
-[127] Yes Yes Yes No  Yes Yes Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes
-[145] No  Yes Yes No  No  Yes No  No  No  No  No  Yes Yes No  No  No  No  No 
+[127] Yes Yes Yes No  Yes No  Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes
+[145] No  Yes Yes No  No  Yes Yes No  No  No  No  Yes Yes No  No  No  No  No 
 [163] Yes No  No  Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes No  Yes No  Yes
 [181] Yes Yes Yes Yes No  Yes No  Yes Yes No  No  Yes No  Yes Yes Yes Yes Yes
 [199] Yes Yes No  Yes No  Yes Yes Yes Yes No  Yes No  No  Yes Yes Yes Yes Yes
@@ -442,8 +450,8 @@ urban
 [253] Yes No  Yes Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes No  No  Yes Yes
 [271] Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes No  No  Yes No  Yes
 [289] No  Yes No  Yes Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
-[307] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes No  No  No  Yes Yes Yes Yes
-[325] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No 
+[307] Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No  No  No  Yes Yes Yes Yes
+[325] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No 
 [343] No  Yes No  Yes No  No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes
 [361] No  No  Yes Yes Yes No  No  Yes No  Yes Yes Yes No  Yes Yes Yes Yes No 
 [379] Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes No  Yes Yes
@@ -472,9 +480,9 @@ summary(urban)
 
 * Information of Imputation (before vs after)
      original imputation original_percent imputation_percent
-No        115        119            28.75              29.75
-Yes       275        281            68.75              70.25
-&lt;NA&gt;       10          0             2.50               0.00
+No        115        120            28.75                 30
+Yes       275        280            68.75                 70
+&lt;NA&gt;       10          0             2.50                  0
 
 # viz of imputation
 plot(urban)</pre></body></html></div>
@@ -490,6 +498,9 @@ carseats %&gt;%
   group_by(US) %&gt;%
   summarise(orig = mean(Income, na.rm = TRUE),
     imputation = mean(Income_imp))
+Registered S3 method overwritten by 'quantmod':
+  method            from
+  as.zoo.data.frame zoo 
 `summarise()` ungrouping output (override with `.groups` argument)
 # A tibble: 2 x 3
   US     orig imputation
@@ -847,14 +858,14 @@ binning(carseats$Income, nbins = 5, type = "kmeans")
 binned type: kmeans
 number of bins: 5
 x
-  [21,36.5] (36.5,55.5] (55.5,75.5] (75.5,97.5]  (97.5,120]        &lt;NA&gt; 
-         66          62          91          86          75          20 
+    [21,49]   (49,71.5] (71.5,89.5]  (89.5,106]   (106,120]        &lt;NA&gt; 
+        115          88          75          62          40          20 
 binning(carseats$Income, nbins = 5, type = "bclust")
 binned type: bclust
 number of bins: 5
 x
-  [21,42.5] (42.5,59.5] (59.5,86.5]  (86.5,106]   (106,120]        &lt;NA&gt; 
-         95          45         126          74          40          20 
+    [21,49]   (49,65.5] (65.5,79.5] (79.5,96.5]  (96.5,120]        &lt;NA&gt; 
+        115          56          63          70          76          20 
 
 # Extract the binned results
 extract(bin)
@@ -1096,14 +1107,6 @@ Data transformation report titles and table of contents
 <div class="figure" style="text-align: center">
 <img src="img/trans_table_html.png" alt="Report table example (web)" width="50%"><p class="caption">
 Report table example (web)
-</p>
-</div>
-<ul>
-<li>Binning information in the data transformation report includes visualization results. The result of the html file is shown in the following figure.</li>
-</ul>
-<div class="figure" style="text-align: center">
-<img src="img/trans_viz_html.png" alt="Data transformation report Binning information (web)" width="75%"><p class="caption">
-Data transformation report Binning information (web)
 </p>
 </div>
 </div>

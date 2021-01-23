@@ -172,8 +172,12 @@ for each combination of variables.</p>
 
 <span class='co'># Visualize pareto chart for variables with missing value.</span>
 <span class='fu'>plot_na_hclust</span>(<span class='no'>carseats</span>)</div><div class='img'><img src='plot_na_hclust-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot_na_hclust</span>(<span class='no'>airquality</span>)</div><div class='img'><img src='plot_na_hclust-2.png' alt='' width='700' height='433' /></div><div class='input'>
-
 <span class='co'># Visualize pareto chart for variables with missing value.</span>
+<span class='kw'>if</span> (!<span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"mice"</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)) {
+  <span class='fu'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span>(<span class='st'>"Package \"mice\" needed for this function to work. Please install it."</span>,
+  <span class='kw'>call.</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+}
+
 <span class='fu'>plot_na_hclust</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span>)</div><div class='img'><img src='plot_na_hclust-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Change the main title.</span>
 <span class='fu'>plot_na_hclust</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"Distribution of missing value"</span>)</div><div class='img'><img src='plot_na_hclust-4.png' alt='' width='700' height='433' /></div><div class='input'>
