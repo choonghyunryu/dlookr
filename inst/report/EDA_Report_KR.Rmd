@@ -15,13 +15,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r enrironment, echo=FALSE, warning=FALSE, message=FALSE}
-#library(xtable)
-library(magrittr)
-library(dlookr)
 library(dplyr)
 library(ggplot2)
 library(gridExtra)
-library(moments)
 library(knitr)
 library(kableExtra)
 ```

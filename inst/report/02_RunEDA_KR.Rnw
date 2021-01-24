@@ -4,10 +4,8 @@
 options(warn = -1)
 
 library(dplyr)
-#library(xtable)
 library(ggplot2)
 library(gridExtra)
-library(moments)
 library(knitr)
 library(kableExtra)
 
