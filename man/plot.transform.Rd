@@ -28,12 +28,14 @@ carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 advertising_minmax <- transform(carseats$Advertising, method = "minmax")
 advertising_minmax
 summary(advertising_minmax)
+
 plot(advertising_minmax)
 
 # Resolving Skewness  --------------------------
 advertising_log <- transform(carseats$Advertising, method = "log")
 advertising_log
 summary(advertising_log)
+
 plot(advertising_log)
 
 plot(advertising_log, typographic = FALSE)

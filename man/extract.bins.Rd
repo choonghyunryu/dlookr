@@ -39,11 +39,11 @@ bin
 summary(bin)
 
 # visualize all information for optimal_bins class
-plot(bin)
+# plot(bin)
 
 # extract binning result
-extract(bin) \%>\% 
-  head(20)
+# extract(bin) \%>\% 
+#   head(20)
 
 }
 \seealso{

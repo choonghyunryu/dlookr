@@ -185,34 +185,34 @@ plot(num_cat)
 #  carseats %>%
 #    eda_report(target = Sales, output_format = "html", output_file = "EDA_carseats.html")
 
-## ----eda_title_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="EDA report cover"----
+## ----eda_title_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="EDA report cover"----
 knitr::include_graphics('img/eda_title_pdf.png')
 
-## ----eda_agenda_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="EDA Report Contents"----
+## ----eda_agenda_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="EDA Report Contents"----
 knitr::include_graphics('img/eda_agenda_pdf.png')
 
-## ----eda_intro_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Example EDA report table"----
+## ----eda_intro_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Example EDA report table"----
 knitr::include_graphics('img/eda_intro_pdf.png')
 
-## ----eda_normality_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Normality test information in EDA reports"----
+## ----eda_normality_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Normality test information in EDA reports"----
 knitr::include_graphics('img/eda_normality_pdf.png')
 
-## ----eda_correlation_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Correlation information in EDA reports"----
-knitr::include_graphics('img/eda_correlation_pdf.png')
+## ----eda_correlation_pdf, echo=FALSE, eval=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Correlation information in EDA reports"----
+#  knitr::include_graphics('img/eda_correlation_pdf.png')
 
-## ----eda_lm_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Linear relationship information in EDA reports"----
+## ----eda_lm_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Linear relationship information in EDA reports"----
 knitr::include_graphics('img/eda_lm_pdf.png')
 
-## ----eda_anova_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Information about ANOVA in EDA reports"----
+## ----eda_anova_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Information about ANOVA in EDA reports"----
 knitr::include_graphics('img/eda_anova_pdf.png')
 
-## ----eda_egenda_html, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="EDA report titles and table of contents"----
+## ----eda_egenda_html, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="EDA report titles and table of contents"----
 knitr::include_graphics('img/eda_agenda_html.png')
 
-## ----eda_table_html, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="EDA report table example (Web)"----
+## ----eda_table_html, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="EDA report table example (Web)"----
 knitr::include_graphics('img/eda_table_html.png')
 
-## ----eda_normality_html, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="EDA Report Normality Test Information (Web)"----
+## ----eda_normality_html, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="EDA Report Normality Test Information (Web)"----
 knitr::include_graphics('img/eda_normality_html.png')
 
 ## ----dbi_table, warning=FALSE, message=FALSE----------------------------------

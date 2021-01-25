@@ -186,7 +186,7 @@ plot_bar_category_impl <- function(df, vars, top, add_character, title, each, ty
       
       if (typographic) {
         p <- p + 
-          theme_ipsum() +
+          theme_ipsum_rc() +
           theme(legend.position = "none",
                 axis.title.x = element_text(size = 12))
         
@@ -210,7 +210,11 @@ plot_bar_category_impl <- function(df, vars, top, add_character, title, each, ty
     n_row <- floor(sqrt(n))
     
     if (typographic) {
-      title <- grid::textGrob(title, gp = grid::gpar(fontfamily = "Arial Narrow", fontsize = 18, font = 2),
+      fontfamily <- "Arial Narrow"
+      fontfamily <- "Roboto Condensed"
+      
+      title <- grid::textGrob(title, gp = grid::gpar(fontfamily = fontfamily, 
+                                                     fontsize = 18, font = 2),
                               x = unit(0.075, "npc"), just = "left")
     }
     
@@ -346,7 +350,7 @@ plot_bar_category_group_impl <- function(df, vars, top, add_character, title, ea
       
       if (typographic) {
         p <- p + 
-          theme_ipsum() +
+          theme_ipsum_rc() +
           theme(legend.position = "none",
                 axis.title.x = element_text(size = 12))
         
@@ -373,7 +377,11 @@ plot_bar_category_group_impl <- function(df, vars, top, add_character, title, ea
     #                          right = group_key))
     
     if (typographic) {
-      title <- grid::textGrob(title, gp = grid::gpar(fontfamily = "Arial Narrow", fontsize = 18, font = 2),
+      fontfamily <- "Arial Narrow"
+      fontfamily <- "Roboto Condensed"
+      
+      title <- grid::textGrob(title, gp = grid::gpar(fontfamily = fontfamily, 
+                                                     fontsize = 18, font = 2),
                               x = unit(0.075, "npc"), just = "left")
     }
     
@@ -502,7 +510,7 @@ plot_qq_numeric_impl <- function(df, vars, col_point, col_line, title, each, typ
     
     if (typographic) {
       p_qq <- p_qq + 
-        theme_ipsum() +
+        theme_ipsum_rc() +
         theme(legend.position = "none",
               axis.title.x = element_text(size = 12),
               axis.title.y = element_text(size = 12))
@@ -527,7 +535,11 @@ plot_qq_numeric_impl <- function(df, vars, col_point, col_line, title, each, typ
     n_row <- floor(sqrt(n))
     
     if (typographic) {
-      title <- grid::textGrob(title, gp = grid::gpar(fontfamily = "Arial Narrow", fontsize = 18, font = 2),
+      fontfamily <- "Arial Narrow"
+      fontfamily <- "Roboto Condensed"
+      
+      title <- grid::textGrob(title, gp = grid::gpar(fontfamily = fontfamily, 
+                                                     fontsize = 18, font = 2),
                               x = unit(0.075, "npc"), just = "left")
     }
     
@@ -563,7 +575,7 @@ plot_qq_numeric_group_impl <- function(df, vars, col_point, col_line, title, eac
     select(!tidyselect::matches("\\.rows")) %>% 
     names()
   
-  n_levels <- attr(df, "group") %>% nrow() 
+  #n_levels <- attr(df, "group") %>% nrow() 
   
   if (length(vars) == 0) vars <- names(df)
   
@@ -599,7 +611,7 @@ plot_qq_numeric_group_impl <- function(df, vars, col_point, col_line, title, eac
     
     if (typographic) {
       p_qq <- p_qq + 
-        theme_ipsum() +
+        theme_ipsum_rc() +
         theme(legend.position = "none",
               axis.title.x = element_text(size = 12),
               axis.title.y = element_text(size = 12))
@@ -624,7 +636,11 @@ plot_qq_numeric_group_impl <- function(df, vars, col_point, col_line, title, eac
     n_row <- floor(sqrt(n))
     
     if (typographic) {
-      title <- grid::textGrob(title, gp = grid::gpar(fontfamily = "Arial Narrow", fontsize = 18, font = 2),
+      fontfamily <- "Arial Narrow"
+      fontfamily <- "Roboto Condensed"
+      
+      title <- grid::textGrob(title, gp = grid::gpar(fontfamily = fontfamily, 
+                                                     fontsize = 18, font = 2),
                               x = unit(0.075, "npc"), just = "left")
     }
     
@@ -755,7 +771,7 @@ plot_box_numeric_impl <- function(df, vars, title, each, typographic) {
     
     if (typographic) {
       p_box <- p_box + 
-        theme_ipsum() +
+        theme_ipsum_rc() +
         theme(legend.position = "none",
               axis.title.x = element_text(size = 12),
               axis.title.y = element_text(size = 12))
@@ -781,7 +797,11 @@ plot_box_numeric_impl <- function(df, vars, title, each, typographic) {
     n_row <- floor(sqrt(n))
     
     if (typographic) {
-      title <- grid::textGrob(title, gp = grid::gpar(fontfamily = "Arial Narrow", fontsize = 18, font = 2),
+      fontfamily <- "Arial Narrow"
+      fontfamily <- "Roboto Condensed"
+      
+      title <- grid::textGrob(title, gp = grid::gpar(fontfamily = fontfamily, 
+                                                     fontsize = 18, font = 2),
                               x = unit(0.075, "npc"), just = "left")
     }
     
@@ -850,7 +870,7 @@ plot_box_numeric_group_impl <- function(df, vars, title, each, typographic) {
     
     if (typographic) {
       p_box <- p_box + 
-        theme_ipsum() +
+        theme_ipsum_rc() +
         scale_fill_ipsum() + 
         theme(legend.position = "none",
               axis.title.x = element_text(size = 12),
@@ -878,7 +898,11 @@ plot_box_numeric_group_impl <- function(df, vars, title, each, typographic) {
     n_row <- floor(sqrt(n))
     
     if (typographic) {
-      title <- grid::textGrob(title, gp = grid::gpar(fontfamily = "Arial Narrow", fontsize = 18, font = 2),
+      fontfamily <- "Arial Narrow"
+      fontfamily <- "Roboto Condensed"
+      
+      title <- grid::textGrob(title, gp = grid::gpar(fontfamily = fontfamily, 
+                                                     fontsize = 18, font = 2),
                               x = unit(0.075, "npc"), just = "left")
     }
     

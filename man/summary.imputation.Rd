@@ -36,14 +36,16 @@ plot(income)
 urban <- imputate_na(carseats, Urban, US, method = "mice")
 urban
 summary(urban)
-plot(urban)
+
+# plot(urban)
 
 # Impute outliers ----------------------------------
 # If the variable of interest is a numerical variable
 price <- imputate_outlier(carseats, Price, method = "capping")
 price
 summary(price)
-plot(price)
+
+# plot(price)
 }
 }
 \seealso{

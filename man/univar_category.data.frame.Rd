@@ -82,13 +82,13 @@ stat <- summary(all_var)
 stat
 
 # plot all variables
-plot(all_var)
+# plot(all_var)
 
 # plot urban
-plot(urban)
+# plot(urban)
 
 # plot all variables by prompt
-plot(all_var, prompt = TRUE)
+# plot(all_var, prompt = TRUE)
 
 }
 \seealso{

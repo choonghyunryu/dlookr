@@ -116,25 +116,25 @@ mice::boys %>%
 #  flights %>%
 #    diagnose_report(output_format = "html", output_file = "Diagn.html")
 
-## ----diag_title_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Data Diagnostic Report Cover"----
+## ----diag_title_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Data Diagnostic Report Cover"----
 knitr::include_graphics('img/diagn_title_pdf.png')
 
-## ----diag_agenda_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Data Diagnostic Report Contents"----
+## ----diag_agenda_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Data Diagnostic Report Contents"----
 knitr::include_graphics('img/diagn_agenda_pdf.png')
 
-## ----diag_intro_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Sample data diagnostic report table"----
+## ----diag_intro_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Sample data diagnostic report table"----
 knitr::include_graphics('img/diag_intro_pdf.png')
 
-## ----diag_outlier_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Data diagnosis report outlier diagnosis contents"----
+## ----diag_outlier_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Data diagnosis report outlier diagnosis contents"----
 knitr::include_graphics('img/diag_outlier_pdf.png')
 
-## ----diag_egenda_html, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Data Diagnostic report titles and table of contents"----
+## ----diag_egenda_html, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Data Diagnostic report titles and table of contents"----
 knitr::include_graphics('img/diag_agenda_html.png')
 
-## ----diag_table_html, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Sample data diagnostic report table (html)"----
-knitr::include_graphics('img/diag_table_html.png')
+## ----diag_table_html, echo=FALSE, eval=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Sample data diagnostic report table (html)"----
+#  knitr::include_graphics('img/diag_table_html.png')
 
-## ----diag_outlier_html, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Data diagnosis report outlier diagnosis contents (html)"----
+## ----diag_outlier_html, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Data diagnosis report outlier diagnosis contents (html)"----
 knitr::include_graphics('img/diag_outlier_html.png')
 
 ## ----dbi_table, warning=FALSE, message=FALSE----------------------------------

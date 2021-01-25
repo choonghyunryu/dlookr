@@ -76,7 +76,8 @@ carseats \%>\%
 price <- imputate_outlier(carseats, Price)
 price
 summary(price)
-plot(price)
+
+# plot(price)
 }
 \seealso{
 \code{\link{imputate_na}}.

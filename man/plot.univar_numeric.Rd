@@ -11,6 +11,7 @@
   stand = ifelse(rep(indiv, 4), c("none", "robust", "minmax", "zscore"), c("robust",
     "minmax", "zscore", "none")),
   prompt = FALSE,
+  typographic = TRUE,
   ...
 )
 }
@@ -33,6 +34,9 @@ he default is "none" if indiv is TRUE, and "robust" if FALSE.}
 
 \item{prompt}{logical. The default value is FALSE. If there are multiple visualizations to be output, 
 if this argument value is TRUE, a prompt is output each time.}
+
+\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
 
 \item{...}{arguments to be passed to methods, such as graphical parameters (see par).
 However, it does not support.}
@@ -65,10 +69,13 @@ plot(all_var)
 plot(all_var, stand = "minmax")
 
 # one plot with all variables
-plot(all_var, stand = "none")
+# plot(all_var, stand = "none")
 
 # one plot with all robust standardized variables 
 plot(all_var, viz = "boxplot")
+
+# not allow the typographic elements
+plot(all_var, typographic = FALSE)
 
 # one plot with all standardized variables by Z-score method 
 plot(all_var, viz = "boxplot", stand = "zscore")

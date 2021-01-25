@@ -129,16 +129,16 @@ compare_numeric <- function(.data, ...) {
 #'   "[["("ShelveLoc vs Urban")
 #'
 #' # plot all pair of variables
-#' plot(all_var)
+#' # plot(all_var)
 #' 
 #' # plot a pair of variables
-#' plot(two_var)
+#' # plot(two_var)
 #' 
 #' # plot all pair of variables by prompt
-#' plot(all_var, prompt = TRUE)
+#' # plot(all_var, prompt = TRUE)
 #' 
 #' # plot a pair of variables
-#' plot(two_var, las = 1)
+#' # plot(two_var, las = 1)
 #' 
 #' @method compare_category data.frame
 #' @importFrom tidyselect vars_select
@@ -310,16 +310,16 @@ compare_category_impl <- function(df, vars) {
 #' summary(all_var, verbose = FALSE)
 #'   
 #' # plot all pair of variables
-#' plot(all_var)
+#' # plot(all_var)
 #' 
 #' # plot a pair of variables
-#' plot(two_var)
+#' # plot(two_var)
 #' 
 #' # plot all pair of variables by prompt
-#' plot(all_var, prompt = TRUE)
+#' # plot(all_var, prompt = TRUE)
 #' 
 #' # plot a pair of variables not focuses on typographic elements
-#' plot(two_var, typographic = FALSE)
+#' # plot(two_var, typographic = FALSE)
 #' 
 #' @method compare_numeric data.frame
 #' @importFrom tidyselect vars_select
@@ -903,9 +903,8 @@ print.compare_numeric <- function(x, ...) {
 #' 
 #' @method plot compare_category
 #' @export
-plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE, typographic = TRUE, ...) {
-  
-  variables <- attr(x, "variables")
+plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE, 
+                                  typographic = TRUE, ...) {
   combination <- attr(x, "combination")
   
   n <- nrow(combination)
@@ -975,7 +974,7 @@ plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE, typographic 
     
     if (typographic) {
       p <- p +
-        theme_ipsum() +
+        theme_ipsum_rc() +
         scale_fill_ipsum(na.value = "grey80") +
         theme(legend.position = "none",
               panel.grid.major.x = element_blank(),
@@ -1055,7 +1054,6 @@ plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE, typographic 
 #' @method plot compare_numeric
 #' @export
 plot.compare_numeric <- function(x, prompt = FALSE, typographic = TRUE, ...) {
-  variables <- attr(x, "variables")
   combination <- attr(x, "combination")
   
   n <- nrow(combination)
@@ -1067,7 +1065,6 @@ plot.compare_numeric <- function(x, prompt = FALSE, typographic = TRUE, ...) {
     yvar <- combination[i, 2]  
     
     datas <- df[ , c(xvar, yvar)]
-    str_formula <- formula(sprintf("%s ~ %s", xvar, yvar))
     
     if (prompt & n > 1) {
       invisible(readline(prompt="Hit <Return> to see next plot:"))
@@ -1107,8 +1104,8 @@ plot.compare_numeric <- function(x, prompt = FALSE, typographic = TRUE, ...) {
         axis.ticks = element_blank(),
         panel.grid = element_blank(),
         axis.line = element_blank(),
-        panel.background = element_rect(fill = "transparent",colour = NA),
-        plot.background = element_rect(fill = "transparent",colour = NA))
+        panel.background = element_rect(fill = "transparent", color = NA),
+        plot.background = element_rect(fill = "transparent", color = NA))
     
     box_left <- datas %>% 
       ggplot(aes_string(x = yvar)) + 
@@ -1122,21 +1119,21 @@ plot.compare_numeric <- function(x, prompt = FALSE, typographic = TRUE, ...) {
         axis.ticks = element_blank(),
         panel.grid = element_blank(),
         axis.line = element_blank(),
-        panel.background = element_rect(fill = "transparent",colour = NA),
-        plot.background = element_rect(fill = "transparent",colour = NA))
+        panel.background = element_rect(fill = "transparent", color = NA),
+        plot.background = element_rect(fill = "transparent", color = NA))
     
     title <- sprintf("Scatterplots with %s and %s", xvar, yvar)
     
     if (typographic) {
       p_scatter <- p_scatter +
-        theme_ipsum() +
+        theme_ipsum_rc() +
         theme(
           axis.title.x = element_text(size = 11),
           axis.title.y = element_text(size = 13)
         )
       
       box_bottom <- box_bottom  +
-        theme_ipsum() +
+        theme_ipsum_rc() +
         theme(axis.title.x = element_blank(),
               axis.text.x = element_blank(),
               axis.text.y = element_text(color = "transparent"),
@@ -1147,7 +1144,7 @@ plot.compare_numeric <- function(x, prompt = FALSE, typographic = TRUE, ...) {
               plot.margin = margin(0, 30, 0, 30))
       
       box_left <- box_left  +
-        theme_ipsum() +
+        theme_ipsum_rc() +
         theme(axis.title.x = element_text(color = "transparent"),
               axis.text.x = element_text(color = "transparent"),
               axis.title.y = element_blank(),
@@ -1158,7 +1155,10 @@ plot.compare_numeric <- function(x, prompt = FALSE, typographic = TRUE, ...) {
               panel.background = element_blank(),              
               plot.margin = margin(30, 0, 30, 0))
       
-      title <- grid::textGrob(title, gp = grid::gpar(fontfamily = "Arial Narrow", fontsize = 18, font = 2),
+      fontfamily <- "Arial Narrow"
+      fontfamily <- "Roboto Condensed"
+      
+      title <- grid::textGrob(title, gp = grid::gpar(fontfamily = fontfamily, fontsize = 18, font = 2),
                               x = unit(0.075, "npc"), just = "left")
     }
     

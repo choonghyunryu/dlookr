@@ -113,7 +113,7 @@ head(Advertising_log)
 # summary of transformation
 summary(Advertising_log)
 # viz of transformation
-plot(Advertising_log)
+# plot(Advertising_log)
 
 ## ----binning, fig.width = 8, fig.height = 6-----------------------------------
 # Binning the carat variable. default type argument is "quantile"
@@ -182,18 +182,18 @@ extract(bin) %>%
 #    transformation_report(target = US, output_format = "html",
 #      output_file = "transformation_carseats.html")
 
-## ----trans_title_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Data transformation report cover"----
+## ----trans_title_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Data transformation report cover"----
 knitr::include_graphics('img/trans_title_pdf.png')
 
-## ----trans_agenda_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Table of Contents"----
+## ----trans_agenda_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Table of Contents"----
 knitr::include_graphics('img/trans_agenda_pdf.png')
 
-## ----trans_content_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Data Transformation Report Table and Visualization Example"----
+## ----trans_content_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Data Transformation Report Table and Visualization Example"----
 knitr::include_graphics('img/trans_content_pdf.png')
 
-## ----trans_agenda_html, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="Data transformation report titles and table of contents"----
+## ----trans_agenda_html, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Data transformation report titles and table of contents"----
 knitr::include_graphics('img/trans_agenda_html.png')
 
-## ----trans_table_html, echo=FALSE, out.width='50%', fig.align='center', fig.pos="!h", fig.cap="Report table example (web)"----
-knitr::include_graphics('img/trans_table_html.png')
+## ----trans_table_html, echo=FALSE, eval=FALSE, out.width='50%', fig.align='center', fig.pos="!h", fig.cap="Report table example (web)"----
+#  knitr::include_graphics('img/trans_table_html.png')
 

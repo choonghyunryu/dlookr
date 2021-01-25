@@ -88,13 +88,15 @@
 #' income <- imputate_na(carseats, Income, US, method = "rpart")
 #' income
 #' summary(income)
-#' plot(income)
+#' 
+#' # plot(income)
 #'
 #' # If the variable of interest is a categorical variable
 #' urban <- imputate_na(carseats, Urban, US, method = "mice")
 #' urban
 #' summary(urban)
-#' plot(urban)
+#' 
+#' # plot(urban)
 #' }
 #' @export
 #'
@@ -377,7 +379,8 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL,
 #' price <- imputate_outlier(carseats, Price)
 #' price
 #' summary(price)
-#' plot(price)
+#' 
+#' # plot(price)
 #' @export
 imputate_outlier <- function(.data, xvar, method, no_attrs) {
   UseMethod("imputate_outlier")
@@ -507,14 +510,16 @@ imputate_outlier_impl <- function(df, xvar, method, no_attrs = FALSE) {
 #' urban <- imputate_na(carseats, Urban, US, method = "mice")
 #' urban
 #' summary(urban)
-#' plot(urban)
+#' 
+#' # plot(urban)
 #'
 #' # Impute outliers ----------------------------------
 #' # If the variable of interest is a numerical variable
 #' price <- imputate_outlier(carseats, Price, method = "capping")
 #' price
 #' summary(price)
-#' plot(price)
+#' 
+#' # plot(price)
 #' }
 #' @method summary imputation
 #' @importFrom tidyr gather
@@ -626,12 +631,14 @@ summary.imputation <- function(object, ...) {
 #' income <- imputate_na(carseats, Income, US, method = "rpart")
 #' income
 #' summary(income)
+#' 
 #' plot(income)
 #'
 #' # If the variable of interest is a categorical variables
 #' urban <- imputate_na(carseats, Urban, US, method = "mice")
 #' urban
 #' summary(urban)
+#' 
 #' plot(urban)
 #'
 #' # Impute outliers ----------------------------------
@@ -639,6 +646,7 @@ summary.imputation <- function(object, ...) {
 #' price <- imputate_outlier(carseats, Price, method = "capping")
 #' price
 #' summary(price)
+#' 
 #' plot(price)
 #' }
 #' @method plot imputation
@@ -678,7 +686,7 @@ plot.imputation <- function(x, typographic = TRUE, ...) {
     
     if (typographic) {
       p <- p +
-        theme_ipsum() +
+        theme_ipsum_rc() +
         scale_color_ipsum() +
         theme(
           axis.title.x = element_text(size = 13),
@@ -697,7 +705,7 @@ plot.imputation <- function(x, typographic = TRUE, ...) {
     
     if (typographic) {
       p <- p +
-        theme_ipsum() +
+        theme_ipsum_rc() +
         scale_fill_ipsum() +
         theme(
           axis.title.x = element_text(size = 13),

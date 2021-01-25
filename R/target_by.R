@@ -46,13 +46,15 @@ target_by <- function(.data, target, ...) {
 #' cat_num <- relate(categ, Sales)
 #' cat_num
 #' summary(cat_num)
-#' plot(cat_num)
+#' 
+#' # plot(cat_num)
 #'
 #' # If the variable of interest is a categorical variable
 #' cat_cat <- relate(categ, ShelveLoc)
 #' cat_cat
 #' summary(cat_cat)
-#' plot(cat_cat)
+#' 
+#' # plot(cat_cat)
 #'
 #' ##---------------------------------------------------
 #' # If the target variable is a categorical variable
@@ -62,16 +64,18 @@ target_by <- function(.data, target, ...) {
 #' num_num <- relate(num, Price)
 #' num_num
 #' summary(num_num)
-#' plot(num_num)
+#' 
+#' # plot(num_num)
 #'
 #' # If the variable of interest is a categorical variable
 #' num_cat <- relate(num, ShelveLoc)
 #' num_cat
 #' summary(num_cat)
-#' plot(num_cat)
+#' 
+#' # plot(num_cat)
 #'
 #' # Not allow typographic
-#' plot(num_cat, typographic = FALSE)
+#' # plot(num_cat, typographic = FALSE)
 #' 
 #' @method target_by data.frame
 #' @importFrom tidyselect vars_select
@@ -189,13 +193,15 @@ target_by_impl <- function(.data, target) {
 #' cat_num <- relate(categ, Sales)
 #' cat_num
 #' summary(cat_num)
-#' plot(cat_num)
+#' 
+#' # plot(cat_num)
 #'
 #' # If the variable of interest is a categorical variable
 #' cat_cat <- relate(categ, ShelveLoc)
 #' cat_cat
 #' summary(cat_cat)
-#' plot(cat_cat)
+#' 
+#' # plot(cat_cat)
 #'
 #' ##---------------------------------------------------
 #' # If the target variable is a categorical variable
@@ -205,16 +211,18 @@ target_by_impl <- function(.data, target) {
 #' num_num <- relate(num, Price)
 #' num_num
 #' summary(num_num)
-#' plot(num_num)
+#' 
+#' # plot(num_num)
 #'
 #' # If the variable of interest is a categorical variable
 #' num_cat <- relate(num, ShelveLoc)
 #' num_cat
 #' summary(num_cat)
-#' plot(num_cat)
+#' 
+#' # plot(num_cat)
 #' 
 #' # Not allow typographic
-#' plot(num_cat, typographic = FALSE)
+#' # plot(num_cat, typographic = FALSE)
 #' 
 #' @export
 relate <- function(.data, predictor) {
@@ -420,13 +428,15 @@ relate_impl <- function(.data, predictor) {
 #' cat_num <- relate(categ, Sales)
 #' cat_num
 #' summary(cat_num)
-#' plot(cat_num)
+#' 
+#' # plot(cat_num)
 #'
 #' # If the variable of interest is a categorical variable
 #' cat_cat <- relate(categ, ShelveLoc)
 #' cat_cat
 #' summary(cat_cat)
-#' plot(cat_cat)
+#' 
+#' # plot(cat_cat)
 #'
 #' ##---------------------------------------------------
 #' # If the target variable is a categorical variable
@@ -436,16 +446,18 @@ relate_impl <- function(.data, predictor) {
 #' num_num <- relate(num, Price)
 #' num_num
 #' summary(num_num)
-#' plot(num_num)
+#' 
+#' # plot(num_num)
 #'
 #' # If the variable of interest is a categorical variable
 #' num_cat <- relate(num, ShelveLoc)
 #' num_cat
 #' summary(num_cat)
-#' plot(num_cat)
+#' 
+#' # plot(num_cat)
 #' 
 #' # Not allow typographic
-#' plot(num_cat, typographic = FALSE)
+#' # plot(num_cat, typographic = FALSE)
 #' 
 #' @method print relate
 #' @importFrom stats anova
@@ -500,12 +512,14 @@ print.relate <- function(x, ...) {
 #' cat_num <- relate(categ, Sales)
 #' cat_num
 #' summary(cat_num)
+#' 
 #' plot(cat_num)
 #'
 #' # If the variable of interest is a categorical variable
 #' cat_cat <- relate(categ, ShelveLoc)
 #' cat_cat
 #' summary(cat_cat)
+#' 
 #' plot(cat_cat)
 #'
 #' ##---------------------------------------------------
@@ -516,6 +530,7 @@ print.relate <- function(x, ...) {
 #' num_num <- relate(num, Price)
 #' num_num
 #' summary(num_num)
+#' 
 #' plot(num_num)
 #' plot(num_num, hex_thres = 400)
 #'
@@ -523,6 +538,7 @@ print.relate <- function(x, ...) {
 #' num_cat <- relate(num, ShelveLoc)
 #' num_cat
 #' summary(num_cat)
+#' 
 #' plot(num_cat)
 #' 
 #' # Not allow typographic
@@ -551,7 +567,7 @@ plot.relate <- function(x, model = FALSE, hex_thres = 1000,
     
     if (typographic) {
       p_desc <- p_desc +
-        theme_ipsum() +
+        theme_ipsum_rc() +
         scale_color_ipsum() +
         theme(axis.title.x = element_text(size = 12),
               axis.title.y = element_text(size = 12))
@@ -602,7 +618,7 @@ plot.relate <- function(x, model = FALSE, hex_thres = 1000,
     
     if (typographic) {
       p_cross <- p_cross +
-        theme_ipsum() +
+        theme_ipsum_rc() +
         scale_fill_ipsum(na.value = "grey80") +
         theme(legend.position = "none",
               panel.grid.major.x = element_blank(),
@@ -645,7 +661,7 @@ plot.relate <- function(x, model = FALSE, hex_thres = 1000,
       
       if (typographic) {
         fig1 <- fig1 +
-          theme_ipsum() +
+          theme_ipsum_rc() +
           theme(axis.title.x = element_text(size = 12),
                 axis.title.y = element_text(size = 12))
       }
@@ -680,7 +696,7 @@ plot.relate <- function(x, model = FALSE, hex_thres = 1000,
       
       if (typographic) {
         fig2 <- fig2 +
-          theme_ipsum() +
+          theme_ipsum_rc() +
           theme(axis.title.x = element_text(size = 12),
                 axis.title.y = element_text(size = 12))
       }
@@ -708,7 +724,7 @@ plot.relate <- function(x, model = FALSE, hex_thres = 1000,
       
       if (typographic) {
         p_box <- p_box +
-          theme_ipsum() +
+          theme_ipsum_rc() +
           scale_fill_ipsum() +
           theme(axis.title.x = element_text(size = 12),
                 axis.title.y = element_text(size = 12))

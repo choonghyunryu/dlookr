@@ -48,13 +48,15 @@ categ <- target_by(carseats, US)
 cat_num <- relate(categ, Sales)
 cat_num
 summary(cat_num)
-plot(cat_num)
+
+# plot(cat_num)
 
 # If the variable of interest is a categorical variable
 cat_cat <- relate(categ, ShelveLoc)
 cat_cat
 summary(cat_cat)
-plot(cat_cat)
+
+# plot(cat_cat)
 
 ##---------------------------------------------------
 # If the target variable is a categorical variable
@@ -64,16 +66,18 @@ num <- target_by(carseats, Sales)
 num_num <- relate(num, Price)
 num_num
 summary(num_num)
-plot(num_num)
+
+# plot(num_num)
 
 # If the variable of interest is a categorical variable
 num_cat <- relate(num, ShelveLoc)
 num_cat
 summary(num_cat)
-plot(num_cat)
+
+# plot(num_cat)
 
 # Not allow typographic
-plot(num_cat, typographic = FALSE)
+# plot(num_cat, typographic = FALSE)
 
 }
 \seealso{

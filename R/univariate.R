@@ -83,13 +83,13 @@ univar_numeric <- function(.data, ...) {
 #' stat
 #'
 #' # plot all variables
-#' plot(all_var)
+#' # plot(all_var)
 #' 
 #' # plot urban
-#' plot(urban)
+#' # plot(urban)
 #' 
 #' # plot all variables by prompt
-#' plot(all_var, prompt = TRUE)
+#' # plot(all_var, prompt = TRUE)
 #' 
 #' @method univar_category data.frame
 #' @importFrom tidyselect vars_select
@@ -210,31 +210,31 @@ univar_category_impl <- function(df, vars) {
 #' summary(all_var, stand = "zscore")
 #' 
 #' # one plot with all variables
-#' plot(all_var)
+#' # plot(all_var)
 #' 
 #' # one plot with all normalized variables by Min-Max method
-#' plot(all_var, stand = "minmax")
+#' # plot(all_var, stand = "minmax")
 #' 
 #' # one plot with all variables
-#' plot(all_var, stand = "none")
+#' # plot(all_var, stand = "none")
 #' 
 #' # one plot with all robust standardized variables 
-#' plot(all_var, viz = "boxplot")
+#' # plot(all_var, viz = "boxplot")
 #' 
 #' # one plot with all standardized variables by Z-score method 
-#' plot(all_var, viz = "boxplot", stand = "zscore")
+#' # plot(all_var, viz = "boxplot", stand = "zscore")
 #' 
 #' # individual boxplot by variables
-#' plot(all_var, indiv = TRUE, "boxplot")
+#' # plot(all_var, indiv = TRUE, "boxplot")
 #' 
 #' # individual histogram by variables
-#' plot(all_var, indiv = TRUE, "hist")
+#' # plot(all_var, indiv = TRUE, "hist")
 #' 
 #' # individual histogram by robust standardized variable 
-#' plot(all_var, indiv = TRUE, "hist", stand = "robust")
+#' # plot(all_var, indiv = TRUE, "hist", stand = "robust")
 #' 
 #' # plot all variables by prompt
-#' plot(all_var, indiv = TRUE, "hist", prompt = TRUE)
+#' # plot(all_var, indiv = TRUE, "hist", prompt = TRUE)
 #' 
 #' @method univar_numeric data.frame
 #' @importFrom tidyselect vars_select
@@ -518,6 +518,8 @@ print.univar_numeric <- function(x, ...) {
 #' if this argument value is TRUE, a prompt is output each time. 
 #' @param na.rm logical. Specifies whether to include NA when plotting bar plot. 
 #' The default is FALSE, so plot NA.  
+#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
 #' However, it does not support all parameters.
 #' @seealso \code{\link{univar_category}}, \code{\link{print.univar_category}}, \code{\link{summary.univar_category}}.
@@ -553,10 +555,13 @@ print.univar_numeric <- function(x, ...) {
 #' # plot all variables by prompt
 #' plot(all_var, prompt = TRUE)
 #' 
+#' # not allow the typographic elements
+#' plot(all_var, typographic = FALSE)
+#' 
 #' @method plot univar_category
 #' @import ggplot2
 #' @export
-plot.univar_category <- function(x, na.rm = TRUE, prompt = FALSE, ...) {
+plot.univar_category <- function(x, na.rm = TRUE, prompt = FALSE, typographic = TRUE, ...) {
   variables <- attr(x, "variables")
   
   n <- length(variables)
@@ -586,7 +591,17 @@ plot.univar_category <- function(x, na.rm = TRUE, prompt = FALSE, ...) {
       theme(legend.position = "None") +
       theme(plot.title = element_text(hjust = 0.5))
     
-    print(obj)
+    if (typographic) {
+      obj <- obj +
+        theme_ipsum_rc() +
+        scale_fill_ipsum() +
+        theme(legend.position = "None",
+              axis.title.x = element_text(size = 13),
+              axis.title.y = element_text(size = 13)
+        )  
+    }
+    
+    suppressWarnings(print(obj))
   } 
 }
 
@@ -610,6 +625,8 @@ plot.univar_category <- function(x, na.rm = TRUE, prompt = FALSE, ...) {
 #' he default is "none" if indiv is TRUE, and "robust" if FALSE.
 #' @param prompt logical. The default value is FALSE. If there are multiple visualizations to be output, 
 #' if this argument value is TRUE, a prompt is output each time. 
+#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package. 
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
 #' However, it does not support.
 #' @seealso \code{\link{univar_numeric}}, \code{\link{print.univar_numeric}}, \code{\link{summary.univar_numeric}}.
@@ -638,10 +655,13 @@ plot.univar_category <- function(x, na.rm = TRUE, prompt = FALSE, ...) {
 #' plot(all_var, stand = "minmax")
 #' 
 #' # one plot with all variables
-#' plot(all_var, stand = "none")
+#' # plot(all_var, stand = "none")
 #' 
 #' # one plot with all robust standardized variables 
 #' plot(all_var, viz = "boxplot")
+#' 
+#' # not allow the typographic elements
+#' plot(all_var, typographic = FALSE)
 #' 
 #' # one plot with all standardized variables by Z-score method 
 #' plot(all_var, viz = "boxplot", stand = "zscore")
@@ -665,7 +685,7 @@ plot.univar_category <- function(x, na.rm = TRUE, prompt = FALSE, ...) {
 plot.univar_numeric <- function(x, indiv = FALSE, viz = c("hist", "boxplot"), 
                                     stand = ifelse(rep(indiv, 4), c("none", "robust", "minmax", "zscore"),
                                     c("robust", "minmax", "zscore", "none")), 
-                                    prompt = FALSE, ...) {
+                                    prompt = FALSE, typographic = TRUE, ...) {
   stand <- match.arg(stand)
   viz <- match.arg(viz)
   
@@ -719,13 +739,23 @@ plot.univar_numeric <- function(x, indiv = FALSE, viz = c("hist", "boxplot"),
       p <- df %>% 
         tidyr::gather(variable, obs) %>% 
         ggplot(aes(variable, obs, fill = variable)) +
-        geom_boxplot() +
+        geom_boxplot(alpha = 0.8) +
         ylab(value) +
         xlab("Variables") + 
         ggtitle(sprintf("Boxplots of %s", value)) +
         theme_bw() +
         theme(legend.position = "None") +
         theme(plot.title = element_text(hjust = 0.5))
+      
+      if (typographic) {
+        p <- p +
+          theme_ipsum_rc() +
+          scale_fill_ipsum() +
+          theme(legend.position = "None",
+                axis.title.x = element_text(size = 13),
+                axis.title.y = element_text(size = 13)
+          )  
+      }
       
       suppressMessages(
         suppressWarnings(print(p)))
@@ -734,12 +764,22 @@ plot.univar_numeric <- function(x, indiv = FALSE, viz = c("hist", "boxplot"),
         tidyr::gather(variable, obs) %>% 
         ggplot(aes(obs)) +
         facet_wrap(~variable) + 
-        geom_histogram(colour = "gray", fill = "lightblue") +
+        geom_histogram(color = "gray", fill = "steelblue") +
         ylab("Frequency") +
         xlab(value) + 
         ggtitle(sprintf("Histogram of %s", value)) +
         theme_bw() +
         theme(plot.title = element_text(hjust = 0.5))
+      
+      if (typographic) {
+        p <- p +
+          theme_ipsum_rc() +
+          scale_fill_ipsum() +
+          theme(legend.position = "None",
+                axis.title.x = element_text(size = 13),
+                axis.title.y = element_text(size = 13)
+          )  
+      }
       
       suppressMessages(
         suppressWarnings(print(p)))
@@ -775,10 +815,46 @@ plot.univar_numeric <- function(x, indiv = FALSE, viz = c("hist", "boxplot"),
       } 
       
       if (viz == "boxplot") {
-        boxplot(vec, col = "lightblue", main = sprintf("Boxplot of %s %s", variables[i], value))
+        p <- data.frame(vec = vec) %>% 
+          ggplot(aes(vec)) +
+          geom_boxplot(alpha = 0.8, fill = "steelblue") +
+          coord_flip() +
+          ylim(-0.7, 0.7) +
+          labs(title = sprintf("Boxplot of %s", variables[i]), x = "", y = "") +
+          theme_bw() +
+          theme(legend.position = "None") +
+          theme(axis.text.y = element_blank())
+        
+        if (typographic) {
+          p <- p +
+            theme_ipsum_rc() +
+            theme(legend.position = "None",
+                  axis.text.x = element_blank()
+            )  
+        }
       } else if (viz == "hist") {
-        hist(vec, col = "lightblue", main = sprintf("Histogram of %s %s", variables[i], value))
+        p <- data.frame(vec = vec) %>% 
+          ggplot(aes(vec)) +
+          geom_histogram(color = "gray", fill = "steelblue") +
+          ylab("Frequency") +
+          xlab(value) + 
+          ggtitle(sprintf("Histogram of %s", variables[i])) +
+          theme_bw() +
+          theme(plot.title = element_text(hjust = 0.5))
+        
+        if (typographic) {
+          p <- p +
+            theme_ipsum_rc() +
+            scale_fill_ipsum() +
+            theme(legend.position = "None",
+                  axis.title.x = element_text(size = 13),
+                  axis.title.y = element_text(size = 13)
+            )  
+        }
       }  
+      
+      suppressMessages(
+        suppressWarnings(print(p)))
     } 
   }
 }

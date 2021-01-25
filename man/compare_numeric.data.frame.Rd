@@ -121,16 +121,16 @@ summary(all_var, thres_rs = 0.05)
 summary(all_var, verbose = FALSE)
   
 # plot all pair of variables
-plot(all_var)
+# plot(all_var)
 
 # plot a pair of variables
-plot(two_var)
+# plot(two_var)
 
 # plot all pair of variables by prompt
-plot(all_var, prompt = TRUE)
+# plot(all_var, prompt = TRUE)
 
 # plot a pair of variables not focuses on typographic elements
-plot(two_var, typographic = FALSE)
+# plot(two_var, typographic = FALSE)
 
 }
 \seealso{

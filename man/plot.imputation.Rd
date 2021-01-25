@@ -33,12 +33,14 @@ carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 income <- imputate_na(carseats, Income, US, method = "rpart")
 income
 summary(income)
+
 plot(income)
 
 # If the variable of interest is a categorical variables
 urban <- imputate_na(carseats, Urban, US, method = "mice")
 urban
 summary(urban)
+
 plot(urban)
 
 # Impute outliers ----------------------------------
@@ -46,6 +48,7 @@ plot(urban)
 price <- imputate_outlier(carseats, Price, method = "capping")
 price
 summary(price)
+
 plot(price)
 }
 }

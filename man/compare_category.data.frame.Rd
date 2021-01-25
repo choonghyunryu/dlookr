@@ -128,16 +128,16 @@ summary(all_var, "table", na.rm = TRUE, verbose = FALSE) \%>\%
   "[["("ShelveLoc vs Urban")
 
 # plot all pair of variables
-plot(all_var)
+# plot(all_var)
 
 # plot a pair of variables
-plot(two_var)
+# plot(two_var)
 
 # plot all pair of variables by prompt
-plot(all_var, prompt = TRUE)
+# plot(all_var, prompt = TRUE)
 
 # plot a pair of variables
-plot(two_var, las = 1)
+# plot(two_var, las = 1)
 
 }
 \seealso{

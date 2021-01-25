@@ -488,62 +488,62 @@ The EDA report is an automated report to assist in the EDA process. Design the d
 
 * The cover of the report is shown in the following figure.
 
-```{r eda_title_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="EDA report cover"}
+```{r eda_title_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="EDA report cover"}
 knitr::include_graphics('img/eda_title_pdf.png')
 ```
 
 * The report's agenda is shown in the following figure.
 
-```{r eda_agenda_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="EDA Report Contents"}
+```{r eda_agenda_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="EDA Report Contents"}
 knitr::include_graphics('img/eda_agenda_pdf.png')
 ```
 
 * Much information is represented in tables in the report. An example of the table is shown in the following figure.
 
-```{r eda_intro_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Example EDA report table"}
+```{r eda_intro_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Example EDA report table"}
 knitr::include_graphics('img/eda_intro_pdf.png')
 ```
 
 * In the EDA report, the normality test content includes visualization results. The result is shown in the following figure.
 
-```{r eda_normality_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Normality test information in EDA reports"}
+```{r eda_normality_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Normality test information in EDA reports"}
 knitr::include_graphics('img/eda_normality_pdf.png')
 ```
 
-* Correlation information in EDA reports includes visualization results. The result is shown in the following figure.
+#* Correlation information in EDA reports includes visualization results. The result is shown in the following #figure.
 
-```{r eda_correlation_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Correlation information in EDA reports"}
+```{r eda_correlation_pdf, echo=FALSE, eval=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Correlation information in EDA reports"}
 knitr::include_graphics('img/eda_correlation_pdf.png')
 ```
 
 * In EDA reports, information on linear relationships includes tables and visualization results. The result is shown in the following figure.
 
-```{r eda_lm_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Linear relationship information in EDA reports"}
+```{r eda_lm_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Linear relationship information in EDA reports"}
 knitr::include_graphics('img/eda_lm_pdf.png')
 ```
 
 * In EDA reports, ANOVA information includes tables and visualization results. The result is shown in the following figure.
 
-```{r eda_anova_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Information about ANOVA in EDA reports"}
+```{r eda_anova_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Information about ANOVA in EDA reports"}
 knitr::include_graphics('img/eda_anova_pdf.png')
 ```
 
 #### Contents of html file
 * The title and contents of the report are shown in the following figure.
 
-```{r eda_egenda_html, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="EDA report titles and table of contents"}
+```{r eda_egenda_html, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="EDA report titles and table of contents"}
 knitr::include_graphics('img/eda_agenda_html.png')
 ```
 
 * Much information is represented in tables in the report. An example of a table in the html file is shown in the following figure.
 
-```{r eda_table_html, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="EDA report table example (Web)"}
+```{r eda_table_html, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="EDA report table example (Web)"}
 knitr::include_graphics('img/eda_table_html.png')
 ```
 
 * In EDA reports, normality test information includes visualization results. The result of the html file is shown in the following figure.
 
-```{r eda_normality_html, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="EDA Report Normality Test Information (Web)"}
+```{r eda_normality_html, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="EDA Report Normality Test Information (Web)"}
 knitr::include_graphics('img/eda_normality_html.png')
 ```
 

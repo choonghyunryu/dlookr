@@ -53,9 +53,10 @@
 #' advertising_log <- transform(carseats$Advertising, method = "log")
 #' advertising_log
 #' summary(advertising_log)
-#' plot(advertising_log)
+#' 
+#' # plot(advertising_log)
 #'
-#' plot(advertising_log, typographic = FALSE)
+#' # plot(advertising_log, typographic = FALSE)
 #' 
 #' # Using dplyr ----------------------------------
 #' library(dplyr)
@@ -63,6 +64,7 @@
 #' carseats %>%
 #'   mutate(Advertising_log = transform(Advertising, method = "log+1")) %>%
 #'   lm(Sales ~ Advertising_log, data = .)
+#'   
 #' @export
 #' @import tibble
 #' @importFrom stats sd
@@ -151,15 +153,18 @@ transform <- function(x, method = c("zscore", "minmax", "log", "log+1", "sqrt",
 #' advertising_minmax <- transform(carseats$Advertising, method = "minmax")
 #' advertising_minmax
 #' summary(advertising_minmax)
-#' plot(advertising_minmax)
+#' 
+#' # plot(advertising_minmax)
 #'
 #' # Resolving Skewness  --------------------------
 #' advertising_log <- transform(carseats$Advertising, method = "log")
 #' advertising_log
 #' summary(advertising_log)
-#' plot(advertising_log)
 #' 
-#' plot(advertising_log, typographic = FALSE)
+#' # plot(advertising_log)
+#' 
+#' # plot(advertising_log, typographic = FALSE)
+#' 
 #' @method summary transform
 #' @importFrom tidyr gather
 #' @export
@@ -214,12 +219,14 @@ summary.transform <- function(object, ...) {
 #' advertising_minmax <- transform(carseats$Advertising, method = "minmax")
 #' advertising_minmax
 #' summary(advertising_minmax)
+#' 
 #' plot(advertising_minmax)
 #'
 #' # Resolving Skewness  --------------------------
 #' advertising_log <- transform(carseats$Advertising, method = "log")
 #' advertising_log
 #' summary(advertising_log)
+#' 
 #' plot(advertising_log)
 #' 
 #' plot(advertising_log, typographic = FALSE)
@@ -253,12 +260,12 @@ plot.transform <- function(x, typographic = TRUE, ...) {
 
   if (typographic) {
     fig1 <- fig1 +
-      theme_ipsum() +
+      theme_ipsum_rc() +
       theme(axis.title.x = element_text(size = 13),
             axis.title.y = element_text(size = 13))
     
     fig2 <- fig2 +
-      theme_ipsum() +
+      theme_ipsum_rc() +
       theme(axis.title.x = element_text(size = 13),
             axis.title.y = element_text(size = 13))
   }  

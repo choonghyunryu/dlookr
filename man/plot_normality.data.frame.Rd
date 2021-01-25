@@ -119,8 +119,8 @@ carseats \%>\%
 plot_normality(Income, Price)
 
 # Positions values select variables
-carseats \%>\%
- plot_normality(1)
+# carseats \%>\%
+#  plot_normality(1)
 
 # Using pipes & dplyr -------------------------
 # Plot 'Sales' variable by 'ShelveLoc' and 'US'

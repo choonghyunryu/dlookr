@@ -292,11 +292,11 @@ print.bins <- function(x, ...) {
 #' bin <- binning(carseats$Income, nbins = 5, type = "equal")
 #' plot(bin)
 #' 
-#' bin <- binning(carseats$Income, nbins = 5, type = "pretty")
-#' plot(bin)
+#' #bin <- binning(carseats$Income, nbins = 5, type = "pretty")
+#' #plot(bin)
 #' 
-#' bin <- binning(carseats$Income, nbins = 5, type = "kmeans")
-#' plot(bin)
+#' #bin <- binning(carseats$Income, nbins = 5, type = "kmeans")
+#' #plot(bin)
 #' 
 #' bin <- binning(carseats$Income, nbins = 5, type = "bclust")
 #' plot(bin)
@@ -330,7 +330,7 @@ plot.bins <- function(x, typographic = TRUE, ...) {
   
   if (typographic) {
     p_top <- p_top +
-      theme_ipsum() 
+      theme_ipsum_rc() 
   }
   
   data_bottom <- data.frame(bins = seq(levels), freq = as.integer(table(bins)) / length(bins))
@@ -347,7 +347,7 @@ plot.bins <- function(x, typographic = TRUE, ...) {
   
   if (typographic) {
     p_bottom <- p_bottom +
-      theme_ipsum() 
+      theme_ipsum_rc() 
   }
   
   suppressWarnings(gridExtra::grid.arrange(p_top, p_bottom, nrow = 2, ncol = 1)) 
@@ -423,17 +423,17 @@ plot.bins <- function(x, typographic = TRUE, ...) {
 #' summary(bin)
 #' 
 #' # visualize all information for optimal_bins class
-#' plot(bin)
+#' # plot(bin)
 #' 
 #' # visualize WoE information for optimal_bins class
-#' plot(bin, type = "WoE")
+#' # plot(bin, type = "WoE")
 #' 
 #' # visualize all information without typographic
-#' plot(bin, typographic = FALSE)
+#' # plot(bin, typographic = FALSE)
 #' 
 #' # extract binned results
-#' extract(bin) %>% 
-#'   head(20)
+#' # extract(bin) %>% 
+#' #   head(20)
 #' 
 #' @export
 #' @importFrom tibble is_tibble
@@ -595,17 +595,17 @@ binning_by <- function(.data, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
 #' attr(bin, "performance")
 #'
 #' # visualize all information for optimal_bins class
-#' plot(bin)
+#' # plot(bin)
 #' 
 #' # visualize WoE information for optimal_bins class
-#' plot(bin, type = "WoE")
+#' # plot(bin, type = "WoE")
 #' 
 #' # visualize all information without typographic
-#' plot(bin, typographic = FALSE)
+#' # plot(bin, typographic = FALSE)
 #' 
 #' # extract binned results
-#' extract(bin) %>% 
-#'   head(20)
+#' # extract(bin) %>% 
+#' #   head(20)
 #' 
 #' @method summary optimal_bins
 #' @export
@@ -681,7 +681,7 @@ plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE
       
       if (typographic) {
         p_dist <- p_dist +
-          theme_ipsum() 
+          theme_ipsum_rc() 
         
         if (type %in% c("all")) {
           p_dist <- p_dist +
@@ -709,7 +709,7 @@ plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE
       
       if (typographic) {
         p_freq <- p_freq +
-          theme_ipsum() 
+          theme_ipsum_rc() 
         
         if (type %in% c("all")) {
           p_freq <- p_freq +
@@ -735,7 +735,7 @@ plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE
       
       if (typographic) {
         p_badrate <- p_badrate +
-          theme_ipsum() 
+          theme_ipsum_rc() 
         
         if (type %in% c("all")) {
           p_badrate <- p_badrate +
@@ -760,7 +760,7 @@ plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE
       
       if (typographic) {
         p_woe <- p_woe +
-          theme_ipsum()
+          theme_ipsum_rc()
         
         if (type %in% c("all")) {
           p_woe <- p_woe +
@@ -818,11 +818,11 @@ extract <- function(x) {
 #' summary(bin)
 #'
 #' # visualize all information for optimal_bins class
-#' plot(bin)
+#' # plot(bin)
 #' 
 #' # extract binning result
-#' extract(bin) %>% 
-#'   head(20)
+#' # extract(bin) %>% 
+#' #   head(20)
 #' 
 #' @export
 #' @method extract bins
@@ -907,13 +907,15 @@ extract.bins <- function(x) {
 #' perf <- performance_bin(carseats$US_2, carseats$Advertising_bin) 
 #' perf
 #' summary(perf)
-#' plot(perf)
+#' 
+#' # plot(perf)
 #' 
 #' # Diagnose performance binned variable without NA
 #' perf <- performance_bin(carseats$US_2, carseats$Advertising_bin, na.rm = TRUE) 
 #' perf
 #' summary(perf)
-#' plot(perf)
+#' 
+#' # plot(perf)
 #' 
 #' @export
 #' @import dplyr
@@ -1132,13 +1134,15 @@ performance_bin <- function (y, x, na.rm = FALSE) {
 #' perf <- performance_bin(carseats$US_2, carseats$Advertising_bin) 
 #' perf
 #' summary(perf)
-#' plot(perf)
+#' 
+#' # plot(perf)
 #' 
 #' # Diagnose performance binned variable without NA
 #' perf <- performance_bin(carseats$US_2, carseats$Advertising_bin, na.rm = TRUE) 
 #' perf
 #' summary(perf)
-#' plot(perf)
+#' 
+#' # plot(perf)
 #' 
 #' @method summary performance_bin
 #' @export
@@ -1221,12 +1225,14 @@ summary.performance_bin <- function(object, ...) {
 #' perf <- performance_bin(carseats$US_2, carseats$Advertising_bin) 
 #' perf
 #' summary(perf)
+#' 
 #' plot(perf)
 #' 
 #' # Diagnose performance binned variable without NA
 #' perf <- performance_bin(carseats$US_2, carseats$Advertising_bin, na.rm = TRUE) 
 #' perf
 #' summary(perf)
+#' 
 #' plot(perf)
 #' plot(perf, typographic = FALSE)
 #' 
@@ -1271,7 +1277,7 @@ plot.performance_bin <- function(x, typographic = TRUE, ...) {
       scale_fill_discrete(labels = c("Negative", "Positive"))}) 
   } else {
     suppressWarnings({p +
-      theme_ipsum() +
+      theme_ipsum_rc() +
       scale_fill_ipsum(labels = c("Negative", "Positive")) +
       theme(
         axis.title.y = element_text(size = 13),

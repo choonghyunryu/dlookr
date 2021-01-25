@@ -425,6 +425,6 @@ plot_correlate_group_impl <- function(df, vars, method) {
     idx <- seq(cnt)
   } 
   
-  tmp <- lapply(idx, plot_correlate, df, vars)
+  invisible(lapply(idx, plot_correlate, df, vars))
 }
 

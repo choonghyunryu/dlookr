@@ -103,13 +103,15 @@ carseats \%>\%
 income <- imputate_na(carseats, Income, US, method = "rpart")
 income
 summary(income)
-plot(income)
+
+# plot(income)
 
 # If the variable of interest is a categorical variable
 urban <- imputate_na(carseats, Urban, US, method = "mice")
 urban
 summary(urban)
-plot(urban)
+
+# plot(urban)
 }
 }
 \seealso{

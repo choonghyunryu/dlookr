@@ -63,7 +63,7 @@
 #' 
 #' summary(ov)
 #' 
-#' plot(ov)
+#' # plot(ov)
 #' }
 #' 
 #' @export

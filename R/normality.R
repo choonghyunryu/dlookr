@@ -308,8 +308,8 @@ normality_group_impl <- function(df, vars, sample) {
 #' plot_normality(Income, Price)
 #'
 #' # Positions values select variables
-#' carseats %>%
-#'  plot_normality(1)
+#' # carseats %>%
+#' #  plot_normality(1)
 #'
 #' # Using pipes & dplyr -------------------------
 #' # Plot 'Sales' variable by 'ShelveLoc' and 'US'
@@ -358,7 +358,8 @@ plot_normality_impl <- function(df, vars, left, right, col = "steelblue", typogr
     plot_normality_raw(x, left, right, main, col, typographic)
   }
 
-  tmp <- lapply(vars[idx_numeric], function(x) plot_normality(df, x, left, right, col, typographic))
+  invisible(lapply(vars[idx_numeric], function(x) 
+    plot_normality(df, x, left, right, col, typographic)))
 }
 
 
@@ -447,36 +448,40 @@ plot_normality_raw <- function(x, left = c("log", "sqrt", "log+1", "log+a", "1/x
   
   if (typographic) {
     top_left <- top_left +
-      theme_ipsum() +
+      theme_ipsum_rc() +
       theme(plot.margin = margin(20, 30, 10, 30))
     
     top_right <- top_right +
-      theme_ipsum() +
+      theme_ipsum_rc() +
       theme(plot.margin = margin(20, 30, 10, 30))
     
     if (non_finite_left) {
       bottom_left <- bottom_left +
-        theme_ipsum(grid = FALSE) +
+        theme_ipsum_rc(grid = FALSE) +
         theme(plot.margin = margin(10, 30, 20, 30)) +
         null_theme
     } else {
       bottom_left <- bottom_left +
-        theme_ipsum() +
+        theme_ipsum_rc() +
         theme(plot.margin = margin(10, 30, 20, 30))
     }
     
     if (non_finite_right) {
       bottom_right <- bottom_right +
-        theme_ipsum(grid = FALSE) +
+        theme_ipsum_rc(grid = FALSE) +
         theme(plot.margin = margin(10, 30, 20, 30)) +
         null_theme
     } else {
       bottom_right <- bottom_right +
-        theme_ipsum() +
+        theme_ipsum_rc() +
         theme(plot.margin = margin(10, 30, 20, 30))
     }
     
-    top <- grid::textGrob(main, gp = grid::gpar(fontfamily = "Arial Narrow", fontsize = 18, font = 2),
+    fontfamily <- "Arial Narrow"
+    fontfamily <- "Roboto Condensed"
+    
+    top <- grid::textGrob(main, gp = grid::gpar(fontfamily = fontfamily, 
+                                                fontsize = 18, font = 2),
                            x = unit(0.075, "npc"), just = "left")
     
   } else {
@@ -546,7 +551,8 @@ plot_normality_group_impl <- function(df, vars, left, right, col = "steelblue", 
     lapply(seq(cnt), plot_normality, df, var, col, typographic)
   }
   
-  tmp <- lapply(vars[idx_numeric], function(x) call_plot(x, left, right, col, typographic))
+  invisible(lapply(vars[idx_numeric], function(x) 
+    call_plot(x, left, right, col, typographic)))
 }
 
 

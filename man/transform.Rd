@@ -67,9 +67,10 @@ plot(advertising_minmax)
 advertising_log <- transform(carseats$Advertising, method = "log")
 advertising_log
 summary(advertising_log)
-plot(advertising_log)
 
-plot(advertising_log, typographic = FALSE)
+# plot(advertising_log)
+
+# plot(advertising_log, typographic = FALSE)
 
 # Using dplyr ----------------------------------
 library(dplyr)
@@ -77,6 +78,7 @@ library(dplyr)
 carseats \%>\%
   mutate(Advertising_log = transform(Advertising, method = "log+1")) \%>\%
   lm(Sales ~ Advertising_log, data = .)
+  
 }
 \seealso{
 \code{\link{summary.transform}}, \code{\link{plot.transform}}.

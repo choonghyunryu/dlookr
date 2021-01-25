@@ -378,44 +378,44 @@ The `data diagnostic report` is an automated report to aid in the data diagnosti
 
 * The cover of the report is shown in the following figure.:
 
-```{r diag_title_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Data Diagnostic Report Cover"}
+```{r diag_title_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Data Diagnostic Report Cover"}
 knitr::include_graphics('img/diagn_title_pdf.png')
 ```
 
 * The contents of the report is shown in the following figure.:
 
-```{r diag_agenda_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Data Diagnostic Report Contents"}
+```{r diag_agenda_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Data Diagnostic Report Contents"}
 knitr::include_graphics('img/diagn_agenda_pdf.png')
 ```
 
 * Most information is represented in the report as a table. An example of a table is shown in the following figure.:
 
-```{r diag_intro_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Sample data diagnostic report table"}
+```{r diag_intro_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Sample data diagnostic report table"}
 knitr::include_graphics('img/diag_intro_pdf.png')
 ```
 
 * In the data diagnosis report, the outlier diagnostic contents include visualization. The result is shown in the following figure.:
 
-```{r diag_outlier_pdf, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Data diagnosis report outlier diagnosis contents"}
+```{r diag_outlier_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Data diagnosis report outlier diagnosis contents"}
 knitr::include_graphics('img/diag_outlier_pdf.png')
 ```
 
 #### Contents of html file
 * The title and contents of the report is shown in the following figure.:
 
-```{r diag_egenda_html, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Data Diagnostic report titles and table of contents"}
+```{r diag_egenda_html, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Data Diagnostic report titles and table of contents"}
 knitr::include_graphics('img/diag_agenda_html.png')
 ```
 
-* Most of the information is represented in tables in reports. An example of a table in the html file is shown in the following figure.
+#* Most of the information is represented in tables in reports. An example of a table in the html file is shown in #the following figure.
 
-```{r diag_table_html, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Sample data diagnostic report table (html)"}
+```{r diag_table_html, echo=FALSE, eval=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Sample data diagnostic report table (html)"}
 knitr::include_graphics('img/diag_table_html.png')
 ```
 
 * In the data diagnosis report, the outlier diagnostic contents include visualization. The result of the html file is shown in the following figure.
 
-```{r diag_outlier_html, echo=FALSE, out.width='70%', fig.align='center', fig.pos="!h", fig.cap="Data diagnosis report outlier diagnosis contents (html)"}
+```{r diag_outlier_html, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Data diagnosis report outlier diagnosis contents (html)"}
 knitr::include_graphics('img/diag_outlier_html.png')
 ```
 

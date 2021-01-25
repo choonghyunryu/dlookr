@@ -57,13 +57,15 @@ carseats$Advertising_bin <- cut(carseats$Advertising, breaks)
 perf <- performance_bin(carseats$US_2, carseats$Advertising_bin) 
 perf
 summary(perf)
-plot(perf)
+
+# plot(perf)
 
 # Diagnose performance binned variable without NA
 perf <- performance_bin(carseats$US_2, carseats$Advertising_bin, na.rm = TRUE) 
 perf
 summary(perf)
-plot(perf)
+
+# plot(perf)
 
 }
 \seealso{

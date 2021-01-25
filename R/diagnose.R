@@ -698,26 +698,30 @@ plot_outlier_raw <- function(x, main = NULL, col = "steelblue", typographic = TR
   
   if (typographic) {
     top_left <- top_left +
-      theme_ipsum() +
+      theme_ipsum_rc() +
       theme(axis.text.x = element_blank(),
             axis.ticks.x = element_blank(),
             plot.margin = margin(10, 30, 10, 30))
     
     top_right <- top_right +
-      theme_ipsum() +
+      theme_ipsum_rc() +
       theme(plot.margin = margin(10, 30, 10, 30))
     
     bottom_left <- bottom_left +
-      theme_ipsum() +
+      theme_ipsum_rc() +
       theme(axis.text.x = element_blank(),
             axis.ticks.x = element_blank(),
             plot.margin = margin(10, 30, 10, 30))
     
     bottom_right <- bottom_right +
-      theme_ipsum() +
+      theme_ipsum_rc() +
       theme(plot.margin = margin(10, 30, 10, 30))    
     
-    top <- grid::textGrob(main, gp = grid::gpar(fontfamily = "Arial Narrow", fontsize = 18, font = 2),
+    fontfamily <- "Arial Narrow"
+    fontfamily <- "Roboto Condensed"
+    
+    top <- grid::textGrob(main, gp = grid::gpar(fontfamily = fontfamily, 
+                                                fontsize = 18, font = 2),
                           x = unit(0.075, "npc"), just = "left")
   } else {
     top <- main
@@ -867,7 +871,7 @@ plot_outlier_target_impl <- function(df, vars, typographic = TRUE) {
     
     if (typographic) {
       box_with <- box_with +
-        theme_ipsum() +
+        theme_ipsum_rc() +
         scale_fill_ipsum() + 
         theme(legend.position = "none",
               axis.title.x = element_text(size = 12),
@@ -875,14 +879,14 @@ plot_outlier_target_impl <- function(df, vars, typographic = TRUE) {
               plot.margin = margin(10, 30, 10, 10))
       
       density_with <- density_with +
-        theme_ipsum() +
+        theme_ipsum_rc() +
         scale_color_ipsum() +
         theme(axis.title.x = element_text(size = 12),
               axis.title.y = element_text(size = 12),
               plot.margin = margin(10, 30, 10, 10))
       
       box_without <- box_without +
-        theme_ipsum() +
+        theme_ipsum_rc() +
         scale_fill_ipsum() + 
         theme(legend.position = "none",
               axis.title.x = element_text(size = 12),
@@ -890,7 +894,7 @@ plot_outlier_target_impl <- function(df, vars, typographic = TRUE) {
               plot.margin = margin(10, 30, 10, 10))
       
       density_without <- density_without +
-        theme_ipsum() +
+        theme_ipsum_rc() +
         scale_color_ipsum() +
         theme(axis.title.x = element_text(size = 12),
               axis.title.y = element_text(size = 12),
@@ -1008,7 +1012,6 @@ diagnose_report <- function(.data, output_format, output_file, output_dir, ...) 
 #' @importFrom rmarkdown render
 #' @importFrom prettydoc html_pretty
 #' @importFrom kableExtra kable_styling
-#' @importFrom tinytex latexmk
 #' @importFrom utils browseURL
 #' @method diagnose_report data.frame
 #' @export
