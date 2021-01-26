@@ -567,7 +567,7 @@ plot.relate <- function(x, model = FALSE, hex_thres = 1000,
     
     if (typographic) {
       p_desc <- p_desc +
-        theme_ipsum_rc() +
+        theme_typographic() +
         scale_color_ipsum() +
         theme(axis.title.x = element_text(size = 12),
               axis.title.y = element_text(size = 12))
@@ -618,7 +618,7 @@ plot.relate <- function(x, model = FALSE, hex_thres = 1000,
     
     if (typographic) {
       p_cross <- p_cross +
-        theme_ipsum_rc() +
+        theme_typographic() +
         scale_fill_ipsum(na.value = "grey80") +
         theme(legend.position = "none",
               panel.grid.major.x = element_blank(),
@@ -661,7 +661,7 @@ plot.relate <- function(x, model = FALSE, hex_thres = 1000,
       
       if (typographic) {
         fig1 <- fig1 +
-          theme_ipsum_rc() +
+          theme_typographic() +
           theme(axis.title.x = element_text(size = 12),
                 axis.title.y = element_text(size = 12))
       }
@@ -696,7 +696,7 @@ plot.relate <- function(x, model = FALSE, hex_thres = 1000,
       
       if (typographic) {
         fig2 <- fig2 +
-          theme_ipsum_rc() +
+          theme_typographic() +
           theme(axis.title.x = element_text(size = 12),
                 axis.title.y = element_text(size = 12))
       }
@@ -724,7 +724,7 @@ plot.relate <- function(x, model = FALSE, hex_thres = 1000,
       
       if (typographic) {
         p_box <- p_box +
-          theme_ipsum_rc() +
+          theme_typographic() +
           scale_fill_ipsum() +
           theme(axis.title.x = element_text(size = 12),
                 axis.title.y = element_text(size = 12))

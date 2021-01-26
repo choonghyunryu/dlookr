@@ -890,7 +890,7 @@ print.compare_numeric <- function(x, ...) {
 #' plot(two_var)
 #' 
 #' # plot all pair of variables by prompt
-#' plot(all_var, prompt = TRUE)
+#' # plot(all_var, prompt = TRUE)
 #' 
 #' # plot a pair of variables without NA
 #' plot(two_var, na.rm = TRUE)
@@ -974,7 +974,7 @@ plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE,
     
     if (typographic) {
       p <- p +
-        theme_ipsum_rc() +
+        theme_typographic() +
         scale_fill_ipsum(na.value = "grey80") +
         theme(legend.position = "none",
               panel.grid.major.x = element_blank(),
@@ -1043,7 +1043,7 @@ plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE,
 #' plot(two_var)
 #' 
 #' # plot all pair of variables by prompt
-#' plot(all_var, prompt = TRUE)
+#' # plot(all_var, prompt = TRUE)
 #' 
 #' # plot a pair of variables not focuses on typographic elements
 #' plot(two_var, typographic = FALSE)
@@ -1126,14 +1126,14 @@ plot.compare_numeric <- function(x, prompt = FALSE, typographic = TRUE, ...) {
     
     if (typographic) {
       p_scatter <- p_scatter +
-        theme_ipsum_rc() +
+        theme_typographic() +
         theme(
           axis.title.x = element_text(size = 11),
           axis.title.y = element_text(size = 13)
         )
       
       box_bottom <- box_bottom  +
-        theme_ipsum_rc() +
+        theme_typographic() +
         theme(axis.title.x = element_blank(),
               axis.text.x = element_blank(),
               axis.text.y = element_text(color = "transparent"),
@@ -1144,7 +1144,7 @@ plot.compare_numeric <- function(x, prompt = FALSE, typographic = TRUE, ...) {
               plot.margin = margin(0, 30, 0, 30))
       
       box_left <- box_left  +
-        theme_ipsum_rc() +
+        theme_typographic() +
         theme(axis.title.x = element_text(color = "transparent"),
               axis.text.x = element_text(color = "transparent"),
               axis.title.y = element_blank(),
@@ -1155,8 +1155,7 @@ plot.compare_numeric <- function(x, prompt = FALSE, typographic = TRUE, ...) {
               panel.background = element_blank(),              
               plot.margin = margin(30, 0, 30, 0))
       
-      fontfamily <- "Arial Narrow"
-      fontfamily <- "Roboto Condensed"
+      fontfamily <- get_font_family()
       
       title <- grid::textGrob(title, gp = grid::gpar(fontfamily = fontfamily, fontsize = 18, font = 2),
                               x = unit(0.075, "npc"), just = "left")

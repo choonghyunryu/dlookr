@@ -52,7 +52,7 @@ plot(all_var)
 plot(two_var)
 
 # plot all pair of variables by prompt
-plot(all_var, prompt = TRUE)
+# plot(all_var, prompt = TRUE)
 
 # plot a pair of variables without NA
 plot(two_var, na.rm = TRUE)

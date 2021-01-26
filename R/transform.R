@@ -260,12 +260,12 @@ plot.transform <- function(x, typographic = TRUE, ...) {
 
   if (typographic) {
     fig1 <- fig1 +
-      theme_ipsum_rc() +
+      theme_typographic() +
       theme(axis.title.x = element_text(size = 13),
             axis.title.y = element_text(size = 13))
     
     fig2 <- fig2 +
-      theme_ipsum_rc() +
+      theme_typographic() +
       theme(axis.title.x = element_text(size = 13),
             axis.title.y = element_text(size = 13))
   }  

@@ -78,7 +78,7 @@ plot(all_var, viz = "boxplot")
 plot(all_var, typographic = FALSE)
 
 # one plot with all standardized variables by Z-score method 
-plot(all_var, viz = "boxplot", stand = "zscore")
+# plot(all_var, viz = "boxplot", stand = "zscore")
 
 # individual boxplot by variables
 plot(all_var, indiv = TRUE, "boxplot")
@@ -90,7 +90,7 @@ plot(all_var, indiv = TRUE, "hist")
 plot(all_var, indiv = TRUE, "hist", stand = "robust")
 
 # plot all variables by prompt
-plot(all_var, indiv = TRUE, "hist", prompt = TRUE)
+# plot(all_var, indiv = TRUE, "hist", prompt = TRUE)
 
 }
 \seealso{

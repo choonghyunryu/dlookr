@@ -448,38 +448,39 @@ plot_normality_raw <- function(x, left = c("log", "sqrt", "log+1", "log+a", "1/x
   
   if (typographic) {
     top_left <- top_left +
-      theme_ipsum_rc() +
+      theme_typographic() +
       theme(plot.margin = margin(20, 30, 10, 30))
     
     top_right <- top_right +
-      theme_ipsum_rc() +
+      theme_typographic() +
       theme(plot.margin = margin(20, 30, 10, 30))
     
     if (non_finite_left) {
       bottom_left <- bottom_left +
-        theme_ipsum_rc(grid = FALSE) +
-        theme(plot.margin = margin(10, 30, 20, 30)) +
+        theme_typographic() +
+        theme(panel.grid = element_blank(),
+              plot.margin = margin(10, 30, 20, 30)) +
         null_theme
     } else {
       bottom_left <- bottom_left +
-        theme_ipsum_rc() +
+        theme_typographic() +
         theme(plot.margin = margin(10, 30, 20, 30))
     }
     
     if (non_finite_right) {
       bottom_right <- bottom_right +
-        theme_ipsum_rc(grid = FALSE) +
-        theme(plot.margin = margin(10, 30, 20, 30)) +
+        theme_typographic() +
+        theme(panel.grid = element_blank(),
+              plot.margin = margin(10, 30, 20, 30)) +
         null_theme
     } else {
       bottom_right <- bottom_right +
-        theme_ipsum_rc() +
+        theme_typographic() +
         theme(plot.margin = margin(10, 30, 20, 30))
     }
     
-    fontfamily <- "Arial Narrow"
-    fontfamily <- "Roboto Condensed"
-    
+    fontfamily <- get_font_family()
+
     top <- grid::textGrob(main, gp = grid::gpar(fontfamily = fontfamily, 
                                                 fontsize = 18, font = 2),
                            x = unit(0.075, "npc"), just = "left")

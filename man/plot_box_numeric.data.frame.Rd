@@ -71,7 +71,7 @@ plot_box_numeric(carseats, -Sales, -Income)
 plot_box_numeric(carseats, "Sales", "Income", each = TRUE)
 
 # Not allow the typographic elements
-plot_box_numeric(carseats, typographic = FALSE)
+# plot_box_numeric(carseats, typographic = FALSE)
 
 # Using pipes ---------------------------------
 library(dplyr)

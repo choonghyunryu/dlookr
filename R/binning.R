@@ -330,7 +330,7 @@ plot.bins <- function(x, typographic = TRUE, ...) {
   
   if (typographic) {
     p_top <- p_top +
-      theme_ipsum_rc() 
+      theme_typographic() 
   }
   
   data_bottom <- data.frame(bins = seq(levels), freq = as.integer(table(bins)) / length(bins))
@@ -347,7 +347,7 @@ plot.bins <- function(x, typographic = TRUE, ...) {
   
   if (typographic) {
     p_bottom <- p_bottom +
-      theme_ipsum_rc() 
+      theme_typographic() 
   }
   
   suppressWarnings(gridExtra::grid.arrange(p_top, p_bottom, nrow = 2, ncol = 1)) 
@@ -681,7 +681,7 @@ plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE
       
       if (typographic) {
         p_dist <- p_dist +
-          theme_ipsum_rc() 
+          theme_typographic() 
         
         if (type %in% c("all")) {
           p_dist <- p_dist +
@@ -709,7 +709,7 @@ plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE
       
       if (typographic) {
         p_freq <- p_freq +
-          theme_ipsum_rc() 
+          theme_typographic() 
         
         if (type %in% c("all")) {
           p_freq <- p_freq +
@@ -735,7 +735,7 @@ plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE
       
       if (typographic) {
         p_badrate <- p_badrate +
-          theme_ipsum_rc() 
+          theme_typographic() 
         
         if (type %in% c("all")) {
           p_badrate <- p_badrate +
@@ -760,7 +760,7 @@ plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE
       
       if (typographic) {
         p_woe <- p_woe +
-          theme_ipsum_rc()
+          theme_typographic()
         
         if (type %in% c("all")) {
           p_woe <- p_woe +
@@ -1277,7 +1277,7 @@ plot.performance_bin <- function(x, typographic = TRUE, ...) {
       scale_fill_discrete(labels = c("Negative", "Positive"))}) 
   } else {
     suppressWarnings({p +
-      theme_ipsum_rc() +
+      theme_typographic() +
       scale_fill_ipsum(labels = c("Negative", "Positive")) +
       theme(
         axis.title.y = element_text(size = 13),

@@ -51,7 +51,7 @@ plot(all_var)
 plot(two_var)
 
 # plot all pair of variables by prompt
-plot(all_var, prompt = TRUE)
+# plot(all_var, prompt = TRUE)
 
 # plot a pair of variables not focuses on typographic elements
 plot(two_var, typographic = FALSE)

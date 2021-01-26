@@ -117,7 +117,7 @@ plot_na_hclust <- function (x, main = NULL, col.left = "#009E73", col.right = "#
   
   if (typographic) {
     p <- p +
-      theme_ipsum_rc() +
+      theme_typographic() +
       theme(legend.position = "none",
             axis.title.x = element_text(size = 12),
             axis.title.y = element_text(size = 12))
@@ -283,7 +283,7 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
   
   if (typographic) {
     p <- p +
-      theme_ipsum_rc() +
+      theme_typographic() +
       theme(legend.position = "top",
             axis.title.x = element_text(size = 12),
             axis.title.y = element_text(size = 12),
@@ -497,7 +497,7 @@ plot_na_intersect <- function (x, only_na = TRUE, n_intersacts = NULL,
   
   if (typographic) {
     top <- top +
-      theme_ipsum_rc() +
+      theme_typographic() +
       scale_x_continuous(breaks = seq(marginal_var$Var1), 
                          labels = marginal_var$n_var,
                          limits = c(0, length(na_variable)) + 0.5) +
@@ -508,7 +508,7 @@ plot_na_intersect <- function (x, only_na = TRUE, n_intersacts = NULL,
             plot.margin = margin(10, 10, 0, 10))
     
     body <- body +
-      theme_ipsum_rc() +
+      theme_typographic() +
       theme(legend.position = "none",
             axis.title.x = element_text(size = 12),
             axis.title.y = element_blank(),
@@ -516,7 +516,7 @@ plot_na_intersect <- function (x, only_na = TRUE, n_intersacts = NULL,
             plot.margin = margin(0, 10, 30, 10))
       
     right <- right +
-      theme_ipsum_rc() +
+      theme_typographic() +
       scale_x_continuous(breaks = seq(marginal_obs$Var2), 
                          labels = marginal_obs$n_obs,
                          limits = c(0, nrow(marginal_obs)) + 0.5) +    
@@ -528,8 +528,7 @@ plot_na_intersect <- function (x, only_na = TRUE, n_intersacts = NULL,
             axis.text.x = element_text(color = "transparent"),
             plot.margin = margin(0, 10, 30, 0))
     
-    fontfamily <- "Arial Narrow"
-    fontfamily <- "Roboto Condensed"
+    fontfamily <- get_font_family()
     
     main <- grid::textGrob(main, gp = grid::gpar(fontfamily = fontfamily, 
                                                  fontsize = 18, font = 2),

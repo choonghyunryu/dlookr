@@ -553,7 +553,7 @@ print.univar_numeric <- function(x, ...) {
 #' plot(all_var, na.rm = FALSE)
 #'  
 #' # plot all variables by prompt
-#' plot(all_var, prompt = TRUE)
+#' # plot(all_var, prompt = TRUE)
 #' 
 #' # not allow the typographic elements
 #' plot(all_var, typographic = FALSE)
@@ -593,7 +593,7 @@ plot.univar_category <- function(x, na.rm = TRUE, prompt = FALSE, typographic = 
     
     if (typographic) {
       obj <- obj +
-        theme_ipsum_rc() +
+        theme_typographic() +
         scale_fill_ipsum() +
         theme(legend.position = "None",
               axis.title.x = element_text(size = 13),
@@ -664,7 +664,7 @@ plot.univar_category <- function(x, na.rm = TRUE, prompt = FALSE, typographic = 
 #' plot(all_var, typographic = FALSE)
 #' 
 #' # one plot with all standardized variables by Z-score method 
-#' plot(all_var, viz = "boxplot", stand = "zscore")
+#' # plot(all_var, viz = "boxplot", stand = "zscore")
 #' 
 #' # individual boxplot by variables
 #' plot(all_var, indiv = TRUE, "boxplot")
@@ -676,7 +676,7 @@ plot.univar_category <- function(x, na.rm = TRUE, prompt = FALSE, typographic = 
 #' plot(all_var, indiv = TRUE, "hist", stand = "robust")
 #' 
 #' # plot all variables by prompt
-#' plot(all_var, indiv = TRUE, "hist", prompt = TRUE)
+#' # plot(all_var, indiv = TRUE, "hist", prompt = TRUE)
 #' 
 #' @importFrom tidyr gather
 #' @import ggplot2
@@ -749,7 +749,7 @@ plot.univar_numeric <- function(x, indiv = FALSE, viz = c("hist", "boxplot"),
       
       if (typographic) {
         p <- p +
-          theme_ipsum_rc() +
+          theme_typographic() +
           scale_fill_ipsum() +
           theme(legend.position = "None",
                 axis.title.x = element_text(size = 13),
@@ -773,7 +773,7 @@ plot.univar_numeric <- function(x, indiv = FALSE, viz = c("hist", "boxplot"),
       
       if (typographic) {
         p <- p +
-          theme_ipsum_rc() +
+          theme_typographic() +
           scale_fill_ipsum() +
           theme(legend.position = "None",
                 axis.title.x = element_text(size = 13),
@@ -827,7 +827,7 @@ plot.univar_numeric <- function(x, indiv = FALSE, viz = c("hist", "boxplot"),
         
         if (typographic) {
           p <- p +
-            theme_ipsum_rc() +
+            theme_typographic() +
             theme(legend.position = "None",
                   axis.text.x = element_blank()
             )  
@@ -844,7 +844,7 @@ plot.univar_numeric <- function(x, indiv = FALSE, viz = c("hist", "boxplot"),
         
         if (typographic) {
           p <- p +
-            theme_ipsum_rc() +
+            theme_typographic() +
             scale_fill_ipsum() +
             theme(legend.position = "None",
                   axis.title.x = element_text(size = 13),

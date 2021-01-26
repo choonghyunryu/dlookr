@@ -98,8 +98,8 @@ carseats \%>\%
   plot_bar_category(top = 7)
    
 # Visualize only factor, not character
-carseats \%>\%
-  plot_bar_category(add_character = FALSE) 
+# carseats \%>\%
+#   plot_bar_category(add_character = FALSE) 
   
 # Using groupd_df  ------------------------------
 carseats \%>\% 

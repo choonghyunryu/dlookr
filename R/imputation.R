@@ -686,7 +686,7 @@ plot.imputation <- function(x, typographic = TRUE, ...) {
     
     if (typographic) {
       p <- p +
-        theme_ipsum_rc() +
+        theme_typographic() +
         scale_color_ipsum() +
         theme(
           axis.title.x = element_text(size = 13),
@@ -705,7 +705,7 @@ plot.imputation <- function(x, typographic = TRUE, ...) {
     
     if (typographic) {
       p <- p +
-        theme_ipsum_rc() +
+        theme_typographic() +
         scale_fill_ipsum() +
         theme(
           axis.title.x = element_text(size = 13),

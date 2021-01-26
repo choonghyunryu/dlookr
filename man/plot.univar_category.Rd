@@ -54,7 +54,7 @@ plot(urban)
 plot(all_var, na.rm = FALSE)
  
 # plot all variables by prompt
-plot(all_var, prompt = TRUE)
+# plot(all_var, prompt = TRUE)
 
 # not allow the typographic elements
 plot(all_var, typographic = FALSE)
