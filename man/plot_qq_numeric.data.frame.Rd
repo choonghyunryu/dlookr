@@ -76,7 +76,7 @@ carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 plot_qq_numeric(carseats, -Sales, -Income)
 
 # Not allow the typographic elements
-plot_qq_numeric(carseats, "Sales", typographic = FALSE)
+# plot_qq_numeric(carseats, "Sales", typographic = FALSE)
 
 # Using pipes ---------------------------------
 library(dplyr)
@@ -90,8 +90,8 @@ carseats \%>\%
   group_by(ShelveLoc) \%>\% 
   plot_qq_numeric()
   
-carseats \%>\% 
-  group_by(ShelveLoc) \%>\% 
-  plot_qq_numeric(each = TRUE)  
+#carseats \%>\% 
+#   group_by(ShelveLoc) \%>\% 
+#   plot_qq_numeric(each = TRUE)  
   
 }

@@ -624,14 +624,14 @@ diagnose_outlier.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_si
 #' #   plot_outlier()
 #'   
 #' # Positive values select variables
-#' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   plot_outlier(Sales, Price)
+#'  con_sqlite %>% 
+#'    tbl("TB_CARSEATS") %>% 
+#'    plot_outlier(Sales, Price)
 #'   
 #' # Negative values to drop variables, and In-memory mode and collect size is 200
-#' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   plot_outlier(-Sales, -Price, collect_size = 200)
+#' # con_sqlite %>% 
+#' #   tbl("TB_CARSEATS") %>% 
+#' #   plot_outlier(-Sales, -Price, collect_size = 200)
 #'   
 #' # Positions values select variables
 #' # con_sqlite %>% 
@@ -644,9 +644,9 @@ diagnose_outlier.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_si
 #' #   plot_outlier(-1, -5)
 #'   
 #' # Not allow the typographic elements
-#'  con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   plot_outlier(-1, -5, typographic = FALSE)
+#' #  con_sqlite %>% 
+#' #   tbl("TB_CARSEATS") %>% 
+#' #   plot_outlier(-1, -5, typographic = FALSE)
 #'
 #' # Using pipes & dplyr -------------------------
 #' # Visualization of numerical variables with a ratio of

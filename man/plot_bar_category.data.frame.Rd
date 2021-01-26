@@ -78,13 +78,13 @@ plot_bar_category(carseats)
 
 # Select the variable to diagnose
 # plot_bar_category(carseats, "ShelveLoc", "Urban")
-plot_bar_category(carseats, -ShelveLoc, -Urban)
+# plot_bar_category(carseats, -ShelveLoc, -Urban)
 
 # Visualize the each plots
 plot_bar_category(carseats, each = TRUE)
 
 # Not allow typographic argument
-plot_bar_category(carseats, typographic = FALSE)
+# plot_bar_category(carseats, typographic = FALSE)
 
 # Using pipes ---------------------------------
 library(dplyr)
@@ -106,8 +106,8 @@ carseats \%>\%
   group_by(ShelveLoc) \%>\% 
   plot_bar_category(top = 5)
   
-carseats \%>\% 
-  group_by(ShelveLoc) \%>\% 
-  plot_bar_category(each = TRUE, top = 5)  
+# carseats \%>\% 
+#   group_by(ShelveLoc) \%>\% 
+#   plot_bar_category(each = TRUE, top = 5)  
   
 }

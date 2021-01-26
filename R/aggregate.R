@@ -47,13 +47,13 @@ plot_bar_category <- function(.data, ...) {
 #'
 #' # Select the variable to diagnose
 #' # plot_bar_category(carseats, "ShelveLoc", "Urban")
-#' plot_bar_category(carseats, -ShelveLoc, -Urban)
+#' # plot_bar_category(carseats, -ShelveLoc, -Urban)
 #' 
 #' # Visualize the each plots
 #' plot_bar_category(carseats, each = TRUE)
 #' 
 #' # Not allow typographic argument
-#' plot_bar_category(carseats, typographic = FALSE)
+#' # plot_bar_category(carseats, typographic = FALSE)
 #' 
 #' # Using pipes ---------------------------------
 #' library(dplyr)
@@ -75,9 +75,9 @@ plot_bar_category <- function(.data, ...) {
 #'   group_by(ShelveLoc) %>% 
 #'   plot_bar_category(top = 5)
 #'   
-#' carseats %>% 
-#'   group_by(ShelveLoc) %>% 
-#'   plot_bar_category(each = TRUE, top = 5)  
+#' # carseats %>% 
+#' #   group_by(ShelveLoc) %>% 
+#' #   plot_bar_category(each = TRUE, top = 5)  
 #'   
 #' @method plot_bar_category data.frame
 #' @importFrom tidyselect vars_select
@@ -438,7 +438,7 @@ plot_qq_numeric <- function(.data, ...) {
 #' plot_qq_numeric(carseats, -Sales, -Income)
 #'
 #' # Not allow the typographic elements
-#' plot_qq_numeric(carseats, "Sales", typographic = FALSE)
+#' # plot_qq_numeric(carseats, "Sales", typographic = FALSE)
 #' 
 #' # Using pipes ---------------------------------
 #' library(dplyr)
@@ -452,9 +452,9 @@ plot_qq_numeric <- function(.data, ...) {
 #'   group_by(ShelveLoc) %>% 
 #'   plot_qq_numeric()
 #'   
-#' carseats %>% 
-#'   group_by(ShelveLoc) %>% 
-#'   plot_qq_numeric(each = TRUE)  
+#' #carseats %>% 
+#' #   group_by(ShelveLoc) %>% 
+#' #   plot_qq_numeric(each = TRUE)  
 #'   
 #' @method plot_qq_numeric data.frame
 #' @import ggplot2
@@ -693,7 +693,7 @@ plot_box_numeric <- function(.data, ...) {
 #' plot_box_numeric(carseats, -Sales, -Income)
 #'
 #' # Visualize the each plots
-#' plot_box_numeric(carseats, "Sales", "Income", each = TRUE)
+#' # plot_box_numeric(carseats, "Sales", "Income", each = TRUE)
 #' 
 #' # Not allow the typographic elements
 #' # plot_box_numeric(carseats, typographic = FALSE)
@@ -710,9 +710,9 @@ plot_box_numeric <- function(.data, ...) {
 #'   group_by(ShelveLoc) %>% 
 #'   plot_box_numeric()
 #'   
-#' carseats %>% 
-#'   group_by(ShelveLoc) %>% 
-#'   plot_box_numeric(each = TRUE)  
+#' # carseats %>% 
+#' #   group_by(ShelveLoc) %>% 
+#' #   plot_box_numeric(each = TRUE)  
 #'   
 #' @method plot_box_numeric data.frame
 #' @import ggplot2

@@ -66,7 +66,7 @@ stat
 plot(all_var)
 
 # one plot with all normalized variables by Min-Max method
-plot(all_var, stand = "minmax")
+# plot(all_var, stand = "minmax")
 
 # one plot with all variables
 # plot(all_var, stand = "none")
@@ -75,19 +75,19 @@ plot(all_var, stand = "minmax")
 plot(all_var, viz = "boxplot")
 
 # not allow the typographic elements
-plot(all_var, typographic = FALSE)
+# plot(all_var, typographic = FALSE)
 
 # one plot with all standardized variables by Z-score method 
 # plot(all_var, viz = "boxplot", stand = "zscore")
 
 # individual boxplot by variables
-plot(all_var, indiv = TRUE, "boxplot")
+# plot(all_var, indiv = TRUE, "boxplot")
 
 # individual histogram by variables
 plot(all_var, indiv = TRUE, "hist")
 
 # individual histogram by robust standardized variable 
-plot(all_var, indiv = TRUE, "hist", stand = "robust")
+# plot(all_var, indiv = TRUE, "hist", stand = "robust")
 
 # plot all variables by prompt
 # plot(all_var, indiv = TRUE, "hist", prompt = TRUE)

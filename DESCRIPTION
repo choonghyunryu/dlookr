@@ -52,8 +52,7 @@ Suggests:
     randomForest,
     rpart,
     RSQLite,
-    stringr,
-    testthat
+    stringr
 Author: Choonghyun Ryu [aut, cre]
 Maintainer: Choonghyun Ryu <choonghyun.ryu@gmail.com>    
 BugReports: https://github.com/choonghyunryu/dlookr/issues

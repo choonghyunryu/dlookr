@@ -570,10 +570,10 @@ plot_outlier <- function(.data, ...) {
 #' # plot_outlier(carseats, 6)
 #'
 #' # Using the col argument
-#' plot_outlier(carseats, Sales, col = "gray")
+#' # plot_outlier(carseats, Sales, col = "gray")
 #' 
 #' # Not allow typographic argument
-#' plot_outlier(carseats, Sales, typographic = FALSE)
+#' # plot_outlier(carseats, Sales, typographic = FALSE)
 #' 
 #' # Using pipes ---------------------------------
 #' library(dplyr)

@@ -68,7 +68,7 @@ carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 plot_box_numeric(carseats, -Sales, -Income)
 
 # Visualize the each plots
-plot_box_numeric(carseats, "Sales", "Income", each = TRUE)
+# plot_box_numeric(carseats, "Sales", "Income", each = TRUE)
 
 # Not allow the typographic elements
 # plot_box_numeric(carseats, typographic = FALSE)
@@ -85,8 +85,8 @@ carseats \%>\%
   group_by(ShelveLoc) \%>\% 
   plot_box_numeric()
   
-carseats \%>\% 
-  group_by(ShelveLoc) \%>\% 
-  plot_box_numeric(each = TRUE)  
+# carseats \%>\% 
+#   group_by(ShelveLoc) \%>\% 
+#   plot_box_numeric(each = TRUE)  
   
 }
