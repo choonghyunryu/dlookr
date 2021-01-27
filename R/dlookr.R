@@ -87,8 +87,8 @@ if (getRversion() >= "2.15.1") {
           return(paste(Sys.getenv("SystemRoot"), "\\Fonts", sep = ""))
         }
         else {
-          masg <- "Unknown platform. Don't know where to look for truetype fonts."
-          packageStartupMessage(msg)
+          #msg <- "Don't know where to look for truetype fonts."
+          #packageStartupMessage(msg)
           return(NULL)
         }
       }
@@ -126,10 +126,10 @@ if (getRversion() >= "2.15.1") {
       
       return(TRUE)
     } else {
-      msg <- sprintf("Either %s or %s fonts are required to Viz.\n
-                   Please use %s to install Liberation Sans Narrow",
-                   "Arial Narrow", "Liberation Sans Narrow",
-                   "dlookr::import_liberation()")
+      msg <- paste0(sprintf("Either %s or %s fonts are required to Viz.\n",
+                            "Arial Narrow", "Liberation Sans Narrow"),
+                    sprintf("Please use %s to install Liberation Sans Narrow font.",
+                            "dlookr::import_liberation()"))
       packageStartupMessage(msg)
       return(FALSE)
     }
