@@ -713,7 +713,8 @@ plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE
         
         if (type %in% c("all")) {
           p_freq <- p_freq +
-            theme(plot.margin = margin(10, 10, 10, 10))
+            theme(legend.position = "none",
+                  plot.margin = margin(10, 10, 10, 10))
         } 
       }
     }
@@ -739,7 +740,8 @@ plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE
         
         if (type %in% c("all")) {
           p_badrate <- p_badrate +
-            theme(plot.margin = margin(10, 10, 10, 10))
+            theme(legend.position = "none",
+                  plot.margin = margin(10, 10, 10, 10))
         } 
       }
     }
@@ -764,7 +766,8 @@ plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE
         
         if (type %in% c("all")) {
           p_woe <- p_woe +
-            theme(plot.margin = margin(10, 10, 10, 10))
+            theme(legend.position = "none",
+                  plot.margin = margin(10, 10, 10, 10))
         }  
       }
     }
