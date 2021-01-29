@@ -217,8 +217,8 @@ plot_bar_category_impl <- function(df, vars, top, add_character, title, each, ty
                               x = unit(0.075, "npc"), just = "left")
     }
     
-    grobs <- gridExtra::arrangeGrob(grobs = plist, nrow = n_row)
-    suppressWarnings(gridExtra::grid.arrange(grobs, top = title))
+    suppressWarnings(gridExtra::grid.arrange(
+      gridExtra::arrangeGrob(grobs = plist, nrow = n_row), top = title))
   }  
 }
 
@@ -299,7 +299,7 @@ plot_bar_category_group_impl <- function(df, vars, top, add_character, title, ea
       filter(na_flag) %>% 
       mutate(rank = top + 2)
     
-    rbind(tops, others,missing) %>% 
+    bind_rows(tops, others, missing) %>% 
       mutate(flag = ifelse(na_flag, "Missing", 
                            ifelse(is.na(menas), "OtherTop", "Tops")))
   }
@@ -383,8 +383,9 @@ plot_bar_category_group_impl <- function(df, vars, top, add_character, title, ea
                               x = unit(0.075, "npc"), just = "left")
     }
     
-    grobs <- gridExtra::arrangeGrob(grobs = plist, nrow = n_row)
-    suppressWarnings(gridExtra::grid.arrange(grobs, top = title, right = group_key))
+    suppressWarnings(gridExtra::grid.arrange(
+      gridExtra::arrangeGrob(grobs = plist, nrow = n_row),
+      top = title, right = group_key))
   }
 }
 
@@ -540,8 +541,8 @@ plot_qq_numeric_impl <- function(df, vars, col_point, col_line, title, each, typ
                               x = unit(0.075, "npc"), just = "left")
     }
     
-    grobs <- gridExtra::arrangeGrob(grobs = plist, nrow = n_row)
-    suppressWarnings(gridExtra::grid.arrange(grobs, top = title))
+    suppressWarnings(gridExtra::grid.arrange(
+      gridExtra::arrangeGrob(grobs = plist, nrow = n_row), top = title))
   }
   }) # End of suppressWarnings()
 }
@@ -640,8 +641,9 @@ plot_qq_numeric_group_impl <- function(df, vars, col_point, col_line, title, eac
                               x = unit(0.075, "npc"), just = "left")
     }
     
-    grobs <- gridExtra::arrangeGrob(grobs = plist, nrow = n_row)
-    suppressWarnings(gridExtra::grid.arrange(grobs, top = title, right = group_key))
+    suppressWarnings(gridExtra::grid.arrange(
+      gridExtra::arrangeGrob(grobs = plist, nrow = n_row), 
+      top = title, right = group_key))
   }
   }) # End of suppressWarnings()
 }
@@ -800,8 +802,8 @@ plot_box_numeric_impl <- function(df, vars, title, each, typographic) {
                               x = unit(0.075, "npc"), just = "left")
     }
     
-    grobs <- gridExtra::arrangeGrob(grobs = plist, nrow = n_row)
-    suppressWarnings(gridExtra::grid.arrange(grobs, top = title))
+    suppressWarnings(gridExtra::grid.arrange(
+      gridExtra::arrangeGrob(grobs = plist, nrow = n_row), top = title))
   }  
   }) # End of suppressWarnings()
 }
@@ -900,8 +902,9 @@ plot_box_numeric_group_impl <- function(df, vars, title, each, typographic) {
                               x = unit(0.075, "npc"), just = "left")
     }
     
-    grobs <- gridExtra::arrangeGrob(grobs = plist, nrow = n_row)
-    suppressWarnings(gridExtra::grid.arrange(grobs, top = title, right = group_key))
+    suppressWarnings(gridExtra::grid.arrange(
+      gridExtra::arrangeGrob(grobs = plist, nrow = n_row),
+      top = title, right = group_key))
   }
   }) # End of suppressWarnings()
 }

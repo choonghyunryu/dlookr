@@ -52,9 +52,14 @@
 #'   get_column_info
 
 get_column_info <- function(df) {
-  res <- DBI::dbSendQuery(df$src$con, 
-                          sprintf("select * from %s", df$ops$x))
-  
+  if (requireNamespace("DBI", quietly = TRUE)) {
+    res <- DBI::dbSendQuery(df$src$con, 
+                            sprintf("select * from %s", df$ops$x))
+  } else {
+    stop("Package 'DBI' needed for this function to work. Please install it.", 
+         call. = FALSE)
+  }
+
   column_info <- DBI::dbColumnInfo(res)
   DBI::dbClearResult(res)
   
