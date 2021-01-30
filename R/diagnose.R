@@ -671,17 +671,17 @@ plot_outlier_raw <- function(x, main = NULL, col = "steelblue", typographic = TR
   n_bins_out <- round(log2(nrow(df_out)) + 1)
   
   top_left <- df_all %>% 
-    ggplot(aes(x)) +
+    ggplot(aes(y = x)) +
     geom_boxplot(fill = col, color = "black", alpha = 0.8) +
-    coord_flip(ylim = c(-0.7, 0.7)) + 
+    xlim(-0.7, 0.7) + 
     labs(title = "With outliers", x = "", y = "") +
     theme(axis.text.x = element_blank(),
           axis.ticks.x = element_blank())
   
   bottom_left <- df_out %>% 
-    ggplot(aes(x)) +
+    ggplot(aes(y = x)) +
     geom_boxplot(fill = col, color = "black", alpha = 0.8) +
-    coord_flip(ylim = c(-0.7, 0.7)) + 
+    xlim(-0.7, 0.7) + 
     labs(title = "With outliers", x = "", y = "") +
     theme(axis.text.x = element_blank(),
           axis.ticks.x = element_blank())
@@ -699,23 +699,27 @@ plot_outlier_raw <- function(x, main = NULL, col = "steelblue", typographic = TR
   if (typographic) {
     top_left <- top_left +
       theme_typographic() +
-      theme(axis.text.x = element_blank(),
+      theme(plot.title = element_text(size = 15, face = "plain"),
+            axis.text.x = element_blank(),
             axis.ticks.x = element_blank(),
             plot.margin = margin(10, 30, 10, 30))
     
     top_right <- top_right +
       theme_typographic() +
-      theme(plot.margin = margin(10, 30, 10, 30))
+      theme(plot.title = element_text(size = 15, face = "plain"),
+            plot.margin = margin(10, 30, 10, 30))
     
     bottom_left <- bottom_left +
       theme_typographic() +
-      theme(axis.text.x = element_blank(),
+      theme(plot.title = element_text(size = 15, face = "plain"),
+            axis.text.x = element_blank(),
             axis.ticks.x = element_blank(),
             plot.margin = margin(10, 30, 10, 30))
     
     bottom_right <- bottom_right +
       theme_typographic() +
-      theme(plot.margin = margin(10, 30, 10, 30))    
+      theme(plot.title = element_text(size = 15, face = "plain"),
+            plot.margin = margin(10, 30, 10, 30))    
     
     fontfamily <- get_font_family()
     
@@ -822,7 +826,7 @@ plot_outlier_target_impl <- function(df, vars, typographic = TRUE) {
   if (utils::packageVersion("dplyr") >= "0.8.0") {
     type_target <- df[, target] %>% pull %>% is %>% "["(1)
   } else {
-    type_target <- is(df[, target])[1]
+    type_target <- is(df[, target][[1]])[1]
   } 
   
   if (!type_target %in% c("ordered", "factor", "character")) {
@@ -844,7 +848,7 @@ plot_outlier_target_impl <- function(df, vars, typographic = TRUE) {
   plot_outliers <- function(df, target, predictor, typographic = TRUE) {
     data_with <- df %>% 
       ungroup() %>% 
-      select(all_of(target), all_of(predictor)) %>% 
+      select(target, predictor) %>% 
       filter(!is.na(target))
     
     box_with <- ggplot(data_with, aes_string(x = target, y = predictor, fill = target)) +
@@ -873,30 +877,42 @@ plot_outlier_target_impl <- function(df, vars, typographic = TRUE) {
         theme_typographic() +
         scale_fill_ipsum() + 
         theme(legend.position = "none",
+              plot.title = element_text(size = 15),
               axis.title.x = element_text(size = 12),
               axis.title.y = element_text(size = 12),
+              axis.text.x = element_text(size = 10),
+              axis.text.y = element_text(size = 10),              
               plot.margin = margin(10, 30, 10, 10))
       
       density_with <- density_with +
         theme_typographic() +
         scale_color_ipsum() +
-        theme(axis.title.x = element_text(size = 12),
+        theme(plot.title = element_text(size = 15),
+              axis.title.x = element_text(size = 12),
               axis.title.y = element_text(size = 12),
+              axis.text.x = element_text(size = 10),
+              axis.text.y = element_text(size = 10),              
               plot.margin = margin(10, 30, 10, 10))
       
       box_without <- box_without +
         theme_typographic() +
         scale_fill_ipsum() + 
         theme(legend.position = "none",
+              plot.title = element_text(size = 15),
               axis.title.x = element_text(size = 12),
               axis.title.y = element_text(size = 12),
+              axis.text.x = element_text(size = 10),
+              axis.text.y = element_text(size = 10),              
               plot.margin = margin(10, 30, 10, 10))
       
       density_without <- density_without +
         theme_typographic() +
         scale_color_ipsum() +
-        theme(axis.title.x = element_text(size = 12),
+        theme(plot.title = element_text(size = 15),
+              axis.title.x = element_text(size = 12),
               axis.title.y = element_text(size = 12),
+              axis.text.x = element_text(size = 10),
+              axis.text.y = element_text(size = 10),              
               plot.margin = margin(10, 30, 10, 10))    
     }
     

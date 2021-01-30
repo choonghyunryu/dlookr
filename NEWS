@@ -9,14 +9,25 @@ CHANGES IN R VERSION 0.4.1:
 
     • Fixed .onAttach() failed which occurred when installing in Solaris 
       environment.
-   
-    • Fixed plot_bar_category.grouped_df() failed in r-oldrel-macos-x86_64 
-      environment.      
 
     • Fixed an issue where unnecessary blank plots were displayed in 
       plot_box_numeric(), plot_qq_numeric(), plot_bar_category().
       
-
+    • Fixed an Resolves an issue where an installation error occurs in 
+      an environment using the old tidyselect package without all_of().
+      
+    • Fixed an error in plot_box_numeric(), plot_bar_category(),
+      plot_outlier(), compare_numeric(), plot.univar_numeric() 
+      when the ggplot2 package version is out of date.
+      
+    • Fixed an error that occurred in plot_box_numeric.grouped_df(),
+      plot_bar_category.grouped_df(), plot_qq_numeric.grouped_df() 
+      when the dplyr package version is less than 0.8.0
+      
+    • Fixed an error that occurred in binning_by(), target_by() 
+      when the dplyr package version is less than 0.8.0
+      
+      
 
 CHANGES IN R VERSION 0.4.0:
 

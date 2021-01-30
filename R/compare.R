@@ -167,7 +167,7 @@ compare_category_impl <- function(df, vars) {
   if (length(idx_category) < 2) {
     stop("The number of categorical variables selected is less than 2.")
   }
-
+  
   combination <- t(utils::combn(names(df)[idx_category], 2))
   x <- combination[, 1]
   y <- combination[, 2]
@@ -489,7 +489,7 @@ compare_numeric_impl <- function(df, vars) {
 #' @method summary compare_category
 #' @export
 summary.compare_category <- function(object, method = c("all", "table", "relative", "chisq"), 
-                            pos = NULL, na.rm = TRUE, marginal = FALSE, verbose = TRUE, ...) {
+                                     pos = NULL, na.rm = TRUE, marginal = FALSE, verbose = TRUE, ...) {
   method <- match.arg(method)
   
   variables <- attr(object, "variables")
@@ -551,7 +551,7 @@ summary.compare_category <- function(object, method = c("all", "table", "relativ
       
       var1 <- unique(pull(object[[i]][, 1]))
       var2 <- unique(pull(object[[i]][, 2]))
-                   
+      
       dname <- list(var1, var2)
       
       if (marginal) {
@@ -576,7 +576,7 @@ summary.compare_category <- function(object, method = c("all", "table", "relativ
       
       relative[[j]] <- cbind(relative[[j]], margin.table(relative[[j]], 1))
       relative[[j]] <- rbind(relative[[j]], margin.table(relative[[j]], 2))
-
+      
       attr(relative[[j]], "dimnames") <- dname
     } else {
       relative[[j]] <- prop.table(contingency[[j]])
@@ -586,7 +586,7 @@ summary.compare_category <- function(object, method = c("all", "table", "relativ
                        chisq.test() %>% 
                        get_tab_chisq() %>% 
                        select(-method))
-
+    
     j <- j + 1
   }
   
@@ -597,7 +597,7 @@ summary.compare_category <- function(object, method = c("all", "table", "relativ
     names(contingency) <- apply(combination[pos, ], 1, 
                                 function(x) paste(x, collapse = " vs "))
     names(relative) <- apply(combination[pos, ], 1,
-                           function(x) paste(x, collapse = " vs ")) 
+                             function(x) paste(x, collapse = " vs ")) 
   }
   
   chisq <- cbind(data.frame(variable_1 = combination[pos, 1],
@@ -766,7 +766,7 @@ summary.compare_numeric <- function(object, method = c("all", "correlation", "li
   
   variables <- attr(object, "variables")
   combination <- attr(object, "combination")
-    
+  
   n <- nrow(combination)
   
   if (method %in% c("all", "correlation")) {
@@ -774,7 +774,7 @@ summary.compare_numeric <- function(object, method = c("all", "correlation", "li
       arrange(desc(abs(coef_corr))) %>% 
       filter(abs(coef_corr) > thres_corr)
   }  
-
+  
   if (method %in% c("all", "linear")) {
     linear <- object$linear %>% 
       arrange(-r.squared) %>% 
@@ -1090,16 +1090,18 @@ plot.compare_numeric <- function(x, prompt = FALSE, typographic = TRUE, ...) {
       geom_point(color = "#FF9900") +
       stat_minmax_ellipse(geom = "polygon", alpha = 0.3, fill = "steelblue", color = "steelblue") + 
       stat_minmax_ellipse(level = 0.5, geom = "polygon", alpha = 0.5, 
-                   fill = "steelblue", color = "steelblue") + 
+                          fill = "steelblue", color = "steelblue") + 
       stat_smooth(method = "lm", formula = y ~ x) 
     
     box_bottom <- datas %>% 
-      ggplot(aes_string(x = xvar)) + 
+      ggplot(aes_string(y = xvar)) + 
       geom_boxplot(size = 0.3, fill = "steelblue", alpha = 0.3) +
-      ylab("") +
+      xlab(xvar) +
+      coord_flip() +      
       theme(
         axis.title.x = element_blank(),
         axis.text.x = element_blank(), 
+        axis.title.y = element_text(color = "transparent"),
         axis.text.y = element_text(color = "transparent"),
         axis.ticks = element_blank(),
         panel.grid = element_blank(),
@@ -1108,10 +1110,9 @@ plot.compare_numeric <- function(x, prompt = FALSE, typographic = TRUE, ...) {
         plot.background = element_rect(fill = "transparent", color = NA))
     
     box_left <- datas %>% 
-      ggplot(aes_string(x = yvar)) + 
+      ggplot(aes_string(y = yvar)) + 
       geom_boxplot(size = 0.3, fill = "steelblue", alpha = 0.3) + 
-      ylab("") +
-      coord_flip() +
+      xlab("") +
       theme(
         axis.title.y = element_blank(),
         axis.text.y = element_blank(), 
@@ -1136,6 +1137,7 @@ plot.compare_numeric <- function(x, prompt = FALSE, typographic = TRUE, ...) {
         theme_typographic() +
         theme(axis.title.x = element_blank(),
               axis.text.x = element_blank(),
+              axis.title.y = element_text(color = "transparent"),
               axis.text.y = element_text(color = "transparent"),
               panel.grid.major = element_blank(),
               panel.grid.minor = element_blank(),
@@ -1162,7 +1164,7 @@ plot.compare_numeric <- function(x, prompt = FALSE, typographic = TRUE, ...) {
     }
     
     suppressWarnings(gridExtra::grid.arrange(box_left, p_scatter, blank, box_bottom, ncol = 2, nrow = 2,
-                            widths = c(1, 25), heights=c(20, 1), top = title))
+                                             widths = c(1, 25), heights=c(26, 2), top = title))
   } 
 }
 
@@ -1210,5 +1212,3 @@ stat_minmax_ellipse <- function(mapping = NULL, data = NULL,
     )
   )
 }
-
-

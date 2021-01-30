@@ -816,10 +816,9 @@ plot.univar_numeric <- function(x, indiv = FALSE, viz = c("hist", "boxplot"),
       
       if (viz == "boxplot") {
         p <- data.frame(vec = vec) %>% 
-          ggplot(aes(vec)) +
+          ggplot(aes(y = vec)) +
           geom_boxplot(alpha = 0.8, fill = "steelblue") +
-          coord_flip() +
-          ylim(-0.7, 0.7) +
+          xlim(-0.7, 0.7) +
           labs(title = sprintf("Boxplot of %s", variables[i]), x = "", y = "") +
           theme_bw() +
           theme(legend.position = "None") +

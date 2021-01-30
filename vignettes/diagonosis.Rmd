@@ -230,14 +230,14 @@ The plot derived from the numerical data diagnosis is as follows.
 
 `plot_outlier()` can visualize an outliers in the `arr_delay` variable of `flights` as follows:
 
-```{r plot_outlier, fig.align='center', fig.width = 6, fig.height = 4}
+```{r plot_outlier, fig.align='center', fig.width = 7, fig.height = 5}
 flights %>%
   plot_outlier(arr_delay) 
 ```
 
 The following example uses `diagnose_outlier()`, `plot_outlier()`, and `dplyr` packages to visualize all numerical variables with an outlier ratio of 5% or higher.
 
-```{r plot_outlier_pipe, fig.align='center', fig.width = 6, fig.height = 4}
+```{r plot_outlier_pipe, fig.align='center', fig.width = 7, fig.height = 5}
 flights %>%
   plot_outlier(diagnose_outlier(flights) %>% 
                  filter(outliers_ratio >= 5) %>% 
@@ -258,14 +258,14 @@ dlookr provides a visualization tool that looks at the relationship of variables
 
 `plot_na_pareto()` draws a pareto chart by collecting variables including missing values.
 
-```{r plot_na_pareto1, fig.align='center', fig.width = 6, fig.height = 4}
+```{r plot_na_pareto1, fig.align='center', fig.width = 7, fig.height = 5}
 mice::boys %>% 
   plot_na_pareto(col = "blue")
 ```
 
 The default value of the `only_na` argument is FALSE, which includes variables that do not contain missing values, but if this value is set to TRUE, only variables containing missing values are visualized. The variable `age` was excluded from this plot.
 
-```{r plot_na_pareto2, fig.align='center', fig.width = 6, fig.height = 4}
+```{r plot_na_pareto2, fig.align='center', fig.width = 7, fig.height = 5}
 mice::boys %>% 
   plot_na_pareto(only_na = TRUE, main = "Pareto Chart for mice::boys")
 ```
@@ -274,14 +274,14 @@ The rating of the variable is expressed as a proportion of missing values. It is
  If it is [0, 0.05), it is `Good`, if it is [0.05, 0.4) it is `OK`, if it is [0.4, 0.8) it is `Bad`, and if it is [0.8, 1.0] it is `Remove`. 
 You can override this grade using the `grade` argument as follows:
 
-```{r plot_na_pareto3, fig.align='center', fig.width = 6, fig.height = 4}
+```{r plot_na_pareto3, fig.align='center', fig.width = 7, fig.height = 5}
 mice::boys %>% 
   plot_na_pareto(grade = list(High = 0.1, Middle = 0.6, Low = 1), relative = TRUE)
 ```
 
 If the `plot` argument is set to FALSE, information about missing values is returned instead of plotting.
 
-```{r plot_na_pareto4, fig.align='center', fig.width = 6, fig.height = 4}
+```{r plot_na_pareto4, fig.align='center', fig.width = 7, fig.height = 5}
 plot_na_pareto(mice::boys, only_na = TRUE, plot = FALSE)
 ```
 
@@ -289,7 +289,7 @@ plot_na_pareto(mice::boys, only_na = TRUE, plot = FALSE)
 
 It is important to look at the relationship between variables, including missing values. `plot_na_hclust()` visualizes the relationship of variables that contain missing values. This function rearranges the positions of variables using hierarchical clustering. Then, the expression of the missing value is visualized by grouping similar variables.
 
-```{r plot_na_hclust, fig.align='center', fig.width = 6, fig.height = 4}
+```{r plot_na_hclust, fig.align='center', fig.width = 7, fig.height = 5}
 mice::boys %>% 
   plot_na_hclust(main = "Distribution of missing value")
 ```
@@ -304,7 +304,7 @@ Finally, the visualization at the top right expresses the number of variables in
 
 This example visualize the combination variables that is include missing value.
 
-```{r plot_na_hclust1, fig.align='center', fig.width = 6, fig.height = 4}
+```{r plot_na_hclust1, fig.align='center', fig.width = 7, fig.height = 5}
 mice::boys %>% 
   plot_na_intersect()
 ```
@@ -312,14 +312,14 @@ mice::boys %>%
 
 If the `n_vars` argument is used, only the top `n` variables containing many missing values are visualized.
 
-```{r plot_na_hclust3, fig.align='center', fig.width = 6, fig.height = 4}
+```{r plot_na_hclust3, fig.align='center', fig.width = 7, fig.height = 5}
 mice::boys %>%
   plot_na_intersect(n_vars = 5)
 ```
 
 If you use the `n_intersacts` argument, only the top n numbers of variable combinations(intersection) including missing values are visualized. and If you want to visualize the combination variables that is include missing value and complete case. You just add only_na = FALSE.
 
-```{r plot_na_hclust4, fig.align='center', fig.width = 6, fig.height = 4}
+```{r plot_na_hclust4, fig.align='center', fig.width = 7, fig.height = 5}
 mice::boys %>%
   plot_na_intersect(only_na = FALSE, n_intersacts = 7)
 ```
@@ -398,25 +398,6 @@ knitr::include_graphics('img/diag_intro_pdf.png')
 
 ```{r diag_outlier_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Data diagnosis report outlier diagnosis contents"}
 knitr::include_graphics('img/diag_outlier_pdf.png')
-```
-
-#### Contents of html file
-* The title and contents of the report is shown in the following figure.:
-
-```{r diag_egenda_html, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Data Diagnostic report titles and table of contents"}
-knitr::include_graphics('img/diag_agenda_html.png')
-```
-
-#* Most of the information is represented in tables in reports. An example of a table in the html file is shown in #the following figure.
-
-```{r diag_table_html, echo=FALSE, eval=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Sample data diagnostic report table (html)"}
-knitr::include_graphics('img/diag_table_html.png')
-```
-
-* In the data diagnosis report, the outlier diagnostic contents include visualization. The result of the html file is shown in the following figure.
-
-```{r diag_outlier_html, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Data diagnosis report outlier diagnosis contents (html)"}
-knitr::include_graphics('img/diag_outlier_html.png')
 ```
 
 ## Diagnosing tables in DBMS

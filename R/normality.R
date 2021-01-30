@@ -116,7 +116,7 @@ plot_normality <- function(.data, ...) {
 normality.data.frame <- function(.data, ..., sample = 5000) {
   sample <- min(5000, nrow(.data), sample)
   .data <- sample_n(.data, sample)
-
+  
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
   normality_impl(.data, vars, sample)
 }
@@ -124,21 +124,21 @@ normality.data.frame <- function(.data, ..., sample = 5000) {
 #' @importFrom stats shapiro.test
 normality_impl <- function(df, vars, sample) {
   if (length(vars) == 0) vars <- names(df)
-
+  
   if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
-
+  
   idx_numeric <- find_class(df[, vars], type = "numerical")
-
+  
   num_normal <- function(x) {
     x <- x[which(!is.infinite(x))]
     
     result <- shapiro.test(x)
-
+    
     tibble(statistic = result$statistic, p_value = result$p.value)
   }
-
+  
   statistic <- lapply(vars[idx_numeric], function(x) num_normal(pull(df, x)))
-
+  
   tibble(vars = vars[idx_numeric], statistic, sample = sample) %>%
     tidyr::unnest(cols = c(statistic)) %>%
     select(vars, statistic, p_value, sample)
@@ -158,17 +158,17 @@ normality.grouped_df <- function(.data, ..., sample = 5000) {
 #' @importFrom stats shapiro.test
 normality_group_impl <- function(df, vars, sample) {
   if (length(vars) == 0) vars <- names(df)
-
+  
   if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
-
+  
   idx_numeric <- find_class(df[, vars], type = "numerical")
-
+  
   if (utils::packageVersion("dplyr") >= "0.8.0") flag <- 0
   else flag <- 1
   
   num_normal <- function(x, .data, vars, n_sample) {
     nums <- .data[x + flag, vars][[1]]
-
+    
     n_sample <- min(length(nums), n_sample)
     
     x <- sample(nums, n_sample)
@@ -185,7 +185,7 @@ normality_group_impl <- function(df, vars, sample) {
              sample = n_sample)
     }        
   }
-
+  
   call_normal <- function(vars) {
     #idx <- which(sapply(attr(df, "indices"), length) >= 3)
     if (utils::packageVersion("dplyr") >= "0.8.0") {
@@ -203,11 +203,11 @@ normality_group_impl <- function(df, vars, sample) {
     }  
     
     dplyr::bind_cols(tibble(variable = rep(vars, nrow(statistic))),
-      as_tibble(glables), statistic)
+                     as_tibble(glables), statistic)
   }
-
+  
   statistic <- lapply(vars[idx_numeric], function(x) call_normal(x))
-
+  
   tibble(statistic) %>%
     tidyr::unnest(cols = c(statistic))
 }
@@ -345,19 +345,19 @@ plot_normality.data.frame <- function(.data, ..., left = c("log", "sqrt", "log+1
 #' @importFrom stats qqline qqnorm
 plot_normality_impl <- function(df, vars, left, right, col = "steelblue", typographic = TRUE) {
   if (length(vars) == 0) vars <- names(df)
-
+  
   if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
-
+  
   idx_numeric <- find_class(df[, vars], type = "numerical")
-
+  
   plot_normality <- function(df, var, left, right, col = "steelblue", typographic = TRUE) {
     x <- pull(df, var)
-
+    
     main <- sprintf("Normality Diagnosis Plot (%s)", var) 
     
     plot_normality_raw(x, left, right, main, col, typographic)
   }
-
+  
   invisible(lapply(vars[idx_numeric], function(x) 
     plot_normality(df, x, left, right, col, typographic)))
 }
@@ -449,41 +449,47 @@ plot_normality_raw <- function(x, left = c("log", "sqrt", "log+1", "log+a", "1/x
   if (typographic) {
     top_left <- top_left +
       theme_typographic() +
-      theme(plot.margin = margin(20, 30, 10, 30))
+      theme(plot.title = element_text(size = 15, face = "plain"),
+            plot.margin = margin(20, 30, 10, 30))
     
     top_right <- top_right +
       theme_typographic() +
-      theme(plot.margin = margin(20, 30, 10, 30))
+      theme(plot.title = element_text(size = 15, face = "plain"),
+            plot.margin = margin(20, 30, 10, 30))
     
     if (non_finite_left) {
       bottom_left <- bottom_left +
         theme_typographic() +
         theme(panel.grid = element_blank(),
+              plot.title = element_text(size = 15, face = "plain"),
               plot.margin = margin(10, 30, 20, 30)) +
         null_theme
     } else {
       bottom_left <- bottom_left +
         theme_typographic() +
-        theme(plot.margin = margin(10, 30, 20, 30))
+        theme(plot.title = element_text(size = 15, face = "plain"),
+              plot.margin = margin(10, 30, 20, 30))
     }
     
     if (non_finite_right) {
       bottom_right <- bottom_right +
         theme_typographic() +
         theme(panel.grid = element_blank(),
+              plot.title = element_text(size = 15, face = "plain"),
               plot.margin = margin(10, 30, 20, 30)) +
         null_theme
     } else {
       bottom_right <- bottom_right +
         theme_typographic() +
-        theme(plot.margin = margin(10, 30, 20, 30))
+        theme(plot.title = element_text(size = 15, face = "plain"),
+              plot.margin = margin(10, 30, 20, 30))
     }
     
     fontfamily <- get_font_family()
-
+    
     top <- grid::textGrob(main, gp = grid::gpar(fontfamily = fontfamily, 
                                                 fontsize = 18, font = 2),
-                           x = unit(0.075, "npc"), just = "left")
+                          x = unit(0.075, "npc"), just = "left")
     
   } else {
     top <- main
@@ -631,6 +637,6 @@ get_transform <- function(x, method = c("log", "sqrt", "log+1", "log+a", "1/x",
     
     result <- get_yjohnson(x)
   }
-
+  
   result
 }

@@ -83,11 +83,11 @@ carseats %>%
   normality(log_income) %>%
   filter(p_value > 0.01)
 
-## ----plot_normality, fig.align='center', fig.width = 6, fig.height = 4--------
+## ----plot_normality, fig.align='center', fig.width = 7, fig.height = 5--------
 # Select columns by name
 plot_normality(carseats, Sales, CompPrice)
 
-## ----plot_normality2, fig.align='center', fig.width = 6, fig.height = 4-------
+## ----plot_normality2, fig.align='center', fig.width = 7, fig.height = 5-------
 carseats %>%
   filter(ShelveLoc == "Good") %>%
   group_by(US) %>%
@@ -118,14 +118,14 @@ carseats %>%
   correlate(Sales) %>%
   filter(abs(coef_corr) > 0.5)
 
-## ----plot_correlate, fig.align='center', fig.width = 6, fig.height = 4--------
+## ----plot_correlate, fig.align='center', fig.width = 7, fig.height = 5--------
 plot_correlate(carseats)
 
-## ----plot_correlate2, fig.align='center', fig.width = 5, fig.height = 3-------
+## ----plot_correlate2, fig.align='center', fig.width = 6, fig.height = 4-------
 # Select columns by name
 plot_correlate(carseats, Sales, Price)
 
-## ----plot_correlate3, fig.align='center', fig.width = 5, fig.height = 3, warning=FALSE----
+## ----plot_correlate3, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE----
 carseats %>%
   filter(ShelveLoc == "Good") %>%
   group_by(Urban) %>%
@@ -140,7 +140,7 @@ cat_num <- relate(categ, Sales)
 cat_num
 summary(cat_num)
 
-## ----target_by3, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE----
+## ----target_by3, fig.align='center', fig.width = 7, fig.height = 5, warning=FALSE----
 plot(cat_num)
 
 ## ----target_by4---------------------------------------------------------------
@@ -149,7 +149,7 @@ cat_cat <- relate(categ, ShelveLoc)
 cat_cat
 summary(cat_cat)
 
-## ----target_by5, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE----
+## ----target_by5, fig.align='center', fig.width = 7, fig.height = 5, warning=FALSE----
 plot(cat_cat)
 
 ## ----target_by6---------------------------------------------------------------
@@ -162,10 +162,10 @@ num_num <- relate(num, Price)
 num_num
 summary(num_num)
 
-## ----target_by8, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE----
+## ----target_by8, fig.align='center', fig.width = 7, fig.height = 5, warning=FALSE----
 plot(num_num)
 
-## ----target_by8_2, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE----
+## ----target_by8_2, fig.align='center', fig.width = 7, fig.height = 5, warning=FALSE----
 plot(num_num, hex_thres = 350)
 
 ## ----target_by9---------------------------------------------------------------
@@ -174,7 +174,7 @@ num_cat <- relate(num, ShelveLoc)
 num_cat
 summary(num_cat)
 
-## ----target_by10, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE----
+## ----target_by10, fig.align='center', fig.width = 7, fig.height = 5, warning=FALSE----
 plot(num_cat)
 
 ## ----eda_report, eval=FALSE---------------------------------------------------
@@ -205,15 +205,6 @@ knitr::include_graphics('img/eda_lm_pdf.png')
 
 ## ----eda_anova_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Information about ANOVA in EDA reports"----
 knitr::include_graphics('img/eda_anova_pdf.png')
-
-## ----eda_egenda_html, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="EDA report titles and table of contents"----
-knitr::include_graphics('img/eda_agenda_html.png')
-
-## ----eda_table_html, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="EDA report table example (Web)"----
-knitr::include_graphics('img/eda_table_html.png')
-
-## ----eda_normality_html, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="EDA Report Normality Test Information (Web)"----
-knitr::include_graphics('img/eda_normality_html.png')
 
 ## ----dbi_table, warning=FALSE, message=FALSE----------------------------------
 if (!require(DBI)) install.packages('DBI')

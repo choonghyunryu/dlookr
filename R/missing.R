@@ -56,7 +56,7 @@ plot_na_hclust <- function (x, main = NULL, col.left = "#009E73", col.right = "#
   na_variable <- names(na_variable[na_variable == TRUE])
   
   x <- x[na_obs, ] %>% 
-    select_at(all_of(na_variable)) %>% 
+    select_at(na_variable) %>% 
     is.na() %>% 
     as.matrix() + 0
   
@@ -233,7 +233,7 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
   }
   
   if (is.null(main)) 
-    main = "Pareto chart of variables with missing values"
+    main = "Pareto chart with missing values"
   
   scaleRight <- max(info_na$cumulative) / info_na$frequencies[1]
   
@@ -401,7 +401,7 @@ plot_na_intersect <- function (x, only_na = TRUE, n_intersacts = NULL,
   }  
   
   x <- x %>% 
-    select_at(vars(all_of(na_variable))) %>% 
+    select_at(vars(na_variable)) %>% 
     is.na() %>% 
     as.data.frame() %>% 
     group_by_at(na_variable) %>% 
@@ -439,7 +439,7 @@ plot_na_intersect <- function (x, only_na = TRUE, n_intersacts = NULL,
   breaks <- pretty(marginal_obs$n_obs)
   
   if (is.null(main)) 
-    main = "Missing information for intersection of variables"
+    main = "Missing with intersection of variables"
   
   # Create center plot
   body <- ggplot(dframe, aes(x = Var1, y = Var2)) + 

@@ -248,14 +248,14 @@ In the data analysis process, it often encounters numerical data that follows th
 
 `plot_normality()` can also specify several variables like `normality()` function.
 
-```{r plot_normality, fig.align='center', fig.width = 6, fig.height = 4}
+```{r plot_normality, fig.align='center', fig.width = 7, fig.height = 5}
 # Select columns by name
 plot_normality(carseats, Sales, CompPrice)
 ```
 
 The `plot_normality()` function also supports the `group_by()` function syntax in the `dplyr` package.
 
-```{r plot_normality2, fig.align='center', fig.width = 6, fig.height = 4}
+```{r plot_normality2, fig.align='center', fig.width = 7, fig.height = 5}
 carseats %>%
   filter(ShelveLoc == "Good") %>%
   group_by(US) %>%
@@ -308,21 +308,21 @@ carseats %>%
 ### Visualization of the correlation matrix using `plot_correlate()`
 `plot_correlate()` visualizes the correlation matrix.
 
-```{r plot_correlate, fig.align='center', fig.width = 6, fig.height = 4}
+```{r plot_correlate, fig.align='center', fig.width = 7, fig.height = 5}
 plot_correlate(carseats)
 ```
 
 `plot_correlate()` can also specify multiple variables, like the `correlate()` function.
 The following is a visualization of the correlation matrix including several selected variables.
 
-```{r plot_correlate2, fig.align='center', fig.width = 5, fig.height = 3}
+```{r plot_correlate2, fig.align='center', fig.width = 6, fig.height = 4}
 # Select columns by name
 plot_correlate(carseats, Sales, Price)
 ```
 
 The `plot_correlate()` function also supports the `group_by()` function syntax in the `dplyr` package.
 
-```{r plot_correlate3, fig.align='center', fig.width = 5, fig.height = 3, warning=FALSE}
+```{r plot_correlate3, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE}
 carseats %>%
   filter(ShelveLoc == "Good") %>%
   group_by(Urban) %>%
@@ -357,7 +357,7 @@ summary(cat_num)
 
 `plot()` visualizes the `relate` class object created by `relate()` as the relationship between the target variable and the predictor variable. The relationship between `US` and `Sales` is visualized by density plot.
 
-```{r target_by3, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE}
+```{r target_by3, fig.align='center', fig.width = 7, fig.height = 5, warning=FALSE}
 plot(cat_num)
 ```
 
@@ -374,7 +374,7 @@ summary(cat_cat)
 
 `plot()` visualizes the relationship between the target variable and the predictor. The relationship between `US` and `ShelveLoc` is represented by a `mosaics plot`.
 
-```{r target_by5, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE}
+```{r target_by5, fig.align='center', fig.width = 7, fig.height = 5, warning=FALSE}
 plot(cat_cat)
 ```
 
@@ -401,7 +401,7 @@ summary(num_num)
 The figure on the left shows the scatter plot of `Sales` and `Price` and the confidence interval of the regression line and regression line. 
 The figure on the right shows the relationship between the original data and the predicted values of the linear model as a scatter plot. If there is a linear relationship between the two variables, the scatter plot of the observations converges on the red diagonal line.
 
-```{r target_by8, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE}
+```{r target_by8, fig.align='center', fig.width = 7, fig.height = 5, warning=FALSE}
 plot(num_num)
 ```
 
@@ -412,7 +412,7 @@ In `plot()`, the `hex_thres` argument provides a basis for drawing `hexabin plot
 
 The following example visualizes the `hexabin plot` rather than the scatter plot by specifying 350 for the `hex_thres` argument. This is because the number of observations is 400.
 
-```{r target_by8_2, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE}
+```{r target_by8_2, fig.align='center', fig.width = 7, fig.height = 5, warning=FALSE}
 plot(num_num, hex_thres = 350)
 ```
 
@@ -431,7 +431,7 @@ summary(num_cat)
 
 `plot()` visualizes the relationship between the target variable and the predictor. The relationship between `Sales` and `ShelveLoc` is represented by a `box plot`.
 
-```{r target_by10, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE}
+```{r target_by10, fig.align='center', fig.width = 7, fig.height = 5, warning=FALSE}
 plot(num_cat)
 ```
 
@@ -527,26 +527,6 @@ knitr::include_graphics('img/eda_lm_pdf.png')
 ```{r eda_anova_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Information about ANOVA in EDA reports"}
 knitr::include_graphics('img/eda_anova_pdf.png')
 ```
-
-#### Contents of html file
-* The title and contents of the report are shown in the following figure.
-
-```{r eda_egenda_html, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="EDA report titles and table of contents"}
-knitr::include_graphics('img/eda_agenda_html.png')
-```
-
-* Much information is represented in tables in the report. An example of a table in the html file is shown in the following figure.
-
-```{r eda_table_html, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="EDA report table example (Web)"}
-knitr::include_graphics('img/eda_table_html.png')
-```
-
-* In EDA reports, normality test information includes visualization results. The result of the html file is shown in the following figure.
-
-```{r eda_normality_html, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="EDA Report Normality Test Information (Web)"}
-knitr::include_graphics('img/eda_normality_html.png')
-```
-
 
 ## Exploratory data analysis for tables in DBMS
 

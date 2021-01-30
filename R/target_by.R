@@ -243,6 +243,7 @@ relate.target_df <- function(.data, predictor) {
 }
 
 #' @importFrom stats cor formula lm xtabs
+#' @importFrom tidyselect matches
 #' @importFrom methods is
 relate_impl <- function(.data, predictor) {
   relate_cat_by_num_impl <- function(.data, predictor) {
@@ -250,6 +251,7 @@ relate_impl <- function(.data, predictor) {
 
     total <- describe(ungroup(.data),  predictor)
     total <- total %>%
+      select(-matches("statistic")) %>% 
       mutate(levlel = "total") %>%
       select(1, 27, 2:26)
     names(total)[2] <- names(indiv)[2]
@@ -599,7 +601,7 @@ plot.relate <- function(x, model = FALSE, hex_thres = 1000,
       y_pos[j] <- y_pos[j] / sum(y)
     }
     
-    p_cross <- data %>% 
+    suppressWarnings(p_cross <- data %>% 
       group_by(a) %>% 
       mutate(x_width = sum(n)) %>% 
       ggplot(aes(x = factor(a), y = n)) +
@@ -614,7 +616,7 @@ plot.relate <- function(x, model = FALSE, hex_thres = 1000,
             axis.text.x = element_blank(),
             axis.ticks.x = element_blank(),
             strip.background = element_blank(),
-            panel.spacing = unit(0, "pt"))
+            panel.spacing = unit(0, "pt")))
     
     if (typographic) {
       p_cross <- p_cross +
