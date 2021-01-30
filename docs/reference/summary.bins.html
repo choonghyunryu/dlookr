@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
       </span>
     </div>
 
@@ -180,23 +180,23 @@ summary.bins() returns data.frame including frequency and relative frequency for
 <span class='no'>bin</span></div><div class='output co'>#&gt; binned type: quantile
 #&gt; number of bins: 10
 #&gt; x
-#&gt;     [21,30]   (30,38.4] (38.4,50.4]   (50.4,62]     (62,69]     (69,78] 
-#&gt;          40          36          38          39          41          37 
-#&gt;   (78,86.6] (86.6,97.6]  (97.6,107]   (107,120]        &lt;NA&gt; 
-#&gt;          35          38          39          37          20 </div><div class='input'>
+#&gt;   [21,30] (30,39.4] (39.4,48]   (48,62]   (62,69] (69,76.5] (76.5,84]   (84,96]  (96,107] 
+#&gt;        39        37        39        41        41        31        40        37        39 
+#&gt; (107,120]      &lt;NA&gt; 
+#&gt;        36        20 </div><div class='input'>
 <span class='co'># Summarise bins class object</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>bin</span>)</div><div class='output co'>#&gt;         levels freq   rate
-#&gt; 1      [21,30]   40 0.1000
-#&gt; 2    (30,38.4]   36 0.0900
-#&gt; 3  (38.4,50.4]   38 0.0950
-#&gt; 4    (50.4,62]   39 0.0975
-#&gt; 5      (62,69]   41 0.1025
-#&gt; 6      (69,78]   37 0.0925
-#&gt; 7    (78,86.6]   35 0.0875
-#&gt; 8  (86.6,97.6]   38 0.0950
-#&gt; 9   (97.6,107]   39 0.0975
-#&gt; 10   (107,120]   37 0.0925
-#&gt; 11        &lt;NA&gt;   20 0.0500</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>bin</span>)</div><div class='output co'>#&gt;       levels freq   rate
+#&gt; 1    [21,30]   39 0.0975
+#&gt; 2  (30,39.4]   37 0.0925
+#&gt; 3  (39.4,48]   39 0.0975
+#&gt; 4    (48,62]   41 0.1025
+#&gt; 5    (62,69]   41 0.1025
+#&gt; 6  (69,76.5]   31 0.0775
+#&gt; 7  (76.5,84]   40 0.1000
+#&gt; 8    (84,96]   37 0.0925
+#&gt; 9   (96,107]   39 0.0975
+#&gt; 10 (107,120]   36 0.0900
+#&gt; 11      &lt;NA&gt;   20 0.0500</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

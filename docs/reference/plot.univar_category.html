@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
       </span>
     </div>
 
@@ -124,7 +124,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for univar_category</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>prompt</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>prompt</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -142,6 +142,11 @@ The default is FALSE, so plot NA.</p></td>
       <th>prompt</th>
       <td><p>logical. The default value is FALSE. If there are multiple visualizations to be output, 
 if this argument value is TRUE, a prompt is output each time.</p></td>
+    </tr>
+    <tr>
+      <th>typographic</th>
+      <td><p>logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -200,7 +205,10 @@ However, it does not support all parameters.</p></td>
 <span class='co'># plot all variables by na.rm = FALSE</span>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot.univar_category-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_category-6.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_category-7.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># plot all variables by prompt</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>, <span class='kw'>prompt</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Hit &lt;Return&gt; to see next plot:</div><div class='img'><img src='plot.univar_category-8.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Hit &lt;Return&gt; to see next plot:</div><div class='img'><img src='plot.univar_category-9.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Hit &lt;Return&gt; to see next plot:</div><div class='img'><img src='plot.univar_category-10.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># plot(all_var, prompt = TRUE)</span>
+
+<span class='co'># not allow the typographic elements</span>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot.univar_category-8.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_category-9.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_category-10.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

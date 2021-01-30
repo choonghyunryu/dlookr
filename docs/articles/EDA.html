@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
       </span>
     </div>
 
@@ -76,7 +76,7 @@
       <h1 data-toc-skip>Exploratory Data Analysis</h1>
                         <h4 class="author">Choonghyun Ryu</h4>
             
-            <h4 class="date">2021-01-23</h4>
+            <h4 class="date">2021-01-30</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/choonghyunryu/dlookr/blob/master/vignettes/EDA.Rmd"><code>vignettes/EDA.Rmd</code></a></small>
       <div class="hidden name"><code>EDA.Rmd</code></div>
@@ -336,7 +336,7 @@ describe(carseats, -(Sales:Income))
 3 Price        -0.125  116.   100    117    131   
 4 Age          -0.0772  53.3   39.8   54.5   66   
 # … with 4 more rows</pre></body></html></div>
-<p>The <code><a href="../reference/describe.data.frame.html">describe()</a></code> function supports the <code><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by()</a></code> function syntax of the <code>dplyr</code> package.</p>
+<p>The <code><a href="../reference/describe.data.frame.html">describe()</a></code> function supports the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> function syntax of the <code>dplyr</code> package.</p>
 <div class="sourceCode" id="cb6"><html><body><pre class="r">carseats %&gt;%
   group_by(US) %&gt;% 
   describe(Sales, Income) 
@@ -434,7 +434,7 @@ carseats %&gt;%
 4 Age             0.957 1.86e- 9    400
 # … with 1 more row</pre></body></html></div>
 <p>In particular, the <code>Advertising</code> variable is considered to be the most out of the normal distribution.</p>
-<p>The <code><a href="../reference/normality.data.frame.html">normality()</a></code> function supports the <code><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by()</a></code> function syntax in the <code>dplyr</code> package.</p>
+<p>The <code><a href="../reference/normality.data.frame.html">normality()</a></code> function supports the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> function syntax in the <code>dplyr</code> package.</p>
 <div class="sourceCode" id="cb11"><html><body><pre class="r">carseats %&gt;%
   group_by(ShelveLoc, US) %&gt;%
   normality(Income) %&gt;% 
@@ -476,7 +476,7 @@ carseats %&gt;%
 <div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="co"># Select columns by name</span>
 <span class="fu"><a href="../reference/plot_normality.data.frame.html">plot_normality</a></span>(<span class="no">carseats</span>, <span class="no">Sales</span>, <span class="no">CompPrice</span>)</pre></body></html></div>
 <p><img src="EDA_files/figure-html/plot_normality-1.png" width="600px" style="display: block; margin: auto;"><img src="EDA_files/figure-html/plot_normality-2.png" width="600px" style="display: block; margin: auto;"></p>
-<p>The <code><a href="../reference/plot_normality.data.frame.html">plot_normality()</a></code> function also supports the <code><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by()</a></code> function syntax in the <code>dplyr</code> package.</p>
+<p>The <code><a href="../reference/plot_normality.data.frame.html">plot_normality()</a></code> function also supports the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> function syntax in the <code>dplyr</code> package.</p>
 <div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">ShelveLoc</span> <span class="kw">==</span> <span class="st">"Good"</span>) <span class="kw">%&gt;%</span>
   <span class="fu">group_by</span>(<span class="no">US</span>) <span class="kw">%&gt;%</span>
@@ -534,7 +534,7 @@ correlate(carseats, -(Sales:Income))
 3 Price       Sales   -0.445 
 4 Age         Sales   -0.232 
 # … with 31 more rows</pre></body></html></div>
-<p><code><a href="../reference/correlate.data.frame.html">correlate()</a></code> produces <code>two pairs of variables</code>. So the following example uses <code><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter()</a></code> to get the correlation coefficient for <code>a pair of variable</code> combinations:</p>
+<p><code><a href="../reference/correlate.data.frame.html">correlate()</a></code> produces <code>two pairs of variables</code>. So the following example uses <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> to get the correlation coefficient for <code>a pair of variable</code> combinations:</p>
 <div class="sourceCode" id="cb17"><html><body><pre class="r">carseats %&gt;%
   correlate(Sales:Income) %&gt;%
   filter(as.integer(var1) &gt; as.integer(var2))
@@ -544,7 +544,7 @@ correlate(carseats, -(Sales:Income))
 1 CompPrice Sales        0.0641
 2 Income    Sales        0.151 
 3 Income    CompPrice   -0.0761</pre></body></html></div>
-<p>The <code><a href="../reference/correlate.data.frame.html">correlate()</a></code> also supports the <code><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by()</a></code> function syntax in the <code>dplyr</code> package.</p>
+<p>The <code><a href="../reference/correlate.data.frame.html">correlate()</a></code> also supports the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> function syntax in the <code>dplyr</code> package.</p>
 <div class="sourceCode" id="cb18"><html><body><pre class="r">carseats %&gt;%
   filter(ShelveLoc == "Good") %&gt;%
   group_by(Urban, US) %&gt;%
@@ -570,7 +570,7 @@ correlate(carseats, -(Sales:Income))
 <div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="co"># Select columns by name</span>
 <span class="fu"><a href="../reference/plot_correlate.data.frame.html">plot_correlate</a></span>(<span class="no">carseats</span>, <span class="no">Sales</span>, <span class="no">Price</span>)</pre></body></html></div>
 <p><img src="EDA_files/figure-html/plot_correlate2-1.png" width="600px" style="display: block; margin: auto;"></p>
-<p>The <code><a href="../reference/plot_correlate.data.frame.html">plot_correlate()</a></code> function also supports the <code><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by()</a></code> function syntax in the <code>dplyr</code> package.</p>
+<p>The <code><a href="../reference/plot_correlate.data.frame.html">plot_correlate()</a></code> function also supports the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> function syntax in the <code>dplyr</code> package.</p>
 <div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">ShelveLoc</span> <span class="kw">==</span> <span class="st">"Good"</span>) <span class="kw">%&gt;%</span>
   <span class="fu">group_by</span>(<span class="no">Urban</span>) <span class="kw">%&gt;%</span>
@@ -584,7 +584,7 @@ correlate(carseats, -(Sales:Income))
 <div id="definition-of-target-variable" class="section level3">
 <h3 class="hasAnchor">
 <a href="#definition-of-target-variable" class="anchor"></a>Definition of target variable</h3>
-<p>To perform EDA based on <code>target variable</code>, you need to create a <code>target_by</code> class object. <code><a href="../reference/target_by.data.frame.html">target_by()</a></code> creates a <code>target_by</code> class with an object inheriting data.frame or data.frame. <code><a href="../reference/target_by.data.frame.html">target_by()</a></code> is similar to <code><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by()</a></code> in <code>dplyr</code> which creates <code>grouped_df</code>. The difference is that you specify only one variable.</p>
+<p>To perform EDA based on <code>target variable</code>, you need to create a <code>target_by</code> class object. <code><a href="../reference/target_by.data.frame.html">target_by()</a></code> creates a <code>target_by</code> class with an object inheriting data.frame or data.frame. <code><a href="../reference/target_by.data.frame.html">target_by()</a></code> is similar to <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> in <code>dplyr</code> which creates <code>grouped_df</code>. The difference is that you specify only one variable.</p>
 <p>The following is an example of specifying <code>US</code> as target variable in <code>carseats</code> data.frame.:</p>
 <div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="no">categ</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/target_by.data.frame.html">target_by</a></span>(<span class="no">carseats</span>, <span class="no">US</span>)</pre></body></html></div>
 </div>
@@ -846,7 +846,7 @@ F-statistic: 92.23 on 2 and 397 DF,  p-value: &lt; 2.2e-16</pre></body></html></
 <li>The cover of the report is shown in the following figure.</li>
 </ul>
 <div class="figure" style="text-align: center">
-<img src="img/eda_title_pdf.png" alt="EDA report cover" width="70%"><p class="caption">
+<img src="img/eda_title_pdf.png" alt="EDA report cover" width="60%"><p class="caption">
 EDA report cover
 </p>
 </div>
@@ -854,7 +854,7 @@ EDA report cover
 <li>The report’s agenda is shown in the following figure.</li>
 </ul>
 <div class="figure" style="text-align: center">
-<img src="img/eda_agenda_pdf.png" alt="EDA Report Contents" width="70%"><p class="caption">
+<img src="img/eda_agenda_pdf.png" alt="EDA Report Contents" width="60%"><p class="caption">
 EDA Report Contents
 </p>
 </div>
@@ -862,7 +862,7 @@ EDA Report Contents
 <li>Much information is represented in tables in the report. An example of the table is shown in the following figure.</li>
 </ul>
 <div class="figure" style="text-align: center">
-<img src="img/eda_intro_pdf.png" alt="Example EDA report table" width="70%"><p class="caption">
+<img src="img/eda_intro_pdf.png" alt="Example EDA report table" width="60%"><p class="caption">
 Example EDA report table
 </p>
 </div>
@@ -870,23 +870,16 @@ Example EDA report table
 <li>In the EDA report, the normality test content includes visualization results. The result is shown in the following figure.</li>
 </ul>
 <div class="figure" style="text-align: center">
-<img src="img/eda_normality_pdf.png" alt="Normality test information in EDA reports" width="70%"><p class="caption">
+<img src="img/eda_normality_pdf.png" alt="Normality test information in EDA reports" width="60%"><p class="caption">
 Normality test information in EDA reports
 </p>
 </div>
-<ul>
-<li>Correlation information in EDA reports includes visualization results. The result is shown in the following figure.</li>
-</ul>
-<div class="figure" style="text-align: center">
-<img src="img/eda_correlation_pdf.png" alt="Correlation information in EDA reports" width="70%"><p class="caption">
-Correlation information in EDA reports
-</p>
-</div>
+<p>#* Correlation information in EDA reports includes visualization results. The result is shown in the following #figure.</p>
 <ul>
 <li>In EDA reports, information on linear relationships includes tables and visualization results. The result is shown in the following figure.</li>
 </ul>
 <div class="figure" style="text-align: center">
-<img src="img/eda_lm_pdf.png" alt="Linear relationship information in EDA reports" width="70%"><p class="caption">
+<img src="img/eda_lm_pdf.png" alt="Linear relationship information in EDA reports" width="60%"><p class="caption">
 Linear relationship information in EDA reports
 </p>
 </div>
@@ -894,36 +887,8 @@ Linear relationship information in EDA reports
 <li>In EDA reports, ANOVA information includes tables and visualization results. The result is shown in the following figure.</li>
 </ul>
 <div class="figure" style="text-align: center">
-<img src="img/eda_anova_pdf.png" alt="Information about ANOVA in EDA reports" width="70%"><p class="caption">
+<img src="img/eda_anova_pdf.png" alt="Information about ANOVA in EDA reports" width="60%"><p class="caption">
 Information about ANOVA in EDA reports
-</p>
-</div>
-</div>
-<div id="contents-of-html-file" class="section level4">
-<h4 class="hasAnchor">
-<a href="#contents-of-html-file" class="anchor"></a>Contents of html file</h4>
-<ul>
-<li>The title and contents of the report are shown in the following figure.</li>
-</ul>
-<div class="figure" style="text-align: center">
-<img src="img/eda_agenda_html.png" alt="EDA report titles and table of contents" width="70%"><p class="caption">
-EDA report titles and table of contents
-</p>
-</div>
-<ul>
-<li>Much information is represented in tables in the report. An example of a table in the html file is shown in the following figure.</li>
-</ul>
-<div class="figure" style="text-align: center">
-<img src="img/eda_table_html.png" alt="EDA report table example (Web)" width="70%"><p class="caption">
-EDA report table example (Web)
-</p>
-</div>
-<ul>
-<li>In EDA reports, normality test information includes visualization results. The result of the html file is shown in the following figure.</li>
-</ul>
-<div class="figure" style="text-align: center">
-<img src="img/eda_normality_html.png" alt="EDA Report Normality Test Information (Web)" width="70%"><p class="caption">
-EDA Report Normality Test Information (Web)
 </p>
 </div>
 </div>
@@ -971,15 +936,15 @@ EDA Report Normality Test Information (Web)
 <span class="no">carseats</span>[<span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">NROW</a></span>(<span class="no">carseats</span>)), <span class="fl">5</span>), <span class="st">"Urban"</span>] <span class="kw">&lt;-</span> <span class="fl">NA</span>
 
 <span class="co"># connect DBMS</span>
-<span class="no">con_sqlite</span> <span class="kw">&lt;-</span> <span class="kw pkg">DBI</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/DBI/man/dbConnect.html">dbConnect</a></span>(<span class="kw pkg">RSQLite</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/RSQLite/man/SQLite.html">SQLite</a></span>(), <span class="st">":memory:"</span>)
+<span class="no">con_sqlite</span> <span class="kw">&lt;-</span> <span class="kw pkg">DBI</span><span class="kw ns">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html">dbConnect</a></span>(<span class="kw pkg">RSQLite</span><span class="kw ns">::</span><span class="fu"><a href="https://rsqlite.r-dbi.org/reference/SQLite.html">SQLite</a></span>(), <span class="st">":memory:"</span>)
 
 <span class="co"># copy carseats to the DBMS with a table named TB_CARSEATS</span>
-<span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/copy_to.html">copy_to</a></span>(<span class="no">con_sqlite</span>, <span class="no">carseats</span>, <span class="kw">name</span> <span class="kw">=</span> <span class="st">"TB_CARSEATS"</span>, <span class="kw">overwrite</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/copy_to.html">copy_to</a></span>(<span class="no">con_sqlite</span>, <span class="no">carseats</span>, <span class="kw">name</span> <span class="kw">=</span> <span class="st">"TB_CARSEATS"</span>, <span class="kw">overwrite</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 </div>
 <div id="calculating-descriptive-statistics-of-numerical-column-of-table-in-the-dbms" class="section level3">
 <h3 class="hasAnchor">
 <a href="#calculating-descriptive-statistics-of-numerical-column-of-table-in-the-dbms" class="anchor"></a>Calculating descriptive statistics of numerical column of table in the DBMS</h3>
-<p>Use <code><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">dplyr::tbl()</a></code> to create a tbl_dbi object, then use it as a data frame object. That is, the data argument of all EDA function is specified as tbl_dbi object instead of data frame object.</p>
+<p>Use <code><a href="https://dplyr.tidyverse.org/reference/tbl.html">dplyr::tbl()</a></code> to create a tbl_dbi object, then use it as a data frame object. That is, the data argument of all EDA function is specified as tbl_dbi object instead of data frame object.</p>
 <div class="sourceCode" id="cb36"><html><body><pre class="r"># Positive values select variables
 con_sqlite %&gt;% 
   tbl("TB_CARSEATS") %&gt;% 
@@ -1105,9 +1070,9 @@ con_sqlite %&gt;%
 <span class="co"># and plot 'Income' by 'US'</span>
 <span class="co"># the result is same as a data.frame, but not display here. reference above in document.</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="no">ShelveLoc</span> <span class="kw">==</span> <span class="st">"Good"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by</a></span>(<span class="no">US</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">ShelveLoc</span> <span class="kw">==</span> <span class="st">"Good"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">US</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/plot_normality.data.frame.html">plot_normality</a></span>(<span class="no">Income</span>)</pre></body></html></div>
 </div>
 <div id="compute-the-correlation-coefficient-between-two-columns-of-table-in-dbms" class="section level3">
@@ -1186,9 +1151,9 @@ con_sqlite %&gt;%
 <span class="co"># and 'US' variables.</span>
 <span class="co"># the result is same as a data.frame, but not display here. reference above in document.</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="no">ShelveLoc</span> <span class="kw">==</span> <span class="st">"Good"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by</a></span>(<span class="no">Urban</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">ShelveLoc</span> <span class="kw">==</span> <span class="st">"Good"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">Urban</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/plot_correlate.data.frame.html">plot_correlate</a></span>(<span class="no">Sales</span>)</pre></body></html></div>
 </div>
 <div id="eda-based-on-target-variable-1" class="section level3">
@@ -1272,64 +1237,64 @@ summary(cat_num)
 <span class="co"># reporting the EDA information</span>
 <span class="co"># create pdf file. file name is EDA_Report.pdf</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/eda_report.data.frame.html">eda_report</a></span>(<span class="no">US</span>)
 
 <span class="co"># create pdf file. file name is EDA_TB_CARSEATS.pdf</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/eda_report.data.frame.html">eda_report</a></span>(<span class="st">"US"</span>, <span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"EDA_TB_CARSEATS.pdf"</span>)
 
 <span class="co"># create html file. file name is EDA_Report.html</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/eda_report.data.frame.html">eda_report</a></span>(<span class="st">"US"</span>, <span class="kw">output_format</span> <span class="kw">=</span> <span class="st">"html"</span>)
 
 <span class="co"># create html file. file name is EDA_TB_CARSEATS.html</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/eda_report.data.frame.html">eda_report</a></span>(<span class="no">US</span>, <span class="kw">output_format</span> <span class="kw">=</span> <span class="st">"html"</span>, <span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"EDA_TB_CARSEATS.html"</span>)
 
 <span class="co">## target variable is numerical variable</span>
 <span class="co"># reporting the EDA information, and collect size is 350</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/eda_report.data.frame.html">eda_report</a></span>(<span class="no">Sales</span>, <span class="kw">collect_size</span> <span class="kw">=</span> <span class="fl">350</span>)
 
 <span class="co"># create pdf file. file name is EDA2.pdf</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/eda_report.data.frame.html">eda_report</a></span>(<span class="st">"Sales"</span>, <span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"EDA2.pdf"</span>)
 
 <span class="co"># create html file. file name is EDA_Report.html</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/eda_report.data.frame.html">eda_report</a></span>(<span class="st">"Sales"</span>, <span class="kw">output_format</span> <span class="kw">=</span> <span class="st">"html"</span>)
 
 <span class="co"># create html file. file name is EDA2.html</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/eda_report.data.frame.html">eda_report</a></span>(<span class="no">Sales</span>, <span class="kw">output_format</span> <span class="kw">=</span> <span class="st">"html"</span>, <span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"EDA2.html"</span>)
 
 <span class="co">## target variable is null</span>
 <span class="co"># reporting the EDA information</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/eda_report.data.frame.html">eda_report</a></span>()
 
 <span class="co"># create pdf file. file name is EDA2.pdf</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/eda_report.data.frame.html">eda_report</a></span>(<span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"EDA2.pdf"</span>)
 
 <span class="co"># create html file. file name is EDA_Report.html</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/eda_report.data.frame.html">eda_report</a></span>(<span class="kw">output_format</span> <span class="kw">=</span> <span class="st">"html"</span>)
 
 <span class="co"># create html file. file name is EDA2.html</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/eda_report.data.frame.html">eda_report</a></span>(<span class="kw">output_format</span> <span class="kw">=</span> <span class="st">"html"</span>, <span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"EDA2.html"</span>)</pre></body></html></div>
 </div>
 </div>

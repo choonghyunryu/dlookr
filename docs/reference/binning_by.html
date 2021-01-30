@@ -74,7 +74,7 @@ into bins for ulterior usage in scoring modeling." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
       </span>
     </div>
 
@@ -256,17 +256,19 @@ smbinning() function of smbinning package.</p>
 #&gt; 1 [-1,0]  (0,6]   87.67064 7.731349e-21
 #&gt; 2  (0,6] (6,29]   34.73349 3.780706e-09
 #&gt; </div><div class='input'>
-<span class='co'># visualize all information for optimal_bins class</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bin</span>)</div><div class='img'><img src='binning_by-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># visualize WoE information for optimal_bins class</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bin</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"WoE"</span>)</div><div class='img'><img src='binning_by-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># visualize all information without typographic</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bin</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='binning_by-3.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># extract binned results</span>
-<span class='fu'>extract</span>(<span class='no'>bin</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fl'>20</span>)</div><div class='output co'>#&gt;  [1] (6,29] (6,29] (6,29] (0,6]  (0,6]  (6,29] [-1,0] (6,29] [-1,0] [-1,0]
-#&gt; [11] (6,29] (0,6]  (0,6]  (6,29] (6,29] (0,6]  [-1,0] (6,29] [-1,0] (6,29]
-#&gt; Levels: [-1,0] (0,6] (6,29]</div><div class='input'>
+# visualize all information for optimal_bins class
+# plot(bin)
+
+# visualize WoE information for optimal_bins class
+# plot(bin, type = "WoE")
+
+# visualize all information without typographic
+# plot(bin, typographic = FALSE)
+
+# extract binned results
+# extract(bin) %&gt;% 
+#   head(20)
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

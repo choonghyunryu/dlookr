@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
       </span>
     </div>
 
@@ -76,7 +76,7 @@
       <h1 data-toc-skip>Data quality diagnosis</h1>
                         <h4 class="author">Choonghyun Ryu</h4>
             
-            <h4 class="date">2021-01-23</h4>
+            <h4 class="date">2021-01-30</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/choonghyunryu/dlookr/blob/master/vignettes/diagonosis.Rmd"><code>vignettes/diagonosis.Rmd</code></a></small>
       <div class="hidden name"><code>diagonosis.Rmd</code></div>
@@ -275,7 +275,7 @@ diagnose(flights, -(year:day))
 3 day           1     8   15.7      16    23    31     0     0       0
 4 dep_time      1   907 1349.     1401  1744  2400     0     0       0
 # … with 10 more rows</pre></body></html></div>
-<p>If a numeric variable can not logically have a negative or zero value, it can be used with <code><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter()</a></code> to easily find a variable that does not logically match:</p>
+<p>If a numeric variable can not logically have a negative or zero value, it can be used with <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> to easily find a variable that does not logically match:</p>
 <div class="sourceCode" id="cb6"><html><body><pre class="r">diagnose_numeric(flights) %&gt;% 
   filter(minus &gt; 0 | zero &gt; 0) 
 # A tibble: 3 x 10
@@ -316,7 +316,7 @@ diagnose(flights, -(year:day))
 3 carrier   EV     336776 54173  16.1     3
 4 carrier   DL     336776 48110  14.3     4
 # … with 29 more rows</pre></body></html></div>
-<p>In collaboration with <code><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter()</a></code> in the <code>dplyr</code> package, we can see that the <code>tailnum</code> variable is ranked in top 1 with 2,512 missing values in the case where the missing value is included in the top 10:</p>
+<p>In collaboration with <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> in the <code>dplyr</code> package, we can see that the <code>tailnum</code> variable is ranked in top 1 with 2,512 missing values in the case where the missing value is included in the top 10:</p>
 <div class="sourceCode" id="cb8"><html><body><pre class="r">diagnose_category(flights) %&gt;% 
   filter(is.na(levels))
 # A tibble: 1 x 6
@@ -365,7 +365,7 @@ diagnose(flights, -(year:day))
 3 day                  0              0           NaN     15.7         15.7 
 4 dep_time             0              0           NaN   1349.        1349.  
 # … with 10 more rows</pre></body></html></div>
-<p>Numeric variables that contained outliers are easily found with <code><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter()</a></code>.:</p>
+<p>Numeric variables that contained outliers are easily found with <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>.:</p>
 <div class="sourceCode" id="cb11"><html><body><pre class="r">diagnose_outlier(flights) %&gt;% 
   filter(outliers_cnt &gt; 0) 
 # A tibble: 5 x 6
@@ -425,15 +425,15 @@ diagnose(flights, -(year:day))
 <a href="#visualize-pareto-chart-using-plot_na_pareto" class="anchor"></a>visualize pareto chart using <code>plot_na_pareto()</code>
 </h4>
 <p><code><a href="../reference/plot_na_pareto.html">plot_na_pareto()</a></code> draws a pareto chart by collecting variables including missing values.</p>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="kw pkg">mice</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/mice/man/boys.html">boys</a></span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="kw pkg">mice</span><span class="kw ns">::</span><span class="no"><a href="https://amices.org/mice/reference/boys.html">boys</a></span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/plot_na_pareto.html">plot_na_pareto</a></span>(<span class="kw">col</span> <span class="kw">=</span> <span class="st">"blue"</span>)</pre></body></html></div>
 <p><img src="diagonosis_files/figure-html/plot_na_pareto1-1.png" width="600px" style="display: block; margin: auto;"></p>
 <p>The default value of the <code>only_na</code> argument is FALSE, which includes variables that do not contain missing values, but if this value is set to TRUE, only variables containing missing values are visualized. The variable <code>age</code> was excluded from this plot.</p>
-<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="kw pkg">mice</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/mice/man/boys.html">boys</a></span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="kw pkg">mice</span><span class="kw ns">::</span><span class="no"><a href="https://amices.org/mice/reference/boys.html">boys</a></span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/plot_na_pareto.html">plot_na_pareto</a></span>(<span class="kw">only_na</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">main</span> <span class="kw">=</span> <span class="st">"Pareto Chart for mice::boys"</span>)</pre></body></html></div>
 <p><img src="diagonosis_files/figure-html/plot_na_pareto2-1.png" width="600px" style="display: block; margin: auto;"></p>
 <p>The rating of the variable is expressed as a proportion of missing values. It is calculated as the ratio of missing values. If it is [0, 0.05), it is <code>Good</code>, if it is [0.05, 0.4) it is <code>OK</code>, if it is [0.4, 0.8) it is <code>Bad</code>, and if it is [0.8, 1.0] it is <code>Remove</code>. You can override this grade using the <code>grade</code> argument as follows:</p>
-<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="kw pkg">mice</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/mice/man/boys.html">boys</a></span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="kw pkg">mice</span><span class="kw ns">::</span><span class="no"><a href="https://amices.org/mice/reference/boys.html">boys</a></span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/plot_na_pareto.html">plot_na_pareto</a></span>(<span class="kw">grade</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">High</span> <span class="kw">=</span> <span class="fl">0.1</span>, <span class="kw">Middle</span> <span class="kw">=</span> <span class="fl">0.6</span>, <span class="kw">Low</span> <span class="kw">=</span> <span class="fl">1</span>), <span class="kw">relative</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 <p><img src="diagonosis_files/figure-html/plot_na_pareto3-1.png" width="600px" style="display: block; margin: auto;"></p>
 <p>If the <code>plot</code> argument is set to FALSE, information about missing values is returned instead of plotting.</p>
@@ -452,7 +452,7 @@ diagnose(flights, -(year:day))
 <a href="#visualize-combination-chart-using-plot_na_hclust" class="anchor"></a>visualize combination chart using <code>plot_na_hclust()</code>
 </h4>
 <p>It is important to look at the relationship between variables, including missing values. <code><a href="../reference/plot_na_hclust.html">plot_na_hclust()</a></code> visualizes the relationship of variables that contain missing values. This function rearranges the positions of variables using hierarchical clustering. Then, the expression of the missing value is visualized by grouping similar variables.</p>
-<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="kw pkg">mice</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/mice/man/boys.html">boys</a></span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="kw pkg">mice</span><span class="kw ns">::</span><span class="no"><a href="https://amices.org/mice/reference/boys.html">boys</a></span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/plot_na_hclust.html">plot_na_hclust</a></span>(<span class="kw">main</span> <span class="kw">=</span> <span class="st">"Distribution of missing value"</span>)</pre></body></html></div>
 <p><img src="diagonosis_files/figure-html/plot_na_hclust-1.png" width="600px" style="display: block; margin: auto;"></p>
 </div>
@@ -463,15 +463,15 @@ diagnose(flights, -(year:day))
 <p><code><a href="../reference/plot_na_intersect.html">plot_na_intersect()</a></code> visualize the combinations of missing value across cases.</p>
 <p>The visualization consists of four parts. The bottom left, which is the most basic, visualizes the case of cross(intersection)-combination. The x-axis is the variable including the missing value, and the y-axis represents the case of a combination of variables. And on the marginal of the two axes, the frequency of the case is expressed as a bar graph. Finally, the visualization at the top right expresses the number of variables including missing values in the data set, and the number of observations including missing values and complete cases .</p>
 <p>This example visualize the combination variables that is include missing value.</p>
-<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="kw pkg">mice</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/mice/man/boys.html">boys</a></span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="kw pkg">mice</span><span class="kw ns">::</span><span class="no"><a href="https://amices.org/mice/reference/boys.html">boys</a></span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/plot_na_intersect.html">plot_na_intersect</a></span>()</pre></body></html></div>
 <p><img src="diagonosis_files/figure-html/plot_na_hclust1-1.png" width="600px" style="display: block; margin: auto;"></p>
 <p>If the <code>n_vars</code> argument is used, only the top <code>n</code> variables containing many missing values are visualized.</p>
-<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="kw pkg">mice</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/mice/man/boys.html">boys</a></span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="kw pkg">mice</span><span class="kw ns">::</span><span class="no"><a href="https://amices.org/mice/reference/boys.html">boys</a></span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/plot_na_intersect.html">plot_na_intersect</a></span>(<span class="kw">n_vars</span> <span class="kw">=</span> <span class="fl">5</span>)</pre></body></html></div>
 <p><img src="diagonosis_files/figure-html/plot_na_hclust3-1.png" width="600px" style="display: block; margin: auto;"></p>
 <p>If you use the <code>n_intersacts</code> argument, only the top n numbers of variable combinations(intersection) including missing values are visualized. and If you want to visualize the combination variables that is include missing value and complete case. You just add only_na = FALSE.</p>
-<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="kw pkg">mice</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/mice/man/boys.html">boys</a></span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="kw pkg">mice</span><span class="kw ns">::</span><span class="no"><a href="https://amices.org/mice/reference/boys.html">boys</a></span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/plot_na_intersect.html">plot_na_intersect</a></span>(<span class="kw">only_na</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">n_intersacts</span> <span class="kw">=</span> <span class="fl">7</span>)</pre></body></html></div>
 <p><img src="diagonosis_files/figure-html/plot_na_hclust4-1.png" width="600px" style="display: block; margin: auto;"></p>
 </div>
@@ -540,7 +540,7 @@ diagnose(flights, -(year:day))
 <li>The cover of the report is shown in the following figure.:</li>
 </ul>
 <div class="figure" style="text-align: center">
-<img src="img/diagn_title_pdf.png" alt="Data Diagnostic Report Cover" width="70%"><p class="caption">
+<img src="img/diagn_title_pdf.png" alt="Data Diagnostic Report Cover" width="60%"><p class="caption">
 Data Diagnostic Report Cover
 </p>
 </div>
@@ -548,7 +548,7 @@ Data Diagnostic Report Cover
 <li>The contents of the report is shown in the following figure.:</li>
 </ul>
 <div class="figure" style="text-align: center">
-<img src="img/diagn_agenda_pdf.png" alt="Data Diagnostic Report Contents" width="70%"><p class="caption">
+<img src="img/diagn_agenda_pdf.png" alt="Data Diagnostic Report Contents" width="60%"><p class="caption">
 Data Diagnostic Report Contents
 </p>
 </div>
@@ -556,7 +556,7 @@ Data Diagnostic Report Contents
 <li>Most information is represented in the report as a table. An example of a table is shown in the following figure.:</li>
 </ul>
 <div class="figure" style="text-align: center">
-<img src="img/diag_intro_pdf.png" alt="Sample data diagnostic report table" width="70%"><p class="caption">
+<img src="img/diag_intro_pdf.png" alt="Sample data diagnostic report table" width="60%"><p class="caption">
 Sample data diagnostic report table
 </p>
 </div>
@@ -564,36 +564,8 @@ Sample data diagnostic report table
 <li>In the data diagnosis report, the outlier diagnostic contents include visualization. The result is shown in the following figure.:</li>
 </ul>
 <div class="figure" style="text-align: center">
-<img src="img/diag_outlier_pdf.png" alt="Data diagnosis report outlier diagnosis contents" width="70%"><p class="caption">
+<img src="img/diag_outlier_pdf.png" alt="Data diagnosis report outlier diagnosis contents" width="60%"><p class="caption">
 Data diagnosis report outlier diagnosis contents
-</p>
-</div>
-</div>
-<div id="contents-of-html-file" class="section level4">
-<h4 class="hasAnchor">
-<a href="#contents-of-html-file" class="anchor"></a>Contents of html file</h4>
-<ul>
-<li>The title and contents of the report is shown in the following figure.:</li>
-</ul>
-<div class="figure" style="text-align: center">
-<img src="img/diag_agenda_html.png" alt="Data Diagnostic report titles and table of contents" width="70%"><p class="caption">
-Data Diagnostic report titles and table of contents
-</p>
-</div>
-<ul>
-<li>Most of the information is represented in tables in reports. An example of a table in the html file is shown in the following figure.</li>
-</ul>
-<div class="figure" style="text-align: center">
-<img src="img/diag_table_html.png" alt="Sample data diagnostic report table (html)" width="70%"><p class="caption">
-Sample data diagnostic report table (html)
-</p>
-</div>
-<ul>
-<li>In the data diagnosis report, the outlier diagnostic contents include visualization. The result of the html file is shown in the following figure.</li>
-</ul>
-<div class="figure" style="text-align: center">
-<img src="img/diag_outlier_html.png" alt="Data diagnosis report outlier diagnosis contents (html)" width="70%"><p class="caption">
-Data diagnosis report outlier diagnosis contents (html)
 </p>
 </div>
 </div>
@@ -640,15 +612,15 @@ Data diagnosis report outlier diagnosis contents (html)
 <span class="no">carseats</span>[<span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">NROW</a></span>(<span class="no">carseats</span>)), <span class="fl">5</span>), <span class="st">"Urban"</span>] <span class="kw">&lt;-</span> <span class="fl">NA</span>
 
 <span class="co"># connect DBMS</span>
-<span class="no">con_sqlite</span> <span class="kw">&lt;-</span> <span class="kw pkg">DBI</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/DBI/man/dbConnect.html">dbConnect</a></span>(<span class="kw pkg">RSQLite</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/RSQLite/man/SQLite.html">SQLite</a></span>(), <span class="st">":memory:"</span>)
+<span class="no">con_sqlite</span> <span class="kw">&lt;-</span> <span class="kw pkg">DBI</span><span class="kw ns">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html">dbConnect</a></span>(<span class="kw pkg">RSQLite</span><span class="kw ns">::</span><span class="fu"><a href="https://rsqlite.r-dbi.org/reference/SQLite.html">SQLite</a></span>(), <span class="st">":memory:"</span>)
 
 <span class="co"># copy carseats to the DBMS with a table named TB_CARSEATS</span>
-<span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/copy_to.html">copy_to</a></span>(<span class="no">con_sqlite</span>, <span class="no">carseats</span>, <span class="kw">name</span> <span class="kw">=</span> <span class="st">"TB_CARSEATS"</span>, <span class="kw">overwrite</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/copy_to.html">copy_to</a></span>(<span class="no">con_sqlite</span>, <span class="no">carseats</span>, <span class="kw">name</span> <span class="kw">=</span> <span class="st">"TB_CARSEATS"</span>, <span class="kw">overwrite</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 </div>
 <div id="diagnose-data-quality-of-variables-in-the-dbms" class="section level3">
 <h3 class="hasAnchor">
 <a href="#diagnose-data-quality-of-variables-in-the-dbms" class="anchor"></a>Diagnose data quality of variables in the DBMS</h3>
-<p>Use <code><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">dplyr::tbl()</a></code> to create a tbl_dbi object, then use it as a data frame object. That is, the data argument of all diagnose function is specified as tbl_dbi object instead of data frame object.</p>
+<p>Use <code><a href="https://dplyr.tidyverse.org/reference/tbl.html">dplyr::tbl()</a></code> to create a tbl_dbi object, then use it as a data frame object. That is, the data argument of all diagnose function is specified as tbl_dbi object instead of data frame object.</p>
 <div class="sourceCode" id="cb27"><html><body><pre class="r"># Diagnosis of all columns
 con_sqlite %&gt;% 
   tbl("TB_CARSEATS") %&gt;% 
@@ -658,7 +630,7 @@ con_sqlite %&gt;%
   &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;           &lt;dbl&gt;        &lt;int&gt;       &lt;dbl&gt;
 1 Sales       double             0               0          336       0.84 
 2 CompPrice   double             0               0           73       0.182
-3 Income      double            20               5           99       0.248
+3 Income      double            20               5           98       0.245
 4 Advertising double             0               0           28       0.07 
 # … with 7 more rows
 
@@ -670,7 +642,7 @@ con_sqlite %&gt;%
   variables types   missing_count missing_percent unique_count unique_rate
   &lt;chr&gt;     &lt;chr&gt;           &lt;int&gt;           &lt;dbl&gt;        &lt;int&gt;       &lt;dbl&gt;
 1 Sales     numeric             0               0          336       0.84 
-2 Income    numeric            20               5           99       0.248
+2 Income    numeric            20               5           98       0.245
 3 Age       numeric             0               0           56       0.14 
   
 # Positions values select columns, and In-memory mode and collect size is 200
@@ -680,10 +652,10 @@ con_sqlite %&gt;%
 # A tibble: 8 x 6
   variables   types   missing_count missing_percent unique_count unique_rate
   &lt;chr&gt;       &lt;chr&gt;           &lt;int&gt;           &lt;dbl&gt;        &lt;int&gt;       &lt;dbl&gt;
-1 Sales       numeric             0               0          182       0.91 
-2 CompPrice   numeric             0               0           65       0.325
-3 Income      numeric             8               4           84       0.42 
-4 Advertising numeric             0               0           23       0.115
+1 Sales       numeric             0              0           182       0.91 
+2 CompPrice   numeric             0              0            65       0.325
+3 Income      numeric            14              7.           81       0.405
+4 Advertising numeric             0              0            23       0.115
 # … with 4 more rows</pre></body></html></div>
 </div>
 <div id="diagnose-data-quality-of-categorical-variables-in-the-dbms" class="section level3">
@@ -707,8 +679,8 @@ con_sqlite %&gt;%
 # A tibble: 5 x 6
   variables levels     N  freq ratio  rank
   &lt;chr&gt;     &lt;chr&gt;  &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt;
-1 Urban     Yes      400   279 69.8      1
-2 Urban     No       400   116 29.0      2
+1 Urban     Yes      400   278 69.5      1
+2 Urban     No       400   117 29.2      2
 3 Urban     &lt;NA&gt;     400     5  1.25     3
 4 US        Yes      400   258 64.5      1
 # … with 1 more row</pre></body></html></div>
@@ -725,7 +697,7 @@ con_sqlite %&gt;%
   &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt;   &lt;int&gt;
 1 Sales           0   5.39   7.50   7.49   9.32  16.3     1     0       2
 2 CompPrice      77 115    125.   125    135    175       0     0       2
-3 Income         21  44     69.2   69     91    120       0     0       0
+3 Income         21  42     68.5   69     91    120       0     0       0
 4 Advertising     0   0      6.64   5     12     29     144     0       0
 # … with 4 more rows
   
@@ -737,7 +709,7 @@ con_sqlite %&gt;%
   variables   min    Q1  mean median    Q3   max  zero minus outlier
 * &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt;   &lt;int&gt;
 1 Sales         0  5.26  7.42   7.50  9.10  14.9     1     0       0
-2 Income       21 48    71.6   73    93    120       0     0       0</pre></body></html></div>
+2 Income       21 46.2  71.0   73.5  92.8  120       0     0       0</pre></body></html></div>
 </div>
 <div id="diagnose-outlier-of-numerical-variables-in-the-dbms" class="section level3">
 <h3 class="hasAnchor">
@@ -758,13 +730,13 @@ con_sqlite %&gt;%
 <span class="co"># outliers greater than 1%</span>
 <span class="co"># the result is same as a data.frame, but not display here. reference above in document.</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/plot_outlier.data.frame.html">plot_outlier</a></span>(<span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-                 <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+                 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
                  <span class="fu"><a href="../reference/diagnose_outlier.data.frame.html">diagnose_outlier</a></span>() <span class="kw">%&gt;%</span>
-                 <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="no">outliers_ratio</span> <span class="kw">&gt;</span> <span class="fl">1</span>) <span class="kw">%&gt;%</span>
-                 <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/select.html">select</a></span>(<span class="no">variables</span>) <span class="kw">%&gt;%</span>
-                 <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/pull.html">pull</a></span>())</pre></body></html></div>
+                 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">outliers_ratio</span> <span class="kw">&gt;</span> <span class="fl">1</span>) <span class="kw">%&gt;%</span>
+                 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">variables</span>) <span class="kw">%&gt;%</span>
+                 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span>())</pre></body></html></div>
 </div>
 <div id="reporting-the-information-of-data-diagnosis-for-table-of-thr-dbms" class="section level3">
 <h3 class="hasAnchor">
@@ -773,22 +745,22 @@ con_sqlite %&gt;%
 <p>Using the <code>collect_size</code> argument, you can perform data diagnosis with the corresponding number of sample data. If the number of data is very large, use <code>collect_size</code>.</p>
 <div class="sourceCode" id="cb32"><html><body><pre class="r"><span class="co"># create pdf file. file name is DataDiagnosis_Report.pdf</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/diagnose_report.data.frame.html">diagnose_report</a></span>()
 
 <span class="co"># create pdf file. file name is Diagn.pdf, and collect size is 350</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/diagnose_report.data.frame.html">diagnose_report</a></span>(<span class="kw">collect_size</span> <span class="kw">=</span> <span class="fl">350</span>, <span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"Diagn.pdf"</span>)
 
 <span class="co"># create html file. file name is Diagnosis_Report.html</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/diagnose_report.data.frame.html">diagnose_report</a></span>(<span class="kw">output_format</span> <span class="kw">=</span> <span class="st">"html"</span>)
 
 <span class="co"># create html file. file name is Diagn.html</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/diagnose_report.data.frame.html">diagnose_report</a></span>(<span class="kw">output_format</span> <span class="kw">=</span> <span class="st">"html"</span>, <span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"Diagn.html"</span>)</pre></body></html></div>
 </div>
 </div>

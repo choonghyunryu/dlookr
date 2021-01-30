@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
       </span>
     </div>
 
@@ -186,62 +186,56 @@ only applies when the model argument is TRUE, and is used for ... of the plot.lm
 <span class='co'># If the variable of interest is a numerical variable</span>
 <span class='no'>cat_num</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='relate.html'>relate</a></span>(<span class='no'>categ</span>, <span class='no'>Sales</span>)
 <span class='no'>cat_num</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 3 x 27</span><span>
-#&gt;   variable US        n    na  mean    sd se_mean   IQR skewness kurtosis   p00
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Sales    No      142     0  6.82  2.60   0.218  3.44   0.323    0.808   0   
-#&gt; </span><span style='color: #555555;'>2</span><span> Sales    Yes     258     0  7.87  2.88   0.179  4.23   0.076</span><span style='text-decoration: underline;'>0</span><span>  -</span><span style='color: #BB0000;'>0.326</span><span>   0.37
-#&gt; </span><span style='color: #555555;'>3</span><span> Sales    total   400     0  7.50  2.82   0.141  3.93   0.186   -</span><span style='color: #BB0000;'>0.080</span><span style='color: #BB0000;text-decoration: underline;'>9</span><span>  0   
-#&gt; </span><span style='color: #555555;'># … with 16 more variables: p01 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, p05 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, p10 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, p20 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   p25 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, p30 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, p40 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, p50 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, p60 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, p70 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   p75 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, p80 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, p90 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, p95 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, p99 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, p100 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>cat_num</span>)</div><div class='output co'>#&gt;    variable             US          n               na         mean      
-#&gt;  Length:3           No   :1   Min.   :142.0   Min.   :0   Min.   :6.823  
-#&gt;  Class :character   Yes  :1   1st Qu.:200.0   1st Qu.:0   1st Qu.:7.160  
-#&gt;  Mode  :character   total:1   Median :258.0   Median :0   Median :7.496  
-#&gt;                               Mean   :266.7   Mean   :0   Mean   :7.395  
-#&gt;                               3rd Qu.:329.0   3rd Qu.:0   3rd Qu.:7.682  
-#&gt;                               Max.   :400.0   Max.   :0   Max.   :7.867  
-#&gt;        sd           se_mean            IQR           skewness      
-#&gt;  Min.   :2.603   Min.   :0.1412   Min.   :3.442   Min.   :0.07603  
-#&gt;  1st Qu.:2.713   1st Qu.:0.1602   1st Qu.:3.686   1st Qu.:0.13080  
-#&gt;  Median :2.824   Median :0.1791   Median :3.930   Median :0.18556  
-#&gt;  Mean   :2.768   Mean   :0.1796   Mean   :3.866   Mean   :0.19489  
-#&gt;  3rd Qu.:2.851   3rd Qu.:0.1988   3rd Qu.:4.077   3rd Qu.:0.25432  
-#&gt;  Max.   :2.877   Max.   :0.2184   Max.   :4.225   Max.   :0.32308  
-#&gt;     kurtosis             p00              p01              p05       
-#&gt;  Min.   :-0.32638   Min.   :0.0000   Min.   :0.4675   Min.   :3.147  
-#&gt;  1st Qu.:-0.20363   1st Qu.:0.0000   1st Qu.:0.6868   1st Qu.:3.148  
-#&gt;  Median :-0.08088   Median :0.0000   Median :0.9062   Median :3.149  
-#&gt;  Mean   : 0.13350   Mean   :0.1233   Mean   :1.0072   Mean   :3.183  
-#&gt;  3rd Qu.: 0.36344   3rd Qu.:0.1850   3rd Qu.:1.2771   3rd Qu.:3.200  
-#&gt;  Max.   : 0.80776   Max.   :0.3700   Max.   :1.6480   Max.   :3.252  
-#&gt;       p10             p20             p25             p30       
-#&gt;  Min.   :3.917   Min.   :4.754   Min.   :5.080   Min.   :5.306  
-#&gt;  1st Qu.:4.018   1st Qu.:4.910   1st Qu.:5.235   1st Qu.:5.587  
-#&gt;  Median :4.119   Median :5.066   Median :5.390   Median :5.867  
-#&gt;  Mean   :4.073   Mean   :5.051   Mean   :5.411   Mean   :5.775  
-#&gt;  3rd Qu.:4.152   3rd Qu.:5.199   3rd Qu.:5.576   3rd Qu.:6.010  
-#&gt;  Max.   :4.184   Max.   :5.332   Max.   :5.763   Max.   :6.153  
-#&gt;       p40             p50             p60             p70       
-#&gt;  Min.   :5.994   Min.   :6.660   Min.   :7.496   Min.   :7.957  
-#&gt;  1st Qu.:6.301   1st Qu.:7.075   1st Qu.:7.787   1st Qu.:8.386  
-#&gt;  Median :6.608   Median :7.490   Median :8.078   Median :8.815  
-#&gt;  Mean   :6.506   Mean   :7.313   Mean   :8.076   Mean   :8.740  
-#&gt;  3rd Qu.:6.762   3rd Qu.:7.640   3rd Qu.:8.366   3rd Qu.:9.132  
-#&gt;  Max.   :6.916   Max.   :7.790   Max.   :8.654   Max.   :9.449  
-#&gt;       p75             p80              p90              p95       
-#&gt;  Min.   :8.523   Min.   : 8.772   Min.   : 9.349   Min.   :11.28  
-#&gt;  1st Qu.:8.921   1st Qu.: 9.265   1st Qu.:10.325   1st Qu.:11.86  
-#&gt;  Median :9.320   Median : 9.758   Median :11.300   Median :12.44  
-#&gt;  Mean   :9.277   Mean   : 9.665   Mean   :10.795   Mean   :12.08  
-#&gt;  3rd Qu.:9.654   3rd Qu.:10.111   3rd Qu.:11.518   3rd Qu.:12.49  
-#&gt;  Max.   :9.988   Max.   :10.464   Max.   :11.736   Max.   :12.54  
-#&gt;       p99             p100      
-#&gt;  Min.   :13.64   Min.   :14.90  
-#&gt;  1st Qu.:13.78   1st Qu.:15.59  
-#&gt;  Median :13.91   Median :16.27  
-#&gt;  Mean   :13.86   Mean   :15.81  
-#&gt;  3rd Qu.:13.97   3rd Qu.:16.27  
-#&gt;  Max.   :14.03   Max.   :16.27  </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>cat_num</span>)</div><div class='img'><img src='plot.relate-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt;   variable US        n    na  mean    sd se_mean   IQR skewness kurtosis   p00   p01   p05
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> Sales    No      142     0  6.82  2.60   0.218  3.44   0.323    0.808   0    0.468  3.25
+#&gt; </span><span style='color: #555555;'>2</span><span> Sales    Yes     258     0  7.87  2.88   0.179  4.23   0.076</span><span style='text-decoration: underline;'>0</span><span>  -</span><span style='color: #BB0000;'>0.326</span><span>   0.37 1.65   3.15
+#&gt; </span><span style='color: #555555;'>3</span><span> Sales    total   400     0  7.50  2.82   0.141  3.93   0.186   -</span><span style='color: #BB0000;'>0.080</span><span style='color: #BB0000;text-decoration: underline;'>9</span><span>  0    0.906  3.15
+#&gt; </span><span style='color: #555555;'># … with 14 more variables: p10 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, p20 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, p25 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, p30 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, p40 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   p50 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, p60 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, p70 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, p75 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, p80 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, p90 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, p95 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   p99 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, p100 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>cat_num</span>)</div><div class='output co'>#&gt;    variable             US          n               na         mean             sd       
+#&gt;  Length:3           No   :1   Min.   :142.0   Min.   :0   Min.   :6.823   Min.   :2.603  
+#&gt;  Class :character   Yes  :1   1st Qu.:200.0   1st Qu.:0   1st Qu.:7.160   1st Qu.:2.713  
+#&gt;  Mode  :character   total:1   Median :258.0   Median :0   Median :7.496   Median :2.824  
+#&gt;                               Mean   :266.7   Mean   :0   Mean   :7.395   Mean   :2.768  
+#&gt;                               3rd Qu.:329.0   3rd Qu.:0   3rd Qu.:7.682   3rd Qu.:2.851  
+#&gt;                               Max.   :400.0   Max.   :0   Max.   :7.867   Max.   :2.877  
+#&gt;     se_mean            IQR           skewness          kurtosis             p00        
+#&gt;  Min.   :0.1412   Min.   :3.442   Min.   :0.07603   Min.   :-0.32638   Min.   :0.0000  
+#&gt;  1st Qu.:0.1602   1st Qu.:3.686   1st Qu.:0.13080   1st Qu.:-0.20363   1st Qu.:0.0000  
+#&gt;  Median :0.1791   Median :3.930   Median :0.18556   Median :-0.08088   Median :0.0000  
+#&gt;  Mean   :0.1796   Mean   :3.866   Mean   :0.19489   Mean   : 0.13350   Mean   :0.1233  
+#&gt;  3rd Qu.:0.1988   3rd Qu.:4.077   3rd Qu.:0.25432   3rd Qu.: 0.36344   3rd Qu.:0.1850  
+#&gt;  Max.   :0.2184   Max.   :4.225   Max.   :0.32308   Max.   : 0.80776   Max.   :0.3700  
+#&gt;       p01              p05             p10             p20             p25       
+#&gt;  Min.   :0.4675   Min.   :3.147   Min.   :3.917   Min.   :4.754   Min.   :5.080  
+#&gt;  1st Qu.:0.6868   1st Qu.:3.148   1st Qu.:4.018   1st Qu.:4.910   1st Qu.:5.235  
+#&gt;  Median :0.9062   Median :3.149   Median :4.119   Median :5.066   Median :5.390  
+#&gt;  Mean   :1.0072   Mean   :3.183   Mean   :4.073   Mean   :5.051   Mean   :5.411  
+#&gt;  3rd Qu.:1.2771   3rd Qu.:3.200   3rd Qu.:4.152   3rd Qu.:5.199   3rd Qu.:5.576  
+#&gt;  Max.   :1.6480   Max.   :3.252   Max.   :4.184   Max.   :5.332   Max.   :5.763  
+#&gt;       p30             p40             p50             p60             p70       
+#&gt;  Min.   :5.306   Min.   :5.994   Min.   :6.660   Min.   :7.496   Min.   :7.957  
+#&gt;  1st Qu.:5.587   1st Qu.:6.301   1st Qu.:7.075   1st Qu.:7.787   1st Qu.:8.386  
+#&gt;  Median :5.867   Median :6.608   Median :7.490   Median :8.078   Median :8.815  
+#&gt;  Mean   :5.775   Mean   :6.506   Mean   :7.313   Mean   :8.076   Mean   :8.740  
+#&gt;  3rd Qu.:6.010   3rd Qu.:6.762   3rd Qu.:7.640   3rd Qu.:8.366   3rd Qu.:9.132  
+#&gt;  Max.   :6.153   Max.   :6.916   Max.   :7.790   Max.   :8.654   Max.   :9.449  
+#&gt;       p75             p80              p90              p95             p99       
+#&gt;  Min.   :8.523   Min.   : 8.772   Min.   : 9.349   Min.   :11.28   Min.   :13.64  
+#&gt;  1st Qu.:8.921   1st Qu.: 9.265   1st Qu.:10.325   1st Qu.:11.86   1st Qu.:13.78  
+#&gt;  Median :9.320   Median : 9.758   Median :11.300   Median :12.44   Median :13.91  
+#&gt;  Mean   :9.277   Mean   : 9.665   Mean   :10.795   Mean   :12.08   Mean   :13.86  
+#&gt;  3rd Qu.:9.654   3rd Qu.:10.111   3rd Qu.:11.518   3rd Qu.:12.49   3rd Qu.:13.97  
+#&gt;  Max.   :9.988   Max.   :10.464   Max.   :11.736   Max.   :12.54   Max.   :14.03  
+#&gt;       p100      
+#&gt;  Min.   :14.90  
+#&gt;  1st Qu.:15.59  
+#&gt;  Median :16.27  
+#&gt;  Mean   :15.81  
+#&gt;  3rd Qu.:16.27  
+#&gt;  Max.   :16.27  </div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>cat_num</span>)</div><div class='img'><img src='plot.relate-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># If the variable of interest is a categorical variable</span>
 <span class='no'>cat_cat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='relate.html'>relate</a></span>(<span class='no'>categ</span>, <span class='no'>ShelveLoc</span>)
 <span class='no'>cat_cat</span></div><div class='output co'>#&gt;      ShelveLoc
@@ -251,7 +245,8 @@ only applies when the model argument is TRUE, and is used for ... of the plot.lm
 #&gt; Number of cases in table: 400 
 #&gt; Number of factors: 2 
 #&gt; Test for independence of all factors:
-#&gt; 	Chisq = 2.7397, df = 2, p-value = 0.2541</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>cat_cat</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Ignoring unknown aesthetics: width</span></div><div class='img'><img src='plot.relate-2.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 	Chisq = 2.7397, df = 2, p-value = 0.2541</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>cat_cat</span>)</div><div class='img'><img src='plot.relate-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>##---------------------------------------------------</span>
 <span class='co'># If the target variable is a categorical variable</span>
 <span class='no'>num</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='target_by.data.frame.html'>target_by</a></span>(<span class='no'>carseats</span>, <span class='no'>Sales</span>)
@@ -283,7 +278,8 @@ only applies when the model argument is TRUE, and is used for ... of the plot.lm
 #&gt; Residual standard error: 2.532 on 398 degrees of freedom
 #&gt; Multiple R-squared:  0.198,	Adjusted R-squared:  0.196 
 #&gt; F-statistic: 98.25 on 1 and 398 DF,  p-value: &lt; 2.2e-16
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>num_num</span>)</div><div class='img'><img src='plot.relate-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>num_num</span>, <span class='kw'>hex_thres</span> <span class='kw'>=</span> <span class='fl'>400</span>)</div><div class='img'><img src='plot.relate-4.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; </div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>num_num</span>)</div><div class='img'><img src='plot.relate-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>num_num</span>, <span class='kw'>hex_thres</span> <span class='kw'>=</span> <span class='fl'>400</span>)</div><div class='img'><img src='plot.relate-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># If the variable of interest is a categorical variable</span>
 <span class='no'>num_cat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='relate.html'>relate</a></span>(<span class='no'>num</span>, <span class='no'>ShelveLoc</span>)
 <span class='no'>num_cat</span></div><div class='output co'>#&gt; Analysis of Variance Table
@@ -312,7 +308,8 @@ only applies when the model argument is TRUE, and is used for ... of the plot.lm
 #&gt; Residual standard error: 2.339 on 397 degrees of freedom
 #&gt; Multiple R-squared:  0.3172,	Adjusted R-squared:  0.3138 
 #&gt; F-statistic: 92.23 on 2 and 397 DF,  p-value: &lt; 2.2e-16
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>num_cat</span>)</div><div class='img'><img src='plot.relate-5.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; </div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>num_cat</span>)</div><div class='img'><img src='plot.relate-5.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Not allow typographic</span>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>num_cat</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot.relate-6.png' alt='' width='700' height='433' /></div><div class='input'> 
 </div></span></pre>

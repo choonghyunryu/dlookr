@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
       </span>
     </div>
 
@@ -187,10 +187,10 @@ The default is TRUE. if TRUE provides a base theme that focuses on typographic e
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
   <span class='no'>diagnose</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/desc.html'>desc</a></span>(<span class='no'>missing_count</span>))</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 11 x 6</span><span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span>(<span class='no'>missing_count</span>))</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 11 x 6</span><span>
 #&gt;    variables   types   missing_count missing_percent unique_count unique_rate
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> Income      numeric            20            5              99      0.248 
+#&gt; </span><span style='color: #555555;'> 1</span><span> Income      numeric            20            5              98      0.245 
 #&gt; </span><span style='color: #555555;'> 2</span><span> Urban       factor              5            1.25            3      0.007</span><span style='text-decoration: underline;'>5</span><span>
 #&gt; </span><span style='color: #555555;'> 3</span><span> Sales       numeric             0            0             336      0.84  
 #&gt; </span><span style='color: #555555;'> 4</span><span> CompPrice   numeric             0            0              73      0.182 
@@ -209,9 +209,9 @@ The default is TRUE. if TRUE provides a base theme that focuses on typographic e
   <span class='kw'>call.</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 }
 
-<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span> <span class='kw'>%&gt;%</span>
+<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://amices.org/mice/reference/boys.html'>boys</a></span> <span class='kw'>%&gt;%</span>
   <span class='no'>diagnose</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/desc.html'>desc</a></span>(<span class='no'>missing_count</span>))</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 9 x 6</span><span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span>(<span class='no'>missing_count</span>))</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 9 x 6</span><span>
 #&gt;   variables types   missing_count missing_percent unique_count unique_rate
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span> tv        integer           522          69.8             19     0.025</span><span style='text-decoration: underline;'>4</span><span> 
@@ -224,18 +224,18 @@ The default is TRUE. if TRUE provides a base theme that focuses on typographic e
 #&gt; </span><span style='color: #555555;'>8</span><span> reg       factor              3           0.401            6     0.008</span><span style='text-decoration: underline;'>02</span><span>
 #&gt; </span><span style='color: #555555;'>9</span><span> age       numeric             0           0              683     0.913  </div><div class='input'>
 <span class='co'># Visualize pareto chart for variables with missing value.</span>
-<span class='fu'>plot_na_pareto</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"blue"</span>)</div><div class='img'><img src='plot_na_pareto-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>plot_na_pareto</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://amices.org/mice/reference/boys.html'>boys</a></span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"blue"</span>)</div><div class='img'><img src='plot_na_pareto-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Visualize only variables containing missing values</span>
-<span class='fu'>plot_na_pareto</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span>, <span class='kw'>only_na</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot_na_pareto-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>plot_na_pareto</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://amices.org/mice/reference/boys.html'>boys</a></span>, <span class='kw'>only_na</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot_na_pareto-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Display the relative frequency </span>
-<span class='fu'>plot_na_pareto</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot_na_pareto-5.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>plot_na_pareto</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://amices.org/mice/reference/boys.html'>boys</a></span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot_na_pareto-5.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Change the grade</span>
-<span class='fu'>plot_na_pareto</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span>, <span class='kw'>grade</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>High</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>Middle</span> <span class='kw'>=</span> <span class='fl'>0.6</span>, <span class='kw'>Low</span> <span class='kw'>=</span> <span class='fl'>1</span>))</div><div class='img'><img src='plot_na_pareto-6.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>plot_na_pareto</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://amices.org/mice/reference/boys.html'>boys</a></span>, <span class='kw'>grade</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>High</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>Middle</span> <span class='kw'>=</span> <span class='fl'>0.6</span>, <span class='kw'>Low</span> <span class='kw'>=</span> <span class='fl'>1</span>))</div><div class='img'><img src='plot_na_pareto-6.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Change the main title.</span>
-<span class='fu'>plot_na_pareto</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>only_na</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+<span class='fu'>plot_na_pareto</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://amices.org/mice/reference/boys.html'>boys</a></span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>only_na</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
 <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"Pareto Chart for mice::boys"</span>)</div><div class='img'><img src='plot_na_pareto-7.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Return the aggregate information about missing values.</span>
-<span class='fu'>plot_na_pareto</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span>, <span class='kw'>only_na</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 8 x 5</span><span>
+<span class='fu'>plot_na_pareto</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://amices.org/mice/reference/boys.html'>boys</a></span>, <span class='kw'>only_na</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 8 x 5</span><span>
 #&gt;   variable frequencies   ratio grade cumulative
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span> tv               522 0.698   Bad         32.2
@@ -247,7 +247,7 @@ The default is TRUE. if TRUE provides a base theme that focuses on typographic e
 #&gt; </span><span style='color: #555555;'>7</span><span> wgt                4 0.005</span><span style='text-decoration: underline;'>35</span><span> Good        99.8
 #&gt; </span><span style='color: #555555;'>8</span><span> reg                3 0.004</span><span style='text-decoration: underline;'>01</span><span> Good       100  </div><div class='input'>
 <span class='co'># Not support typographic elements</span>
-<span class='fu'>plot_na_pareto</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot_na_pareto-8.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>plot_na_pareto</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://amices.org/mice/reference/boys.html'>boys</a></span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot_na_pareto-8.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

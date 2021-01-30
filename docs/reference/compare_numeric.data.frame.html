@@ -73,7 +73,7 @@ between numerical variables." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
       </span>
     </div>
 
@@ -332,15 +332,19 @@ and return compare_numeric class that based list object.</p>
 #&gt; </span><span style='color: #555555;'>2</span><span> Sales Price     0.198         0.196  2.53      98.2 7.62</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>-21</span><span>     1  -</span><span style='color: #BB0000;'>938.</span><span>
 #&gt; </span><span style='color: #555555;'># … with 5 more variables: AIC </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, BIC </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, deviance </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   df.residual </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, nobs </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </div><div class='input'>
-<span class='co'># plot all pair of variables</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>)</div><div class='img'><img src='compare_numeric.data.frame-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='compare_numeric.data.frame-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='compare_numeric.data.frame-3.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># plot a pair of variables</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>two_var</span>)</div><div class='img'><img src='compare_numeric.data.frame-4.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># plot all pair of variables by prompt</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>, <span class='kw'>prompt</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='compare_numeric.data.frame-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='compare_numeric.data.frame-6.png' alt='' width='700' height='433' /></div><div class='img'><img src='compare_numeric.data.frame-7.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># plot a pair of variables not focuses on typographic elements</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>two_var</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='compare_numeric.data.frame-8.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; </div><div class='input'>  
+# plot all pair of variables
+# plot(all_var)
+
+# plot a pair of variables
+# plot(two_var)
+
+# plot all pair of variables by prompt
+# plot(all_var, prompt = TRUE)
+
+# plot a pair of variables not focuses on typographic elements
+# plot(two_var, typographic = FALSE)
+
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

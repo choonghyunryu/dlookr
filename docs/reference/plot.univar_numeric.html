@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
       </span>
     </div>
 
@@ -131,6 +131,7 @@
   <span class='kw'>stand</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='no'>indiv</span>, <span class='fl'>4</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"none"</span>, <span class='st'>"robust"</span>, <span class='st'>"minmax"</span>, <span class='st'>"zscore"</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"robust"</span>,
     <span class='st'>"minmax"</span>, <span class='st'>"zscore"</span>, <span class='st'>"none"</span>)),
   <span class='kw'>prompt</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='no'>...</span>
 )</pre>
 
@@ -165,6 +166,11 @@ he default is "none" if indiv is TRUE, and "robust" if FALSE.</p></td>
       <th>prompt</th>
       <td><p>logical. The default value is FALSE. If there are multiple visualizations to be output, 
 if this argument value is TRUE, a prompt is output each time.</p></td>
+    </tr>
+    <tr>
+      <th>typographic</th>
+      <td><p>logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -218,21 +224,30 @@ However, it does not support.</p></td>
 <span class='co'># one plot with all variables</span>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>)</div><div class='img'><img src='plot.univar_numeric-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># one plot with all normalized variables by Min-Max method</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>, <span class='kw'>stand</span> <span class='kw'>=</span> <span class='st'>"minmax"</span>)</div><div class='img'><img src='plot.univar_numeric-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># plot(all_var, stand = "minmax")</span>
+
 <span class='co'># one plot with all variables</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>, <span class='kw'>stand</span> <span class='kw'>=</span> <span class='st'>"none"</span>)</div><div class='img'><img src='plot.univar_numeric-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># plot(all_var, stand = "none")</span>
+
 <span class='co'># one plot with all robust standardized variables </span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>, <span class='kw'>viz</span> <span class='kw'>=</span> <span class='st'>"boxplot"</span>)</div><div class='img'><img src='plot.univar_numeric-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>, <span class='kw'>viz</span> <span class='kw'>=</span> <span class='st'>"boxplot"</span>)</div><div class='img'><img src='plot.univar_numeric-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># not allow the typographic elements</span>
+<span class='co'># plot(all_var, typographic = FALSE)</span>
+
 <span class='co'># one plot with all standardized variables by Z-score method </span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>, <span class='kw'>viz</span> <span class='kw'>=</span> <span class='st'>"boxplot"</span>, <span class='kw'>stand</span> <span class='kw'>=</span> <span class='st'>"zscore"</span>)</div><div class='img'><img src='plot.univar_numeric-5.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># plot(all_var, viz = "boxplot", stand = "zscore")</span>
+
 <span class='co'># individual boxplot by variables</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>, <span class='kw'>indiv</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='st'>"boxplot"</span>)</div><div class='img'><img src='plot.univar_numeric-6.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_numeric-7.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_numeric-8.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_numeric-9.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_numeric-10.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_numeric-11.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_numeric-12.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_numeric-13.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># plot(all_var, indiv = TRUE, "boxplot")</span>
+
 <span class='co'># individual histogram by variables</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>, <span class='kw'>indiv</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='st'>"hist"</span>)</div><div class='img'><img src='plot.univar_numeric-14.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_numeric-15.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_numeric-16.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_numeric-17.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_numeric-18.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_numeric-19.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_numeric-20.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_numeric-21.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># individual histogram by robust standardized variable </span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>, <span class='kw'>indiv</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='st'>"hist"</span>, <span class='kw'>stand</span> <span class='kw'>=</span> <span class='st'>"robust"</span>)</div><div class='img'><img src='plot.univar_numeric-22.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_numeric-23.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_numeric-24.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_numeric-25.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_numeric-26.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_numeric-27.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_numeric-28.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_numeric-29.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># plot all variables by prompt</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>, <span class='kw'>indiv</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='st'>"hist"</span>, <span class='kw'>prompt</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Hit &lt;Return&gt; to see next plot:</div><div class='img'><img src='plot.univar_numeric-30.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Hit &lt;Return&gt; to see next plot:</div><div class='img'><img src='plot.univar_numeric-31.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Hit &lt;Return&gt; to see next plot:</div><div class='img'><img src='plot.univar_numeric-32.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Hit &lt;Return&gt; to see next plot:</div><div class='img'><img src='plot.univar_numeric-33.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Hit &lt;Return&gt; to see next plot:</div><div class='img'><img src='plot.univar_numeric-34.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Hit &lt;Return&gt; to see next plot:</div><div class='img'><img src='plot.univar_numeric-35.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Hit &lt;Return&gt; to see next plot:</div><div class='img'><img src='plot.univar_numeric-36.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Hit &lt;Return&gt; to see next plot:</div><div class='img'><img src='plot.univar_numeric-37.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>, <span class='kw'>indiv</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='st'>"hist"</span>)</div><div class='img'><img src='plot.univar_numeric-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_numeric-4.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_numeric-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_numeric-6.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_numeric-7.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_numeric-8.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_numeric-9.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_numeric-10.png' alt='' width='700' height='433' /></div><div class='input'>
+# individual histogram by robust standardized variable 
+# plot(all_var, indiv = TRUE, "hist", stand = "robust")
+
+# plot all variables by prompt
+# plot(all_var, indiv = TRUE, "hist", prompt = TRUE)
+
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

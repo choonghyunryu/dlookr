@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
       </span>
     </div>
 
@@ -76,7 +76,7 @@
       <h1 data-toc-skip>Data Transformation</h1>
                         <h4 class="author">Choonghyun Ryu</h4>
             
-            <h4 class="date">2021-01-23</h4>
+            <h4 class="date">2021-01-30</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/choonghyunryu/dlookr/blob/master/vignettes/transformation.Rmd"><code>vignettes/transformation.Rmd</code></a></small>
       <div class="hidden name"><code>transformation.Rmd</code></div>
@@ -434,13 +434,13 @@ urban &lt;- imputate_na(carseats, Urban, US, method = "mice")
 # result of imputation
 urban
   [1] Yes Yes Yes Yes Yes No  Yes Yes No  No  No  Yes Yes Yes Yes No  Yes Yes
- [19] No  Yes Yes No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes No 
+ [19] No  Yes Yes No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes
  [37] No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes
  [55] No  Yes Yes Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes Yes Yes Yes No 
  [73] Yes No  No  No  Yes No  Yes Yes Yes Yes Yes No  No  No  Yes No  Yes No 
- [91] No  Yes Yes No  Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes
+ [91] No  Yes Yes Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes
 [109] Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes No 
-[127] Yes Yes Yes No  Yes No  Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes
+[127] Yes Yes Yes No  Yes Yes Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes
 [145] No  Yes Yes No  No  Yes Yes No  No  No  No  Yes Yes No  No  No  No  No 
 [163] Yes No  No  Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes No  Yes No  Yes
 [181] Yes Yes Yes Yes No  Yes No  Yes Yes No  No  Yes No  Yes Yes Yes Yes Yes
@@ -451,7 +451,7 @@ urban
 [271] Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes No  No  Yes No  Yes
 [289] No  Yes No  Yes Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
 [307] Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No  No  No  Yes Yes Yes Yes
-[325] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No 
+[325] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No 
 [343] No  Yes No  Yes No  No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes
 [361] No  No  Yes Yes Yes No  No  Yes No  Yes Yes Yes No  Yes Yes Yes Yes No 
 [379] Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes No  Yes Yes
@@ -480,9 +480,9 @@ summary(urban)
 
 * Information of Imputation (before vs after)
      original imputation original_percent imputation_percent
-No        115        120            28.75                 30
-Yes       275        280            68.75                 70
-&lt;NA&gt;       10          0             2.50                  0
+No        115        118            28.75               29.5
+Yes       275        282            68.75               70.5
+&lt;NA&gt;       10          0             2.50                0.0
 
 # viz of imputation
 plot(urban)</pre></body></html></div>
@@ -784,8 +784,7 @@ p95       19.0000000     2.99573227
 p99       23.0100000     3.17846205
 p100      29.0000000     3.40119738
 # viz of transformation
-plot(Advertising_log)</pre></body></html></div>
-<p><img src="transformation_files/figure-html/resolving3-1.png" width="600px" style="display: block; margin: auto;"></p>
+# plot(Advertising_log)</pre></body></html></div>
 </div>
 </div>
 <div id="binning" class="section level2">
@@ -858,14 +857,14 @@ binning(carseats$Income, nbins = 5, type = "kmeans")
 binned type: kmeans
 number of bins: 5
 x
-    [21,49]   (49,71.5] (71.5,89.5]  (89.5,106]   (106,120]        &lt;NA&gt; 
-        115          88          75          62          40          20 
+  [21,37.5] (37.5,55.5] (55.5,76.5] (76.5,97.5]  (97.5,120]        &lt;NA&gt; 
+         70          58          95          82          75          20 
 binning(carseats$Income, nbins = 5, type = "bclust")
 binned type: bclust
 number of bins: 5
 x
-    [21,49]   (49,65.5] (65.5,79.5] (79.5,96.5]  (96.5,120]        &lt;NA&gt; 
-        115          56          63          70          76          20 
+  [21,49] (49,66.5] (66.5,85]  (85,108] (108,120]      &lt;NA&gt; 
+      115        59        90        78        38        20 
 
 # Extract the binned results
 extract(bin)
@@ -1069,7 +1068,7 @@ Levels: [-1,0] (0,6] (6,29]</pre></body></html></div>
 <li>The cover of the report is shown in the following figure.</li>
 </ul>
 <div class="figure" style="text-align: center">
-<img src="img/trans_title_pdf.png" alt="Data transformation report cover" width="70%"><p class="caption">
+<img src="img/trans_title_pdf.png" alt="Data transformation report cover" width="60%"><p class="caption">
 Data transformation report cover
 </p>
 </div>
@@ -1077,7 +1076,7 @@ Data transformation report cover
 <li>The report’s agenda is shown in the following figure.</li>
 </ul>
 <div class="figure" style="text-align: center">
-<img src="img/trans_agenda_pdf.png" alt="Table of Contents" width="70%"><p class="caption">
+<img src="img/trans_agenda_pdf.png" alt="Table of Contents" width="60%"><p class="caption">
 Table of Contents
 </p>
 </div>
@@ -1085,28 +1084,8 @@ Table of Contents
 <li>Much of the information is displayed in tables and visualization results in reports. An example is shown in the following figure.</li>
 </ul>
 <div class="figure" style="text-align: center">
-<img src="img/trans_content_pdf.png" alt="Data Transformation Report Table and Visualization Example" width="70%"><p class="caption">
+<img src="img/trans_content_pdf.png" alt="Data Transformation Report Table and Visualization Example" width="60%"><p class="caption">
 Data Transformation Report Table and Visualization Example
-</p>
-</div>
-</div>
-<div id="contents-of-html-file" class="section level4">
-<h4 class="hasAnchor">
-<a href="#contents-of-html-file" class="anchor"></a>Contents of html file</h4>
-<ul>
-<li>The title and contents of the report are shown in the following figure.</li>
-</ul>
-<div class="figure" style="text-align: center">
-<img src="img/trans_agenda_html.png" alt="Data transformation report titles and table of contents" width="80%"><p class="caption">
-Data transformation report titles and table of contents
-</p>
-</div>
-<ul>
-<li>Much information is represented in tables in the report. An example of a table in an html file is shown in the following figure.</li>
-</ul>
-<div class="figure" style="text-align: center">
-<img src="img/trans_table_html.png" alt="Report table example (web)" width="50%"><p class="caption">
-Report table example (web)
 </p>
 </div>
 </div>

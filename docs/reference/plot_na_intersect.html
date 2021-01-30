@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
       </span>
     </div>
 
@@ -193,9 +193,9 @@ and the number of observations including missing values and complete cases .</p>
   <span class='kw'>call.</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 }
 
-<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span> <span class='kw'>%&gt;%</span>
+<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://amices.org/mice/reference/boys.html'>boys</a></span> <span class='kw'>%&gt;%</span>
   <span class='no'>diagnose</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/desc.html'>desc</a></span>(<span class='no'>missing_count</span>))</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 9 x 6</span><span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span>(<span class='no'>missing_count</span>))</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 9 x 6</span><span>
 #&gt;   variables types   missing_count missing_percent unique_count unique_rate
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span> tv        integer           522          69.8             19     0.025</span><span style='text-decoration: underline;'>4</span><span> 
@@ -208,15 +208,15 @@ and the number of observations including missing values and complete cases .</p>
 #&gt; </span><span style='color: #555555;'>8</span><span> reg       factor              3           0.401            6     0.008</span><span style='text-decoration: underline;'>02</span><span>
 #&gt; </span><span style='color: #555555;'>9</span><span> age       numeric             0           0              683     0.913  </div><div class='input'>
 <span class='co'># Visualize the combination variables that is include missing value</span>
-<span class='fu'>plot_na_intersect</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span>)</div><div class='img'><img src='plot_na_intersect-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>plot_na_intersect</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://amices.org/mice/reference/boys.html'>boys</a></span>)</div><div class='img'><img src='plot_na_intersect-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Visualize variables containing missing values and complete case</span>
-<span class='fu'>plot_na_intersect</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span>, <span class='kw'>only_na</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot_na_intersect-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>plot_na_intersect</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://amices.org/mice/reference/boys.html'>boys</a></span>, <span class='kw'>only_na</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot_na_intersect-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Using n_vars argument</span>
-<span class='fu'>plot_na_intersect</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span>, <span class='kw'>n_vars</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='img'><img src='plot_na_intersect-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>plot_na_intersect</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://amices.org/mice/reference/boys.html'>boys</a></span>, <span class='kw'>n_vars</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='img'><img src='plot_na_intersect-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Using n_intersacts argument</span>
-<span class='fu'>plot_na_intersect</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span>, <span class='kw'>only_na</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>n_intersacts</span> <span class='kw'>=</span> <span class='fl'>7</span>)</div><div class='img'><img src='plot_na_intersect-5.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>plot_na_intersect</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://amices.org/mice/reference/boys.html'>boys</a></span>, <span class='kw'>only_na</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>n_intersacts</span> <span class='kw'>=</span> <span class='fl'>7</span>)</div><div class='img'><img src='plot_na_intersect-5.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Not allow typographic elements</span>
-<span class='fu'>plot_na_intersect</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/mice/man/boys.html'>boys</a></span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot_na_intersect-6.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>plot_na_intersect</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://amices.org/mice/reference/boys.html'>boys</a></span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot_na_intersect-6.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

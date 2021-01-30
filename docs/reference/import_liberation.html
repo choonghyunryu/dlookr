@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Kullback-Leibler Divergence — kld • dlookr</title>
+<title>Import Liberation Sans Narrow fonts — import_liberation • dlookr</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Kullback-Leibler Divergence — kld" />
-<meta property="og:description" content="Computes the Kullback-Leibler divergence between two probability distributions." />
+<meta property="og:title" content="Import Liberation Sans Narrow fonts — import_liberation" />
+<meta property="og:description" content="Import Liberation Sans Narrow font to be used when drawing charts." />
 
 
 
@@ -114,56 +114,26 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Kullback-Leibler Divergence</h1>
-    <small class="dont-index">Source: <a href='https://github.com/choonghyunryu/dlookr/blob/master/R/stats.R'><code>R/stats.R</code></a></small>
-    <div class="hidden name"><code>kld.Rd</code></div>
+    <h1>Import Liberation Sans Narrow fonts</h1>
+    <small class="dont-index">Source: <a href='https://github.com/choonghyunryu/dlookr/blob/master/R/graphics.R'><code>R/graphics.R</code></a></small>
+    <div class="hidden name"><code>import_liberation.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Computes the Kullback-Leibler divergence between two probability distributions.</p>
+    <p>Import Liberation Sans Narrow font to be used when drawing charts.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>kld</span>(<span class='no'>p</span>, <span class='no'>q</span>, <span class='kw'>base</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"log"</span>, <span class='st'>"log2"</span>, <span class='st'>"log10"</span>), <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>import_liberation</span>()</pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>p</th>
-      <td><p>numeric. probability distributions.</p></td>
-    </tr>
-    <tr>
-      <th>q</th>
-      <td><p>numeric. probability distributions.</p></td>
-    </tr>
-    <tr>
-      <th>base</th>
-      <td><p>character. log bases. "log", "log2", "log10". default is "log"</p></td>
-    </tr>
-    <tr>
-      <th>margin</th>
-      <td><p>logical. Choose whether to return individual values or totals. 
-The default value is FALSE, which returns individual values.</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>numeric. Kullback-Leibler divergence of probability distributions p and q.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <p>The Liberation(tm) Fonts is a font family which aims at metric compatibility 
+with Arial, Times New Roman, and Courier New. It is sponsored by Red Hat.
+Import fonts is older versions of the Liberation(tm) fonts. This is released 
+as open source under the GNU General Public License version 2 with exceptions. 
+https://fedoraproject.org/wiki/Licensing/LiberationFontLicense</p>
 
-    <div class='dont-index'><p><code><a href='jsd.html'>jsd</a></code>.</p></div>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Sample data for probability distributions p.</span>
-<span class='no'>event</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>115</span>, <span class='fl'>76</span>, <span class='fl'>61</span>, <span class='fl'>39</span>, <span class='fl'>55</span>, <span class='fl'>10</span>, <span class='fl'>1</span>)
-<span class='no'>no_event</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>3</span>, <span class='fl'>7</span>, <span class='fl'>10</span>, <span class='fl'>28</span>, <span class='fl'>44</span>, <span class='fl'>117</span>)
-
-<span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='no'>event</span> / <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>event</span>)
-<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='no'>no_event</span> / <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>no_event</span>)
-
-<span class='fu'>kld</span>(<span class='no'>p</span>, <span class='no'>q</span>)</div><div class='output co'>#&gt; [1]  1.00670753  0.57712559  0.28087582  0.09174581  0.02372228 -0.05609955 -0.01479923</div><div class='input'><span class='fu'>kld</span>(<span class='no'>p</span>, <span class='no'>q</span>, <span class='kw'>base</span> <span class='kw'>=</span> <span class='st'>"log2"</span>)</div><div class='output co'>#&gt; [1]  1.45237196  0.83261623  0.40521815  0.13236123  0.03422402 -0.08093455 -0.02135077</div><div class='input'><span class='fu'>kld</span>(<span class='no'>p</span>, <span class='no'>q</span>, <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] 1.909278</div><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

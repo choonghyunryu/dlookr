@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
       </span>
     </div>
 
@@ -276,7 +276,7 @@ function of the dplyr package.</p>
 #&gt; (11323927090,12271604926] 
 #&gt;                         7 </div><div class='input'>
 <span class='co'># extract binned results</span>
-<span class='fu'>extract</span>(<span class='no'>bin</span>)</div><div class='output co'>#&gt;  [1] (11323927090,12271604926] (4539682535,6596119923]  
+<span class='fu'><a href='extract.bins.html'>extract</a></span>(<span class='no'>bin</span>)</div><div class='output co'>#&gt;  [1] (11323927090,12271604926] (4539682535,6596119923]  
 #&gt;  [3] (8390946494,9945326269]   (6596119923,8390946494]  
 #&gt;  [5] (4539682535,6596119923]   (9945326269,11323927090] 
 #&gt;  [7] [24691358,1786596118]     [24691358,1786596118]    
@@ -305,11 +305,15 @@ function of the dplyr package.</p>
 <span class='co'># -------------------------</span>
 <span class='co'># Using pipes &amp; dplyr</span>
 <span class='co'># -------------------------</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
-
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'>
 <span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>Income_bin</span> <span class='kw'>=</span> <span class='fu'>binning</span>(<span class='no'>carseats</span>$<span class='no'>Income</span>) <span class='kw'>%&gt;%</span>
-                     <span class='fu'>extract</span>()) <span class='kw'>%&gt;%</span>
+                     <span class='fu'><a href='extract.bins.html'>extract</a></span>()) <span class='kw'>%&gt;%</span>
  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>ShelveLoc</span>, <span class='no'>Income_bin</span>) <span class='kw'>%&gt;%</span>
  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>freq</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span>()) <span class='kw'>%&gt;%</span>
  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span>(<span class='no'>freq</span>)) <span class='kw'>%&gt;%</span>

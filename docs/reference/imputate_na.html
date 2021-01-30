@@ -73,7 +73,7 @@ statistical methods." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
       </span>
     </div>
 
@@ -211,36 +211,32 @@ to help determine whether the imputed value is used in the analysis.</p>
 <span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>5</span>), <span class='st'>"Urban"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
 
 <span class='co'># Replace the missing value of the Income variable with median</span>
-<span class='fu'>imputate_na</span>(<span class='no'>carseats</span>, <span class='no'>Income</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"median"</span>)</div><div class='output co'>#&gt;   [1]  73  48  35 100  69 113 105  81 110 113  78  94  35  28 117  95  32  74
-#&gt;  [19] 110  76  90  29  46  69 119  32 115 118  74  99  94  58  32  69  54  84
-#&gt;  [37]  76  41  73  60  98  53  69  42  79  63  69  98  52  93  32  90  40  64
-#&gt;  [55]  69  81  82  91  93  71 102  69  69  88  67  26  92  61  69  69  81  51
-#&gt;  [73]  45  90  68 111  69  71  48  67 100  72  83  36  25 103  84  67  42  66
-#&gt;  [91]  22  46 113  30  97  25  42  82  77  47  69  93  22  91  96 100  33 107
-#&gt; [109]  79  65  62 118  99  29  87  35  75  53  88  94 105  89 100 103 113  78
-#&gt; [127]  68  48 100 120  84  69  87  98  31  94  75  42 103  62  60  42  84  88
-#&gt; [145]  68  63  83  54 119 120  84  58  78  36  69  72  34  58  90  60  28  21
-#&gt; [163]  74  64  64  58  67  73  89  41  39 106  69  91  24  89 107  72  71  25
-#&gt; [181] 112  83  60  74  33 100  51  32  37 117  37  42  26  70  98  93  69  61
-#&gt; [199]  80  88  69  83  78  82  80  22  67 105  54  21  41 118  69  84 115  83
-#&gt; [217]  33  44  61  79 120  44 119  45  82  25  33  64  73 104  60  69  80  76
-#&gt; [235]  62  32  34  28  24 105  80  63  46  25  30  43  56 114  52  67 105 111
-#&gt; [253]  97  24  69  81  40  62  38  36  69  42  77  26  29  35  93  82  57  69
-#&gt; [271]  26  56  33 106  93 119  69  48 113  57  86  69  96 110  46  26 118  44
-#&gt; [289]  40  77 111  70  66  84  76  35  44  83  63  69  78  93  77  52  98  29
-#&gt; [307]  32  92  80 111  65  68 117  81  33  21  36  30  72  45  70  39  50 105
-#&gt; [325]  65  69  30  38  66  54  59  63  33  60  69  70  35  38  24  44  29 120
-#&gt; [343] 102  42  80  68 107  39 102  27 101 115 103  67  31 100 109  69  96  62
-#&gt; [361]  86  25  55  75  21  30  69 106  22 100  41  81  50  71  47  46  60  61
-#&gt; [379]  88 111  64  65  28 117  37  69 116  73  89  42  75  63  42  51  58 108
-#&gt; [397]  23  26  79  37
+<span class='fu'>imputate_na</span>(<span class='no'>carseats</span>, <span class='no'>Income</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"median"</span>)</div><div class='output co'>#&gt;   [1]  73  48  35  69  64 113 105  81 110 113  78  94  69  28 117  95  32  74 110  76  90
+#&gt;  [22]  29  46  31  69  32 115 118  74  99  94  58  32  69  54  84  76  41  73  60  98  53
+#&gt;  [43]  69  42  79  63  90  98  52  93  32  90  40  64 103  81  82  91  93  71 102  32  45
+#&gt;  [64]  69  67  26  69  61  69  59  81  51  45  90  68 111  87  71  48  67 100  72  83  36
+#&gt;  [85]  25 103  84  67  69  66  22  46 113  30  97  25  42  82  77  47  69  93  22  91  96
+#&gt; [106] 100  33 107  79  69  62 118  99  29  87  35  75  53  88  94  69  89 100 103 113  78
+#&gt; [127]  68  48 100 120  84  69  87  98  31  94  75  42 103  62  60  42  84  88  68  63  83
+#&gt; [148]  54 119 120  84  58  78  36  69  72  34  69  69  60  28  21  74  64  64  58  67  73
+#&gt; [169]  89  41  39 106 102  91  24  89 107  72  71  25 112  83  60  74  33 100  51  32  37
+#&gt; [190] 117  37  42  26  70  98  93  28  61  69  88  92  83  78  82  80  22  67 105  54  21
+#&gt; [211]  41 118  69  84 115  83  33  44  61  79 120  44 119  45  82  25  33  64  73 104  60
+#&gt; [232]  69  80  76  62  32  34  28  24 105  80  63  69  25  30  43  56 114  52  67 105 111
+#&gt; [253]  97  24 104  81  40  62  38  36 117  42  77  26  29  35  93  82  57  69  26  56  33
+#&gt; [274] 106  93 119  69  69 113  57  86  69  96 110  46  69 118  44  40  77  69  70  66  84
+#&gt; [295]  76  35  44  83  63  40  78  93  77  52  98  29  32  69  80 111  65  68 117  81  33
+#&gt; [316]  21  36  30  72  45  70  39  50 105  65  69  30  38  66  54  59  63  33  60 117  70
+#&gt; [337]  35  38  24  44  29 120 102  42  80  68 107  39 102  27 101 115 103  67  31 100 109
+#&gt; [358]  73  96  62  86  25  55  75  21  30  56  69  22 100  41  81  50  71  47  46  60  61
+#&gt; [379]  88 111  64  65  69 117  37  73 116  73  89  42  75  63  42  51  58 108  23  26  79
+#&gt; [400]  37
 #&gt; attr(,"var_type")
 #&gt; [1] "numerical"
 #&gt; attr(,"method")
 #&gt; [1] "median"
 #&gt; attr(,"na_pos")
-#&gt;  [1]   5  24  34  43  47  55  62  63  70  77 173 197 201 255 261 300 335 358 367
-#&gt; [20] 386
+#&gt;  [1]   4  13  25  34  64  67  69  89 110 121 158 159 199 243 278 286 291 308 368 383
 #&gt; attr(,"type")
 #&gt; [1] "missing values"
 #&gt; attr(,"message")
@@ -251,71 +247,62 @@ to help determine whether the imputed value is used in the analysis.</p>
 #&gt; [1] "imputation" "numeric"   </div><div class='input'>
 <span class='co'># Replace the missing value of the Income variable with rpart</span>
 <span class='co'># The target variable is US.</span>
-<span class='fu'>imputate_na</span>(<span class='no'>carseats</span>, <span class='no'>Income</span>, <span class='no'>US</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"rpart"</span>)</div><div class='output co'>#&gt;   [1]  73.00000  48.00000  35.00000 100.00000  55.63636 113.00000 105.00000
-#&gt;   [8]  81.00000 110.00000 113.00000  78.00000  94.00000  35.00000  28.00000
-#&gt;  [15] 117.00000  95.00000  32.00000  74.00000 110.00000  76.00000  90.00000
-#&gt;  [22]  29.00000  46.00000  76.51852 119.00000  32.00000 115.00000 118.00000
-#&gt;  [29]  74.00000  99.00000  94.00000  58.00000  32.00000  78.06452  54.00000
-#&gt;  [36]  84.00000  76.00000  41.00000  73.00000  60.00000  98.00000  53.00000
-#&gt;  [43]  88.35294  42.00000  79.00000  63.00000  47.75000  98.00000  52.00000
-#&gt;  [50]  93.00000  32.00000  90.00000  40.00000  64.00000  67.00000  81.00000
-#&gt;  [57]  82.00000  91.00000  93.00000  71.00000 102.00000  44.26316  53.05882
-#&gt;  [64]  88.00000  67.00000  26.00000  92.00000  61.00000  69.00000  69.43478
-#&gt;  [71]  81.00000  51.00000  45.00000  90.00000  68.00000 111.00000  88.35294
-#&gt;  [78]  71.00000  48.00000  67.00000 100.00000  72.00000  83.00000  36.00000
-#&gt;  [85]  25.00000 103.00000  84.00000  67.00000  42.00000  66.00000  22.00000
-#&gt;  [92]  46.00000 113.00000  30.00000  97.00000  25.00000  42.00000  82.00000
-#&gt;  [99]  77.00000  47.00000  69.00000  93.00000  22.00000  91.00000  96.00000
-#&gt; [106] 100.00000  33.00000 107.00000  79.00000  65.00000  62.00000 118.00000
-#&gt; [113]  99.00000  29.00000  87.00000  35.00000  75.00000  53.00000  88.00000
-#&gt; [120]  94.00000 105.00000  89.00000 100.00000 103.00000 113.00000  78.00000
-#&gt; [127]  68.00000  48.00000 100.00000 120.00000  84.00000  69.00000  87.00000
-#&gt; [134]  98.00000  31.00000  94.00000  75.00000  42.00000 103.00000  62.00000
-#&gt; [141]  60.00000  42.00000  84.00000  88.00000  68.00000  63.00000  83.00000
-#&gt; [148]  54.00000 119.00000 120.00000  84.00000  58.00000  78.00000  36.00000
-#&gt; [155]  69.00000  72.00000  34.00000  58.00000  90.00000  60.00000  28.00000
-#&gt; [162]  21.00000  74.00000  64.00000  64.00000  58.00000  67.00000  73.00000
-#&gt; [169]  89.00000  41.00000  39.00000 106.00000  88.35294  91.00000  24.00000
-#&gt; [176]  89.00000 107.00000  72.00000  71.00000  25.00000 112.00000  83.00000
-#&gt; [183]  60.00000  74.00000  33.00000 100.00000  51.00000  32.00000  37.00000
-#&gt; [190] 117.00000  37.00000  42.00000  26.00000  70.00000  98.00000  93.00000
-#&gt; [197]  53.05882  61.00000  80.00000  88.00000  53.76471  83.00000  78.00000
-#&gt; [204]  82.00000  80.00000  22.00000  67.00000 105.00000  54.00000  21.00000
-#&gt; [211]  41.00000 118.00000  69.00000  84.00000 115.00000  83.00000  33.00000
-#&gt; [218]  44.00000  61.00000  79.00000 120.00000  44.00000 119.00000  45.00000
-#&gt; [225]  82.00000  25.00000  33.00000  64.00000  73.00000 104.00000  60.00000
-#&gt; [232]  69.00000  80.00000  76.00000  62.00000  32.00000  34.00000  28.00000
-#&gt; [239]  24.00000 105.00000  80.00000  63.00000  46.00000  25.00000  30.00000
-#&gt; [246]  43.00000  56.00000 114.00000  52.00000  67.00000 105.00000 111.00000
-#&gt; [253]  97.00000  24.00000  52.57143  81.00000  40.00000  62.00000  38.00000
-#&gt; [260]  36.00000  55.63636  42.00000  77.00000  26.00000  29.00000  35.00000
-#&gt; [267]  93.00000  82.00000  57.00000  69.00000  26.00000  56.00000  33.00000
-#&gt; [274] 106.00000  93.00000 119.00000  69.00000  48.00000 113.00000  57.00000
-#&gt; [281]  86.00000  69.00000  96.00000 110.00000  46.00000  26.00000 118.00000
-#&gt; [288]  44.00000  40.00000  77.00000 111.00000  70.00000  66.00000  84.00000
-#&gt; [295]  76.00000  35.00000  44.00000  83.00000  63.00000  52.57143  78.00000
-#&gt; [302]  93.00000  77.00000  52.00000  98.00000  29.00000  32.00000  92.00000
-#&gt; [309]  80.00000 111.00000  65.00000  68.00000 117.00000  81.00000  33.00000
-#&gt; [316]  21.00000  36.00000  30.00000  72.00000  45.00000  70.00000  39.00000
-#&gt; [323]  50.00000 105.00000  65.00000  69.00000  30.00000  38.00000  66.00000
-#&gt; [330]  54.00000  59.00000  63.00000  33.00000  60.00000  55.63636  70.00000
-#&gt; [337]  35.00000  38.00000  24.00000  44.00000  29.00000 120.00000 102.00000
-#&gt; [344]  42.00000  80.00000  68.00000 107.00000  39.00000 102.00000  27.00000
-#&gt; [351] 101.00000 115.00000 103.00000  67.00000  31.00000 100.00000 109.00000
-#&gt; [358]  88.35294  96.00000  62.00000  86.00000  25.00000  55.00000  75.00000
-#&gt; [365]  21.00000  30.00000  53.05882 106.00000  22.00000 100.00000  41.00000
-#&gt; [372]  81.00000  50.00000  71.00000  47.00000  46.00000  60.00000  61.00000
-#&gt; [379]  88.00000 111.00000  64.00000  65.00000  28.00000 117.00000  37.00000
-#&gt; [386]  69.43478 116.00000  73.00000  89.00000  42.00000  75.00000  63.00000
-#&gt; [393]  42.00000  51.00000  58.00000 108.00000  23.00000  26.00000  79.00000
-#&gt; [400]  37.00000
+<span class='fu'>imputate_na</span>(<span class='no'>carseats</span>, <span class='no'>Income</span>, <span class='no'>US</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"rpart"</span>)</div><div class='output co'>#&gt;   [1]  73.00000  48.00000  35.00000  49.16667  64.00000 113.00000 105.00000  81.00000
+#&gt;   [9] 110.00000 113.00000  78.00000  94.00000  58.12500  28.00000 117.00000  95.00000
+#&gt;  [17]  32.00000  74.00000 110.00000  76.00000  90.00000  29.00000  46.00000  31.00000
+#&gt;  [25]  56.69697  32.00000 115.00000 118.00000  74.00000  99.00000  94.00000  58.00000
+#&gt;  [33]  32.00000  74.66279  54.00000  84.00000  76.00000  41.00000  73.00000  60.00000
+#&gt;  [41]  98.00000  53.00000  69.00000  42.00000  79.00000  63.00000  90.00000  98.00000
+#&gt;  [49]  52.00000  93.00000  32.00000  90.00000  40.00000  64.00000 103.00000  81.00000
+#&gt;  [57]  82.00000  91.00000  93.00000  71.00000 102.00000  32.00000  45.00000  74.66279
+#&gt;  [65]  67.00000  26.00000  74.66279  61.00000  56.69697  59.00000  81.00000  51.00000
+#&gt;  [73]  45.00000  90.00000  68.00000 111.00000  87.00000  71.00000  48.00000  67.00000
+#&gt;  [81] 100.00000  72.00000  83.00000  36.00000  25.00000 103.00000  84.00000  67.00000
+#&gt;  [89]  81.53846  66.00000  22.00000  46.00000 113.00000  30.00000  97.00000  25.00000
+#&gt;  [97]  42.00000  82.00000  77.00000  47.00000  69.00000  93.00000  22.00000  91.00000
+#&gt; [105]  96.00000 100.00000  33.00000 107.00000  79.00000  74.66279  62.00000 118.00000
+#&gt; [113]  99.00000  29.00000  87.00000  35.00000  75.00000  53.00000  88.00000  94.00000
+#&gt; [121]  72.00000  89.00000 100.00000 103.00000 113.00000  78.00000  68.00000  48.00000
+#&gt; [129] 100.00000 120.00000  84.00000  69.00000  87.00000  98.00000  31.00000  94.00000
+#&gt; [137]  75.00000  42.00000 103.00000  62.00000  60.00000  42.00000  84.00000  88.00000
+#&gt; [145]  68.00000  63.00000  83.00000  54.00000 119.00000 120.00000  84.00000  58.00000
+#&gt; [153]  78.00000  36.00000  69.00000  72.00000  34.00000  74.66279  56.69697  60.00000
+#&gt; [161]  28.00000  21.00000  74.00000  64.00000  64.00000  58.00000  67.00000  73.00000
+#&gt; [169]  89.00000  41.00000  39.00000 106.00000 102.00000  91.00000  24.00000  89.00000
+#&gt; [177] 107.00000  72.00000  71.00000  25.00000 112.00000  83.00000  60.00000  74.00000
+#&gt; [185]  33.00000 100.00000  51.00000  32.00000  37.00000 117.00000  37.00000  42.00000
+#&gt; [193]  26.00000  70.00000  98.00000  93.00000  28.00000  61.00000  53.36538  88.00000
+#&gt; [201]  92.00000  83.00000  78.00000  82.00000  80.00000  22.00000  67.00000 105.00000
+#&gt; [209]  54.00000  21.00000  41.00000 118.00000  69.00000  84.00000 115.00000  83.00000
+#&gt; [217]  33.00000  44.00000  61.00000  79.00000 120.00000  44.00000 119.00000  45.00000
+#&gt; [225]  82.00000  25.00000  33.00000  64.00000  73.00000 104.00000  60.00000  69.00000
+#&gt; [233]  80.00000  76.00000  62.00000  32.00000  34.00000  28.00000  24.00000 105.00000
+#&gt; [241]  80.00000  63.00000  53.36538  25.00000  30.00000  43.00000  56.00000 114.00000
+#&gt; [249]  52.00000  67.00000 105.00000 111.00000  97.00000  24.00000 104.00000  81.00000
+#&gt; [257]  40.00000  62.00000  38.00000  36.00000 117.00000  42.00000  77.00000  26.00000
+#&gt; [265]  29.00000  35.00000  93.00000  82.00000  57.00000  69.00000  26.00000  56.00000
+#&gt; [273]  33.00000 106.00000  93.00000 119.00000  69.00000  49.16667 113.00000  57.00000
+#&gt; [281]  86.00000  69.00000  96.00000 110.00000  46.00000  56.69697 118.00000  44.00000
+#&gt; [289]  40.00000  77.00000 101.11111  70.00000  66.00000  84.00000  76.00000  35.00000
+#&gt; [297]  44.00000  83.00000  63.00000  40.00000  78.00000  93.00000  77.00000  52.00000
+#&gt; [305]  98.00000  29.00000  32.00000  71.36364  80.00000 111.00000  65.00000  68.00000
+#&gt; [313] 117.00000  81.00000  33.00000  21.00000  36.00000  30.00000  72.00000  45.00000
+#&gt; [321]  70.00000  39.00000  50.00000 105.00000  65.00000  69.00000  30.00000  38.00000
+#&gt; [329]  66.00000  54.00000  59.00000  63.00000  33.00000  60.00000 117.00000  70.00000
+#&gt; [337]  35.00000  38.00000  24.00000  44.00000  29.00000 120.00000 102.00000  42.00000
+#&gt; [345]  80.00000  68.00000 107.00000  39.00000 102.00000  27.00000 101.00000 115.00000
+#&gt; [353] 103.00000  67.00000  31.00000 100.00000 109.00000  73.00000  96.00000  62.00000
+#&gt; [361]  86.00000  25.00000  55.00000  75.00000  21.00000  30.00000  56.00000  74.66279
+#&gt; [369]  22.00000 100.00000  41.00000  81.00000  50.00000  71.00000  47.00000  46.00000
+#&gt; [377]  60.00000  61.00000  88.00000 111.00000  64.00000  65.00000  53.36538 117.00000
+#&gt; [385]  37.00000  73.00000 116.00000  73.00000  89.00000  42.00000  75.00000  63.00000
+#&gt; [393]  42.00000  51.00000  58.00000 108.00000  23.00000  26.00000  79.00000  37.00000
 #&gt; attr(,"var_type")
 #&gt; [1] "numerical"
 #&gt; attr(,"method")
 #&gt; [1] "rpart"
 #&gt; attr(,"na_pos")
-#&gt;  [1]   5  24  34  43  47  55  62  63  70  77 173 197 201 255 261 300 335 358 367
-#&gt; [20] 386
+#&gt;  [1]   4  13  25  34  64  67  69  89 110 121 158 159 199 243 278 286 291 308 368 383
 #&gt; attr(,"type")
 #&gt; [1] "missing values"
 #&gt; attr(,"message")
@@ -325,35 +312,32 @@ to help determine whether the imputed value is used in the analysis.</p>
 #&gt; attr(,"class")
 #&gt; [1] "imputation" "numeric"   </div><div class='input'>
 <span class='co'># Replace the missing value of the Urban variable with mode</span>
-<span class='fu'>imputate_na</span>(<span class='no'>carseats</span>, <span class='no'>Urban</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mode"</span>)</div><div class='output co'>#&gt;   [1] Yes Yes Yes Yes Yes No  Yes Yes No  No  No  Yes Yes Yes Yes No  Yes Yes
-#&gt;  [19] No  Yes Yes No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes No 
-#&gt;  [37] No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes
-#&gt;  [55] No  Yes Yes Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes Yes Yes Yes No 
-#&gt;  [73] Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes No  No  Yes No  Yes No 
-#&gt;  [91] No  Yes Yes Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes
-#&gt; [109] Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes No 
-#&gt; [127] Yes Yes Yes No  Yes Yes Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes
-#&gt; [145] No  Yes Yes No  No  Yes No  No  No  No  No  Yes Yes No  No  No  No  Yes
-#&gt; [163] Yes No  No  Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes No  Yes No  Yes
-#&gt; [181] Yes Yes Yes Yes No  Yes No  Yes Yes No  No  Yes No  Yes Yes Yes Yes Yes
-#&gt; [199] Yes Yes No  Yes No  Yes Yes Yes Yes No  Yes No  No  Yes Yes Yes Yes Yes
-#&gt; [217] Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes No  No  No  No  Yes No 
-#&gt; [235] No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes
-#&gt; [253] Yes No  Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes No  No  Yes Yes
-#&gt; [271] Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes No  No  Yes No  Yes
-#&gt; [289] No  Yes No  Yes Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
-#&gt; [307] Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No  No  No  Yes Yes Yes Yes
-#&gt; [325] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No 
-#&gt; [343] No  Yes No  Yes No  No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes
-#&gt; [361] No  No  Yes Yes Yes No  No  Yes No  Yes Yes Yes No  Yes Yes Yes Yes No 
-#&gt; [379] Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes No  Yes Yes
-#&gt; [397] No  Yes Yes Yes
+<span class='fu'>imputate_na</span>(<span class='no'>carseats</span>, <span class='no'>Urban</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mode"</span>)</div><div class='output co'>#&gt;   [1] Yes Yes Yes Yes Yes No  Yes Yes No  No  No  Yes Yes Yes Yes No  Yes Yes No  Yes Yes
+#&gt;  [22] No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes No  No  Yes
+#&gt;  [43] Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes
+#&gt;  [64] Yes No  No  Yes Yes Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes
+#&gt;  [85] Yes No  Yes No  Yes No  No  Yes Yes Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes
+#&gt; [106] Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes No 
+#&gt; [127] Yes Yes Yes No  Yes Yes Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes No  Yes Yes
+#&gt; [148] No  No  Yes Yes No  No  No  No  Yes Yes No  No  No  No  No  Yes No  Yes Yes Yes Yes
+#&gt; [169] Yes Yes Yes Yes Yes Yes No  Yes No  Yes No  Yes Yes Yes Yes Yes No  Yes No  Yes Yes
+#&gt; [190] No  No  Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes No  Yes Yes Yes Yes No  Yes No 
+#&gt; [211] No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes No  No  No 
+#&gt; [232] No  Yes No  No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes
+#&gt; [253] Yes No  Yes Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes No  No  Yes Yes Yes Yes Yes
+#&gt; [274] Yes Yes Yes Yes Yes No  Yes Yes No  Yes No  No  Yes No  Yes No  Yes No  Yes Yes Yes
+#&gt; [295] Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes
+#&gt; [316] Yes Yes No  No  No  Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes
+#&gt; [337] Yes Yes Yes Yes Yes No  No  Yes No  Yes No  No  Yes No  No  No  Yes No  Yes Yes Yes
+#&gt; [358] Yes Yes Yes No  No  Yes Yes Yes No  No  Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes
+#&gt; [379] Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes No  Yes Yes No  Yes Yes
+#&gt; [400] Yes
 #&gt; attr(,"var_type")
 #&gt; [1] categorical
 #&gt; attr(,"method")
 #&gt; [1] mode
 #&gt; attr(,"na_pos")
-#&gt; [1] 162 163 217 240 260
+#&gt; [1]  85 151 165 335 378
 #&gt; attr(,"type")
 #&gt; [1] missing values
 #&gt; attr(,"message")
@@ -389,37 +373,34 @@ to help determine whether the imputed value is used in the analysis.</p>
 #&gt;   5   2  Income  Urban
 #&gt;   5   3  Income  Urban
 #&gt;   5   4  Income  Urban
-#&gt;   5   5  Income  Urban</div><div class='output co'>#&gt;   [1] Yes Yes Yes Yes Yes No  Yes Yes No  No  No  Yes Yes Yes Yes No  Yes Yes
-#&gt;  [19] No  Yes Yes No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes No 
-#&gt;  [37] No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes
-#&gt;  [55] No  Yes Yes Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes Yes Yes Yes No 
-#&gt;  [73] Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes No  No  Yes No  Yes No 
-#&gt;  [91] No  Yes Yes Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes
-#&gt; [109] Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes No 
-#&gt; [127] Yes Yes Yes No  Yes Yes Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes
-#&gt; [145] No  Yes Yes No  No  Yes No  No  No  No  No  Yes Yes No  No  No  No  No 
-#&gt; [163] Yes No  No  Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes No  Yes No  Yes
-#&gt; [181] Yes Yes Yes Yes No  Yes No  Yes Yes No  No  Yes No  Yes Yes Yes Yes Yes
-#&gt; [199] Yes Yes No  Yes No  Yes Yes Yes Yes No  Yes No  No  Yes Yes Yes Yes Yes
-#&gt; [217] Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes No  No  No  No  Yes No 
-#&gt; [235] No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes
-#&gt; [253] Yes No  Yes Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes No  No  Yes Yes
-#&gt; [271] Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes No  No  Yes No  Yes
-#&gt; [289] No  Yes No  Yes Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
-#&gt; [307] Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No  No  No  Yes Yes Yes Yes
-#&gt; [325] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No 
-#&gt; [343] No  Yes No  Yes No  No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes
-#&gt; [361] No  No  Yes Yes Yes No  No  Yes No  Yes Yes Yes No  Yes Yes Yes Yes No 
-#&gt; [379] Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes No  Yes Yes
-#&gt; [397] No  Yes Yes Yes
+#&gt;   5   5  Income  Urban</div><div class='output co'>#&gt;   [1] Yes Yes Yes Yes Yes No  Yes Yes No  No  No  Yes Yes Yes Yes No  Yes Yes No  Yes Yes
+#&gt;  [22] No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes No  No  Yes
+#&gt;  [43] Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes
+#&gt;  [64] Yes No  No  Yes Yes Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes
+#&gt;  [85] Yes No  Yes No  Yes No  No  Yes Yes Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes
+#&gt; [106] Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes No 
+#&gt; [127] Yes Yes Yes No  Yes Yes Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes No  Yes Yes
+#&gt; [148] No  No  Yes Yes No  No  No  No  Yes Yes No  No  No  No  No  Yes No  No  Yes Yes Yes
+#&gt; [169] Yes Yes Yes Yes Yes Yes No  Yes No  Yes No  Yes Yes Yes Yes Yes No  Yes No  Yes Yes
+#&gt; [190] No  No  Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes No  Yes Yes Yes Yes No  Yes No 
+#&gt; [211] No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes No  No  No 
+#&gt; [232] No  Yes No  No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes
+#&gt; [253] Yes No  Yes Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes No  No  Yes Yes Yes Yes Yes
+#&gt; [274] Yes Yes Yes Yes Yes No  Yes Yes No  Yes No  No  Yes No  Yes No  Yes No  Yes Yes Yes
+#&gt; [295] Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes
+#&gt; [316] Yes Yes No  No  No  Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes No  Yes
+#&gt; [337] Yes Yes Yes Yes Yes No  No  Yes No  Yes No  No  Yes No  No  No  Yes No  Yes Yes Yes
+#&gt; [358] Yes Yes Yes No  No  Yes Yes Yes No  No  Yes No  Yes Yes Yes No  Yes Yes Yes Yes No 
+#&gt; [379] Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes No  Yes Yes No  Yes Yes
+#&gt; [400] Yes
 #&gt; attr(,"var_type")
 #&gt; [1] categorical
 #&gt; attr(,"method")
 #&gt; [1] mice
 #&gt; attr(,"na_pos")
-#&gt; [1] 162 163 217 240 260
+#&gt; [1]  85 151 165 335 378
 #&gt; attr(,"seed")
-#&gt; [1] 70673
+#&gt; [1] 99768
 #&gt; attr(,"type")
 #&gt; [1] missing values
 #&gt; attr(,"message")
@@ -435,78 +416,71 @@ to help determine whether the imputed value is used in the analysis.</p>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>Income_imp</span> <span class='kw'>=</span> <span class='fu'>imputate_na</span>(<span class='no'>carseats</span>, <span class='no'>Income</span>, <span class='no'>US</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"knn"</span>, <span class='kw'>no_attrs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>US</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>orig</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>Income</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-    <span class='kw'>imputation</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>Income_imp</span>))</div><div class='output co'>#&gt; <span class='message'>`summarise()` ungrouping output (override with `.groups` argument)</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 3</span><span>
+    <span class='kw'>imputation</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>Income_imp</span>))</div><div class='output co'>#&gt; <span class='message'>Registered S3 method overwritten by 'quantmod':</span>
+#&gt; <span class='message'>  method            from</span>
+#&gt; <span class='message'>  as.zoo.data.frame zoo </span></div><div class='output co'>#&gt; <span class='message'>`summarise()` ungrouping output (override with `.groups` argument)</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 3</span><span>
 #&gt;   US     orig imputation
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> No     65.6       65.5
-#&gt; </span><span style='color: #555555;'>2</span><span> Yes    70.2       70.3</div><div class='input'>
+#&gt; </span><span style='color: #555555;'>1</span><span> No     65.0       64.9
+#&gt; </span><span style='color: #555555;'>2</span><span> Yes    70.5       70.4</div><div class='input'>
 <span class='co'># If the variable of interest is a numerical variable</span>
 <span class='no'>income</span> <span class='kw'>&lt;-</span> <span class='fu'>imputate_na</span>(<span class='no'>carseats</span>, <span class='no'>Income</span>, <span class='no'>US</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"rpart"</span>)
-<span class='no'>income</span></div><div class='output co'>#&gt;   [1]  73.00000  48.00000  35.00000 100.00000  55.63636 113.00000 105.00000
-#&gt;   [8]  81.00000 110.00000 113.00000  78.00000  94.00000  35.00000  28.00000
-#&gt;  [15] 117.00000  95.00000  32.00000  74.00000 110.00000  76.00000  90.00000
-#&gt;  [22]  29.00000  46.00000  76.51852 119.00000  32.00000 115.00000 118.00000
-#&gt;  [29]  74.00000  99.00000  94.00000  58.00000  32.00000  78.06452  54.00000
-#&gt;  [36]  84.00000  76.00000  41.00000  73.00000  60.00000  98.00000  53.00000
-#&gt;  [43]  88.35294  42.00000  79.00000  63.00000  47.75000  98.00000  52.00000
-#&gt;  [50]  93.00000  32.00000  90.00000  40.00000  64.00000  67.00000  81.00000
-#&gt;  [57]  82.00000  91.00000  93.00000  71.00000 102.00000  44.26316  53.05882
-#&gt;  [64]  88.00000  67.00000  26.00000  92.00000  61.00000  69.00000  69.43478
-#&gt;  [71]  81.00000  51.00000  45.00000  90.00000  68.00000 111.00000  88.35294
-#&gt;  [78]  71.00000  48.00000  67.00000 100.00000  72.00000  83.00000  36.00000
-#&gt;  [85]  25.00000 103.00000  84.00000  67.00000  42.00000  66.00000  22.00000
-#&gt;  [92]  46.00000 113.00000  30.00000  97.00000  25.00000  42.00000  82.00000
-#&gt;  [99]  77.00000  47.00000  69.00000  93.00000  22.00000  91.00000  96.00000
-#&gt; [106] 100.00000  33.00000 107.00000  79.00000  65.00000  62.00000 118.00000
-#&gt; [113]  99.00000  29.00000  87.00000  35.00000  75.00000  53.00000  88.00000
-#&gt; [120]  94.00000 105.00000  89.00000 100.00000 103.00000 113.00000  78.00000
-#&gt; [127]  68.00000  48.00000 100.00000 120.00000  84.00000  69.00000  87.00000
-#&gt; [134]  98.00000  31.00000  94.00000  75.00000  42.00000 103.00000  62.00000
-#&gt; [141]  60.00000  42.00000  84.00000  88.00000  68.00000  63.00000  83.00000
-#&gt; [148]  54.00000 119.00000 120.00000  84.00000  58.00000  78.00000  36.00000
-#&gt; [155]  69.00000  72.00000  34.00000  58.00000  90.00000  60.00000  28.00000
-#&gt; [162]  21.00000  74.00000  64.00000  64.00000  58.00000  67.00000  73.00000
-#&gt; [169]  89.00000  41.00000  39.00000 106.00000  88.35294  91.00000  24.00000
-#&gt; [176]  89.00000 107.00000  72.00000  71.00000  25.00000 112.00000  83.00000
-#&gt; [183]  60.00000  74.00000  33.00000 100.00000  51.00000  32.00000  37.00000
-#&gt; [190] 117.00000  37.00000  42.00000  26.00000  70.00000  98.00000  93.00000
-#&gt; [197]  53.05882  61.00000  80.00000  88.00000  53.76471  83.00000  78.00000
-#&gt; [204]  82.00000  80.00000  22.00000  67.00000 105.00000  54.00000  21.00000
-#&gt; [211]  41.00000 118.00000  69.00000  84.00000 115.00000  83.00000  33.00000
-#&gt; [218]  44.00000  61.00000  79.00000 120.00000  44.00000 119.00000  45.00000
-#&gt; [225]  82.00000  25.00000  33.00000  64.00000  73.00000 104.00000  60.00000
-#&gt; [232]  69.00000  80.00000  76.00000  62.00000  32.00000  34.00000  28.00000
-#&gt; [239]  24.00000 105.00000  80.00000  63.00000  46.00000  25.00000  30.00000
-#&gt; [246]  43.00000  56.00000 114.00000  52.00000  67.00000 105.00000 111.00000
-#&gt; [253]  97.00000  24.00000  52.57143  81.00000  40.00000  62.00000  38.00000
-#&gt; [260]  36.00000  55.63636  42.00000  77.00000  26.00000  29.00000  35.00000
-#&gt; [267]  93.00000  82.00000  57.00000  69.00000  26.00000  56.00000  33.00000
-#&gt; [274] 106.00000  93.00000 119.00000  69.00000  48.00000 113.00000  57.00000
-#&gt; [281]  86.00000  69.00000  96.00000 110.00000  46.00000  26.00000 118.00000
-#&gt; [288]  44.00000  40.00000  77.00000 111.00000  70.00000  66.00000  84.00000
-#&gt; [295]  76.00000  35.00000  44.00000  83.00000  63.00000  52.57143  78.00000
-#&gt; [302]  93.00000  77.00000  52.00000  98.00000  29.00000  32.00000  92.00000
-#&gt; [309]  80.00000 111.00000  65.00000  68.00000 117.00000  81.00000  33.00000
-#&gt; [316]  21.00000  36.00000  30.00000  72.00000  45.00000  70.00000  39.00000
-#&gt; [323]  50.00000 105.00000  65.00000  69.00000  30.00000  38.00000  66.00000
-#&gt; [330]  54.00000  59.00000  63.00000  33.00000  60.00000  55.63636  70.00000
-#&gt; [337]  35.00000  38.00000  24.00000  44.00000  29.00000 120.00000 102.00000
-#&gt; [344]  42.00000  80.00000  68.00000 107.00000  39.00000 102.00000  27.00000
-#&gt; [351] 101.00000 115.00000 103.00000  67.00000  31.00000 100.00000 109.00000
-#&gt; [358]  88.35294  96.00000  62.00000  86.00000  25.00000  55.00000  75.00000
-#&gt; [365]  21.00000  30.00000  53.05882 106.00000  22.00000 100.00000  41.00000
-#&gt; [372]  81.00000  50.00000  71.00000  47.00000  46.00000  60.00000  61.00000
-#&gt; [379]  88.00000 111.00000  64.00000  65.00000  28.00000 117.00000  37.00000
-#&gt; [386]  69.43478 116.00000  73.00000  89.00000  42.00000  75.00000  63.00000
-#&gt; [393]  42.00000  51.00000  58.00000 108.00000  23.00000  26.00000  79.00000
-#&gt; [400]  37.00000
+<span class='no'>income</span></div><div class='output co'>#&gt;   [1]  73.00000  48.00000  35.00000  49.16667  64.00000 113.00000 105.00000  81.00000
+#&gt;   [9] 110.00000 113.00000  78.00000  94.00000  58.12500  28.00000 117.00000  95.00000
+#&gt;  [17]  32.00000  74.00000 110.00000  76.00000  90.00000  29.00000  46.00000  31.00000
+#&gt;  [25]  56.69697  32.00000 115.00000 118.00000  74.00000  99.00000  94.00000  58.00000
+#&gt;  [33]  32.00000  74.66279  54.00000  84.00000  76.00000  41.00000  73.00000  60.00000
+#&gt;  [41]  98.00000  53.00000  69.00000  42.00000  79.00000  63.00000  90.00000  98.00000
+#&gt;  [49]  52.00000  93.00000  32.00000  90.00000  40.00000  64.00000 103.00000  81.00000
+#&gt;  [57]  82.00000  91.00000  93.00000  71.00000 102.00000  32.00000  45.00000  74.66279
+#&gt;  [65]  67.00000  26.00000  74.66279  61.00000  56.69697  59.00000  81.00000  51.00000
+#&gt;  [73]  45.00000  90.00000  68.00000 111.00000  87.00000  71.00000  48.00000  67.00000
+#&gt;  [81] 100.00000  72.00000  83.00000  36.00000  25.00000 103.00000  84.00000  67.00000
+#&gt;  [89]  81.53846  66.00000  22.00000  46.00000 113.00000  30.00000  97.00000  25.00000
+#&gt;  [97]  42.00000  82.00000  77.00000  47.00000  69.00000  93.00000  22.00000  91.00000
+#&gt; [105]  96.00000 100.00000  33.00000 107.00000  79.00000  74.66279  62.00000 118.00000
+#&gt; [113]  99.00000  29.00000  87.00000  35.00000  75.00000  53.00000  88.00000  94.00000
+#&gt; [121]  72.00000  89.00000 100.00000 103.00000 113.00000  78.00000  68.00000  48.00000
+#&gt; [129] 100.00000 120.00000  84.00000  69.00000  87.00000  98.00000  31.00000  94.00000
+#&gt; [137]  75.00000  42.00000 103.00000  62.00000  60.00000  42.00000  84.00000  88.00000
+#&gt; [145]  68.00000  63.00000  83.00000  54.00000 119.00000 120.00000  84.00000  58.00000
+#&gt; [153]  78.00000  36.00000  69.00000  72.00000  34.00000  74.66279  56.69697  60.00000
+#&gt; [161]  28.00000  21.00000  74.00000  64.00000  64.00000  58.00000  67.00000  73.00000
+#&gt; [169]  89.00000  41.00000  39.00000 106.00000 102.00000  91.00000  24.00000  89.00000
+#&gt; [177] 107.00000  72.00000  71.00000  25.00000 112.00000  83.00000  60.00000  74.00000
+#&gt; [185]  33.00000 100.00000  51.00000  32.00000  37.00000 117.00000  37.00000  42.00000
+#&gt; [193]  26.00000  70.00000  98.00000  93.00000  28.00000  61.00000  53.36538  88.00000
+#&gt; [201]  92.00000  83.00000  78.00000  82.00000  80.00000  22.00000  67.00000 105.00000
+#&gt; [209]  54.00000  21.00000  41.00000 118.00000  69.00000  84.00000 115.00000  83.00000
+#&gt; [217]  33.00000  44.00000  61.00000  79.00000 120.00000  44.00000 119.00000  45.00000
+#&gt; [225]  82.00000  25.00000  33.00000  64.00000  73.00000 104.00000  60.00000  69.00000
+#&gt; [233]  80.00000  76.00000  62.00000  32.00000  34.00000  28.00000  24.00000 105.00000
+#&gt; [241]  80.00000  63.00000  53.36538  25.00000  30.00000  43.00000  56.00000 114.00000
+#&gt; [249]  52.00000  67.00000 105.00000 111.00000  97.00000  24.00000 104.00000  81.00000
+#&gt; [257]  40.00000  62.00000  38.00000  36.00000 117.00000  42.00000  77.00000  26.00000
+#&gt; [265]  29.00000  35.00000  93.00000  82.00000  57.00000  69.00000  26.00000  56.00000
+#&gt; [273]  33.00000 106.00000  93.00000 119.00000  69.00000  49.16667 113.00000  57.00000
+#&gt; [281]  86.00000  69.00000  96.00000 110.00000  46.00000  56.69697 118.00000  44.00000
+#&gt; [289]  40.00000  77.00000 101.11111  70.00000  66.00000  84.00000  76.00000  35.00000
+#&gt; [297]  44.00000  83.00000  63.00000  40.00000  78.00000  93.00000  77.00000  52.00000
+#&gt; [305]  98.00000  29.00000  32.00000  71.36364  80.00000 111.00000  65.00000  68.00000
+#&gt; [313] 117.00000  81.00000  33.00000  21.00000  36.00000  30.00000  72.00000  45.00000
+#&gt; [321]  70.00000  39.00000  50.00000 105.00000  65.00000  69.00000  30.00000  38.00000
+#&gt; [329]  66.00000  54.00000  59.00000  63.00000  33.00000  60.00000 117.00000  70.00000
+#&gt; [337]  35.00000  38.00000  24.00000  44.00000  29.00000 120.00000 102.00000  42.00000
+#&gt; [345]  80.00000  68.00000 107.00000  39.00000 102.00000  27.00000 101.00000 115.00000
+#&gt; [353] 103.00000  67.00000  31.00000 100.00000 109.00000  73.00000  96.00000  62.00000
+#&gt; [361]  86.00000  25.00000  55.00000  75.00000  21.00000  30.00000  56.00000  74.66279
+#&gt; [369]  22.00000 100.00000  41.00000  81.00000  50.00000  71.00000  47.00000  46.00000
+#&gt; [377]  60.00000  61.00000  88.00000 111.00000  64.00000  65.00000  53.36538 117.00000
+#&gt; [385]  37.00000  73.00000 116.00000  73.00000  89.00000  42.00000  75.00000  63.00000
+#&gt; [393]  42.00000  51.00000  58.00000 108.00000  23.00000  26.00000  79.00000  37.00000
 #&gt; attr(,"var_type")
 #&gt; [1] "numerical"
 #&gt; attr(,"method")
 #&gt; [1] "rpart"
 #&gt; attr(,"na_pos")
-#&gt;  [1]   5  24  34  43  47  55  62  63  70  77 173 197 201 255 261 300 335 358 367
-#&gt; [20] 386
+#&gt;  [1]   4  13  25  34  64  67  69  89 110 121 158 159 199 243 278 286 291 308 368 383
 #&gt; attr(,"type")
 #&gt; [1] "missing values"
 #&gt; attr(,"message")
@@ -521,29 +495,31 @@ to help determine whether the imputed value is used in the analysis.</p>
 #&gt;              Original   Imputation
 #&gt; n        380.00000000 400.00000000
 #&gt; na        20.00000000   0.00000000
-#&gt; mean      68.53421053  68.33467662
-#&gt; sd        27.94163514  27.44685740
-#&gt; se_mean    1.43337564   1.37234287
-#&gt; IQR       47.50000000  45.00000000
-#&gt; skewness   0.04884927   0.06846486
-#&gt; kurtosis  -1.07523194  -1.02731761
+#&gt; mean      68.48684211  68.35583080
+#&gt; sd        27.90376102  27.35958064
+#&gt; se_mean    1.43143274   1.36797903
+#&gt; IQR       47.25000000  45.00000000
+#&gt; skewness   0.05561661   0.07120062
+#&gt; kurtosis  -1.06529990  -1.00244290
 #&gt; p00       21.00000000  21.00000000
 #&gt; p01       21.79000000  21.99000000
 #&gt; p05       25.95000000  26.00000000
-#&gt; p10       30.00000000  30.90000000
+#&gt; p10       30.00000000  31.00000000
 #&gt; p20       39.00000000  40.00000000
 #&gt; p25       42.75000000  44.00000000
-#&gt; p30       48.00000000  51.00000000
+#&gt; p30       49.40000000  51.00000000
 #&gt; p40       62.00000000  61.00000000
 #&gt; p50       69.00000000  69.00000000
-#&gt; p60       77.00000000  76.71111111
-#&gt; p70       84.00000000  84.00000000
-#&gt; p75       90.25000000  89.00000000
-#&gt; p80       96.00000000  94.00000000
+#&gt; p60       77.00000000  75.00000000
+#&gt; p70       84.00000000  83.00000000
+#&gt; p75       90.00000000  89.00000000
+#&gt; p80       96.00000000  94.20000000
 #&gt; p90      107.00000000 106.10000000
-#&gt; p95      115.00000000 114.05000000
+#&gt; p95      115.00000000 115.00000000
 #&gt; p99      119.21000000 119.01000000
-#&gt; p100     120.00000000 120.00000000</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>income</span>)</div><div class='img'><img src='imputate_na-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; p100     120.00000000 120.00000000</div><div class='input'>
+<span class='co'># plot(income)</span>
+
 <span class='co'># If the variable of interest is a categorical variable</span>
 <span class='no'>urban</span> <span class='kw'>&lt;-</span> <span class='fu'>imputate_na</span>(<span class='no'>carseats</span>, <span class='no'>Urban</span>, <span class='no'>US</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mice"</span>)</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
@@ -571,37 +547,34 @@ to help determine whether the imputed value is used in the analysis.</p>
 #&gt;   5   2  Income  Urban
 #&gt;   5   3  Income  Urban
 #&gt;   5   4  Income  Urban
-#&gt;   5   5  Income  Urban</div><div class='input'><span class='no'>urban</span></div><div class='output co'>#&gt;   [1] Yes Yes Yes Yes Yes No  Yes Yes No  No  No  Yes Yes Yes Yes No  Yes Yes
-#&gt;  [19] No  Yes Yes No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes No 
-#&gt;  [37] No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes
-#&gt;  [55] No  Yes Yes Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes Yes Yes Yes No 
-#&gt;  [73] Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes No  No  Yes No  Yes No 
-#&gt;  [91] No  Yes Yes Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes
-#&gt; [109] Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes No 
-#&gt; [127] Yes Yes Yes No  Yes Yes Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes
-#&gt; [145] No  Yes Yes No  No  Yes No  No  No  No  No  Yes Yes No  No  No  No  Yes
-#&gt; [163] No  No  No  Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes No  Yes No  Yes
-#&gt; [181] Yes Yes Yes Yes No  Yes No  Yes Yes No  No  Yes No  Yes Yes Yes Yes Yes
-#&gt; [199] Yes Yes No  Yes No  Yes Yes Yes Yes No  Yes No  No  Yes Yes Yes Yes Yes
-#&gt; [217] Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes No  No  No  No  Yes No 
-#&gt; [235] No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes
-#&gt; [253] Yes No  Yes Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes No  No  Yes Yes
-#&gt; [271] Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes No  No  Yes No  Yes
-#&gt; [289] No  Yes No  Yes Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
-#&gt; [307] Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No  No  No  Yes Yes Yes Yes
-#&gt; [325] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No 
-#&gt; [343] No  Yes No  Yes No  No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes
-#&gt; [361] No  No  Yes Yes Yes No  No  Yes No  Yes Yes Yes No  Yes Yes Yes Yes No 
-#&gt; [379] Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes No  Yes Yes
-#&gt; [397] No  Yes Yes Yes
+#&gt;   5   5  Income  Urban</div><div class='input'><span class='no'>urban</span></div><div class='output co'>#&gt;   [1] Yes Yes Yes Yes Yes No  Yes Yes No  No  No  Yes Yes Yes Yes No  Yes Yes No  Yes Yes
+#&gt;  [22] No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes No  No  Yes
+#&gt;  [43] Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes
+#&gt;  [64] Yes No  No  Yes Yes Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes
+#&gt;  [85] No  No  Yes No  Yes No  No  Yes Yes Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes
+#&gt; [106] Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes No 
+#&gt; [127] Yes Yes Yes No  Yes Yes Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes No  Yes Yes
+#&gt; [148] No  No  Yes No  No  No  No  No  Yes Yes No  No  No  No  No  Yes No  No  Yes Yes Yes
+#&gt; [169] Yes Yes Yes Yes Yes Yes No  Yes No  Yes No  Yes Yes Yes Yes Yes No  Yes No  Yes Yes
+#&gt; [190] No  No  Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes No  Yes Yes Yes Yes No  Yes No 
+#&gt; [211] No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes No  No  No 
+#&gt; [232] No  Yes No  No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes
+#&gt; [253] Yes No  Yes Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes No  No  Yes Yes Yes Yes Yes
+#&gt; [274] Yes Yes Yes Yes Yes No  Yes Yes No  Yes No  No  Yes No  Yes No  Yes No  Yes Yes Yes
+#&gt; [295] Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes
+#&gt; [316] Yes Yes No  No  No  Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes No  Yes
+#&gt; [337] Yes Yes Yes Yes Yes No  No  Yes No  Yes No  No  Yes No  No  No  Yes No  Yes Yes Yes
+#&gt; [358] Yes Yes Yes No  No  Yes Yes Yes No  No  Yes No  Yes Yes Yes No  Yes Yes Yes Yes No 
+#&gt; [379] Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes No  Yes Yes No  Yes Yes
+#&gt; [400] Yes
 #&gt; attr(,"var_type")
 #&gt; [1] categorical
 #&gt; attr(,"method")
 #&gt; [1] mice
 #&gt; attr(,"na_pos")
-#&gt; [1] 162 163 217 240 260
+#&gt; [1]  85 151 165 335 378
 #&gt; attr(,"seed")
-#&gt; [1] 88978
+#&gt; [1] 22636
 #&gt; attr(,"type")
 #&gt; [1] missing values
 #&gt; attr(,"message")
@@ -610,13 +583,15 @@ to help determine whether the imputed value is used in the analysis.</p>
 #&gt; [1] TRUE
 #&gt; Levels: No Yes</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>urban</span>)</div><div class='output co'>#&gt; * Impute missing values based on Multivariate Imputation by Chained Equations
 #&gt;  - method : mice
-#&gt;  - random seed : 88978
+#&gt;  - random seed : 22636
 #&gt; 
 #&gt; * Information of Imputation (before vs after)
 #&gt;      original imputation original_percent imputation_percent
-#&gt; No        116        118            29.00               29.5
-#&gt; Yes       279        282            69.75               70.5
-#&gt; &lt;NA&gt;        5          0             1.25                0.0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>urban</span>)</div><div class='img'><img src='imputate_na-2.png' alt='' width='700' height='433' /></div><div class='input'># }
+#&gt; No        114        119            28.50              29.75
+#&gt; Yes       281        281            70.25              70.25
+#&gt; &lt;NA&gt;        5          0             1.25               0.00</div><div class='input'>
+# plot(urban)
+# }
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
