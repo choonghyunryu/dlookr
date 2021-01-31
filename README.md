@@ -1387,6 +1387,14 @@ method.
 
 ``` r
 library(mice)
+#> 
+#> Attaching package: 'mice'
+#> The following object is masked from 'package:stats':
+#> 
+#>     filter
+#> The following objects are masked from 'package:base':
+#> 
+#>     cbind, rbind
 
 urban <- imputate_na(carseats, Urban, US, method = "mice")
 #> 
@@ -1426,7 +1434,7 @@ urban
 #>  [73] Yes No  No  No  Yes No  Yes Yes Yes Yes Yes No  No  No  Yes No  Yes No 
 #>  [91] No  Yes Yes No  Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes
 #> [109] Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes No 
-#> [127] Yes Yes Yes No  Yes No  Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes
+#> [127] Yes Yes Yes No  Yes Yes Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes
 #> [145] No  Yes Yes No  No  Yes No  No  No  No  No  Yes Yes No  No  No  No  No 
 #> [163] Yes No  No  Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes No  Yes No  Yes
 #> [181] Yes Yes Yes Yes No  Yes No  Yes Yes No  No  Yes No  Yes Yes Yes Yes Yes
@@ -1436,7 +1444,7 @@ urban
 #> [253] Yes No  Yes Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes No  No  Yes Yes
 #> [271] Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes No  No  Yes No  Yes
 #> [289] No  Yes No  Yes Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
-#> [307] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes No  No  No  Yes Yes Yes Yes
+#> [307] Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No  No  No  Yes Yes Yes Yes
 #> [325] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No 
 #> [343] No  Yes No  Yes No  No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes
 #> [361] No  No  Yes Yes Yes No  No  Yes No  Yes Yes Yes No  Yes Yes Yes Yes No 
@@ -1466,9 +1474,9 @@ summary(urban)
 #> 
 #> * Information of Imputation (before vs after)
 #>      original imputation original_percent imputation_percent
-#> No        115        120            28.75                 30
-#> Yes       275        280            68.75                 70
-#> <NA>       10          0             2.50                  0
+#> No        115        118            28.75               29.5
+#> Yes       275        282            68.75               70.5
+#> <NA>       10          0             2.50                0.0
 
 # viz of imputation
 plot(urban)
@@ -1490,6 +1498,9 @@ carseats %>%
   group_by(US) %>%
   summarise(orig = mean(Income, na.rm = TRUE),
     imputation = mean(Income_imp))
+#> Registered S3 method overwritten by 'quantmod':
+#>   method            from
+#>   as.zoo.data.frame zoo
 #> `summarise()` ungrouping output (override with `.groups` argument)
 #> # A tibble: 2 x 3
 #>   US     orig imputation
@@ -1870,14 +1881,14 @@ binning(carseats$Income, nbins = 5, type = "kmeans")
 #> binned type: kmeans
 #> number of bins: 5
 #> x
-#>   [21,36.5] (36.5,55.5] (55.5,75.5] (75.5,97.5]  (97.5,120]        <NA> 
-#>          66          62          91          86          75          20
+#>   [21,37.5] (37.5,55.5] (55.5,76.5] (76.5,98.5]  (98.5,120]        <NA> 
+#>          70          58          95          87          70          20
 binning(carseats$Income, nbins = 5, type = "bclust")
 #> binned type: bclust
 #> number of bins: 5
 #> x
-#>   [21,38.5] (38.5,56.5]   (56.5,85]    (85,106]   (106,120]        <NA> 
-#>          74          57         133          76          40          20
+#>   [21,37.5] (37.5,64.5] (64.5,86.5]  (86.5,110]   (110,120]        <NA> 
+#>          70          97          99          80          34          20
 
 # Extract the binned results
 extract(bin)
@@ -2277,49 +2288,6 @@ Linear relationship information in EDA reports
 
 </div>
 
-#### version of html file
-
-##### The argenda of the report
-
-The title and contents of the report are shown in the following figure.:
-
-<div class="figure" style="text-align: center">
-
-<img src="vignettes/img/eda_agenda_html.png" alt="EDA report titles and table of contents" width="70%" />
-<p class="caption">
-EDA report titles and table of contents
-</p>
-
-</div>
-
-##### Appearance of table
-
-Much information is represented in tables in the report. An example of a
-table in an html file is shown in the following figure.:
-
-<div class="figure" style="text-align: center">
-
-<img src="vignettes/img/eda_table_html.png" alt="EDA report table example (web)" width="70%" />
-<p class="caption">
-EDA report table example (web)
-</p>
-
-</div>
-
-##### Appearance of plot
-
-In EDA reports, normality test information includes visualization
-results. The result of the html file is shown in the following figure.:
-
-<div class="figure" style="text-align: center">
-
-<img src="vignettes/img/eda_normality_html.png" alt="EDA Report Normality Test Information (web)" width="70%" />
-<p class="caption">
-EDA Report Normality Test Information (web)
-</p>
-
-</div>
-
 ## Supports table of DBMS
 
 ### Functions that supports tables of DBMS
@@ -2454,7 +2422,7 @@ con_sqlite %>%
 #>   <chr>       <dbl>  <dbl>  <dbl>  <dbl>  <dbl> <dbl> <int> <int>   <int>
 #> 1 Sales           0   5.39   7.50   7.49   9.32  16.3     1     0       2
 #> 2 CompPrice      77 115    125.   125    135    175       0     0       2
-#> 3 Income         21  42     68.4   69     91    120       0     0       0
+#> 3 Income         21  44     69.1   69     91    120       0     0       0
 #> 4 Advertising     0   0      6.64   5     12     29     144     0       0
 #> 5 Population     10 139    265.   272    398.   509       0     0       0
 #> 6 Price          24 100    116.   117    131    191       0     0       5
@@ -2532,9 +2500,9 @@ con_sqlite %>%
 #> # A tibble: 3 x 27
 #>   variable ShelveLoc     n    na  mean    sd se_mean   IQR skewness kurtosis
 #>   <chr>    <chr>     <dbl> <dbl> <dbl> <dbl>   <dbl> <dbl>    <dbl>    <dbl>
-#> 1 Sales    Bad          74     0  5.52  2.37   0.276  3.53    0.142  0.00245
-#> 2 Sales    Good         57     0 10.4   2.64   0.349  3.78   -0.235 -0.181  
-#> 3 Sales    Medium      149     0  7.28  2.11   0.173  3.04    0.159 -0.457  
+#> 1 Sales    Bad          72     0  5.46  2.38   0.281  3.56    0.191   0.0338
+#> 2 Sales    Good         57     0 10.4   2.64   0.349  3.78   -0.235  -0.181 
+#> 3 Sales    Medium      149     0  7.33  2.17   0.178  3.06    0.231  -0.323 
 #> # … with 17 more variables: p00 <dbl>, p01 <dbl>, p05 <dbl>, p10 <dbl>,
 #> #   p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>, p60 <dbl>,
 #> #   p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>, p99 <dbl>,
@@ -2559,7 +2527,7 @@ con_sqlite %>%
 #> # A tibble: 1 x 6
 #>   variable   ShelveLoc US    statistic p_value sample
 #>   <chr>      <chr>     <chr>     <dbl>   <dbl>  <dbl>
-#> 1 log_income Bad       No        0.946  0.0998     34
+#> 1 log_income Bad       No        0.946   0.103     34
 ```
 
 #### Normalization visualization of numerical column in the DBMS
@@ -2595,7 +2563,7 @@ con_sqlite %>%
 #>   <chr> <chr> <fct> <fct>          <dbl>
 #> 1 No    No    Sales Population    -0.530
 #> 2 No    No    Sales Price         -0.838
-#> 3 No    Yes   Sales Price         -0.674
+#> 3 No    Yes   Sales Price         -0.644
 #> 4 Yes   No    Sales Price         -0.833
 #> 5 Yes   No    Sales Age           -0.649
 #> 6 Yes   Yes   Sales Price         -0.604
