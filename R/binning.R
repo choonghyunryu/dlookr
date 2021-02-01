@@ -40,7 +40,8 @@
 #' \item levels : levels of binned value.
 #' \item raw : raw data, numeric vector corresponding to x argument.
 #' }
-#' @seealso \code{\link{binning_by}}, \code{\link{print.bins}}, \code{\link{summary.bins}}.
+#' @seealso \code{\link{binning_by}}, \code{\link{print.bins}}, \code{\link{summary.bins}},
+#'  \code{\link{plot.bins}}.
 #' @export
 #' @examples
 #' # Generate data for the example
@@ -62,12 +63,12 @@
 #' # Using another type argument
 #' bin <- binning(carseats$Income, nbins = 5, type = "equal")
 #' bin
-#' bin <- binning(carseats$Income, nbins = 5, type = "pretty")
-#' bin
-#' bin <- binning(carseats$Income, nbins = 5, type = "kmeans")
-#' bin
-#' bin <- binning(carseats$Income, nbins = 5, type = "bclust")
-#' bin
+#' # bin <- binning(carseats$Income, nbins = 5, type = "pretty")
+#' # bin
+#' # bin <- binning(carseats$Income, nbins = 5, type = "kmeans")
+#' # bin
+#' # bin <- binning(carseats$Income, nbins = 5, type = "bclust")
+#' # bin
 #' 
 #' x <- sample(1:1000, size = 50) * 12345679
 #' bin <- binning(x)
@@ -83,6 +84,7 @@
 #' # -------------------------
 #' library(dplyr)
 #'
+#' # Compare binned frequency by ShelveLoc
 #' carseats %>%
 #'  mutate(Income_bin = binning(carseats$Income) %>% 
 #'                      extract()) %>%
@@ -90,6 +92,14 @@
 #'  summarise(freq = n()) %>%
 #'  arrange(desc(freq)) %>%
 #'  head(10)
+#'  
+#'  # Compare binned frequency by ShelveLoc using Viz
+#'  carseats %>%
+#'    mutate(Income_bin = binning(carseats$Income) %>% 
+#'            extract()) %>%
+#'    target_by(ShelveLoc) %>% 
+#'    relate(Income_bin) %>% 
+#'    plot()
 #'  
 #' @importFrom grDevices nclass.Sturges
 #' @importFrom stats na.omit quantile
