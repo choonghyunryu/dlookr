@@ -27,6 +27,10 @@ CHANGES IN R VERSION 0.4.1:
     • Fixed an error that occurred in binning_by(), target_by() 
       when the dplyr package version is less than 0.8.0
       
+    • Fixed an bug that occurred in binning(), when the approxy.lab argument 
+      is TRUE, the maximum value is sometimes omitted from binning and 
+      mapped to NA.   
+      
       
 
 CHANGES IN R VERSION 0.4.0:

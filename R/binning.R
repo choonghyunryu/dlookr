@@ -185,7 +185,9 @@ binning <- function(x, nbins,
       sapply(c) %>% 
       as.numeric() %>% 
       unique()
+    
     pretty.lab[1] <- min(x, na.rm = TRUE)
+    pretty.lab[length(pretty.lab)] <- max(x, na.rm = TRUE)
     
     if (approxy.lab) {
       if (!all(pretty.lab == breaks)) {
