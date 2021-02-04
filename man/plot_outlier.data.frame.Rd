@@ -90,8 +90,8 @@ carseats \%>\%
 #   plot_outlier(6)
   
 # Positions values select variables
-carseats \%>\%
-  plot_outlier(-1, -5)
+# carseats \%>\%
+#   plot_outlier(-1, -5)
 
 # Using pipes & dplyr -------------------------
 # Visualization of numerical variables with a ratio of

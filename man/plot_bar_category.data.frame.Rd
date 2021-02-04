@@ -81,7 +81,7 @@ plot_bar_category(carseats)
 # plot_bar_category(carseats, -ShelveLoc, -Urban)
 
 # Visualize the each plots
-plot_bar_category(carseats, each = TRUE)
+# plot_bar_category(carseats, each = TRUE)
 
 # Not allow typographic argument
 # plot_bar_category(carseats, typographic = FALSE)
