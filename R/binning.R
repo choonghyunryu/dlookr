@@ -48,14 +48,18 @@
 #' carseats <- ISLR::Carseats
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 #' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+#' 
 #' # Binning the carat variable. default type argument is "quantile"
 #' bin <- binning(carseats$Income)
 #' # Print bins class object
 #' bin
+#' 
 #' # Summarise bins class object
 #' summary(bin)
+#' 
 #' # Plot bins class object
 #' plot(bin)
+#' 
 #' # Using labels argument
 #' bin <- binning(carseats$Income, nbins = 4,
 #'               labels = c("LQ1", "UQ1", "LQ3", "UQ3"))
@@ -859,7 +863,10 @@ extract.bins <- function(x) {
   idx <- as.integer(object)
   levels <- attr(object,"levels")
   
-  factor(levels[idx], levels = levels)
+  raw <- factor(levels[idx], levels = levels)
+  class(raw) <- class(x)[-1]
+  
+  raw
 }
 
 

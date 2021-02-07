@@ -1,7 +1,7 @@
 Package: dlookr
 Type: Package
 Title: Tools for Data Diagnosis, Exploration, Transformation
-Version: 0.4.1
+Version: 0.4.2
 Authors@R: c(
   person("Choonghyun", "Ryu",, "choonghyun.ryu@gmail.com", role = c("aut", "cre"))
   )
@@ -28,7 +28,7 @@ Imports:
     gridExtra,
     hrbrthemes,
     kableExtra,
-    knitr,
+    knitr (>= 1.22),
     magrittr,
     methods,
     mice,    
