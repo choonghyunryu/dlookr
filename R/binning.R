@@ -363,8 +363,12 @@ plot.bins <- function(x, typographic = TRUE, ...) {
   
   if (typographic) {
     p_bottom <- p_bottom +
-      theme_typographic() 
+      theme_typographic() +
+      theme(plot.margin = margin(5, 20, 10, 20))
   }
+  
+  p_bottom <- p_bottom +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
   
   suppressWarnings(gridExtra::grid.arrange(p_top, p_bottom, nrow = 2, ncol = 1)) 
 }

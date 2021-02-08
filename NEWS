@@ -14,13 +14,17 @@ CHANGES IN R VERSION 0.4.2:
 
     • Reduced page load overhead in pdf files for more than 5000 data in three 
       automated reports. (diagnose_report, eda_report, transformation_report)
+      (@choonghyunryu, #30).
     
   MINOR CHANGES:
 
     • Import dependency was modified to limit the version of the knitr package 
-      for report generation to 1.22 or higher..
+      for report generation to 1.22 or higher.
     
-    
+    • In the visualization result of plot.bins(), the x-axis text of the lower 
+      plot was rotated 45 degrees and expressed without overlapping.
+      
+      
     
 CHANGES IN R VERSION 0.4.1:
 
@@ -111,19 +115,19 @@ CHANGES IN R VERSION 0.4.0:
       display the more informations.
 
     • transform(), summary.transform(), plot.transform() supports 
-      Box-Cox transform and Yeo-Johnson transform. (@lucazav, #21).      
+      Box-Cox transform and Yeo-Johnson transform. (thanks @lucazav, #21).      
       
     • plot_normality() supports log+1, log+a, 1/x, x^2, x^3, Box-Cox, 
-      Yeo-Johnson transform. (@lucazav, #21).
+      Yeo-Johnson transform. (thanks @lucazav, #21).
       
     • transform(), summary.transform(), plot.transform() supports 
-      Box-Cox transform. (@lucazav, #21).
+      Box-Cox transform. (thanks @lucazav, #21).
       
     • transform(), summary.transform(), plot.transform() supports 
-      Box-Cox transform. (@lucazav, #21).
+      Box-Cox transform. (thanks @lucazav, #21).
       
     • transform(), summary.transform(), plot.transform() supports 
-      Box-Cox transform. (@lucazav, #21).
+      Box-Cox transform. (thanks @lucazav, #21).
       
     • plot.optimal_bins() changed the plot from smbinning package to 
       own code using ggplot2.
@@ -143,10 +147,10 @@ CHANGES IN R VERSION 0.4.0:
   BUG FIXES:
 
     • eda_report() fixed error when data have a only 1 complated numeric 
-      variable (@EvanLuff, #27).
+      variable (thanks @EvanLuff, #27).
       
     • eda_report() fixed error when transform numeric variables that include 
-      minus values (@Roberto Passera).    
+      minus values (thanks @Roberto Passera).    
 
 
 
@@ -157,60 +161,61 @@ CHANGES IN R VERSION 0.3.14:
     • Add a new function univar_category() to compute information to examine 
       the indivisual categorical variables. and print.univar_category(), 
       summary.univar_category() is print and summary for "univar_category" 
-      class. (@Roberto Passera)
+      class. (thanks @Roberto Passera)
       
     • Add a new function plot.univar_category() to visualize bar plot by 
-      attribute of "univar_category" class. (@Roberto Passera)
+      attribute of "univar_category" class. (thanks @Roberto Passera)
       
     • Add a new function univar_numeric() to compute information to examine 
       the indivisual numerical variables. and print.univar_numeric(), 
       summary.univar_numeric() is print and summary for "univar_numeric" 
-      class. (@Roberto Passera)   
+      class. (thanks @Roberto Passera)   
     
     • Add a new function plot.univar_numeric() to visualize box plot and 
-      histogram by attribute of "univar_numeric" class. (@Roberto Passera)  
+      histogram by attribute of "univar_numeric" class. (thanks @Roberto Passera)  
     
     • Add a new function compare_category() to compute information to examine 
       the relationship between numerical variables. and 
       print.compare_category(), summary.compare_category() is print and summary 
-      for "compare_category" class. (@Roberto Passera)  
+      for "compare_category" class. (thanks @Roberto Passera)  
 
     • Add a new function plot.compare_category() to visualize mosaics plot by 
-      attribute of "compare_category" class. (@Roberto Passera)   
+      attribute of "compare_category" class. (thanks @Roberto Passera)   
     
     • Add a new function compare_numeric() to compute information to examine 
       the relationship between numerical variables. and print.compare_numeric(), 
       summary.compare_numeric() is print and summary for "compare_numeric" 
-      class. (@Roberto Passera)  
+      class. (thanks @Roberto Passera)  
     
     • Add a new function plot.compare_numeric() to visualize scatter plot 
       included boxplots by attribute of "compare_numeric" class. 
-      (@Roberto Passera)  
+      (thanks @Roberto Passera)  
     
     • Add a new function plot_na_pareto() to visualize pareto chart for 
       variables with missing value.   
     
     • Add a new function plot_na_hclust() to visualize distribution of 
-      missing value by combination of variables. (@Luca Zavarella)  
+      missing value by combination of variables. (thanks @Luca Zavarella)  
     
     • Add a new function plot_na_intersect() to visualize the patterns of 
       missing value, or rather the combinations of missing value across 
-      cases. (@Luca Zavarella)
+      cases. (thanks @Luca Zavarella)
     
     • Add a new vignette `Introduce dlookr`.  
     
     • correlate() add the non-parametric correlation coefficient, like 
-      "spearman" and "kendall" (@Roberto Passera) 
+      "spearman" and "kendall" (thanks @Roberto Passera) 
     
     • plot_correlate() add the non-parametric correlation coefficient, 
-      like "spearman"" and "kendall" (@Roberto Passera)  
+      like "spearman"" and "kendall" (thanks @Roberto Passera)  
       
   BUG FIXES:
 
     • relate() fixed error when using character type as a categorical 
-      variable (@jgduenasl, #14).
+      variable (thanks @jgduenasl, #14).
       
-    • plot.transform() fixed miss typo in title of plot (@MarioPrado1148, #26).
+    • plot.transform() fixed miss typo in title of plot 
+      (thanks @MarioPrado1148, #26).
       
     • Corrected sentence and typo in manuals and vignettes.
     
@@ -269,7 +274,7 @@ CHANGES IN R VERSION 0.3.11:
   BUG FIXES:
   
     • plot_outlier() fixed error run against a dataset with a numeric column 
-      where all values are NA(@rhinomlbox, #8).
+      where all values are NA(thanks @rhinomlbox, #8).
 
     • describe(), describe.grouped_df() fixed error run against a dataset with 
       a numeric column where number of complate values are 0 to 3.
@@ -322,7 +327,7 @@ CHANGES IN R VERSION 0.3.9:
   BUG FIXES:
   
     • binning(), binning_by() fixed error to converts a numeric variable to 
-      a categorization variable. (@Green-16, #4).
+      a categorization variable. (thanks @Green-16, #4).
       
       
 
@@ -428,7 +433,7 @@ CHANGES IN R VERSION 0.3.3:
   NEW FEATURES:
   
     • diagnose_report(), eda_report(), transformation_report() supports 
-      Korean language(hangul) with pdf output. (@cardiomoon).
+      Korean language(hangul) with pdf output. (thanks @cardiomoon).
       
   BUG FIXES:
   
@@ -485,12 +490,12 @@ CHANGES IN R VERSION 0.3.1:
   NEW FEATURES:
   
     • The `plot_outlier()` supports a col argument that a color to be used 
-      to fill the bars. (@hangtime79, #3).
+      to fill the bars. (thanks @hangtime79, #3).
       
     • Remove the name of the numeric vector to return when index = TRUE 
       in `find_na ()`, `find_outliers()`, `find_skewness()`.
       
   BUG FIXES:
   
-    • Fixed typographical errors in EDA Report headings (@hangtime79, #2).
+    • Fixed typographical errors in EDA Report headings (thanks @hangtime79, #2).
     
