@@ -12,7 +12,8 @@ CHANGES IN R VERSION 0.4.2:
       
   MAJOR CHANGES:
 
-    • .
+    • Reduced page load overhead in pdf files for more than 5000 data in three 
+      automated reports. (diagnose_report, eda_report, transformation_report)
     
   MINOR CHANGES:
 

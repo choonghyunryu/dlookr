@@ -77,6 +77,8 @@ idx.numeric <- idx.numeric[apply(as.data.frame(edaData[, idx.numeric]), 2,
 # remove from the correlation coefficient calculation
 idx.numeric <- idx.numeric[apply(as.data.frame(edaData[, idx.numeric]), 2,
                                  function(x) diff(range(x, na.rm = TRUE)) > 0)]
+
+N <- NROW(edaData)
 @
 
 \chapter{개요}
@@ -214,8 +216,13 @@ if (length(idx.numeric) == 0) {
     cat("\\\\")
     cat("\n")
 
-    cairo_pdf(filename = sprintf("./figure/norm%s.pdf", i), width = 6, height = 4, 
-      family = "NanumGothic")
+    if (N >= 5000) {
+      png(filename = sprintf("./figure/norm%s.png", i), width = 600, height = 400)
+    } else {
+      cairo_pdf(filename = sprintf("./figure/norm%s.pdf", i), width = 6, height = 4, 
+        family = "NanumGothic")
+    }
+
     x <- data.frame(x)
     
     if (sum(x < 0, na.rm = TRUE) > 0) {
@@ -232,7 +239,13 @@ if (length(idx.numeric) == 0) {
 
     cat("\\begin{figure}[!ht]\n")
     cat("\\centering\n")
-    cat(sprintf("\\includegraphics[width=1.0\\textwidth]{figure/norm%s.pdf}\n", i))
+
+    if (N >= 5000) {
+      cat(sprintf("\\includegraphics[width=0.8\\textwidth]{figure/norm%s.png}\n", i))
+    } else {
+      cat(sprintf("\\includegraphics[width=0.8\\textwidth]{figure/norm%s.pdf}\n", i))
+    } 
+
     cat(sprintf("\\caption{%s}\n", cap))
     cat("\\end{figure}\n")
 
@@ -303,7 +316,7 @@ if (!is.null(targetVariable)) {
 }  
 @
 
-<<numeric_variables, echo=FALSE, results='asis'>>=
+<<numeric_variables, echo=FALSE, results='asis', message=FALSE, warning=FALSE>>=
 if (!is.null(targetVariable)) {
   if (factor_flag) {
     if (length(idx.numeric) == 0) {
@@ -328,7 +341,13 @@ if (!is.null(targetVariable)) {
           kable_styling(latex_options = c("striped", "hold_position")) %>%
           cat()
 
-        cairo_pdf(filename = sprintf("./figure/%s.pdf", i), width = 8, height = 6, family = "NanumGothic")
+        if (N >= 5000) {
+          png(filename = sprintf("./figure/%s.png", i), width = 700, height = 500)
+        } else {
+          cairo_pdf(filename = sprintf("./figure/%s.pdf", i), width = 8, height = 6, 
+                    family = "NanumGothic")
+        }
+
         plot_outlier(target_by_obj, names(edaData)[i])
         dev.off()
 
@@ -336,7 +355,13 @@ if (!is.null(targetVariable)) {
 
         cat("\\begin{figure}[!ht]\n")
         cat("\\centering\n")
-        cat(sprintf("\\includegraphics[width=1.0\\textwidth]{figure/%s.pdf}\n", i))
+
+        if (N >= 5000) {
+          cat(sprintf("\\includegraphics[width=0.9\\textwidth]{figure/%s.png}\n", i))
+        } else {
+          cat(sprintf("\\includegraphics[width=0.9\\textwidth]{figure/%s.pdf}\n", i))
+        } 
+
         cat(sprintf("\\caption{%s}\n", cap))
         cat("\\end{figure}\n")
 
@@ -385,8 +410,8 @@ if (!is.null(targetVariable)) {
           kable_styling(latex_options = c("striped", "hold_position")) %>%
           cat()
 
-        png(filename = sprintf("./figure/%s.png", i), width = 800, height = 400)
-        plot(num_num)
+        png(filename = sprintf("./figure/linear%s.png", i), width = 800, height = 400)
+        suppressMessages(plot(num_num))
         dev.off()
 
         cap <- change_under(names(edaData)[i])
@@ -396,7 +421,7 @@ if (!is.null(targetVariable)) {
         cat("\n\\begin{center}\n")
         cat("\\begin{figure}[!ht]\n")
         cat("\\centering\n")
-        cat(sprintf("\\includegraphics[width=1.0\\textwidth]{figure/%s.png}\n", i))
+        cat(sprintf("\\includegraphics[width=1.0\\textwidth]{figure/linear%s.png}\n", i))
         cat(sprintf("\\caption{%s}\n", cap))
         cat("\\end{figure}\n")
 
@@ -541,8 +566,13 @@ if (!is.null(targetVariable)) {
           kable_styling(latex_options = c("striped", "hold_position")) %>%
           cat()
 
-        cairo_pdf(filename = sprintf("./figure/%s.pdf", i), width = 6, height = 4,
-          family = "NanumGothic")
+        if (N >= 5000) {
+          png(filename = sprintf("./figure/%s.png", i), width = 600, height = 400)
+        } else {
+          cairo_pdf(filename = sprintf("./figure/%s.pdf", i), width = 6, height = 4,
+                    family = "NanumGothic")
+        }
+
         print(plot(num_cat))
         dev.off()
 
@@ -552,7 +582,13 @@ if (!is.null(targetVariable)) {
         cat("\n\\begin{center}\n")
         cat("\\begin{figure}[!ht]\n")
         cat("\\centering\n")
-        cat(sprintf("\\includegraphics[width=0.8\\textwidth]{figure/%s.pdf}\n", i))
+
+        if (N >= 5000) {
+          cat(sprintf("\\includegraphics[width=0.8\\textwidth]{figure/%s.png}\n", i))
+        } else {
+          cat(sprintf("\\includegraphics[width=0.8\\textwidth]{figure/%s.pdf}\n", i))
+        } 
+
         cat(sprintf("\\caption{%s}\n", cap))
         cat("\\end{figure}\n")
 
