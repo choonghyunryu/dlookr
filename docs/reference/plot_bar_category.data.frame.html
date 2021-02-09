@@ -73,7 +73,7 @@ categorical data by level or relationship to specific numerical data by level." 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
       </span>
     </div>
 
@@ -216,7 +216,8 @@ the distribution of categorical data more easily than a frequency table.</p>
 <span class='co'># plot_bar_category(carseats, -ShelveLoc, -Urban)</span>
 
 <span class='co'># Visualize the each plots</span>
-<span class='fu'>plot_bar_category</span>(<span class='no'>carseats</span>, <span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot_bar_category.data.frame-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_bar_category.data.frame-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_bar_category.data.frame-4.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_bar_category.data.frame-5.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># plot_bar_category(carseats, each = TRUE)</span>
+
 <span class='co'># Not allow typographic argument</span>
 <span class='co'># plot_bar_category(carseats, typographic = FALSE)</span>
 
@@ -229,7 +230,7 @@ the distribution of categorical data more easily than a frequency table.</p>
 
 <span class='co'># Visualize just 7 levels of top frequency</span>
 <span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>plot_bar_category</span>(<span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>7</span>)</div><div class='img'><img src='plot_bar_category.data.frame-6.png' alt='' width='700' height='433' /></div><div class='input'>
+  <span class='fu'>plot_bar_category</span>(<span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>7</span>)</div><div class='img'><img src='plot_bar_category.data.frame-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Visualize only factor, not character</span>
 <span class='co'># carseats %&gt;%</span>
 <span class='co'>#   plot_bar_category(add_character = FALSE) </span>
@@ -237,7 +238,7 @@ the distribution of categorical data more easily than a frequency table.</p>
 <span class='co'># Using groupd_df  ------------------------------</span>
 <span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>ShelveLoc</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>plot_bar_category</span>(<span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='img'><img src='plot_bar_category.data.frame-7.png' alt='' width='700' height='433' /></div><div class='input'>  
+  <span class='fu'>plot_bar_category</span>(<span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='img'><img src='plot_bar_category.data.frame-3.png' alt='' width='700' height='433' /></div><div class='input'>  
 # carseats %&gt;% 
 #   group_by(ShelveLoc) %&gt;% 
 #   plot_bar_category(each = TRUE, top = 5)  

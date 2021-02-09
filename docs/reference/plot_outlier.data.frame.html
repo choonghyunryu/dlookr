@@ -73,7 +73,7 @@ for diagnosing the quality of the numerical data." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
       </span>
     </div>
 
@@ -210,18 +210,19 @@ one variable in the ... argument, the specified number of plots are drawn.</p>
 
 <span class='co'># Positive values select variables</span>
 <span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>plot_outlier</span>(<span class='no'>Sales</span>, <span class='no'>Price</span>)</div><div class='img'><img src='plot_outlier.data.frame-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-4.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Negative values to drop variables</span>
-<span class='co'># carseats %&gt;%</span>
-<span class='co'>#   plot_outlier(-Sales, -Price)</span>
+  <span class='fu'>plot_outlier</span>(<span class='no'>Sales</span>, <span class='no'>Price</span>)</div><div class='img'><img src='plot_outlier.data.frame-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-4.png' alt='' width='700' height='433' /></div><div class='input'>  
+# Negative values to drop variables
+# carseats %&gt;%
+#   plot_outlier(-Sales, -Price)
+  
+# Positions values select variables
+# carseats %&gt;%
+#   plot_outlier(6)
+  
+# Positions values select variables
+# carseats %&gt;%
+#   plot_outlier(-1, -5)
 
-<span class='co'># Positions values select variables</span>
-<span class='co'># carseats %&gt;%</span>
-<span class='co'>#   plot_outlier(6)</span>
-
-<span class='co'># Positions values select variables</span>
-<span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>plot_outlier</span>(-<span class='fl'>1</span>, -<span class='fl'>5</span>)</div><div class='img'><img src='plot_outlier.data.frame-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-6.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-7.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-8.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-9.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-10.png' alt='' width='700' height='433' /></div><div class='input'>
 # Using pipes &amp; dplyr -------------------------
 # Visualization of numerical variables with a ratio of
 # outliers greater than 1%
