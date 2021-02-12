@@ -1,14 +1,12 @@
 CHANGES IN R VERSION 0.4.2:
-
-  NEW FEATURES:
-  
-    • .
       
   BUG FIXES:
 
     • Fixed a bug in which when an object created with binning() and 
       binning_by() is extracted with the extract() function, the ordered factor 
       is also extracted as a factor.
+      
+    • Fixed .onAttach() error when installing package in solaris OS.
       
   MAJOR CHANGES:
 

@@ -86,10 +86,14 @@ if (getRversion() >= "2.15.1") {
         else if (grepl("^mingw", R.version$os)) {
           return(paste(Sys.getenv("SystemRoot"), "\\Fonts", sep = ""))
         }
+        else if (grepl("^SunOS", R.version$os)) {
+          paths <- c("/usr/share/fonts/", "/usr/X11/lib/X11/fonts/TrueType/", 
+                     "~/.fonts/")
+        }        
         else {
           #msg <- "Don't know where to look for truetype fonts."
           #packageStartupMessage(msg)
-          return(NULL)
+          return(character(0))
         }
       }
       
