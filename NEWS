@@ -2,58 +2,62 @@ CHANGES IN R VERSION 0.4.2:
       
   BUG FIXES:
 
-    • Fixed a bug in which when an object created with binning() and 
+    * Fixed a bug in which when an object created with binning() and 
       binning_by() is extracted with the extract() function, the ordered factor 
       is also extracted as a factor.
       
-    • Fixed .onAttach() error when installing package in solaris OS.
+    * Fixed .onAttach() error when installing package in solaris OS.
       
   MAJOR CHANGES:
 
-    • Reduced page load overhead in pdf files for more than 5000 data in three 
+    * Reduced page load overhead in pdf files for more than 5000 data in three 
       automated reports. (diagnose_report, eda_report, transformation_report)
       (@choonghyunryu, #30).
     
   MINOR CHANGES:
 
-    • Import dependency was modified to limit the version of the knitr package 
+    * Import dependency was modified to limit the version of the knitr package 
       for report generation to 1.22 or higher.
     
-    • In the visualization result of plot.bins(), the x-axis text of the lower 
+    * In the visualization result of plot.bins(), the x-axis text of the lower 
       plot was rotated 45 degrees and expressed without overlapping.
       
+    * changed the dependency of hrbrthemes from hrbrthemes to hrbrthemes(>= 0.8.0)
+      because error that occurs in an environment where the hrbrthemes package 
+      is installed before version 0.6.0. So, modified the dependency of 
+      hrbrthemes(thanks @coissac, #33).    
       
     
 CHANGES IN R VERSION 0.4.1:
 
   NEW FEATURES:
   
-    • In the case of type = "all" in plot.optimal_bins(), the legend is not 
+    * In the case of type = "all" in plot.optimal_bins(), the legend is not 
       displayed in the barchart.
       
   BUG FIXES:
 
-    • Fixed .onAttach() failed which occurred when installing in Solaris 
+    * Fixed .onAttach() failed which occurred when installing in Solaris 
       environment.
 
-    • Fixed an issue where unnecessary blank plots were displayed in 
+    * Fixed an issue where unnecessary blank plots were displayed in 
       plot_box_numeric(), plot_qq_numeric(), plot_bar_category().
       
-    • Fixed an Resolves an issue where an installation error occurs in 
+    * Fixed an Resolves an issue where an installation error occurs in 
       an environment using the old tidyselect package without all_of().
       
-    • Fixed an error in plot_box_numeric(), plot_bar_category(),
+    * Fixed an error in plot_box_numeric(), plot_bar_category(),
       plot_outlier(), compare_numeric(), plot.univar_numeric() 
       when the ggplot2 package version is out of date.
       
-    • Fixed an error that occurred in plot_box_numeric.grouped_df(),
+    * Fixed an error that occurred in plot_box_numeric.grouped_df(),
       plot_bar_category.grouped_df(), plot_qq_numeric.grouped_df() 
       when the dplyr package version is less than 0.8.0
       
-    • Fixed an error that occurred in binning_by(), target_by() 
+    * Fixed an error that occurred in binning_by(), target_by() 
       when the dplyr package version is less than 0.8.0
       
-    • Fixed an bug that occurred in binning(), when the approxy.lab argument 
+    * Fixed an bug that occurred in binning(), when the approxy.lab argument 
       is TRUE, the maximum value is sometimes omitted from binning and 
       mapped to NA.   
       
@@ -63,91 +67,91 @@ CHANGES IN R VERSION 0.4.0:
 
   NEW FEATURES:
   
-    • Add a new function entropy() to compute Shannon's entropy.
+    * Add a new function entropy() to compute Shannon's entropy.
     
-    • Add a new function get_percentile() to compute percentile position.
+    * Add a new function get_percentile() to compute percentile position.
     
-    • Add a new function get_transform() to transform numeric variable.  
+    * Add a new function get_transform() to transform numeric variable.  
       
-    • Add a new function kld() to computes the Kullback-Leibler divergence 
+    * Add a new function kld() to computes the Kullback-Leibler divergence 
       between two probability distributions.
     
-    • Add a new function jsd() to computes the Jensen-Shannon divergence 
+    * Add a new function jsd() to computes the Jensen-Shannon divergence 
       between two probability distributions.
     
-    • Add a new function overview() to describe overview of data.       
+    * Add a new function overview() to describe overview of data.       
 
-    • Add a new function summary.overview() to summarizes the data 
+    * Add a new function summary.overview() to summarizes the data 
       information from the overview class object created with overview().   
     
-    • Add a new function plot.overview() to visualizes the data information 
+    * Add a new function plot.overview() to visualizes the data information 
       from the overview class object created with overview().   
     
-    • Add a new function plot_bar_category() to visualizes the distribution of 
+    * Add a new function plot_bar_category() to visualizes the distribution of 
       categorical data by level or relationship to specific numerical data 
       by level.    
     
-    • Add a new function plot_qq_numeric() to visualizes the Q-Q plot of 
+    * Add a new function plot_qq_numeric() to visualizes the Q-Q plot of 
       numeric data or relationship to specific categorical data.    
     
-    • Add a new function plot_box_numeric() to visualizes the box plot of 
+    * Add a new function plot_box_numeric() to visualizes the box plot of 
       numeric data or relationship to specific categorical data.   
     
-    • Add a new function plot_outlier.target_df() to visualizes 
+    * Add a new function plot_outlier.target_df() to visualizes 
       the information of outliers by target variable.    
     
-    • Add a new function performance_bin(), summary.performance_bin(), 
+    * Add a new function performance_bin(), summary.performance_bin(), 
       plot.performance_bin() to diagnose the binned variable for 
       binomial classification model.         
 
-    • Add a new function summary.optimal_bins() to summarise the binned 
+    * Add a new function summary.optimal_bins() to summarise the binned 
       variable for optimal binning.  
     
-    • eda_report() change the correlation plot and normality test
+    * eda_report() change the correlation plot and normality test
       (log+1: include 0, log+a/Box-Cox: include minus). 
     
-    • plot_correlate() change the correlation plot that support 2 case 
+    * plot_correlate() change the correlation plot that support 2 case 
       plots(number of variabe >=20, <20). 
     
-    • plot_na_pareto() changed the legend that show the all levels and 
+    * plot_na_pareto() changed the legend that show the all levels and 
       display the more informations.
 
-    • transform(), summary.transform(), plot.transform() supports 
+    * transform(), summary.transform(), plot.transform() supports 
       Box-Cox transform and Yeo-Johnson transform. (thanks @lucazav, #21).      
       
-    • plot_normality() supports log+1, log+a, 1/x, x^2, x^3, Box-Cox, 
+    * plot_normality() supports log+1, log+a, 1/x, x^2, x^3, Box-Cox, 
       Yeo-Johnson transform. (thanks @lucazav, #21).
       
-    • transform(), summary.transform(), plot.transform() supports 
+    * transform(), summary.transform(), plot.transform() supports 
       Box-Cox transform. (thanks @lucazav, #21).
       
-    • transform(), summary.transform(), plot.transform() supports 
+    * transform(), summary.transform(), plot.transform() supports 
       Box-Cox transform. (thanks @lucazav, #21).
       
-    • transform(), summary.transform(), plot.transform() supports 
+    * transform(), summary.transform(), plot.transform() supports 
       Box-Cox transform. (thanks @lucazav, #21).
       
-    • plot.optimal_bins() changed the plot from smbinning package to 
+    * plot.optimal_bins() changed the plot from smbinning package to 
       own code using ggplot2.
       
-    • plot.bins(), plot.compare_category(), plot.compare_numeric(), 
+    * plot.bins(), plot.compare_category(), plot.compare_numeric(), 
       plot_outlier(), plot_normality() changed the look & feel that draw 
       the viz from high-level graphic function to ggplot2.
       
-    • plot.optimal_bins(), plot_na_hclust(), plot_na_pareto(), 
+    * plot.optimal_bins(), plot_na_hclust(), plot_na_pareto(), 
       plot_na_intersect(), plot.relate(), plot_bar_category(), 
       plot_qq_numeric(), plot_box_numeric() append argemt typographic 
       thst is whether to apply focuses on typographic elements.     
       
-    • modified visualization of report by diagnose_report(), eda_report(), 
+    * modified visualization of report by diagnose_report(), eda_report(), 
       transformation_report().
       
   BUG FIXES:
 
-    • eda_report() fixed error when data have a only 1 complated numeric 
+    * eda_report() fixed error when data have a only 1 complated numeric 
       variable (thanks @EvanLuff, #27).
       
-    • eda_report() fixed error when transform numeric variables that include 
+    * eda_report() fixed error when transform numeric variables that include 
       minus values (thanks @Roberto Passera).    
 
 
@@ -156,66 +160,66 @@ CHANGES IN R VERSION 0.3.14:
 
   NEW FEATURES:
   
-    • Add a new function univar_category() to compute information to examine 
+    * Add a new function univar_category() to compute information to examine 
       the indivisual categorical variables. and print.univar_category(), 
       summary.univar_category() is print and summary for "univar_category" 
       class. (thanks @Roberto Passera)
       
-    • Add a new function plot.univar_category() to visualize bar plot by 
+    * Add a new function plot.univar_category() to visualize bar plot by 
       attribute of "univar_category" class. (thanks @Roberto Passera)
       
-    • Add a new function univar_numeric() to compute information to examine 
+    * Add a new function univar_numeric() to compute information to examine 
       the indivisual numerical variables. and print.univar_numeric(), 
       summary.univar_numeric() is print and summary for "univar_numeric" 
       class. (thanks @Roberto Passera)   
     
-    • Add a new function plot.univar_numeric() to visualize box plot and 
+    * Add a new function plot.univar_numeric() to visualize box plot and 
       histogram by attribute of "univar_numeric" class. (thanks @Roberto Passera)  
     
-    • Add a new function compare_category() to compute information to examine 
+    * Add a new function compare_category() to compute information to examine 
       the relationship between numerical variables. and 
       print.compare_category(), summary.compare_category() is print and summary 
       for "compare_category" class. (thanks @Roberto Passera)  
 
-    • Add a new function plot.compare_category() to visualize mosaics plot by 
+    * Add a new function plot.compare_category() to visualize mosaics plot by 
       attribute of "compare_category" class. (thanks @Roberto Passera)   
     
-    • Add a new function compare_numeric() to compute information to examine 
+    * Add a new function compare_numeric() to compute information to examine 
       the relationship between numerical variables. and print.compare_numeric(), 
       summary.compare_numeric() is print and summary for "compare_numeric" 
       class. (thanks @Roberto Passera)  
     
-    • Add a new function plot.compare_numeric() to visualize scatter plot 
+    * Add a new function plot.compare_numeric() to visualize scatter plot 
       included boxplots by attribute of "compare_numeric" class. 
       (thanks @Roberto Passera)  
     
-    • Add a new function plot_na_pareto() to visualize pareto chart for 
+    * Add a new function plot_na_pareto() to visualize pareto chart for 
       variables with missing value.   
     
-    • Add a new function plot_na_hclust() to visualize distribution of 
+    * Add a new function plot_na_hclust() to visualize distribution of 
       missing value by combination of variables. (thanks @Luca Zavarella)  
     
-    • Add a new function plot_na_intersect() to visualize the patterns of 
+    * Add a new function plot_na_intersect() to visualize the patterns of 
       missing value, or rather the combinations of missing value across 
       cases. (thanks @Luca Zavarella)
     
-    • Add a new vignette `Introduce dlookr`.  
+    * Add a new vignette `Introduce dlookr`.  
     
-    • correlate() add the non-parametric correlation coefficient, like 
+    * correlate() add the non-parametric correlation coefficient, like 
       "spearman" and "kendall" (thanks @Roberto Passera) 
     
-    • plot_correlate() add the non-parametric correlation coefficient, 
+    * plot_correlate() add the non-parametric correlation coefficient, 
       like "spearman"" and "kendall" (thanks @Roberto Passera)  
       
   BUG FIXES:
 
-    • relate() fixed error when using character type as a categorical 
+    * relate() fixed error when using character type as a categorical 
       variable (thanks @jgduenasl, #14).
       
-    • plot.transform() fixed miss typo in title of plot 
+    * plot.transform() fixed miss typo in title of plot 
       (thanks @MarioPrado1148, #26).
       
-    • Corrected sentence and typo in manuals and vignettes.
+    * Corrected sentence and typo in manuals and vignettes.
     
     
   
@@ -223,19 +227,19 @@ CHANGES IN R VERSION 0.3.13:
 
   BUG FIXES:
   
-    • plot_normality() fixed an issue where plots are not drawn correctly 
+    * plot_normality() fixed an issue where plots are not drawn correctly 
       if data contains Inf.
       
-    • normality() fixed an issue where NaN is returned in the result if 
+    * normality() fixed an issue where NaN is returned in the result if 
       the data contains Inf. And  fixed warning message that is "`cols` 
       is now required."
  
-    • binning() fixed error an issue where some bining errors could occur 
+    * binning() fixed error an issue where some bining errors could occur 
       at values close to breaks for large numbers. And appended 
       approxy.lab argument that choice large number breaks are approximated to 
       pretty numbers. 
       
-    • describe() fixed warning message that is "`cols` is now required."
+    * describe() fixed warning message that is "`cols` is now required."
  
 
 
@@ -243,27 +247,27 @@ CHANGES IN R VERSION 0.3.12:
 
   NEW FEATURES:
   
-    • imputate_na() appended no_attrs argument that choice the return value. 
+    * imputate_na() appended no_attrs argument that choice the return value. 
       return object of imputation class or numerical/categorical variable. 
 
-    • imputate_outlier() appended no_attrs argument that choice the return 
+    * imputate_outlier() appended no_attrs argument that choice the return 
       value. return object of imputation class or numerical vector. 
       
-    • diagnose_report() Adjusted the pdf margins to increase the number of 
+    * diagnose_report() Adjusted the pdf margins to increase the number of 
       columns represented in the table. In the latex, duplicate table labels 
       were removed.
       
-    • eda_report() Adjusted the pdf margins to increase the number of 
+    * eda_report() Adjusted the pdf margins to increase the number of 
       columns represented in the table. In the latex, duplicate table labels 
       were removed.
       
-    • transformation_report() Adjusted the pdf margins to increase the number 
+    * transformation_report() Adjusted the pdf margins to increase the number 
       of columns represented in the table. In the latex, duplicate table labels 
       were removed.     
       
   BUG FIXES:
   
-    • imputate_na() fixed error when method is 'rpart' or 'knn'. 
+    * imputate_na() fixed error when method is 'rpart' or 'knn'. 
     
     
 
@@ -271,30 +275,30 @@ CHANGES IN R VERSION 0.3.11:
 
   BUG FIXES:
   
-    • plot_outlier() fixed error run against a dataset with a numeric column 
+    * plot_outlier() fixed error run against a dataset with a numeric column 
       where all values are NA(thanks @rhinomlbox, #8).
 
-    • describe(), describe.grouped_df() fixed error run against a dataset with 
+    * describe(), describe.grouped_df() fixed error run against a dataset with 
       a numeric column where number of complate values are 0 to 3.
       
-    • binning() fixed error like "'breaks' are not unique". and fixed error of 
+    * binning() fixed error like "'breaks' are not unique". and fixed error of 
       binning with a column where all values are NA. 
       
-    • imputate_na() fixed the problem of imputation using ('rpart', 'mode', 
+    * imputate_na() fixed the problem of imputation using ('rpart', 'mode', 
       'mice') method with a column where all values are NA. 
       
-    • imputate_na() fixed the problem of imputation using 'knn' method 
+    * imputate_na() fixed the problem of imputation using 'knn' method 
       when the complete case is small. 
       
-    • summary.imputation() fixed the problem of imputation object isn't compleate.
+    * summary.imputation() fixed the problem of imputation object isn't compleate.
       
-    • transformation_report() fixed the problem of trying to output 
+    * transformation_report() fixed the problem of trying to output 
       Korean language report in English operating system environment.
       
-    • transformation_report() fixed the LaTeX error like "Illegal unit of 
+    * transformation_report() fixed the LaTeX error like "Illegal unit of 
       measure (pt inserted)" in Binning section. 
       
-    • transformation_report() fixed the error imputate_na() function call.     
+    * transformation_report() fixed the error imputate_na() function call.     
 
 
 
@@ -302,7 +306,7 @@ CHANGES IN R VERSION 0.3.10:
 
   BUG FIXES:
   
-    • imputate_na() fixed error to imputation using 'method' argument value 
+    * imputate_na() fixed error to imputation using 'method' argument value 
       is "mice".
       
 
@@ -311,20 +315,20 @@ CHANGES IN R VERSION 0.3.9:
 
   NEW FEATURES:
   
-    • find_class() handled 'labelled' vectors as categorical variables.
+    * find_class() handled 'labelled' vectors as categorical variables.
     
-    • imputate_na() modified to set the random number generation version 
+    * imputate_na() modified to set the random number generation version 
       to 3.5.0 in the 'mice' method.
     
-    • Set the random number generation version to 3.5.0 before calling 
+    * Set the random number generation version to 3.5.0 before calling 
       set.seed() in the code of vignette of "EDA".
     
-    • Set the random number generation version to 3.5.0 before calling 
+    * Set the random number generation version to 3.5.0 before calling 
       set.seed() in the code of vignette of "Data Transformation".  
       
   BUG FIXES:
   
-    • binning(), binning_by() fixed error to converts a numeric variable to 
+    * binning(), binning_by() fixed error to converts a numeric variable to 
       a categorization variable. (thanks @Green-16, #4).
       
       
@@ -333,14 +337,14 @@ CHANGES IN R VERSION 0.3.8:
 
   NEW FEATURES:
   
-    • summary.imputation(), describe.grouped_df(), normality.grouped_df(),
+    * summary.imputation(), describe.grouped_df(), normality.grouped_df(),
       plot_normality.grouped_df(), correlate.grouped_df(), plot.relate(),
       plot_correlate.grouped_df(), relate.target_df() modified features 
       to correspond to dplyr 0.8.0 or later.
       
   BUG FIXES:
   
-    • plot_correlate.grouped_df() fixed error in the main title of the plot 
+    * plot_correlate.grouped_df() fixed error in the main title of the plot 
       output the factor value as an integer.
       
 
@@ -349,14 +353,14 @@ CHANGES IN R VERSION 0.3.7:
 
   NEW FEATURES:
   
-    • eda_report() Handle exceptions when there are fewer than two numeric 
+    * eda_report() Handle exceptions when there are fewer than two numeric 
       variables when outputting a reflation plot.
       
   BUG FIXES:
   
-    • diagnose_report() fixed errors when number of numeric variables is zero.
+    * diagnose_report() fixed errors when number of numeric variables is zero.
 
-    • eda_report() fixed errors that are outputting abnormalities in pdf 
+    * eda_report() fixed errors that are outputting abnormalities in pdf 
       documents when the target variable name contains "_".
 
 
@@ -365,19 +369,19 @@ CHANGES IN R VERSION 0.3.6:
 
   NEW FEATURES:
   
-    • diagnose_report(), eda_report(), transformation_report() was converted 
+    * diagnose_report(), eda_report(), transformation_report() was converted 
       to Korean version of Hangul Report in Korean O/S.
       
-    • diagnose_report() was added an argument to choose whether to present 
+    * diagnose_report() was added an argument to choose whether to present 
       the report results to the browser.
       
-    • diagnose_report() limited the maximum number of cases per 
+    * diagnose_report() limited the maximum number of cases per 
       "Categorical variable level top 10" to 50 cases.
       
-    • eda_report() was added an argument to choose whether to present 
+    * eda_report() was added an argument to choose whether to present 
       the report results to the browser.
       
-    • transformation_report() was added an argument to choose whether to 
+    * transformation_report() was added an argument to choose whether to 
       present the report results to the browser.
 
 
@@ -386,21 +390,21 @@ CHANGES IN R VERSION 0.3.5:
 
   NEW FEATURES:
   
-    • plot_outlier() change message in data where all variables are 
+    * plot_outlier() change message in data where all variables are 
       categorical variables.
       
-    • diagnose_report() modify the table column name in pdf report and 
+    * diagnose_report() modify the table column name in pdf report and 
       lower the number of decimal places.
       
   BUG FIXES:
   
-    • diagnose_category() fixed subscript error in data where all variables 
+    * diagnose_category() fixed subscript error in data where all variables 
       are numeric variables.
 
-    • diagnose_numeric(), diagnose_outlier() fixed subscript error in data 
+    * diagnose_numeric(), diagnose_outlier() fixed subscript error in data 
       where all variables are categorical variables.
       
-    • eda_report() fixed errors in pdf report when variable name contains "_".      
+    * eda_report() fixed errors in pdf report when variable name contains "_".      
 
 
 
@@ -408,20 +412,20 @@ CHANGES IN R VERSION 0.3.4:
 
   NEW FEATURES:
   
-    • diagnose_report() Added ability to set font family of pdf report figure.
+    * diagnose_report() Added ability to set font family of pdf report figure.
       
   BUG FIXES:
   
-    • find_outliers() fixed errors in index or name extraction of variables 
+    * find_outliers() fixed errors in index or name extraction of variables 
       containing outliers.
 
-    • find_skewness() fixed errors in index or name extraction of variables 
+    * find_skewness() fixed errors in index or name extraction of variables 
       with skewness exceeds the threshold.
       
-    • eda_report() fixed in table caption of EDA report. and added ability to 
+    * eda_report() fixed in table caption of EDA report. and added ability to 
       set font family of pdf report figure. 
     
-    •  fixed in table caption of Transformation report. 
+    *  fixed in table caption of Transformation report. 
       and added ability to set font family of pdf report figure.
       
   
@@ -430,12 +434,12 @@ CHANGES IN R VERSION 0.3.3:
 
   NEW FEATURES:
   
-    • diagnose_report(), eda_report(), transformation_report() supports 
+    * diagnose_report(), eda_report(), transformation_report() supports 
       Korean language(hangul) with pdf output. (thanks @cardiomoon).
       
   BUG FIXES:
   
-    • eda_report() fixed in table/figure caption of EDA report.
+    * eda_report() fixed in table/figure caption of EDA report.
       
       
 
@@ -443,43 +447,43 @@ CHANGES IN R VERSION 0.3.2:
 
   NEW FEATURES:
   
-    • plot.relate() supports hexabin plotting when this target variable is 
+    * plot.relate() supports hexabin plotting when this target variable is 
       numeric and the predictor is also a numeric type.
     
-    • Add a new function get_column_info() to show the table 
+    * Add a new function get_column_info() to show the table 
       information of the DBMS.
       
-    • diagnose() supports diagnosing columns of table in the DBMS.
+    * diagnose() supports diagnosing columns of table in the DBMS.
       
-    • diagnose_category() supports diagnosing character columns of 
+    * diagnose_category() supports diagnosing character columns of 
       table in the DBMS.
       
-    • diagnose_numeric() supports diagnosing numeric columns of table 
+    * diagnose_numeric() supports diagnosing numeric columns of table 
       in the DBMS.
       
-    • diagnose_outlier() supports diagnosing outlier of numeric columns of 
+    * diagnose_outlier() supports diagnosing outlier of numeric columns of 
       table in the DBMS.
       
-    • plot_outlier() supports diagnosing outlier of numeric columns of 
+    * plot_outlier() supports diagnosing outlier of numeric columns of 
       table in the DBMS.
       
-    • normality() supports test of normality for numeric columns of 
+    * normality() supports test of normality for numeric columns of 
       table in the DBMS.
       
-    • plot_normality() supports test of normality for numeric columns of 
+    * plot_normality() supports test of normality for numeric columns of 
       table in the DBMS.
       
-    • correlate(), plot_correlate() supports computing the correlation 
+    * correlate(), plot_correlate() supports computing the correlation 
       coefficient of numeric columns of table in the DBMS.
       
-    • describe() supports computing descriptive statistic of numeric 
+    * describe() supports computing descriptive statistic of numeric 
       columns of table in the DBMS.
       
-    • target_by() supports columns of table in the DBMS.
+    * target_by() supports columns of table in the DBMS.
       
   BUG FIXES:
   
-    • Fixed in 4.1.1 of EDA report without target variable..
+    * Fixed in 4.1.1 of EDA report without target variable..
 
 
 
@@ -487,13 +491,13 @@ CHANGES IN R VERSION 0.3.1:
 
   NEW FEATURES:
   
-    • The `plot_outlier()` supports a col argument that a color to be used 
+    * The `plot_outlier()` supports a col argument that a color to be used 
       to fill the bars. (thanks @hangtime79, #3).
       
-    • Remove the name of the numeric vector to return when index = TRUE 
+    * Remove the name of the numeric vector to return when index = TRUE 
       in `find_na ()`, `find_outliers()`, `find_skewness()`.
       
   BUG FIXES:
   
-    • Fixed typographical errors in EDA Report headings (thanks @hangtime79, #2).
+    * Fixed typographical errors in EDA Report headings (thanks @hangtime79, #2).
     
