@@ -7,7 +7,9 @@ CHANGES IN R VERSION 0.4.2:
       is also extracted as a factor.
       
     * Fixed .onAttach() error when installing package in solaris OS.
-      
+    
+    * Fixed extract() not extracting factor from "bins" object.
+    
   MAJOR CHANGES:
 
     * Reduced page load overhead in pdf files for more than 5000 data in three 

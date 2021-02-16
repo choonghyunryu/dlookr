@@ -868,7 +868,7 @@ extract.bins <- function(x) {
   levels <- attr(object,"levels")
   
   raw <- factor(levels[idx], levels = levels)
-  class(raw) <- class(x)[-1]
+  class(raw) <- grep("bins", class(x), invert = TRUE, value = TRUE)
   
   raw
 }
