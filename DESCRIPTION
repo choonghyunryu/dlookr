@@ -1,7 +1,7 @@
 Package: dlookr
 Type: Package
 Title: Tools for Data Diagnosis, Exploration, Transformation
-Version: 0.4.2
+Version: 0.4.3
 Authors@R: c(
   person("Choonghyun", "Ryu",, "choonghyun.ryu@gmail.com", role = c("aut", "cre"))
   )
@@ -47,7 +47,7 @@ Suggests:
     classInt,
     dbplyr,
     DMwR,
-    forecast,
+    forecast (>= 8.3),
     ISLR,
     nycflights13,
     randomForest,

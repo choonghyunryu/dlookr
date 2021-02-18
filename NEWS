@@ -1,3 +1,21 @@
+CHANGES IN R VERSION 0.4.3:
+      
+  BUG FIXES:
+
+    * Fixed an error that occurred when calling get_transform() with 
+      the Box-Cox method when the forecast package version is less than 8.3. 
+      Changed forecast package dependency to 8.3 or higher.
+    
+  MAJOR CHANGES:
+
+    * 
+    
+  MINOR CHANGES:
+
+    * 
+      
+      
+      
 CHANGES IN R VERSION 0.4.2:
       
   BUG FIXES:
