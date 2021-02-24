@@ -39,11 +39,11 @@ carseats <- ISLR::Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 
-# Visualize pareto chart for variables with missing value.
+# Visualize hcluster chart for variables with missing value.
 plot_na_hclust(carseats)
 plot_na_hclust(airquality)
   
-# Visualize pareto chart for variables with missing value.
+# Visualize hcluster chart for variables with missing value.
 if (!requireNamespace("mice", quietly = TRUE)) {
   stop("Package \"mice\" needed for this function to work. Please install it.",
   call. = FALSE)

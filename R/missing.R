@@ -20,11 +20,11 @@
 #' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 #' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 #' 
-#' # Visualize pareto chart for variables with missing value.
+#' # Visualize hcluster chart for variables with missing value.
 #' plot_na_hclust(carseats)
 #' plot_na_hclust(airquality)
 #'   
-#' # Visualize pareto chart for variables with missing value.
+#' # Visualize hcluster chart for variables with missing value.
 #' if (!requireNamespace("mice", quietly = TRUE)) {
 #'   stop("Package \"mice\" needed for this function to work. Please install it.",
 #'   call. = FALSE)
@@ -350,7 +350,7 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
 #' # Using n_vars argument
 #' plot_na_intersect(mice::boys, n_vars = 5) 
 #' 
-#' # Using n_intersacts argument
+#' # Using n_intersects argument
 #' plot_na_intersect(mice::boys, only_na = FALSE, n_intersacts = 7)
 #' 
 #' # Not allow typographic elements
