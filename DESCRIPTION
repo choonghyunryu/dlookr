@@ -20,7 +20,7 @@ Depends:
     R (>= 3.2.0)
 Imports: 
     cli,
-    corrplot,
+    corrplot (>= 0.84),
     dplyr (>= 0.7.6),
     extrafont,
     ggplot2 (>= 3.0.0),

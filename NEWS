@@ -5,6 +5,9 @@ CHANGES IN R VERSION 0.4.3:
     * Fixed an error that occurred when calling get_transform() with 
       the Box-Cox method when the forecast package version is less than 8.3. 
       Changed forecast package dependency to 8.3 or higher.
+      
+    * Fixed an error that occurred when calling eda_report() with 
+      the shapiro.test() function when the data included many missing values. 
     
   MAJOR CHANGES:
 

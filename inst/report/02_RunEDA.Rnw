@@ -129,31 +129,32 @@ if (length(idx.numeric) == 0) {
   cat("\n\nThere is no numeric variable.\n\n")
 } else {
   for (i in idx.numeric) {
-      cap <- change_under(names(edaData)[i])
+    cap <- change_under(names(edaData)[i])
 
-      cat("\n")
-      cat("\\subsubsection{", cap, "}\n")
+    cat("\n")
+    cat("\\subsubsection{", cap, "}\n")
 
     cat("\\noindent * normality test : Shapiro-Wilk normality test\n\n")
 
-    x <- if (NROW(edaData) > 5000) {
-      sample(pull(edaData, i), size = 5000, replace = TRUE)
-    } else {
-      pull(edaData, i)
-    }
-
-    if (all(is.na(x))) {
+    x <- pull(edaData, i) %>%
+      .[!is.na(.)]
+ 
+    if (length(x) == 0) {
       cat("all 'x' values are NA\n\n")
       cat("\\clearpage")
       next
     }
-
+ 
+    if (length(x) > 5000) {
+      x <- sample(x, size = 5000, replace = TRUE)
+    }
+ 
     if(length(x) < 3L || length(x) > 5000L) {
       cat("sample size must be between 3 and 5000\n\n")
       cat("\\clearpage")
       next
     }
-
+ 
     if(diff(range(x, na.rm = TRUE)) == 0) {
       cat("all 'x' values are identical\n\n")
       cat("\\clearpage")
