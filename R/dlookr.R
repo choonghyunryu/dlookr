@@ -139,9 +139,20 @@ if (getRversion() >= "2.15.1") {
     }
   }
   
-  load_fonts()
-  flag <- import_arial_narrow()
+  sucess <- TRUE
+  result <- try(load_fonts())
   
-  if (flag)
-    load_fonts()
+  if (class(result) == "try-error") {
+    sucess <- FALSE
+  }
+  
+  flag <- try(import_arial_narrow())
+  
+  if (class(flag) == "try-error") {
+    sucess <- FALSE
+  }
+  
+  if (flag) {
+    try(load_fonts())
+  }
 }
