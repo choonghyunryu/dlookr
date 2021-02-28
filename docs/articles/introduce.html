@@ -177,7 +177,7 @@
 <tr class="even">
 <td align="left">diagnose data quality of numerical variables</td>
 <td align="left">descriptive statistics, number of zero, minus, outliers</td>
-<td align="left"><code><a href="../reference/diagnose_category.data.frame.html">diagnose_category()</a></code></td>
+<td align="left"><code><a href="../reference/diagnose_numeric.data.frame.html">diagnose_numeric()</a></code></td>
 <td align="center">x</td>
 </tr>
 <tr class="odd">
@@ -646,7 +646,7 @@
 <td align="center"></td>
 </tr>
 <tr class="odd">
-<td align="left">outliers</td>
+<td align="left">skewed variable</td>
 <td align="left">find the numerical variable that skewed variable that inherits the data.frame</td>
 <td align="left"><code><a href="../reference/find_skewness.html">find_skewness()</a></code></td>
 <td align="center"></td>
@@ -769,6 +769,12 @@
 <td align="left"><code><a href="../reference/plot.performance_bin.html">plot.performance_bin()</a></code></td>
 <td align="center"></td>
 </tr>
+<tr class="even">
+<td align="left">visualize</td>
+<td align="left">extract bins from “bins” and “optimal_bins” objects</td>
+<td align="left"><code><a href="../reference/extract.bins.html">extract.bins()</a></code></td>
+<td align="center"></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -836,13 +842,13 @@
 <tr class="even">
 <td align="left">summaries</td>
 <td align="left">compares the distribution of data before and after data transformation</td>
-<td align="left"><code><a href="../reference/summary.bins.html">summary.bins()</a></code></td>
+<td align="left"><code><a href="../reference/summary.transform.html">summary.transform()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="odd">
 <td align="left">visualize</td>
 <td align="left">visualize two kinds of plot by attribute of ‘transform’ class. The transformation of a numerical variable is a density plot.</td>
-<td align="left"><code>plot.transform</code></td>
+<td align="left"><code><a href="../reference/plot.transform.html">plot.transform()</a></code></td>
 <td align="center"></td>
 </tr>
 </tbody>
@@ -866,15 +872,131 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">eporting the information of transformation into pdf file</td>
-<td align="left">reporting the information of transformation</td>
+<td align="left">reporting the information of transformation into pdf</td>
+<td align="left">reporting the information of transformation.</td>
 <td align="left"><code><a href="../reference/transformation_report.html">transformation_report()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="even">
-<td align="left">eporting the information of transformation into html file</td>
-<td align="left">eporting the information of transformation</td>
+<td align="left">reporting the information of transformation into html</td>
+<td align="left">reporting the information of transformation.</td>
 <td align="left"><code><a href="../reference/transformation_report.html">transformation_report()</a></code></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="miscellaneous" class="section level3">
+<h3 class="hasAnchor">
+<a href="#miscellaneous" class="anchor"></a>Miscellaneous</h3>
+<div id="statistics" class="section level4">
+<h4 class="hasAnchor">
+<a href="#statistics" class="anchor"></a>Statistics</h4>
+<table class="table">
+<colgroup>
+<col width="19%">
+<col width="38%">
+<col width="19%">
+<col width="23%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">Types</th>
+<th align="left">Descriptions</th>
+<th align="left">Functions</th>
+<th align="center">Support DBI</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">statistics</td>
+<td align="left">calculate the entropy.</td>
+<td align="left"><code><a href="../reference/entropy.html">entropy()</a></code></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left">statistics</td>
+<td align="left">calculate the skewness of the data.</td>
+<td align="left"><code><a href="../reference/skewness.html">skewness()</a></code></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="left">statistics</td>
+<td align="left">calculate the kurtosis of the data.</td>
+<td align="left"><code><a href="../reference/kurtosis.html">kurtosis()</a></code></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left">statistics</td>
+<td align="left">calculate the Jensen-Shannon divergence between two probability distributions.</td>
+<td align="left"><code><a href="../reference/jsd.html">jsd()</a></code></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="left">statistics</td>
+<td align="left">calculate the Kullback-Leibler divergence between two probability distributions.</td>
+<td align="left"><code><a href="../reference/kld.html">kld()</a></code></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left">statistics</td>
+<td align="left">finding percentile of numerical variable.</td>
+<td align="left"><code><a href="../reference/get_percentile.html">get_percentile()</a></code></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="left">statistics</td>
+<td align="left">transform a numeric vector using several methods like “log”, “sqrt”, “log+1”, “log+a”, “1/x”, “x^2”, “x^3”, “Box-Cox”, “Yeo-Johnson”</td>
+<td align="left"><code><a href="../reference/get_transform.html">get_transform()</a></code></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="programming" class="section level4">
+<h4 class="hasAnchor">
+<a href="#programming" class="anchor"></a>Programming</h4>
+<table class="table">
+<colgroup>
+<col width="19%">
+<col width="38%">
+<col width="19%">
+<col width="23%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">Types</th>
+<th align="left">Descriptions</th>
+<th align="left">Functions</th>
+<th align="center">Support DBI</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">programming</td>
+<td align="left">extracts variable information having a certain class from an object inheriting data.frame.</td>
+<td align="left"><code><a href="../reference/find_class.html">find_class()</a></code></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left">programming</td>
+<td align="left">gets class of variables in data.frame or tbl_df.</td>
+<td align="left"><code><a href="../reference/get_class.html">get_class()</a></code></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="left">programming</td>
+<td align="left">retrieves the column information of the DBMS table through the tbl_bdi object of dplyr.</td>
+<td align="left"><code><a href="../reference/get_column_info.html">get_column_info()</a></code></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left">programming</td>
+<td align="left">finding Users Machine’s OS.</td>
+<td align="left"><code><a href="../reference/get_os.html">get_os()</a></code></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="left">programming</td>
+<td align="left">import Liberation Sans Narrow fonts.</td>
+<td align="left"><code><a href="../reference/import_liberation.html">import_liberation()</a></code></td>
 <td align="center"></td>
 </tr>
 </tbody>

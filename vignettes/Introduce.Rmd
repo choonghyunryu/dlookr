@@ -56,7 +56,7 @@ summary overview object  | summary described overview of data  | `summary.overvi
 plot overview object | plot described overview of data | `plot.overview()` | 
 diagnose data quality of variables | The scope of data quality diagnosis is information on missing values and unique value information | `diagnose()` | x
 diagnose data quality of categorical variables | frequency, ratio, rank by levels of each variables | `diagnose_category()` | x
-diagnose data quality of numerical variables | descriptive statistics, number of zero, minus, outliers | `diagnose_category()` | x
+diagnose data quality of numerical variables | descriptive statistics, number of zero, minus, outliers | `diagnose_numeric()` | x
 diagnose data quality for outlier  | number of outliers, ratio, mean of outliers, mean with outliers, mean without outliers | `diagnose_outlier()` | x
 plot outliers information of numerical data  | box plot and histogram whith outliers, without outliers | `plot_outlier.data.frame()` | x
 plot outliers information of numerical data by target variable  | box plot and density plot whith outliers, without outliers | `plot_outlier.target_df()` | x
@@ -138,7 +138,7 @@ Types | Descriptions | Functions | Support DBI
 :---|:-------|:---|:---:
 missing values  | find the variable that contains the missing value in the object that inherits the data.frame | `find_na()` | 
 outliers | find the numerical variable that contains outliers in the object that inherits the data.frame | `find_outliers()` | 
-outliers | find the numerical variable that skewed variable that inherits the data.frame | `find_skewness()` | 
+skewed variable | find the numerical variable that skewed variable that inherits the data.frame | `find_skewness()` | 
 
 #### Imputation
 Types | Descriptions | Functions | Support DBI
@@ -160,6 +160,7 @@ visualize | generates plots for understand distribution, bad rate, and weight of
 evaluate | calculates metrics to evaluate the performance of binned variable for binomial classification model | `performance_bin()` | 
 summaries | summary metrics to evaluate the performance of binomial classification model after performance_bin() | `summary.performance_bin()` | 
 visualize | It generates plots for understand frequency, WoE by bins using performance_bin after running binning_by() | `plot.performance_bin()` | 
+visualize | extract bins from "bins" and "optimal_bins" objects | `extract.bins()` | 
 
 #### Diagnose Binned Variable
 Types | Descriptions | Functions | Support DBI
@@ -173,11 +174,34 @@ visualize | visualize for understand frequency, WoE by bins using performance_bi
 Types | Descriptions | Functions | Support DBI
 :---|:-------|:---|:---:
 transformation | performs variable transformation for standardization and resolving skewness of numerical variables. | `transform()` | 
-summaries | compares the distribution of data before and after data transformation | `summary.bins()` | 
-visualize | visualize two kinds of plot by attribute of 'transform' class. The transformation of a numerical variable is a density plot. | `plot.transform` | 
+summaries | compares the distribution of data before and after data transformation | `summary.transform()` | 
+visualize | visualize two kinds of plot by attribute of 'transform' class. The transformation of a numerical variable is a density plot. | `plot.transform()` | 
 
 #### Reporting
 Types | Descriptions | Functions | Support DBI
 :-----|:--------|:---|:---:
-eporting the information of transformation into pdf file | reporting the information of transformation | `transformation_report()` | 
-eporting the information of transformation into html file | eporting the information of transformation | `transformation_report()` | 
+reporting the information of transformation into pdf | reporting the information of transformation. | `transformation_report()` | 
+reporting the information of transformation into html | reporting the information of transformation. | `transformation_report()` | 
+
+
+### Miscellaneous
+
+#### Statistics
+Types | Descriptions | Functions | Support DBI
+:---|:-------|:---|:---:
+statistics  | calculate the entropy. | `entropy()` | 
+statistics  | calculate the skewness of the data. | `skewness()` | 
+statistics  | calculate the kurtosis of the data. | `kurtosis()` | 
+statistics  | calculate the Jensen-Shannon divergence between two probability distributions. | `jsd()` | 
+statistics  | calculate the Kullback-Leibler divergence between two probability distributions. | `kld()` | 
+statistics  | finding percentile of numerical variable. | `get_percentile()` | 
+statistics  | transform a numeric vector using several methods like "log", "sqrt", "log+1", "log+a", "1/x", "x^2", "x^3", "Box-Cox", "Yeo-Johnson"| `get_transform()` | 
+
+#### Programming
+Types | Descriptions | Functions | Support DBI
+:---|:-------|:---|:---:
+programming  | extracts variable information having a certain class from an object inheriting data.frame. | `find_class()` | 
+programming  | gets class of variables in data.frame or tbl_df. | `get_class()` | 
+programming  | retrieves the column information of the DBMS table through the tbl_bdi object of dplyr. | `get_column_info()` | 
+programming  | finding Users Machine's OS. | `get_os()` | 
+programming  | import Liberation Sans Narrow fonts. | `import_liberation()` | 
