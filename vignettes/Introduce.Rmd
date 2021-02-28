@@ -161,6 +161,14 @@ evaluate | calculates metrics to evaluate the performance of binned variable for
 summaries | summary metrics to evaluate the performance of binomial classification model after performance_bin() | `summary.performance_bin()` | 
 visualize | It generates plots for understand frequency, WoE by bins using performance_bin after running binning_by() | `plot.performance_bin()` | 
 
+#### Diagnose Binned Variable
+Types | Descriptions | Functions | Support DBI
+:---|:-------|:---|:---:
+diagnosis | performs diagnose performance that calculates metrics to evaluate the performance of binned variable for binomial classification model. | `performance_bin()` | 
+summaries | summary method for "performance_bin". summary metrics to evaluate the performance of binomial classification model. | `
+summary.performance_bin()` | 
+visualize | visualize for understand frequency, WoE by bins using performance_bin and something else. | `plot.performance_bin()` | 
+
 #### Transformation
 Types | Descriptions | Functions | Support DBI
 :---|:-------|:---|:---:
