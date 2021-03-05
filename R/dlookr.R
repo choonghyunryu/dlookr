@@ -150,9 +150,9 @@ if (getRversion() >= "2.15.1") {
   
   if (class(flag) == "try-error") {
     sucess <- FALSE
-  }
-  
-  if (flag) {
-    try(load_fonts())
+  } else {
+    if (flag) {
+      try(load_fonts())
+    }    
   }
 }
