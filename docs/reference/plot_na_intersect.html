@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.3</span>
       </span>
     </div>
 
@@ -186,8 +186,12 @@ and the number of observations including missing values and complete cases .</p>
 <span class='co'># Visualize the combination variables that is include missing value.</span>
 <span class='fu'>plot_na_intersect</span>(<span class='no'>carseats</span>)</div><div class='img'><img src='plot_na_intersect-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Diagnose the data with missing_count using diagnose() function</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
-
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'>
 <span class='kw'>if</span> (!<span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"mice"</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)) {
   <span class='fu'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span>(<span class='st'>"Package \"mice\" needed for this function to work. Please install it."</span>,
   <span class='kw'>call.</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
@@ -195,25 +199,25 @@ and the number of observations including missing values and complete cases .</p>
 
 <span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://amices.org/mice/reference/boys.html'>boys</a></span> <span class='kw'>%&gt;%</span>
   <span class='no'>diagnose</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span>(<span class='no'>missing_count</span>))</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 9 x 6</span><span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span>(<span class='no'>missing_count</span>))</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 9 x 6</span><span>
 #&gt;   variables types   missing_count missing_percent unique_count unique_rate
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> tv        integer           522          69.8             19     0.025</span><span style='text-decoration: underline;'>4</span><span> 
-#&gt; </span><span style='color: #555555;'>2</span><span> gen       ordered           503          67.2              6     0.008</span><span style='text-decoration: underline;'>02</span><span>
-#&gt; </span><span style='color: #555555;'>3</span><span> phb       ordered           503          67.2              7     0.009</span><span style='text-decoration: underline;'>36</span><span>
-#&gt; </span><span style='color: #555555;'>4</span><span> hc        numeric            46           6.15           205     0.274  
-#&gt; </span><span style='color: #555555;'>5</span><span> bmi       numeric            21           2.81           504     0.674  
-#&gt; </span><span style='color: #555555;'>6</span><span> hgt       numeric            20           2.67           483     0.646  
-#&gt; </span><span style='color: #555555;'>7</span><span> wgt       numeric             4           0.535          524     0.701  
-#&gt; </span><span style='color: #555555;'>8</span><span> reg       factor              3           0.401            6     0.008</span><span style='text-decoration: underline;'>02</span><span>
-#&gt; </span><span style='color: #555555;'>9</span><span> age       numeric             0           0              683     0.913  </div><div class='input'>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> tv        integer           522          69.8             19     0.025</span><span style='text-decoration: underline;'>4</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> gen       ordered           503          67.2              6     0.008</span><span style='text-decoration: underline;'>02</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> phb       ordered           503          67.2              7     0.009</span><span style='text-decoration: underline;'>36</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> hc        numeric            46           6.15           205     0.274  
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> bmi       numeric            21           2.81           504     0.674  
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> hgt       numeric            20           2.67           483     0.646  
+#&gt; </span><span style='color: #BCBCBC;'>7</span><span> wgt       numeric             4           0.535          524     0.701  
+#&gt; </span><span style='color: #BCBCBC;'>8</span><span> reg       factor              3           0.401            6     0.008</span><span style='text-decoration: underline;'>02</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>9</span><span> age       numeric             0           0              683     0.913  </div><div class='input'>
 <span class='co'># Visualize the combination variables that is include missing value</span>
 <span class='fu'>plot_na_intersect</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://amices.org/mice/reference/boys.html'>boys</a></span>)</div><div class='img'><img src='plot_na_intersect-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Visualize variables containing missing values and complete case</span>
 <span class='fu'>plot_na_intersect</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://amices.org/mice/reference/boys.html'>boys</a></span>, <span class='kw'>only_na</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot_na_intersect-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Using n_vars argument</span>
 <span class='fu'>plot_na_intersect</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://amices.org/mice/reference/boys.html'>boys</a></span>, <span class='kw'>n_vars</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='img'><img src='plot_na_intersect-4.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Using n_intersacts argument</span>
+<span class='co'># Using n_intersects argument</span>
 <span class='fu'>plot_na_intersect</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://amices.org/mice/reference/boys.html'>boys</a></span>, <span class='kw'>only_na</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>n_intersacts</span> <span class='kw'>=</span> <span class='fl'>7</span>)</div><div class='img'><img src='plot_na_intersect-5.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Not allow typographic elements</span>
 <span class='fu'>plot_na_intersect</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://amices.org/mice/reference/boys.html'>boys</a></span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot_na_intersect-6.png' alt='' width='700' height='433' /></div><div class='input'>

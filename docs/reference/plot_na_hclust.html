@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.3</span>
       </span>
     </div>
 
@@ -170,9 +170,9 @@ for each combination of variables.</p>
 <span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>20</span>), <span class='st'>"Income"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
 <span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>5</span>), <span class='st'>"Urban"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
 
-<span class='co'># Visualize pareto chart for variables with missing value.</span>
+<span class='co'># Visualize hcluster chart for variables with missing value.</span>
 <span class='fu'>plot_na_hclust</span>(<span class='no'>carseats</span>)</div><div class='img'><img src='plot_na_hclust-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot_na_hclust</span>(<span class='no'>airquality</span>)</div><div class='img'><img src='plot_na_hclust-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Visualize pareto chart for variables with missing value.</span>
+<span class='co'># Visualize hcluster chart for variables with missing value.</span>
 <span class='kw'>if</span> (!<span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"mice"</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)) {
   <span class='fu'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span>(<span class='st'>"Package \"mice\" needed for this function to work. Please install it."</span>,
   <span class='kw'>call.</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
