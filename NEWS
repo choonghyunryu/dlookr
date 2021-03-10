@@ -9,15 +9,10 @@ CHANGES IN R VERSION 0.4.3:
     * Fixed an error that occurred when calling eda_report() with 
       the shapiro.test() function when the data included many missing values. 
     
-  MAJOR CHANGES:
+    * Fixed .onAttach() error when loading package in MS-Windows OS. 
+      (thanks @Roberto Passera)) 
 
-    * 
-    
-  MINOR CHANGES:
 
-    * 
-      
-      
       
 CHANGES IN R VERSION 0.4.2:
       
@@ -50,6 +45,7 @@ CHANGES IN R VERSION 0.4.2:
       is installed before version 0.6.0. So, modified the dependency of 
       hrbrthemes(thanks @coissac, #33).    
       
+    
     
 CHANGES IN R VERSION 0.4.1:
 
