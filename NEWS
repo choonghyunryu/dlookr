@@ -1,3 +1,21 @@
+CHANGES IN R VERSION 0.4.4:
+      
+  BUG FIXES:
+
+    * Fixed an error that occurred when "section 1.2.1 Diagnosis of categorical 
+      variables" of diagnose_report() shows unnecessary records in cases with 
+      a lot of ties in the frequency rank. (thanks @sedechio, #34)
+      
+    * Fixed a bug in which when an object created with diagnose_category(), 
+      the rank variable is just row numbers.
+
+  MINOR CHANGES:
+
+    * The type argument was added to diagnose_category(). "rank" returns the 
+      rows corresponding to the top n rank, and "n" returns the top n rows.
+      
+      
+
 CHANGES IN R VERSION 0.4.3:
       
   BUG FIXES:
@@ -10,7 +28,7 @@ CHANGES IN R VERSION 0.4.3:
       the shapiro.test() function when the data included many missing values. 
     
     * Fixed .onAttach() error when loading package in MS-Windows OS. 
-      (thanks @Roberto Passera)) 
+      (thanks @Roberto Passera)
 
 
       

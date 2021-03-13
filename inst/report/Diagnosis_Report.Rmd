@@ -106,12 +106,12 @@ if (NROW(diagn_uniq_num) > 0) {
 ## Detailed data diagnosis
 ### Diagnosis of categorical variables
 ```{r diagnose_catagory, echo=FALSE, warning=FALSE, message=FALSE, comment=""}
-diagn_category <- diagnose_category(edaData, top = 10)
+diagn_category <- diagnose_category(edaData, top = 10, type = "n")
 
 if (NROW(diagn_category) > 0) {
   names(diagn_category)[5] <- "ratio(%)"
 
-  cap <- "Categorical variable level top 10"
+  cap <- "Top 10 levels of categorical variables"
   
   knitr::kable(diagn_category, digits = 2, caption = cap, format = "html",
                format.args = list(big.mark = ",")) %>% 

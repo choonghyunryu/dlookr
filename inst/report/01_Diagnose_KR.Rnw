@@ -123,7 +123,7 @@ if (NROW(diagn_uniq_num) > 0) {
 \section{데이터 진단 상세}
 \subsection{범주형 변수의 진단}
 <<diagnose_catagory, echo=FALSE, results='asis'>>=
-diagn_category <- diagnose_category(edaData)
+diagn_category <- diagnose_category(edaData, top = 10, type = "n")
 
 if (NROW(diagn_category) > 0) {
   names(diagn_category)[5] <- "ratio(%)"

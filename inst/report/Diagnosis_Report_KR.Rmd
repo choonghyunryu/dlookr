@@ -106,7 +106,7 @@ if (NROW(diagn_uniq_num) > 0) {
 ## 데이터 진단 상세
 ### 범주형 변수의 진단
 ```{r diagnose_catagory, echo=FALSE, warning=FALSE, message=FALSE, comment=""}
-diagn_category <- diagnose_category(edaData, top = 10)
+diagn_category <- diagnose_category(edaData, top = 10, type = "n")
 
 if (NROW(diagn_category) > 0) {
   names(diagn_category)[5] <- "ratio(%)"

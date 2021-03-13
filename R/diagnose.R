@@ -157,8 +157,15 @@ diagnose_category <- function(.data, ...) {
 #' column names represent column positions.
 #' They support unquoting and splicing.
 #'
-#' @param top an integer. Specifies the upper top rank to extract.
+#' @param top an integer. Specifies the upper top rows or rank to extract.
 #' Default is 10.
+#' @param type a character string specifying how result are extracted.
+#' Default is "rank" that extract top n ranks by decreasing frequency. 
+#' In this case, if there are ties in rank, more rows than the number specified 
+#' by the top argument are returned.
+#' "n" extract top n rows by decreasing frequency. 
+#' If there are too many rows to be returned because there are too many ties, 
+#' you can adjust the returned rows appropriately by using "n".
 #' @param add_character logical. Decide whether to include text variables in the
 #' diagnosis of categorical data. The default value is TRUE, which also includes character variables.
 #' @return an object of tbl_df.
@@ -206,16 +213,39 @@ diagnose_category <- function(.data, ...) {
 #' carseats %>%
 #'   diagnose_category()  %>%
 #'   filter(ratio >= 60)
+#'   
+#' # Using type argument -------------------------
+#'  dfm <- data.frame(alpabet = c(rep(letters[1:5], times = 5), "c")) 
+#'  
+#'  # extract rows that less than equal rank 10
+#'  # default of top argument is 10
+#'  dfm %>% 
+#'    diagnose_category()
+#'    
+#'  # extract rows that less than equal rank 2
+#'  dfm %>% 
+#'    diagnose_category(top = 2, type = "rank")
+#'    
+#'  # extract rows that less than equal rank 2
+#'  # default of type argument is "rank"
+#'  dfm %>% 
+#'    diagnose_category(top = 2)
+#'  
+#'  # extract only 2 rows
+#'  dfm %>% 
+#'    diagnose_category(top = 2, type = "n")
+#'  
 #' @method diagnose_category data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
 #' @export
-diagnose_category.data.frame <- function(.data, ..., top = 10, add_character = TRUE) {
+diagnose_category.data.frame <- function(.data, ..., top = 10, type = c("rank", "n")[1], 
+                                         add_character = TRUE) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
-  diagn_category_impl(.data, vars, top, add_character)
+  diagn_category_impl(.data, vars, top, type, add_character)
 }
 
-diagn_category_impl <- function(df, vars, top, add_character) {
+diagn_category_impl <- function(df, vars, top, type, add_character) {
   if (length(vars) == 0) vars <- names(df)
 
   if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
@@ -224,23 +254,36 @@ diagn_category_impl <- function(df, vars, top, add_character) {
     idx_factor <- find_class(df[, vars], type = "categorical2")
   else
     idx_factor <- find_class(df[, vars], type = "categorical")
-
+  
+  if (length(type) != 1 | !type %in% c("rank", "n")) {
+    message("The type argument must be one of \"rank\" or \"n\".\n")
+    return(NULL)    
+  }
+  
   if (length(idx_factor) == 0) {
     message("There is no categorical variable in the data or variable list.\n")
     return(NULL)
   }
   
-  get_topn <- function(df, var, top) {
-    df %>%
+  get_topn <- function(df, var, top, type) {
+    tab <- df %>%
       select(variable = var) %>%
       count(variable, sort = TRUE) %>%
       transmute(variables = var, levels = variable, N = sum(n), freq = n,
-                ratio = n / sum(n) * 100, rank = row_number()) %>%
-      top_n(freq, n = top)
+                ratio = n / sum(n) * 100, 
+                rank = rank(max(freq) - freq, ties.method = "min"))
+    
+    if (type == "n") {
+      tab %>% 
+        slice_head(n = top)
+    } else if (type == "rank") {
+      tab %>% 
+        top_n(n = top, freq)      
+    }
   }
 
   result <- lapply(vars[idx_factor],
-                   function(x) get_topn(df, x, top))
+                   function(x) get_topn(df, x, top, type))
   suppressWarnings(
     do.call("rbind", result)
   )

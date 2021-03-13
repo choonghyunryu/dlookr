@@ -7,7 +7,13 @@
 \usage{
 diagnose_category(.data, ...)
 
-\method{diagnose_category}{data.frame}(.data, ..., top = 10, add_character = TRUE)
+\method{diagnose_category}{data.frame}(
+  .data,
+  ...,
+  top = 10,
+  type = c("rank", "n")[1],
+  add_character = TRUE
+)
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}
@@ -21,8 +27,16 @@ These arguments are automatically quoted and evaluated in a context where
 column names represent column positions.
 They support unquoting and splicing.}
 
-\item{top}{an integer. Specifies the upper top rank to extract.
+\item{top}{an integer. Specifies the upper top rows or rank to extract.
 Default is 10.}
+
+\item{type}{a character string specifying how result are extracted.
+Default is "rank" that extract top n ranks by decreasing frequency. 
+In this case, if there are ties in rank, more rows than the number specified 
+by the top argument are returned.
+"n" extract top n rows by decreasing frequency. 
+If there are too many rows to be returned because there are too many ties, 
+you can adjust the returned rows appropriately by using "n".}
 
 \item{add_character}{logical. Decide whether to include text variables in the
 diagnosis of categorical data. The default value is TRUE, which also includes character variables.}
@@ -99,6 +113,28 @@ carseats \%>\%
 carseats \%>\%
   diagnose_category()  \%>\%
   filter(ratio >= 60)
+  
+# Using type argument -------------------------
+ dfm <- data.frame(alpabet = c(rep(letters[1:5], times = 5), "c")) 
+ 
+ # extract rows that less than equal rank 10
+ # default of top argument is 10
+ dfm \%>\% 
+   diagnose_category()
+   
+ # extract rows that less than equal rank 2
+ dfm \%>\% 
+   diagnose_category(top = 2, type = "rank")
+   
+ # extract rows that less than equal rank 2
+ # default of type argument is "rank"
+ dfm \%>\% 
+   diagnose_category(top = 2)
+ 
+ # extract only 2 rows
+ dfm \%>\% 
+   diagnose_category(top = 2, type = "n")
+ 
 }
 \seealso{
 \code{\link{diagnose_category.tbl_dbi}}, \code{\link{diagnose.data.frame}}, \code{\link{diagnose_numeric.data.frame}}, \code{\link{diagnose_outlier.data.frame}}.

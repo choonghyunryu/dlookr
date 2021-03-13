@@ -123,7 +123,7 @@ if (NROW(diagn_uniq_num) > 0) {
 \section{Detailed data diagnosis}
 \subsection{Diagnosis of categorical variables}
 <<diagnose_catagory, echo=FALSE, results='asis'>>=
-diagn_category <- diagnose_category(edaData)
+diagn_category <- diagnose_category(edaData, top = 10, type = "n")
 
 if (NROW(diagn_category) > 0) {
   names(diagn_category)[5] <- "ratio(%)"
@@ -131,7 +131,7 @@ if (NROW(diagn_category) > 0) {
   diagn_category <- diagn_category %>% 
   filter(rank <= 50)
     
-  cap <- "Categorical variable level top 10"
+  cap <- "Top 10 levels of categorical variables"
 
   kable(diagn_category, booktabs = TRUE,
         caption = cap, digits = digit, longtable = TRUE,
