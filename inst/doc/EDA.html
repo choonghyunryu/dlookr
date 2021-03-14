@@ -12,7 +12,7 @@
 
 <meta name="author" content="Choonghyun Ryu" />
 
-<meta name="date" content="2021-02-28" />
+<meta name="date" content="2021-03-14" />
 
 <title>Exploratory Data Analysis</title>
 
@@ -140,7 +140,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <h1 class="title toc-ignore">Exploratory Data Analysis</h1>
 <h4 class="author">Choonghyun Ryu</h4>
-<h4 class="date">2021-02-28</h4>
+<h4 class="date">2021-03-14</h4>
 
 
 
@@ -965,12 +965,12 @@ Information about ANOVA in EDA reports
 <span id="cb36-35"><a href="#cb36-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">describe</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb36-36"><a href="#cb36-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(ShelveLoc <span class="sc">==</span> <span class="st">&quot;Good&quot;</span>)</span>
 <span id="cb36-37"><a href="#cb36-37" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 8 x 27</span></span>
-<span id="cb36-38"><a href="#cb36-38" aria-hidden="true" tabindex="-1"></a>  variable ShelveLoc     n    na   mean    sd se_mean   IQR skewness kurtosis</span>
-<span id="cb36-39"><a href="#cb36-39" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>    <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>  <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>   <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>    <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>    <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
-<span id="cb36-40"><a href="#cb36-40" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> Sales    Good         <span class="dv">85</span>     <span class="dv">0</span>  <span class="fl">10.2</span>   <span class="fl">2.50</span>   <span class="fl">0.271</span>  <span class="fl">3.63</span>  <span class="sc">-</span><span class="fl">0.0759</span>   <span class="sc">-</span><span class="fl">0.261</span></span>
-<span id="cb36-41"><a href="#cb36-41" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> CompPri… Good         <span class="dv">85</span>     <span class="dv">0</span> <span class="fl">126.</span>   <span class="fl">15.0</span>    <span class="fl">1.62</span>  <span class="dv">22</span>      <span class="fl">0.0141</span>   <span class="sc">-</span><span class="fl">0.490</span></span>
-<span id="cb36-42"><a href="#cb36-42" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> Income   Good         <span class="dv">80</span>     <span class="dv">5</span>  <span class="fl">68.2</span>  <span class="fl">27.9</span>    <span class="fl">3.12</span>  <span class="dv">49</span>     <span class="sc">-</span><span class="fl">0.112</span>    <span class="sc">-</span><span class="fl">1.22</span> </span>
-<span id="cb36-43"><a href="#cb36-43" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> Adverti… Good         <span class="dv">85</span>     <span class="dv">0</span>   <span class="fl">7.35</span>  <span class="fl">6.80</span>   <span class="fl">0.738</span> <span class="dv">12</span>      <span class="fl">0.424</span>    <span class="sc">-</span><span class="fl">0.901</span></span>
+<span id="cb36-38"><a href="#cb36-38" aria-hidden="true" tabindex="-1"></a>  variable    ShelveLoc     n    na   mean    sd se_mean   IQR skewness kurtosis</span>
+<span id="cb36-39"><a href="#cb36-39" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>       <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>  <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>   <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>    <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>    <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb36-40"><a href="#cb36-40" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> Sales       Good         <span class="dv">85</span>     <span class="dv">0</span>  <span class="fl">10.2</span>   <span class="fl">2.50</span>   <span class="fl">0.271</span>  <span class="fl">3.63</span>  <span class="sc">-</span><span class="fl">0.0759</span>   <span class="sc">-</span><span class="fl">0.261</span></span>
+<span id="cb36-41"><a href="#cb36-41" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> CompPrice   Good         <span class="dv">85</span>     <span class="dv">0</span> <span class="fl">126.</span>   <span class="fl">15.0</span>    <span class="fl">1.62</span>  <span class="dv">22</span>      <span class="fl">0.0141</span>   <span class="sc">-</span><span class="fl">0.490</span></span>
+<span id="cb36-42"><a href="#cb36-42" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> Income      Good         <span class="dv">80</span>     <span class="dv">5</span>  <span class="fl">68.2</span>  <span class="fl">27.9</span>    <span class="fl">3.12</span>  <span class="dv">49</span>     <span class="sc">-</span><span class="fl">0.112</span>    <span class="sc">-</span><span class="fl">1.22</span> </span>
+<span id="cb36-43"><a href="#cb36-43" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> Advertising Good         <span class="dv">85</span>     <span class="dv">0</span>   <span class="fl">7.35</span>  <span class="fl">6.80</span>   <span class="fl">0.738</span> <span class="dv">12</span>      <span class="fl">0.424</span>    <span class="sc">-</span><span class="fl">0.901</span></span>
 <span id="cb36-44"><a href="#cb36-44" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 4 more rows, and 17 more variables: p00 &lt;dbl&gt;, p01 &lt;dbl&gt;, p05 &lt;dbl&gt;,</span></span>
 <span id="cb36-45"><a href="#cb36-45" aria-hidden="true" tabindex="-1"></a><span class="co">#   p10 &lt;dbl&gt;, p20 &lt;dbl&gt;, p25 &lt;dbl&gt;, p30 &lt;dbl&gt;, p40 &lt;dbl&gt;, p50 &lt;dbl&gt;,</span></span>
 <span id="cb36-46"><a href="#cb36-46" aria-hidden="true" tabindex="-1"></a><span class="co">#   p60 &lt;dbl&gt;, p70 &lt;dbl&gt;, p75 &lt;dbl&gt;, p80 &lt;dbl&gt;, p90 &lt;dbl&gt;, p95 &lt;dbl&gt;,</span></span>

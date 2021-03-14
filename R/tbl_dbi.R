@@ -247,6 +247,13 @@ diagn_std_impl_dbi <- function(df, vars) {
 #' They support unquoting and splicing.
 #' @param top an integer. Specifies the upper top rank to extract.
 #' Default is 10.
+#' @param type a character string specifying how result are extracted.
+#' Default is "rank" that extract top n ranks by decreasing frequency. 
+#' In this case, if there are ties in rank, more rows than the number specified 
+#' by the top argument are returned.
+#' "n" extract top n rows by decreasing frequency. 
+#' If there are too many rows to be returned because there are too many ties, 
+#' you can adjust the returned rows appropriately by using "n".
 #' @param in_database Specifies whether to perform in-database operations. 
 #' If TRUE, most operations are performed in the DBMS. if FALSE, 
 #' table data is taken in R and operated in-memory.
@@ -308,20 +315,54 @@ diagn_std_impl_dbi <- function(df, vars) {
 #'   diagnose_category()  %>%
 #'   filter(ratio >= 60)
 #'   
-diagnose_category.tbl_dbi <- function(.data, ..., top = 10, in_database = TRUE, collect_size = Inf) {
+#' # Using type argument -------------------------
+#'  dfm <- data.frame(alpabet = c(rep(letters[1:5], times = 5), "c")) 
+#'  
+#' # copy carseats to the DBMS with a table named TB_CARSEATS
+#' copy_to(con_sqlite, dfm, name = "TB_EXAMPLE", overwrite = TRUE)  
+#'  
+#' # extract rows that less than equal rank 10
+#' # default of top argument is 10
+#' con_sqlite %>% 
+#'   tbl("TB_EXAMPLE") %>% 
+#'   diagnose_category()
+#'    
+#' # extract rows that less than equal rank 2
+#' con_sqlite %>% 
+#'   tbl("TB_EXAMPLE") %>% 
+#'   diagnose_category(top = 2, type = "rank")
+#'    
+#' # extract rows that less than equal rank 2
+#' # default of type argument is "rank"
+#' con_sqlite %>% 
+#'   tbl("TB_EXAMPLE") %>% 
+#'   diagnose_category(top = 2)
+#'  
+#'  # extract only 2 rows
+#' con_sqlite %>% 
+#'   tbl("TB_EXAMPLE") %>% 
+#'   diagnose_category(top = 2, type = "n")
+#'    
+diagnose_category.tbl_dbi <- function(.data, ..., top = 10, type = c("rank", "n")[1],
+                                      in_database = TRUE, collect_size = Inf) {
   vars <- tidyselect::vars_select(colnames(.data), !!! rlang::quos(...))
   
   if (in_database) {
-    diagn_category_impl_dbi(.data, vars, top)
+    diagn_category_impl_dbi(.data, vars, top, type)
   } else {
     .data %>% 
       dplyr::collect(n = collect_size) %>% 
-      diagn_category_impl(vars, top, add_character = TRUE)
+      diagn_category_impl(vars, top, type, add_character = TRUE)
   }
 }
 
-diagn_category_impl_dbi <- function(df, vars, top) {
+diagn_category_impl_dbi <- function(df, vars, top, type) {
   if (length(vars) == 0) vars <- colnames(df)
+  
+  if (length(type) != 1 | !type %in% c("rank", "n")) {
+    message("The type argument must be one of \"rank\" or \"n\".\n")
+    return(NULL)    
+  }
   
   col_type <- df %>%
     get_column_info %>%
@@ -334,9 +375,9 @@ diagn_category_impl_dbi <- function(df, vars, top) {
   N <- tally(df) %>% 
     pull
   
-  get_topn <- function(df, var, top) {
-    suppressMessages(
-      df %>%
+  get_topn <- function(df, var, top, type) {
+    suppressMessages({
+      tab <- df %>%
         select(levels = var) %>%
         group_by(levels) %>% 
         tally %>% 
@@ -344,13 +385,21 @@ diagn_category_impl_dbi <- function(df, vars, top) {
         as_tibble %>% 
         cbind(var, .) %>% 
         transmute(variables = var, levels, N, freq = n,
-                  ratio = n / N * 100, rank = row_number()) %>%
-        top_n(top)
-    )
+                  ratio = n / N * 100, 
+                  rank = rank(max(freq) - freq, ties.method = "min"))
+      
+      if (type == "n") {
+        tab %>% 
+          slice_head(n = top)
+      } else if (type == "rank") {
+        tab %>% 
+          top_n(n = top, freq)      
+      }
+    })
   }
   
   result <- lapply(vars[idx_factor],
-                   function(x) get_topn(df, x, top))
+                   function(x) get_topn(df, x, top, type))
   as_tibble(do.call("rbind", result))
 }
 

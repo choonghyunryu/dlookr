@@ -4,7 +4,14 @@
 \alias{diagnose_category.tbl_dbi}
 \title{Diagnose data quality of categorical variables in the DBMS}
 \usage{
-\method{diagnose_category}{tbl_dbi}(.data, ..., top = 10, in_database = TRUE, collect_size = Inf)
+\method{diagnose_category}{tbl_dbi}(
+  .data,
+  ...,
+  top = 10,
+  type = c("rank", "n")[1],
+  in_database = TRUE,
+  collect_size = Inf
+)
 }
 \arguments{
 \item{.data}{a tbl_dbi.}
@@ -20,6 +27,14 @@ They support unquoting and splicing.}
 
 \item{top}{an integer. Specifies the upper top rank to extract.
 Default is 10.}
+
+\item{type}{a character string specifying how result are extracted.
+Default is "rank" that extract top n ranks by decreasing frequency. 
+In this case, if there are ties in rank, more rows than the number specified 
+by the top argument are returned.
+"n" extract top n rows by decreasing frequency. 
+If there are too many rows to be returned because there are too many ties, 
+you can adjust the returned rows appropriately by using "n".}
 
 \item{in_database}{Specifies whether to perform in-database operations. 
 If TRUE, most operations are performed in the DBMS. if FALSE, 
@@ -111,6 +126,34 @@ con_sqlite \%>\%
   diagnose_category()  \%>\%
   filter(ratio >= 60)
   
+# Using type argument -------------------------
+ dfm <- data.frame(alpabet = c(rep(letters[1:5], times = 5), "c")) 
+ 
+# copy carseats to the DBMS with a table named TB_CARSEATS
+copy_to(con_sqlite, dfm, name = "TB_EXAMPLE", overwrite = TRUE)  
+ 
+# extract rows that less than equal rank 10
+# default of top argument is 10
+con_sqlite \%>\% 
+  tbl("TB_EXAMPLE") \%>\% 
+  diagnose_category()
+   
+# extract rows that less than equal rank 2
+con_sqlite \%>\% 
+  tbl("TB_EXAMPLE") \%>\% 
+  diagnose_category(top = 2, type = "rank")
+   
+# extract rows that less than equal rank 2
+# default of type argument is "rank"
+con_sqlite \%>\% 
+  tbl("TB_EXAMPLE") \%>\% 
+  diagnose_category(top = 2)
+ 
+ # extract only 2 rows
+con_sqlite \%>\% 
+  tbl("TB_EXAMPLE") \%>\% 
+  diagnose_category(top = 2, type = "n")
+   
 }
 \seealso{
 \code{\link{diagnose_category.data.frame}}, \code{\link{diagnose.tbl_dbi}}, \code{\link{diagnose_category.tbl_dbi}}, \code{\link{diagnose_numeric.tbl_dbi}}, \code{\link{diagnose_outlier.tbl_dbi}}.
