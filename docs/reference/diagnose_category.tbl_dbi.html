@@ -74,7 +74,7 @@ column of the DBMS table through tbl_dbi." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.4</span>
       </span>
     </div>
 
@@ -128,7 +128,14 @@ column of the DBMS table through tbl_dbi.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for tbl_dbi</span>
-<span class='fu'><a href='diagnose_category.data.frame.html'>diagnose_category</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>in_database</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>collect_size</span> <span class='kw'>=</span> <span class='fl'>Inf</span>)</pre>
+<span class='fu'><a href='diagnose_category.data.frame.html'>diagnose_category</a></span>(
+  <span class='no'>.data</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"rank"</span>, <span class='st'>"n"</span>)[<span class='fl'>1</span>],
+  <span class='kw'>in_database</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>collect_size</span> <span class='kw'>=</span> <span class='fl'>Inf</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -152,6 +159,16 @@ They support unquoting and splicing.</p></td>
       <th>top</th>
       <td><p>an integer. Specifies the upper top rank to extract.
 Default is 10.</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>a character string specifying how result are extracted.
+Default is "rank" that extract top n ranks by decreasing frequency. 
+In this case, if there are ties in rank, more rows than the number specified 
+by the top argument are returned.
+"n" extract top n rows by decreasing frequency. 
+If there are too many rows to be returned because there are too many ties, 
+you can adjust the returned rows appropriately by using "n".</p></td>
     </tr>
     <tr>
       <th>in_database</th>
@@ -213,79 +230,128 @@ variable is likely to be an identifier.</p>
 <span class='co'># Diagnosis of all categorical variables</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='diagnose_category.data.frame.html'>diagnose_category</a></span>()</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 8 x 6</span><span>
+  <span class='fu'><a href='diagnose_category.data.frame.html'>diagnose_category</a></span>()</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 8 x 6</span><span>
 #&gt;   variables levels     N  freq ratio  rank
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> ShelveLoc Medium   400   219 54.8      1
-#&gt; </span><span style='color: #555555;'>2</span><span> ShelveLoc Bad      400    96 24        2
-#&gt; </span><span style='color: #555555;'>3</span><span> ShelveLoc Good     400    85 21.2      3
-#&gt; </span><span style='color: #555555;'>4</span><span> Urban     Yes      400   278 69.5      1
-#&gt; </span><span style='color: #555555;'>5</span><span> Urban     No       400   117 29.2      2
-#&gt; </span><span style='color: #555555;'>6</span><span> Urban     </span><span style='color: #BB0000;'>NA</span><span>       400     5  1.25     3
-#&gt; </span><span style='color: #555555;'>7</span><span> US        Yes      400   258 64.5      1
-#&gt; </span><span style='color: #555555;'>8</span><span> US        No       400   142 35.5      2</div><div class='input'>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> ShelveLoc Medium   400   219 54.8      1
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> ShelveLoc Bad      400    96 24        2
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> ShelveLoc Good     400    85 21.2      3
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Urban     Yes      400   279 69.8      1
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> Urban     No       400   116 29.0      2
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> Urban     </span><span style='color: #BB0000;'>NA</span><span>       400     5  1.25     3
+#&gt; </span><span style='color: #BCBCBC;'>7</span><span> US        Yes      400   258 64.5      1
+#&gt; </span><span style='color: #BCBCBC;'>8</span><span> US        No       400   142 35.5      2</div><div class='input'>
 <span class='co'># Positive values select variables</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='diagnose_category.data.frame.html'>diagnose_category</a></span>(<span class='no'>Urban</span>, <span class='no'>US</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 5 x 6</span><span>
+  <span class='fu'><a href='diagnose_category.data.frame.html'>diagnose_category</a></span>(<span class='no'>Urban</span>, <span class='no'>US</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 5 x 6</span><span>
 #&gt;   variables levels     N  freq ratio  rank
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Urban     Yes      400   278 69.5      1
-#&gt; </span><span style='color: #555555;'>2</span><span> Urban     No       400   117 29.2      2
-#&gt; </span><span style='color: #555555;'>3</span><span> Urban     </span><span style='color: #BB0000;'>NA</span><span>       400     5  1.25     3
-#&gt; </span><span style='color: #555555;'>4</span><span> US        Yes      400   258 64.5      1
-#&gt; </span><span style='color: #555555;'>5</span><span> US        No       400   142 35.5      2</div><div class='input'>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> Urban     Yes      400   279 69.8      1
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> Urban     No       400   116 29.0      2
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Urban     </span><span style='color: #BB0000;'>NA</span><span>       400     5  1.25     3
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> US        Yes      400   258 64.5      1
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> US        No       400   142 35.5      2</div><div class='input'>
 <span class='co'># Negative values to drop variables, and In-memory mode</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='diagnose_category.data.frame.html'>diagnose_category</a></span>(-<span class='no'>Urban</span>, -<span class='no'>US</span>, <span class='kw'>in_database</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 6</span><span>
+  <span class='fu'><a href='diagnose_category.data.frame.html'>diagnose_category</a></span>(-<span class='no'>Urban</span>, -<span class='no'>US</span>, <span class='kw'>in_database</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 3 x 6</span><span>
 #&gt;   variables levels     N  freq ratio  rank
-#&gt; </span><span style='color: #555555;'>*</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> ShelveLoc Medium   400   219  54.8     1
-#&gt; </span><span style='color: #555555;'>2</span><span> ShelveLoc Bad      400    96  24       2
-#&gt; </span><span style='color: #555555;'>3</span><span> ShelveLoc Good     400    85  21.2     3</div><div class='input'>
+#&gt; </span><span style='color: #BCBCBC;'>*</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> ShelveLoc Medium   400   219  54.8     1
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> ShelveLoc Bad      400    96  24       2
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> ShelveLoc Good     400    85  21.2     3</div><div class='input'>
 <span class='co'># Positions values select variables, and In-memory mode and collect size is 200</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='diagnose_category.data.frame.html'>diagnose_category</a></span>(<span class='fl'>7</span>, <span class='kw'>in_database</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>collect_size</span> <span class='kw'>=</span> <span class='fl'>200</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 6</span><span>
+  <span class='fu'><a href='diagnose_category.data.frame.html'>diagnose_category</a></span>(<span class='fl'>7</span>, <span class='kw'>in_database</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>collect_size</span> <span class='kw'>=</span> <span class='fl'>200</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 3 x 6</span><span>
 #&gt;   variables levels     N  freq ratio  rank
-#&gt; </span><span style='color: #555555;'>*</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> ShelveLoc Medium   200   113  56.5     1
-#&gt; </span><span style='color: #555555;'>2</span><span> ShelveLoc Bad      200    47  23.5     2
-#&gt; </span><span style='color: #555555;'>3</span><span> ShelveLoc Good     200    40  20       3</div><div class='input'>
+#&gt; </span><span style='color: #BCBCBC;'>*</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> ShelveLoc Medium   200   113  56.5     1
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> ShelveLoc Bad      200    47  23.5     2
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> ShelveLoc Good     200    40  20       3</div><div class='input'>
 <span class='co'># Positions values select variables</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='diagnose_category.data.frame.html'>diagnose_category</a></span>(-<span class='fl'>7</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 5 x 6</span><span>
+  <span class='fu'><a href='diagnose_category.data.frame.html'>diagnose_category</a></span>(-<span class='fl'>7</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 5 x 6</span><span>
 #&gt;   variables levels     N  freq ratio  rank
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Urban     Yes      400   278 69.5      1
-#&gt; </span><span style='color: #555555;'>2</span><span> Urban     No       400   117 29.2      2
-#&gt; </span><span style='color: #555555;'>3</span><span> Urban     </span><span style='color: #BB0000;'>NA</span><span>       400     5  1.25     3
-#&gt; </span><span style='color: #555555;'>4</span><span> US        Yes      400   258 64.5      1
-#&gt; </span><span style='color: #555555;'>5</span><span> US        No       400   142 35.5      2</div><div class='input'>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> Urban     Yes      400   279 69.8      1
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> Urban     No       400   116 29.0      2
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Urban     </span><span style='color: #BB0000;'>NA</span><span>       400     5  1.25     3
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> US        Yes      400   258 64.5      1
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> US        No       400   142 35.5      2</div><div class='input'>
 <span class='co'># Top rank levels with top argument</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='diagnose_category.data.frame.html'>diagnose_category</a></span>(<span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 6</span><span>
+  <span class='fu'><a href='diagnose_category.data.frame.html'>diagnose_category</a></span>(<span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 6 x 6</span><span>
 #&gt;   variables levels     N  freq ratio  rank
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> ShelveLoc Bad      400    96 24        2
-#&gt; </span><span style='color: #555555;'>2</span><span> ShelveLoc Good     400    85 21.2      3
-#&gt; </span><span style='color: #555555;'>3</span><span> Urban     No       400   117 29.2      2
-#&gt; </span><span style='color: #555555;'>4</span><span> Urban     </span><span style='color: #BB0000;'>NA</span><span>       400     5  1.25     3
-#&gt; </span><span style='color: #555555;'>5</span><span> US        Yes      400   258 64.5      1
-#&gt; </span><span style='color: #555555;'>6</span><span> US        No       400   142 35.5      2</div><div class='input'>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> ShelveLoc Medium   400   219  54.8     1
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> ShelveLoc Bad      400    96  24       2
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Urban     Yes      400   279  69.8     1
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Urban     No       400   116  29.0     2
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> US        Yes      400   258  64.5     1
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> US        No       400   142  35.5     2</div><div class='input'>
 <span class='co'># Using pipes &amp; dplyr -------------------------</span>
 <span class='co'># Extraction of level that is more than 60% of categorical data</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='diagnose_category.data.frame.html'>diagnose_category</a></span>()  <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>ratio</span> <span class='kw'>&gt;=</span> <span class='fl'>60</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 6</span><span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>ratio</span> <span class='kw'>&gt;=</span> <span class='fl'>60</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 6</span><span>
 #&gt;   variables levels     N  freq ratio  rank
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Urban     Yes      400   278  69.5     1
-#&gt; </span><span style='color: #555555;'>2</span><span> US        Yes      400   258  64.5     1</div><div class='input'>  
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> Urban     Yes      400   279  69.8     1
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> US        Yes      400   258  64.5     1</div><div class='input'>
+<span class='co'># Using type argument -------------------------</span>
+ <span class='no'>dfm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>alpabet</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>5</span>], <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>5</span>), <span class='st'>"c"</span>))
+
+<span class='co'># copy carseats to the DBMS with a table named TB_CARSEATS</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/copy_to.html'>copy_to</a></span>(<span class='no'>con_sqlite</span>, <span class='no'>dfm</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"TB_EXAMPLE"</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='co'># extract rows that less than equal rank 10</span>
+<span class='co'># default of top argument is 10</span>
+<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_EXAMPLE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='diagnose_category.data.frame.html'>diagnose_category</a></span>()</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 5 x 6</span><span>
+#&gt;   variables levels     N  freq ratio  rank
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> alpabet   c         26     6  23.1     1
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> alpabet   e         26     5  19.2     2
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> alpabet   d         26     5  19.2     2
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> alpabet   b         26     5  19.2     2
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> alpabet   a         26     5  19.2     2</div><div class='input'>
+<span class='co'># extract rows that less than equal rank 2</span>
+<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_EXAMPLE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='diagnose_category.data.frame.html'>diagnose_category</a></span>(<span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"rank"</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 5 x 6</span><span>
+#&gt;   variables levels     N  freq ratio  rank
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> alpabet   c         26     6  23.1     1
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> alpabet   e         26     5  19.2     2
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> alpabet   d         26     5  19.2     2
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> alpabet   b         26     5  19.2     2
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> alpabet   a         26     5  19.2     2</div><div class='input'>
+<span class='co'># extract rows that less than equal rank 2</span>
+<span class='co'># default of type argument is "rank"</span>
+<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_EXAMPLE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='diagnose_category.data.frame.html'>diagnose_category</a></span>(<span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 5 x 6</span><span>
+#&gt;   variables levels     N  freq ratio  rank
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> alpabet   c         26     6  23.1     1
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> alpabet   e         26     5  19.2     2
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> alpabet   d         26     5  19.2     2
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> alpabet   b         26     5  19.2     2
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> alpabet   a         26     5  19.2     2</div><div class='input'>
+ <span class='co'># extract only 2 rows</span>
+<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_EXAMPLE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='diagnose_category.data.frame.html'>diagnose_category</a></span>(<span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"n"</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 6</span><span>
+#&gt;   variables levels     N  freq ratio  rank
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> alpabet   c         26     6  23.1     1
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> alpabet   e         26     5  19.2     2</div><div class='input'>   
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
