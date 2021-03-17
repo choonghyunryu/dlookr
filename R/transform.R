@@ -115,8 +115,14 @@ transform <- function(x, method = c("zscore", "minmax", "log", "log+1", "sqrt",
     result <- x^2
   else if (method == "x^3")
     result <- x^3
-  else if (method == "Box-Cox") 
-    result <- get_boxcox(x)
+  else if (method == "Box-Cox") {
+    if (!requireNamespace("forecast", quietly = TRUE)) {
+      stop("Package \"forecast\" needed for this function to work. Please install it.",
+           call. = FALSE)
+    }
+
+    result <- get_boxcox(x)        
+  }
   else if (method == "Yeo-Johnson")  {
     if (!requireNamespace("forecast", quietly = TRUE)) {
       stop("Package \"forecast\" needed for this function to work. Please install it.",
@@ -182,7 +188,6 @@ summary.transform <- function(object, ...) {
     select(-variable, -key) %>%
     t
   colnames(smmry) <- c("Original", "Transformation")
-
 
   if (method %in% c("zscore", "minmax")) {
     cat(sprintf("* Standardization with %s\n\n", method))

@@ -44,7 +44,6 @@ carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 
 library(dplyr)
-library(stringr)
 
 # Calculates the all categorical variavels
 all_var <- univar_category(carseats)
@@ -54,7 +53,7 @@ all_var
 
 # Calculates the only Urban variable
 all_var \%>\% 
-  "["(str_detect(names(all_var), "Urban"))
+  "["(names(all_var) \%in\% "Urban")
   
 urban <- univar_category(carseats, Urban)
   

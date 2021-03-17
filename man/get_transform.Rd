@@ -40,11 +40,15 @@ The supported transformation method is follow.:
 # log+a transform 
 get_transform(iris$Sepal.Length, "log+a")
 
-# log transform 
-get_transform(iris$Sepal.Length, "Box-Cox")
+if (requireNamespace("forecast", quietly = TRUE)) {
+  # Box-Cox transform 
+  get_transform(iris$Sepal.Length, "Box-Cox")
 
-# log transform 
-get_transform(iris$Sepal.Length, "Yeo-Johnson")
+  # Yeo-Johnson transform 
+  get_transform(iris$Sepal.Length, "Yeo-Johnson")
+} else {
+  cat("If you want to use this feature, you need to install the forecast package.\n")
+}
 }
 
 }

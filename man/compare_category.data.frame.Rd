@@ -57,7 +57,6 @@ carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 
 library(dplyr)
-library(stringr)
 
 # Compare the all categorical variables
 all_var <- compare_category(carseats)
@@ -67,7 +66,7 @@ all_var
 
 # Compare the categorical variables that case of joint the US variable
 all_var \%>\% 
-  "["(str_detect(names(all_var), "US"))
+  "["(names(all_var) \%in\% "US")
   
 # Compare the two categorical variables
 two_var <- compare_category(carseats, ShelveLoc, Urban)

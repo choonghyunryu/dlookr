@@ -52,8 +52,7 @@ Suggests:
     nycflights13,
     randomForest,
     rpart,
-    RSQLite,
-    stringr
+    RSQLite
 Author: Choonghyun Ryu [aut, cre]
 Maintainer: Choonghyun Ryu <choonghyun.ryu@gmail.com>    
 BugReports: https://github.com/choonghyunryu/dlookr/issues

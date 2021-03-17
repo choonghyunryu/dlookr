@@ -129,16 +129,20 @@ Here is a list of the data conversion functions and functions provided by dlookr
 In the following example, `imputate_na()` imputes the missing value of `Income`, a numeric variable of carseats, using the "rpart" method. `summary()` summarizes missing value imputation information, and `plot()` visualizes missing information.
 
 ```{r imputate_na, fig.align='center', fig.width = 7, fig.height = 5}
-income <- imputate_na(carseats, Income, US, method = "rpart")
+if (requireNamespace("rpart", quietly = TRUE)) {
+  income <- imputate_na(carseats, Income, US, method = "rpart")
 
-# result of imputation
-income
+  # result of imputation
+  income
 
-# summary of imputation
-summary(income)
+  # summary of imputation
+  summary(income)
 
-# viz of imputation
-plot(income)
+  # viz of imputation
+  plot(income)
+} else {
+  cat("If you want to use this feature, you need to install the rpart package.\n")
+}
 ```
 
 The following imputes the categorical variable `urban` by the "mice" method.
@@ -163,11 +167,15 @@ The following example imputes the missing value of the `Income` variable, and th
 
 ```{r imputate_na3}
 # The mean before and after the imputation of the Income variable
+if (requireNamespace("DMwR", quietly = TRUE)) {
 carseats %>%
   mutate(Income_imp = imputate_na(carseats, Income, US, method = "knn")) %>%
   group_by(US) %>%
   summarise(orig = mean(Income, na.rm = TRUE),
     imputation = mean(Income_imp))
+} else {
+  cat("If you want to use this feature, you need to install the DMwR package.\n")
+}
 ```
 
 
@@ -309,8 +317,13 @@ bin
 # Using another type argument
 binning(carseats$Income, nbins = 5, type = "equal")
 binning(carseats$Income, nbins = 5, type = "pretty")
-binning(carseats$Income, nbins = 5, type = "kmeans")
-binning(carseats$Income, nbins = 5, type = "bclust")
+
+if (requireNamespace("classInt", quietly = TRUE)) {
+  binning(carseats$Income, nbins = 5, type = "kmeans")
+  binning(carseats$Income, nbins = 5, type = "bclust")
+} else {
+  cat("If you want to use this feature, you need to install the classInt package.\n")
+}
 
 # Extract the binned results
 extract(bin)

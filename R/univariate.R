@@ -54,7 +54,6 @@ univar_numeric <- function(.data, ...) {
 #' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 #'
 #' library(dplyr)
-#' library(stringr)
 #' 
 #' # Calculates the all categorical variables
 #' all_var <- univar_category(carseats)
@@ -64,7 +63,7 @@ univar_numeric <- function(.data, ...) {
 #' 
 #' # Calculates the only Urban variable
 #' all_var %>% 
-#'   "["(str_detect(names(all_var), "Urban"))
+#'   "["(names(all_var) %in% "Urban")
 #'   
 #' urban <- univar_category(carseats, Urban)
 #'   
@@ -304,7 +303,6 @@ univar_numeric_impl <- function(df, vars) {
 #' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 #'
 #' library(dplyr)
-#' library(stringr)
 #' 
 #' # Calculates the all categorical variavels
 #' all_var <- univar_category(carseats)
@@ -314,7 +312,7 @@ univar_numeric_impl <- function(df, vars) {
 #' 
 #' # Calculates the only Urban variable
 #' all_var %>% 
-#'   "["(str_detect(names(all_var), "Urban"))
+#'   "["(names(all_var) %in% "Urban")
 #'   
 #' urban <- univar_category(carseats, Urban)
 #'   

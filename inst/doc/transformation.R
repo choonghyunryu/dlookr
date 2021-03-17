@@ -22,16 +22,20 @@ set.seed(456)
 carseats[sample(seq(NROW(carseats)), 10), "Urban"] <- NA
 
 ## ----imputate_na, fig.align='center', fig.width = 7, fig.height = 5-----------
-income <- imputate_na(carseats, Income, US, method = "rpart")
+if (requireNamespace("rpart", quietly = TRUE)) {
+  income <- imputate_na(carseats, Income, US, method = "rpart")
 
-# result of imputation
-income
+  # result of imputation
+  income
 
-# summary of imputation
-summary(income)
+  # summary of imputation
+  summary(income)
 
-# viz of imputation
-plot(income)
+  # viz of imputation
+  plot(income)
+} else {
+  cat("If you want to use this feature, you need to install the rpart package.\n")
+}
 
 ## ----imputate_na2, fig.align='center', fig.width = 7, fig.height = 5----------
 library(mice)
@@ -49,11 +53,15 @@ plot(urban)
 
 ## ----imputate_na3-------------------------------------------------------------
 # The mean before and after the imputation of the Income variable
+if (requireNamespace("DMwR", quietly = TRUE)) {
 carseats %>%
   mutate(Income_imp = imputate_na(carseats, Income, US, method = "knn")) %>%
   group_by(US) %>%
   summarise(orig = mean(Income, na.rm = TRUE),
     imputation = mean(Income_imp))
+} else {
+  cat("If you want to use this feature, you need to install the DMwR package.\n")
+}
 
 ## ----imputate_outlier, fig.align='center', fig.width = 7, fig.height = 5------
 price <- imputate_outlier(carseats, Price, method = "capping")
@@ -131,8 +139,13 @@ bin
 # Using another type argument
 binning(carseats$Income, nbins = 5, type = "equal")
 binning(carseats$Income, nbins = 5, type = "pretty")
-binning(carseats$Income, nbins = 5, type = "kmeans")
-binning(carseats$Income, nbins = 5, type = "bclust")
+
+if (requireNamespace("classInt", quietly = TRUE)) {
+  binning(carseats$Income, nbins = 5, type = "kmeans")
+  binning(carseats$Income, nbins = 5, type = "bclust")
+} else {
+  cat("If you want to use this feature, you need to install the classInt package.\n")
+}
 
 # Extract the binned results
 extract(bin)

@@ -97,8 +97,12 @@ plot_normality(carseats, 1)
 
 # Change the method of transformation
 plot_normality(carseats, Income, right = "1/x")
-plot_normality(carseats, Income, left = "Box-Cox", right = "Yeo-Johnson")
 
+if (requireNamespace("forecast", quietly = TRUE)) {
+  plot_normality(carseats, Income, left = "Box-Cox", right = "Yeo-Johnson")
+} else {
+  cat("If you want to use this feature, you need to install the rpart package.\n")
+}
 # Not allow typographic elements
 plot_normality(carseats, Income, typographic = FALSE)
 
@@ -130,10 +134,14 @@ carseats \%>\%
 
 # extract only those with 'ShelveLoc' variable level is "Good",
 # and plot 'Income' by 'US'
-carseats \%>\%
- filter(ShelveLoc == "Good") \%>\%
- group_by(US) \%>\%
- plot_normality(Income, right = "Box-Cox")
+if (requireNamespace("forecast", quietly = TRUE)) {
+  carseats \%>\%
+   filter(ShelveLoc == "Good") \%>\%
+   group_by(US) \%>\%
+   plot_normality(Income, right = "Box-Cox")
+} else {
+  cat("If you want to use this feature, you need to install the rpart package.\n")
+}
 }
 }
 \seealso{

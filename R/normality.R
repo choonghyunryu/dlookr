@@ -286,8 +286,12 @@ normality_group_impl <- function(df, vars, sample) {
 #'
 #' # Change the method of transformation
 #' plot_normality(carseats, Income, right = "1/x")
-#' plot_normality(carseats, Income, left = "Box-Cox", right = "Yeo-Johnson")
 #' 
+#' if (requireNamespace("forecast", quietly = TRUE)) {
+#'   plot_normality(carseats, Income, left = "Box-Cox", right = "Yeo-Johnson")
+#' } else {
+#'   cat("If you want to use this feature, you need to install the rpart package.\n")
+#' }
 #' # Not allow typographic elements
 #' plot_normality(carseats, Income, typographic = FALSE)
 #' 
@@ -319,10 +323,14 @@ normality_group_impl <- function(df, vars, sample) {
 #'
 #' # extract only those with 'ShelveLoc' variable level is "Good",
 #' # and plot 'Income' by 'US'
-#' carseats %>%
-#'  filter(ShelveLoc == "Good") %>%
-#'  group_by(US) %>%
-#'  plot_normality(Income, right = "Box-Cox")
+#' if (requireNamespace("forecast", quietly = TRUE)) {
+#'   carseats %>%
+#'    filter(ShelveLoc == "Good") %>%
+#'    group_by(US) %>%
+#'    plot_normality(Income, right = "Box-Cox")
+#' } else {
+#'   cat("If you want to use this feature, you need to install the rpart package.\n")
+#' }
 #' }
 #' @method plot_normality data.frame
 #' @importFrom tidyselect vars_select
@@ -591,11 +599,15 @@ plot_normality_group_impl <- function(df, vars, left, right, col = "steelblue", 
 #' # log+a transform 
 #' get_transform(iris$Sepal.Length, "log+a")
 #'
-#' # log transform 
-#' get_transform(iris$Sepal.Length, "Box-Cox")
+#' if (requireNamespace("forecast", quietly = TRUE)) {
+#'   # Box-Cox transform 
+#'   get_transform(iris$Sepal.Length, "Box-Cox")
 #' 
-#' # log transform 
-#' get_transform(iris$Sepal.Length, "Yeo-Johnson")
+#'   # Yeo-Johnson transform 
+#'   get_transform(iris$Sepal.Length, "Yeo-Johnson")
+#' } else {
+#'   cat("If you want to use this feature, you need to install the forecast package.\n")
+#' }
 #' }
 #' 
 get_transform <- function(x, method = c("log", "sqrt", "log+1", "log+a", "1/x", 
@@ -627,8 +639,14 @@ get_transform <- function(x, method = c("log", "sqrt", "log+1", "log+a", "1/x",
     result <- x^2
   else if (method == "x^3")
     result <- x^3
-  else if (method == "Box-Cox") 
-    result <- get_boxcox(x)
+  else if (method == "Box-Cox") {
+    if (!requireNamespace("forecast", quietly = TRUE)) {
+      stop("Package \"forecast\" needed for this function to work. Please install it.",
+           call. = FALSE)
+    }
+    
+    result <- get_boxcox(x) 
+  }
   else if (method == "Yeo-Johnson") {
     if (!requireNamespace("forecast", quietly = TRUE)) {
       stop("Package \"forecast\" needed for this function to work. Please install it.",
