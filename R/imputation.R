@@ -195,14 +195,9 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL,
     if (!x %in% complete_order) {
       return(rep(NA, length(data)))
     }
-    
-    if (requireNamespace("DMwR", quietly = TRUE)) {
-      impute <- DMwR::knnImputation(df[, complete_order])
-    } else {
-      stop("Package 'DMwR' needed for this function to work. Please install it.", 
-           call. = FALSE)
-    }
-  
+
+    impute <- imputation_knn(df[, complete_order])
+
     pred <- impute[, x]
 
     ifelse(is.na(data), pred, data)

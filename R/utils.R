@@ -475,5 +475,69 @@ get_melt <- function(x) {
   df
 } 
 
+# for replace DMwR::knnImputation()
+#' @importFrom stats dist
+imputation_knn <- function (data, k = 10) 
+{
+  weight_center <- function(x, weight) {
+    if (is.numeric(x)) {
+      sum(x * weight / sum(weight))
+    } else {
+      agg <- aggregate(weight, list(x), sum) 
+      pos <- agg[, 2] %>% which.max()
+      levels(agg[, 1])[pos]
+    }  
+  }
+  
+  n_row <- nrow(data)
+  n_col <- ncol(data)
+  
+  idx_category <- find_class(data, "categorical")
+  flag_category <- length(idx_category) > 0
+  idx_numeric <- find_class(data, "numerical")
+  
+  dm <- data
+  dm <- dm %>% 
+    mutate_at(idx_numeric, scale)   
+  
+  if (flag_category) {
+    dm <- dm %>% 
+      mutate_at(idx_category, as.integer) 
+  }
+  
+  mat_data <- as.matrix(dm)
+  complete_not <- which(!complete.cases(mat_data))
+  complete_yes <- setdiff(seq(n_row), complete_not)
+  
+  if (length(complete_not) == 0) 
+    warning("Data did not include missing values.")
+  
+  mat_data_complete <- mat_data[complete_yes, ]
+  
+  if (nrow(mat_data_complete) < k) 
+    stop("Not sufficient complete cases for computing neighbors.")
+  
+  for (i in complete_not) {
+    idx_na <- which(is.na(mat_data[i, ]))
+    idx_category_nona <- setdiff(idx_category, idx_na)
+    
+    dist <- scale(mat_data_complete, mat_data[i, ], FALSE)
+    
+    if (length(idx_category_nona)) {
+      dist[, idx_category_nona] <- ifelse(dist[, idx_category_nona] > 0, 1, 
+                                          dist[, idx_category_nona])
+    }
+    
+    dist <- dist[, -idx_na]
+    dist <- sqrt(drop(dist^2 %*% rep(1, ncol(dist))))
+    idx_shortest <- order(dist)[seq(k)]
+    
+    for (j in idx_na) 
+      data[i, j] <- weight_center(data[complete_yes, j][idx_shortest], 
+                                  exp(-dist[idx_shortest]))
+  }
+  
+  data
+}
 
 

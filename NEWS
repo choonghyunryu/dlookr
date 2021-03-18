@@ -14,10 +14,10 @@ CHANGES IN R VERSION 0.4.4:
     * The type argument was added to diagnose_category(). "rank" returns the 
       rows corresponding to the top n rank, and "n" returns the top n rows.
       
-    * Remove the suggested package that is stringr.  
+    * Remove the suggested package that are stringr and DMwR.  
     
     * Added exception handling logic in examples and vignettes using suggested 
-      package(DMwR, classInt, rpart, forecast).  
+      package(classInt, rpart, forecast).  
 
       
 

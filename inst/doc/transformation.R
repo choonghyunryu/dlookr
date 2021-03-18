@@ -53,15 +53,11 @@ plot(urban)
 
 ## ----imputate_na3-------------------------------------------------------------
 # The mean before and after the imputation of the Income variable
-if (requireNamespace("DMwR", quietly = TRUE)) {
 carseats %>%
   mutate(Income_imp = imputate_na(carseats, Income, US, method = "knn")) %>%
   group_by(US) %>%
   summarise(orig = mean(Income, na.rm = TRUE),
-    imputation = mean(Income_imp))
-} else {
-  cat("If you want to use this feature, you need to install the DMwR package.\n")
-}
+            imputation = mean(Income_imp))
 
 ## ----imputate_outlier, fig.align='center', fig.width = 7, fig.height = 5------
 price <- imputate_outlier(carseats, Price, method = "capping")
