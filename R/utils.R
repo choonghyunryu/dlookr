@@ -476,7 +476,7 @@ get_melt <- function(x) {
 } 
 
 # for replace DMwR::knnImputation()
-#' @importFrom stats dist
+#' @importFrom stats dist aggregate
 imputation_knn <- function (data, k = 10) 
 {
   weight_center <- function(x, weight) {
