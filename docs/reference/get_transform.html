@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.4</span>
       </span>
     </div>
 
@@ -168,11 +168,15 @@
 <span class='co'># log+a transform </span>
 <span class='fu'>get_transform</span>(<span class='no'>iris</span>$<span class='no'>Sepal.Length</span>, <span class='st'>"log+a"</span>)
 
-<span class='co'># log transform </span>
-<span class='fu'>get_transform</span>(<span class='no'>iris</span>$<span class='no'>Sepal.Length</span>, <span class='st'>"Box-Cox"</span>)
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"forecast"</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)) {
+  <span class='co'># Box-Cox transform </span>
+  <span class='fu'>get_transform</span>(<span class='no'>iris</span>$<span class='no'>Sepal.Length</span>, <span class='st'>"Box-Cox"</span>)
 
-<span class='co'># log transform </span>
-<span class='fu'>get_transform</span>(<span class='no'>iris</span>$<span class='no'>Sepal.Length</span>, <span class='st'>"Yeo-Johnson"</span>)
+  <span class='co'># Yeo-Johnson transform </span>
+  <span class='fu'>get_transform</span>(<span class='no'>iris</span>$<span class='no'>Sepal.Length</span>, <span class='st'>"Yeo-Johnson"</span>)
+} <span class='kw'>else</span> {
+  <span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span>(<span class='st'>"If you want to use this feature, you need to install the forecast package.\n"</span>)
+}
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

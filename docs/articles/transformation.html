@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.4</span>
       </span>
     </div>
 
@@ -70,13 +70,13 @@
 
       
 
-      </header><script src="transformation_files/header-attrs-2.6.4/header-attrs.js"></script><div class="row">
+      </header><script src="transformation_files/header-attrs-2.7.4/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Data Transformation</h1>
                         <h4 class="author">Choonghyun Ryu</h4>
             
-            <h4 class="date">2021-01-30</h4>
+            <h4 class="date">2021-03-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/choonghyunryu/dlookr/blob/master/vignettes/transformation.Rmd"><code>vignettes/transformation.Rmd</code></a></small>
       <div class="hidden name"><code>transformation.Rmd</code></div>
@@ -277,86 +277,20 @@ str(Carseats)
 </li>
 </ul>
 <p>In the following example, <code><a href="../reference/imputate_na.html">imputate_na()</a></code> imputes the missing value of <code>Income</code>, a numeric variable of carseats, using the “rpart” method. <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> summarizes missing value imputation information, and <code><a href="https://rdrr.io/r/base/plot.html">plot()</a></code> visualizes missing information.</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r">income &lt;- imputate_na(carseats, Income, US, method = "rpart")
+<div class="sourceCode" id="cb3"><html><body><pre class="r">if (requireNamespace("rpart", quietly = TRUE)) {
+  income &lt;- imputate_na(carseats, Income, US, method = "rpart")
 
-# result of imputation
-income
-  [1]  73.00000  48.00000  35.00000 100.00000  64.00000 113.00000 105.00000
-  [8]  81.00000 110.00000 113.00000  78.00000  94.00000  35.00000  28.00000
- [15] 117.00000  95.00000  76.75000  68.70968 110.00000  76.00000  90.00000
- [22]  29.00000  46.00000  31.00000 119.00000  32.00000 115.00000 118.00000
- [29]  74.00000  99.00000  94.00000  58.00000  32.00000  38.00000  54.00000
- [36]  84.00000  76.00000  41.00000  73.00000  69.27778  98.00000  53.00000
- [43]  69.00000  42.00000  79.00000  63.00000  90.00000  98.00000  52.00000
- [50]  93.00000  32.00000  90.00000  40.00000  64.00000 103.00000  81.00000
- [57]  82.00000  91.00000  93.00000  71.00000 102.00000  32.00000  45.00000
- [64]  88.00000  67.00000  26.00000  92.00000  61.00000  69.00000  59.00000
- [71]  81.00000  51.00000  45.00000  90.00000  68.00000 111.00000  87.00000
- [78]  71.00000  48.00000  67.00000 100.00000  72.00000  83.00000  36.00000
- [85]  25.00000 103.00000  84.00000  67.00000  42.00000  66.00000  22.00000
- [92]  46.00000 113.00000  30.00000  88.93750  25.00000  42.00000  82.00000
- [99]  77.00000  47.00000  69.00000  93.00000  22.00000  91.00000  96.00000
-[106] 100.00000  33.00000 107.00000  79.00000  65.00000  62.00000 118.00000
-[113]  99.00000  29.00000  87.00000  68.70968  75.00000  53.00000  88.00000
-[120]  94.00000 105.00000  89.00000 100.00000 103.00000 113.00000  98.33333
-[127]  68.00000  48.00000 100.00000 120.00000  84.00000  69.00000  87.00000
-[134]  98.00000  31.00000  94.00000  75.00000  42.00000 103.00000  62.00000
-[141]  60.00000  42.00000  84.00000  88.00000  68.00000  63.00000  83.00000
-[148]  54.00000 119.00000 120.00000  84.00000  58.00000  78.00000  36.00000
-[155]  69.00000  72.00000  34.00000  58.00000  90.00000  60.00000  28.00000
-[162]  21.00000  83.53846  64.00000  64.00000  58.00000  67.00000  73.00000
-[169]  89.00000  41.00000  39.00000 106.00000 102.00000  91.00000  24.00000
-[176]  89.00000  69.27778  72.00000  85.00000  25.00000 112.00000  83.00000
-[183]  60.00000  74.00000  33.00000 100.00000  51.00000  32.00000  37.00000
-[190] 117.00000  37.00000  42.00000  26.00000  70.00000  98.00000  93.00000
-[197]  28.00000  61.00000  80.00000  88.00000  92.00000  83.00000  78.00000
-[204]  82.00000  80.00000  22.00000  67.00000 105.00000  98.33333  21.00000
-[211]  41.00000 118.00000  69.00000  84.00000 115.00000  83.00000  43.75000
-[218]  44.00000  61.00000  79.00000 120.00000  73.47368 119.00000  45.00000
-[225]  82.00000  25.00000  33.00000  64.00000  73.00000 104.00000  60.00000
-[232]  69.00000  80.00000  76.00000  62.00000  32.00000  34.00000  28.00000
-[239]  24.00000 105.00000  80.00000  63.00000  46.00000  25.00000  30.00000
-[246]  43.00000  56.00000 114.00000  52.00000  67.00000 105.00000 111.00000
-[253]  97.00000  24.00000 104.00000  81.00000  40.00000  62.00000  38.00000
-[260]  36.00000 117.00000  42.00000  73.47368  26.00000  29.00000  35.00000
-[267]  93.00000  82.00000  57.00000  69.00000  26.00000  56.00000  33.00000
-[274] 106.00000  93.00000 119.00000  69.00000  48.00000 113.00000  57.00000
-[281]  86.00000  69.00000  96.00000 110.00000  46.00000  26.00000 118.00000
-[288]  44.00000  40.00000  77.00000 111.00000  70.00000  66.00000  84.00000
-[295]  76.00000  35.00000  44.00000  83.00000  63.00000  40.00000  78.00000
-[302]  93.00000  77.00000  52.00000  98.00000  29.00000  32.00000  92.00000
-[309]  80.00000 111.00000  65.00000  68.00000 117.00000  81.00000  56.57895
-[316]  21.00000  36.00000  30.00000  72.00000  45.00000  70.00000  39.00000
-[323]  50.00000 105.00000  65.00000  69.00000  30.00000  38.00000  66.00000
-[330]  54.00000  59.00000  63.00000  33.00000  60.00000 117.00000  70.00000
-[337]  35.00000  38.00000  24.00000  44.00000  29.00000 120.00000 102.00000
-[344]  42.00000  80.00000  68.00000  76.75000  39.00000 102.00000  27.00000
-[351]  51.83333 115.00000 103.00000  67.00000  31.00000 100.00000 109.00000
-[358]  73.00000  96.00000  62.00000  86.00000  25.00000  55.00000  51.83333
-[365]  21.00000  30.00000  56.00000 106.00000  22.00000 100.00000  41.00000
-[372]  81.00000  68.66667  68.88889  47.00000  46.00000  60.00000  61.00000
-[379]  88.00000 111.00000  64.00000  65.00000  28.00000 117.00000  37.00000
-[386]  73.00000 116.00000  73.00000  89.00000  42.00000  75.00000  63.00000
-[393]  42.00000  51.00000  58.00000 108.00000  81.17647  26.00000  79.00000
-[400]  37.00000
-attr(,"var_type")
-[1] "numerical"
-attr(,"method")
-[1] "rpart"
-attr(,"na_pos")
- [1]  17  18  40  95 116 126 163 177 179 209 217 222 263 315 347 351 364 373 374
-[20] 397
-attr(,"type")
-[1] "missing values"
-attr(,"message")
-[1] "complete imputation"
-attr(,"success")
-[1] TRUE
-attr(,"class")
-[1] "imputation" "numeric"   
+  # result of imputation
+  income
 
-# summary of imputation
-summary(income)
+  # summary of imputation
+  summary(income)
+
+  # viz of imputation
+  plot(income)
+} else {
+  cat("If you want to use this feature, you need to install the rpart package.\n")
+}
 * Impute missing values based on Recursive Partitioning and Regression Trees
  - method : rpart
 
@@ -386,10 +320,7 @@ p80       96.200000  96.00000000
 p90      108.100000 106.10000000
 p95      115.050000 115.00000000
 p99      119.210000 119.01000000
-p100     120.000000 120.00000000
-
-# viz of imputation
-plot(income)</pre></body></html></div>
+p100     120.000000 120.00000000</pre></body></html></div>
 <p><img src="transformation_files/figure-html/imputate_na-1.png" width="600px" style="display: block; margin: auto;"></p>
 <p>The following imputes the categorical variable <code>urban</code> by the “mice” method.</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r">library(mice)
@@ -437,7 +368,7 @@ urban
  [19] No  Yes Yes No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes
  [37] No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes
  [55] No  Yes Yes Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes Yes Yes Yes No 
- [73] Yes No  No  No  Yes No  Yes Yes Yes Yes Yes No  No  No  Yes No  Yes No 
+ [73] Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes No  No  Yes No  Yes No 
  [91] No  Yes Yes Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes
 [109] Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes No 
 [127] Yes Yes Yes No  Yes Yes Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes
@@ -449,8 +380,8 @@ urban
 [235] No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes
 [253] Yes No  Yes Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes No  No  Yes Yes
 [271] Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes No  No  Yes No  Yes
-[289] No  Yes No  Yes Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
-[307] Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No  No  No  Yes Yes Yes Yes
+[289] No  Yes No  No  Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
+[307] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes No  No  No  Yes Yes Yes Yes
 [325] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No 
 [343] No  Yes No  Yes No  No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes
 [361] No  No  Yes Yes Yes No  No  Yes No  Yes Yes Yes No  Yes Yes Yes Yes No 
@@ -480,9 +411,9 @@ summary(urban)
 
 * Information of Imputation (before vs after)
      original imputation original_percent imputation_percent
-No        115        118            28.75               29.5
-Yes       275        282            68.75               70.5
-&lt;NA&gt;       10          0             2.50                0.0
+No        115        119            28.75              29.75
+Yes       275        281            68.75              70.25
+&lt;NA&gt;       10          0             2.50               0.00
 
 # viz of imputation
 plot(urban)</pre></body></html></div>
@@ -497,14 +428,10 @@ carseats %&gt;%
   mutate(Income_imp = imputate_na(carseats, Income, US, method = "knn")) %&gt;%
   group_by(US) %&gt;%
   summarise(orig = mean(Income, na.rm = TRUE),
-    imputation = mean(Income_imp))
-Registered S3 method overwritten by 'quantmod':
-  method            from
-  as.zoo.data.frame zoo 
-`summarise()` ungrouping output (override with `.groups` argument)
+            imputation = mean(Income_imp))
 # A tibble: 2 x 3
   US     orig imputation
-  &lt;fct&gt; &lt;dbl&gt;      &lt;dbl&gt;
+* &lt;fct&gt; &lt;dbl&gt;      &lt;dbl&gt;
 1 No     65.8       66.1
 2 Yes    70.4       70.5</pre></body></html></div>
 </div>
@@ -635,10 +562,9 @@ carseats %&gt;%
   group_by(US) %&gt;%
   summarise(orig = mean(Price, na.rm = TRUE),
     imputation = mean(Price_imp, na.rm = TRUE))
-`summarise()` ungrouping output (override with `.groups` argument)
 # A tibble: 2 x 3
   US     orig imputation
-  &lt;fct&gt; &lt;dbl&gt;      &lt;dbl&gt;
+* &lt;fct&gt; &lt;dbl&gt;      &lt;dbl&gt;
 1 No     114.       114.
 2 Yes    117.       117.</pre></body></html></div>
 </div>
@@ -853,18 +779,18 @@ number of bins: 5
 x
   [20,40]   (40,60]   (60,80]  (80,100] (100,120]      &lt;NA&gt; 
        81        65        94        80        60        20 
-binning(carseats$Income, nbins = 5, type = "kmeans")
-binned type: kmeans
-number of bins: 5
-x
-  [21,37.5] (37.5,55.5] (55.5,76.5] (76.5,97.5]  (97.5,120]        &lt;NA&gt; 
-         70          58          95          82          75          20 
-binning(carseats$Income, nbins = 5, type = "bclust")
+
+if (requireNamespace("classInt", quietly = TRUE)) {
+  binning(carseats$Income, nbins = 5, type = "kmeans")
+  binning(carseats$Income, nbins = 5, type = "bclust")
+} else {
+  cat("If you want to use this feature, you need to install the classInt package.\n")
+}
 binned type: bclust
 number of bins: 5
 x
-  [21,49] (49,66.5] (66.5,85]  (85,108] (108,120]      &lt;NA&gt; 
-      115        59        90        78        38        20 
+  [21,33.5] (33.5,54.5]   (54.5,85]    (85,108]   (108,120]        &lt;NA&gt; 
+         55          72         137          78          38          20 
 
 # Extract the binned results
 extract(bin)
@@ -895,7 +821,7 @@ extract(bin)
 [361] LQ3  LQ1  UQ1  &lt;NA&gt; LQ1  LQ1  UQ1  UQ3  LQ1  UQ3  LQ1  LQ3  &lt;NA&gt; &lt;NA&gt; UQ1 
 [376] UQ1  UQ1  UQ1  LQ3  UQ3  UQ1  UQ1  LQ1  UQ3  LQ1  LQ3  UQ3  LQ3  LQ3  LQ1 
 [391] LQ3  UQ1  LQ1  UQ1  UQ1  UQ3  &lt;NA&gt; LQ1  LQ3  LQ1 
-Levels: LQ1 UQ1 LQ3 UQ3
+Levels: LQ1 &lt; UQ1 &lt; LQ3 &lt; UQ3
 
 # -------------------------
 # Using pipes &amp; dplyr
@@ -909,11 +835,11 @@ carseats %&gt;%
  summarise(freq = n()) %&gt;%
  arrange(desc(freq)) %&gt;%
  head(10)
-`summarise()` regrouping output by 'ShelveLoc' (override with `.groups` argument)
+`summarise()` has grouped output by 'ShelveLoc'. You can override using the `.groups` argument.
 # A tibble: 10 x 3
 # Groups:   ShelveLoc [1]
   ShelveLoc Income_bin  freq
-  &lt;fct&gt;     &lt;fct&gt;      &lt;int&gt;
+  &lt;fct&gt;     &lt;ord&gt;      &lt;int&gt;
 1 Medium    [21,30]       25
 2 Medium    (62,69]       24
 3 Medium    (48,62]       23
@@ -994,7 +920,7 @@ extract(bin) %&gt;%
   head(20)
  [1] (6,29] (6,29] (6,29] (0,6]  (0,6]  (6,29] [-1,0] (6,29] [-1,0] [-1,0]
 [11] (6,29] (0,6]  (0,6]  (6,29] (6,29] (0,6]  [-1,0] (6,29] [-1,0] (6,29]
-Levels: [-1,0] (0,6] (6,29]</pre></body></html></div>
+Levels: [-1,0] &lt; (0,6] &lt; (6,29]</pre></body></html></div>
 </div>
 </div>
 <div id="creating-a-data-transformation-report-using-transformation_report" class="section level2">

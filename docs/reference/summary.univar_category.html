@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.4</span>
       </span>
     </div>
 
@@ -177,7 +177,6 @@ The "variables" attribute is not displayed.</p>
 <span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>5</span>), <span class='st'>"Urban"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>stringr</span>)
 
 <span class='co'># Calculates the all categorical variavels</span>
 <span class='no'>all_var</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='univar_category.data.frame.html'>univar_category</a></span>(<span class='no'>carseats</span>)
@@ -202,7 +201,7 @@ The "variables" attribute is not displayed.</p>
 #&gt; </div><div class='input'>
 <span class='co'># Calculates the only Urban variable</span>
 <span class='no'>all_var</span> <span class='kw'>%&gt;%</span>
-  <span class='st'>"["</span>(<span class='fu'><a href='https://stringr.tidyverse.org/reference/str_detect.html'>str_detect</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>all_var</span>), <span class='st'>"Urban"</span>))</div><div class='output co'>#&gt; $Urban
+  <span class='st'>"["</span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>all_var</span>) <span class='kw'>%in%</span> <span class='st'>"Urban"</span>)</div><div class='output co'>#&gt; $Urban
 #&gt;   Urban   n   rate
 #&gt; 1    No 117 0.2925
 #&gt; 2   Yes 278 0.6950
