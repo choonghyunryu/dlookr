@@ -15,6 +15,7 @@ Description: A collection of tools that support data diagnosis, exploration, and
     And it creates automated reports that support these three tasks.
 License: GPL-2 | file LICENSE
 Encoding: UTF-8
+LazyData: true
 Depends:
     R (>= 3.2.0)
 Imports: 
