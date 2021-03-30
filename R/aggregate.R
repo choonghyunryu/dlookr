@@ -35,48 +35,47 @@ plot_bar_category <- function(.data, ...) {
 #' 
 #' @examples
 #' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+#' heartfailure[sample(seq(NROW(heartfailure)), 20), "platelets"] <- NA
+#' heartfailure[sample(seq(NROW(heartfailure)), 5), "smoking"] <- NA
+#' 
 #' set.seed(123)
-#' carseats$Test <- sample(LETTERS[1:15], 400, replace = TRUE)
-#' carseats$Test[1:30] <- NA
-#'
+#' heartfailure$test <- sample(LETTERS[1:15], 299, replace = TRUE)
+#' heartfailure$test[1:30] <- NA
+#' 
 #' # Visualization of all numerical variables
-#' plot_bar_category(carseats)
-#'
+#' plot_bar_category(heartfailure)
+#' 
 #' # Select the variable to diagnose
-#' # plot_bar_category(carseats, "ShelveLoc", "Urban")
-#' # plot_bar_category(carseats, -ShelveLoc, -Urban)
+#' # plot_bar_category(heartfailure, "test", "smoking")
+#' # plot_bar_category(heartfailure, -test, -smoking)
 #' 
 #' # Visualize the each plots
-#' # plot_bar_category(carseats, each = TRUE)
+#' # plot_bar_category(heartfailure, each = TRUE)
 #' 
 #' # Not allow typographic argument
-#' # plot_bar_category(carseats, typographic = FALSE)
+#' # plot_bar_category(heartfailure, typographic = FALSE)
 #' 
 #' # Using pipes ---------------------------------
 #' library(dplyr)
-#'
+#' 
 #' # Plot of all categorical variables
-#' #carseats %>%
+#' # heartfailure %>%
 #' #   plot_bar_category()
-#'
+#' 
 #' # Visualize just 7 levels of top frequency
-#' carseats %>%
+#' heartfailure %>%
 #'   plot_bar_category(top = 7)
-#'    
+#'   
 #' # Visualize only factor, not character
-#' # carseats %>%
+#' # heartfailure %>%
 #' #   plot_bar_category(add_character = FALSE) 
-#'   
+#' 
 #' # Using groupd_df  ------------------------------
-#' carseats %>% 
-#'   group_by(ShelveLoc) %>% 
+#' heartfailure %>% 
+#'   group_by(death_event) %>% 
 #'   plot_bar_category(top = 5)
-#'   
-#' # carseats %>% 
-#' #   group_by(ShelveLoc) %>% 
+#' # heartfailure %>% 
+#' #   group_by(death_event) %>% 
 #' #   plot_bar_category(each = TRUE, top = 5)  
 #'   
 #' @method plot_bar_category data.frame
