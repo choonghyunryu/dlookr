@@ -23,11 +23,8 @@ A data frame with 299 rows and 13 variables. The variables are as follows:
 }
 }
 \source{
-{Davide Chicco, Giuseppe Jurman: Machine learning can predict survival of patients with heart failure from serum creatinine and ejection fraction alone. BMC Medical Informatics and Decision Making 20, 16 (2020). 
-(https://doi.org/10.1186/s12911-020-1023-5)
-
-data source : "Heart Failure Prediction" in Kaggle (https://www.kaggle.com/andrewmvd/heart-failure-clinical-data),
-License : CC BY 4.0
+{
+data source : "Heart Failure Prediction" in Kaggle <https://www.kaggle.com/andrewmvd/heart-failure-clinical-data>, License : CC BY 4.0
 }
 }
 \usage{
@@ -38,5 +35,11 @@ A dataset containing the ages and other attributes of almost 300 cases.
 }
 \details{
 Heart failure is a common event caused by Cardiovascular diseasess and this dataset contains 12 features that can be used to predict mortality by heart failure.
+}
+\references{
+{
+Davide Chicco, Giuseppe Jurman: Machine learning can predict survival of patients with heart failure from serum creatinine and ejection fraction alone. BMC Medical Informatics and Decision Making 20, 16 (2020). 
+<https://doi.org/10.1186/s12911-020-1023-5>
+}
 }
 \keyword{datasets}

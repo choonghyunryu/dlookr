@@ -26,16 +26,17 @@
 #' @keywords datasets
 #' @name heartfailure
 #' @usage data(heartfailure)
-#' @source {Davide Chicco, Giuseppe Jurman: Machine learning can predict survival of patients with heart failure from serum creatinine and ejection fraction alone. BMC Medical Informatics and Decision Making 20, 16 (2020). 
-#' (https://doi.org/10.1186/s12911-020-1023-5)
-#' 
-#' data source : "Heart Failure Prediction" in Kaggle (https://www.kaggle.com/andrewmvd/heart-failure-clinical-data),
-#' License : CC BY 4.0
+#' @references {
+#' Davide Chicco, Giuseppe Jurman: Machine learning can predict survival of patients with heart failure from serum creatinine and ejection fraction alone. BMC Medical Informatics and Decision Making 20, 16 (2020). 
+#' <https://doi.org/10.1186/s12911-020-1023-5>
+#' }
+#' @source {
+#' data source : "Heart Failure Prediction" in Kaggle <https://www.kaggle.com/andrewmvd/heart-failure-clinical-data>, License : CC BY 4.0
 #' }
 NULL
 
 # library(dplyr)
-# heartfailure <- read.csv("heart_failure_clinical_records_dataset.csv")
+# heartfailure <- read.csv("pkg_data/heart_failure_clinical_records_dataset.csv")
 # as_yn <- function(x) {
 #   as.factor(ifelse(x == 1 , "Yes", "No"))
 # }
