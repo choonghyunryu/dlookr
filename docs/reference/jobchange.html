@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Heart Failure Data — heartfailure • dlookr</title>
+<title>Job Change of Data Scientists — jobchange • dlookr</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Heart Failure Data — heartfailure" />
-<meta property="og:description" content="A dataset containing the ages and other attributes of almost 300 cases." />
+<meta property="og:title" content="Job Change of Data Scientists — jobchange" />
+<meta property="og:description" content="A dataset containing the gender and other attributes of almost 20000 cases." />
 
 
 
@@ -114,47 +114,44 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Heart Failure Data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/choonghyunryu/dlookr/blob/master/R/heartfailure.R'><code>R/heartfailure.R</code></a></small>
-    <div class="hidden name"><code>heartfailure.Rd</code></div>
+    <h1>Job Change of Data Scientists</h1>
+    <small class="dont-index">Source: <a href='https://github.com/choonghyunryu/dlookr/blob/master/R/jobchange.R'><code>R/jobchange.R</code></a></small>
+    <div class="hidden name"><code>jobchange.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A dataset containing the ages and other attributes of almost 300 cases.</p>
+    <p>A dataset containing the gender and other attributes of almost 20000 cases.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>heartfailure</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>jobchange</span>)</pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A data frame with 299 rows and 13 variables. The variables are as follows:</p><dl'>
-  <dt>age</dt><dd><p>patient's age.</p></dd>
-  <dt>anaemia</dt><dd><p>decrease of red blood cells or hemoglobin (boolean), Yes, No.</p></dd>
-  <dt>cpk_enzyme</dt><dd><p>level of the CPK(creatinine phosphokinase) enzyme in the blood (mcg/L).</p></dd>
-  <dt>diabetes</dt><dd><p>if the patient has diabetes (boolean), Yes, No.</p></dd>
-  <dt>ejection_fraction</dt><dd><p>percentage of blood leaving the heart at each contraction (percentage).</p></dd>
-  <dt>hblood_pressure</dt><dd><p>high_blood_pressure. if the patient has hypertension (boolean), Yes, No.</p></dd>
-  <dt>platelets</dt><dd><p>platelets in the blood (kiloplatelets/mL).</p></dd>
-  <dt>creatinine</dt><dd><p>level of serum creatinine in the blood (mg/dL).</p></dd>
-  <dt>sodium</dt><dd><p>level of serum sodium in the blood (mEq/L).</p></dd>
-  <dt>sex</dt><dd><p>patient's sex (binary), Male, Female.</p></dd>
-  <dt>smoking</dt><dd><p>if the patient smokes or not (boolean), Yes, No.</p></dd>
-  <dt>time</dt><dd><p>follow-up period (days).</p></dd>
-  <dt>death_event</dt><dd><p>if the patient deceased during the follow-up period (boolean), Yes, No.</p></dd>
+    <p>A data frame with 19158 rows and 14 variables. The variables are as follows:</p><dl'>
+  <dt>enrollee_id</dt><dd><p>unique ID for candidate</p></dd>
+  <dt>city</dt><dd><p>city code.</p></dd>
+  <dt>city_dev_index</dt><dd><p>developement index of the city (scaled).</p></dd>
+  <dt>gender</dt><dd><p>gender of candidate.</p></dd>
+  <dt>relevent_experience</dt><dd><p>relevant experience of candidate</p></dd>
+  <dt>enrolled_university</dt><dd><p>type of University course enrolled if any.</p></dd>
+  <dt>education_level</dt><dd><p>education level of candidate.</p></dd>
+  <dt>major_discipline</dt><dd><p>education major discipline of candidate.</p></dd>
+  <dt>experience</dt><dd><p>candidate total experience in years.</p></dd>
+  <dt>company_size</dt><dd><p>number of employees in current employer's company.</p></dd>
+  <dt>company_type</dt><dd><p>type of current employer.</p></dd>
+  <dt>last_new_job</dt><dd><p>difference in years between previous job and current job.</p></dd>
+  <dt>training_hours</dt><dd><p>training hours completed.</p></dd>
+  <dt>job_chnge</dt><dd><p>if looking for a job change (boolean), Yes, No.</p></dd>
 
 </dl>
 
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>"Heart Failure Prediction" in Kaggle &lt;https://www.kaggle.com/andrewmvd/heart-failure-clinical-data&gt;, License : CC BY 4.0</p>
+    <p>"HR Analytics: Job Change of Data Scientists" in Kaggle &lt;https://www.kaggle.com/arashnic/hr-analytics-job-change-of-data-scientists&gt;, License : CC0(Public Domain</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Heart failure is a common event caused by Cardiovascular diseasess and this dataset contains 12 features that can be used to predict mortality by heart failure.</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <p>Davide Chicco, Giuseppe Jurman: Machine learning can predict survival of patients with heart failure from serum creatinine and ejection fraction alone. BMC Medical Informatics and Decision Making 20, 16 (2020). 
-&lt;https://doi.org/10.1186/s12911-020-1023-5&gt;</p>
+    <p>This dataset designed to understand the factors that lead a person to leave current job for HR researches too.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

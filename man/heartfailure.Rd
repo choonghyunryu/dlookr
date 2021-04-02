@@ -24,7 +24,7 @@ A data frame with 299 rows and 13 variables. The variables are as follows:
 }
 \source{
 {
-data source : "Heart Failure Prediction" in Kaggle <https://www.kaggle.com/andrewmvd/heart-failure-clinical-data>, License : CC BY 4.0
+"Heart Failure Prediction" in Kaggle <https://www.kaggle.com/andrewmvd/heart-failure-clinical-data>, License : CC BY 4.0
 }
 }
 \usage{

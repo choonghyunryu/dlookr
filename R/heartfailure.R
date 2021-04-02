@@ -31,7 +31,7 @@
 #' <https://doi.org/10.1186/s12911-020-1023-5>
 #' }
 #' @source {
-#' data source : "Heart Failure Prediction" in Kaggle <https://www.kaggle.com/andrewmvd/heart-failure-clinical-data>, License : CC BY 4.0
+#' "Heart Failure Prediction" in Kaggle <https://www.kaggle.com/andrewmvd/heart-failure-clinical-data>, License : CC BY 4.0
 #' }
 NULL
 
