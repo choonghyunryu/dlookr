@@ -57,44 +57,40 @@ See vignette("diagonosis") for an introduction to these concepts.
 }
 
 \examples{
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-
 # Diagnosis of numerical variables
-diagnose_numeric(carseats)
+diagnose_numeric(heartfailure)
 
 # Select the variable to diagnose
-diagnose_numeric(carseats, Sales, Income)
-diagnose_numeric(carseats, -Sales, -Income)
-diagnose_numeric(carseats, "Sales", "Income")
-diagnose_numeric(carseats, 5)
+diagnose_numeric(heartfailure, cpk_enzyme, sodium)
+diagnose_numeric(heartfailure, -cpk_enzyme, -sodium)
+diagnose_numeric(heartfailure, "cpk_enzyme", "sodium")
+diagnose_numeric(heartfailure, 5)
 
 # Using pipes ---------------------------------
 library(dplyr)
 
 # Diagnosis of all numerical variables
-carseats \%>\%
+heartfailure \%>\%
   diagnose_numeric()
 # Positive values select variables
-carseats \%>\%
-  diagnose_numeric(Sales, Income)
+heartfailure \%>\%
+  diagnose_numeric(cpk_enzyme, sodium)
 # Negative values to drop variables
-carseats \%>\%
-  diagnose_numeric(-Sales, -Income)
+heartfailure \%>\%
+  diagnose_numeric(-cpk_enzyme, -sodium)
 # Positions values select variables
-carseats \%>\%
+heartfailure \%>\%
   diagnose_numeric(5)
 # Positions values select variables
-carseats \%>\%
+heartfailure \%>\%
   diagnose_numeric(-1, -5)
 
 # Using pipes & dplyr -------------------------
-# Information records of zero variable more than 0
-carseats \%>\%
+# List of variables containing outliers
+heartfailure \%>\%
   diagnose_numeric()  \%>\%
-  filter(zero > 0)
+  filter(outlier > 0)
+  
 }
 \seealso{
 \code{\link{diagnose_numeric.tbl_dbi}}, \code{\link{diagnose.data.frame}}, \code{\link{diagnose_category.data.frame}}, \code{\link{diagnose_outlier.data.frame}}.

@@ -46,42 +46,37 @@ diagnose <- function(.data, ...) {
 #' @seealso \code{\link{diagnose.tbl_dbi}}, \code{\link{diagnose_category.data.frame}}, \code{\link{diagnose_numeric.data.frame}}.
 #' @export
 #' @examples
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
 #' # Diagnosis of all variables
-#' diagnose(carseats)
-#'
+#' diagnose(jobchange)
+#' 
 #' # Select the variable to diagnose
-#' diagnose(carseats, Sales, Income, Age)
-#' diagnose(carseats, -Sales, -Income, -Age)
-#' diagnose(carseats, "Sales", "Income", "Age")
-#' diagnose(carseats, 1, 3, 8)
-#'
+#' diagnose(jobchange, gender, experience, training_hours)
+#' diagnose(jobchange, -gender, -experience, -training_hours)
+#' diagnose(jobchange, "gender", "experience", "training_hours")
+#' diagnose(jobchange, 4, 9, 13)
+#' 
 #' # Using pipes ---------------------------------
 #' library(dplyr)
-#'
+#' 
 #' # Diagnosis of all variables
-#' carseats %>%
+#' jobchange %>%
 #'   diagnose()
 #' # Positive values select variables
-#' carseats %>%
-#'   diagnose(Sales, Income, Age)
+#' jobchange %>%
+#'   diagnose(gender, experience, training_hours)
 #' # Negative values to drop variables
-#' carseats %>%
-#'   diagnose(-Sales, -Income, -Age)
+#' jobchange %>%
+#'   diagnose(-gender, -experience, -training_hours)
 #' # Positions values select variables
-#' carseats %>%
-#'   diagnose(1, 3, 8)
+#' jobchange %>%
+#'   diagnose(4, 9, 13)
 #' # Positions values select variables
-#' carseats %>%
+#' jobchange %>%
 #'   diagnose(-8, -9, -10)
-#'
+#'   
 #' # Using pipes & dplyr -------------------------
 #' # Diagnosis of missing variables
-#' carseats %>%
+#' jobchange %>%
 #'   diagnose() %>%
 #'   filter(missing_count > 0)
 #' @method diagnose data.frame
@@ -160,10 +155,10 @@ diagnose_category <- function(.data, ...) {
 #' @param top an integer. Specifies the upper top rows or rank to extract.
 #' Default is 10.
 #' @param type a character string specifying how result are extracted.
-#' Default is "rank" that extract top n ranks by decreasing frequency. 
+#' "rank" that extract top n ranks by decreasing frequency. 
 #' In this case, if there are ties in rank, more rows than the number specified 
 #' by the top argument are returned.
-#' "n" extract top n rows by decreasing frequency. 
+#' Default is "n" extract only top n rows by decreasing frequency. 
 #' If there are too many rows to be returned because there are too many ties, 
 #' you can adjust the returned rows appropriately by using "n".
 #' @param add_character logical. Decide whether to include text variables in the
@@ -172,74 +167,67 @@ diagnose_category <- function(.data, ...) {
 #' @seealso \code{\link{diagnose_category.tbl_dbi}}, \code{\link{diagnose.data.frame}}, \code{\link{diagnose_numeric.data.frame}}, \code{\link{diagnose_outlier.data.frame}}.
 #' @export
 #' @examples
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
 #' # Diagnosis of categorical variables
-#' diagnose_category(carseats)
-#'
+#' diagnose_category(jobchange)
+#' 
 #' # Select the variable to diagnose
-#' diagnose_category(carseats, ShelveLoc, Urban)
-#' diagnose_category(carseats, -ShelveLoc, -Urban)
-#' diagnose_category(carseats, "ShelveLoc", "Urban")
-#' diagnose_category(carseats, 7)
-#'
+#' diagnose_category(jobchange, education_level, company_type)
+#' diagnose_category(jobchange, -education_level, -company_type)
+#' diagnose_category(jobchange, "education_level", "company_type")
+#' diagnose_category(jobchange, 7)
+#' 
 #' # Using pipes ---------------------------------
 #' library(dplyr)
-#'
+#' 
 #' # Diagnosis of all categorical variables
-#' carseats %>%
+#' jobchange %>%
 #'   diagnose_category()
+#'
 #' # Positive values select variables
-#' carseats %>%
-#'   diagnose_category(Urban, US)
+#' jobchange %>%
+#'  diagnose_category(company_type, job_chnge)
 #' # Negative values to drop variables
-#' carseats %>%
-#'   diagnose_category(-Urban, -US)
+#' jobchange %>%
+#'   diagnose_category(-company_type, -job_chnge)
 #' # Positions values select variables
-#' carseats %>%
+#' jobchange %>%
 #'   diagnose_category(7)
 #' # Positions values select variables
-#' carseats %>%
+#' jobchange %>%
 #'   diagnose_category(-7)
+#'   
 #' # Top rank levels with top argument
-#' carseats %>%
+#' jobchange %>%
 #'   diagnose_category(top = 2)
-#'
+#'   
 #' # Using pipes & dplyr -------------------------
 #' # Extraction of level that is more than 60% of categorical data
-#' carseats %>%
+#' jobchange %>%
 #'   diagnose_category()  %>%
 #'   filter(ratio >= 60)
-#'   
-#' # Using type argument -------------------------
-#'  dfm <- data.frame(alpabet = c(rep(letters[1:5], times = 5), "c")) 
+#'
+#' # All observations of enrollee_id have a rank of 1. 
+#' # Because it is a unique identifier. Therefore, if you select up to the top rank 3, 
+#' # all records are displayed. It will probably fill your screen.
+#' 
+#' # extract rows that less than equal rank 3
+#' # default of type argument is "n"
+#' jobchange %>% 
+#'   diagnose_category(enrollee_id, top = 3)
+#'
+#' # extract rows that less than equal rank 3
+#' jobchange %>% 
+#'   diagnose_category(enrollee_id, top = 3, type = "rank")
 #'  
-#'  # extract rows that less than equal rank 10
-#'  # default of top argument is 10
-#'  dfm %>% 
-#'    diagnose_category()
-#'    
-#'  # extract rows that less than equal rank 2
-#'  dfm %>% 
-#'    diagnose_category(top = 2, type = "rank")
-#'    
-#'  # extract rows that less than equal rank 2
-#'  # default of type argument is "rank"
-#'  dfm %>% 
-#'    diagnose_category(top = 2)
-#'  
-#'  # extract only 2 rows
-#'  dfm %>% 
-#'    diagnose_category(top = 2, type = "n")
+#' # extract only 3 rows
+#' jobchange %>% 
+#'   diagnose_category(enrollee_id, top = 3, type = "n")
 #'  
 #' @method diagnose_category data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
 #' @export
-diagnose_category.data.frame <- function(.data, ..., top = 10, type = c("rank", "n")[1], 
+diagnose_category.data.frame <- function(.data, ..., top = 10, type = c("rank", "n")[2], 
                                          add_character = TRUE) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
   diagn_category_impl(.data, vars, top, type, add_character)
@@ -285,7 +273,8 @@ diagn_category_impl <- function(df, vars, top, type, add_character) {
   result <- lapply(vars[idx_factor],
                    function(x) get_topn(df, x, top, type))
   suppressWarnings(
-    do.call("rbind", result)
+    do.call("rbind", result) %>% 
+      tibble::as_tibble()
   )
 }
 
@@ -341,44 +330,40 @@ diagnose_numeric <- function(.data, ...) {
 #' @seealso \code{\link{diagnose_numeric.tbl_dbi}}, \code{\link{diagnose.data.frame}}, \code{\link{diagnose_category.data.frame}}, \code{\link{diagnose_outlier.data.frame}}.
 #' @export
 #' @examples
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
 #' # Diagnosis of numerical variables
-#' diagnose_numeric(carseats)
-#'
+#' diagnose_numeric(heartfailure)
+#' 
 #' # Select the variable to diagnose
-#' diagnose_numeric(carseats, Sales, Income)
-#' diagnose_numeric(carseats, -Sales, -Income)
-#' diagnose_numeric(carseats, "Sales", "Income")
-#' diagnose_numeric(carseats, 5)
-#'
+#' diagnose_numeric(heartfailure, cpk_enzyme, sodium)
+#' diagnose_numeric(heartfailure, -cpk_enzyme, -sodium)
+#' diagnose_numeric(heartfailure, "cpk_enzyme", "sodium")
+#' diagnose_numeric(heartfailure, 5)
+#' 
 #' # Using pipes ---------------------------------
 #' library(dplyr)
-#'
+#' 
 #' # Diagnosis of all numerical variables
-#' carseats %>%
+#' heartfailure %>%
 #'   diagnose_numeric()
 #' # Positive values select variables
-#' carseats %>%
-#'   diagnose_numeric(Sales, Income)
+#' heartfailure %>%
+#'   diagnose_numeric(cpk_enzyme, sodium)
 #' # Negative values to drop variables
-#' carseats %>%
-#'   diagnose_numeric(-Sales, -Income)
+#' heartfailure %>%
+#'   diagnose_numeric(-cpk_enzyme, -sodium)
 #' # Positions values select variables
-#' carseats %>%
+#' heartfailure %>%
 #'   diagnose_numeric(5)
 #' # Positions values select variables
-#' carseats %>%
+#' heartfailure %>%
 #'   diagnose_numeric(-1, -5)
 #'
 #' # Using pipes & dplyr -------------------------
-#' # Information records of zero variable more than 0
-#' carseats %>%
+#' # List of variables containing outliers
+#' heartfailure %>%
 #'   diagnose_numeric()  %>%
-#'   filter(zero > 0)
+#'   filter(outlier > 0)
+#'   
 #' @method diagnose_numeric data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos

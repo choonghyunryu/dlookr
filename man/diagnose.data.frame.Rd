@@ -54,42 +54,37 @@ See vignette("diagonosis") for an introduction to these concepts.
 }
 
 \examples{
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-
 # Diagnosis of all variables
-diagnose(carseats)
+diagnose(jobchange)
 
 # Select the variable to diagnose
-diagnose(carseats, Sales, Income, Age)
-diagnose(carseats, -Sales, -Income, -Age)
-diagnose(carseats, "Sales", "Income", "Age")
-diagnose(carseats, 1, 3, 8)
+diagnose(jobchange, gender, experience, training_hours)
+diagnose(jobchange, -gender, -experience, -training_hours)
+diagnose(jobchange, "gender", "experience", "training_hours")
+diagnose(jobchange, 4, 9, 13)
 
 # Using pipes ---------------------------------
 library(dplyr)
 
 # Diagnosis of all variables
-carseats \%>\%
+jobchange \%>\%
   diagnose()
 # Positive values select variables
-carseats \%>\%
-  diagnose(Sales, Income, Age)
+jobchange \%>\%
+  diagnose(gender, experience, training_hours)
 # Negative values to drop variables
-carseats \%>\%
-  diagnose(-Sales, -Income, -Age)
+jobchange \%>\%
+  diagnose(-gender, -experience, -training_hours)
 # Positions values select variables
-carseats \%>\%
-  diagnose(1, 3, 8)
+jobchange \%>\%
+  diagnose(4, 9, 13)
 # Positions values select variables
-carseats \%>\%
+jobchange \%>\%
   diagnose(-8, -9, -10)
-
+  
 # Using pipes & dplyr -------------------------
 # Diagnosis of missing variables
-carseats \%>\%
+jobchange \%>\%
   diagnose() \%>\%
   filter(missing_count > 0)
 }

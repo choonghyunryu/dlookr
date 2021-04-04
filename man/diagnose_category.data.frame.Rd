@@ -11,7 +11,7 @@ diagnose_category(.data, ...)
   .data,
   ...,
   top = 10,
-  type = c("rank", "n")[1],
+  type = c("rank", "n")[2],
   add_character = TRUE
 )
 }
@@ -31,10 +31,10 @@ They support unquoting and splicing.}
 Default is 10.}
 
 \item{type}{a character string specifying how result are extracted.
-Default is "rank" that extract top n ranks by decreasing frequency. 
+"rank" that extract top n ranks by decreasing frequency. 
 In this case, if there are ties in rank, more rows than the number specified 
 by the top argument are returned.
-"n" extract top n rows by decreasing frequency. 
+Default is "n" extract only top n rows by decreasing frequency. 
 If there are too many rows to be returned because there are too many ties, 
 you can adjust the returned rows appropriately by using "n".}
 
@@ -72,68 +72,61 @@ See vignette("diagonosis") for an introduction to these concepts.
 }
 
 \examples{
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-
 # Diagnosis of categorical variables
-diagnose_category(carseats)
+diagnose_category(jobchange)
 
 # Select the variable to diagnose
-diagnose_category(carseats, ShelveLoc, Urban)
-diagnose_category(carseats, -ShelveLoc, -Urban)
-diagnose_category(carseats, "ShelveLoc", "Urban")
-diagnose_category(carseats, 7)
+diagnose_category(jobchange, education_level, company_type)
+diagnose_category(jobchange, -education_level, -company_type)
+diagnose_category(jobchange, "education_level", "company_type")
+diagnose_category(jobchange, 7)
 
 # Using pipes ---------------------------------
 library(dplyr)
 
 # Diagnosis of all categorical variables
-carseats \%>\%
+jobchange \%>\%
   diagnose_category()
+
 # Positive values select variables
-carseats \%>\%
-  diagnose_category(Urban, US)
+jobchange \%>\%
+ diagnose_category(company_type, job_chnge)
 # Negative values to drop variables
-carseats \%>\%
-  diagnose_category(-Urban, -US)
+jobchange \%>\%
+  diagnose_category(-company_type, -job_chnge)
 # Positions values select variables
-carseats \%>\%
+jobchange \%>\%
   diagnose_category(7)
 # Positions values select variables
-carseats \%>\%
+jobchange \%>\%
   diagnose_category(-7)
+  
 # Top rank levels with top argument
-carseats \%>\%
+jobchange \%>\%
   diagnose_category(top = 2)
-
+  
 # Using pipes & dplyr -------------------------
 # Extraction of level that is more than 60\% of categorical data
-carseats \%>\%
+jobchange \%>\%
   diagnose_category()  \%>\%
   filter(ratio >= 60)
-  
-# Using type argument -------------------------
- dfm <- data.frame(alpabet = c(rep(letters[1:5], times = 5), "c")) 
+
+# All observations of enrollee_id have a rank of 1. 
+# Because it is a unique identifier. Therefore, if you select up to the top rank 3, 
+# all records are displayed. It will probably fill your screen.
+
+# extract rows that less than equal rank 3
+# default of type argument is "n"
+jobchange \%>\% 
+  diagnose_category(enrollee_id, top = 3)
+
+# extract rows that less than equal rank 3
+jobchange \%>\% 
+  diagnose_category(enrollee_id, top = 3, type = "rank")
  
- # extract rows that less than equal rank 10
- # default of top argument is 10
- dfm \%>\% 
-   diagnose_category()
-   
- # extract rows that less than equal rank 2
- dfm \%>\% 
-   diagnose_category(top = 2, type = "rank")
-   
- # extract rows that less than equal rank 2
- # default of type argument is "rank"
- dfm \%>\% 
-   diagnose_category(top = 2)
- 
- # extract only 2 rows
- dfm \%>\% 
-   diagnose_category(top = 2, type = "n")
+# extract only 3 rows
+jobchange \%>\% 
+  diagnose_category(enrollee_id, top = 3, type = "n")
  
 }
 \seealso{
