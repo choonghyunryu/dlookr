@@ -51,44 +51,40 @@ See vignette("diagonosis") for an introduction to these concepts.
 }
 
 \examples{
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-
 # Diagnosis of numerical variables
-diagnose_outlier(carseats)
+diagnose_outlier(heartfailure)
 
 # Select the variable to diagnose
-diagnose_outlier(carseats, Sales, Income)
-diagnose_outlier(carseats, -Sales, -Income)
-diagnose_outlier(carseats, "Sales", "Income")
-diagnose_outlier(carseats, 5)
+diagnose_outlier(heartfailure, cpk_enzyme, sodium)
+diagnose_outlier(heartfailure, -cpk_enzyme, -sodium)
+diagnose_outlier(heartfailure, "cpk_enzyme", "sodium")
+diagnose_outlier(heartfailure, 5)
 
 # Using pipes ---------------------------------
 library(dplyr)
 
 # Diagnosis of all numerical variables
-carseats \%>\%
+heartfailure \%>\%
   diagnose_outlier()
 # Positive values select variables
-carseats \%>\%
-  diagnose_outlier(Sales, Income)
+heartfailure \%>\%
+  diagnose_outlier(cpk_enzyme, sodium)
 # Negative values to drop variables
-carseats \%>\%
-  diagnose_outlier(-Sales, -Income)
+heartfailure \%>\%
+  diagnose_outlier(-cpk_enzyme, -sodium)
 # Positions values select variables
-carseats \%>\%
+heartfailure \%>\%
   diagnose_outlier(5)
 # Positions values select variables
-carseats \%>\%
+heartfailure \%>\%
   diagnose_outlier(-1, -5)
 
 # Using pipes & dplyr -------------------------
 # outlier_ratio is more than 1\%
-carseats \%>\%
+heartfailure \%>\%
   diagnose_outlier()  \%>\%
   filter(outliers_ratio > 1)
+  
 }
 \seealso{
 \code{\link{diagnose_outlier.tbl_dbi}}, \code{\link{diagnose.data.frame}}, \code{\link{diagnose_category.data.frame}}, \code{\link{diagnose_numeric.data.frame}}.

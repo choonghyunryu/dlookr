@@ -73,7 +73,7 @@ diagnosing the quality of the variables of data.frame or tbl_df." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@ diagnosing the quality of the variables of data.frame or tbl_df.</p>
   <span class='no'>.data</span>,
   <span class='no'>...</span>,
   <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"rank"</span>, <span class='st'>"n"</span>)[<span class='fl'>1</span>],
+  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"rank"</span>, <span class='st'>"n"</span>)[<span class='fl'>2</span>],
   <span class='kw'>add_character</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</pre>
 
@@ -162,10 +162,10 @@ Default is 10.</p></td>
     <tr>
       <th>type</th>
       <td><p>a character string specifying how result are extracted.
-Default is "rank" that extract top n ranks by decreasing frequency. 
+"rank" that extract top n ranks by decreasing frequency. 
 In this case, if there are ties in rank, more rows than the number specified 
 by the top argument are returned.
-"n" extract top n rows by decreasing frequency. 
+Default is "n" extract only top n rows by decreasing frequency. 
 If there are too many rows to be returned because there are too many ties, 
 you can adjust the returned rows appropriately by using "n".</p></td>
     </tr>
@@ -206,143 +206,213 @@ variable is likely to be an identifier.</p>
     <div class='dont-index'><p><code><a href='diagnose_category.tbl_dbi.html'>diagnose_category.tbl_dbi</a></code>, <code><a href='diagnose.data.frame.html'>diagnose.data.frame</a></code>, <code><a href='diagnose_numeric.data.frame.html'>diagnose_numeric.data.frame</a></code>, <code><a href='diagnose_outlier.data.frame.html'>diagnose_outlier.data.frame</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Generate data for the example</span>
-<span class='no'>carseats</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ISLR</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/ISLR/man/Carseats.html'>Carseats</a></span>
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>20</span>), <span class='st'>"Income"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>5</span>), <span class='st'>"Urban"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-
-<span class='co'># Diagnosis of categorical variables</span>
-<span class='fu'>diagnose_category</span>(<span class='no'>carseats</span>)</div><div class='output co'>#&gt;   variables levels   N freq ratio rank
-#&gt; 1 ShelveLoc Medium 400  219 54.75    1
-#&gt; 2 ShelveLoc    Bad 400   96 24.00    2
-#&gt; 3 ShelveLoc   Good 400   85 21.25    3
-#&gt; 4     Urban    Yes 400  279 69.75    1
-#&gt; 5     Urban     No 400  116 29.00    2
-#&gt; 6     Urban   &lt;NA&gt; 400    5  1.25    3
-#&gt; 7        US    Yes 400  258 64.50    1
-#&gt; 8        US     No 400  142 35.50    2</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='co'># Diagnosis of categorical variables</span>
+<span class='fu'>diagnose_category</span>(<span class='no'>jobchange</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 78 x 6</span><span>
+#&gt;    variables   levels     N  freq   ratio  rank
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> enrollee_id 1      </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> enrollee_id 10     </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> enrollee_id 10000  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> enrollee_id 10001  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> enrollee_id 10002  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> enrollee_id 10003  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> enrollee_id 10004  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> enrollee_id 10005  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> enrollee_id 10006  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> enrollee_id 10008  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #949494;'># … with 68 more rows</span><span></div><div class='input'>
 <span class='co'># Select the variable to diagnose</span>
-<span class='fu'>diagnose_category</span>(<span class='no'>carseats</span>, <span class='no'>ShelveLoc</span>, <span class='no'>Urban</span>)</div><div class='output co'>#&gt;             variables levels   N freq ratio rank
-#&gt; ShelveLoc.1 ShelveLoc Medium 400  219 54.75    1
-#&gt; ShelveLoc.2 ShelveLoc    Bad 400   96 24.00    2
-#&gt; ShelveLoc.3 ShelveLoc   Good 400   85 21.25    3
-#&gt; Urban.1         Urban    Yes 400  279 69.75    1
-#&gt; Urban.2         Urban     No 400  116 29.00    2
-#&gt; Urban.3         Urban   &lt;NA&gt; 400    5  1.25    3</div><div class='input'><span class='fu'>diagnose_category</span>(<span class='no'>carseats</span>, -<span class='no'>ShelveLoc</span>, -<span class='no'>Urban</span>)</div><div class='output co'>#&gt;      variables levels   N freq ratio rank
-#&gt; US.1        US    Yes 400  258  64.5    1
-#&gt; US.2        US     No 400  142  35.5    2</div><div class='input'><span class='fu'>diagnose_category</span>(<span class='no'>carseats</span>, <span class='st'>"ShelveLoc"</span>, <span class='st'>"Urban"</span>)</div><div class='output co'>#&gt;             variables levels   N freq ratio rank
-#&gt; ShelveLoc.1 ShelveLoc Medium 400  219 54.75    1
-#&gt; ShelveLoc.2 ShelveLoc    Bad 400   96 24.00    2
-#&gt; ShelveLoc.3 ShelveLoc   Good 400   85 21.25    3
-#&gt; Urban.1         Urban    Yes 400  279 69.75    1
-#&gt; Urban.2         Urban     No 400  116 29.00    2
-#&gt; Urban.3         Urban   &lt;NA&gt; 400    5  1.25    3</div><div class='input'><span class='fu'>diagnose_category</span>(<span class='no'>carseats</span>, <span class='fl'>7</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 3 x 6</span><span>
-#&gt;   variables levels     N  freq ratio  rank
-#&gt; </span><span style='color: #BCBCBC;'>*</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> ShelveLoc Medium   400   219  54.8     1
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> ShelveLoc Bad      400    96  24       2
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> ShelveLoc Good     400    85  21.2     3</div><div class='input'>
+<span class='fu'>diagnose_category</span>(<span class='no'>jobchange</span>, <span class='no'>education_level</span>, <span class='no'>company_type</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 13 x 6</span><span>
+#&gt;    variables       levels                  N  freq  ratio  rank
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>               </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> education_level Graduate            </span><span style='text-decoration: underline;'>19</span><span>158 </span><span style='text-decoration: underline;'>11</span><span>598 60.5       1
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> education_level Masters             </span><span style='text-decoration: underline;'>19</span><span>158  </span><span style='text-decoration: underline;'>4</span><span>361 22.8       2
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> education_level High School         </span><span style='text-decoration: underline;'>19</span><span>158  </span><span style='text-decoration: underline;'>2</span><span>017 10.5       3
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> education_level </span><span style='color: #BB0000;'>NA</span><span>                  </span><span style='text-decoration: underline;'>19</span><span>158   460  2.40      4
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> education_level Phd                 </span><span style='text-decoration: underline;'>19</span><span>158   414  2.16      5
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> education_level Primary School      </span><span style='text-decoration: underline;'>19</span><span>158   308  1.61      6
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> company_type    Pvt Ltd             </span><span style='text-decoration: underline;'>19</span><span>158  </span><span style='text-decoration: underline;'>9</span><span>817 51.2       1
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> company_type    </span><span style='color: #BB0000;'>NA</span><span>                  </span><span style='text-decoration: underline;'>19</span><span>158  </span><span style='text-decoration: underline;'>6</span><span>140 32.0       2
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> company_type    Funded Startup      </span><span style='text-decoration: underline;'>19</span><span>158  </span><span style='text-decoration: underline;'>1</span><span>001  5.22      3
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> company_type    Public Sector       </span><span style='text-decoration: underline;'>19</span><span>158   955  4.98      4
+#&gt; </span><span style='color: #BCBCBC;'>11</span><span> company_type    Early Stage Startup </span><span style='text-decoration: underline;'>19</span><span>158   603  3.15      5
+#&gt; </span><span style='color: #BCBCBC;'>12</span><span> company_type    NGO                 </span><span style='text-decoration: underline;'>19</span><span>158   521  2.72      6
+#&gt; </span><span style='color: #BCBCBC;'>13</span><span> company_type    Other               </span><span style='text-decoration: underline;'>19</span><span>158   121  0.632     7</div><div class='input'><span class='fu'>diagnose_category</span>(<span class='no'>jobchange</span>, -<span class='no'>education_level</span>, -<span class='no'>company_type</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 65 x 6</span><span>
+#&gt;    variables   levels     N  freq   ratio  rank
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> enrollee_id 1      </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> enrollee_id 10     </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> enrollee_id 10000  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> enrollee_id 10001  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> enrollee_id 10002  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> enrollee_id 10003  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> enrollee_id 10004  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> enrollee_id 10005  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> enrollee_id 10006  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> enrollee_id 10008  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #949494;'># … with 55 more rows</span><span></div><div class='input'><span class='fu'>diagnose_category</span>(<span class='no'>jobchange</span>, <span class='st'>"education_level"</span>, <span class='st'>"company_type"</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 13 x 6</span><span>
+#&gt;    variables       levels                  N  freq  ratio  rank
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>               </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> education_level Graduate            </span><span style='text-decoration: underline;'>19</span><span>158 </span><span style='text-decoration: underline;'>11</span><span>598 60.5       1
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> education_level Masters             </span><span style='text-decoration: underline;'>19</span><span>158  </span><span style='text-decoration: underline;'>4</span><span>361 22.8       2
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> education_level High School         </span><span style='text-decoration: underline;'>19</span><span>158  </span><span style='text-decoration: underline;'>2</span><span>017 10.5       3
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> education_level </span><span style='color: #BB0000;'>NA</span><span>                  </span><span style='text-decoration: underline;'>19</span><span>158   460  2.40      4
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> education_level Phd                 </span><span style='text-decoration: underline;'>19</span><span>158   414  2.16      5
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> education_level Primary School      </span><span style='text-decoration: underline;'>19</span><span>158   308  1.61      6
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> company_type    Pvt Ltd             </span><span style='text-decoration: underline;'>19</span><span>158  </span><span style='text-decoration: underline;'>9</span><span>817 51.2       1
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> company_type    </span><span style='color: #BB0000;'>NA</span><span>                  </span><span style='text-decoration: underline;'>19</span><span>158  </span><span style='text-decoration: underline;'>6</span><span>140 32.0       2
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> company_type    Funded Startup      </span><span style='text-decoration: underline;'>19</span><span>158  </span><span style='text-decoration: underline;'>1</span><span>001  5.22      3
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> company_type    Public Sector       </span><span style='text-decoration: underline;'>19</span><span>158   955  4.98      4
+#&gt; </span><span style='color: #BCBCBC;'>11</span><span> company_type    Early Stage Startup </span><span style='text-decoration: underline;'>19</span><span>158   603  3.15      5
+#&gt; </span><span style='color: #BCBCBC;'>12</span><span> company_type    NGO                 </span><span style='text-decoration: underline;'>19</span><span>158   521  2.72      6
+#&gt; </span><span style='color: #BCBCBC;'>13</span><span> company_type    Other               </span><span style='text-decoration: underline;'>19</span><span>158   121  0.632     7</div><div class='input'><span class='fu'>diagnose_category</span>(<span class='no'>jobchange</span>, <span class='fl'>7</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 6 x 6</span><span>
+#&gt;   variables       levels             N  freq ratio  rank
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;ord&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> education_level Graduate       </span><span style='text-decoration: underline;'>19</span><span>158 </span><span style='text-decoration: underline;'>11</span><span>598 60.5      1
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> education_level Masters        </span><span style='text-decoration: underline;'>19</span><span>158  </span><span style='text-decoration: underline;'>4</span><span>361 22.8      2
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> education_level High School    </span><span style='text-decoration: underline;'>19</span><span>158  </span><span style='text-decoration: underline;'>2</span><span>017 10.5      3
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> education_level </span><span style='color: #BB0000;'>NA</span><span>             </span><span style='text-decoration: underline;'>19</span><span>158   460  2.40     4
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> education_level Phd            </span><span style='text-decoration: underline;'>19</span><span>158   414  2.16     5
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> education_level Primary School </span><span style='text-decoration: underline;'>19</span><span>158   308  1.61     6</div><div class='input'>
 <span class='co'># Using pipes ---------------------------------</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+
 <span class='co'># Diagnosis of all categorical variables</span>
-<span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>diagnose_category</span>()</div><div class='output co'>#&gt;   variables levels   N freq ratio rank
-#&gt; 1 ShelveLoc Medium 400  219 54.75    1
-#&gt; 2 ShelveLoc    Bad 400   96 24.00    2
-#&gt; 3 ShelveLoc   Good 400   85 21.25    3
-#&gt; 4     Urban    Yes 400  279 69.75    1
-#&gt; 5     Urban     No 400  116 29.00    2
-#&gt; 6     Urban   &lt;NA&gt; 400    5  1.25    3
-#&gt; 7        US    Yes 400  258 64.50    1
-#&gt; 8        US     No 400  142 35.50    2</div><div class='input'><span class='co'># Positive values select variables</span>
-<span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>diagnose_category</span>(<span class='no'>Urban</span>, <span class='no'>US</span>)</div><div class='output co'>#&gt;         variables levels   N freq ratio rank
-#&gt; Urban.1     Urban    Yes 400  279 69.75    1
-#&gt; Urban.2     Urban     No 400  116 29.00    2
-#&gt; Urban.3     Urban   &lt;NA&gt; 400    5  1.25    3
-#&gt; US.1           US    Yes 400  258 64.50    1
-#&gt; US.2           US     No 400  142 35.50    2</div><div class='input'><span class='co'># Negative values to drop variables</span>
-<span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>diagnose_category</span>(-<span class='no'>Urban</span>, -<span class='no'>US</span>)</div><div class='output co'>#&gt;             variables levels   N freq ratio rank
-#&gt; ShelveLoc.1 ShelveLoc Medium 400  219 54.75    1
-#&gt; ShelveLoc.2 ShelveLoc    Bad 400   96 24.00    2
-#&gt; ShelveLoc.3 ShelveLoc   Good 400   85 21.25    3</div><div class='input'><span class='co'># Positions values select variables</span>
-<span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>diagnose_category</span>(<span class='fl'>7</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 3 x 6</span><span>
-#&gt;   variables levels     N  freq ratio  rank
-#&gt; </span><span style='color: #BCBCBC;'>*</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> ShelveLoc Medium   400   219  54.8     1
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> ShelveLoc Bad      400    96  24       2
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> ShelveLoc Good     400    85  21.2     3</div><div class='input'><span class='co'># Positions values select variables</span>
-<span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>diagnose_category</span>(-<span class='fl'>7</span>)</div><div class='output co'>#&gt;         variables levels   N freq ratio rank
-#&gt; Urban.1     Urban    Yes 400  279 69.75    1
-#&gt; Urban.2     Urban     No 400  116 29.00    2
-#&gt; Urban.3     Urban   &lt;NA&gt; 400    5  1.25    3
-#&gt; US.1           US    Yes 400  258 64.50    1
-#&gt; US.2           US     No 400  142 35.50    2</div><div class='input'><span class='co'># Top rank levels with top argument</span>
-<span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>diagnose_category</span>(<span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt;   variables levels   N freq ratio rank
-#&gt; 1 ShelveLoc Medium 400  219 54.75    1
-#&gt; 2 ShelveLoc    Bad 400   96 24.00    2
-#&gt; 3     Urban    Yes 400  279 69.75    1
-#&gt; 4     Urban     No 400  116 29.00    2
-#&gt; 5        US    Yes 400  258 64.50    1
-#&gt; 6        US     No 400  142 35.50    2</div><div class='input'>
+<span class='no'>jobchange</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>diagnose_category</span>()</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 78 x 6</span><span>
+#&gt;    variables   levels     N  freq   ratio  rank
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> enrollee_id 1      </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> enrollee_id 10     </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> enrollee_id 10000  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> enrollee_id 10001  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> enrollee_id 10002  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> enrollee_id 10003  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> enrollee_id 10004  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> enrollee_id 10005  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> enrollee_id 10006  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> enrollee_id 10008  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #949494;'># … with 68 more rows</span><span></div><div class='input'>
+<span class='co'># Positive values select variables</span>
+<span class='no'>jobchange</span> <span class='kw'>%&gt;%</span>
+ <span class='fu'>diagnose_category</span>(<span class='no'>company_type</span>, <span class='no'>job_chnge</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 9 x 6</span><span>
+#&gt;   variables    levels                  N  freq  ratio  rank
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>               </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> company_type Pvt Ltd             </span><span style='text-decoration: underline;'>19</span><span>158  </span><span style='text-decoration: underline;'>9</span><span>817 51.2       1
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> company_type </span><span style='color: #BB0000;'>NA</span><span>                  </span><span style='text-decoration: underline;'>19</span><span>158  </span><span style='text-decoration: underline;'>6</span><span>140 32.0       2
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> company_type Funded Startup      </span><span style='text-decoration: underline;'>19</span><span>158  </span><span style='text-decoration: underline;'>1</span><span>001  5.22      3
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> company_type Public Sector       </span><span style='text-decoration: underline;'>19</span><span>158   955  4.98      4
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> company_type Early Stage Startup </span><span style='text-decoration: underline;'>19</span><span>158   603  3.15      5
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> company_type NGO                 </span><span style='text-decoration: underline;'>19</span><span>158   521  2.72      6
+#&gt; </span><span style='color: #BCBCBC;'>7</span><span> company_type Other               </span><span style='text-decoration: underline;'>19</span><span>158   121  0.632     7
+#&gt; </span><span style='color: #BCBCBC;'>8</span><span> job_chnge    No                  </span><span style='text-decoration: underline;'>19</span><span>158 </span><span style='text-decoration: underline;'>14</span><span>381 75.1       1
+#&gt; </span><span style='color: #BCBCBC;'>9</span><span> job_chnge    Yes                 </span><span style='text-decoration: underline;'>19</span><span>158  </span><span style='text-decoration: underline;'>4</span><span>777 24.9       2</div><div class='input'><span class='co'># Negative values to drop variables</span>
+<span class='no'>jobchange</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>diagnose_category</span>(-<span class='no'>company_type</span>, -<span class='no'>job_chnge</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 69 x 6</span><span>
+#&gt;    variables   levels     N  freq   ratio  rank
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> enrollee_id 1      </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> enrollee_id 10     </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> enrollee_id 10000  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> enrollee_id 10001  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> enrollee_id 10002  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> enrollee_id 10003  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> enrollee_id 10004  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> enrollee_id 10005  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> enrollee_id 10006  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> enrollee_id 10008  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #949494;'># … with 59 more rows</span><span></div><div class='input'><span class='co'># Positions values select variables</span>
+<span class='no'>jobchange</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>diagnose_category</span>(<span class='fl'>7</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 6 x 6</span><span>
+#&gt;   variables       levels             N  freq ratio  rank
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;ord&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> education_level Graduate       </span><span style='text-decoration: underline;'>19</span><span>158 </span><span style='text-decoration: underline;'>11</span><span>598 60.5      1
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> education_level Masters        </span><span style='text-decoration: underline;'>19</span><span>158  </span><span style='text-decoration: underline;'>4</span><span>361 22.8      2
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> education_level High School    </span><span style='text-decoration: underline;'>19</span><span>158  </span><span style='text-decoration: underline;'>2</span><span>017 10.5      3
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> education_level </span><span style='color: #BB0000;'>NA</span><span>             </span><span style='text-decoration: underline;'>19</span><span>158   460  2.40     4
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> education_level Phd            </span><span style='text-decoration: underline;'>19</span><span>158   414  2.16     5
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> education_level Primary School </span><span style='text-decoration: underline;'>19</span><span>158   308  1.61     6</div><div class='input'><span class='co'># Positions values select variables</span>
+<span class='no'>jobchange</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>diagnose_category</span>(-<span class='fl'>7</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 72 x 6</span><span>
+#&gt;    variables   levels     N  freq   ratio  rank
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> enrollee_id 1      </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> enrollee_id 10     </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> enrollee_id 10000  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> enrollee_id 10001  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> enrollee_id 10002  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> enrollee_id 10003  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> enrollee_id 10004  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> enrollee_id 10005  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> enrollee_id 10006  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> enrollee_id 10008  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #949494;'># … with 62 more rows</span><span></div><div class='input'>
+<span class='co'># Top rank levels with top argument</span>
+<span class='no'>jobchange</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>diagnose_category</span>(<span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 24 x 6</span><span>
+#&gt;    variables           levels                      N  freq    ratio  rank
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>               </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> enrollee_id         1                       </span><span style='text-decoration: underline;'>19</span><span>158     1  0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> enrollee_id         10                      </span><span style='text-decoration: underline;'>19</span><span>158     1  0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> city                city_103                </span><span style='text-decoration: underline;'>19</span><span>158  </span><span style='text-decoration: underline;'>4</span><span>355 22.7         1
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> city                city_21                 </span><span style='text-decoration: underline;'>19</span><span>158  </span><span style='text-decoration: underline;'>2</span><span>702 14.1         2
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> gender              Male                    </span><span style='text-decoration: underline;'>19</span><span>158 </span><span style='text-decoration: underline;'>13</span><span>221 69.0         1
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> gender              </span><span style='color: #BB0000;'>NA</span><span>                      </span><span style='text-decoration: underline;'>19</span><span>158  </span><span style='text-decoration: underline;'>4</span><span>508 23.5         2
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> relevent_experience Has relevent experience </span><span style='text-decoration: underline;'>19</span><span>158 </span><span style='text-decoration: underline;'>13</span><span>792 72.0         1
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> relevent_experience No relevent experience  </span><span style='text-decoration: underline;'>19</span><span>158  </span><span style='text-decoration: underline;'>5</span><span>366 28.0         2
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> enrolled_university no_enrollment           </span><span style='text-decoration: underline;'>19</span><span>158 </span><span style='text-decoration: underline;'>13</span><span>817 72.1         1
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> enrolled_university Full time course        </span><span style='text-decoration: underline;'>19</span><span>158  </span><span style='text-decoration: underline;'>3</span><span>757 19.6         2
+#&gt; </span><span style='color: #949494;'># … with 14 more rows</span><span></div><div class='input'>
 <span class='co'># Using pipes &amp; dplyr -------------------------</span>
 <span class='co'># Extraction of level that is more than 60% of categorical data</span>
-<span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
+<span class='no'>jobchange</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>diagnose_category</span>()  <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>ratio</span> <span class='kw'>&gt;=</span> <span class='fl'>60</span>)</div><div class='output co'>#&gt;   variables levels   N freq ratio rank
-#&gt; 1     Urban    Yes 400  279 69.75    1
-#&gt; 2        US    Yes 400  258 64.50    1</div><div class='input'>
-<span class='co'># Using type argument -------------------------</span>
- <span class='no'>dfm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>alpabet</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>5</span>], <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>5</span>), <span class='st'>"c"</span>))
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>ratio</span> <span class='kw'>&gt;=</span> <span class='fl'>60</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 6 x 6</span><span>
+#&gt;   variables           levels                      N  freq ratio  rank
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>               </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> gender              Male                    </span><span style='text-decoration: underline;'>19</span><span>158 </span><span style='text-decoration: underline;'>13</span><span>221  69.0     1
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> relevent_experience Has relevent experience </span><span style='text-decoration: underline;'>19</span><span>158 </span><span style='text-decoration: underline;'>13</span><span>792  72.0     1
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> enrolled_university no_enrollment           </span><span style='text-decoration: underline;'>19</span><span>158 </span><span style='text-decoration: underline;'>13</span><span>817  72.1     1
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> education_level     Graduate                </span><span style='text-decoration: underline;'>19</span><span>158 </span><span style='text-decoration: underline;'>11</span><span>598  60.5     1
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> major_discipline    STEM                    </span><span style='text-decoration: underline;'>19</span><span>158 </span><span style='text-decoration: underline;'>14</span><span>492  75.6     1
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> job_chnge           No                      </span><span style='text-decoration: underline;'>19</span><span>158 </span><span style='text-decoration: underline;'>14</span><span>381  75.1     1</div><div class='input'>
+<span class='co'># All observations of enrollee_id have a rank of 1. </span>
+<span class='co'># Because it is a unique identifier. Therefore, if you select up to the top rank 3, </span>
+<span class='co'># all records are displayed. It will probably fill your screen.</span>
 
- <span class='co'># extract rows that less than equal rank 10</span>
- <span class='co'># default of top argument is 10</span>
- <span class='no'>dfm</span> <span class='kw'>%&gt;%</span>
-   <span class='fu'>diagnose_category</span>()</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 5 x 6</span><span>
-#&gt;   variables levels     N  freq ratio  rank
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> alpabet   c         26     6  23.1     1
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> alpabet   a         26     5  19.2     2
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> alpabet   b         26     5  19.2     2
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> alpabet   d         26     5  19.2     2
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> alpabet   e         26     5  19.2     2</div><div class='input'>
- <span class='co'># extract rows that less than equal rank 2</span>
- <span class='no'>dfm</span> <span class='kw'>%&gt;%</span>
-   <span class='fu'>diagnose_category</span>(<span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"rank"</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 5 x 6</span><span>
-#&gt;   variables levels     N  freq ratio  rank
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> alpabet   c         26     6  23.1     1
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> alpabet   a         26     5  19.2     2
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> alpabet   b         26     5  19.2     2
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> alpabet   d         26     5  19.2     2
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> alpabet   e         26     5  19.2     2</div><div class='input'>
- <span class='co'># extract rows that less than equal rank 2</span>
- <span class='co'># default of type argument is "rank"</span>
- <span class='no'>dfm</span> <span class='kw'>%&gt;%</span>
-   <span class='fu'>diagnose_category</span>(<span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 5 x 6</span><span>
-#&gt;   variables levels     N  freq ratio  rank
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> alpabet   c         26     6  23.1     1
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> alpabet   a         26     5  19.2     2
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> alpabet   b         26     5  19.2     2
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> alpabet   d         26     5  19.2     2
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> alpabet   e         26     5  19.2     2</div><div class='input'>
- <span class='co'># extract only 2 rows</span>
- <span class='no'>dfm</span> <span class='kw'>%&gt;%</span>
-   <span class='fu'>diagnose_category</span>(<span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"n"</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 6</span><span>
-#&gt;   variables levels     N  freq ratio  rank
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> alpabet   c         26     6  23.1     1
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> alpabet   a         26     5  19.2     2</div><div class='input'> 
+<span class='co'># extract rows that less than equal rank 3</span>
+<span class='co'># default of type argument is "n"</span>
+<span class='no'>jobchange</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>diagnose_category</span>(<span class='no'>enrollee_id</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 3 x 6</span><span>
+#&gt;   variables   levels     N  freq   ratio  rank
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> enrollee_id 1      </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> enrollee_id 10     </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> enrollee_id 10000  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1</div><div class='input'>
+<span class='co'># extract rows that less than equal rank 3</span>
+<span class='no'>jobchange</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>diagnose_category</span>(<span class='no'>enrollee_id</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"rank"</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 19,158 x 6</span><span>
+#&gt;    variables   levels     N  freq   ratio  rank
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> enrollee_id 1      </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> enrollee_id 10     </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> enrollee_id 10000  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> enrollee_id 10001  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> enrollee_id 10002  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> enrollee_id 10003  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> enrollee_id 10004  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> enrollee_id 10005  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> enrollee_id 10006  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> enrollee_id 10008  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #949494;'># … with 19,148 more rows</span><span></div><div class='input'>
+<span class='co'># extract only 3 rows</span>
+<span class='no'>jobchange</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>diagnose_category</span>(<span class='no'>enrollee_id</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"n"</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 3 x 6</span><span>
+#&gt;   variables   levels     N  freq   ratio  rank
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> enrollee_id 1      </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> enrollee_id 10     </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> enrollee_id 10000  </span><span style='text-decoration: underline;'>19</span><span>158     1 0.005</span><span style='text-decoration: underline;'>22</span><span>     1</div><div class='input'> 
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
