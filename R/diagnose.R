@@ -579,59 +579,54 @@ plot_outlier <- function(.data, ...) {
 #' @seealso \code{\link{plot_outlier.tbl_dbi}}, \code{\link{diagnose_outlier.data.frame}}.
 #' @export
 #' @examples
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
 #' # Visualization of all numerical variables
-#' # plot_outlier(carseats)
-#'
+#' # plot_outlier(heartfailure)
+#' 
 #' # Select the variable to diagnose
-#' plot_outlier(carseats, Sales, Price)
-#' # plot_outlier(carseats, -Sales, -Price)
-#' # plot_outlier(carseats, "Sales", "Price")
-#' # plot_outlier(carseats, 6)
-#'
+#' plot_outlier(heartfailure, cpk_enzyme, sodium)
+#' # plot_outlier(heartfailure, -cpk_enzyme, -sodium)
+#' # plot_outlier(heartfailure, "cpk_enzyme", "sodium")
+#' # plot_outlier(heartfailure, 7)
+#' 
 #' # Using the col argument
-#' # plot_outlier(carseats, Sales, col = "gray")
+#' # plot_outlier(heartfailure, cpk_enzyme, col = "gray")
 #' 
 #' # Not allow typographic argument
-#' # plot_outlier(carseats, Sales, typographic = FALSE)
+#' # plot_outlier(heartfailure, cpk_enzyme, typographic = FALSE)
 #' 
 #' # Using pipes ---------------------------------
 #' library(dplyr)
-#'
+#' 
 #' # Visualization of all numerical variables
-#' # carseats %>%
+#' # heartfailure %>%
 #' #   plot_outlier()
-#'   
+#' 
 #' # Positive values select variables
-#' carseats %>%
-#'   plot_outlier(Sales, Price)
+#' heartfailure %>%
+#'   plot_outlier(cpk_enzyme, sodium)
 #'   
 #' # Negative values to drop variables
-#' # carseats %>%
-#' #   plot_outlier(-Sales, -Price)
-#'   
+#' # heartfailure %>%
+#' #   plot_outlier(-cpk_enzyme, -sodium)
+#' 
 #' # Positions values select variables
-#' # carseats %>%
-#' #   plot_outlier(6)
-#'   
+#' # heartfailure %>%
+#' #   plot_outlier(7)
+#' 
 #' # Positions values select variables
-#' # carseats %>%
+#' # heartfailure %>%
 #' #   plot_outlier(-1, -5)
-#'
+#' 
 #' # Using pipes & dplyr -------------------------
 #' # Visualization of numerical variables with a ratio of
-#' # outliers greater than 1%
-#' # carseats %>%
-#' #   plot_outlier(carseats %>%
+#' # outliers greater than 5%
+#' # heartfailure %>%
+#' #   plot_outlier(heartfailure %>%
 #' #      diagnose_outlier() %>%
-#' #      filter(outliers_ratio > 1) %>%
+#' #      filter(outliers_ratio > 5) %>%
 #' #      select(variables) %>%
 #' #      pull())
-#'   
+#' 
 #' @method plot_outlier data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
@@ -792,34 +787,29 @@ plot_outlier_raw <- function(x, main = NULL, col = "steelblue", typographic = TR
 #' @seealso \code{\link{plot_outlier.data.frame}}.
 #' @export
 #' @examples
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
 #' # the target variable is a categorical variable
-#' categ <- target_by(carseats, US)
+#' categ <- target_by(heartfailure, death_event)
 #' 
-#' plot_outlier(categ, Price)
-#' plot_outlier(categ, Price, typographic = FALSE)
+#' plot_outlier(categ, sodium)
+#' plot_outlier(categ, sodium, typographic = FALSE)
 #' 
-#' # using dplyr
+#' # death_eventing dplyr
 #' library(dplyr)
-#' carseats %>% 
-#'   target_by(US) %>% 
-#'   plot_outlier(Price, CompPrice)
+#' heartfailure %>% 
+#'   target_by(death_event) %>% 
+#'   plot_outlier(sodium, cpk_enzyme)
 #' 
-#' # Using DBMS tables ----------------------------------
+#' # death_eventing DBMS tables ----------------------------------
 #' # connect DBMS
 #' con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 #' 
-#' # copy carseats to the DBMS with a table named TB_CARSEATS
-#' copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
-#'
-#' # If the target variable is a categorical variable
-#' categ <- target_by(con_sqlite %>% tbl("TB_CARSEATS") , US)
+#' # copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+#' copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
 #' 
-#' plot_outlier(categ, Price)
+#' # If the target variable is a categorical variable
+#' categ <- target_by(con_sqlite %>% tbl("TB_HEARTFAILURE") , death_event)
+#' 
+#' plot_outlier(categ, sodium)
 #' 
 #' @method plot_outlier target_df
 #' @importFrom tidyselect vars_select

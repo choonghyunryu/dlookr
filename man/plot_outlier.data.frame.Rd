@@ -50,59 +50,54 @@ See vignette("diagonosis") for an introduction to these concepts.
 }
 
 \examples{
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-
 # Visualization of all numerical variables
-# plot_outlier(carseats)
+# plot_outlier(heartfailure)
 
 # Select the variable to diagnose
-plot_outlier(carseats, Sales, Price)
-# plot_outlier(carseats, -Sales, -Price)
-# plot_outlier(carseats, "Sales", "Price")
-# plot_outlier(carseats, 6)
+plot_outlier(heartfailure, cpk_enzyme, sodium)
+# plot_outlier(heartfailure, -cpk_enzyme, -sodium)
+# plot_outlier(heartfailure, "cpk_enzyme", "sodium")
+# plot_outlier(heartfailure, 7)
 
 # Using the col argument
-# plot_outlier(carseats, Sales, col = "gray")
+# plot_outlier(heartfailure, cpk_enzyme, col = "gray")
 
 # Not allow typographic argument
-# plot_outlier(carseats, Sales, typographic = FALSE)
+# plot_outlier(heartfailure, cpk_enzyme, typographic = FALSE)
 
 # Using pipes ---------------------------------
 library(dplyr)
 
 # Visualization of all numerical variables
-# carseats \%>\%
+# heartfailure \%>\%
 #   plot_outlier()
-  
+
 # Positive values select variables
-carseats \%>\%
-  plot_outlier(Sales, Price)
+heartfailure \%>\%
+  plot_outlier(cpk_enzyme, sodium)
   
 # Negative values to drop variables
-# carseats \%>\%
-#   plot_outlier(-Sales, -Price)
-  
+# heartfailure \%>\%
+#   plot_outlier(-cpk_enzyme, -sodium)
+
 # Positions values select variables
-# carseats \%>\%
-#   plot_outlier(6)
-  
+# heartfailure \%>\%
+#   plot_outlier(7)
+
 # Positions values select variables
-# carseats \%>\%
+# heartfailure \%>\%
 #   plot_outlier(-1, -5)
 
 # Using pipes & dplyr -------------------------
 # Visualization of numerical variables with a ratio of
-# outliers greater than 1\%
-# carseats \%>\%
-#   plot_outlier(carseats \%>\%
+# outliers greater than 5\%
+# heartfailure \%>\%
+#   plot_outlier(heartfailure \%>\%
 #      diagnose_outlier() \%>\%
-#      filter(outliers_ratio > 1) \%>\%
+#      filter(outliers_ratio > 5) \%>\%
 #      select(variables) \%>\%
 #      pull())
-  
+
 }
 \seealso{
 \code{\link{plot_outlier.tbl_dbi}}, \code{\link{diagnose_outlier.data.frame}}.

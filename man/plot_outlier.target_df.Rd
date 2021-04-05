@@ -43,34 +43,29 @@ The plot derived from the numerical data diagnosis is as follows.
 }
 
 \examples{
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-
 # the target variable is a categorical variable
-categ <- target_by(carseats, US)
+categ <- target_by(heartfailure, death_event)
 
-plot_outlier(categ, Price)
-plot_outlier(categ, Price, typographic = FALSE)
+plot_outlier(categ, sodium)
+plot_outlier(categ, sodium, typographic = FALSE)
 
-# using dplyr
+# death_eventing dplyr
 library(dplyr)
-carseats \%>\% 
-  target_by(US) \%>\% 
-  plot_outlier(Price, CompPrice)
+heartfailure \%>\% 
+  target_by(death_event) \%>\% 
+  plot_outlier(sodium, cpk_enzyme)
 
-# Using DBMS tables ----------------------------------
+# death_eventing DBMS tables ----------------------------------
 # connect DBMS
 con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 
-# copy carseats to the DBMS with a table named TB_CARSEATS
-copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
+# copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
 
 # If the target variable is a categorical variable
-categ <- target_by(con_sqlite \%>\% tbl("TB_CARSEATS") , US)
+categ <- target_by(con_sqlite \%>\% tbl("TB_HEARTFAILURE") , death_event)
 
-plot_outlier(categ, Price)
+plot_outlier(categ, sodium)
 
 }
 \seealso{
