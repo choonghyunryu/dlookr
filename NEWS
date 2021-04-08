@@ -6,7 +6,7 @@ CHANGES IN R VERSION 0.4.5:
     
     * Changed the manpages are diagnose(), diagnose_category(), 
       diagnose_numeric(), diagnose_outlier(), plot_outlier(),
-      plot_outlier.target_df(), plot_bar_category().
+      plot_outlier.target_df(), diagnose_report(), plot_bar_category().
       
     * Changed default type of diagnose_category() from "rank" to "n". 
     
