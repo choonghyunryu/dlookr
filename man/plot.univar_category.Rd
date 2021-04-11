@@ -25,39 +25,42 @@ However, it does not support all parameters.}
 Visualize mosaics plot by attribute of univar_category class.
 }
 \examples{
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-
 library(dplyr)
 
 # Calculates the all categorical variables
-all_var <- univar_category(carseats)
+all_var <- univar_category(heartfailure)
 
 # Print univar_category class object
 all_var
 
 # Calculates the only Urban variable
-urban <- univar_category(carseats, Urban)
-  
+all_var \%>\% 
+  "["(names(all_var) \%in\% "smoking")
+
+smoking <- univar_category(heartfailure, smoking)
+
 # Print univar_category class object
-urban
+smoking
+
+# Filtering the case of Urban included NA 
+smoking \%>\%
+  "[["(1) \%>\% 
+  filter(!is.na(smoking))
+
+# Summary the all case : Return a invisible copy of an object.
+stat <- summary(all_var)
+
+# Summary by returned object
+stat
 
 # plot all variables
-plot(all_var)
+# plot(all_var)
 
 # plot urban
-plot(urban)
+# plot(smoking)
 
-# plot all variables by na.rm = FALSE
-plot(all_var, na.rm = FALSE)
- 
 # plot all variables by prompt
 # plot(all_var, prompt = TRUE)
-
-# not allow the typographic elements
-plot(all_var, typographic = FALSE)
 
 }
 \seealso{

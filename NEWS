@@ -1,12 +1,18 @@
 CHANGES IN R VERSION 0.4.5:
+      
+  BUG FIXES:
 
+    * Fixed an error that is in plot.univar_category(), if the number of 
+      categories is more than 10, no output after 10.
+      
   MINOR CHANGES:
     
     * Added datasets that are 'heartfailure' and 'jobchange'. 
     
     * Changed the manpages are diagnose(), diagnose_category(), 
       diagnose_numeric(), diagnose_outlier(), plot_outlier(),
-      plot_outlier.target_df(), diagnose_report(), plot_bar_category().
+      plot_outlier.target_df(), diagnose_report(), plot.univar_category(),
+      plot_bar_category().
       
     * Changed default type of diagnose_category() from "rank" to "n". 
     
