@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
       </span>
     </div>
 
@@ -160,55 +160,56 @@ However, it does not support all parameters.</p></td>
     <div class='dont-index'><p><code><a href='univar_category.data.frame.html'>univar_category</a></code>, <code><a href='summary.univar_category.html'>print.univar_category</a></code>, <code><a href='summary.univar_category.html'>summary.univar_category</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Generate data for the example</span>
-<span class='no'>carseats</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ISLR</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/ISLR/man/Carseats.html'>Carseats</a></span>
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>20</span>), <span class='st'>"Income"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>5</span>), <span class='st'>"Urban"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
 <span class='co'># Calculates the all categorical variables</span>
-<span class='no'>all_var</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='univar_category.data.frame.html'>univar_category</a></span>(<span class='no'>carseats</span>)
+<span class='no'>all_var</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='univar_category.data.frame.html'>univar_category</a></span>(<span class='no'>heartfailure</span>)
 
 <span class='co'># Print univar_category class object</span>
-<span class='no'>all_var</span></div><div class='output co'>#&gt; $ShelveLoc
-#&gt;   ShelveLoc   n   rate
-#&gt; 1       Bad  96 0.2400
-#&gt; 2      Good  85 0.2125
-#&gt; 3    Medium 219 0.5475
+<span class='no'>all_var</span></div><div class='output co'>#&gt; $anaemia
+#&gt;   anaemia   n      rate
+#&gt; 1      No 170 0.5685619
+#&gt; 2     Yes 129 0.4314381
 #&gt; 
-#&gt; $Urban
-#&gt;   Urban   n   rate
-#&gt; 1    No 117 0.2925
-#&gt; 2   Yes 278 0.6950
-#&gt; 3  &lt;NA&gt;   5 0.0125
+#&gt; $diabetes
+#&gt;   diabetes   n      rate
+#&gt; 1       No 174 0.5819398
+#&gt; 2      Yes 125 0.4180602
 #&gt; 
-#&gt; $US
-#&gt;    US   n  rate
-#&gt; 1  No 142 0.355
-#&gt; 2 Yes 258 0.645
+#&gt; $hblood_pressure
+#&gt;   hblood_pressure   n      rate
+#&gt; 1              No 194 0.6488294
+#&gt; 2             Yes 105 0.3511706
+#&gt; 
+#&gt; $sex
+#&gt;      sex   n      rate
+#&gt; 1 Female 105 0.3511706
+#&gt; 2   Male 194 0.6488294
+#&gt; 
+#&gt; $smoking
+#&gt;   smoking   n       rate
+#&gt; 1      No 201 0.67224080
+#&gt; 2     Yes  93 0.31103679
+#&gt; 3    &lt;NA&gt;   5 0.01672241
+#&gt; 
+#&gt; $death_event
+#&gt;   death_event   n      rate
+#&gt; 1          No 203 0.6789298
+#&gt; 2         Yes  96 0.3210702
 #&gt; </div><div class='input'>
-<span class='co'># Calculates the only Urban variable</span>
-<span class='no'>urban</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='univar_category.data.frame.html'>univar_category</a></span>(<span class='no'>carseats</span>, <span class='no'>Urban</span>)
+<span class='no'>smoking</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='univar_category.data.frame.html'>univar_category</a></span>(<span class='no'>heartfailure</span>, <span class='no'>smoking</span>)
 
 <span class='co'># Print univar_category class object</span>
-<span class='no'>urban</span></div><div class='output co'>#&gt; $Urban
-#&gt;   Urban   n   rate
-#&gt; 1    No 117 0.2925
-#&gt; 2   Yes 278 0.6950
-#&gt; 3  &lt;NA&gt;   5 0.0125
+<span class='no'>smoking</span></div><div class='output co'>#&gt; $smoking
+#&gt;   smoking   n       rate
+#&gt; 1      No 201 0.67224080
+#&gt; 2     Yes  93 0.31103679
+#&gt; 3    &lt;NA&gt;   5 0.01672241
 #&gt; </div><div class='input'>
 <span class='co'># plot all variables</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>)</div><div class='img'><img src='plot.univar_category-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_category-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_category-3.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># plot urban</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>urban</span>)</div><div class='img'><img src='plot.univar_category-4.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># plot all variables by na.rm = FALSE</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot.univar_category-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_category-6.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_category-7.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># plot all variables by prompt</span>
-<span class='co'># plot(all_var, prompt = TRUE)</span>
-
-<span class='co'># not allow the typographic elements</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot.univar_category-8.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_category-9.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_category-10.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>)</div><div class='img'><img src='plot.univar_category-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_category-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_category-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_category-4.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_category-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_category-6.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># plot smoking</span>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>smoking</span>)</div><div class='img'><img src='plot.univar_category-7.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
