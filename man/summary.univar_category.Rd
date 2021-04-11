@@ -38,44 +38,33 @@ print.univar_category() displays only the information of variables included in u
 The "variables" attribute is not displayed.
 }
 \examples{
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-
 library(dplyr)
 
-# Calculates the all categorical variavels
-all_var <- univar_category(carseats)
+# Calculates the all categorical variables
+all_var <- univar_category(heartfailure)
 
 # Print univar_category class object
 all_var
 
-# Calculates the only Urban variable
+# Calculates the only smoking variable
 all_var \%>\% 
-  "["(names(all_var) \%in\% "Urban")
-  
-urban <- univar_category(carseats, Urban)
-  
-# Print univar_category class object
-urban
+  "["(names(all_var) \%in\% "smoking")
 
-# Filtering the case of Urban included NA 
-urban \%>\%
+smoking <- univar_category(heartfailure, smoking)
+
+# Print univar_category class object
+smoking
+
+# Filtering the case of smoking included NA 
+smoking \%>\%
   "[["(1) \%>\% 
-  filter(!is.na(Urban))
-  
+  filter(!is.na(smoking))
+
 # Summary the all case : Return a invisible copy of an object.
 stat <- summary(all_var)
 
 # Summary by returned object
 stat
-  
-# Summary chi-squared test by returned object exclude NA
-summary(urban)
-
-# Summary chi-squared test by returned object include NA
-summary(urban, na.rm = FALSE)
 
 }
 \seealso{

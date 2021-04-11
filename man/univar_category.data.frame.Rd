@@ -47,33 +47,28 @@ Attributes of compare_category class is as follows.
 }
 
 \examples{
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-
 library(dplyr)
 
 # Calculates the all categorical variables
-all_var <- univar_category(carseats)
+all_var <- univar_category(heartfailure)
 
 # Print univar_category class object
 all_var
 
-# Calculates the only Urban variable
+# Calculates the only smoking variable
 all_var \%>\% 
-  "["(names(all_var) \%in\% "Urban")
-  
-urban <- univar_category(carseats, Urban)
-  
-# Print univar_category class object
-urban
+  "["(names(all_var) \%in\% "smoking")
 
-# Filtering the case of Urban included NA 
-urban \%>\%
+smoking <- univar_category(heartfailure, smoking)
+
+# Print univar_category class object
+smoking
+
+# Filtering the case of smoking included NA 
+smoking \%>\%
   "[["(1) \%>\% 
-  filter(!is.na(Urban))
-  
+  filter(!is.na(smoking))
+
 # Summary the all case : Return a invisible copy of an object.
 stat <- summary(all_var)
 
@@ -83,8 +78,8 @@ stat
 # plot all variables
 # plot(all_var)
 
-# plot urban
-# plot(urban)
+# plot smoking
+# plot(smoking)
 
 # plot all variables by prompt
 # plot(all_var, prompt = TRUE)

@@ -55,20 +55,15 @@ Attributes of compare_category class is as follows.
 }
 
 \examples{
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-
 # Calculates the all categorical variables
-all_var <- univar_numeric(carseats)
+all_var <- univar_numeric(heartfailure)
 
 # Print univar_numeric class object
 all_var
 
-# Calculates the Price, CompPrice variable
-univar_numeric(carseats, Price, CompPrice)
-  
+# Calculates the platelets, sodium variable
+univar_numeric(heartfailure, platelets, sodium)
+
 # Summary the all case : Return a invisible copy of an object.
 stat <- summary(all_var)
 

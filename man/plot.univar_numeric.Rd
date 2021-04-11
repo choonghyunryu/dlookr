@@ -45,17 +45,15 @@ However, it does not support.}
 Visualize boxplots and histogram by attribute of univar_numeric class.
 }
 \examples{
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-
 # Calculates the all categorical variables
-all_var <- univar_numeric(carseats)
+all_var <- univar_numeric(heartfailure)
 
 # Print univar_numeric class object
 all_var
-  
+
+# Calculates the platelets, sodium variable
+univar_numeric(heartfailure, platelets, sodium)
+
 # Summary the all case : Return a invisible copy of an object.
 stat <- summary(all_var)
 
@@ -73,9 +71,6 @@ plot(all_var)
 
 # one plot with all robust standardized variables 
 plot(all_var, viz = "boxplot")
-
-# not allow the typographic elements
-# plot(all_var, typographic = FALSE)
 
 # one plot with all standardized variables by Z-score method 
 # plot(all_var, viz = "boxplot", stand = "zscore")

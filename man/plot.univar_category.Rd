@@ -33,34 +33,16 @@ all_var <- univar_category(heartfailure)
 # Print univar_category class object
 all_var
 
-# Calculates the only Urban variable
-all_var \%>\% 
-  "["(names(all_var) \%in\% "smoking")
-
 smoking <- univar_category(heartfailure, smoking)
 
 # Print univar_category class object
 smoking
 
-# Filtering the case of Urban included NA 
-smoking \%>\%
-  "[["(1) \%>\% 
-  filter(!is.na(smoking))
-
-# Summary the all case : Return a invisible copy of an object.
-stat <- summary(all_var)
-
-# Summary by returned object
-stat
-
 # plot all variables
-# plot(all_var)
+plot(all_var)
 
-# plot urban
-# plot(smoking)
-
-# plot all variables by prompt
-# plot(all_var, prompt = TRUE)
+# plot smoking
+plot(smoking)
 
 }
 \seealso{

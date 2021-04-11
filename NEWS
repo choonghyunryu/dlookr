@@ -11,8 +11,10 @@ CHANGES IN R VERSION 0.4.5:
     
     * Changed the manpages are diagnose(), diagnose_category(), 
       diagnose_numeric(), diagnose_outlier(), plot_outlier(),
-      plot_outlier.target_df(), diagnose_report(), plot.univar_category(),
-      plot_bar_category().
+      plot_outlier.target_df(), diagnose_report(), univar_category.data.frame(),
+      summary.univar_category(), plot.univar_category(),
+      univar_numeric.data.frame(), summary.univar_numeric(), 
+      plot.univar_numeric(), plot_bar_category().
       
     * Changed default type of diagnose_category() from "rank" to "n". 
     
