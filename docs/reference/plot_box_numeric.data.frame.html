@@ -73,7 +73,7 @@ relationship to specific categorical data." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
       </span>
     </div>
 
@@ -187,36 +187,31 @@ on one screen. This function can also display a box plot for each level of a spe
 categorical variable.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Generate data for the example</span>
-<span class='no'>carseats</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ISLR</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/ISLR/man/Carseats.html'>Carseats</a></span>
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>20</span>), <span class='st'>"Income"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>5</span>), <span class='st'>"Urban"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-
-<span class='co'># Visualization of all numerical variables</span>
-<span class='co'># plot_box_numeric(carseats)</span>
+    <pre class="examples"><div class='input'><span class='co'># Visualization of all numerical variables</span>
+<span class='co'># plot_box_numeric(heartfailure)</span>
 
 <span class='co'># Select the variable to diagnose</span>
-<span class='co'># plot_box_numeric(carseats, "Sales", "Income")</span>
-<span class='fu'>plot_box_numeric</span>(<span class='no'>carseats</span>, -<span class='no'>Sales</span>, -<span class='no'>Income</span>)</div><div class='img'><img src='plot_box_numeric.data.frame-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># plot_box_numeric(heartfailure, "age", "time")</span>
+<span class='fu'>plot_box_numeric</span>(<span class='no'>heartfailure</span>, -<span class='no'>age</span>, -<span class='no'>time</span>)</div><div class='img'><img src='plot_box_numeric.data.frame-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Visualize the each plots</span>
-<span class='co'># plot_box_numeric(carseats, "Sales", "Income", each = TRUE)</span>
+<span class='co'># plot_box_numeric(heartfailure, "age", "time", each = TRUE)</span>
 
 <span class='co'># Not allow the typographic elements</span>
-<span class='co'># plot_box_numeric(carseats, typographic = FALSE)</span>
+<span class='co'># plot_box_numeric(heartfailure, typographic = FALSE)</span>
 
 <span class='co'># Using pipes ---------------------------------</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
 <span class='co'># Plot of all numerical variables</span>
-<span class='co'># carseats %&gt;%</span>
+<span class='co'># heartfailure %&gt;%</span>
 <span class='co'>#   plot_box_numeric()</span>
 
 <span class='co'># Using groupd_df  ------------------------------</span>
-<span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>ShelveLoc</span>) <span class='kw'>%&gt;%</span>
+<span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>smoking</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>plot_box_numeric</span>()</div><div class='img'><img src='plot_box_numeric.data.frame-2.png' alt='' width='700' height='433' /></div><div class='input'>  
-# carseats %&gt;% 
-#   group_by(ShelveLoc) %&gt;% 
+# heartfailure %&gt;% 
+#   group_by(smoking) %&gt;% 
 #   plot_box_numeric(each = TRUE)  
   
 </div></pre>

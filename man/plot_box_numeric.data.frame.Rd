@@ -55,38 +55,33 @@ on one screen. This function can also display a box plot for each level of a spe
 categorical variable.
 }
 \examples{
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-
 # Visualization of all numerical variables
-# plot_box_numeric(carseats)
+# plot_box_numeric(heartfailure)
 
 # Select the variable to diagnose
-# plot_box_numeric(carseats, "Sales", "Income")
-plot_box_numeric(carseats, -Sales, -Income)
+# plot_box_numeric(heartfailure, "age", "time")
+plot_box_numeric(heartfailure, -age, -time)
 
 # Visualize the each plots
-# plot_box_numeric(carseats, "Sales", "Income", each = TRUE)
+# plot_box_numeric(heartfailure, "age", "time", each = TRUE)
 
 # Not allow the typographic elements
-# plot_box_numeric(carseats, typographic = FALSE)
+# plot_box_numeric(heartfailure, typographic = FALSE)
 
 # Using pipes ---------------------------------
 library(dplyr)
 
 # Plot of all numerical variables
-# carseats \%>\%
+# heartfailure \%>\%
 #   plot_box_numeric()
   
 # Using groupd_df  ------------------------------
-carseats \%>\% 
-  group_by(ShelveLoc) \%>\% 
+heartfailure \%>\% 
+  group_by(smoking) \%>\% 
   plot_box_numeric()
   
-# carseats \%>\% 
-#   group_by(ShelveLoc) \%>\% 
+# heartfailure \%>\% 
+#   group_by(smoking) \%>\% 
 #   plot_box_numeric(each = TRUE)  
   
 }

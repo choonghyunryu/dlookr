@@ -449,37 +449,32 @@ plot_qq_numeric <- function(.data, ...) {
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @examples
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
 #' # Visualization of all numerical variables
-#' # plot_qq_numeric(carseats)
-#'
+#' # plot_qq_numeric(heartfailure)
+#' 
 #' # Select the variable to diagnose
-#' # plot_qq_numeric(carseats, "Sales", "Income")
-#' plot_qq_numeric(carseats, -Sales, -Income)
-#'
+#' # plot_qq_numeric(carseats, "age", "time")
+#' plot_qq_numeric(heartfailure, -age, -time)
+#' 
 #' # Not allow the typographic elements
-#' # plot_qq_numeric(carseats, "Sales", typographic = FALSE)
+#' # plot_qq_numeric(heartfailure, "age", typographic = FALSE)
 #' 
 #' # Using pipes ---------------------------------
 #' library(dplyr)
-#'
+#' 
 #' # Plot of all numerical variables
-#' # carseats %>%
+#' # heartfailure %>%
 #' #   plot_qq_numeric()
-#'   
+#' 
 #' # Using groupd_df  ------------------------------
-#' carseats %>% 
-#'   group_by(ShelveLoc) %>% 
+#' heartfailure %>% 
+#'   group_by(smoking) %>% 
 #'   plot_qq_numeric()
-#'   
-#' #carseats %>% 
-#' #   group_by(ShelveLoc) %>% 
+#' 
+#' #heartfailure %>% 
+#' #   group_by(smoking) %>% 
 #' #   plot_qq_numeric(each = TRUE)  
-#'   
+#' 
 #' @method plot_qq_numeric data.frame
 #' @import ggplot2
 #' @import hrbrthemes
@@ -707,38 +702,33 @@ plot_box_numeric <- function(.data, ...) {
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @examples
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
 #' # Visualization of all numerical variables
-#' # plot_box_numeric(carseats)
+#' # plot_box_numeric(heartfailure)
 #'
 #' # Select the variable to diagnose
-#' # plot_box_numeric(carseats, "Sales", "Income")
-#' plot_box_numeric(carseats, -Sales, -Income)
+#' # plot_box_numeric(heartfailure, "age", "time")
+#' plot_box_numeric(heartfailure, -age, -time)
 #'
 #' # Visualize the each plots
-#' # plot_box_numeric(carseats, "Sales", "Income", each = TRUE)
+#' # plot_box_numeric(heartfailure, "age", "time", each = TRUE)
 #' 
 #' # Not allow the typographic elements
-#' # plot_box_numeric(carseats, typographic = FALSE)
+#' # plot_box_numeric(heartfailure, typographic = FALSE)
 #' 
 #' # Using pipes ---------------------------------
 #' library(dplyr)
 #'
 #' # Plot of all numerical variables
-#' # carseats %>%
+#' # heartfailure %>%
 #' #   plot_box_numeric()
 #'   
 #' # Using groupd_df  ------------------------------
-#' carseats %>% 
-#'   group_by(ShelveLoc) %>% 
+#' heartfailure %>% 
+#'   group_by(smoking) %>% 
 #'   plot_box_numeric()
 #'   
-#' # carseats %>% 
-#' #   group_by(ShelveLoc) %>% 
+#' # heartfailure %>% 
+#' #   group_by(smoking) %>% 
 #' #   plot_box_numeric(each = TRUE)  
 #'   
 #' @method plot_box_numeric data.frame
