@@ -16,27 +16,17 @@
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @examples
 #' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+#' set.seed(123L)
+#' jobchange2 <- jobchange[sample(nrow(jobchange), size = 1000), ]
 #' 
 #' # Visualize hcluster chart for variables with missing value.
-#' plot_na_hclust(carseats)
-#' plot_na_hclust(airquality)
-#'   
-#' # Visualize hcluster chart for variables with missing value.
-#' if (!requireNamespace("mice", quietly = TRUE)) {
-#'   stop("Package \"mice\" needed for this function to work. Please install it.",
-#'   call. = FALSE)
-#' }
-#' 
-#' plot_na_hclust(mice::boys)
+#' plot_na_hclust(jobchange2)
 #' 
 #' # Change the main title.
-#' plot_na_hclust(mice::boys, main = "Distribution of missing value")
+#' plot_na_hclust(jobchange2, main = "Distribution of missing value")
 #' 
 #' # Not support typographic elements
-#' plot_na_hclust(mice::boys, typographic = FALSE)
+#' plot_na_hclust(jobchange2, typographic = FALSE)
 #' 
 #' @importFrom stats hclust dist order.dendrogram as.dendrogram reorder
 #' @import ggplot2
@@ -147,51 +137,40 @@ plot_na_hclust <- function (x, main = NULL, col.left = "#009E73", col.right = "#
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @examples
 #' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
+#' set.seed(123L)
+#' jobchange2 <- jobchange[sample(nrow(jobchange), size = 1000), ]
+#' 
 #' # Diagnose the data with missing_count using diagnose() function
 #' library(dplyr)
-#' carseats %>% 
+#' 
+#' jobchange2 %>% 
 #'   diagnose %>% 
 #'   arrange(desc(missing_count))
 #' 
 #' # Visualize pareto chart for variables with missing value.
-#' plot_na_pareto(carseats)
-#' plot_na_pareto(airquality)
-#'   
-#' # Diagnose the data with missing_count using diagnose() function
-#' if (!requireNamespace("mice", quietly = TRUE)) {
-#'   stop("Package \"mice\" needed for this function to work. Please install it.",
-#'   call. = FALSE)
-#' }
-#' 
-#' mice::boys %>% 
-#'   diagnose %>% 
-#'   arrange(desc(missing_count))
+#' plot_na_pareto(jobchange2)
 #' 
 #' # Visualize pareto chart for variables with missing value.
-#' plot_na_pareto(mice::boys, col = "blue")
+#' plot_na_pareto(jobchange2, col = "blue")
 #' 
 #' # Visualize only variables containing missing values
-#' plot_na_pareto(mice::boys, only_na = TRUE)
+#' plot_na_pareto(jobchange2, only_na = TRUE)
 #' 
 #' # Display the relative frequency 
-#' plot_na_pareto(mice::boys, relative = TRUE)
+#' plot_na_pareto(jobchange2, relative = TRUE)
 #' 
 #' # Change the grade
-#' plot_na_pareto(mice::boys, grade = list(High = 0.1, Middle = 0.6, Low = 1))
+#' plot_na_pareto(jobchange2, grade = list(High = 0.1, Middle = 0.6, Low = 1))
 #' 
 #' # Change the main title.
-#' plot_na_pareto(mice::boys, relative = TRUE, only_na = TRUE, 
-#' main = "Pareto Chart for mice::boys")
-#' 
+#' plot_na_pareto(jobchange2, relative = TRUE, only_na = TRUE, 
+#'                main = "Pareto Chart for jobchange")
+#'   
 #' # Return the aggregate information about missing values.
-#' plot_na_pareto(mice::boys, only_na = TRUE, plot = FALSE)
+#' plot_na_pareto(jobchange2, only_na = TRUE, plot = FALSE)
 #' 
 #' # Not support typographic elements
-#' plot_na_pareto(mice::boys, typographic = FALSE)
+#' plot_na_pareto(jobchange2, typographic = FALSE)
 #' 
 #' @importFrom purrr map_int
 #' @importFrom tibble enframe
@@ -322,39 +301,33 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @examples
 #' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+#' set.seed(123L)
+#' jobchange2 <- jobchange[sample(nrow(jobchange), size = 1000), ]
 #' 
 #' # Visualize the combination variables that is include missing value.
-#' plot_na_intersect(carseats)
-#'   
+#' plot_na_intersect(jobchange2)
+#' 
 #' # Diagnose the data with missing_count using diagnose() function
 #' library(dplyr)
 #' 
-#' if (!requireNamespace("mice", quietly = TRUE)) {
-#'   stop("Package \"mice\" needed for this function to work. Please install it.",
-#'   call. = FALSE)
-#' }
-#' 
-#' mice::boys %>% 
+#' jobchange2 %>% 
 #'   diagnose %>% 
 #'   arrange(desc(missing_count))
 #' 
 #' # Visualize the combination variables that is include missing value
-#' plot_na_intersect(mice::boys)
+#' plot_na_intersect(jobchange2)
 #' 
 #' # Visualize variables containing missing values and complete case
-#' plot_na_intersect(mice::boys, only_na = FALSE)
+#' plot_na_intersect(jobchange2, only_na = FALSE)
 #' 
 #' # Using n_vars argument
-#' plot_na_intersect(mice::boys, n_vars = 5) 
+#' plot_na_intersect(jobchange2, n_vars = 5) 
 #' 
 #' # Using n_intersects argument
-#' plot_na_intersect(mice::boys, only_na = FALSE, n_intersacts = 7)
+#' plot_na_intersect(jobchange2, only_na = FALSE, n_intersacts = 7)
 #' 
 #' # Not allow typographic elements
-#' plot_na_intersect(mice::boys, typographic = FALSE)
+#' plot_na_intersect(jobchange2, typographic = FALSE)
 #' 
 #' @importFrom purrr map_int
 #' @importFrom tibble enframe

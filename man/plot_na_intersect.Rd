@@ -46,38 +46,32 @@ and the number of observations including missing values and complete cases .
 }
 \examples{
 # Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+set.seed(123L)
+jobchange2 <- jobchange[sample(nrow(jobchange), size = 1000), ]
 
 # Visualize the combination variables that is include missing value.
-plot_na_intersect(carseats)
-  
+plot_na_intersect(jobchange2)
+
 # Diagnose the data with missing_count using diagnose() function
 library(dplyr)
 
-if (!requireNamespace("mice", quietly = TRUE)) {
-  stop("Package \"mice\" needed for this function to work. Please install it.",
-  call. = FALSE)
-}
-
-mice::boys \%>\% 
+jobchange2 \%>\% 
   diagnose \%>\% 
   arrange(desc(missing_count))
 
 # Visualize the combination variables that is include missing value
-plot_na_intersect(mice::boys)
+plot_na_intersect(jobchange2)
 
 # Visualize variables containing missing values and complete case
-plot_na_intersect(mice::boys, only_na = FALSE)
+plot_na_intersect(jobchange2, only_na = FALSE)
 
 # Using n_vars argument
-plot_na_intersect(mice::boys, n_vars = 5) 
+plot_na_intersect(jobchange2, n_vars = 5) 
 
 # Using n_intersects argument
-plot_na_intersect(mice::boys, only_na = FALSE, n_intersacts = 7)
+plot_na_intersect(jobchange2, only_na = FALSE, n_intersacts = 7)
 
 # Not allow typographic elements
-plot_na_intersect(mice::boys, typographic = FALSE)
+plot_na_intersect(jobchange2, typographic = FALSE)
 
 }

@@ -42,50 +42,39 @@ Visualize pareto chart for variables with missing value.
 }
 \examples{
 # Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+set.seed(123L)
+jobchange2 <- jobchange[sample(nrow(jobchange), size = 1000), ]
 
 # Diagnose the data with missing_count using diagnose() function
 library(dplyr)
-carseats \%>\% 
+
+jobchange2 \%>\% 
   diagnose \%>\% 
   arrange(desc(missing_count))
 
 # Visualize pareto chart for variables with missing value.
-plot_na_pareto(carseats)
-plot_na_pareto(airquality)
-  
-# Diagnose the data with missing_count using diagnose() function
-if (!requireNamespace("mice", quietly = TRUE)) {
-  stop("Package \"mice\" needed for this function to work. Please install it.",
-  call. = FALSE)
-}
-
-mice::boys \%>\% 
-  diagnose \%>\% 
-  arrange(desc(missing_count))
+plot_na_pareto(jobchange2)
 
 # Visualize pareto chart for variables with missing value.
-plot_na_pareto(mice::boys, col = "blue")
+plot_na_pareto(jobchange2, col = "blue")
 
 # Visualize only variables containing missing values
-plot_na_pareto(mice::boys, only_na = TRUE)
+plot_na_pareto(jobchange2, only_na = TRUE)
 
 # Display the relative frequency 
-plot_na_pareto(mice::boys, relative = TRUE)
+plot_na_pareto(jobchange2, relative = TRUE)
 
 # Change the grade
-plot_na_pareto(mice::boys, grade = list(High = 0.1, Middle = 0.6, Low = 1))
+plot_na_pareto(jobchange2, grade = list(High = 0.1, Middle = 0.6, Low = 1))
 
 # Change the main title.
-plot_na_pareto(mice::boys, relative = TRUE, only_na = TRUE, 
-main = "Pareto Chart for mice::boys")
-
+plot_na_pareto(jobchange2, relative = TRUE, only_na = TRUE, 
+               main = "Pareto Chart for jobchange")
+  
 # Return the aggregate information about missing values.
-plot_na_pareto(mice::boys, only_na = TRUE, plot = FALSE)
+plot_na_pareto(jobchange2, only_na = TRUE, plot = FALSE)
 
 # Not support typographic elements
-plot_na_pareto(mice::boys, typographic = FALSE)
+plot_na_pareto(jobchange2, typographic = FALSE)
 
 }

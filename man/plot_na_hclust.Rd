@@ -35,26 +35,16 @@ for each combination of variables.
 }
 \examples{
 # Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+set.seed(123L)
+jobchange2 <- jobchange[sample(nrow(jobchange), size = 1000), ]
 
 # Visualize hcluster chart for variables with missing value.
-plot_na_hclust(carseats)
-plot_na_hclust(airquality)
-  
-# Visualize hcluster chart for variables with missing value.
-if (!requireNamespace("mice", quietly = TRUE)) {
-  stop("Package \"mice\" needed for this function to work. Please install it.",
-  call. = FALSE)
-}
-
-plot_na_hclust(mice::boys)
+plot_na_hclust(jobchange2)
 
 # Change the main title.
-plot_na_hclust(mice::boys, main = "Distribution of missing value")
+plot_na_hclust(jobchange2, main = "Distribution of missing value")
 
 # Not support typographic elements
-plot_na_hclust(mice::boys, typographic = FALSE)
+plot_na_hclust(jobchange2, typographic = FALSE)
 
 }

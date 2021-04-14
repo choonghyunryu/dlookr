@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
       </span>
     </div>
 
@@ -179,48 +179,43 @@ and the number of observations including missing values and complete cases .</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Generate data for the example</span>
-<span class='no'>carseats</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ISLR</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/ISLR/man/Carseats.html'>Carseats</a></span>
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>20</span>), <span class='st'>"Income"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>5</span>), <span class='st'>"Urban"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>123L</span>)
+<span class='no'>jobchange2</span> <span class='kw'>&lt;-</span> <span class='no'>jobchange</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>jobchange</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>1000</span>), ]
 
 <span class='co'># Visualize the combination variables that is include missing value.</span>
-<span class='fu'>plot_na_intersect</span>(<span class='no'>carseats</span>)</div><div class='img'><img src='plot_na_intersect-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>plot_na_intersect</span>(<span class='no'>jobchange2</span>)</div><div class='img'><img src='plot_na_intersect-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Diagnose the data with missing_count using diagnose() function</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'>
-<span class='kw'>if</span> (!<span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"mice"</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)) {
-  <span class='fu'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span>(<span class='st'>"Package \"mice\" needed for this function to work. Please install it."</span>,
-  <span class='kw'>call.</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-}
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
-<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://amices.org/mice/reference/boys.html'>boys</a></span> <span class='kw'>%&gt;%</span>
+<span class='no'>jobchange2</span> <span class='kw'>%&gt;%</span>
   <span class='no'>diagnose</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span>(<span class='no'>missing_count</span>))</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 9 x 6</span><span>
-#&gt;   variables types   missing_count missing_percent unique_count unique_rate
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> tv        integer           522          69.8             19     0.025</span><span style='text-decoration: underline;'>4</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> gen       ordered           503          67.2              6     0.008</span><span style='text-decoration: underline;'>02</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> phb       ordered           503          67.2              7     0.009</span><span style='text-decoration: underline;'>36</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> hc        numeric            46           6.15           205     0.274  
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> bmi       numeric            21           2.81           504     0.674  
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> hgt       numeric            20           2.67           483     0.646  
-#&gt; </span><span style='color: #BCBCBC;'>7</span><span> wgt       numeric             4           0.535          524     0.701  
-#&gt; </span><span style='color: #BCBCBC;'>8</span><span> reg       factor              3           0.401            6     0.008</span><span style='text-decoration: underline;'>02</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>9</span><span> age       numeric             0           0              683     0.913  </div><div class='input'>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span>(<span class='no'>missing_count</span>))</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 14 x 6</span><span>
+#&gt;    variables      types   missing_count missing_percent unique_count unique_rate
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> company_type   factor            325           32.5             7       0.007
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> company_size   ordered           313           31.3             9       0.009
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> gender         factor            227           22.7             4       0.004
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> major_discipl… factor            161           16.1             7       0.007
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> last_new_job   ordered            24            2.4             7       0.007
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> education_lev… ordered            17            1.7             6       0.006
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> enrolled_univ… factor             11            1.10            4       0.004
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> experience     ordered             3            0.3            23       0.023
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> enrollee_id    charac…             0            0            </span><span style='text-decoration: underline;'>1</span><span>000       1    
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> city           factor              0            0              88       0.088
+#&gt; </span><span style='color: #BCBCBC;'>11</span><span> city_dev_index numeric             0            0              72       0.072
+#&gt; </span><span style='color: #BCBCBC;'>12</span><span> relevent_expe… factor              0            0               2       0.002
+#&gt; </span><span style='color: #BCBCBC;'>13</span><span> training_hours integer             0            0             194       0.194
+#&gt; </span><span style='color: #BCBCBC;'>14</span><span> job_chnge      factor              0            0               2       0.002</div><div class='input'>
 <span class='co'># Visualize the combination variables that is include missing value</span>
-<span class='fu'>plot_na_intersect</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://amices.org/mice/reference/boys.html'>boys</a></span>)</div><div class='img'><img src='plot_na_intersect-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>plot_na_intersect</span>(<span class='no'>jobchange2</span>)</div><div class='img'><img src='plot_na_intersect-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Visualize variables containing missing values and complete case</span>
-<span class='fu'>plot_na_intersect</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://amices.org/mice/reference/boys.html'>boys</a></span>, <span class='kw'>only_na</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot_na_intersect-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>plot_na_intersect</span>(<span class='no'>jobchange2</span>, <span class='kw'>only_na</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot_na_intersect-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Using n_vars argument</span>
-<span class='fu'>plot_na_intersect</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://amices.org/mice/reference/boys.html'>boys</a></span>, <span class='kw'>n_vars</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='img'><img src='plot_na_intersect-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>plot_na_intersect</span>(<span class='no'>jobchange2</span>, <span class='kw'>n_vars</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='img'><img src='plot_na_intersect-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Using n_intersects argument</span>
-<span class='fu'>plot_na_intersect</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://amices.org/mice/reference/boys.html'>boys</a></span>, <span class='kw'>only_na</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>n_intersacts</span> <span class='kw'>=</span> <span class='fl'>7</span>)</div><div class='img'><img src='plot_na_intersect-5.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>plot_na_intersect</span>(<span class='no'>jobchange2</span>, <span class='kw'>only_na</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>n_intersacts</span> <span class='kw'>=</span> <span class='fl'>7</span>)</div><div class='img'><img src='plot_na_intersect-5.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Not allow typographic elements</span>
-<span class='fu'>plot_na_intersect</span>(<span class='kw pkg'>mice</span><span class='kw ns'>::</span><span class='no'><a href='https://amices.org/mice/reference/boys.html'>boys</a></span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot_na_intersect-6.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>plot_na_intersect</span>(<span class='no'>jobchange2</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot_na_intersect-6.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
