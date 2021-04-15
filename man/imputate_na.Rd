@@ -71,48 +71,50 @@ See vignette("transformation") for an introduction to these concepts.
 \examples{
 \donttest{
 # Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+heartfailure2 <- heartfailure
+heartfailure2[sample(seq(NROW(heartfailure2)), 20), "platelets"] <- NA
+heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
 
-# Replace the missing value of the Income variable with median
-imputate_na(carseats, Income, method = "median")
+# Replace the missing value of the platelets variable with median
+imputate_na(heartfailure2, platelets, method = "median")
 
-# Replace the missing value of the Income variable with rpart
-# The target variable is US.
-imputate_na(carseats, Income, US, method = "rpart")
+# Replace the missing value of the platelets variable with rpart
+# The target variable is death_event.
+imputate_na(heartfailure2, platelets, death_event, method = "rpart")
 
-# Replace the missing value of the Urban variable with mode
-imputate_na(carseats, Urban, method = "mode")
+# Replace the missing value of the smoking variable with mode
+imputate_na(heartfailure2, smoking, method = "mode")
 
-# Replace the missing value of the Urban variable with mice
-# The target variable is US.
-imputate_na(carseats, Urban, US, method = "mice")
+# Replace the missing value of the smoking variable with mice
+# The target variable is death_event.
+imputate_na(heartfailure2, smoking, death_event, method = "mice")
 
 ## using dplyr -------------------------------------
 library(dplyr)
 
-# The mean before and after the imputation of the Income variable
-carseats \%>\%
-  mutate(Income_imp = imputate_na(carseats, Income, US, method = "knn", no_attrs = TRUE)) \%>\%
-  group_by(US) \%>\%
-  summarise(orig = mean(Income, na.rm = TRUE),
-    imputation = mean(Income_imp))
+# The mean before and after the imputation of the platelets variable
+heartfailure2 \%>\%
+  mutate(platelets_imp = imputate_na(heartfailure2, platelets, death_event, 
+                                     method = "knn", no_attrs = TRUE)) \%>\%
+  group_by(death_event) \%>\%
+  summarise(orig = mean(platelets, na.rm = TRUE),
+            imputation = mean(platelets_imp))
 
 # If the variable of interest is a numerical variable
-income <- imputate_na(carseats, Income, US, method = "rpart")
-income
-summary(income)
+platelets <- imputate_na(heartfailure2, platelets, death_event, method = "rpart")
+platelets
+summary(platelets)
 
-# plot(income)
+# plot(platelets)
 
 # If the variable of interest is a categorical variable
-urban <- imputate_na(carseats, Urban, US, method = "mice")
-urban
-summary(urban)
+smoking <- imputate_na(heartfailure2, smoking, death_event, method = "mice")
+smoking
+summary(smoking)
 
-# plot(urban)
+# plot(smoking)
 }
+
 }
 \seealso{
 \code{\link{imputate_outlier}}.

@@ -73,7 +73,7 @@ categorical data by level or relationship to specific numerical data by level." 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
       </span>
     </div>
 
@@ -202,43 +202,44 @@ the distribution of categorical data more easily than a frequency table.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Generate data for the example</span>
-<span class='no'>heartfailure</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>heartfailure</span>)), <span class='fl'>20</span>), <span class='st'>"platelets"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-<span class='no'>heartfailure</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>heartfailure</span>)), <span class='fl'>5</span>), <span class='st'>"smoking"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
+<span class='no'>heartfailure2</span> <span class='kw'>&lt;-</span> <span class='no'>heartfailure</span>
+<span class='no'>heartfailure2</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>heartfailure2</span>)), <span class='fl'>20</span>), <span class='st'>"platelets"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
+<span class='no'>heartfailure2</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>heartfailure2</span>)), <span class='fl'>5</span>), <span class='st'>"smoking"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>123</span>)
-<span class='no'>heartfailure</span>$<span class='no'>test</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>15</span>], <span class='fl'>299</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>heartfailure</span>$<span class='no'>test</span>[<span class='fl'>1</span>:<span class='fl'>30</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
+<span class='no'>heartfailure2</span>$<span class='no'>test</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>15</span>], <span class='fl'>299</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>heartfailure2</span>$<span class='no'>test</span>[<span class='fl'>1</span>:<span class='fl'>30</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
 
 <span class='co'># Visualization of all numerical variables</span>
-<span class='fu'>plot_bar_category</span>(<span class='no'>heartfailure</span>)</div><div class='img'><img src='plot_bar_category.data.frame-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>plot_bar_category</span>(<span class='no'>heartfailure2</span>)</div><div class='img'><img src='plot_bar_category.data.frame-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Select the variable to diagnose</span>
-<span class='co'># plot_bar_category(heartfailure, "test", "smoking")</span>
-<span class='co'># plot_bar_category(heartfailure, -test, -smoking)</span>
+<span class='co'># plot_bar_category(heartfailure2, "test", "smoking")</span>
+<span class='co'># plot_bar_category(heartfailure2, -test, -smoking)</span>
 
 <span class='co'># Visualize the each plots</span>
-<span class='co'># plot_bar_category(heartfailure, each = TRUE)</span>
+<span class='co'># plot_bar_category(heartfailure2, each = TRUE)</span>
 
 <span class='co'># Not allow typographic argument</span>
-<span class='co'># plot_bar_category(heartfailure, typographic = FALSE)</span>
+<span class='co'># plot_bar_category(heartfailure2, typographic = FALSE)</span>
 
 <span class='co'># Using pipes ---------------------------------</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
 <span class='co'># Plot of all categorical variables</span>
-<span class='co'># heartfailure %&gt;%</span>
+<span class='co'># heartfailure2 %&gt;%</span>
 <span class='co'>#   plot_bar_category()</span>
 
 <span class='co'># Visualize just 7 levels of top frequency</span>
-<span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
+<span class='no'>heartfailure2</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>plot_bar_category</span>(<span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>7</span>)</div><div class='img'><img src='plot_bar_category.data.frame-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Visualize only factor, not character</span>
-<span class='co'># heartfailure %&gt;%</span>
+<span class='co'># heartfailure2 %&gt;%</span>
 <span class='co'>#   plot_bar_category(add_character = FALSE) </span>
 
 <span class='co'># Using groupd_df  ------------------------------</span>
-<span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
+<span class='no'>heartfailure2</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>plot_bar_category</span>(<span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='img'><img src='plot_bar_category.data.frame-3.png' alt='' width='700' height='433' /></div><div class='input'># heartfailure %&gt;% 
+  <span class='fu'>plot_bar_category</span>(<span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='img'><img src='plot_bar_category.data.frame-3.png' alt='' width='700' height='433' /></div><div class='input'># heartfailure2 %&gt;% 
 #   group_by(death_event) %&gt;% 
 #   plot_bar_category(each = TRUE, top = 5)  
   
