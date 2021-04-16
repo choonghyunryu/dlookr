@@ -351,33 +351,29 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL,
 #' }
 #' @seealso \code{\link{imputate_na}}.
 #' @examples
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
-#' # Replace the outliers of the Price variable with median.
-#' imputate_outlier(carseats, Price, method = "median")
-#'
-#' # Replace the outliers of the Price variable with capping.
-#' imputate_outlier(carseats, Price, method = "capping")
-#'
+#' # Replace the outliers of the sodium variable with median.
+#' imputate_outlier(heartfailure, sodium, method = "median")
+#' 
+#' # Replace the outliers of the sodium variable with capping.
+#' imputate_outlier(heartfailure, sodium, method = "capping")
+#' 
 #' ## using dplyr -------------------------------------
 #' library(dplyr)
-#'
-#' # The mean before and after the imputation of the Price variable
-#' carseats %>%
-#'   mutate(Price_imp = imputate_outlier(carseats, Price, method = "capping", no_attrs = TRUE)) %>%
-#'   group_by(US) %>%
-#'   summarise(orig = mean(Price, na.rm = TRUE),
-#'     imputation = mean(Price_imp, na.rm = TRUE))
-#'
-#' # If the variable of interest is a numerical variables
-#' price <- imputate_outlier(carseats, Price)
-#' price
-#' summary(price)
 #' 
-#' # plot(price)
+#' # The mean before and after the imputation of the sodium variable
+#' heartfailure %>%
+#'   mutate(sodium_imp = imputate_outlier(heartfailure, sodium, 
+#'                                       method = "capping", no_attrs = TRUE)) %>%
+#'   group_by(death_event) %>%
+#'   summarise(orig = mean(sodium, na.rm = TRUE),
+#'             imputation = mean(sodium_imp, na.rm = TRUE))
+#'             
+#' # If the variable of interest is a numerical variables
+#' sodium <- imputate_outlier(heartfailure, sodium)
+#' sodium
+#' summary(sodium)
+#' 
+#' # plot(sodium)
 #' @export
 imputate_outlier <- function(.data, xvar, method, no_attrs) {
   UseMethod("imputate_outlier")
@@ -492,31 +488,31 @@ imputate_outlier_impl <- function(df, xvar, method, no_attrs = FALSE) {
 #' @examples
 #' \donttest{
 #' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+#' heartfailure2 <- heartfailure
+#' heartfailure2[sample(seq(NROW(heartfailure2)), 20), "platelets"] <- NA
+#' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
 #'
 #' # Impute missing values -----------------------------
 #' # If the variable of interest is a numerical variables
-#' income <- imputate_na(carseats, Income, US, method = "rpart")
-#' income
-#' summary(income)
-#' plot(income)
+#' platelets <- imputate_na(heartfailure2, platelets, death_event, method = "rpart")
+#' platelets
+#' summary(platelets)
+#' plot(platelets)
 #'
 #' # If the variable of interest is a categorical variables
-#' urban <- imputate_na(carseats, Urban, US, method = "mice")
-#' urban
-#' summary(urban)
+#' smoking <- imputate_na(heartfailure2, smoking, death_event, method = "mice")
+#' smoking
+#' summary(smoking)
 #' 
-#' # plot(urban)
+#' # plot(smoking)
 #'
 #' # Impute outliers ----------------------------------
 #' # If the variable of interest is a numerical variable
-#' price <- imputate_outlier(carseats, Price, method = "capping")
-#' price
-#' summary(price)
+#' platelets <- imputate_outlier(heartfailure2, platelets, method = "capping")
+#' platelets
+#' summary(platelets)
 #' 
-#' # plot(price)
+#' # plot(platelets)
 #' }
 #' @method summary imputation
 #' @importFrom tidyr gather
@@ -619,32 +615,32 @@ summary.imputation <- function(object, ...) {
 #' @examples
 #' \donttest{
 #' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+#' heartfailure2 <- heartfailure
+#' heartfailure2[sample(seq(NROW(heartfailure2)), 20), "platelets"] <- NA
+#' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
 #'
 #' # Impute missing values -----------------------------
 #' # If the variable of interest is a numerical variables
-#' income <- imputate_na(carseats, Income, US, method = "rpart")
-#' income
-#' summary(income)
+#' plateletsplatelets <- imputate_na(heartfailure2, platelets, death_event, method = "rpart")
+#' platelets
+#' summary(platelets)
 #' 
-#' plot(income)
+#' plot(platelets)
 #'
 #' # If the variable of interest is a categorical variables
-#' urban <- imputate_na(carseats, Urban, US, method = "mice")
-#' urban
-#' summary(urban)
+#' smoking <- imputate_na(heartfailure2, smoking, death_event, method = "mice")
+#' smoking
+#' summary(smoking)
 #' 
-#' plot(urban)
+#' plot(smoking)
 #'
 #' # Impute outliers ----------------------------------
 #' # If the variable of interest is a numerical variable
-#' price <- imputate_outlier(carseats, Price, method = "capping")
-#' price
-#' summary(price)
+#' platelets <- imputate_outlier(heartfailure2, platelets, method = "capping")
+#' platelets
+#' summary(platelets)
 #' 
-#' plot(price)
+#' plot(platelets)
 #' }
 #' @method plot imputation
 #' @import ggplot2

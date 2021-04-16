@@ -51,33 +51,29 @@ to help determine whether the imputed value is used in the analysis.
 See vignette("transformation") for an introduction to these concepts.
 }
 \examples{
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+# Replace the outliers of the sodium variable with median.
+imputate_outlier(heartfailure, sodium, method = "median")
 
-# Replace the outliers of the Price variable with median.
-imputate_outlier(carseats, Price, method = "median")
-
-# Replace the outliers of the Price variable with capping.
-imputate_outlier(carseats, Price, method = "capping")
+# Replace the outliers of the sodium variable with capping.
+imputate_outlier(heartfailure, sodium, method = "capping")
 
 ## using dplyr -------------------------------------
 library(dplyr)
 
-# The mean before and after the imputation of the Price variable
-carseats \%>\%
-  mutate(Price_imp = imputate_outlier(carseats, Price, method = "capping", no_attrs = TRUE)) \%>\%
-  group_by(US) \%>\%
-  summarise(orig = mean(Price, na.rm = TRUE),
-    imputation = mean(Price_imp, na.rm = TRUE))
-
+# The mean before and after the imputation of the sodium variable
+heartfailure \%>\%
+  mutate(sodium_imp = imputate_outlier(heartfailure, sodium, 
+                                      method = "capping", no_attrs = TRUE)) \%>\%
+  group_by(death_event) \%>\%
+  summarise(orig = mean(sodium, na.rm = TRUE),
+            imputation = mean(sodium_imp, na.rm = TRUE))
+            
 # If the variable of interest is a numerical variables
-price <- imputate_outlier(carseats, Price)
-price
-summary(price)
+sodium <- imputate_outlier(heartfailure, sodium)
+sodium
+summary(sodium)
 
-# plot(price)
+# plot(sodium)
 }
 \seealso{
 \code{\link{imputate_na}}.
