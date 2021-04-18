@@ -52,33 +52,32 @@ Attributes of compare_category class is as follows.
 
 \examples{
 # Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+heartfailure2 <- heartfailure
+heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
 
 library(dplyr)
 
 # Compare the all categorical variables
-all_var <- compare_category(carseats)
+all_var <- compare_category(heartfailure2)
 
 # Print compare_numeric class objects
 all_var
 
-# Compare the categorical variables that case of joint the US variable
+# Compare the categorical variables that case of joint the death_event variable
 all_var \%>\% 
-  "["(names(all_var) \%in\% "US")
-  
+  "["(grep("death_event", names(all_var)))
+
 # Compare the two categorical variables
-two_var <- compare_category(carseats, ShelveLoc, Urban)
+two_var <- compare_category(heartfailure2, smoking, death_event)
 
 # Print compare_numeric class objects
 two_var
 
-# Filtering the case of US included NA 
+# Filtering the case of smoking included NA 
 two_var \%>\%
   "[["(1) \%>\% 
-  filter(!is.na(Urban))
-  
+  filter(!is.na(smoking))
+
 # Summary the all case : Return a invisible copy of an object.
 stat <- summary(all_var)
 
@@ -117,14 +116,14 @@ summary(all_var, "chisq", verbose = FALSE)
 # If you want to use dplyr, set verbose to FALSE
 summary(all_var, "chisq", verbose = FALSE) \%>\% 
   filter(p.value < 0.26)
-  
+
 # Extract component from list by index
 summary(all_var, "table", na.rm = TRUE, verbose = FALSE) \%>\% 
   "[["(1)
 
 # Extract component from list by name
-  summary(all_var, "table", na.rm = TRUE, verbose = FALSE) \%>\% 
-  "[["("ShelveLoc vs Urban")
+summary(all_var, "table", na.rm = TRUE, verbose = FALSE) \%>\% 
+  "[["("smoking vs death_event")
 
 # plot all pair of variables
 # plot(all_var)

@@ -67,40 +67,34 @@ Attributes of compare_numeric class is as follows.
 
 \examples{
 # Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+heartfailure2 <- heartfailure[, c("platelets", "creatinine", "sodium")]
 
 library(dplyr)
-
-carseats <- carseats \%>\% 
-  select(CompPrice, Sales, Price)
-
 # Compare the all numerical variables
-all_var <- compare_numeric(carseats)
+all_var <- compare_numeric(heartfailure2)
 
 # Print compare_numeric class object
 all_var
 
-# Compare the correlation that case of joint the Price variable
+# Compare the correlation that case of joint the sodium variable
 all_var \%>\% 
   "$"(correlation) \%>\% 
-  filter(var1 == "Price" | var2 == "Price") \%>\% 
+  filter(var1 == "sodium" | var2 == "sodium") \%>\% 
   arrange(desc(abs(coef_corr)))
   
 # Compare the correlation that case of abs(coef_corr) > 0.3
 all_var \%>\% 
   "$"(correlation) \%>\% 
-  filter(abs(coef_corr) > 0.3)
+  filter(abs(coef_corr) > 0.1)
   
-# Compare the linear model that case of joint the Price variable  
+# Compare the linear model that case of joint the sodium variable  
 all_var \%>\% 
   "$"(linear) \%>\% 
-  filter(var1 == "Price" | var2 == "Price") \%>\% 
+  filter(var1 == "sodium" | var2 == "sodium") \%>\% 
   arrange(desc(r.squared))
   
 # Compare the two numerical variables
-two_var <- compare_numeric(carseats, Price, CompPrice)
+two_var <- compare_numeric(heartfailure2, sodium, creatinine)
 
 # Print compare_numeric class objects
 two_var
@@ -111,8 +105,8 @@ stat <- summary(all_var)
 # Just correlation
 summary(all_var, method = "correlation")
 
-# Just correlation condition by r > 0.2
-summary(all_var, method = "correlation", thres_corr = 0.2)
+# Just correlation condition by r > 0.1
+summary(all_var, method = "correlation", thres_corr = 0.1)
 
 # linear model summaries condition by R^2 > 0.05
 summary(all_var, thres_rs = 0.05)

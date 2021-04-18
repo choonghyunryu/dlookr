@@ -53,33 +53,32 @@ compare_numeric <- function(.data, ...) {
 #' @export
 #' @examples
 #' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
+#' heartfailure2 <- heartfailure
+#' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
+#' 
 #' library(dplyr)
 #' 
 #' # Compare the all categorical variables
-#' all_var <- compare_category(carseats)
+#' all_var <- compare_category(heartfailure2)
 #' 
 #' # Print compare_numeric class objects
 #' all_var
 #' 
-#' # Compare the categorical variables that case of joint the US variable
+#' # Compare the categorical variables that case of joint the death_event variable
 #' all_var %>% 
-#'   "["(names(all_var) %in% "US")
-#'   
+#'   "["(grep("death_event", names(all_var)))
+#' 
 #' # Compare the two categorical variables
-#' two_var <- compare_category(carseats, ShelveLoc, Urban)
+#' two_var <- compare_category(heartfailure2, smoking, death_event)
 #' 
 #' # Print compare_numeric class objects
 #' two_var
 #' 
-#' # Filtering the case of US included NA 
+#' # Filtering the case of smoking included NA 
 #' two_var %>%
 #'   "[["(1) %>% 
-#'   filter(!is.na(Urban))
-#'   
+#'   filter(!is.na(smoking))
+#' 
 #' # Summary the all case : Return a invisible copy of an object.
 #' stat <- summary(all_var)
 #' 
@@ -118,15 +117,15 @@ compare_numeric <- function(.data, ...) {
 #' # If you want to use dplyr, set verbose to FALSE
 #' summary(all_var, "chisq", verbose = FALSE) %>% 
 #'   filter(p.value < 0.26)
-#'   
+#' 
 #' # Extract component from list by index
 #' summary(all_var, "table", na.rm = TRUE, verbose = FALSE) %>% 
 #'   "[["(1)
-#'
+#' 
 #' # Extract component from list by name
-#'   summary(all_var, "table", na.rm = TRUE, verbose = FALSE) %>% 
-#'   "[["("ShelveLoc vs Urban")
-#'
+#' summary(all_var, "table", na.rm = TRUE, verbose = FALSE) %>% 
+#'   "[["("smoking vs death_event")
+#' 
 #' # plot all pair of variables
 #' # plot(all_var)
 #' 
@@ -255,40 +254,34 @@ compare_category_impl <- function(df, vars) {
 #' @export
 #' @examples
 #' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+#' heartfailure2 <- heartfailure[, c("platelets", "creatinine", "sodium")]
 #'
 #' library(dplyr)
-#' 
-#' carseats <- carseats %>% 
-#'   select(CompPrice, Sales, Price)
-#' 
 #' # Compare the all numerical variables
-#' all_var <- compare_numeric(carseats)
+#' all_var <- compare_numeric(heartfailure2)
 #' 
 #' # Print compare_numeric class object
 #' all_var
 #' 
-#' # Compare the correlation that case of joint the Price variable
+#' # Compare the correlation that case of joint the sodium variable
 #' all_var %>% 
 #'   "$"(correlation) %>% 
-#'   filter(var1 == "Price" | var2 == "Price") %>% 
+#'   filter(var1 == "sodium" | var2 == "sodium") %>% 
 #'   arrange(desc(abs(coef_corr)))
 #'   
 #' # Compare the correlation that case of abs(coef_corr) > 0.3
 #' all_var %>% 
 #'   "$"(correlation) %>% 
-#'   filter(abs(coef_corr) > 0.3)
+#'   filter(abs(coef_corr) > 0.1)
 #'   
-#' # Compare the linear model that case of joint the Price variable  
+#' # Compare the linear model that case of joint the sodium variable  
 #' all_var %>% 
 #'   "$"(linear) %>% 
-#'   filter(var1 == "Price" | var2 == "Price") %>% 
+#'   filter(var1 == "sodium" | var2 == "sodium") %>% 
 #'   arrange(desc(r.squared))
 #'   
 #' # Compare the two numerical variables
-#' two_var <- compare_numeric(carseats, Price, CompPrice)
+#' two_var <- compare_numeric(heartfailure2, sodium, creatinine)
 #' 
 #' # Print compare_numeric class objects
 #' two_var
@@ -299,8 +292,8 @@ compare_category_impl <- function(df, vars) {
 #' # Just correlation
 #' summary(all_var, method = "correlation")
 #' 
-#' # Just correlation condition by r > 0.2
-#' summary(all_var, method = "correlation", thres_corr = 0.2)
+#' # Just correlation condition by r > 0.1
+#' summary(all_var, method = "correlation", thres_corr = 0.1)
 #' 
 #' # linear model summaries condition by R^2 > 0.05
 #' summary(all_var, thres_rs = 0.05)
