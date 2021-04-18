@@ -52,32 +52,27 @@ and method of transformation.
 See vignette("transformation") for an introduction to these concepts.
 }
 \examples{
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-
 # Standardization ------------------------------
-advertising_minmax <- transform(carseats$Advertising, method = "minmax")
-advertising_minmax
-summary(advertising_minmax)
-plot(advertising_minmax)
+creatinine_minmax <- transform(heartfailure$creatinine, method = "minmax")
+creatinine_minmax
+summary(creatinine_minmax)
+plot(creatinine_minmax)
 
 # Resolving Skewness  --------------------------
-advertising_log <- transform(carseats$Advertising, method = "log")
-advertising_log
-summary(advertising_log)
+creatinine_log <- transform(heartfailure$creatinine, method = "log")
+creatinine_log
+summary(creatinine_log)
 
-# plot(advertising_log)
+# plot(creatinine_log)
 
-# plot(advertising_log, typographic = FALSE)
+# plot(creatinine_log, typographic = FALSE)
 
 # Using dplyr ----------------------------------
 library(dplyr)
 
-carseats \%>\%
-  mutate(Advertising_log = transform(Advertising, method = "log+1")) \%>\%
-  lm(Sales ~ Advertising_log, data = .)
+heartfailure \%>\%
+  mutate(creatinine_log = transform(creatinine, method = "log+1")) \%>\%
+  lm(sodium ~ creatinine_log, data = .)
   
 }
 \seealso{

@@ -16,7 +16,9 @@ CHANGES IN R VERSION 0.4.5:
       univar_numeric.data.frame(), summary.univar_numeric(), 
       plot.univar_numeric(), plot_bar_category(), plot_qq_numeric(),
       plot_box_numeric(), plot_na_hclust(), plot_na_pareto(), 
-      plot_na_intersect(), imputate_na(), summary.imputation(), plot.imputation().
+      plot_na_intersect(), imputate_na(), summary.imputation(), plot.imputation(),
+      normality(), plot_normality(), transform(), summary.transform(),
+      plot.transform(), transformation_report().
       
     * Changed default type of diagnose_category() from "rank" to "n". 
     

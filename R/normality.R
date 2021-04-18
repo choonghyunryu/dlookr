@@ -50,62 +50,57 @@ plot_normality <- function(.data, ...) {
 #' @export
 #' @examples
 #' \donttest{
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
 #' # Normality test of numerical variables
-#' normality(carseats)
-#'
+#' normality(heartfailure)
+#' 
 #' # Select the variable to describe
-#' normality(carseats, Sales, Price)
-#' normality(carseats, -Sales, -Price)
-#' normality(carseats, 1)
-#' normality(carseats, Sales, Price, sample = 300)
-#'
-#' # Using dplyr::grouped_dt
+#' normality(heartfailure, platelets, sodium)
+#' normality(heartfailure, -platelets, -sodium)
+#' normality(heartfailure, 1)
+#' normality(heartfailure, platelets, sodium, sample = 200)
+#' 
+#' # death_eventing dplyr::grouped_dt
 #' library(dplyr)
-#'
-#' gdata <- group_by(carseats, ShelveLoc, US)
-#' normality(gdata, "Sales")
+#' 
+#' gdata <- group_by(heartfailure, smoking, death_event)
+#' normality(gdata, "platelets")
 #' normality(gdata, sample = 250)
-#'
-#' # Using pipes ---------------------------------
+#' 
+#' # death_eventing pipes ---------------------------------
 #' # Normality test of all numerical variables
-#' carseats %>%
-#'  normality()
-#'
+#' heartfailure %>%
+#'   normality()
+#' 
 #' # Positive values select variables
-#' carseats %>%
-#'  normality(Sales, Price)
-#'
+#' heartfailure %>%
+#'   normality(platelets, sodium)
+#' 
 #' # Positions values select variables
-#' carseats %>%
-#'  normality(1)
-#'
-#' # Using pipes & dplyr -------------------------
-#' # Test all numerical variables by 'ShelveLoc' and 'US',
-#' # and extract only those with 'ShelveLoc' variable level is "Good".
-#' carseats %>%
-#'  group_by(ShelveLoc, US) %>%
-#'  normality() %>%
-#'  filter(ShelveLoc == "Good")
-#'
-#' # extract only those with 'Urban' variable level is "Yes",
-#' # and test 'Sales' by 'ShelveLoc' and 'US'
-#' carseats %>%
-#'  filter(Urban == "Yes") %>%
-#'  group_by(ShelveLoc, US) %>%
-#'  normality(Sales)
-#'
-#' # Test log(Income) variables by 'ShelveLoc' and 'US',
+#' heartfailure %>%
+#'   normality(1)
+#' 
+#' # death_eventing pipes & dplyr -------------------------
+#' # Test all numerical variables by 'smoking' and 'death_event',
+#' # and extract only those with 'smoking' variable level is "No".
+#' heartfailure %>%
+#'   group_by(smoking, death_event) %>%
+#'   normality() %>%
+#'   filter(smoking == "No")
+#' 
+#' # extract only those with 'sex' variable level is "Male",
+#' # and test 'platelets' by 'smoking' and 'death_event'
+#' heartfailure %>%
+#'   filter(sex == "Male") %>%
+#'   group_by(smoking, death_event) %>%
+#'   normality(platelets)
+#' 
+#' # Test log(platelets) variables by 'smoking' and 'death_event',
 #' # and extract only p.value greater than 0.01.
-#' carseats %>%
-#'  mutate(log_income = log(Income)) %>%
-#'  group_by(ShelveLoc, US) %>%
-#'  normality(log_income) %>%
-#'  filter(p_value > 0.01)
+#' heartfailure %>%
+#'   mutate(platelets_income = log(platelets)) %>%
+#'   group_by(smoking, death_event) %>%
+#'   normality(platelets_income) %>%
+#'   filter(p_value > 0.01)
 #' }
 #' 
 #' @method normality data.frame
@@ -269,65 +264,59 @@ normality_group_impl <- function(df, vars, sample) {
 #' @export
 #' @examples
 #' \donttest{
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#' 
-#' carseats <- carseats[, c("Income", "Price", "ShelveLoc", "Sales", "Urban", "US")]
-#'
 #' # Visualization of all numerical variables
-#' plot_normality(carseats)
+#' heartfailure2 <- heartfailure[, c("creatinine", "platelets", "sodium", "sex", "smoking")]
+#' plot_normality(heartfailure2)
 #'
 #' # Select the variable to plot
-#' plot_normality(carseats, Income, Price)
-#' plot_normality(carseats, -Income, -Price, col = "gray")
-#' plot_normality(carseats, 1)
+#' plot_normality(heartfailure2, platelets, sodium)
+#' plot_normality(heartfailure2, -platelets, -sodium, col = "gray")
+#' plot_normality(heartfailure2, 1)
 #'
 #' # Change the method of transformation
-#' plot_normality(carseats, Income, right = "1/x")
+#' plot_normality(heartfailure2, platelets, right = "1/x")
 #' 
 #' if (requireNamespace("forecast", quietly = TRUE)) {
-#'   plot_normality(carseats, Income, left = "Box-Cox", right = "Yeo-Johnson")
+#'   plot_normality(heartfailure2, platelets, left = "Box-Cox", right = "Yeo-Johnson")
 #' } else {
 #'   cat("If you want to use this feature, you need to install the rpart package.\n")
 #' }
 #' # Not allow typographic elements
-#' plot_normality(carseats, Income, typographic = FALSE)
+#' plot_normality(heartfailure2, platelets, typographic = FALSE)
 #' 
 #' # Using dplyr::grouped_df
 #' library(dplyr)
 #'
-#' gdata <- group_by(carseats, ShelveLoc, US)
+#' gdata <- group_by(heartfailure2, sex, smoking)
 #' plot_normality(gdata)
-#' plot_normality(gdata, "Sales")
+#' plot_normality(gdata, "creatinine")
 #'
 #' # Using pipes ---------------------------------
 #' # Visualization of all numerical variables
-#' carseats %>%
+#' heartfailure2 %>%
 #'  plot_normality()
 #'
 #' # Positive values select variables
-#' carseats %>%
-#' plot_normality(Income, Price)
+#' heartfailure2 %>%
+#' plot_normality(platelets, sodium)
 #'
 #' # Positions values select variables
-#' # carseats %>%
+#' # heartfailure2 %>%
 #' #  plot_normality(1)
 #'
 #' # Using pipes & dplyr -------------------------
-#' # Plot 'Sales' variable by 'ShelveLoc' and 'US'
-#' carseats %>%
-#'  group_by(ShelveLoc, US) %>%
-#'  plot_normality(Sales)
+#' # Plot 'creatinine' variable by 'sex' and 'smoking'
+#' heartfailure2 %>%
+#'  group_by(sex, smoking) %>%
+#'  plot_normality(creatinine)
 #'
-#' # extract only those with 'ShelveLoc' variable level is "Good",
-#' # and plot 'Income' by 'US'
+#' # extract only those with 'sex' variable level is "Male",
+#' # and plot 'platelets' by 'smoking'
 #' if (requireNamespace("forecast", quietly = TRUE)) {
-#'   carseats %>%
-#'    filter(ShelveLoc == "Good") %>%
-#'    group_by(US) %>%
-#'    plot_normality(Income, right = "Box-Cox")
+#'   heartfailure2 %>%
+#'    filter(sex == "Male") %>%
+#'    group_by(smoking) %>%
+#'    plot_normality(platelets, right = "Box-Cox")
 #' } else {
 #'   cat("If you want to use this feature, you need to install the rpart package.\n")
 #' }

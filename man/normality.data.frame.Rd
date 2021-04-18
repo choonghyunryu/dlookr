@@ -52,62 +52,57 @@ The number of observations supported by the stats::shapiro.test function is 3 to
 
 \examples{
 \donttest{
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-
 # Normality test of numerical variables
-normality(carseats)
+normality(heartfailure)
 
 # Select the variable to describe
-normality(carseats, Sales, Price)
-normality(carseats, -Sales, -Price)
-normality(carseats, 1)
-normality(carseats, Sales, Price, sample = 300)
+normality(heartfailure, platelets, sodium)
+normality(heartfailure, -platelets, -sodium)
+normality(heartfailure, 1)
+normality(heartfailure, platelets, sodium, sample = 200)
 
-# Using dplyr::grouped_dt
+# death_eventing dplyr::grouped_dt
 library(dplyr)
 
-gdata <- group_by(carseats, ShelveLoc, US)
-normality(gdata, "Sales")
+gdata <- group_by(heartfailure, smoking, death_event)
+normality(gdata, "platelets")
 normality(gdata, sample = 250)
 
-# Using pipes ---------------------------------
+# death_eventing pipes ---------------------------------
 # Normality test of all numerical variables
-carseats \%>\%
- normality()
+heartfailure \%>\%
+  normality()
 
 # Positive values select variables
-carseats \%>\%
- normality(Sales, Price)
+heartfailure \%>\%
+  normality(platelets, sodium)
 
 # Positions values select variables
-carseats \%>\%
- normality(1)
+heartfailure \%>\%
+  normality(1)
 
-# Using pipes & dplyr -------------------------
-# Test all numerical variables by 'ShelveLoc' and 'US',
-# and extract only those with 'ShelveLoc' variable level is "Good".
-carseats \%>\%
- group_by(ShelveLoc, US) \%>\%
- normality() \%>\%
- filter(ShelveLoc == "Good")
+# death_eventing pipes & dplyr -------------------------
+# Test all numerical variables by 'smoking' and 'death_event',
+# and extract only those with 'smoking' variable level is "No".
+heartfailure \%>\%
+  group_by(smoking, death_event) \%>\%
+  normality() \%>\%
+  filter(smoking == "No")
 
-# extract only those with 'Urban' variable level is "Yes",
-# and test 'Sales' by 'ShelveLoc' and 'US'
-carseats \%>\%
- filter(Urban == "Yes") \%>\%
- group_by(ShelveLoc, US) \%>\%
- normality(Sales)
+# extract only those with 'sex' variable level is "Male",
+# and test 'platelets' by 'smoking' and 'death_event'
+heartfailure \%>\%
+  filter(sex == "Male") \%>\%
+  group_by(smoking, death_event) \%>\%
+  normality(platelets)
 
-# Test log(Income) variables by 'ShelveLoc' and 'US',
+# Test log(platelets) variables by 'smoking' and 'death_event',
 # and extract only p.value greater than 0.01.
-carseats \%>\%
- mutate(log_income = log(Income)) \%>\%
- group_by(ShelveLoc, US) \%>\%
- normality(log_income) \%>\%
- filter(p_value > 0.01)
+heartfailure \%>\%
+  mutate(platelets_income = log(platelets)) \%>\%
+  group_by(smoking, death_event) \%>\%
+  normality(platelets_income) \%>\%
+  filter(p_value > 0.01)
 }
 
 }

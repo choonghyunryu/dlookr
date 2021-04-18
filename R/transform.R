@@ -38,32 +38,27 @@
 #' }
 #' @seealso \code{\link{summary.transform}}, \code{\link{plot.transform}}.
 #' @examples
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
 #' # Standardization ------------------------------
-#' advertising_minmax <- transform(carseats$Advertising, method = "minmax")
-#' advertising_minmax
-#' summary(advertising_minmax)
-#' plot(advertising_minmax)
+#' creatinine_minmax <- transform(heartfailure$creatinine, method = "minmax")
+#' creatinine_minmax
+#' summary(creatinine_minmax)
+#' plot(creatinine_minmax)
 #'
 #' # Resolving Skewness  --------------------------
-#' advertising_log <- transform(carseats$Advertising, method = "log")
-#' advertising_log
-#' summary(advertising_log)
+#' creatinine_log <- transform(heartfailure$creatinine, method = "log")
+#' creatinine_log
+#' summary(creatinine_log)
 #' 
-#' # plot(advertising_log)
+#' # plot(creatinine_log)
 #'
-#' # plot(advertising_log, typographic = FALSE)
+#' # plot(creatinine_log, typographic = FALSE)
 #' 
 #' # Using dplyr ----------------------------------
 #' library(dplyr)
 #'
-#' carseats %>%
-#'   mutate(Advertising_log = transform(Advertising, method = "log+1")) %>%
-#'   lm(Sales ~ Advertising_log, data = .)
+#' heartfailure %>%
+#'   mutate(creatinine_log = transform(creatinine, method = "log+1")) %>%
+#'   lm(sodium ~ creatinine_log, data = .)
 #'   
 #' @export
 #' @import tibble
@@ -150,26 +145,21 @@ transform <- function(x, method = c("zscore", "minmax", "log", "log+1", "sqrt",
 #'
 #' @seealso \code{\link{transform}}, \code{\link{plot.transform}}.
 #' @examples
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
 #' # Standardization ------------------------------
-#' advertising_minmax <- transform(carseats$Advertising, method = "minmax")
-#' advertising_minmax
-#' summary(advertising_minmax)
+#' creatinine_minmax <- transform(heartfailure$creatinine, method = "minmax")
+#' creatinine_minmax
+#' summary(creatinine_minmax)
 #' 
-#' # plot(advertising_minmax)
+#' # plot(creatinine_minmax)
 #'
 #' # Resolving Skewness  --------------------------
-#' advertising_log <- transform(carseats$Advertising, method = "log")
-#' advertising_log
-#' summary(advertising_log)
+#' creatinine_log <- transform(heartfailure$creatinine, method = "log")
+#' creatinine_log
+#' summary(creatinine_log)
 #' 
-#' # plot(advertising_log)
+#' # plot(creatinine_log)
 #' 
-#' # plot(advertising_log, typographic = FALSE)
+#' # plot(creatinine_log, typographic = FALSE)
 #' 
 #' @method summary transform
 #' @importFrom tidyr gather
@@ -215,26 +205,22 @@ summary.transform <- function(object, ...) {
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
 #' @seealso \code{\link{transform}}, \code{\link{summary.transform}}.
 #' @examples
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
 #' # Standardization ------------------------------
-#' advertising_minmax <- transform(carseats$Advertising, method = "minmax")
-#' advertising_minmax
-#' summary(advertising_minmax)
+#' creatinine_minmax <- transform(heartfailure$creatinine, method = "minmax")
+#' creatinine_minmax
+#' summary(creatinine_minmax)
 #' 
-#' plot(advertising_minmax)
+#' plot(creatinine_minmax)
 #'
 #' # Resolving Skewness  --------------------------
-#' advertising_log <- transform(carseats$Advertising, method = "log")
-#' advertising_log
-#' summary(advertising_log)
+#' creatinine_log <- transform(heartfailure$creatinine, method = "log")
+#' creatinine_log
+#' summary(creatinine_log)
 #' 
-#' plot(advertising_log)
+#' plot(creatinine_log)
 #' 
-#' plot(advertising_log, typographic = FALSE)
+#' plot(creatinine_log, typographic = FALSE)
+#' 
 #' @method plot transform
 #' @import ggplot2
 #' @import hrbrthemes
@@ -342,27 +328,23 @@ plot.transform <- function(x, typographic = TRUE, ...) {
 #'
 #' @examples
 #' \dontrun{
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
 #' # reporting the Binning information -------------------------
 #' # create pdf file. file name is Transformation_Report.pdf & No target variable
-#' transformation_report(carseats)
+#' transformation_report(heartfailure)
 #' 
 #' # create pdf file. file name is Transformation_Report.pdf
-#' transformation_report(carseats, US)
+#' transformation_report(heartfailure, death_event)
 #' 
-#' # create pdf file. file name is Transformation_carseats.pdf
-#' transformation_report(carseats, "US", output_file = "Transformation_carseats.pdf")
+#' # create pdf file. file name is Transformation_heartfailure.pdf
+#' transformation_report(heartfailure, "death_event", 
+#'                       output_file = "Transformation_heartfailure.pdf")
 #' 
 #' # create html file. file name is Transformation_Report.html
-#' transformation_report(carseats, "US", output_format = "html")
+#' transformation_report(heartfailure, "death_event", output_format = "html")
 #' 
-#' # create html file. file name is Transformation_carseats
-#' transformation_report(carseats, US, output_format = "html", 
-#'                       output_file = "Transformation_carseats.html")
+#' # create html file. file name is Transformation_heartfailure.html
+#' transformation_report(heartfailure, death_event, output_format = "html", 
+#'                       output_file = "Transformation_heartfailure.html")
 #' }
 #'
 #' @importFrom knitr knit2pdf

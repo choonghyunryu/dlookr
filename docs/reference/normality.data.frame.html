@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
       </span>
     </div>
 
@@ -181,146 +181,136 @@ The number of observations supported by the stats::shapiro.test function is 3 to
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='co'># Generate data for the example</span>
-<span class='no'>carseats</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ISLR</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/ISLR/man/Carseats.html'>Carseats</a></span>
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>20</span>), <span class='st'>"Income"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>5</span>), <span class='st'>"Urban"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-
 <span class='co'># Normality test of numerical variables</span>
-<span class='fu'>normality</span>(<span class='no'>carseats</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 8 x 4</span><span>
-#&gt;   vars        statistic  p_value sample
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Sales           0.995 2.54</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>    400
-#&gt; </span><span style='color: #555555;'>2</span><span> CompPrice       0.998 9.77</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>    400
-#&gt; </span><span style='color: #555555;'>3</span><span> Income          0.963 2.92</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 8</span><span>    400
-#&gt; </span><span style='color: #555555;'>4</span><span> Advertising     0.874 1.49</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>-17</span><span>    400
-#&gt; </span><span style='color: #555555;'>5</span><span> Population      0.952 4.08</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>-10</span><span>    400
-#&gt; </span><span style='color: #555555;'>6</span><span> Price           0.996 3.90</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>    400
-#&gt; </span><span style='color: #555555;'>7</span><span> Age             0.957 1.86</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 9</span><span>    400
-#&gt; </span><span style='color: #555555;'>8</span><span> Education       0.924 2.43</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>-13</span><span>    400</div><div class='input'>
+<span class='fu'>normality</span>(<span class='no'>heartfailure</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 7 x 4</span><span>
+#&gt;   vars              statistic  p_value sample
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> age                   0.975 5.11</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 5</span><span>    299
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> cpk_enzyme            0.514 7.05</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-28</span><span>    299
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> ejection_fraction     0.947 7.22</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 9</span><span>    299
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> platelets             0.912 2.88</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-12</span><span>    299
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> creatinine            0.551 5.39</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-27</span><span>    299
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> sodium                0.939 9.21</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-10</span><span>    299
+#&gt; </span><span style='color: #BCBCBC;'>7</span><span> time                  0.947 6.28</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 9</span><span>    299</div><div class='input'>
 <span class='co'># Select the variable to describe</span>
-<span class='fu'>normality</span>(<span class='no'>carseats</span>, <span class='no'>Sales</span>, <span class='no'>Price</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 4</span><span>
-#&gt;   vars  statistic p_value sample
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Sales     0.995   0.254    400
-#&gt; </span><span style='color: #555555;'>2</span><span> Price     0.996   0.390    400</div><div class='input'><span class='fu'>normality</span>(<span class='no'>carseats</span>, -<span class='no'>Sales</span>, -<span class='no'>Price</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 4</span><span>
-#&gt;   vars        statistic  p_value sample
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> CompPrice       0.998 9.77</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>    400
-#&gt; </span><span style='color: #555555;'>2</span><span> Income          0.963 2.92</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 8</span><span>    400
-#&gt; </span><span style='color: #555555;'>3</span><span> Advertising     0.874 1.49</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>-17</span><span>    400
-#&gt; </span><span style='color: #555555;'>4</span><span> Population      0.952 4.08</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>-10</span><span>    400
-#&gt; </span><span style='color: #555555;'>5</span><span> Age             0.957 1.86</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 9</span><span>    400
-#&gt; </span><span style='color: #555555;'>6</span><span> Education       0.924 2.43</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>-13</span><span>    400</div><div class='input'><span class='fu'>normality</span>(<span class='no'>carseats</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 4</span><span>
-#&gt;   vars  statistic p_value sample
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Sales     0.995   0.254    400</div><div class='input'><span class='fu'>normality</span>(<span class='no'>carseats</span>, <span class='no'>Sales</span>, <span class='no'>Price</span>, <span class='kw'>sample</span> <span class='kw'>=</span> <span class='fl'>300</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 4</span><span>
-#&gt;   vars  statistic p_value sample
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Sales     0.994   0.239    300
-#&gt; </span><span style='color: #555555;'>2</span><span> Price     0.996   0.618    300</div><div class='input'>
-<span class='co'># Using dplyr::grouped_dt</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
-
-<span class='no'>gdata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>carseats</span>, <span class='no'>ShelveLoc</span>, <span class='no'>US</span>)
-<span class='fu'>normality</span>(<span class='no'>gdata</span>, <span class='st'>"Sales"</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 6</span><span>
-#&gt;   variable ShelveLoc US    statistic p_value sample
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Sales    Bad       No        0.988  0.961      34
-#&gt; </span><span style='color: #555555;'>2</span><span> Sales    Bad       Yes       0.983  0.554      62
-#&gt; </span><span style='color: #555555;'>3</span><span> Sales    Good      No        0.955  0.342      24
-#&gt; </span><span style='color: #555555;'>4</span><span> Sales    Good      Yes       0.983  0.567      61
-#&gt; </span><span style='color: #555555;'>5</span><span> Sales    Medium    No        0.975  0.096</span><span style='text-decoration: underline;'>1</span><span>     84
-#&gt; </span><span style='color: #555555;'>6</span><span> Sales    Medium    Yes       0.991  0.526     135</div><div class='input'><span class='fu'>normality</span>(<span class='no'>gdata</span>, <span class='kw'>sample</span> <span class='kw'>=</span> <span class='fl'>250</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 48 x 6</span><span>
-#&gt;    variable  ShelveLoc US    statistic p_value sample
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> Sales     Bad       No        0.988  0.961      34
-#&gt; </span><span style='color: #555555;'> 2</span><span> Sales     Bad       Yes       0.983  0.554      62
-#&gt; </span><span style='color: #555555;'> 3</span><span> Sales     Good      No        0.955  0.342      24
-#&gt; </span><span style='color: #555555;'> 4</span><span> Sales     Good      Yes       0.983  0.567      61
-#&gt; </span><span style='color: #555555;'> 5</span><span> Sales     Medium    No        0.975  0.096</span><span style='text-decoration: underline;'>1</span><span>     84
-#&gt; </span><span style='color: #555555;'> 6</span><span> Sales     Medium    Yes       0.991  0.526     135
-#&gt; </span><span style='color: #555555;'> 7</span><span> CompPrice Bad       No        0.986  0.927      34
-#&gt; </span><span style='color: #555555;'> 8</span><span> CompPrice Bad       Yes       0.983  0.542      62
-#&gt; </span><span style='color: #555555;'> 9</span><span> CompPrice Good      No        0.970  0.658      24
-#&gt; </span><span style='color: #555555;'>10</span><span> CompPrice Good      Yes       0.984  0.598      61
-#&gt; </span><span style='color: #555555;'># … with 38 more rows</span><span></div><div class='input'>
-<span class='co'># Using pipes ---------------------------------</span>
+<span class='fu'>normality</span>(<span class='no'>heartfailure</span>, <span class='no'>platelets</span>, <span class='no'>sodium</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 4</span><span>
+#&gt;   vars      statistic  p_value sample
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> platelets     0.912 2.88</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-12</span><span>    299
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> sodium        0.939 9.21</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-10</span><span>    299</div><div class='input'><span class='fu'>normality</span>(<span class='no'>heartfailure</span>, -<span class='no'>platelets</span>, -<span class='no'>sodium</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 5 x 4</span><span>
+#&gt;   vars              statistic  p_value sample
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> age                   0.975 5.11</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 5</span><span>    299
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> cpk_enzyme            0.514 7.05</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-28</span><span>    299
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> ejection_fraction     0.947 7.22</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 9</span><span>    299
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> creatinine            0.551 5.39</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-27</span><span>    299
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> time                  0.947 6.28</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 9</span><span>    299</div><div class='input'><span class='fu'>normality</span>(<span class='no'>heartfailure</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 4</span><span>
+#&gt;   vars  statistic   p_value sample
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> age       0.975 0.000</span><span style='text-decoration: underline;'>051</span><span>1    299</div><div class='input'><span class='fu'>normality</span>(<span class='no'>heartfailure</span>, <span class='no'>platelets</span>, <span class='no'>sodium</span>, <span class='kw'>sample</span> <span class='kw'>=</span> <span class='fl'>200</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 4</span><span>
+#&gt;   vars      statistic  p_value sample
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> platelets     0.884 2.70</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-11</span><span>    200
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> sodium        0.943 4.30</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 7</span><span>    200</div><div class='input'>
+<span class='co'># death_eventing dplyr::grouped_dt</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'>
+<span class='no'>gdata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>heartfailure</span>, <span class='no'>smoking</span>, <span class='no'>death_event</span>)
+<span class='fu'>normality</span>(<span class='no'>gdata</span>, <span class='st'>"platelets"</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 4 x 6</span><span>
+#&gt;   variable  smoking death_event statistic      p_value sample
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> platelets No      No              0.892 0.000</span><span style='text-decoration: underline;'>000</span><span>016</span><span style='text-decoration: underline;'>1</span><span>    137
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> platelets No      Yes             0.987 0.704            66
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> platelets Yes     No              0.834 0.000</span><span style='text-decoration: underline;'>000</span><span>404      66
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> platelets Yes     Yes             0.900 0.008</span><span style='text-decoration: underline;'>36</span><span>          30</div><div class='input'><span class='fu'>normality</span>(<span class='no'>gdata</span>, <span class='kw'>sample</span> <span class='kw'>=</span> <span class='fl'>250</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 28 x 6</span><span>
+#&gt;    variable          smoking death_event statistic  p_value sample
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> age               No      No              0.978 2.49</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 2</span><span>    137
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> age               No      Yes             0.955 1.70</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 2</span><span>     66
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> age               Yes     No              0.972 1.46</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 1</span><span>     66
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> age               Yes     Yes             0.967 4.61</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 1</span><span>     30
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> cpk_enzyme        No      No              0.715 5.49</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-15</span><span>    137
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> cpk_enzyme        No      Yes             0.458 3.20</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-14</span><span>     66
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> cpk_enzyme        Yes     No              0.563 1.03</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-12</span><span>     66
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> cpk_enzyme        Yes     Yes             0.391 4.50</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-10</span><span>     30
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> ejection_fraction No      No              0.918 4.26</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 7</span><span>    137
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> ejection_fraction No      Yes             0.941 3.44</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 3</span><span>     66
+#&gt; </span><span style='color: #949494;'># … with 18 more rows</span><span></div><div class='input'>
+<span class='co'># death_eventing pipes ---------------------------------</span>
 <span class='co'># Normality test of all numerical variables</span>
-<span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
- <span class='fu'>normality</span>()</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 8 x 4</span><span>
-#&gt;   vars        statistic  p_value sample
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Sales           0.995 2.54</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>    400
-#&gt; </span><span style='color: #555555;'>2</span><span> CompPrice       0.998 9.77</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>    400
-#&gt; </span><span style='color: #555555;'>3</span><span> Income          0.963 2.92</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 8</span><span>    400
-#&gt; </span><span style='color: #555555;'>4</span><span> Advertising     0.874 1.49</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>-17</span><span>    400
-#&gt; </span><span style='color: #555555;'>5</span><span> Population      0.952 4.08</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>-10</span><span>    400
-#&gt; </span><span style='color: #555555;'>6</span><span> Price           0.996 3.90</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>    400
-#&gt; </span><span style='color: #555555;'>7</span><span> Age             0.957 1.86</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 9</span><span>    400
-#&gt; </span><span style='color: #555555;'>8</span><span> Education       0.924 2.43</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>-13</span><span>    400</div><div class='input'>
+<span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>normality</span>()</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 7 x 4</span><span>
+#&gt;   vars              statistic  p_value sample
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> age                   0.975 5.11</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 5</span><span>    299
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> cpk_enzyme            0.514 7.05</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-28</span><span>    299
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> ejection_fraction     0.947 7.22</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 9</span><span>    299
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> platelets             0.912 2.88</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-12</span><span>    299
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> creatinine            0.551 5.39</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-27</span><span>    299
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> sodium                0.939 9.21</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-10</span><span>    299
+#&gt; </span><span style='color: #BCBCBC;'>7</span><span> time                  0.947 6.28</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 9</span><span>    299</div><div class='input'>
 <span class='co'># Positive values select variables</span>
-<span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
- <span class='fu'>normality</span>(<span class='no'>Sales</span>, <span class='no'>Price</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 4</span><span>
-#&gt;   vars  statistic p_value sample
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Sales     0.995   0.254    400
-#&gt; </span><span style='color: #555555;'>2</span><span> Price     0.996   0.390    400</div><div class='input'>
+<span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>normality</span>(<span class='no'>platelets</span>, <span class='no'>sodium</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 4</span><span>
+#&gt;   vars      statistic  p_value sample
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> platelets     0.912 2.88</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-12</span><span>    299
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> sodium        0.939 9.21</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-10</span><span>    299</div><div class='input'>
 <span class='co'># Positions values select variables</span>
-<span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
- <span class='fu'>normality</span>(<span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 4</span><span>
-#&gt;   vars  statistic p_value sample
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Sales     0.995   0.254    400</div><div class='input'>
-<span class='co'># Using pipes &amp; dplyr -------------------------</span>
-<span class='co'># Test all numerical variables by 'ShelveLoc' and 'US',</span>
-<span class='co'># and extract only those with 'ShelveLoc' variable level is "Good".</span>
-<span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>ShelveLoc</span>, <span class='no'>US</span>) <span class='kw'>%&gt;%</span>
- <span class='fu'>normality</span>() <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>ShelveLoc</span> <span class='kw'>==</span> <span class='st'>"Good"</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 16 x 6</span><span>
-#&gt;    variable    ShelveLoc US    statistic  p_value sample
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> Sales       Good      No        0.955 3.42</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>     24
-#&gt; </span><span style='color: #555555;'> 2</span><span> Sales       Good      Yes       0.983 5.67</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>     61
-#&gt; </span><span style='color: #555555;'> 3</span><span> CompPrice   Good      No        0.970 6.58</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>     24
-#&gt; </span><span style='color: #555555;'> 4</span><span> CompPrice   Good      Yes       0.984 5.98</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>     61
-#&gt; </span><span style='color: #555555;'> 5</span><span> Income      Good      No        0.902 3.31</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 2</span><span>     24
-#&gt; </span><span style='color: #555555;'> 6</span><span> Income      Good      Yes       0.955 3.03</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 2</span><span>     61
-#&gt; </span><span style='color: #555555;'> 7</span><span> Advertising Good      No        0.209 2.19</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>-10</span><span>     24
-#&gt; </span><span style='color: #555555;'> 8</span><span> Advertising Good      Yes       0.976 2.65</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>     61
-#&gt; </span><span style='color: #555555;'> 9</span><span> Population  Good      No        0.976 8.14</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>     24
-#&gt; </span><span style='color: #555555;'>10</span><span> Population  Good      Yes       0.971 1.56</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>     61
-#&gt; </span><span style='color: #555555;'>11</span><span> Price       Good      No        0.963 5.12</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>     24
-#&gt; </span><span style='color: #555555;'>12</span><span> Price       Good      Yes       0.978 3.46</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>     61
-#&gt; </span><span style='color: #555555;'>13</span><span> Age         Good      No        0.944 2.01</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>     24
-#&gt; </span><span style='color: #555555;'>14</span><span> Age         Good      Yes       0.944 7.92</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 3</span><span>     61
-#&gt; </span><span style='color: #555555;'>15</span><span> Education   Good      No        0.935 1.29</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 1</span><span>     24
-#&gt; </span><span style='color: #555555;'>16</span><span> Education   Good      Yes       0.907 2.18</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>- 4</span><span>     61</div><div class='input'>
-<span class='co'># extract only those with 'Urban' variable level is "Yes",</span>
-<span class='co'># and test 'Sales' by 'ShelveLoc' and 'US'</span>
-<span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>Urban</span> <span class='kw'>==</span> <span class='st'>"Yes"</span>) <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>ShelveLoc</span>, <span class='no'>US</span>) <span class='kw'>%&gt;%</span>
- <span class='fu'>normality</span>(<span class='no'>Sales</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 6</span><span>
-#&gt;   variable ShelveLoc US    statistic p_value sample
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Sales    Bad       No        0.985   0.968     23
-#&gt; </span><span style='color: #555555;'>2</span><span> Sales    Bad       Yes       0.983   0.686     50
-#&gt; </span><span style='color: #555555;'>3</span><span> Sales    Good      No        0.959   0.617     17
-#&gt; </span><span style='color: #555555;'>4</span><span> Sales    Good      Yes       0.970   0.385     39
-#&gt; </span><span style='color: #555555;'>5</span><span> Sales    Medium    No        0.981   0.541     54
-#&gt; </span><span style='color: #555555;'>6</span><span> Sales    Medium    Yes       0.991   0.797     94</div><div class='input'>
-<span class='co'># Test log(Income) variables by 'ShelveLoc' and 'US',</span>
+<span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>normality</span>(<span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 4</span><span>
+#&gt;   vars  statistic   p_value sample
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> age       0.975 0.000</span><span style='text-decoration: underline;'>051</span><span>1    299</div><div class='input'>
+<span class='co'># death_eventing pipes &amp; dplyr -------------------------</span>
+<span class='co'># Test all numerical variables by 'smoking' and 'death_event',</span>
+<span class='co'># and extract only those with 'smoking' variable level is "No".</span>
+<span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>smoking</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>normality</span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>smoking</span> <span class='kw'>==</span> <span class='st'>"No"</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 14 x 6</span><span>
+#&gt;    variable          smoking death_event statistic  p_value sample
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> age               No      No              0.978 2.49</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 2</span><span>    137
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> age               No      Yes             0.955 1.70</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 2</span><span>     66
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> cpk_enzyme        No      No              0.715 5.49</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-15</span><span>    137
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> cpk_enzyme        No      Yes             0.458 3.20</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-14</span><span>     66
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> ejection_fraction No      No              0.918 4.26</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 7</span><span>    137
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> ejection_fraction No      Yes             0.941 3.44</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 3</span><span>     66
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> platelets         No      No              0.892 1.61</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 8</span><span>    137
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> platelets         No      Yes             0.987 7.04</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 1</span><span>     66
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> creatinine        No      No              0.550 1.00</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-18</span><span>    137
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> creatinine        No      Yes             0.655 3.52</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-11</span><span>     66
+#&gt; </span><span style='color: #BCBCBC;'>11</span><span> sodium            No      No              0.980 4.11</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 2</span><span>    137
+#&gt; </span><span style='color: #BCBCBC;'>12</span><span> sodium            No      Yes             0.948 7.83</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 3</span><span>     66
+#&gt; </span><span style='color: #BCBCBC;'>13</span><span> time              No      No              0.929 2.29</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 6</span><span>    137
+#&gt; </span><span style='color: #BCBCBC;'>14</span><span> time              No      Yes             0.870 5.24</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 6</span><span>     66</div><div class='input'>
+<span class='co'># extract only those with 'sex' variable level is "Male",</span>
+<span class='co'># and test 'platelets' by 'smoking' and 'death_event'</span>
+<span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>sex</span> <span class='kw'>==</span> <span class='st'>"Male"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>smoking</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>normality</span>(<span class='no'>platelets</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 4 x 6</span><span>
+#&gt;   variable  smoking death_event statistic     p_value sample
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> platelets No      No              0.963 0.042</span><span style='text-decoration: underline;'>9</span><span>          67
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> platelets No      Yes             0.966 0.349           35
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> platelets Yes     No              0.832 0.000</span><span style='text-decoration: underline;'>000</span><span>406     65
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> platelets Yes     Yes             0.963 0.429           27</div><div class='input'>
+<span class='co'># Test log(platelets) variables by 'smoking' and 'death_event',</span>
 <span class='co'># and extract only p.value greater than 0.01.</span>
-<span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>log_income</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='no'>Income</span>)) <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>ShelveLoc</span>, <span class='no'>US</span>) <span class='kw'>%&gt;%</span>
- <span class='fu'>normality</span>(<span class='no'>log_income</span>) <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>p_value</span> <span class='kw'>&gt;</span> <span class='fl'>0.01</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 6</span><span>
-#&gt;   variable   ShelveLoc US    statistic p_value sample
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> log_income Bad       No        0.941  0.081</span><span style='text-decoration: underline;'>5</span><span>     34</div><div class='input'># }
+<span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>platelets_income</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='no'>platelets</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>smoking</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>normality</span>(<span class='no'>platelets_income</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>p_value</span> <span class='kw'>&gt;</span> <span class='fl'>0.01</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 6</span><span>
+#&gt;   variable         smoking death_event statistic p_value sample
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> platelets_income Yes     Yes             0.983   0.907     30</div><div class='input'># }
 
 </div></span></pre>
   </div>

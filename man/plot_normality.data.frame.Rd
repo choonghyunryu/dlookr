@@ -80,65 +80,59 @@ The plot derived from the numerical data visualization is as follows.
 
 \examples{
 \donttest{
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-
-carseats <- carseats[, c("Income", "Price", "ShelveLoc", "Sales", "Urban", "US")]
-
 # Visualization of all numerical variables
-plot_normality(carseats)
+heartfailure2 <- heartfailure[, c("creatinine", "platelets", "sodium", "sex", "smoking")]
+plot_normality(heartfailure2)
 
 # Select the variable to plot
-plot_normality(carseats, Income, Price)
-plot_normality(carseats, -Income, -Price, col = "gray")
-plot_normality(carseats, 1)
+plot_normality(heartfailure2, platelets, sodium)
+plot_normality(heartfailure2, -platelets, -sodium, col = "gray")
+plot_normality(heartfailure2, 1)
 
 # Change the method of transformation
-plot_normality(carseats, Income, right = "1/x")
+plot_normality(heartfailure2, platelets, right = "1/x")
 
 if (requireNamespace("forecast", quietly = TRUE)) {
-  plot_normality(carseats, Income, left = "Box-Cox", right = "Yeo-Johnson")
+  plot_normality(heartfailure2, platelets, left = "Box-Cox", right = "Yeo-Johnson")
 } else {
   cat("If you want to use this feature, you need to install the rpart package.\n")
 }
 # Not allow typographic elements
-plot_normality(carseats, Income, typographic = FALSE)
+plot_normality(heartfailure2, platelets, typographic = FALSE)
 
 # Using dplyr::grouped_df
 library(dplyr)
 
-gdata <- group_by(carseats, ShelveLoc, US)
+gdata <- group_by(heartfailure2, sex, smoking)
 plot_normality(gdata)
-plot_normality(gdata, "Sales")
+plot_normality(gdata, "creatinine")
 
 # Using pipes ---------------------------------
 # Visualization of all numerical variables
-carseats \%>\%
+heartfailure2 \%>\%
  plot_normality()
 
 # Positive values select variables
-carseats \%>\%
-plot_normality(Income, Price)
+heartfailure2 \%>\%
+plot_normality(platelets, sodium)
 
 # Positions values select variables
-# carseats \%>\%
+# heartfailure2 \%>\%
 #  plot_normality(1)
 
 # Using pipes & dplyr -------------------------
-# Plot 'Sales' variable by 'ShelveLoc' and 'US'
-carseats \%>\%
- group_by(ShelveLoc, US) \%>\%
- plot_normality(Sales)
+# Plot 'creatinine' variable by 'sex' and 'smoking'
+heartfailure2 \%>\%
+ group_by(sex, smoking) \%>\%
+ plot_normality(creatinine)
 
-# extract only those with 'ShelveLoc' variable level is "Good",
-# and plot 'Income' by 'US'
+# extract only those with 'sex' variable level is "Male",
+# and plot 'platelets' by 'smoking'
 if (requireNamespace("forecast", quietly = TRUE)) {
-  carseats \%>\%
-   filter(ShelveLoc == "Good") \%>\%
-   group_by(US) \%>\%
-   plot_normality(Income, right = "Box-Cox")
+  heartfailure2 \%>\%
+   filter(sex == "Male") \%>\%
+   group_by(smoking) \%>\%
+   plot_normality(platelets, right = "Box-Cox")
 } else {
   cat("If you want to use this feature, you need to install the rpart package.\n")
 }

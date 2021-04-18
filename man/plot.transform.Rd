@@ -19,26 +19,22 @@ Visualize two kinds of plot by attribute of `transform` class.
 The transformation of a numerical variable is a density plot.
 }
 \examples{
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-
 # Standardization ------------------------------
-advertising_minmax <- transform(carseats$Advertising, method = "minmax")
-advertising_minmax
-summary(advertising_minmax)
+creatinine_minmax <- transform(heartfailure$creatinine, method = "minmax")
+creatinine_minmax
+summary(creatinine_minmax)
 
-plot(advertising_minmax)
+plot(creatinine_minmax)
 
 # Resolving Skewness  --------------------------
-advertising_log <- transform(carseats$Advertising, method = "log")
-advertising_log
-summary(advertising_log)
+creatinine_log <- transform(heartfailure$creatinine, method = "log")
+creatinine_log
+summary(creatinine_log)
 
-plot(advertising_log)
+plot(creatinine_log)
 
-plot(advertising_log, typographic = FALSE)
+plot(creatinine_log, typographic = FALSE)
+
 }
 \seealso{
 \code{\link{transform}}, \code{\link{summary.transform}}.
