@@ -71,7 +71,7 @@ compare_numeric <- function(.data, ...) {
 #' # Compare the two categorical variables
 #' two_var <- compare_category(heartfailure2, smoking, death_event)
 #' 
-#' # Print compare_numeric class objects
+#' # Print compare_category class objects
 #' two_var
 #' 
 #' # Filtering the case of smoking included NA 
@@ -269,7 +269,7 @@ compare_category_impl <- function(df, vars) {
 #'   filter(var1 == "sodium" | var2 == "sodium") %>% 
 #'   arrange(desc(abs(coef_corr)))
 #'   
-#' # Compare the correlation that case of abs(coef_corr) > 0.3
+#' # Compare the correlation that case of abs(coef_corr) > 0.1
 #' all_var %>% 
 #'   "$"(correlation) %>% 
 #'   filter(abs(coef_corr) > 0.1)
@@ -412,28 +412,27 @@ compare_numeric_impl <- function(df, vars) {
 #' @seealso \code{\link{plot.compare_category}}.
 #' @examples
 #' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
+#' heartfailure2 <- heartfailure
+#' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
+#' 
 #' library(dplyr)
 #' 
 #' # Compare the all categorical variables
-#' all_var <- compare_category(carseats)
+#' all_var <- compare_category(heartfailure2)
 #' 
-#' # Print compare class object
+#' # Print compare_category class objects
 #' all_var
-#'   
-#' # Compare the two categorical variables
-#' two_var <- compare_category(carseats, ShelveLoc, Urban)
 #' 
-#' # Print compare class object
+#' # Compare the two categorical variables
+#' two_var <- compare_category(heartfailure2, smoking, death_event)
+#' 
+#' # Print compare_category class objects
 #' two_var
-#'   
+#' 
 #' # Summary the all case : Return a invisible copy of an object.
 #' stat <- summary(all_var)
 #' 
-#' # Summary by returned object
+#' # Summary by returned objects
 #' stat
 #' 
 #' # component of table 
@@ -468,14 +467,14 @@ compare_numeric_impl <- function(df, vars) {
 #' # If you want to use dplyr, set verbose to FALSE
 #' summary(all_var, "chisq", verbose = FALSE) %>% 
 #'   filter(p.value < 0.26)
-#'   
+#' 
 #' # Extract component from list by index
 #' summary(all_var, "table", na.rm = TRUE, verbose = FALSE) %>% 
 #'   "[["(1)
-#'
+#' 
 #' # Extract component from list by name
-#'   summary(all_var, "table", na.rm = TRUE, verbose = FALSE) %>% 
-#'   "[["("ShelveLoc vs Urban")
+#' summary(all_var, "table", na.rm = TRUE, verbose = FALSE) %>% 
+#'   "[["("smoking vs death_event")
 #'   
 #' @importFrom tidyr spread
 #' @method summary compare_category
@@ -699,39 +698,36 @@ summary.compare_category <- function(object, method = c("all", "table", "relativ
 #' @seealso \code{\link{plot.compare_numeric}}.
 #' @examples
 #' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+#' heartfailure2 <- heartfailure[, c("platelets", "creatinine", "sodium")]
 #'
 #' library(dplyr)
-#' 
 #' # Compare the all numerical variables
-#' all_var <- compare_numeric(carseats)
+#' all_var <- compare_numeric(heartfailure2)
 #' 
-#' # Print compare class object
+#' # Print compare_numeric class object
 #' all_var
 #' 
-#' # Compare the correlation that case of joint the Price variable
+#' # Compare the correlation that case of joint the sodium variable
 #' all_var %>% 
 #'   "$"(correlation) %>% 
-#'   filter(var1 == "Price" | var2 == "Price") %>% 
+#'   filter(var1 == "sodium" | var2 == "sodium") %>% 
 #'   arrange(desc(abs(coef_corr)))
 #'   
-#' # Compare the correlation that case of abs(coef_corr) > 0.3
+#' # Compare the correlation that case of abs(coef_corr) > 0.1
 #' all_var %>% 
 #'   "$"(correlation) %>% 
-#'   filter(abs(coef_corr) > 0.3)
+#'   filter(abs(coef_corr) > 0.1)
 #'   
-#' # Compare the linear model that case of joint the Price variable  
+#' # Compare the linear model that case of joint the sodium variable  
 #' all_var %>% 
 #'   "$"(linear) %>% 
-#'   filter(var1 == "Price" | var2 == "Price") %>% 
+#'   filter(var1 == "sodium" | var2 == "sodium") %>% 
 #'   arrange(desc(r.squared))
 #'   
 #' # Compare the two numerical variables
-#' two_var <- compare_numeric(carseats, Price, CompPrice)
+#' two_var <- compare_numeric(heartfailure2, sodium, creatinine)
 #' 
-#' # Print compare class object
+#' # Print compare_numeric class objects
 #' two_var
 #'   
 #' # Summary the all case : Return a invisible copy of an object.
@@ -740,10 +736,10 @@ summary.compare_category <- function(object, method = c("all", "table", "relativ
 #' # Just correlation
 #' summary(all_var, method = "correlation")
 #' 
-#' # Just correlation condition by r > 0.2
-#' summary(all_var, method = "correlation", thres_corr = 0.2)
+#' # Just correlation condition by r > 0.1
+#' summary(all_var, method = "correlation", thres_corr = 0.1)
 #' 
-#' # linear model summries condition by R^2 > 0.05
+#' # linear model summaries condition by R^2 > 0.05
 #' summary(all_var, thres_rs = 0.05)
 #' 
 #' # verbose is FALSE 
@@ -859,20 +855,21 @@ print.compare_numeric <- function(x, ...) {
 #' @seealso \code{\link{compare_category}}, \code{\link{print.compare_category}}, \code{\link{summary.compare_category}}.
 #' @examples
 #' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
+#' heartfailure2 <- heartfailure
+#' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
+#' 
+#' library(dplyr)
+#' 
 #' # Compare the all categorical variables
-#' all_var <- compare_category(carseats)
+#' all_var <- compare_category(heartfailure2)
 #' 
-#' # Print compare class objects
+#' # Print compare_numeric class objects
 #' all_var
-#'   
-#' # Compare the two categorical variables
-#' two_var <- compare_category(carseats, ShelveLoc, Urban)
 #' 
-#' # Print compare class objects
+#' # Compare the two categorical variables
+#' two_var <- compare_category(heartfailure2, smoking, death_event)
+#' 
+#' # Print compare_category class objects
 #' two_var
 #' 
 #' # plot all pair of variables
@@ -880,10 +877,10 @@ print.compare_numeric <- function(x, ...) {
 #' 
 #' # plot a pair of variables
 #' plot(two_var)
-#' 
+#'
 #' # plot all pair of variables by prompt
 #' # plot(all_var, prompt = TRUE)
-#' 
+#'   
 #' # plot a pair of variables without NA
 #' plot(two_var, na.rm = TRUE)
 #' 
@@ -1007,27 +1004,21 @@ plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE,
 #' @seealso \code{\link{compare_numeric}}, \code{\link{print.compare_numeric}}, \code{\link{summary.compare_numeric}}.
 #' @examples
 #' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+#' heartfailure2 <- heartfailure[, c("platelets", "creatinine", "sodium")]
 #'
-#' # Reduced variables
 #' library(dplyr)
-#' carseats <- carseats %>% 
-#'   select(CompPrice, Sales, Price)
-#'   
 #' # Compare the all numerical variables
-#' all_var <- compare_numeric(carseats)
+#' all_var <- compare_numeric(heartfailure2)
 #' 
-#' # Print compare compare_numeric object
+#' # Print compare_numeric class object
 #' all_var
 #'   
 #' # Compare the two numerical variables
-#' two_var <- compare_numeric(carseats, CompPrice, Price)
+#' two_var <- compare_numeric(heartfailure2, sodium, creatinine)
 #' 
-#' # Print compare_numeric class object
+#' # Print compare_numeric class objects
 #' two_var
-#' 
+#'   
 #' # plot all pair of variables
 #' plot(all_var)
 #' 

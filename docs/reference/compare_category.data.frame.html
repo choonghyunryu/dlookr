@@ -73,7 +73,7 @@ between categorical variables." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
       </span>
     </div>
 
@@ -181,343 +181,1207 @@ and return compare_category class that based list object.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Generate data for the example</span>
-<span class='no'>carseats</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ISLR</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/ISLR/man/Carseats.html'>Carseats</a></span>
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>20</span>), <span class='st'>"Income"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>5</span>), <span class='st'>"Urban"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
+<span class='no'>heartfailure2</span> <span class='kw'>&lt;-</span> <span class='no'>heartfailure</span>
+<span class='no'>heartfailure2</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>heartfailure2</span>)), <span class='fl'>5</span>), <span class='st'>"smoking"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+
 <span class='co'># Compare the all categorical variables</span>
-<span class='no'>all_var</span> <span class='kw'>&lt;-</span> <span class='fu'>compare_category</span>(<span class='no'>carseats</span>)
+<span class='no'>all_var</span> <span class='kw'>&lt;-</span> <span class='fu'>compare_category</span>(<span class='no'>heartfailure2</span>)
 
 <span class='co'># Print compare_numeric class objects</span>
-<span class='no'>all_var</span></div><div class='output co'>#&gt; $`ShelveLoc vs Urban`
-#&gt; <span style='color: #949494;'># A tibble: 8 x 6</span><span>
-#&gt;   ShelveLoc Urban     n   rate var1_rate var2_rate
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> Bad       No       21 0.052</span><span style='text-decoration: underline;'>5</span><span>    0.219      0.181
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> Bad       Yes      73 0.182     0.760      0.262
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Bad       </span><span style='color: #BB0000;'>NA</span><span>        2 0.005     0.020</span><span style='text-decoration: underline;'>8</span><span>     0.4  
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Good      No       28 0.07      0.329      0.241
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> Good      Yes      57 0.142     0.671      0.204
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> Medium    No       67 0.168     0.306      0.578
-#&gt; </span><span style='color: #BCBCBC;'>7</span><span> Medium    Yes     149 0.372     0.680      0.534
-#&gt; </span><span style='color: #BCBCBC;'>8</span><span> Medium    </span><span style='color: #BB0000;'>NA</span><span>        3 0.007</span><span style='text-decoration: underline;'>5</span><span>    0.013</span><span style='text-decoration: underline;'>7</span><span>     0.6  
+<span class='no'>all_var</span></div><div class='output co'>#&gt; $`anaemia vs diabetes`
+#&gt; <span style='color: #949494;'># A tibble: 4 x 6</span><span>
+#&gt;   anaemia diabetes     n  rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No      No          98 0.328     0.576     0.563
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No      Yes         72 0.241     0.424     0.576
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes     No          76 0.254     0.589     0.437
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes     Yes         53 0.177     0.411     0.424
 #&gt; 
-#&gt; $`ShelveLoc vs US`
-#&gt; </span><span style='color: #949494;'># A tibble: 6 x 6</span><span>
-#&gt;   ShelveLoc US        n  rate var1_rate var2_rate
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> Bad       No       34 0.085     0.354     0.239
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> Bad       Yes      62 0.155     0.646     0.240
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Good      No       24 0.06      0.282     0.169
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Good      Yes      61 0.152     0.718     0.236
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> Medium    No       84 0.21      0.384     0.592
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> Medium    Yes     135 0.338     0.616     0.523
+#&gt; $`anaemia vs hblood_pressure`
+#&gt; </span><span style='color: #949494;'># A tibble: 4 x 6</span><span>
+#&gt;   anaemia hblood_pressure     n  rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No      No                113 0.378     0.665     0.582
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No      Yes                57 0.191     0.335     0.543
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes     No                 81 0.271     0.628     0.418
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes     Yes                48 0.161     0.372     0.457
 #&gt; 
-#&gt; $`Urban vs US`
+#&gt; $`anaemia vs sex`
+#&gt; </span><span style='color: #949494;'># A tibble: 4 x 6</span><span>
+#&gt;   anaemia sex        n  rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No      Female    53 0.177     0.312     0.505
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No      Male     117 0.391     0.688     0.603
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes     Female    52 0.174     0.403     0.495
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes     Male      77 0.258     0.597     0.397
+#&gt; 
+#&gt; $`anaemia vs smoking`
 #&gt; </span><span style='color: #949494;'># A tibble: 6 x 6</span><span>
-#&gt;   Urban US        n   rate var1_rate var2_rate
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No    No       46 0.115      0.397    0.324 
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No    Yes      70 0.175      0.603    0.271 
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes   No       94 0.235      0.337    0.662 
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes   Yes     185 0.462      0.663    0.717 
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> </span><span style='color: #BB0000;'>NA</span><span>    No        2 0.005      0.4      0.014</span><span style='text-decoration: underline;'>1</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> </span><span style='color: #BB0000;'>NA</span><span>    Yes       3 0.007</span><span style='text-decoration: underline;'>5</span><span>     0.6      0.011</span><span style='text-decoration: underline;'>6</span><span>
+#&gt;   anaemia smoking     n    rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No      No        106 0.355      0.624      0.53 
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No      Yes        61 0.204      0.359      0.649
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> No      </span><span style='color: #BB0000;'>NA</span><span>          3 0.010</span><span style='text-decoration: underline;'>0</span><span>     0.017</span><span style='text-decoration: underline;'>6</span><span>     0.6  
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes     No         94 0.314      0.729      0.47 
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> Yes     Yes        33 0.110      0.256      0.351
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> Yes     </span><span style='color: #BB0000;'>NA</span><span>          2 0.006</span><span style='text-decoration: underline;'>69</span><span>    0.015</span><span style='text-decoration: underline;'>5</span><span>     0.4  
+#&gt; 
+#&gt; $`anaemia vs death_event`
+#&gt; </span><span style='color: #949494;'># A tibble: 4 x 6</span><span>
+#&gt;   anaemia death_event     n  rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No      No            120 0.401     0.706     0.591
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No      Yes            50 0.167     0.294     0.521
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes     No             83 0.278     0.643     0.409
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes     Yes            46 0.154     0.357     0.479
+#&gt; 
+#&gt; $`diabetes vs hblood_pressure`
+#&gt; </span><span style='color: #949494;'># A tibble: 4 x 6</span><span>
+#&gt;   diabetes hblood_pressure     n  rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No       No                112 0.375     0.644     0.577
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No       Yes                62 0.207     0.356     0.590
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes      No                 82 0.274     0.656     0.423
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes      Yes                43 0.144     0.344     0.410
+#&gt; 
+#&gt; $`diabetes vs sex`
+#&gt; </span><span style='color: #949494;'># A tibble: 4 x 6</span><span>
+#&gt;   diabetes sex        n  rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No       Female    50 0.167     0.287     0.476
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No       Male     124 0.415     0.713     0.639
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes      Female    55 0.184     0.44      0.524
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes      Male      70 0.234     0.56      0.361
+#&gt; 
+#&gt; $`diabetes vs smoking`
+#&gt; </span><span style='color: #949494;'># A tibble: 6 x 6</span><span>
+#&gt;   diabetes smoking     n    rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No       No        106 0.355      0.609      0.53 
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No       Yes        64 0.214      0.368      0.681
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> No       </span><span style='color: #BB0000;'>NA</span><span>          4 0.013</span><span style='text-decoration: underline;'>4</span><span>     0.023</span><span style='text-decoration: underline;'>0</span><span>     0.8  
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes      No         94 0.314      0.752      0.47 
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> Yes      Yes        30 0.100      0.24       0.319
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> Yes      </span><span style='color: #BB0000;'>NA</span><span>          1 0.003</span><span style='text-decoration: underline;'>34</span><span>    0.008      0.2  
+#&gt; 
+#&gt; $`diabetes vs death_event`
+#&gt; </span><span style='color: #949494;'># A tibble: 4 x 6</span><span>
+#&gt;   diabetes death_event     n  rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No       No            118 0.395     0.678     0.581
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No       Yes            56 0.187     0.322     0.583
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes      No             85 0.284     0.68      0.419
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes      Yes            40 0.134     0.32      0.417
+#&gt; 
+#&gt; $`hblood_pressure vs sex`
+#&gt; </span><span style='color: #949494;'># A tibble: 4 x 6</span><span>
+#&gt;   hblood_pressure sex        n  rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No              Female    61 0.204     0.314     0.581
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No              Male     133 0.445     0.686     0.686
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes             Female    44 0.147     0.419     0.419
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes             Male      61 0.204     0.581     0.314
+#&gt; 
+#&gt; $`hblood_pressure vs smoking`
+#&gt; </span><span style='color: #949494;'># A tibble: 6 x 6</span><span>
+#&gt;   hblood_pressure smoking     n    rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No              No        127 0.425      0.655      0.635
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No              Yes        65 0.217      0.335      0.691
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> No              </span><span style='color: #BB0000;'>NA</span><span>          2 0.006</span><span style='text-decoration: underline;'>69</span><span>    0.010</span><span style='text-decoration: underline;'>3</span><span>     0.4  
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes             No         73 0.244      0.695      0.365
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> Yes             Yes        29 0.097</span><span style='text-decoration: underline;'>0</span><span>     0.276      0.309
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> Yes             </span><span style='color: #BB0000;'>NA</span><span>          3 0.010</span><span style='text-decoration: underline;'>0</span><span>     0.028</span><span style='text-decoration: underline;'>6</span><span>     0.6  
+#&gt; 
+#&gt; $`hblood_pressure vs death_event`
+#&gt; </span><span style='color: #949494;'># A tibble: 4 x 6</span><span>
+#&gt;   hblood_pressure death_event     n  rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No              No            137 0.458     0.706     0.675
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No              Yes            57 0.191     0.294     0.594
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes             No             66 0.221     0.629     0.325
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes             Yes            39 0.130     0.371     0.406
+#&gt; 
+#&gt; $`sex vs smoking`
+#&gt; </span><span style='color: #949494;'># A tibble: 6 x 6</span><span>
+#&gt;   sex    smoking     n    rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> Female No        100 0.334     0.952      0.5   
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> Female Yes         4 0.013</span><span style='text-decoration: underline;'>4</span><span>    0.038</span><span style='text-decoration: underline;'>1</span><span>     0.042</span><span style='text-decoration: underline;'>6</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Female </span><span style='color: #BB0000;'>NA</span><span>          1 0.003</span><span style='text-decoration: underline;'>34</span><span>   0.009</span><span style='text-decoration: underline;'>52</span><span>    0.2   
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Male   No        100 0.334     0.515      0.5   
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> Male   Yes        90 0.301     0.464      0.957 
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> Male   </span><span style='color: #BB0000;'>NA</span><span>          4 0.013</span><span style='text-decoration: underline;'>4</span><span>    0.020</span><span style='text-decoration: underline;'>6</span><span>     0.8   
+#&gt; 
+#&gt; $`sex vs death_event`
+#&gt; </span><span style='color: #949494;'># A tibble: 4 x 6</span><span>
+#&gt;   sex    death_event     n  rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> Female No             71 0.237     0.676     0.350
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> Female Yes            34 0.114     0.324     0.354
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Male   No            132 0.441     0.680     0.650
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Male   Yes            62 0.207     0.320     0.646
+#&gt; 
+#&gt; $`smoking vs death_event`
+#&gt; </span><span style='color: #949494;'># A tibble: 6 x 6</span><span>
+#&gt;   smoking death_event     n    rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No      No            135 0.452       0.675    0.665 
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No      Yes            65 0.217       0.325    0.677 
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes     No             64 0.214       0.681    0.315 
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes     Yes            30 0.100       0.319    0.312 
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> </span><span style='color: #BB0000;'>NA</span><span>      No              4 0.013</span><span style='text-decoration: underline;'>4</span><span>      0.8      0.019</span><span style='text-decoration: underline;'>7</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> </span><span style='color: #BB0000;'>NA</span><span>      Yes             1 0.003</span><span style='text-decoration: underline;'>34</span><span>     0.2      0.010</span><span style='text-decoration: underline;'>4</span><span>
 #&gt; </div><div class='input'>
-<span class='co'># Compare the categorical variables that case of joint the US variable</span>
+<span class='co'># Compare the categorical variables that case of joint the death_event variable</span>
 <span class='no'>all_var</span> <span class='kw'>%&gt;%</span>
-  <span class='st'>"["</span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>all_var</span>) <span class='kw'>%in%</span> <span class='st'>"US"</span>)</div><div class='output co'>#&gt; named list()</div><div class='input'>
-<span class='co'># Compare the two categorical variables</span>
-<span class='no'>two_var</span> <span class='kw'>&lt;-</span> <span class='fu'>compare_category</span>(<span class='no'>carseats</span>, <span class='no'>ShelveLoc</span>, <span class='no'>Urban</span>)
-
-<span class='co'># Print compare_numeric class objects</span>
-<span class='no'>two_var</span></div><div class='output co'>#&gt; $`ShelveLoc vs Urban`
-#&gt; </span><span style='color: #949494;'># A tibble: 8 x 6</span><span>
-#&gt;   ShelveLoc Urban     n   rate var1_rate var2_rate
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> Bad       No       21 0.052</span><span style='text-decoration: underline;'>5</span><span>    0.219      0.181
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> Bad       Yes      73 0.182     0.760      0.262
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Bad       </span><span style='color: #BB0000;'>NA</span><span>        2 0.005     0.020</span><span style='text-decoration: underline;'>8</span><span>     0.4  
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Good      No       28 0.07      0.329      0.241
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> Good      Yes      57 0.142     0.671      0.204
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> Medium    No       67 0.168     0.306      0.578
-#&gt; </span><span style='color: #BCBCBC;'>7</span><span> Medium    Yes     149 0.372     0.680      0.534
-#&gt; </span><span style='color: #BCBCBC;'>8</span><span> Medium    </span><span style='color: #BB0000;'>NA</span><span>        3 0.007</span><span style='text-decoration: underline;'>5</span><span>    0.013</span><span style='text-decoration: underline;'>7</span><span>     0.6  
+  <span class='st'>"["</span>(<span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grep</a></span>(<span class='st'>"death_event"</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>all_var</span>)))</div><div class='output co'>#&gt; $`anaemia vs death_event`
+#&gt; </span><span style='color: #949494;'># A tibble: 4 x 6</span><span>
+#&gt;   anaemia death_event     n  rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No      No            120 0.401     0.706     0.591
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No      Yes            50 0.167     0.294     0.521
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes     No             83 0.278     0.643     0.409
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes     Yes            46 0.154     0.357     0.479
+#&gt; 
+#&gt; $`diabetes vs death_event`
+#&gt; </span><span style='color: #949494;'># A tibble: 4 x 6</span><span>
+#&gt;   diabetes death_event     n  rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No       No            118 0.395     0.678     0.581
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No       Yes            56 0.187     0.322     0.583
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes      No             85 0.284     0.68      0.419
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes      Yes            40 0.134     0.32      0.417
+#&gt; 
+#&gt; $`hblood_pressure vs death_event`
+#&gt; </span><span style='color: #949494;'># A tibble: 4 x 6</span><span>
+#&gt;   hblood_pressure death_event     n  rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No              No            137 0.458     0.706     0.675
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No              Yes            57 0.191     0.294     0.594
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes             No             66 0.221     0.629     0.325
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes             Yes            39 0.130     0.371     0.406
+#&gt; 
+#&gt; $`sex vs death_event`
+#&gt; </span><span style='color: #949494;'># A tibble: 4 x 6</span><span>
+#&gt;   sex    death_event     n  rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> Female No             71 0.237     0.676     0.350
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> Female Yes            34 0.114     0.324     0.354
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Male   No            132 0.441     0.680     0.650
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Male   Yes            62 0.207     0.320     0.646
+#&gt; 
+#&gt; $`smoking vs death_event`
+#&gt; </span><span style='color: #949494;'># A tibble: 6 x 6</span><span>
+#&gt;   smoking death_event     n    rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No      No            135 0.452       0.675    0.665 
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No      Yes            65 0.217       0.325    0.677 
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes     No             64 0.214       0.681    0.315 
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes     Yes            30 0.100       0.319    0.312 
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> </span><span style='color: #BB0000;'>NA</span><span>      No              4 0.013</span><span style='text-decoration: underline;'>4</span><span>      0.8      0.019</span><span style='text-decoration: underline;'>7</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> </span><span style='color: #BB0000;'>NA</span><span>      Yes             1 0.003</span><span style='text-decoration: underline;'>34</span><span>     0.2      0.010</span><span style='text-decoration: underline;'>4</span><span>
 #&gt; </div><div class='input'>
-<span class='co'># Filtering the case of US included NA </span>
+<span class='co'># Compare the two categorical variables</span>
+<span class='no'>two_var</span> <span class='kw'>&lt;-</span> <span class='fu'>compare_category</span>(<span class='no'>heartfailure2</span>, <span class='no'>smoking</span>, <span class='no'>death_event</span>)
+
+<span class='co'># Print compare_category class objects</span>
+<span class='no'>two_var</span></div><div class='output co'>#&gt; $`smoking vs death_event`
+#&gt; </span><span style='color: #949494;'># A tibble: 6 x 6</span><span>
+#&gt;   smoking death_event     n    rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No      No            135 0.452       0.675    0.665 
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No      Yes            65 0.217       0.325    0.677 
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes     No             64 0.214       0.681    0.315 
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes     Yes            30 0.100       0.319    0.312 
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> </span><span style='color: #BB0000;'>NA</span><span>      No              4 0.013</span><span style='text-decoration: underline;'>4</span><span>      0.8      0.019</span><span style='text-decoration: underline;'>7</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> </span><span style='color: #BB0000;'>NA</span><span>      Yes             1 0.003</span><span style='text-decoration: underline;'>34</span><span>     0.2      0.010</span><span style='text-decoration: underline;'>4</span><span>
+#&gt; </div><div class='input'>
+<span class='co'># Filtering the case of smoking included NA </span>
 <span class='no'>two_var</span> <span class='kw'>%&gt;%</span>
   <span class='st'>"[["</span>(<span class='fl'>1</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(!<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>Urban</span>))</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 6 x 6</span><span>
-#&gt;   ShelveLoc Urban     n   rate var1_rate var2_rate
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> Bad       No       21 0.052</span><span style='text-decoration: underline;'>5</span><span>     0.219     0.181
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> Bad       Yes      73 0.182      0.760     0.262
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Good      No       28 0.07       0.329     0.241
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Good      Yes      57 0.142      0.671     0.204
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> Medium    No       67 0.168      0.306     0.578
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> Medium    Yes     149 0.372      0.680     0.534</div><div class='input'>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(!<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>smoking</span>))</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 4 x 6</span><span>
+#&gt;   smoking death_event     n  rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No      No            135 0.452     0.675     0.665
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No      Yes            65 0.217     0.325     0.677
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes     No             64 0.214     0.681     0.315
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes     Yes            30 0.100     0.319     0.312</div><div class='input'>
 <span class='co'># Summary the all case : Return a invisible copy of an object.</span>
-<span class='no'>stat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>all_var</span>)</div><div class='output co'>#&gt; </span><span style='color: #00BBBB;'>──</span><span> </span><span style='color: #00BBBB;'>Contingency tables</span><span> </span><span style='color: #00BBBB;'>─────────────────────────────</span><span> </span><span style='color: #00BBBB;'>Number of table is 3</span><span> </span><span style='color: #00BBBB;'>──</span><span>
-#&gt; $`ShelveLoc vs Urban`
-#&gt;          Urban
-#&gt; ShelveLoc  No Yes
-#&gt;    Bad     21  73
-#&gt;    Good    28  57
-#&gt;    Medium  67 149
+<span class='no'>stat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>all_var</span>)</div><div class='output co'>#&gt; </span><span style='color: #00BBBB;'>──</span><span> </span><span style='color: #00BBBB;'>Contingency tables</span><span> </span><span style='color: #00BBBB;'>────────────────────────────</span><span> </span><span style='color: #00BBBB;'>Number of table is 15</span><span> </span><span style='color: #00BBBB;'>──</span><span>
+#&gt; $`anaemia vs diabetes`
+#&gt;        diabetes
+#&gt; anaemia No Yes
+#&gt;     No  98  72
+#&gt;     Yes 76  53
 #&gt; 
-#&gt; $`ShelveLoc vs US`
-#&gt;          US
-#&gt; ShelveLoc  No Yes
-#&gt;    Bad     34  62
-#&gt;    Good    24  61
-#&gt;    Medium  84 135
+#&gt; $`anaemia vs hblood_pressure`
+#&gt;        hblood_pressure
+#&gt; anaemia  No Yes
+#&gt;     No  113  57
+#&gt;     Yes  81  48
 #&gt; 
-#&gt; $`Urban vs US`
-#&gt;      US
-#&gt; Urban  No Yes
-#&gt;   No   46  70
-#&gt;   Yes  94 185
+#&gt; $`anaemia vs sex`
+#&gt;        sex
+#&gt; anaemia Female Male
+#&gt;     No      53  117
+#&gt;     Yes     52   77
 #&gt; 
-#&gt; </span><span style='color: #00BBBB;'>──</span><span> </span><span style='color: #00BBBB;'>Relative contingency tables</span><span> </span><span style='color: #00BBBB;'>────────────────────</span><span> </span><span style='color: #00BBBB;'>Number of table is 3</span><span> </span><span style='color: #00BBBB;'>──</span><span>
-#&gt; $`ShelveLoc vs Urban`
-#&gt;          Urban
-#&gt; ShelveLoc         No        Yes
-#&gt;    Bad    0.05316456 0.18481013
-#&gt;    Good   0.07088608 0.14430380
-#&gt;    Medium 0.16962025 0.37721519
+#&gt; $`anaemia vs smoking`
+#&gt;        smoking
+#&gt; anaemia  No Yes
+#&gt;     No  106  61
+#&gt;     Yes  94  33
 #&gt; 
-#&gt; $`ShelveLoc vs US`
-#&gt;          US
-#&gt; ShelveLoc     No    Yes
-#&gt;    Bad    0.0850 0.1550
-#&gt;    Good   0.0600 0.1525
-#&gt;    Medium 0.2100 0.3375
+#&gt; $`anaemia vs death_event`
+#&gt;        death_event
+#&gt; anaemia  No Yes
+#&gt;     No  120  50
+#&gt;     Yes  83  46
 #&gt; 
-#&gt; $`Urban vs US`
-#&gt;      US
-#&gt; Urban        No       Yes
-#&gt;   No  0.1164557 0.1772152
-#&gt;   Yes 0.2379747 0.4683544
+#&gt; $`diabetes vs hblood_pressure`
+#&gt;         hblood_pressure
+#&gt; diabetes  No Yes
+#&gt;      No  112  62
+#&gt;      Yes  82  43
 #&gt; 
-#&gt; </span><span style='color: #00BBBB;'>──</span><span> </span><span style='color: #00BBBB;'>Chi-squared contingency table tests</span><span> </span><span style='color: #00BBBB;'>────────────</span><span> </span><span style='color: #00BBBB;'>Number of table is 3</span><span> </span><span style='color: #00BBBB;'>──</span><span>
-#&gt;   variable_1 variable_2 statistic   p.value df
-#&gt; 1  ShelveLoc      Urban  3.044924 0.2181741  2
-#&gt; 2  ShelveLoc         US  2.739667 0.2541492  2
-#&gt; 3      Urban         US  1.026155 0.3110633  1</div><div class='input'>
+#&gt; $`diabetes vs sex`
+#&gt;         sex
+#&gt; diabetes Female Male
+#&gt;      No      50  124
+#&gt;      Yes     55   70
+#&gt; 
+#&gt; $`diabetes vs smoking`
+#&gt;         smoking
+#&gt; diabetes  No Yes
+#&gt;      No  106  64
+#&gt;      Yes  94  30
+#&gt; 
+#&gt; $`diabetes vs death_event`
+#&gt;         death_event
+#&gt; diabetes  No Yes
+#&gt;      No  118  56
+#&gt;      Yes  85  40
+#&gt; 
+#&gt; $`hblood_pressure vs sex`
+#&gt;                sex
+#&gt; hblood_pressure Female Male
+#&gt;             No      61  133
+#&gt;             Yes     44   61
+#&gt; 
+#&gt; $`hblood_pressure vs smoking`
+#&gt;                smoking
+#&gt; hblood_pressure  No Yes
+#&gt;             No  127  65
+#&gt;             Yes  73  29
+#&gt; 
+#&gt; $`hblood_pressure vs death_event`
+#&gt;                death_event
+#&gt; hblood_pressure  No Yes
+#&gt;             No  137  57
+#&gt;             Yes  66  39
+#&gt; 
+#&gt; $`sex vs smoking`
+#&gt;         smoking
+#&gt; sex       No Yes
+#&gt;   Female 100   4
+#&gt;   Male   100  90
+#&gt; 
+#&gt; $`sex vs death_event`
+#&gt;         death_event
+#&gt; sex       No Yes
+#&gt;   Female  71  34
+#&gt;   Male   132  62
+#&gt; 
+#&gt; $`smoking vs death_event`
+#&gt;        death_event
+#&gt; smoking  No Yes
+#&gt;     No  135  65
+#&gt;     Yes  64  30
+#&gt; 
+#&gt; </span><span style='color: #00BBBB;'>──</span><span> </span><span style='color: #00BBBB;'>Relative contingency tables</span><span> </span><span style='color: #00BBBB;'>───────────────────</span><span> </span><span style='color: #00BBBB;'>Number of table is 15</span><span> </span><span style='color: #00BBBB;'>──</span><span>
+#&gt; $`anaemia vs diabetes`
+#&gt;        diabetes
+#&gt; anaemia        No       Yes
+#&gt;     No  0.3277592 0.2408027
+#&gt;     Yes 0.2541806 0.1772575
+#&gt; 
+#&gt; $`anaemia vs hblood_pressure`
+#&gt;        hblood_pressure
+#&gt; anaemia        No       Yes
+#&gt;     No  0.3779264 0.1906355
+#&gt;     Yes 0.2709030 0.1605351
+#&gt; 
+#&gt; $`anaemia vs sex`
+#&gt;        sex
+#&gt; anaemia    Female      Male
+#&gt;     No  0.1772575 0.3913043
+#&gt;     Yes 0.1739130 0.2575251
+#&gt; 
+#&gt; $`anaemia vs smoking`
+#&gt;        smoking
+#&gt; anaemia        No       Yes
+#&gt;     No  0.3605442 0.2074830
+#&gt;     Yes 0.3197279 0.1122449
+#&gt; 
+#&gt; $`anaemia vs death_event`
+#&gt;        death_event
+#&gt; anaemia        No       Yes
+#&gt;     No  0.4013378 0.1672241
+#&gt;     Yes 0.2775920 0.1538462
+#&gt; 
+#&gt; $`diabetes vs hblood_pressure`
+#&gt;         hblood_pressure
+#&gt; diabetes        No       Yes
+#&gt;      No  0.3745819 0.2073579
+#&gt;      Yes 0.2742475 0.1438127
+#&gt; 
+#&gt; $`diabetes vs sex`
+#&gt;         sex
+#&gt; diabetes    Female      Male
+#&gt;      No  0.1672241 0.4147157
+#&gt;      Yes 0.1839465 0.2341137
+#&gt; 
+#&gt; $`diabetes vs smoking`
+#&gt;         smoking
+#&gt; diabetes        No       Yes
+#&gt;      No  0.3605442 0.2176871
+#&gt;      Yes 0.3197279 0.1020408
+#&gt; 
+#&gt; $`diabetes vs death_event`
+#&gt;         death_event
+#&gt; diabetes        No       Yes
+#&gt;      No  0.3946488 0.1872910
+#&gt;      Yes 0.2842809 0.1337793
+#&gt; 
+#&gt; $`hblood_pressure vs sex`
+#&gt;                sex
+#&gt; hblood_pressure    Female      Male
+#&gt;             No  0.2040134 0.4448161
+#&gt;             Yes 0.1471572 0.2040134
+#&gt; 
+#&gt; $`hblood_pressure vs smoking`
+#&gt;                smoking
+#&gt; hblood_pressure         No        Yes
+#&gt;             No  0.43197279 0.22108844
+#&gt;             Yes 0.24829932 0.09863946
+#&gt; 
+#&gt; $`hblood_pressure vs death_event`
+#&gt;                death_event
+#&gt; hblood_pressure        No       Yes
+#&gt;             No  0.4581940 0.1906355
+#&gt;             Yes 0.2207358 0.1304348
+#&gt; 
+#&gt; $`sex vs smoking`
+#&gt;         smoking
+#&gt; sex              No        Yes
+#&gt;   Female 0.34013605 0.01360544
+#&gt;   Male   0.34013605 0.30612245
+#&gt; 
+#&gt; $`sex vs death_event`
+#&gt;         death_event
+#&gt; sex             No       Yes
+#&gt;   Female 0.2374582 0.1137124
+#&gt;   Male   0.4414716 0.2073579
+#&gt; 
+#&gt; $`smoking vs death_event`
+#&gt;        death_event
+#&gt; smoking        No       Yes
+#&gt;     No  0.4591837 0.2210884
+#&gt;     Yes 0.2176871 0.1020408
+#&gt; 
+#&gt; </span><span style='color: #00BBBB;'>──</span><span> </span><span style='color: #00BBBB;'>Chi-squared contingency table tests</span><span> </span><span style='color: #00BBBB;'>───────────</span><span> </span><span style='color: #00BBBB;'>Number of table is 15</span><span> </span><span style='color: #00BBBB;'>──</span><span>
+#&gt;         variable_1      variable_2    statistic      p.value df
+#&gt; 1          anaemia        diabetes 1.035093e-02 9.189634e-01  1
+#&gt; 2          anaemia hblood_pressure 2.893564e-01 5.906333e-01  1
+#&gt; 3          anaemia             sex 2.299464e+00 1.294186e-01  1
+#&gt; 4          anaemia         smoking 3.217705e+00 7.284571e-02  1
+#&gt; 5          anaemia     death_event 1.042175e+00 3.073161e-01  1
+#&gt; 6         diabetes hblood_pressure 9.476710e-03 9.224497e-01  1
+#&gt; 7         diabetes             sex 6.783853e+00 9.198613e-03  1
+#&gt; 8         diabetes         smoking 5.364145e+00 2.055487e-02  1
+#&gt; 9         diabetes     death_event 2.161684e-30 1.000000e+00  1
+#&gt; 10 hblood_pressure             sex 2.829289e+00 9.255934e-02  1
+#&gt; 11 hblood_pressure         smoking 6.685444e-01 4.135595e-01  1
+#&gt; 12 hblood_pressure     death_event 1.543461e+00 2.141034e-01  1
+#&gt; 13             sex         smoking 5.654892e+01 5.481762e-14  1
+#&gt; 14             sex     death_event 0.000000e+00 1.000000e+00  1
+#&gt; 15         smoking     death_event 0.000000e+00 1.000000e+00  1</div><div class='input'>
 <span class='co'># Summary by returned objects</span>
 <span class='no'>stat</span></div><div class='output co'>#&gt; $table
-#&gt; $table$`ShelveLoc vs Urban`
-#&gt;          Urban
-#&gt; ShelveLoc  No Yes
-#&gt;    Bad     21  73
-#&gt;    Good    28  57
-#&gt;    Medium  67 149
+#&gt; $table$`anaemia vs diabetes`
+#&gt;        diabetes
+#&gt; anaemia No Yes
+#&gt;     No  98  72
+#&gt;     Yes 76  53
 #&gt; 
-#&gt; $table$`ShelveLoc vs US`
-#&gt;          US
-#&gt; ShelveLoc  No Yes
-#&gt;    Bad     34  62
-#&gt;    Good    24  61
-#&gt;    Medium  84 135
+#&gt; $table$`anaemia vs hblood_pressure`
+#&gt;        hblood_pressure
+#&gt; anaemia  No Yes
+#&gt;     No  113  57
+#&gt;     Yes  81  48
 #&gt; 
-#&gt; $table$`Urban vs US`
-#&gt;      US
-#&gt; Urban  No Yes
-#&gt;   No   46  70
-#&gt;   Yes  94 185
+#&gt; $table$`anaemia vs sex`
+#&gt;        sex
+#&gt; anaemia Female Male
+#&gt;     No      53  117
+#&gt;     Yes     52   77
+#&gt; 
+#&gt; $table$`anaemia vs smoking`
+#&gt;        smoking
+#&gt; anaemia  No Yes
+#&gt;     No  106  61
+#&gt;     Yes  94  33
+#&gt; 
+#&gt; $table$`anaemia vs death_event`
+#&gt;        death_event
+#&gt; anaemia  No Yes
+#&gt;     No  120  50
+#&gt;     Yes  83  46
+#&gt; 
+#&gt; $table$`diabetes vs hblood_pressure`
+#&gt;         hblood_pressure
+#&gt; diabetes  No Yes
+#&gt;      No  112  62
+#&gt;      Yes  82  43
+#&gt; 
+#&gt; $table$`diabetes vs sex`
+#&gt;         sex
+#&gt; diabetes Female Male
+#&gt;      No      50  124
+#&gt;      Yes     55   70
+#&gt; 
+#&gt; $table$`diabetes vs smoking`
+#&gt;         smoking
+#&gt; diabetes  No Yes
+#&gt;      No  106  64
+#&gt;      Yes  94  30
+#&gt; 
+#&gt; $table$`diabetes vs death_event`
+#&gt;         death_event
+#&gt; diabetes  No Yes
+#&gt;      No  118  56
+#&gt;      Yes  85  40
+#&gt; 
+#&gt; $table$`hblood_pressure vs sex`
+#&gt;                sex
+#&gt; hblood_pressure Female Male
+#&gt;             No      61  133
+#&gt;             Yes     44   61
+#&gt; 
+#&gt; $table$`hblood_pressure vs smoking`
+#&gt;                smoking
+#&gt; hblood_pressure  No Yes
+#&gt;             No  127  65
+#&gt;             Yes  73  29
+#&gt; 
+#&gt; $table$`hblood_pressure vs death_event`
+#&gt;                death_event
+#&gt; hblood_pressure  No Yes
+#&gt;             No  137  57
+#&gt;             Yes  66  39
+#&gt; 
+#&gt; $table$`sex vs smoking`
+#&gt;         smoking
+#&gt; sex       No Yes
+#&gt;   Female 100   4
+#&gt;   Male   100  90
+#&gt; 
+#&gt; $table$`sex vs death_event`
+#&gt;         death_event
+#&gt; sex       No Yes
+#&gt;   Female  71  34
+#&gt;   Male   132  62
+#&gt; 
+#&gt; $table$`smoking vs death_event`
+#&gt;        death_event
+#&gt; smoking  No Yes
+#&gt;     No  135  65
+#&gt;     Yes  64  30
 #&gt; 
 #&gt; 
 #&gt; $relative
-#&gt; $relative$`ShelveLoc vs Urban`
-#&gt;          Urban
-#&gt; ShelveLoc         No        Yes
-#&gt;    Bad    0.05316456 0.18481013
-#&gt;    Good   0.07088608 0.14430380
-#&gt;    Medium 0.16962025 0.37721519
+#&gt; $relative$`anaemia vs diabetes`
+#&gt;        diabetes
+#&gt; anaemia        No       Yes
+#&gt;     No  0.3277592 0.2408027
+#&gt;     Yes 0.2541806 0.1772575
 #&gt; 
-#&gt; $relative$`ShelveLoc vs US`
-#&gt;          US
-#&gt; ShelveLoc     No    Yes
-#&gt;    Bad    0.0850 0.1550
-#&gt;    Good   0.0600 0.1525
-#&gt;    Medium 0.2100 0.3375
+#&gt; $relative$`anaemia vs hblood_pressure`
+#&gt;        hblood_pressure
+#&gt; anaemia        No       Yes
+#&gt;     No  0.3779264 0.1906355
+#&gt;     Yes 0.2709030 0.1605351
 #&gt; 
-#&gt; $relative$`Urban vs US`
-#&gt;      US
-#&gt; Urban        No       Yes
-#&gt;   No  0.1164557 0.1772152
-#&gt;   Yes 0.2379747 0.4683544
+#&gt; $relative$`anaemia vs sex`
+#&gt;        sex
+#&gt; anaemia    Female      Male
+#&gt;     No  0.1772575 0.3913043
+#&gt;     Yes 0.1739130 0.2575251
+#&gt; 
+#&gt; $relative$`anaemia vs smoking`
+#&gt;        smoking
+#&gt; anaemia        No       Yes
+#&gt;     No  0.3605442 0.2074830
+#&gt;     Yes 0.3197279 0.1122449
+#&gt; 
+#&gt; $relative$`anaemia vs death_event`
+#&gt;        death_event
+#&gt; anaemia        No       Yes
+#&gt;     No  0.4013378 0.1672241
+#&gt;     Yes 0.2775920 0.1538462
+#&gt; 
+#&gt; $relative$`diabetes vs hblood_pressure`
+#&gt;         hblood_pressure
+#&gt; diabetes        No       Yes
+#&gt;      No  0.3745819 0.2073579
+#&gt;      Yes 0.2742475 0.1438127
+#&gt; 
+#&gt; $relative$`diabetes vs sex`
+#&gt;         sex
+#&gt; diabetes    Female      Male
+#&gt;      No  0.1672241 0.4147157
+#&gt;      Yes 0.1839465 0.2341137
+#&gt; 
+#&gt; $relative$`diabetes vs smoking`
+#&gt;         smoking
+#&gt; diabetes        No       Yes
+#&gt;      No  0.3605442 0.2176871
+#&gt;      Yes 0.3197279 0.1020408
+#&gt; 
+#&gt; $relative$`diabetes vs death_event`
+#&gt;         death_event
+#&gt; diabetes        No       Yes
+#&gt;      No  0.3946488 0.1872910
+#&gt;      Yes 0.2842809 0.1337793
+#&gt; 
+#&gt; $relative$`hblood_pressure vs sex`
+#&gt;                sex
+#&gt; hblood_pressure    Female      Male
+#&gt;             No  0.2040134 0.4448161
+#&gt;             Yes 0.1471572 0.2040134
+#&gt; 
+#&gt; $relative$`hblood_pressure vs smoking`
+#&gt;                smoking
+#&gt; hblood_pressure         No        Yes
+#&gt;             No  0.43197279 0.22108844
+#&gt;             Yes 0.24829932 0.09863946
+#&gt; 
+#&gt; $relative$`hblood_pressure vs death_event`
+#&gt;                death_event
+#&gt; hblood_pressure        No       Yes
+#&gt;             No  0.4581940 0.1906355
+#&gt;             Yes 0.2207358 0.1304348
+#&gt; 
+#&gt; $relative$`sex vs smoking`
+#&gt;         smoking
+#&gt; sex              No        Yes
+#&gt;   Female 0.34013605 0.01360544
+#&gt;   Male   0.34013605 0.30612245
+#&gt; 
+#&gt; $relative$`sex vs death_event`
+#&gt;         death_event
+#&gt; sex             No       Yes
+#&gt;   Female 0.2374582 0.1137124
+#&gt;   Male   0.4414716 0.2073579
+#&gt; 
+#&gt; $relative$`smoking vs death_event`
+#&gt;        death_event
+#&gt; smoking        No       Yes
+#&gt;     No  0.4591837 0.2210884
+#&gt;     Yes 0.2176871 0.1020408
 #&gt; 
 #&gt; 
 #&gt; $chisq
-#&gt;   variable_1 variable_2 statistic   p.value df
-#&gt; 1  ShelveLoc      Urban  3.044924 0.2181741  2
-#&gt; 2  ShelveLoc         US  2.739667 0.2541492  2
-#&gt; 3      Urban         US  1.026155 0.3110633  1
+#&gt;         variable_1      variable_2    statistic      p.value df
+#&gt; 1          anaemia        diabetes 1.035093e-02 9.189634e-01  1
+#&gt; 2          anaemia hblood_pressure 2.893564e-01 5.906333e-01  1
+#&gt; 3          anaemia             sex 2.299464e+00 1.294186e-01  1
+#&gt; 4          anaemia         smoking 3.217705e+00 7.284571e-02  1
+#&gt; 5          anaemia     death_event 1.042175e+00 3.073161e-01  1
+#&gt; 6         diabetes hblood_pressure 9.476710e-03 9.224497e-01  1
+#&gt; 7         diabetes             sex 6.783853e+00 9.198613e-03  1
+#&gt; 8         diabetes         smoking 5.364145e+00 2.055487e-02  1
+#&gt; 9         diabetes     death_event 2.161684e-30 1.000000e+00  1
+#&gt; 10 hblood_pressure             sex 2.829289e+00 9.255934e-02  1
+#&gt; 11 hblood_pressure         smoking 6.685444e-01 4.135595e-01  1
+#&gt; 12 hblood_pressure     death_event 1.543461e+00 2.141034e-01  1
+#&gt; 13             sex         smoking 5.654892e+01 5.481762e-14  1
+#&gt; 14             sex     death_event 0.000000e+00 1.000000e+00  1
+#&gt; 15         smoking     death_event 0.000000e+00 1.000000e+00  1
 #&gt; </div><div class='input'>
 <span class='co'># component of table </span>
-<span class='no'>stat</span>$<span class='no'>table</span></div><div class='output co'>#&gt; $`ShelveLoc vs Urban`
-#&gt;          Urban
-#&gt; ShelveLoc  No Yes
-#&gt;    Bad     21  73
-#&gt;    Good    28  57
-#&gt;    Medium  67 149
+<span class='no'>stat</span>$<span class='no'>table</span></div><div class='output co'>#&gt; $`anaemia vs diabetes`
+#&gt;        diabetes
+#&gt; anaemia No Yes
+#&gt;     No  98  72
+#&gt;     Yes 76  53
 #&gt; 
-#&gt; $`ShelveLoc vs US`
-#&gt;          US
-#&gt; ShelveLoc  No Yes
-#&gt;    Bad     34  62
-#&gt;    Good    24  61
-#&gt;    Medium  84 135
+#&gt; $`anaemia vs hblood_pressure`
+#&gt;        hblood_pressure
+#&gt; anaemia  No Yes
+#&gt;     No  113  57
+#&gt;     Yes  81  48
 #&gt; 
-#&gt; $`Urban vs US`
-#&gt;      US
-#&gt; Urban  No Yes
-#&gt;   No   46  70
-#&gt;   Yes  94 185
+#&gt; $`anaemia vs sex`
+#&gt;        sex
+#&gt; anaemia Female Male
+#&gt;     No      53  117
+#&gt;     Yes     52   77
+#&gt; 
+#&gt; $`anaemia vs smoking`
+#&gt;        smoking
+#&gt; anaemia  No Yes
+#&gt;     No  106  61
+#&gt;     Yes  94  33
+#&gt; 
+#&gt; $`anaemia vs death_event`
+#&gt;        death_event
+#&gt; anaemia  No Yes
+#&gt;     No  120  50
+#&gt;     Yes  83  46
+#&gt; 
+#&gt; $`diabetes vs hblood_pressure`
+#&gt;         hblood_pressure
+#&gt; diabetes  No Yes
+#&gt;      No  112  62
+#&gt;      Yes  82  43
+#&gt; 
+#&gt; $`diabetes vs sex`
+#&gt;         sex
+#&gt; diabetes Female Male
+#&gt;      No      50  124
+#&gt;      Yes     55   70
+#&gt; 
+#&gt; $`diabetes vs smoking`
+#&gt;         smoking
+#&gt; diabetes  No Yes
+#&gt;      No  106  64
+#&gt;      Yes  94  30
+#&gt; 
+#&gt; $`diabetes vs death_event`
+#&gt;         death_event
+#&gt; diabetes  No Yes
+#&gt;      No  118  56
+#&gt;      Yes  85  40
+#&gt; 
+#&gt; $`hblood_pressure vs sex`
+#&gt;                sex
+#&gt; hblood_pressure Female Male
+#&gt;             No      61  133
+#&gt;             Yes     44   61
+#&gt; 
+#&gt; $`hblood_pressure vs smoking`
+#&gt;                smoking
+#&gt; hblood_pressure  No Yes
+#&gt;             No  127  65
+#&gt;             Yes  73  29
+#&gt; 
+#&gt; $`hblood_pressure vs death_event`
+#&gt;                death_event
+#&gt; hblood_pressure  No Yes
+#&gt;             No  137  57
+#&gt;             Yes  66  39
+#&gt; 
+#&gt; $`sex vs smoking`
+#&gt;         smoking
+#&gt; sex       No Yes
+#&gt;   Female 100   4
+#&gt;   Male   100  90
+#&gt; 
+#&gt; $`sex vs death_event`
+#&gt;         death_event
+#&gt; sex       No Yes
+#&gt;   Female  71  34
+#&gt;   Male   132  62
+#&gt; 
+#&gt; $`smoking vs death_event`
+#&gt;        death_event
+#&gt; smoking  No Yes
+#&gt;     No  135  65
+#&gt;     Yes  64  30
 #&gt; </div><div class='input'>
 <span class='co'># component of chi-square test </span>
-<span class='no'>stat</span>$<span class='no'>chisq</span></div><div class='output co'>#&gt;   variable_1 variable_2 statistic   p.value df
-#&gt; 1  ShelveLoc      Urban  3.044924 0.2181741  2
-#&gt; 2  ShelveLoc         US  2.739667 0.2541492  2
-#&gt; 3      Urban         US  1.026155 0.3110633  1</div><div class='input'>
+<span class='no'>stat</span>$<span class='no'>chisq</span></div><div class='output co'>#&gt;         variable_1      variable_2    statistic      p.value df
+#&gt; 1          anaemia        diabetes 1.035093e-02 9.189634e-01  1
+#&gt; 2          anaemia hblood_pressure 2.893564e-01 5.906333e-01  1
+#&gt; 3          anaemia             sex 2.299464e+00 1.294186e-01  1
+#&gt; 4          anaemia         smoking 3.217705e+00 7.284571e-02  1
+#&gt; 5          anaemia     death_event 1.042175e+00 3.073161e-01  1
+#&gt; 6         diabetes hblood_pressure 9.476710e-03 9.224497e-01  1
+#&gt; 7         diabetes             sex 6.783853e+00 9.198613e-03  1
+#&gt; 8         diabetes         smoking 5.364145e+00 2.055487e-02  1
+#&gt; 9         diabetes     death_event 2.161684e-30 1.000000e+00  1
+#&gt; 10 hblood_pressure             sex 2.829289e+00 9.255934e-02  1
+#&gt; 11 hblood_pressure         smoking 6.685444e-01 4.135595e-01  1
+#&gt; 12 hblood_pressure     death_event 1.543461e+00 2.141034e-01  1
+#&gt; 13             sex         smoking 5.654892e+01 5.481762e-14  1
+#&gt; 14             sex     death_event 0.000000e+00 1.000000e+00  1
+#&gt; 15         smoking     death_event 0.000000e+00 1.000000e+00  1</div><div class='input'>
 <span class='co'># component of chi-square test </span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>all_var</span>, <span class='st'>"chisq"</span>)</div><div class='output co'>#&gt; </span><span style='color: #00BBBB;'>──</span><span> </span><span style='color: #00BBBB;'>Chi-squared contingency table tests</span><span> </span><span style='color: #00BBBB;'>────────────</span><span> </span><span style='color: #00BBBB;'>Number of table is 3</span><span> </span><span style='color: #00BBBB;'>──</span><span>
-#&gt;   variable_1 variable_2 statistic   p.value df
-#&gt; 1  ShelveLoc      Urban  3.044924 0.2181741  2
-#&gt; 2  ShelveLoc         US  2.739667 0.2541492  2
-#&gt; 3      Urban         US  1.026155 0.3110633  1</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>all_var</span>, <span class='st'>"chisq"</span>)</div><div class='output co'>#&gt; </span><span style='color: #00BBBB;'>──</span><span> </span><span style='color: #00BBBB;'>Chi-squared contingency table tests</span><span> </span><span style='color: #00BBBB;'>───────────</span><span> </span><span style='color: #00BBBB;'>Number of table is 15</span><span> </span><span style='color: #00BBBB;'>──</span><span>
+#&gt;         variable_1      variable_2    statistic      p.value df
+#&gt; 1          anaemia        diabetes 1.035093e-02 9.189634e-01  1
+#&gt; 2          anaemia hblood_pressure 2.893564e-01 5.906333e-01  1
+#&gt; 3          anaemia             sex 2.299464e+00 1.294186e-01  1
+#&gt; 4          anaemia         smoking 3.217705e+00 7.284571e-02  1
+#&gt; 5          anaemia     death_event 1.042175e+00 3.073161e-01  1
+#&gt; 6         diabetes hblood_pressure 9.476710e-03 9.224497e-01  1
+#&gt; 7         diabetes             sex 6.783853e+00 9.198613e-03  1
+#&gt; 8         diabetes         smoking 5.364145e+00 2.055487e-02  1
+#&gt; 9         diabetes     death_event 2.161684e-30 1.000000e+00  1
+#&gt; 10 hblood_pressure             sex 2.829289e+00 9.255934e-02  1
+#&gt; 11 hblood_pressure         smoking 6.685444e-01 4.135595e-01  1
+#&gt; 12 hblood_pressure     death_event 1.543461e+00 2.141034e-01  1
+#&gt; 13             sex         smoking 5.654892e+01 5.481762e-14  1
+#&gt; 14             sex     death_event 0.000000e+00 1.000000e+00  1
+#&gt; 15         smoking     death_event 0.000000e+00 1.000000e+00  1</div><div class='input'>
 <span class='co'># component of chi-square test (first, third case)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>all_var</span>, <span class='st'>"chisq"</span>, <span class='kw'>pos</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>3</span>))</div><div class='output co'>#&gt; </span><span style='color: #00BBBB;'>──</span><span> </span><span style='color: #00BBBB;'>Chi-squared contingency table tests</span><span> </span><span style='color: #00BBBB;'>────────────</span><span> </span><span style='color: #00BBBB;'>Number of table is 2</span><span> </span><span style='color: #00BBBB;'>──</span><span>
-#&gt;   variable_1 variable_2 statistic   p.value df
-#&gt; 1  ShelveLoc      Urban  3.044924 0.2181741  2
-#&gt; 2      Urban         US  1.026155 0.3110633  1</div><div class='input'>
+#&gt;   variable_1 variable_2  statistic   p.value df
+#&gt; 1    anaemia   diabetes 0.01035093 0.9189634  1
+#&gt; 2    anaemia        sex 2.29946450 0.1294186  1</div><div class='input'>
 <span class='co'># component of relative frequency table </span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>all_var</span>, <span class='st'>"relative"</span>)</div><div class='output co'>#&gt; </span><span style='color: #00BBBB;'>──</span><span> </span><span style='color: #00BBBB;'>Relative contingency tables</span><span> </span><span style='color: #00BBBB;'>────────────────────</span><span> </span><span style='color: #00BBBB;'>Number of table is 3</span><span> </span><span style='color: #00BBBB;'>──</span><span>
-#&gt; $`ShelveLoc vs Urban`
-#&gt;          Urban
-#&gt; ShelveLoc         No        Yes
-#&gt;    Bad    0.05316456 0.18481013
-#&gt;    Good   0.07088608 0.14430380
-#&gt;    Medium 0.16962025 0.37721519
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>all_var</span>, <span class='st'>"relative"</span>)</div><div class='output co'>#&gt; </span><span style='color: #00BBBB;'>──</span><span> </span><span style='color: #00BBBB;'>Relative contingency tables</span><span> </span><span style='color: #00BBBB;'>───────────────────</span><span> </span><span style='color: #00BBBB;'>Number of table is 15</span><span> </span><span style='color: #00BBBB;'>──</span><span>
+#&gt; $`anaemia vs diabetes`
+#&gt;        diabetes
+#&gt; anaemia        No       Yes
+#&gt;     No  0.3277592 0.2408027
+#&gt;     Yes 0.2541806 0.1772575
 #&gt; 
-#&gt; $`ShelveLoc vs US`
-#&gt;          US
-#&gt; ShelveLoc     No    Yes
-#&gt;    Bad    0.0850 0.1550
-#&gt;    Good   0.0600 0.1525
-#&gt;    Medium 0.2100 0.3375
+#&gt; $`anaemia vs hblood_pressure`
+#&gt;        hblood_pressure
+#&gt; anaemia        No       Yes
+#&gt;     No  0.3779264 0.1906355
+#&gt;     Yes 0.2709030 0.1605351
 #&gt; 
-#&gt; $`Urban vs US`
-#&gt;      US
-#&gt; Urban        No       Yes
-#&gt;   No  0.1164557 0.1772152
-#&gt;   Yes 0.2379747 0.4683544
+#&gt; $`anaemia vs sex`
+#&gt;        sex
+#&gt; anaemia    Female      Male
+#&gt;     No  0.1772575 0.3913043
+#&gt;     Yes 0.1739130 0.2575251
+#&gt; 
+#&gt; $`anaemia vs smoking`
+#&gt;        smoking
+#&gt; anaemia        No       Yes
+#&gt;     No  0.3605442 0.2074830
+#&gt;     Yes 0.3197279 0.1122449
+#&gt; 
+#&gt; $`anaemia vs death_event`
+#&gt;        death_event
+#&gt; anaemia        No       Yes
+#&gt;     No  0.4013378 0.1672241
+#&gt;     Yes 0.2775920 0.1538462
+#&gt; 
+#&gt; $`diabetes vs hblood_pressure`
+#&gt;         hblood_pressure
+#&gt; diabetes        No       Yes
+#&gt;      No  0.3745819 0.2073579
+#&gt;      Yes 0.2742475 0.1438127
+#&gt; 
+#&gt; $`diabetes vs sex`
+#&gt;         sex
+#&gt; diabetes    Female      Male
+#&gt;      No  0.1672241 0.4147157
+#&gt;      Yes 0.1839465 0.2341137
+#&gt; 
+#&gt; $`diabetes vs smoking`
+#&gt;         smoking
+#&gt; diabetes        No       Yes
+#&gt;      No  0.3605442 0.2176871
+#&gt;      Yes 0.3197279 0.1020408
+#&gt; 
+#&gt; $`diabetes vs death_event`
+#&gt;         death_event
+#&gt; diabetes        No       Yes
+#&gt;      No  0.3946488 0.1872910
+#&gt;      Yes 0.2842809 0.1337793
+#&gt; 
+#&gt; $`hblood_pressure vs sex`
+#&gt;                sex
+#&gt; hblood_pressure    Female      Male
+#&gt;             No  0.2040134 0.4448161
+#&gt;             Yes 0.1471572 0.2040134
+#&gt; 
+#&gt; $`hblood_pressure vs smoking`
+#&gt;                smoking
+#&gt; hblood_pressure         No        Yes
+#&gt;             No  0.43197279 0.22108844
+#&gt;             Yes 0.24829932 0.09863946
+#&gt; 
+#&gt; $`hblood_pressure vs death_event`
+#&gt;                death_event
+#&gt; hblood_pressure        No       Yes
+#&gt;             No  0.4581940 0.1906355
+#&gt;             Yes 0.2207358 0.1304348
+#&gt; 
+#&gt; $`sex vs smoking`
+#&gt;         smoking
+#&gt; sex              No        Yes
+#&gt;   Female 0.34013605 0.01360544
+#&gt;   Male   0.34013605 0.30612245
+#&gt; 
+#&gt; $`sex vs death_event`
+#&gt;         death_event
+#&gt; sex             No       Yes
+#&gt;   Female 0.2374582 0.1137124
+#&gt;   Male   0.4414716 0.2073579
+#&gt; 
+#&gt; $`smoking vs death_event`
+#&gt;        death_event
+#&gt; smoking        No       Yes
+#&gt;     No  0.4591837 0.2210884
+#&gt;     Yes 0.2176871 0.1020408
 #&gt; </div><div class='input'>
 <span class='co'># component of table without missing values </span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>all_var</span>, <span class='st'>"table"</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #00BBBB;'>──</span><span> </span><span style='color: #00BBBB;'>Contingency tables</span><span> </span><span style='color: #00BBBB;'>─────────────────────────────</span><span> </span><span style='color: #00BBBB;'>Number of table is 3</span><span> </span><span style='color: #00BBBB;'>──</span><span>
-#&gt; $`ShelveLoc vs Urban`
-#&gt;          Urban
-#&gt; ShelveLoc  No Yes
-#&gt;    Bad     21  73
-#&gt;    Good    28  57
-#&gt;    Medium  67 149
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>all_var</span>, <span class='st'>"table"</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #00BBBB;'>──</span><span> </span><span style='color: #00BBBB;'>Contingency tables</span><span> </span><span style='color: #00BBBB;'>────────────────────────────</span><span> </span><span style='color: #00BBBB;'>Number of table is 15</span><span> </span><span style='color: #00BBBB;'>──</span><span>
+#&gt; $`anaemia vs diabetes`
+#&gt;        diabetes
+#&gt; anaemia No Yes
+#&gt;     No  98  72
+#&gt;     Yes 76  53
 #&gt; 
-#&gt; $`ShelveLoc vs US`
-#&gt;          US
-#&gt; ShelveLoc  No Yes
-#&gt;    Bad     34  62
-#&gt;    Good    24  61
-#&gt;    Medium  84 135
+#&gt; $`anaemia vs hblood_pressure`
+#&gt;        hblood_pressure
+#&gt; anaemia  No Yes
+#&gt;     No  113  57
+#&gt;     Yes  81  48
 #&gt; 
-#&gt; $`Urban vs US`
-#&gt;      US
-#&gt; Urban  No Yes
-#&gt;   No   46  70
-#&gt;   Yes  94 185
+#&gt; $`anaemia vs sex`
+#&gt;        sex
+#&gt; anaemia Female Male
+#&gt;     No      53  117
+#&gt;     Yes     52   77
+#&gt; 
+#&gt; $`anaemia vs smoking`
+#&gt;        smoking
+#&gt; anaemia  No Yes
+#&gt;     No  106  61
+#&gt;     Yes  94  33
+#&gt; 
+#&gt; $`anaemia vs death_event`
+#&gt;        death_event
+#&gt; anaemia  No Yes
+#&gt;     No  120  50
+#&gt;     Yes  83  46
+#&gt; 
+#&gt; $`diabetes vs hblood_pressure`
+#&gt;         hblood_pressure
+#&gt; diabetes  No Yes
+#&gt;      No  112  62
+#&gt;      Yes  82  43
+#&gt; 
+#&gt; $`diabetes vs sex`
+#&gt;         sex
+#&gt; diabetes Female Male
+#&gt;      No      50  124
+#&gt;      Yes     55   70
+#&gt; 
+#&gt; $`diabetes vs smoking`
+#&gt;         smoking
+#&gt; diabetes  No Yes
+#&gt;      No  106  64
+#&gt;      Yes  94  30
+#&gt; 
+#&gt; $`diabetes vs death_event`
+#&gt;         death_event
+#&gt; diabetes  No Yes
+#&gt;      No  118  56
+#&gt;      Yes  85  40
+#&gt; 
+#&gt; $`hblood_pressure vs sex`
+#&gt;                sex
+#&gt; hblood_pressure Female Male
+#&gt;             No      61  133
+#&gt;             Yes     44   61
+#&gt; 
+#&gt; $`hblood_pressure vs smoking`
+#&gt;                smoking
+#&gt; hblood_pressure  No Yes
+#&gt;             No  127  65
+#&gt;             Yes  73  29
+#&gt; 
+#&gt; $`hblood_pressure vs death_event`
+#&gt;                death_event
+#&gt; hblood_pressure  No Yes
+#&gt;             No  137  57
+#&gt;             Yes  66  39
+#&gt; 
+#&gt; $`sex vs smoking`
+#&gt;         smoking
+#&gt; sex       No Yes
+#&gt;   Female 100   4
+#&gt;   Male   100  90
+#&gt; 
+#&gt; $`sex vs death_event`
+#&gt;         death_event
+#&gt; sex       No Yes
+#&gt;   Female  71  34
+#&gt;   Male   132  62
+#&gt; 
+#&gt; $`smoking vs death_event`
+#&gt;        death_event
+#&gt; smoking  No Yes
+#&gt;     No  135  65
+#&gt;     Yes  64  30
 #&gt; </div><div class='input'>
 <span class='co'># component of table include marginal value </span>
-<span class='no'>margin</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>all_var</span>, <span class='st'>"table"</span>, <span class='kw'>marginal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #00BBBB;'>──</span><span> </span><span style='color: #00BBBB;'>Contingency tables</span><span> </span><span style='color: #00BBBB;'>─────────────────────────────</span><span> </span><span style='color: #00BBBB;'>Number of table is 3</span><span> </span><span style='color: #00BBBB;'>──</span><span>
-#&gt; $`ShelveLoc vs Urban`
-#&gt;          Urban
-#&gt; ShelveLoc  No Yes &lt;Total&gt;
-#&gt;   Bad      21  73      94
-#&gt;   Good     28  57      85
-#&gt;   Medium   67 149     216
-#&gt;   &lt;Total&gt; 116 279     395
+<span class='no'>margin</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>all_var</span>, <span class='st'>"table"</span>, <span class='kw'>marginal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #00BBBB;'>──</span><span> </span><span style='color: #00BBBB;'>Contingency tables</span><span> </span><span style='color: #00BBBB;'>────────────────────────────</span><span> </span><span style='color: #00BBBB;'>Number of table is 15</span><span> </span><span style='color: #00BBBB;'>──</span><span>
+#&gt; $`anaemia vs diabetes`
+#&gt;          diabetes
+#&gt; anaemia    No Yes &lt;Total&gt;
+#&gt;   No       98  72     170
+#&gt;   Yes      76  53     129
+#&gt;   &lt;Total&gt; 174 125     299
 #&gt; 
-#&gt; $`ShelveLoc vs US`
-#&gt;          US
-#&gt; ShelveLoc  No Yes &lt;Total&gt;
-#&gt;   Bad      34  62      96
-#&gt;   Good     24  61      85
-#&gt;   Medium   84 135     219
-#&gt;   &lt;Total&gt; 142 258     400
+#&gt; $`anaemia vs hblood_pressure`
+#&gt;          hblood_pressure
+#&gt; anaemia    No Yes &lt;Total&gt;
+#&gt;   No      113  57     170
+#&gt;   Yes      81  48     129
+#&gt;   &lt;Total&gt; 194 105     299
 #&gt; 
-#&gt; $`Urban vs US`
-#&gt;          US
-#&gt; Urban      No Yes &lt;Total&gt;
-#&gt;   No       46  70     116
-#&gt;   Yes      94 185     279
-#&gt;   &lt;Total&gt; 140 255     395
-#&gt; </div><div class='input'><span class='no'>margin</span></div><div class='output co'>#&gt; $`ShelveLoc vs Urban`
-#&gt;          Urban
-#&gt; ShelveLoc  No Yes &lt;Total&gt;
-#&gt;   Bad      21  73      94
-#&gt;   Good     28  57      85
-#&gt;   Medium   67 149     216
-#&gt;   &lt;Total&gt; 116 279     395
+#&gt; $`anaemia vs sex`
+#&gt;          sex
+#&gt; anaemia   Female Male &lt;Total&gt;
+#&gt;   No          53  117     170
+#&gt;   Yes         52   77     129
+#&gt;   &lt;Total&gt;    105  194     299
 #&gt; 
-#&gt; $`ShelveLoc vs US`
-#&gt;          US
-#&gt; ShelveLoc  No Yes &lt;Total&gt;
-#&gt;   Bad      34  62      96
-#&gt;   Good     24  61      85
-#&gt;   Medium   84 135     219
-#&gt;   &lt;Total&gt; 142 258     400
+#&gt; $`anaemia vs smoking`
+#&gt;          smoking
+#&gt; anaemia    No Yes &lt;Total&gt;
+#&gt;   No      106  61     167
+#&gt;   Yes      94  33     127
+#&gt;   &lt;Total&gt; 200  94     294
 #&gt; 
-#&gt; $`Urban vs US`
-#&gt;          US
-#&gt; Urban      No Yes &lt;Total&gt;
-#&gt;   No       46  70     116
-#&gt;   Yes      94 185     279
-#&gt;   &lt;Total&gt; 140 255     395
+#&gt; $`anaemia vs death_event`
+#&gt;          death_event
+#&gt; anaemia    No Yes &lt;Total&gt;
+#&gt;   No      120  50     170
+#&gt;   Yes      83  46     129
+#&gt;   &lt;Total&gt; 203  96     299
+#&gt; 
+#&gt; $`diabetes vs hblood_pressure`
+#&gt;          hblood_pressure
+#&gt; diabetes   No Yes &lt;Total&gt;
+#&gt;   No      112  62     174
+#&gt;   Yes      82  43     125
+#&gt;   &lt;Total&gt; 194 105     299
+#&gt; 
+#&gt; $`diabetes vs sex`
+#&gt;          sex
+#&gt; diabetes  Female Male &lt;Total&gt;
+#&gt;   No          50  124     174
+#&gt;   Yes         55   70     125
+#&gt;   &lt;Total&gt;    105  194     299
+#&gt; 
+#&gt; $`diabetes vs smoking`
+#&gt;          smoking
+#&gt; diabetes   No Yes &lt;Total&gt;
+#&gt;   No      106  64     170
+#&gt;   Yes      94  30     124
+#&gt;   &lt;Total&gt; 200  94     294
+#&gt; 
+#&gt; $`diabetes vs death_event`
+#&gt;          death_event
+#&gt; diabetes   No Yes &lt;Total&gt;
+#&gt;   No      118  56     174
+#&gt;   Yes      85  40     125
+#&gt;   &lt;Total&gt; 203  96     299
+#&gt; 
+#&gt; $`hblood_pressure vs sex`
+#&gt;                sex
+#&gt; hblood_pressure Female Male &lt;Total&gt;
+#&gt;         No          61  133     194
+#&gt;         Yes         44   61     105
+#&gt;         &lt;Total&gt;    105  194     299
+#&gt; 
+#&gt; $`hblood_pressure vs smoking`
+#&gt;                smoking
+#&gt; hblood_pressure  No Yes &lt;Total&gt;
+#&gt;         No      127  65     192
+#&gt;         Yes      73  29     102
+#&gt;         &lt;Total&gt; 200  94     294
+#&gt; 
+#&gt; $`hblood_pressure vs death_event`
+#&gt;                death_event
+#&gt; hblood_pressure  No Yes &lt;Total&gt;
+#&gt;         No      137  57     194
+#&gt;         Yes      66  39     105
+#&gt;         &lt;Total&gt; 203  96     299
+#&gt; 
+#&gt; $`sex vs smoking`
+#&gt;          smoking
+#&gt; sex        No Yes &lt;Total&gt;
+#&gt;   Female  100   4     104
+#&gt;   Male    100  90     190
+#&gt;   &lt;Total&gt; 200  94     294
+#&gt; 
+#&gt; $`sex vs death_event`
+#&gt;          death_event
+#&gt; sex        No Yes &lt;Total&gt;
+#&gt;   Female   71  34     105
+#&gt;   Male    132  62     194
+#&gt;   &lt;Total&gt; 203  96     299
+#&gt; 
+#&gt; $`smoking vs death_event`
+#&gt;          death_event
+#&gt; smoking    No Yes &lt;Total&gt;
+#&gt;   No      135  65     200
+#&gt;   Yes      64  30      94
+#&gt;   &lt;Total&gt; 199  95     294
+#&gt; </div><div class='input'><span class='no'>margin</span></div><div class='output co'>#&gt; $`anaemia vs diabetes`
+#&gt;          diabetes
+#&gt; anaemia    No Yes &lt;Total&gt;
+#&gt;   No       98  72     170
+#&gt;   Yes      76  53     129
+#&gt;   &lt;Total&gt; 174 125     299
+#&gt; 
+#&gt; $`anaemia vs hblood_pressure`
+#&gt;          hblood_pressure
+#&gt; anaemia    No Yes &lt;Total&gt;
+#&gt;   No      113  57     170
+#&gt;   Yes      81  48     129
+#&gt;   &lt;Total&gt; 194 105     299
+#&gt; 
+#&gt; $`anaemia vs sex`
+#&gt;          sex
+#&gt; anaemia   Female Male &lt;Total&gt;
+#&gt;   No          53  117     170
+#&gt;   Yes         52   77     129
+#&gt;   &lt;Total&gt;    105  194     299
+#&gt; 
+#&gt; $`anaemia vs smoking`
+#&gt;          smoking
+#&gt; anaemia    No Yes &lt;Total&gt;
+#&gt;   No      106  61     167
+#&gt;   Yes      94  33     127
+#&gt;   &lt;Total&gt; 200  94     294
+#&gt; 
+#&gt; $`anaemia vs death_event`
+#&gt;          death_event
+#&gt; anaemia    No Yes &lt;Total&gt;
+#&gt;   No      120  50     170
+#&gt;   Yes      83  46     129
+#&gt;   &lt;Total&gt; 203  96     299
+#&gt; 
+#&gt; $`diabetes vs hblood_pressure`
+#&gt;          hblood_pressure
+#&gt; diabetes   No Yes &lt;Total&gt;
+#&gt;   No      112  62     174
+#&gt;   Yes      82  43     125
+#&gt;   &lt;Total&gt; 194 105     299
+#&gt; 
+#&gt; $`diabetes vs sex`
+#&gt;          sex
+#&gt; diabetes  Female Male &lt;Total&gt;
+#&gt;   No          50  124     174
+#&gt;   Yes         55   70     125
+#&gt;   &lt;Total&gt;    105  194     299
+#&gt; 
+#&gt; $`diabetes vs smoking`
+#&gt;          smoking
+#&gt; diabetes   No Yes &lt;Total&gt;
+#&gt;   No      106  64     170
+#&gt;   Yes      94  30     124
+#&gt;   &lt;Total&gt; 200  94     294
+#&gt; 
+#&gt; $`diabetes vs death_event`
+#&gt;          death_event
+#&gt; diabetes   No Yes &lt;Total&gt;
+#&gt;   No      118  56     174
+#&gt;   Yes      85  40     125
+#&gt;   &lt;Total&gt; 203  96     299
+#&gt; 
+#&gt; $`hblood_pressure vs sex`
+#&gt;                sex
+#&gt; hblood_pressure Female Male &lt;Total&gt;
+#&gt;         No          61  133     194
+#&gt;         Yes         44   61     105
+#&gt;         &lt;Total&gt;    105  194     299
+#&gt; 
+#&gt; $`hblood_pressure vs smoking`
+#&gt;                smoking
+#&gt; hblood_pressure  No Yes &lt;Total&gt;
+#&gt;         No      127  65     192
+#&gt;         Yes      73  29     102
+#&gt;         &lt;Total&gt; 200  94     294
+#&gt; 
+#&gt; $`hblood_pressure vs death_event`
+#&gt;                death_event
+#&gt; hblood_pressure  No Yes &lt;Total&gt;
+#&gt;         No      137  57     194
+#&gt;         Yes      66  39     105
+#&gt;         &lt;Total&gt; 203  96     299
+#&gt; 
+#&gt; $`sex vs smoking`
+#&gt;          smoking
+#&gt; sex        No Yes &lt;Total&gt;
+#&gt;   Female  100   4     104
+#&gt;   Male    100  90     190
+#&gt;   &lt;Total&gt; 200  94     294
+#&gt; 
+#&gt; $`sex vs death_event`
+#&gt;          death_event
+#&gt; sex        No Yes &lt;Total&gt;
+#&gt;   Female   71  34     105
+#&gt;   Male    132  62     194
+#&gt;   &lt;Total&gt; 203  96     299
+#&gt; 
+#&gt; $`smoking vs death_event`
+#&gt;          death_event
+#&gt; smoking    No Yes &lt;Total&gt;
+#&gt;   No      135  65     200
+#&gt;   Yes      64  30      94
+#&gt;   &lt;Total&gt; 199  95     294
 #&gt; </div><div class='input'>
 <span class='co'># component of chi-square test </span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>two_var</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"chisq"</span>)</div><div class='output co'>#&gt; </span><span style='color: #00BBBB;'>──</span><span> </span><span style='color: #00BBBB;'>Chi-squared contingency table tests</span><span> </span><span style='color: #00BBBB;'>────────────</span><span> </span><span style='color: #00BBBB;'>Number of table is 1</span><span> </span><span style='color: #00BBBB;'>──</span><span>
-#&gt;   variable_1 variable_2 statistic   p.value df
-#&gt; 1  ShelveLoc      Urban  3.044924 0.2181741  2</div><div class='input'>
+#&gt;   variable_1  variable_2 statistic p.value df
+#&gt; 1    smoking death_event         0       1  1</div><div class='input'>
 <span class='co'># verbose is FALSE </span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>all_var</span>, <span class='st'>"chisq"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;   variable_1 variable_2 statistic   p.value df
-#&gt; 1  ShelveLoc      Urban  3.044924 0.2181741  2
-#&gt; 2  ShelveLoc         US  2.739667 0.2541492  2
-#&gt; 3      Urban         US  1.026155 0.3110633  1</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>all_var</span>, <span class='st'>"chisq"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;         variable_1      variable_2    statistic      p.value df
+#&gt; 1          anaemia        diabetes 1.035093e-02 9.189634e-01  1
+#&gt; 2          anaemia hblood_pressure 2.893564e-01 5.906333e-01  1
+#&gt; 3          anaemia             sex 2.299464e+00 1.294186e-01  1
+#&gt; 4          anaemia         smoking 3.217705e+00 7.284571e-02  1
+#&gt; 5          anaemia     death_event 1.042175e+00 3.073161e-01  1
+#&gt; 6         diabetes hblood_pressure 9.476710e-03 9.224497e-01  1
+#&gt; 7         diabetes             sex 6.783853e+00 9.198613e-03  1
+#&gt; 8         diabetes         smoking 5.364145e+00 2.055487e-02  1
+#&gt; 9         diabetes     death_event 2.161684e-30 1.000000e+00  1
+#&gt; 10 hblood_pressure             sex 2.829289e+00 9.255934e-02  1
+#&gt; 11 hblood_pressure         smoking 6.685444e-01 4.135595e-01  1
+#&gt; 12 hblood_pressure     death_event 1.543461e+00 2.141034e-01  1
+#&gt; 13             sex         smoking 5.654892e+01 5.481762e-14  1
+#&gt; 14             sex     death_event 0.000000e+00 1.000000e+00  1
+#&gt; 15         smoking     death_event 0.000000e+00 1.000000e+00  1</div><div class='input'>
 <span class='co'>#' # Using pipes &amp; dplyr -------------------------</span>
 <span class='co'># If you want to use dplyr, set verbose to FALSE</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>all_var</span>, <span class='st'>"chisq"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>p.value</span> <span class='kw'>&lt;</span> <span class='fl'>0.26</span>)</div><div class='output co'>#&gt;   variable_1 variable_2 statistic   p.value df
-#&gt; 1  ShelveLoc      Urban  3.044924 0.2181741  2
-#&gt; 2  ShelveLoc         US  2.739667 0.2541492  2</div><div class='input'>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>p.value</span> <span class='kw'>&lt;</span> <span class='fl'>0.26</span>)</div><div class='output co'>#&gt;        variable_1  variable_2 statistic      p.value df
+#&gt; 1         anaemia         sex  2.299464 1.294186e-01  1
+#&gt; 2         anaemia     smoking  3.217705 7.284571e-02  1
+#&gt; 3        diabetes         sex  6.783853 9.198613e-03  1
+#&gt; 4        diabetes     smoking  5.364145 2.055487e-02  1
+#&gt; 5 hblood_pressure         sex  2.829289 9.255934e-02  1
+#&gt; 6 hblood_pressure death_event  1.543461 2.141034e-01  1
+#&gt; 7             sex     smoking 56.548915 5.481762e-14  1</div><div class='input'>
 <span class='co'># Extract component from list by index</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>all_var</span>, <span class='st'>"table"</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span>
-  <span class='st'>"[["</span>(<span class='fl'>1</span>)</div><div class='output co'>#&gt;          Urban
-#&gt; ShelveLoc  No Yes
-#&gt;    Bad     21  73
-#&gt;    Good    28  57
-#&gt;    Medium  67 149</div><div class='input'>
+  <span class='st'>"[["</span>(<span class='fl'>1</span>)</div><div class='output co'>#&gt;        diabetes
+#&gt; anaemia No Yes
+#&gt;     No  98  72
+#&gt;     Yes 76  53</div><div class='input'>
 <span class='co'># Extract component from list by name</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>all_var</span>, <span class='st'>"table"</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span>
-  <span class='st'>"[["</span>(<span class='st'>"ShelveLoc vs Urban"</span>)</div><div class='output co'>#&gt;          Urban
-#&gt; ShelveLoc  No Yes
-#&gt;    Bad     21  73
-#&gt;    Good    28  57
-#&gt;    Medium  67 149</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>all_var</span>, <span class='st'>"table"</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span>
+  <span class='st'>"[["</span>(<span class='st'>"smoking vs death_event"</span>)</div><div class='output co'>#&gt;        death_event
+#&gt; smoking  No Yes
+#&gt;     No  135  65
+#&gt;     Yes  64  30</div><div class='input'>
 # plot all pair of variables
 # plot(all_var)
 

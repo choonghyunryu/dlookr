@@ -70,7 +70,7 @@ all_var \%>\%
 # Compare the two categorical variables
 two_var <- compare_category(heartfailure2, smoking, death_event)
 
-# Print compare_numeric class objects
+# Print compare_category class objects
 two_var
 
 # Filtering the case of smoking included NA 

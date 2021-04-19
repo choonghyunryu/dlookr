@@ -19,7 +19,8 @@ CHANGES IN R VERSION 0.4.5:
       plot_na_intersect(), imputate_na(), summary.imputation(), plot.imputation(),
       normality(), plot_normality(), transform(), summary.transform(),
       plot.transform(), transformation_report(), compare_category(), 
-      compare_numeric().
+      compare_numeric(), summary.compare_category(), summary.compare_numeric(),
+      plot.compare_category(), plot.compare_numeric().
       
     * Changed default type of diagnose_category() from "rank" to "n". 
     

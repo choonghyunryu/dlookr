@@ -52,28 +52,27 @@ It is also advantageous to specify FALSE if you want to manipulate the results.
 }
 \examples{
 # Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+heartfailure2 <- heartfailure
+heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
 
 library(dplyr)
 
 # Compare the all categorical variables
-all_var <- compare_category(carseats)
+all_var <- compare_category(heartfailure2)
 
-# Print compare class object
+# Print compare_category class objects
 all_var
-  
-# Compare the two categorical variables
-two_var <- compare_category(carseats, ShelveLoc, Urban)
 
-# Print compare class object
+# Compare the two categorical variables
+two_var <- compare_category(heartfailure2, smoking, death_event)
+
+# Print compare_category class objects
 two_var
-  
+
 # Summary the all case : Return a invisible copy of an object.
 stat <- summary(all_var)
 
-# Summary by returned object
+# Summary by returned objects
 stat
 
 # component of table 
@@ -108,14 +107,14 @@ summary(all_var, "chisq", verbose = FALSE)
 # If you want to use dplyr, set verbose to FALSE
 summary(all_var, "chisq", verbose = FALSE) \%>\% 
   filter(p.value < 0.26)
-  
+
 # Extract component from list by index
 summary(all_var, "table", na.rm = TRUE, verbose = FALSE) \%>\% 
   "[["(1)
 
 # Extract component from list by name
-  summary(all_var, "table", na.rm = TRUE, verbose = FALSE) \%>\% 
-  "[["("ShelveLoc vs Urban")
+summary(all_var, "table", na.rm = TRUE, verbose = FALSE) \%>\% 
+  "[["("smoking vs death_event")
   
 }
 \seealso{

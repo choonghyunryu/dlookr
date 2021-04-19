@@ -23,27 +23,21 @@ Visualize scatter plot included box plots by attribute of compare_numeric class.
 }
 \examples{
 # Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+heartfailure2 <- heartfailure[, c("platelets", "creatinine", "sodium")]
 
-# Reduced variables
 library(dplyr)
-carseats <- carseats \%>\% 
-  select(CompPrice, Sales, Price)
-  
 # Compare the all numerical variables
-all_var <- compare_numeric(carseats)
+all_var <- compare_numeric(heartfailure2)
 
-# Print compare compare_numeric object
+# Print compare_numeric class object
 all_var
   
 # Compare the two numerical variables
-two_var <- compare_numeric(carseats, CompPrice, Price)
+two_var <- compare_numeric(heartfailure2, sodium, creatinine)
 
-# Print compare_numeric class object
+# Print compare_numeric class objects
 two_var
-
+  
 # plot all pair of variables
 plot(all_var)
 

@@ -82,7 +82,7 @@ all_var \%>\%
   filter(var1 == "sodium" | var2 == "sodium") \%>\% 
   arrange(desc(abs(coef_corr)))
   
-# Compare the correlation that case of abs(coef_corr) > 0.3
+# Compare the correlation that case of abs(coef_corr) > 0.1
 all_var \%>\% 
   "$"(correlation) \%>\% 
   filter(abs(coef_corr) > 0.1)

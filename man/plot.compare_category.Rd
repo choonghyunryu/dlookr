@@ -29,20 +29,21 @@ Visualize mosaics plot by attribute of compare_category class.
 }
 \examples{
 # Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+heartfailure2 <- heartfailure
+heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
+
+library(dplyr)
 
 # Compare the all categorical variables
-all_var <- compare_category(carseats)
+all_var <- compare_category(heartfailure2)
 
-# Print compare class objects
+# Print compare_numeric class objects
 all_var
-  
-# Compare the two categorical variables
-two_var <- compare_category(carseats, ShelveLoc, Urban)
 
-# Print compare class objects
+# Compare the two categorical variables
+two_var <- compare_category(heartfailure2, smoking, death_event)
+
+# Print compare_category class objects
 two_var
 
 # plot all pair of variables
@@ -53,7 +54,7 @@ plot(two_var)
 
 # plot all pair of variables by prompt
 # plot(all_var, prompt = TRUE)
-
+  
 # plot a pair of variables without NA
 plot(two_var, na.rm = TRUE)
 

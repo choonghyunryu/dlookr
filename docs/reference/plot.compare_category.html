@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
       </span>
     </div>
 
@@ -163,79 +163,188 @@ However, it only support las parameter. las is numeric in 0,1; the style of axis
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Generate data for the example</span>
-<span class='no'>carseats</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ISLR</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/ISLR/man/Carseats.html'>Carseats</a></span>
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>20</span>), <span class='st'>"Income"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>5</span>), <span class='st'>"Urban"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
+<span class='no'>heartfailure2</span> <span class='kw'>&lt;-</span> <span class='no'>heartfailure</span>
+<span class='no'>heartfailure2</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>heartfailure2</span>)), <span class='fl'>5</span>), <span class='st'>"smoking"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
+
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
 <span class='co'># Compare the all categorical variables</span>
-<span class='no'>all_var</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='compare_category.data.frame.html'>compare_category</a></span>(<span class='no'>carseats</span>)
+<span class='no'>all_var</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='compare_category.data.frame.html'>compare_category</a></span>(<span class='no'>heartfailure2</span>)
 
-<span class='co'># Print compare class objects</span>
-<span class='no'>all_var</span></div><div class='output co'>#&gt; $`ShelveLoc vs Urban`
-#&gt; <span style='color: #555555;'># A tibble: 8 x 6</span><span>
-#&gt;   ShelveLoc Urban     n   rate var1_rate var2_rate
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Bad       No       22 0.055     0.229      0.186
-#&gt; </span><span style='color: #555555;'>2</span><span> Bad       Yes      74 0.185     0.771      0.267
-#&gt; </span><span style='color: #555555;'>3</span><span> Good      No       28 0.07      0.329      0.237
-#&gt; </span><span style='color: #555555;'>4</span><span> Good      Yes      55 0.138     0.647      0.199
-#&gt; </span><span style='color: #555555;'>5</span><span> Good      </span><span style='color: #BB0000;'>NA</span><span>        2 0.005     0.023</span><span style='text-decoration: underline;'>5</span><span>     0.4  
-#&gt; </span><span style='color: #555555;'>6</span><span> Medium    No       68 0.17      0.311      0.576
-#&gt; </span><span style='color: #555555;'>7</span><span> Medium    Yes     148 0.37      0.676      0.534
-#&gt; </span><span style='color: #555555;'>8</span><span> Medium    </span><span style='color: #BB0000;'>NA</span><span>        3 0.007</span><span style='text-decoration: underline;'>5</span><span>    0.013</span><span style='text-decoration: underline;'>7</span><span>     0.6  
+<span class='co'># Print compare_numeric class objects</span>
+<span class='no'>all_var</span></div><div class='output co'>#&gt; $`anaemia vs diabetes`
+#&gt; <span style='color: #949494;'># A tibble: 4 x 6</span><span>
+#&gt;   anaemia diabetes     n  rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No      No          98 0.328     0.576     0.563
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No      Yes         72 0.241     0.424     0.576
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes     No          76 0.254     0.589     0.437
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes     Yes         53 0.177     0.411     0.424
 #&gt; 
-#&gt; $`ShelveLoc vs US`
-#&gt; </span><span style='color: #555555;'># A tibble: 6 x 6</span><span>
-#&gt;   ShelveLoc US        n  rate var1_rate var2_rate
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Bad       No       34 0.085     0.354     0.239
-#&gt; </span><span style='color: #555555;'>2</span><span> Bad       Yes      62 0.155     0.646     0.240
-#&gt; </span><span style='color: #555555;'>3</span><span> Good      No       24 0.06      0.282     0.169
-#&gt; </span><span style='color: #555555;'>4</span><span> Good      Yes      61 0.152     0.718     0.236
-#&gt; </span><span style='color: #555555;'>5</span><span> Medium    No       84 0.21      0.384     0.592
-#&gt; </span><span style='color: #555555;'>6</span><span> Medium    Yes     135 0.338     0.616     0.523
+#&gt; $`anaemia vs hblood_pressure`
+#&gt; </span><span style='color: #949494;'># A tibble: 4 x 6</span><span>
+#&gt;   anaemia hblood_pressure     n  rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No      No                113 0.378     0.665     0.582
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No      Yes                57 0.191     0.335     0.543
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes     No                 81 0.271     0.628     0.418
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes     Yes                48 0.161     0.372     0.457
 #&gt; 
-#&gt; $`Urban vs US`
-#&gt; </span><span style='color: #555555;'># A tibble: 6 x 6</span><span>
-#&gt;   Urban US        n   rate var1_rate var2_rate
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> No    No       46 0.115      0.390   0.324  
-#&gt; </span><span style='color: #555555;'>2</span><span> No    Yes      72 0.18       0.610   0.279  
-#&gt; </span><span style='color: #555555;'>3</span><span> Yes   No       93 0.232      0.336   0.655  
-#&gt; </span><span style='color: #555555;'>4</span><span> Yes   Yes     184 0.46       0.664   0.713  
-#&gt; </span><span style='color: #555555;'>5</span><span> </span><span style='color: #BB0000;'>NA</span><span>    No        3 0.007</span><span style='text-decoration: underline;'>5</span><span>     0.6     0.021</span><span style='text-decoration: underline;'>1</span><span> 
-#&gt; </span><span style='color: #555555;'>6</span><span> </span><span style='color: #BB0000;'>NA</span><span>    Yes       2 0.005      0.4     0.007</span><span style='text-decoration: underline;'>75</span><span>
+#&gt; $`anaemia vs sex`
+#&gt; </span><span style='color: #949494;'># A tibble: 4 x 6</span><span>
+#&gt;   anaemia sex        n  rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No      Female    53 0.177     0.312     0.505
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No      Male     117 0.391     0.688     0.603
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes     Female    52 0.174     0.403     0.495
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes     Male      77 0.258     0.597     0.397
+#&gt; 
+#&gt; $`anaemia vs smoking`
+#&gt; </span><span style='color: #949494;'># A tibble: 6 x 6</span><span>
+#&gt;   anaemia smoking     n    rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No      No        107 0.358      0.629      0.535
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No      Yes        61 0.204      0.359      0.649
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> No      </span><span style='color: #BB0000;'>NA</span><span>          2 0.006</span><span style='text-decoration: underline;'>69</span><span>    0.011</span><span style='text-decoration: underline;'>8</span><span>     0.4  
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes     No         93 0.311      0.721      0.465
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> Yes     Yes        33 0.110      0.256      0.351
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> Yes     </span><span style='color: #BB0000;'>NA</span><span>          3 0.010</span><span style='text-decoration: underline;'>0</span><span>     0.023</span><span style='text-decoration: underline;'>3</span><span>     0.6  
+#&gt; 
+#&gt; $`anaemia vs death_event`
+#&gt; </span><span style='color: #949494;'># A tibble: 4 x 6</span><span>
+#&gt;   anaemia death_event     n  rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No      No            120 0.401     0.706     0.591
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No      Yes            50 0.167     0.294     0.521
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes     No             83 0.278     0.643     0.409
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes     Yes            46 0.154     0.357     0.479
+#&gt; 
+#&gt; $`diabetes vs hblood_pressure`
+#&gt; </span><span style='color: #949494;'># A tibble: 4 x 6</span><span>
+#&gt;   diabetes hblood_pressure     n  rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No       No                112 0.375     0.644     0.577
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No       Yes                62 0.207     0.356     0.590
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes      No                 82 0.274     0.656     0.423
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes      Yes                43 0.144     0.344     0.410
+#&gt; 
+#&gt; $`diabetes vs sex`
+#&gt; </span><span style='color: #949494;'># A tibble: 4 x 6</span><span>
+#&gt;   diabetes sex        n  rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No       Female    50 0.167     0.287     0.476
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No       Male     124 0.415     0.713     0.639
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes      Female    55 0.184     0.44      0.524
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes      Male      70 0.234     0.56      0.361
+#&gt; 
+#&gt; $`diabetes vs smoking`
+#&gt; </span><span style='color: #949494;'># A tibble: 6 x 6</span><span>
+#&gt;   diabetes smoking     n    rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No       No        107 0.358      0.615      0.535
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No       Yes        65 0.217      0.374      0.691
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> No       </span><span style='color: #BB0000;'>NA</span><span>          2 0.006</span><span style='text-decoration: underline;'>69</span><span>    0.011</span><span style='text-decoration: underline;'>5</span><span>     0.4  
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes      No         93 0.311      0.744      0.465
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> Yes      Yes        29 0.097</span><span style='text-decoration: underline;'>0</span><span>     0.232      0.309
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> Yes      </span><span style='color: #BB0000;'>NA</span><span>          3 0.010</span><span style='text-decoration: underline;'>0</span><span>     0.024      0.6  
+#&gt; 
+#&gt; $`diabetes vs death_event`
+#&gt; </span><span style='color: #949494;'># A tibble: 4 x 6</span><span>
+#&gt;   diabetes death_event     n  rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No       No            118 0.395     0.678     0.581
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No       Yes            56 0.187     0.322     0.583
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes      No             85 0.284     0.68      0.419
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes      Yes            40 0.134     0.32      0.417
+#&gt; 
+#&gt; $`hblood_pressure vs sex`
+#&gt; </span><span style='color: #949494;'># A tibble: 4 x 6</span><span>
+#&gt;   hblood_pressure sex        n  rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No              Female    61 0.204     0.314     0.581
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No              Male     133 0.445     0.686     0.686
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes             Female    44 0.147     0.419     0.419
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes             Male      61 0.204     0.581     0.314
+#&gt; 
+#&gt; $`hblood_pressure vs smoking`
+#&gt; </span><span style='color: #949494;'># A tibble: 6 x 6</span><span>
+#&gt;   hblood_pressure smoking     n    rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No              No        126 0.421      0.649      0.63 
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No              Yes        65 0.217      0.335      0.691
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> No              </span><span style='color: #BB0000;'>NA</span><span>          3 0.010</span><span style='text-decoration: underline;'>0</span><span>     0.015</span><span style='text-decoration: underline;'>5</span><span>     0.6  
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes             No         74 0.247      0.705      0.37 
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> Yes             Yes        29 0.097</span><span style='text-decoration: underline;'>0</span><span>     0.276      0.309
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> Yes             </span><span style='color: #BB0000;'>NA</span><span>          2 0.006</span><span style='text-decoration: underline;'>69</span><span>    0.019</span><span style='text-decoration: underline;'>0</span><span>     0.4  
+#&gt; 
+#&gt; $`hblood_pressure vs death_event`
+#&gt; </span><span style='color: #949494;'># A tibble: 4 x 6</span><span>
+#&gt;   hblood_pressure death_event     n  rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No              No            137 0.458     0.706     0.675
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No              Yes            57 0.191     0.294     0.594
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes             No             66 0.221     0.629     0.325
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes             Yes            39 0.130     0.371     0.406
+#&gt; 
+#&gt; $`sex vs smoking`
+#&gt; </span><span style='color: #949494;'># A tibble: 6 x 6</span><span>
+#&gt;   sex    smoking     n    rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> Female No        100 0.334      0.952     0.5   
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> Female Yes         2 0.006</span><span style='text-decoration: underline;'>69</span><span>    0.019</span><span style='text-decoration: underline;'>0</span><span>    0.021</span><span style='text-decoration: underline;'>3</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Female </span><span style='color: #BB0000;'>NA</span><span>          3 0.010</span><span style='text-decoration: underline;'>0</span><span>     0.028</span><span style='text-decoration: underline;'>6</span><span>    0.6   
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Male   No        100 0.334      0.515     0.5   
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> Male   Yes        92 0.308      0.474     0.979 
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> Male   </span><span style='color: #BB0000;'>NA</span><span>          2 0.006</span><span style='text-decoration: underline;'>69</span><span>    0.010</span><span style='text-decoration: underline;'>3</span><span>    0.4   
+#&gt; 
+#&gt; $`sex vs death_event`
+#&gt; </span><span style='color: #949494;'># A tibble: 4 x 6</span><span>
+#&gt;   sex    death_event     n  rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> Female No             71 0.237     0.676     0.350
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> Female Yes            34 0.114     0.324     0.354
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Male   No            132 0.441     0.680     0.650
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Male   Yes            62 0.207     0.320     0.646
+#&gt; 
+#&gt; $`smoking vs death_event`
+#&gt; </span><span style='color: #949494;'># A tibble: 6 x 6</span><span>
+#&gt;   smoking death_event     n    rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No      No            135 0.452       0.675    0.665 
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No      Yes            65 0.217       0.325    0.677 
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes     No             65 0.217       0.691    0.320 
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes     Yes            29 0.097</span><span style='text-decoration: underline;'>0</span><span>      0.309    0.302 
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> </span><span style='color: #BB0000;'>NA</span><span>      No              3 0.010</span><span style='text-decoration: underline;'>0</span><span>      0.6      0.014</span><span style='text-decoration: underline;'>8</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> </span><span style='color: #BB0000;'>NA</span><span>      Yes             2 0.006</span><span style='text-decoration: underline;'>69</span><span>     0.4      0.020</span><span style='text-decoration: underline;'>8</span><span>
 #&gt; </div><div class='input'>
 <span class='co'># Compare the two categorical variables</span>
-<span class='no'>two_var</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='compare_category.data.frame.html'>compare_category</a></span>(<span class='no'>carseats</span>, <span class='no'>ShelveLoc</span>, <span class='no'>Urban</span>)
+<span class='no'>two_var</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='compare_category.data.frame.html'>compare_category</a></span>(<span class='no'>heartfailure2</span>, <span class='no'>smoking</span>, <span class='no'>death_event</span>)
 
-<span class='co'># Print compare class objects</span>
-<span class='no'>two_var</span></div><div class='output co'>#&gt; $`ShelveLoc vs Urban`
-#&gt; </span><span style='color: #555555;'># A tibble: 8 x 6</span><span>
-#&gt;   ShelveLoc Urban     n   rate var1_rate var2_rate
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Bad       No       22 0.055     0.229      0.186
-#&gt; </span><span style='color: #555555;'>2</span><span> Bad       Yes      74 0.185     0.771      0.267
-#&gt; </span><span style='color: #555555;'>3</span><span> Good      No       28 0.07      0.329      0.237
-#&gt; </span><span style='color: #555555;'>4</span><span> Good      Yes      55 0.138     0.647      0.199
-#&gt; </span><span style='color: #555555;'>5</span><span> Good      </span><span style='color: #BB0000;'>NA</span><span>        2 0.005     0.023</span><span style='text-decoration: underline;'>5</span><span>     0.4  
-#&gt; </span><span style='color: #555555;'>6</span><span> Medium    No       68 0.17      0.311      0.576
-#&gt; </span><span style='color: #555555;'>7</span><span> Medium    Yes     148 0.37      0.676      0.534
-#&gt; </span><span style='color: #555555;'>8</span><span> Medium    </span><span style='color: #BB0000;'>NA</span><span>        3 0.007</span><span style='text-decoration: underline;'>5</span><span>    0.013</span><span style='text-decoration: underline;'>7</span><span>     0.6  
+<span class='co'># Print compare_category class objects</span>
+<span class='no'>two_var</span></div><div class='output co'>#&gt; $`smoking vs death_event`
+#&gt; </span><span style='color: #949494;'># A tibble: 6 x 6</span><span>
+#&gt;   smoking death_event     n    rate var1_rate var2_rate
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No      No            135 0.452       0.675    0.665 
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No      Yes            65 0.217       0.325    0.677 
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes     No             65 0.217       0.691    0.320 
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes     Yes            29 0.097</span><span style='text-decoration: underline;'>0</span><span>      0.309    0.302 
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> </span><span style='color: #BB0000;'>NA</span><span>      No              3 0.010</span><span style='text-decoration: underline;'>0</span><span>      0.6      0.014</span><span style='text-decoration: underline;'>8</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> </span><span style='color: #BB0000;'>NA</span><span>      Yes             2 0.006</span><span style='text-decoration: underline;'>69</span><span>     0.4      0.020</span><span style='text-decoration: underline;'>8</span><span>
 #&gt; </div><div class='input'>
 <span class='co'># plot all pair of variables</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>)</div><div class='img'><img src='plot.compare_category-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>)</div><div class='img'><img src='plot.compare_category-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-4.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-6.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-7.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-8.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-9.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-10.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-11.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-12.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-13.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-14.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-15.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># plot a pair of variables</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>two_var</span>)</div><div class='img'><img src='plot.compare_category-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>two_var</span>)</div><div class='img'><img src='plot.compare_category-16.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># plot all pair of variables by prompt</span>
 <span class='co'># plot(all_var, prompt = TRUE)</span>
 
 <span class='co'># plot a pair of variables without NA</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>two_var</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.compare_category-5.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>two_var</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.compare_category-17.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># plot a pair of variables</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>two_var</span>, <span class='kw'>las</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='plot.compare_category-6.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>two_var</span>, <span class='kw'>las</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='plot.compare_category-18.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># plot a pair of variables not focuses on typographic elements</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>two_var</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot.compare_category-7.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>two_var</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot.compare_category-19.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
