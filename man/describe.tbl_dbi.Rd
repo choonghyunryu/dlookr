@@ -66,45 +66,43 @@ The information derived from the numerical data describe is as follows.
 \examples{
 library(dplyr)
 
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-
 # connect DBMS
 con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 
-# copy carseats to the DBMS with a table named TB_CARSEATS
-copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
+# copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
 
 # Using pipes ---------------------------------
 # Positive values select variables
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
-  describe(Sales, CompPrice, Income)
+  tbl("TB_HEARTFAILURE") \%>\% 
+  describe(platelets, creatinine, sodium)
 
 # Negative values to drop variables, and In-memory mode and collect size is 200
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
-  describe(-Sales, -CompPrice, -Income, collect_size = 200)
+  tbl("TB_HEARTFAILURE") \%>\% 
+  describe(-platelets, -creatinine, -sodium, collect_size = 200)
 
 # Using pipes & dplyr -------------------------
-# Find the statistic of all numerical variables by 'ShelveLoc' and 'US',
-# and extract only those with 'ShelveLoc' variable level is "Good".
+# Find the statistic of all numerical variables by 'smoking' and 'death_event',
+# and extract only those with 'smoking' variable level is "Yes".
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
-  group_by(ShelveLoc, US) \%>\%
+  tbl("TB_HEARTFAILURE") \%>\% 
+  group_by(smoking, death_event) \%>\%
   describe() \%>\%
-  filter(ShelveLoc == "Good")
+  filter(smoking == "Yes")
 
-# extract only those with 'Urban' variable level is "Yes",
-# and find 'Sales' statistics by 'ShelveLoc' and 'US'
+# extract only those with 'sex' variable level is "Male",
+# and find 'sodium' statistics by 'smoking' and 'death_event'
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
-  filter(Urban == "Yes") \%>\%
-  group_by(ShelveLoc, US) \%>\%
-  describe(Sales)
- 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  filter(sex == "Male") \%>\%
+  group_by(smoking, death_event) \%>\%
+  describe(sodium)
+
+# Disconnect DBMS   
+DBI::dbDisconnect(con_sqlite)
+
 }
 \seealso{
 \code{\link{describe.data.frame}}, \code{\link{diagnose_numeric.tbl_dbi}}.

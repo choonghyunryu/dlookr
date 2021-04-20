@@ -74,7 +74,7 @@ the DBMS table through tbl_dbi." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
       </span>
     </div>
 
@@ -196,173 +196,168 @@ This function is computed stats::cor() function by use = "pairwise.complete.obs"
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
-<span class='co'># Generate data for the example</span>
-<span class='no'>carseats</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ISLR</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/ISLR/man/Carseats.html'>Carseats</a></span>
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>20</span>), <span class='st'>"Income"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>5</span>), <span class='st'>"Urban"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-
 <span class='co'># connect DBMS</span>
 <span class='no'>con_sqlite</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://dbi.r-dbi.org/reference/dbConnect.html'>dbConnect</a></span>(<span class='kw pkg'>RSQLite</span><span class='kw ns'>::</span><span class='fu'><a href='https://rsqlite.r-dbi.org/reference/SQLite.html'>SQLite</a></span>(), <span class='st'>":memory:"</span>)
 
-<span class='co'># copy carseats to the DBMS with a table named TB_CARSEATS</span>
-<span class='fu'><a href='https://dplyr.tidyverse.org/reference/copy_to.html'>copy_to</a></span>(<span class='no'>con_sqlite</span>, <span class='no'>carseats</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"TB_CARSEATS"</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='co'># copy heartfailure to the DBMS with a table named TB_HEARTFAILURE</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/copy_to.html'>copy_to</a></span>(<span class='no'>con_sqlite</span>, <span class='no'>heartfailure</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"TB_HEARTFAILURE"</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># Using pipes ---------------------------------</span>
 <span class='co'># Correlation coefficients of all numerical variables</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='correlate.data.frame.html'>correlate</a></span>()</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 56 x 3</span><span>
-#&gt;    var1        var2      coef_corr
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> CompPrice   Sales        0.064</span><span style='text-decoration: underline;'>1</span><span>
-#&gt; </span><span style='color: #555555;'> 2</span><span> Income      Sales        0.175 
-#&gt; </span><span style='color: #555555;'> 3</span><span> Advertising Sales        0.270 
-#&gt; </span><span style='color: #555555;'> 4</span><span> Population  Sales        0.050</span><span style='text-decoration: underline;'>5</span><span>
-#&gt; </span><span style='color: #555555;'> 5</span><span> Price       Sales       -</span><span style='color: #BB0000;'>0.445</span><span> 
-#&gt; </span><span style='color: #555555;'> 6</span><span> Age         Sales       -</span><span style='color: #BB0000;'>0.232</span><span> 
-#&gt; </span><span style='color: #555555;'> 7</span><span> Education   Sales       -</span><span style='color: #BB0000;'>0.052</span><span style='color: #BB0000;text-decoration: underline;'>0</span><span>
-#&gt; </span><span style='color: #555555;'> 8</span><span> Sales       CompPrice    0.064</span><span style='text-decoration: underline;'>1</span><span>
-#&gt; </span><span style='color: #555555;'> 9</span><span> Income      CompPrice   -</span><span style='color: #BB0000;'>0.095</span><span style='color: #BB0000;text-decoration: underline;'>2</span><span>
-#&gt; </span><span style='color: #555555;'>10</span><span> Advertising CompPrice   -</span><span style='color: #BB0000;'>0.024</span><span style='color: #BB0000;text-decoration: underline;'>2</span><span>
-#&gt; </span><span style='color: #555555;'># … with 46 more rows</span><span></div><div class='input'>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='correlate.data.frame.html'>correlate</a></span>()</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 42 x 3</span><span>
+#&gt;    var1              var2       coef_corr
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> cpk_enzyme        age          -</span><span style='color: #BB0000;'>0.081</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> ejection_fraction age           0.060</span><span style='text-decoration: underline;'>2</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> platelets         age          -</span><span style='color: #BB0000;'>0.052</span><span style='color: #BB0000;text-decoration: underline;'>5</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> creatinine        age           0.159 
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> sodium            age          -</span><span style='color: #BB0000;'>0.045</span><span style='color: #BB0000;text-decoration: underline;'>9</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> time              age          -</span><span style='color: #BB0000;'>0.224</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> age               cpk_enzyme   -</span><span style='color: #BB0000;'>0.081</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> ejection_fraction cpk_enzyme   -</span><span style='color: #BB0000;'>0.044</span><span style='color: #BB0000;text-decoration: underline;'>1</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> platelets         cpk_enzyme    0.024</span><span style='text-decoration: underline;'>5</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> creatinine        cpk_enzyme   -</span><span style='color: #BB0000;'>0.016</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span>
+#&gt; </span><span style='color: #949494;'># … with 32 more rows</span><span></div><div class='input'>
 <span class='co'># Positive values select variables</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='correlate.data.frame.html'>correlate</a></span>(<span class='no'>Sales</span>, <span class='no'>Price</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 14 x 3</span><span>
-#&gt;    var1  var2        coef_corr
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> Price Sales         -</span><span style='color: #BB0000;'>0.445</span><span> 
-#&gt; </span><span style='color: #555555;'> 2</span><span> Sales CompPrice      0.064</span><span style='text-decoration: underline;'>1</span><span>
-#&gt; </span><span style='color: #555555;'> 3</span><span> Price CompPrice      0.585 
-#&gt; </span><span style='color: #555555;'> 4</span><span> Sales Income         0.175 
-#&gt; </span><span style='color: #555555;'> 5</span><span> Price Income        -</span><span style='color: #BB0000;'>0.083</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span>
-#&gt; </span><span style='color: #555555;'> 6</span><span> Sales Advertising    0.270 
-#&gt; </span><span style='color: #555555;'> 7</span><span> Price Advertising    0.044</span><span style='text-decoration: underline;'>5</span><span>
-#&gt; </span><span style='color: #555555;'> 8</span><span> Sales Population     0.050</span><span style='text-decoration: underline;'>5</span><span>
-#&gt; </span><span style='color: #555555;'> 9</span><span> Price Population    -</span><span style='color: #BB0000;'>0.012</span><span style='color: #BB0000;text-decoration: underline;'>1</span><span>
-#&gt; </span><span style='color: #555555;'>10</span><span> Sales Price         -</span><span style='color: #BB0000;'>0.445</span><span> 
-#&gt; </span><span style='color: #555555;'>11</span><span> Sales Age           -</span><span style='color: #BB0000;'>0.232</span><span> 
-#&gt; </span><span style='color: #555555;'>12</span><span> Price Age           -</span><span style='color: #BB0000;'>0.102</span><span> 
-#&gt; </span><span style='color: #555555;'>13</span><span> Sales Education     -</span><span style='color: #BB0000;'>0.052</span><span style='color: #BB0000;text-decoration: underline;'>0</span><span>
-#&gt; </span><span style='color: #555555;'>14</span><span> Price Education      0.011</span><span style='text-decoration: underline;'>7</span><span></div><div class='input'>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='correlate.data.frame.html'>correlate</a></span>(<span class='no'>platelets</span>, <span class='no'>sodium</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 12 x 3</span><span>
+#&gt;    var1      var2              coef_corr
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> platelets age                 -</span><span style='color: #BB0000;'>0.052</span><span style='color: #BB0000;text-decoration: underline;'>5</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> sodium    age                 -</span><span style='color: #BB0000;'>0.045</span><span style='color: #BB0000;text-decoration: underline;'>9</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> platelets cpk_enzyme           0.024</span><span style='text-decoration: underline;'>5</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> sodium    cpk_enzyme           0.059</span><span style='text-decoration: underline;'>6</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> platelets ejection_fraction    0.072</span><span style='text-decoration: underline;'>2</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> sodium    ejection_fraction    0.176 
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> sodium    platelets            0.062</span><span style='text-decoration: underline;'>1</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> platelets creatinine          -</span><span style='color: #BB0000;'>0.041</span><span style='color: #BB0000;text-decoration: underline;'>2</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> sodium    creatinine          -</span><span style='color: #BB0000;'>0.189</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> platelets sodium               0.062</span><span style='text-decoration: underline;'>1</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>11</span><span> platelets time                 0.010</span><span style='text-decoration: underline;'>5</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>12</span><span> sodium    time                 0.087</span><span style='text-decoration: underline;'>6</span><span></div><div class='input'>
 <span class='co'># Negative values to drop variables, and In-memory mode and collect size is 200</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='correlate.data.frame.html'>correlate</a></span>(-<span class='no'>Sales</span>, -<span class='no'>Price</span>, <span class='kw'>collect_size</span> <span class='kw'>=</span> <span class='fl'>200</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 42 x 3</span><span>
-#&gt;    var1        var2      coef_corr
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> CompPrice   Sales        0.114 
-#&gt; </span><span style='color: #555555;'> 2</span><span> Income      Sales        0.220 
-#&gt; </span><span style='color: #555555;'> 3</span><span> Advertising Sales        0.320 
-#&gt; </span><span style='color: #555555;'> 4</span><span> Population  Sales        0.022</span><span style='text-decoration: underline;'>2</span><span>
-#&gt; </span><span style='color: #555555;'> 5</span><span> Age         Sales       -</span><span style='color: #BB0000;'>0.217</span><span> 
-#&gt; </span><span style='color: #555555;'> 6</span><span> Education   Sales       -</span><span style='color: #BB0000;'>0.059</span><span style='color: #BB0000;text-decoration: underline;'>1</span><span>
-#&gt; </span><span style='color: #555555;'> 7</span><span> Income      CompPrice   -</span><span style='color: #BB0000;'>0.126</span><span> 
-#&gt; </span><span style='color: #555555;'> 8</span><span> Advertising CompPrice   -</span><span style='color: #BB0000;'>0.092</span><span style='color: #BB0000;text-decoration: underline;'>5</span><span>
-#&gt; </span><span style='color: #555555;'> 9</span><span> Population  CompPrice   -</span><span style='color: #BB0000;'>0.097</span><span style='color: #BB0000;text-decoration: underline;'>6</span><span>
-#&gt; </span><span style='color: #555555;'>10</span><span> Age         CompPrice   -</span><span style='color: #BB0000;'>0.161</span><span> 
-#&gt; </span><span style='color: #555555;'># … with 32 more rows</span><span></div><div class='input'>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='correlate.data.frame.html'>correlate</a></span>(-<span class='no'>platelets</span>, -<span class='no'>sodium</span>, <span class='kw'>collect_size</span> <span class='kw'>=</span> <span class='fl'>200</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 30 x 3</span><span>
+#&gt;    var1              var2              coef_corr
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> cpk_enzyme        age                -</span><span style='color: #BB0000;'>0.094</span><span style='color: #BB0000;text-decoration: underline;'>6</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> ejection_fraction age                 0.090</span><span style='text-decoration: underline;'>3</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> creatinine        age                 0.208  
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> time              age                -</span><span style='color: #BB0000;'>0.199</span><span>  
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> age               cpk_enzyme         -</span><span style='color: #BB0000;'>0.094</span><span style='color: #BB0000;text-decoration: underline;'>6</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> ejection_fraction cpk_enzyme         -</span><span style='color: #BB0000;'>0.056</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> creatinine        cpk_enzyme          0.012</span><span style='text-decoration: underline;'>2</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> time              cpk_enzyme          0.004</span><span style='text-decoration: underline;'>21</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> age               ejection_fraction   0.090</span><span style='text-decoration: underline;'>3</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> cpk_enzyme        ejection_fraction  -</span><span style='color: #BB0000;'>0.056</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span> 
+#&gt; </span><span style='color: #949494;'># … with 20 more rows</span><span></div><div class='input'>
 <span class='co'># Positions values select variables</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='correlate.data.frame.html'>correlate</a></span>(<span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 7 x 3</span><span>
-#&gt;   var1  var2        coef_corr
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Sales CompPrice      0.064</span><span style='text-decoration: underline;'>1</span><span>
-#&gt; </span><span style='color: #555555;'>2</span><span> Sales Income         0.175 
-#&gt; </span><span style='color: #555555;'>3</span><span> Sales Advertising    0.270 
-#&gt; </span><span style='color: #555555;'>4</span><span> Sales Population     0.050</span><span style='text-decoration: underline;'>5</span><span>
-#&gt; </span><span style='color: #555555;'>5</span><span> Sales Price         -</span><span style='color: #BB0000;'>0.445</span><span> 
-#&gt; </span><span style='color: #555555;'>6</span><span> Sales Age           -</span><span style='color: #BB0000;'>0.232</span><span> 
-#&gt; </span><span style='color: #555555;'>7</span><span> Sales Education     -</span><span style='color: #BB0000;'>0.052</span><span style='color: #BB0000;text-decoration: underline;'>0</span><span></div><div class='input'>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='correlate.data.frame.html'>correlate</a></span>(<span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 6 x 3</span><span>
+#&gt;   var1  var2              coef_corr
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> age   cpk_enzyme          -</span><span style='color: #BB0000;'>0.081</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> age   ejection_fraction    0.060</span><span style='text-decoration: underline;'>2</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> age   platelets           -</span><span style='color: #BB0000;'>0.052</span><span style='color: #BB0000;text-decoration: underline;'>5</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> age   creatinine           0.159 
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> age   sodium              -</span><span style='color: #BB0000;'>0.045</span><span style='color: #BB0000;text-decoration: underline;'>9</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> age   time                -</span><span style='color: #BB0000;'>0.224</span><span> </div><div class='input'>
 <span class='co'># Positions values select variables</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='correlate.data.frame.html'>correlate</a></span>(-<span class='fl'>1</span>, -<span class='fl'>2</span>, -<span class='fl'>3</span>, -<span class='fl'>5</span>, -<span class='fl'>6</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 21 x 3</span><span>
-#&gt;    var1        var2        coef_corr
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> Advertising Sales         0.270  
-#&gt; </span><span style='color: #555555;'> 2</span><span> Age         Sales        -</span><span style='color: #BB0000;'>0.232</span><span>  
-#&gt; </span><span style='color: #555555;'> 3</span><span> Education   Sales        -</span><span style='color: #BB0000;'>0.052</span><span style='color: #BB0000;text-decoration: underline;'>0</span><span> 
-#&gt; </span><span style='color: #555555;'> 4</span><span> Advertising CompPrice    -</span><span style='color: #BB0000;'>0.024</span><span style='color: #BB0000;text-decoration: underline;'>2</span><span> 
-#&gt; </span><span style='color: #555555;'> 5</span><span> Age         CompPrice    -</span><span style='color: #BB0000;'>0.100</span><span>  
-#&gt; </span><span style='color: #555555;'> 6</span><span> Education   CompPrice     0.025</span><span style='text-decoration: underline;'>2</span><span> 
-#&gt; </span><span style='color: #555555;'> 7</span><span> Advertising Income        0.066</span><span style='text-decoration: underline;'>2</span><span> 
-#&gt; </span><span style='color: #555555;'> 8</span><span> Age         Income       -</span><span style='color: #BB0000;'>0.005</span><span style='color: #BB0000;text-decoration: underline;'>57</span><span>
-#&gt; </span><span style='color: #555555;'> 9</span><span> Education   Income       -</span><span style='color: #BB0000;'>0.055</span><span style='color: #BB0000;text-decoration: underline;'>7</span><span> 
-#&gt; </span><span style='color: #555555;'>10</span><span> Age         Advertising  -</span><span style='color: #BB0000;'>0.004</span><span style='color: #BB0000;text-decoration: underline;'>56</span><span>
-#&gt; </span><span style='color: #555555;'># … with 11 more rows</span><span></div><div class='input'>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='correlate.data.frame.html'>correlate</a></span>(-<span class='fl'>1</span>, -<span class='fl'>2</span>, -<span class='fl'>3</span>, -<span class='fl'>5</span>, -<span class='fl'>6</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 24 x 3</span><span>
+#&gt;    var1       var2              coef_corr
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> platelets  age                -</span><span style='color: #BB0000;'>0.052</span><span style='color: #BB0000;text-decoration: underline;'>5</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> creatinine age                 0.159  
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> sodium     age                -</span><span style='color: #BB0000;'>0.045</span><span style='color: #BB0000;text-decoration: underline;'>9</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> time       age                -</span><span style='color: #BB0000;'>0.224</span><span>  
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> platelets  cpk_enzyme          0.024</span><span style='text-decoration: underline;'>5</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> creatinine cpk_enzyme         -</span><span style='color: #BB0000;'>0.016</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> sodium     cpk_enzyme          0.059</span><span style='text-decoration: underline;'>6</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> time       cpk_enzyme         -</span><span style='color: #BB0000;'>0.009</span><span style='color: #BB0000;text-decoration: underline;'>35</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> platelets  ejection_fraction   0.072</span><span style='text-decoration: underline;'>2</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> creatinine ejection_fraction  -</span><span style='color: #BB0000;'>0.011</span><span style='color: #BB0000;text-decoration: underline;'>3</span><span> 
+#&gt; </span><span style='color: #949494;'># … with 14 more rows</span><span></div><div class='input'>
 <span class='co'># ---------------------------------------------</span>
 <span class='co'># Correlation coefficient</span>
 <span class='co'># that eliminates redundant combination of variables</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='correlate.data.frame.html'>correlate</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='no'>var1</span>) <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='no'>var2</span>))</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 28 x 3</span><span>
-#&gt;    var1        var2      coef_corr
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> CompPrice   Sales        0.064</span><span style='text-decoration: underline;'>1</span><span>
-#&gt; </span><span style='color: #555555;'> 2</span><span> Income      Sales        0.175 
-#&gt; </span><span style='color: #555555;'> 3</span><span> Advertising Sales        0.270 
-#&gt; </span><span style='color: #555555;'> 4</span><span> Population  Sales        0.050</span><span style='text-decoration: underline;'>5</span><span>
-#&gt; </span><span style='color: #555555;'> 5</span><span> Price       Sales       -</span><span style='color: #BB0000;'>0.445</span><span> 
-#&gt; </span><span style='color: #555555;'> 6</span><span> Age         Sales       -</span><span style='color: #BB0000;'>0.232</span><span> 
-#&gt; </span><span style='color: #555555;'> 7</span><span> Education   Sales       -</span><span style='color: #BB0000;'>0.052</span><span style='color: #BB0000;text-decoration: underline;'>0</span><span>
-#&gt; </span><span style='color: #555555;'> 8</span><span> Income      CompPrice   -</span><span style='color: #BB0000;'>0.095</span><span style='color: #BB0000;text-decoration: underline;'>2</span><span>
-#&gt; </span><span style='color: #555555;'> 9</span><span> Advertising CompPrice   -</span><span style='color: #BB0000;'>0.024</span><span style='color: #BB0000;text-decoration: underline;'>2</span><span>
-#&gt; </span><span style='color: #555555;'>10</span><span> Population  CompPrice   -</span><span style='color: #BB0000;'>0.094</span><span style='color: #BB0000;text-decoration: underline;'>7</span><span>
-#&gt; </span><span style='color: #555555;'># … with 18 more rows</span><span></div><div class='input'>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='no'>var1</span>) <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='no'>var2</span>))</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 21 x 3</span><span>
+#&gt;    var1              var2       coef_corr
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> cpk_enzyme        age          -</span><span style='color: #BB0000;'>0.081</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> ejection_fraction age           0.060</span><span style='text-decoration: underline;'>2</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> platelets         age          -</span><span style='color: #BB0000;'>0.052</span><span style='color: #BB0000;text-decoration: underline;'>5</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> creatinine        age           0.159 
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> sodium            age          -</span><span style='color: #BB0000;'>0.045</span><span style='color: #BB0000;text-decoration: underline;'>9</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> time              age          -</span><span style='color: #BB0000;'>0.224</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> ejection_fraction cpk_enzyme   -</span><span style='color: #BB0000;'>0.044</span><span style='color: #BB0000;text-decoration: underline;'>1</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> platelets         cpk_enzyme    0.024</span><span style='text-decoration: underline;'>5</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> creatinine        cpk_enzyme   -</span><span style='color: #BB0000;'>0.016</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> sodium            cpk_enzyme    0.059</span><span style='text-decoration: underline;'>6</span><span>
+#&gt; </span><span style='color: #949494;'># … with 11 more rows</span><span></div><div class='input'>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='correlate.data.frame.html'>correlate</a></span>(<span class='no'>Sales</span>, <span class='no'>Price</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='no'>var1</span>) <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='no'>var2</span>))</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 5 x 3</span><span>
-#&gt;   var1  var2        coef_corr
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Price Sales         -</span><span style='color: #BB0000;'>0.445</span><span> 
-#&gt; </span><span style='color: #555555;'>2</span><span> Price CompPrice      0.585 
-#&gt; </span><span style='color: #555555;'>3</span><span> Price Income        -</span><span style='color: #BB0000;'>0.083</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span>
-#&gt; </span><span style='color: #555555;'>4</span><span> Price Advertising    0.044</span><span style='text-decoration: underline;'>5</span><span>
-#&gt; </span><span style='color: #555555;'>5</span><span> Price Population    -</span><span style='color: #BB0000;'>0.012</span><span style='color: #BB0000;text-decoration: underline;'>1</span><span></div><div class='input'>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='correlate.data.frame.html'>correlate</a></span>(<span class='no'>platelets</span>, <span class='no'>sodium</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='no'>var1</span>) <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='no'>var2</span>))</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 8 x 3</span><span>
+#&gt;   var1      var2              coef_corr
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> platelets age                 -</span><span style='color: #BB0000;'>0.052</span><span style='color: #BB0000;text-decoration: underline;'>5</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> sodium    age                 -</span><span style='color: #BB0000;'>0.045</span><span style='color: #BB0000;text-decoration: underline;'>9</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> platelets cpk_enzyme           0.024</span><span style='text-decoration: underline;'>5</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> sodium    cpk_enzyme           0.059</span><span style='text-decoration: underline;'>6</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> platelets ejection_fraction    0.072</span><span style='text-decoration: underline;'>2</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> sodium    ejection_fraction    0.176 
+#&gt; </span><span style='color: #BCBCBC;'>7</span><span> sodium    platelets            0.062</span><span style='text-decoration: underline;'>1</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>8</span><span> sodium    creatinine          -</span><span style='color: #BB0000;'>0.189</span><span> </div><div class='input'>
 <span class='co'># Using pipes &amp; dplyr -------------------------</span>
-<span class='co'># Compute the correlation coefficient of Sales variable by 'ShelveLoc'</span>
-<span class='co'># and 'US' variables. And extract only those with absolute</span>
-<span class='co'># value of correlation coefficient is greater than 0.5</span>
+<span class='co'># Compute the correlation coefficient of platelets variable by 'smoking'</span>
+<span class='co'># and 'death_event' variables. And extract only those with absolute</span>
+<span class='co'># value of correlation coefficient is greater than 0.1</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>ShelveLoc</span>, <span class='no'>US</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='correlate.data.frame.html'>correlate</a></span>(<span class='no'>Sales</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='no'>coef_corr</span>) <span class='kw'>&gt;=</span> <span class='fl'>0.5</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 5</span><span>
-#&gt;   ShelveLoc US    var1  var2  coef_corr
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Bad       No    Sales Price    -</span><span style='color: #BB0000;'>0.527</span><span>
-#&gt; </span><span style='color: #555555;'>2</span><span> Bad       Yes   Sales Price    -</span><span style='color: #BB0000;'>0.583</span><span>
-#&gt; </span><span style='color: #555555;'>3</span><span> Good      No    Sales Price    -</span><span style='color: #BB0000;'>0.811</span><span>
-#&gt; </span><span style='color: #555555;'>4</span><span> Good      Yes   Sales Price    -</span><span style='color: #BB0000;'>0.603</span><span>
-#&gt; </span><span style='color: #555555;'>5</span><span> Medium    No    Sales Price    -</span><span style='color: #BB0000;'>0.610</span><span>
-#&gt; </span><span style='color: #555555;'>6</span><span> Medium    Yes   Sales Price    -</span><span style='color: #BB0000;'>0.538</span><span></div><div class='input'>
-<span class='co'># extract only those with 'ShelveLoc' variable level is "Good",</span>
-<span class='co'># and compute the correlation coefficient of 'Sales' variable</span>
-<span class='co'># by 'Urban' and 'US' variables.</span>
-<span class='co'># And the correlation coefficient is negative and smaller than -0.5</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>smoking</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='correlate.data.frame.html'>correlate</a></span>(<span class='no'>platelets</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='no'>coef_corr</span>) <span class='kw'>&gt;=</span> <span class='fl'>0.1</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 9 x 5</span><span>
+#&gt;   smoking death_event var1      var2              coef_corr
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No      No          platelets ejection_fraction     0.128
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> No      Yes         platelets cpk_enzyme            0.123
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> No      Yes         platelets creatinine           -</span><span style='color: #BB0000;'>0.134</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> No      Yes         platelets sodium                0.171
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> No      Yes         platelets time                 -</span><span style='color: #BB0000;'>0.107</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> Yes     No          platelets age                  -</span><span style='color: #BB0000;'>0.202</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>7</span><span> Yes     No          platelets creatinine           -</span><span style='color: #BB0000;'>0.115</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>8</span><span> Yes     Yes         platelets ejection_fraction     0.296
+#&gt; </span><span style='color: #BCBCBC;'>9</span><span> Yes     Yes         platelets creatinine            0.179</div><div class='input'>
+<span class='co'># extract only those with 'smoking' variable level is "Yes",</span>
+<span class='co'># and compute the correlation coefficient of 'platelets' variable</span>
+<span class='co'># by 'sex' and 'death_event' variables.</span>
+<span class='co'># And the correlation coefficient is negative and smaller than -0.1</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>ShelveLoc</span> <span class='kw'>==</span> <span class='st'>"Good"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>Urban</span>, <span class='no'>US</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='correlate.data.frame.html'>correlate</a></span>(<span class='no'>Sales</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>smoking</span> <span class='kw'>==</span> <span class='st'>"Yes"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>sex</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='correlate.data.frame.html'>correlate</a></span>(<span class='no'>platelets</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>coef_corr</span> <span class='kw'>&lt;</span> <span class='fl'>0</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='no'>coef_corr</span>) <span class='kw'>&gt;</span> <span class='fl'>0.5</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 9 x 5</span><span>
-#&gt;   Urban US    var1  var2       coef_corr
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> No    No    Sales Population    -</span><span style='color: #BB0000;'>0.530</span><span>
-#&gt; </span><span style='color: #555555;'>2</span><span> No    No    Sales Price         -</span><span style='color: #BB0000;'>0.838</span><span>
-#&gt; </span><span style='color: #555555;'>3</span><span> No    Yes   Sales Price         -</span><span style='color: #BB0000;'>0.644</span><span>
-#&gt; </span><span style='color: #555555;'>4</span><span> Yes   No    Sales Price         -</span><span style='color: #BB0000;'>0.833</span><span>
-#&gt; </span><span style='color: #555555;'>5</span><span> Yes   No    Sales Age           -</span><span style='color: #BB0000;'>0.649</span><span>
-#&gt; </span><span style='color: #555555;'>6</span><span> Yes   Yes   Sales Price         -</span><span style='color: #BB0000;'>0.612</span><span>
-#&gt; </span><span style='color: #555555;'>7</span><span> </span><span style='color: #BB0000;'>NA</span><span>    Yes   Sales CompPrice     -</span><span style='color: #BB0000;'>1</span><span>    
-#&gt; </span><span style='color: #555555;'>8</span><span> </span><span style='color: #BB0000;'>NA</span><span>    Yes   Sales Price         -</span><span style='color: #BB0000;'>1</span><span>    
-#&gt; </span><span style='color: #555555;'>9</span><span> </span><span style='color: #BB0000;'>NA</span><span>    Yes   Sales Education     -</span><span style='color: #BB0000;'>1</span><span>    </div><div class='input'> 
-</div></span></pre>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='no'>coef_corr</span>) <span class='kw'>&gt;</span> <span class='fl'>0.1</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 5 x 5</span><span>
+#&gt;   sex    death_event var1      var2              coef_corr
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> Female Yes         platelets ejection_fraction    -</span><span style='color: #BB0000;'>0.310</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> Male   No          platelets age                  -</span><span style='color: #BB0000;'>0.213</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Male   No          platelets creatinine           -</span><span style='color: #BB0000;'>0.110</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Male   Yes         platelets age                  -</span><span style='color: #BB0000;'>0.126</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> Male   Yes         platelets time                 -</span><span style='color: #BB0000;'>0.124</span><span></div><div class='input'>
+<span class='co'># Disconnect DBMS   </span>
+<span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://dbi.r-dbi.org/reference/dbDisconnect.html'>dbDisconnect</a></span>(<span class='no'>con_sqlite</span>)</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

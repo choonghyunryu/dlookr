@@ -35,22 +35,19 @@
 #' @export
 #' @examples
 #' library(dplyr)
-#' 
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
 #' # connect DBMS
 #' con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 #' 
-#' # copy carseats to the DBMS with a table named TB_CARSEATS
-#' copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
+#' # copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+#' copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
 #' 
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   get_column_info
-
+#'   
+#' # Disconnect DBMS   
+#' DBI::dbDisconnect(con_sqlite)
+#' 
 get_column_info <- function(df) {
   if (requireNamespace("DBI", quietly = TRUE)) {
     res <- DBI::dbSendQuery(df$src$con, 
@@ -115,50 +112,48 @@ get_column_info <- function(df) {
 #' @import dplyr
 #' @examples
 #' library(dplyr)
-#' 
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 #'
 #' # connect DBMS
 #' con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 #' 
-#' # copy carseats to the DBMS with a table named TB_CARSEATS
-#' copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
+#' # copy jobchange to the DBMS with a table named TB_JOBCHANGE
+#' copy_to(con_sqlite, jobchange, name = "TB_JOBCHANGE", overwrite = TRUE)
 #' 
 #' # Using pipes ---------------------------------
 #' # Diagnosis of all columns
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_JOBCHANGE") %>% 
 #'   diagnose()
 #'   
 #' # Positive values select columns
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   diagnose(Sales, Income, Age)
+#'   tbl("TB_JOBCHANGE") %>% 
+#'   diagnose(gender, education_level, company_size)
 #'   
 #' # Negative values to drop columns
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   diagnose(-Sales, -Income, -Age)
+#'   tbl("TB_JOBCHANGE") %>% 
+#'   diagnose(-gender, -education_level, -company_size)
 #'   
 #' # Positions values select columns, and In-memory mode
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_JOBCHANGE") %>% 
 #'   diagnose(1, 3, 8, in_database = FALSE)
 #'   
 #' # Positions values select columns, and In-memory mode and collect size is 200
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_JOBCHANGE") %>% 
 #'   diagnose(-8, -9, -10, in_database = FALSE, collect_size = 200)
 #'
 #' # Using pipes & dplyr -------------------------
 #' # Diagnosis of missing variables
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_JOBCHANGE") %>% 
 #'   diagnose() %>%
 #'   filter(missing_count > 0)
+#'   
+#' # Disconnect DBMS   
+#' DBI::dbDisconnect(con_sqlite)
 #'   
 diagnose.tbl_dbi <- function(.data, ..., in_database = TRUE, collect_size = Inf) {
   vars <- tidyselect::vars_select(colnames(.data), !!! rlang::quos(...))
@@ -266,59 +261,54 @@ diagn_std_impl_dbi <- function(df, vars) {
 #' @examples
 #' library(dplyr)
 #' 
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
 #' # connect DBMS
 #' con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 #' 
-#' # copy carseats to the DBMS with a table named TB_CARSEATS
-#' copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
+#' # copy jobchange to the DBMS with a table named TB_JOBCHANGE
+#' copy_to(con_sqlite, jobchange, name = "TB_JOBCHANGE", overwrite = TRUE)
 #' 
 #' # Using pipes ---------------------------------
 #' # Diagnosis of all categorical variables
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_JOBCHANGE") %>% 
 #'   diagnose_category()
 #'   
 #' # Positive values select variables
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   diagnose_category(Urban, US)
+#'   tbl("TB_JOBCHANGE") %>% 
+#'   diagnose_category(company_type, job_chnge)
 #'   
 #' # Negative values to drop variables, and In-memory mode
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   diagnose_category(-Urban, -US, in_database = FALSE)
+#'   tbl("TB_JOBCHANGE") %>% 
+#'   diagnose_category(-company_type, -job_chnge, in_database = FALSE)
 #'   
 #' # Positions values select variables, and In-memory mode and collect size is 200
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_JOBCHANGE") %>% 
 #'   diagnose_category(7, in_database = FALSE, collect_size = 200) 
 #'   
 #' # Positions values select variables
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_JOBCHANGE") %>% 
 #'   diagnose_category(-7)
 #'   
 #' # Top rank levels with top argument
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_JOBCHANGE") %>% 
 #'   diagnose_category(top = 2)
 #'
 #' # Using pipes & dplyr -------------------------
 #' # Extraction of level that is more than 60% of categorical data
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_JOBCHANGE") %>% 
 #'   diagnose_category()  %>%
 #'   filter(ratio >= 60)
 #'   
 #' # Using type argument -------------------------
 #'  dfm <- data.frame(alpabet = c(rep(letters[1:5], times = 5), "c")) 
 #'  
-#' # copy carseats to the DBMS with a table named TB_CARSEATS
+#' # copy dfm to the DBMS with a table named TB_EXAMPLE
 #' copy_to(con_sqlite, dfm, name = "TB_EXAMPLE", overwrite = TRUE)  
 #'  
 #' # extract rows that less than equal rank 10
@@ -342,7 +332,10 @@ diagn_std_impl_dbi <- function(df, vars) {
 #' con_sqlite %>% 
 #'   tbl("TB_EXAMPLE") %>% 
 #'   diagnose_category(top = 2, type = "n")
-#'    
+#'
+#' # Disconnect DBMS   
+#' DBI::dbDisconnect(con_sqlite)
+#'
 diagnose_category.tbl_dbi <- function(.data, ..., top = 10, type = c("rank", "n")[1],
                                       in_database = TRUE, collect_size = Inf) {
   vars <- tidyselect::vars_select(colnames(.data), !!! rlang::quos(...))
@@ -455,49 +448,47 @@ diagn_category_impl_dbi <- function(df, vars, top, type) {
 #' @examples
 #' library(dplyr)
 #' 
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
 #' # connect DBMS
 #' con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 #' 
-#' # copy carseats to the DBMS with a table named TB_CARSEATS
-#' copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
+#' # copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+#' copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
 #'
 #' # Using pipes ---------------------------------
 #' # Diagnosis of all numerical variables
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   diagnose_numeric()
 #'   
 #' # Positive values select variables, and In-memory mode and collect size is 200
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   diagnose_numeric(Sales, Income, collect_size = 200)
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   diagnose_numeric(age, sodium, collect_size = 200)
 #'   
 #' # Negative values to drop variables
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   diagnose_numeric(-Sales, -Income)
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   diagnose_numeric(-age, -sodium)
 #'   
 #' # Positions values select variables
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   diagnose_numeric(5)
 #'   
 #' # Positions values select variables
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   diagnose_numeric(-1, -5)
 #'
 #' # Using pipes & dplyr -------------------------
-#' # Information records of zero variable more than 0
+#' # List of variables containing outliers
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   diagnose_numeric()  %>%
-#'   filter(zero > 0)
+#'   filter(outlier > 0)
+#'
+#' # Disconnect DBMS   
+#' DBI::dbDisconnect(con_sqlite)
 #'   
 diagnose_numeric.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = Inf) {
   vars <- tidyselect::vars_select(colnames(.data), !!! rlang::quos(...))
@@ -558,50 +549,48 @@ diagnose_numeric.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_si
 #' @examples
 #' library(dplyr)
 #' 
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
 #' # connect DBMS
 #' con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 #' 
-#' # copy carseats to the DBMS with a table named TB_CARSEATS
-#' copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
+#' # copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+#' copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
 #'
 #' # Using pipes ---------------------------------
 #' # Diagnosis of all numerical variables
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   diagnose_outlier()
 #'   
 #' # Positive values select variables, and In-memory mode and collect size is 200
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   diagnose_outlier(Sales, Income, collect_size = 200)
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   diagnose_outlier(platelets, sodium, collect_size = 200)
 #'   
 #' # Negative values to drop variables
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   diagnose_outlier(-Sales, -Income)
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   diagnose_outlier(-platelets, -sodium)
 #'   
 #' # Positions values select variables
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   diagnose_outlier(5)
 #' # Positions values select variables
 #' 
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   diagnose_outlier(-1, -5)
 #'
 #' # Using pipes & dplyr -------------------------
 #' # outlier_ratio is more than 1%
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   diagnose_outlier()  %>%
 #'   filter(outliers_ratio > 1)
-#'   
+#'
+#' # Disconnect DBMS   
+#' DBI::dbDisconnect(con_sqlite)
+#'
 diagnose_outlier.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = Inf) {
   vars <- tidyselect::vars_select(colnames(.data), !!! rlang::quos(...))
   
@@ -660,60 +649,58 @@ diagnose_outlier.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_si
 #' @examples
 #' library(dplyr)
 #' 
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
 #' # connect DBMS
 #' con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 #' 
-#' # copy carseats to the DBMS with a table named TB_CARSEATS
-#' copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
+#' # copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+#' copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
 #' 
 #' # Using pipes ---------------------------------
 #' # Visualization of all numerical variables
 #' # con_sqlite %>% 
-#' #   tbl("TB_CARSEATS") %>% 
+#' #   tbl("TB_HEARTFAILURE") %>% 
 #' #   plot_outlier()
 #'   
 #' # Positive values select variables
 #'  con_sqlite %>% 
-#'    tbl("TB_CARSEATS") %>% 
-#'    plot_outlier(Sales, Price)
+#'    tbl("TB_HEARTFAILURE") %>% 
+#'    plot_outlier(platelets, sodium)
 #'   
 #' # Negative values to drop variables, and In-memory mode and collect size is 200
 #' # con_sqlite %>% 
-#' #   tbl("TB_CARSEATS") %>% 
-#' #   plot_outlier(-Sales, -Price, collect_size = 200)
+#' #   tbl("TB_HEARTFAILURE") %>% 
+#' #   plot_outlier(-platelets, -sodium, collect_size = 200)
 #'   
 #' # Positions values select variables
 #' # con_sqlite %>% 
-#' #   tbl("TB_CARSEATS") %>% 
+#' #   tbl("TB_HEARTFAILURE") %>% 
 #' #   plot_outlier(6)
 #'   
 #' # Positions values select variables
 #' # con_sqlite %>% 
-#' #   tbl("TB_CARSEATS") %>% 
+#' #   tbl("TB_HEARTFAILURE") %>% 
 #' #   plot_outlier(-1, -5)
 #'   
 #' # Not allow the typographic elements
 #' #  con_sqlite %>% 
-#' #   tbl("TB_CARSEATS") %>% 
+#' #   tbl("TB_HEARTFAILURE") %>% 
 #' #   plot_outlier(-1, -5, typographic = FALSE)
 #'
 #' # Using pipes & dplyr -------------------------
 #' # Visualization of numerical variables with a ratio of
 #' # outliers greater than 1%
 #' # con_sqlite %>% 
-#' #   tbl("TB_CARSEATS") %>% 
+#' #   tbl("TB_HEARTFAILURE") %>% 
 #' #   plot_outlier(con_sqlite %>% 
-#' #                  tbl("TB_CARSEATS") %>% 
+#' #                  tbl("TB_HEARTFAILURE") %>% 
 #' #                  diagnose_outlier() %>%
 #' #                  filter(outliers_ratio > 1) %>%
 #' #                  select(variables) %>%
 #' #                 pull())
-#'       
+#'
+#' # Disconnect DBMS   
+#' DBI::dbDisconnect(con_sqlite)
+#'          
 plot_outlier.tbl_dbi <- function(.data, ..., col = "steelblue", 
   in_database = FALSE, collect_size = Inf, typographic = TRUE) {
   vars <- tidyselect::vars_select(colnames(.data), !!! rlang::quos(...))
@@ -774,62 +761,60 @@ plot_outlier.tbl_dbi <- function(.data, ..., col = "steelblue",
 #' \donttest{
 #' library(dplyr)
 #' 
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
 #' # connect DBMS
 #' con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 #' 
-#' # copy carseats to the DBMS with a table named TB_CARSEATS
-#' copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
+#' # copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+#' copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
 #'
 #' # Using pipes ---------------------------------
 #' # Normality test of all numerical variables
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   normality()
 #'
 #' # Positive values select variables, and In-memory mode and collect size is 200
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   normality(Sales, Price, collect_size  = 200)
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   normality(platelets, sodium, collect_size  = 200)
 #'
 #' # Positions values select variables
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   normality(1)
 #'
 #' # Using pipes & dplyr -------------------------
-#' # Test all numerical variables by 'ShelveLoc' and 'US',
-#' # and extract only those with 'ShelveLoc' variable level is "Good".
+#' # Test all numerical variables by 'smoking' and 'death_event',
+#' # and extract only those with 'smoking' variable level is "Yes".
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   group_by(ShelveLoc, US) %>%
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   group_by(smoking, death_event) %>%
 #'   normality() %>%
-#'   filter(ShelveLoc == "Good")
+#'   filter(smoking == "Yes")
 #'
-#' # extract only those with 'Urban' variable level is "Yes",
-#' # and test 'Sales' by 'ShelveLoc' and 'US'
+#' # extract only those with 'sex' variable level is "Male",
+#' # and test 'sodium' by 'smoking' and 'death_event'
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   filter(Urban == "Yes") %>%
-#'   group_by(ShelveLoc, US) %>%
-#'   normality(Sales)
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   filter(sex == "Male") %>%
+#'   group_by(smoking, death_event) %>%
+#'   normality(sodium)
 #'
-#' # Test log(Income) variables by 'ShelveLoc' and 'US',
+#' # Test log(sodium) variables by 'smoking' and 'death_event',
 #' # and extract only p.value greater than 0.01.
 #' 
 #' # SQLite extension functions for log
 #' RSQLite::initExtension(con_sqlite)
 #' 
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   mutate(log_income = log(Income)) %>%
-#'   group_by(ShelveLoc, US) %>%
-#'   normality(log_income) %>%
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   mutate(log_sodium = log(sodium)) %>%
+#'   group_by(smoking, death_event) %>%
+#'   normality(log_sodium) %>%
 #'   filter(p_value > 0.01)
+#'  
+#' # Disconnect DBMS   
+#' DBI::dbDisconnect(con_sqlite)
 #' }
 #' 
 normality.tbl_dbi <- function(.data, ..., sample = 5000, 
@@ -920,58 +905,56 @@ normality.tbl_dbi <- function(.data, ..., sample = 5000,
 #' \donttest{
 #' library(dplyr)
 #' 
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
 #' # connect DBMS
 #' con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 #' 
-#' # copy carseats to the DBMS with a table named TB_CARSEATS
-#' copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
+#' # copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+#' copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
 #'
 #' # Using pipes ---------------------------------
 #' # Visualization of all numerical variables
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   plot_normality()
 #'
 #' # Positive values select variables, and In-memory mode and collect size is 200
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   plot_normality(Income, Price, collect_size = 200)
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   plot_normality(platelets, sodium, collect_size = 200)
 #'
 #' # Positions values select variables
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   plot_normality(1)
 #'
 #' # Not allow the typographic elements
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   plot_normality(1, typographic = FALSE)
 #'   
 #' # Using pipes & dplyr -------------------------
-#' # Plot 'Sales' variable by 'ShelveLoc' and 'US'
+#' # Plot 'sodium' variable by 'smoking' and 'death_event'
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   group_by(ShelveLoc, US) %>%
-#'   plot_normality(Sales)
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   group_by(smoking, death_event) %>%
+#'   plot_normality(sodium)
 #'
 #' # Plot using left and right arguments
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   group_by(ShelveLoc, US) %>%
-#'   plot_normality(Sales, left = "Box-Cox", right = "log")
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   group_by(smoking, death_event) %>%
+#'   plot_normality(sodium, left = "Box-Cox", right = "log")
 #'
-#' # extract only those with 'ShelveLoc' variable level is "Good",
-#' # and plot 'Income' by 'US'
+#' # extract only those with 'smoking' variable level is "Yes",
+#' # and plot 'sodium' by 'death_event'
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   filter(ShelveLoc == "Good") %>%
-#'   group_by(US) %>%
-#'   plot_normality(Income)
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   filter(smoking == "Yes") %>%
+#'   group_by(death_event) %>%
+#'   plot_normality(sodium)
+#'   
+#' # Disconnect DBMS   
+#' DBI::dbDisconnect(con_sqlite)
 #' }
 #' 
 plot_normality.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = Inf, 
@@ -1044,77 +1027,75 @@ plot_normality.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
 #' @examples
 #' library(dplyr)
 #' 
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
 #' # connect DBMS
 #' con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 #' 
-#' # copy carseats to the DBMS with a table named TB_CARSEATS
-#' copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
+#' # copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+#' copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
 #'
 #' # Using pipes ---------------------------------
 #' # Correlation coefficients of all numerical variables
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   correlate()
 #'  
 #' # Positive values select variables
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   correlate(Sales, Price)
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   correlate(platelets, sodium)
 #'  
 #' # Negative values to drop variables, and In-memory mode and collect size is 200
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   correlate(-Sales, -Price, collect_size = 200)
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   correlate(-platelets, -sodium, collect_size = 200)
 #'  
 #' # Positions values select variables
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   correlate(1)
 #'  
 #' # Positions values select variables
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   correlate(-1, -2, -3, -5, -6)
 #'  
 #' # ---------------------------------------------
 #' # Correlation coefficient
 #' # that eliminates redundant combination of variables
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   correlate() %>%
 #'   filter(as.integer(var1) > as.integer(var2))
 #'
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   correlate(Sales, Price) %>%
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   correlate(platelets, sodium) %>%
 #'   filter(as.integer(var1) > as.integer(var2))
 #'
 #' # Using pipes & dplyr -------------------------
-#' # Compute the correlation coefficient of Sales variable by 'ShelveLoc'
-#' # and 'US' variables. And extract only those with absolute
-#' # value of correlation coefficient is greater than 0.5
+#' # Compute the correlation coefficient of platelets variable by 'smoking'
+#' # and 'death_event' variables. And extract only those with absolute
+#' # value of correlation coefficient is greater than 0.1
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   group_by(ShelveLoc, US) %>%
-#'   correlate(Sales) %>%
-#'   filter(abs(coef_corr) >= 0.5)
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   group_by(smoking, death_event) %>%
+#'   correlate(platelets) %>%
+#'   filter(abs(coef_corr) >= 0.1)
 #'
-#' # extract only those with 'ShelveLoc' variable level is "Good",
-#' # and compute the correlation coefficient of 'Sales' variable
-#' # by 'Urban' and 'US' variables.
-#' # And the correlation coefficient is negative and smaller than -0.5
+#' # extract only those with 'smoking' variable level is "Yes",
+#' # and compute the correlation coefficient of 'platelets' variable
+#' # by 'sex' and 'death_event' variables.
+#' # And the correlation coefficient is negative and smaller than -0.1
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   filter(ShelveLoc == "Good") %>%
-#'   group_by(Urban, US) %>%
-#'   correlate(Sales) %>%
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   filter(smoking == "Yes") %>%
+#'   group_by(sex, death_event) %>%
+#'   correlate(platelets) %>%
 #'   filter(coef_corr < 0) %>%
-#'   filter(abs(coef_corr) > 0.5)
+#'   filter(abs(coef_corr) > 0.1)
+#'  
+#' # Disconnect DBMS   
+#' DBI::dbDisconnect(con_sqlite)
 #'  
 correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = Inf,
                               method = c("pearson", "kendall", "spearman")) {
@@ -1171,60 +1152,58 @@ correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = In
 #' @examples
 #' library(dplyr)
 #' 
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
 #' # connect DBMS
 #' con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 #' 
-#' # copy carseats to the DBMS with a table named TB_CARSEATS
-#' copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
+#' # copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+#' copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
 #'
 #' # Using pipes ---------------------------------
 #' # Visualize correlation plot of all numerical variables
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   plot_correlate()
 #'   
 #' # Positive values select variables, and In-memory mode and collect size is 200
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   plot_correlate(Sales, Price, collect_size = 200)
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   plot_correlate(platelets, sodium, collect_size = 200)
 #'   
 #' # Negative values to drop variables
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   plot_correlate(-Sales, -Price)
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   plot_correlate(-platelets, -sodium)
 #'   
 #' # Positions values select variables
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   plot_correlate(1)
 #'   
 #' # Positions values select variables
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   plot_correlate(-1, -2, -3, -5, -6)
 #'
 #' # Using pipes & dplyr -------------------------
-#' # Visualize correlation plot of 'Sales' variable by 'ShelveLoc'
-#' # and 'US' variables.
+#' # Visualize correlation plot of 'sodiumsodium' variable by 'smoking'
+#' # and 'death_event' variables.
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   group_by(ShelveLoc, US) %>%
-#'   plot_correlate(Sales)
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   group_by(smoking, death_event) %>%
+#'   plot_correlate(sodium)
 #'
-#' # Extract only those with 'ShelveLoc' variable level is "Good",
-#' # and visualize correlation plot of 'Sales' variable by 'Urban'
-#' # and 'US' variables.
+#' # Extract only those with 'smoking' variable level is "Yes",
+#' # and visualize correlation plot of 'sodium' variable by 'sex'
+#' # and 'death_event' variables.
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   filter(ShelveLoc == "Good") %>%
-#'   group_by(Urban, US) %>%
-#'   plot_correlate(Sales)
-#'  
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   filter(smoking == "Yes") %>%
+#'   group_by(sex, death_event) %>%
+#'   plot_correlate(sodium)
+#'
+#' # Disconnect DBMS   
+#' DBI::dbDisconnect(con_sqlite)
+#'
 plot_correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = Inf,
                                    method = c("pearson", "kendall", "spearman")) {
   vars <- tidyselect::vars_select(colnames(.data), !!! rlang::quos(...))
@@ -1301,45 +1280,43 @@ plot_correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
 #' @examples
 #' library(dplyr)
 #' 
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
 #' # connect DBMS
 #' con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 #' 
-#' # copy carseats to the DBMS with a table named TB_CARSEATS
-#' copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
+#' # copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+#' copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
 #'
 #' # Using pipes ---------------------------------
 #' # Positive values select variables
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   describe(Sales, CompPrice, Income)
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   describe(platelets, creatinine, sodium)
 #'
 #' # Negative values to drop variables, and In-memory mode and collect size is 200
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   describe(-Sales, -CompPrice, -Income, collect_size = 200)
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   describe(-platelets, -creatinine, -sodium, collect_size = 200)
 #'
 #' # Using pipes & dplyr -------------------------
-#' # Find the statistic of all numerical variables by 'ShelveLoc' and 'US',
-#' # and extract only those with 'ShelveLoc' variable level is "Good".
+#' # Find the statistic of all numerical variables by 'smoking' and 'death_event',
+#' # and extract only those with 'smoking' variable level is "Yes".
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   group_by(ShelveLoc, US) %>%
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   group_by(smoking, death_event) %>%
 #'   describe() %>%
-#'   filter(ShelveLoc == "Good")
+#'   filter(smoking == "Yes")
 #'
-#' # extract only those with 'Urban' variable level is "Yes",
-#' # and find 'Sales' statistics by 'ShelveLoc' and 'US'
+#' # extract only those with 'sex' variable level is "Male",
+#' # and find 'sodium' statistics by 'smoking' and 'death_event'
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   filter(Urban == "Yes") %>%
-#'   group_by(ShelveLoc, US) %>%
-#'   describe(Sales)
-#'  
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   filter(sex == "Male") %>%
+#'   group_by(smoking, death_event) %>%
+#'   describe(sodium)
+#'
+#' # Disconnect DBMS   
+#' DBI::dbDisconnect(con_sqlite)
+#'
 describe.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = Inf) {
   vars <- tidyselect::vars_select(colnames(.data), !!! rlang::quos(...))
   
@@ -1441,6 +1418,10 @@ describe.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = Inf
 #' num_cat
 #' summary(num_cat)
 #' plot(num_cat)
+#' 
+#' # Disconnect DBMS   
+#' DBI::dbDisconnect(con_sqlite)
+#' 
 #' @method target_by tbl_dbi
 #' @export
 #'
@@ -1556,6 +1537,9 @@ target_by.tbl_dbi <- function(.data, target, in_database = FALSE, collect_size =
 #' con_sqlite %>% 
 #'   tbl("TB_CARSEATS") %>% 
 #'   diagnose_report(output_format = "html", output_file = "Diagn.html")
+#'   
+#' # Disconnect DBMS   
+#' DBI::dbDisconnect(con_sqlite)
 #' }
 #' 
 #' @method diagnose_report tbl_dbi
@@ -1721,6 +1705,9 @@ diagnose_report.tbl_dbi <- function(.data, output_format = c("pdf", "html"),
 #' con_sqlite %>% 
 #'   tbl("TB_CARSEATS") %>% 
 #'   eda_report(output_format = "html", output_file = "EDA2.html")
+#'   
+#' # Disconnect DBMS   
+#' DBI::dbDisconnect(con_sqlite)
 #' }
 #'
 #' @export

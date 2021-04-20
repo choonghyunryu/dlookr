@@ -174,6 +174,9 @@ con_sqlite \%>\%
 con_sqlite \%>\% 
   tbl("TB_CARSEATS") \%>\% 
   eda_report(output_format = "html", output_file = "EDA2.html")
+  
+# Disconnect DBMS   
+DBI::dbDisconnect(con_sqlite)
 }
 
 }

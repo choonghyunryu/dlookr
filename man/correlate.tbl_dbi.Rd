@@ -60,77 +60,75 @@ The information derived from the numerical data compute is as follows.
 \examples{
 library(dplyr)
 
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-
 # connect DBMS
 con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 
-# copy carseats to the DBMS with a table named TB_CARSEATS
-copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
+# copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
 
 # Using pipes ---------------------------------
 # Correlation coefficients of all numerical variables
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
   correlate()
  
 # Positive values select variables
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
-  correlate(Sales, Price)
+  tbl("TB_HEARTFAILURE") \%>\% 
+  correlate(platelets, sodium)
  
 # Negative values to drop variables, and In-memory mode and collect size is 200
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
-  correlate(-Sales, -Price, collect_size = 200)
+  tbl("TB_HEARTFAILURE") \%>\% 
+  correlate(-platelets, -sodium, collect_size = 200)
  
 # Positions values select variables
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
   correlate(1)
  
 # Positions values select variables
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
   correlate(-1, -2, -3, -5, -6)
  
 # ---------------------------------------------
 # Correlation coefficient
 # that eliminates redundant combination of variables
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
   correlate() \%>\%
   filter(as.integer(var1) > as.integer(var2))
 
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
-  correlate(Sales, Price) \%>\%
+  tbl("TB_HEARTFAILURE") \%>\% 
+  correlate(platelets, sodium) \%>\%
   filter(as.integer(var1) > as.integer(var2))
 
 # Using pipes & dplyr -------------------------
-# Compute the correlation coefficient of Sales variable by 'ShelveLoc'
-# and 'US' variables. And extract only those with absolute
-# value of correlation coefficient is greater than 0.5
+# Compute the correlation coefficient of platelets variable by 'smoking'
+# and 'death_event' variables. And extract only those with absolute
+# value of correlation coefficient is greater than 0.1
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
-  group_by(ShelveLoc, US) \%>\%
-  correlate(Sales) \%>\%
-  filter(abs(coef_corr) >= 0.5)
+  tbl("TB_HEARTFAILURE") \%>\% 
+  group_by(smoking, death_event) \%>\%
+  correlate(platelets) \%>\%
+  filter(abs(coef_corr) >= 0.1)
 
-# extract only those with 'ShelveLoc' variable level is "Good",
-# and compute the correlation coefficient of 'Sales' variable
-# by 'Urban' and 'US' variables.
-# And the correlation coefficient is negative and smaller than -0.5
+# extract only those with 'smoking' variable level is "Yes",
+# and compute the correlation coefficient of 'platelets' variable
+# by 'sex' and 'death_event' variables.
+# And the correlation coefficient is negative and smaller than -0.1
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
-  filter(ShelveLoc == "Good") \%>\%
-  group_by(Urban, US) \%>\%
-  correlate(Sales) \%>\%
+  tbl("TB_HEARTFAILURE") \%>\% 
+  filter(smoking == "Yes") \%>\%
+  group_by(sex, death_event) \%>\%
+  correlate(platelets) \%>\%
   filter(coef_corr < 0) \%>\%
-  filter(abs(coef_corr) > 0.5)
+  filter(abs(coef_corr) > 0.1)
+ 
+# Disconnect DBMS   
+DBI::dbDisconnect(con_sqlite)
  
 }
 \seealso{

@@ -85,58 +85,56 @@ The plot derived from the numerical data visualization is as follows.
 \donttest{
 library(dplyr)
 
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-
 # connect DBMS
 con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 
-# copy carseats to the DBMS with a table named TB_CARSEATS
-copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
+# copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
 
 # Using pipes ---------------------------------
 # Visualization of all numerical variables
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
   plot_normality()
 
 # Positive values select variables, and In-memory mode and collect size is 200
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
-  plot_normality(Income, Price, collect_size = 200)
+  tbl("TB_HEARTFAILURE") \%>\% 
+  plot_normality(platelets, sodium, collect_size = 200)
 
 # Positions values select variables
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
   plot_normality(1)
 
 # Not allow the typographic elements
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
   plot_normality(1, typographic = FALSE)
   
 # Using pipes & dplyr -------------------------
-# Plot 'Sales' variable by 'ShelveLoc' and 'US'
+# Plot 'sodium' variable by 'smoking' and 'death_event'
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
-  group_by(ShelveLoc, US) \%>\%
-  plot_normality(Sales)
+  tbl("TB_HEARTFAILURE") \%>\% 
+  group_by(smoking, death_event) \%>\%
+  plot_normality(sodium)
 
 # Plot using left and right arguments
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
-  group_by(ShelveLoc, US) \%>\%
-  plot_normality(Sales, left = "Box-Cox", right = "log")
+  tbl("TB_HEARTFAILURE") \%>\% 
+  group_by(smoking, death_event) \%>\%
+  plot_normality(sodium, left = "Box-Cox", right = "log")
 
-# extract only those with 'ShelveLoc' variable level is "Good",
-# and plot 'Income' by 'US'
+# extract only those with 'smoking' variable level is "Yes",
+# and plot 'sodium' by 'death_event'
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
-  filter(ShelveLoc == "Good") \%>\%
-  group_by(US) \%>\%
-  plot_normality(Income)
+  tbl("TB_HEARTFAILURE") \%>\% 
+  filter(smoking == "Yes") \%>\%
+  group_by(death_event) \%>\%
+  plot_normality(sodium)
+  
+# Disconnect DBMS   
+DBI::dbDisconnect(con_sqlite)
 }
 
 }

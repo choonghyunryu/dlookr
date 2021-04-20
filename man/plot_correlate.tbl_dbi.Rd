@@ -48,60 +48,58 @@ one variable in the ... argument, the specified number of plots are drawn.
 \examples{
 library(dplyr)
 
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-
 # connect DBMS
 con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 
-# copy carseats to the DBMS with a table named TB_CARSEATS
-copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
+# copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
 
 # Using pipes ---------------------------------
 # Visualize correlation plot of all numerical variables
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
   plot_correlate()
   
 # Positive values select variables, and In-memory mode and collect size is 200
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
-  plot_correlate(Sales, Price, collect_size = 200)
+  tbl("TB_HEARTFAILURE") \%>\% 
+  plot_correlate(platelets, sodium, collect_size = 200)
   
 # Negative values to drop variables
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
-  plot_correlate(-Sales, -Price)
+  tbl("TB_HEARTFAILURE") \%>\% 
+  plot_correlate(-platelets, -sodium)
   
 # Positions values select variables
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
   plot_correlate(1)
   
 # Positions values select variables
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
   plot_correlate(-1, -2, -3, -5, -6)
 
 # Using pipes & dplyr -------------------------
-# Visualize correlation plot of 'Sales' variable by 'ShelveLoc'
-# and 'US' variables.
+# Visualize correlation plot of 'sodiumsodium' variable by 'smoking'
+# and 'death_event' variables.
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
-  group_by(ShelveLoc, US) \%>\%
-  plot_correlate(Sales)
+  tbl("TB_HEARTFAILURE") \%>\% 
+  group_by(smoking, death_event) \%>\%
+  plot_correlate(sodium)
 
-# Extract only those with 'ShelveLoc' variable level is "Good",
-# and visualize correlation plot of 'Sales' variable by 'Urban'
-# and 'US' variables.
+# Extract only those with 'smoking' variable level is "Yes",
+# and visualize correlation plot of 'sodium' variable by 'sex'
+# and 'death_event' variables.
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
-  filter(ShelveLoc == "Good") \%>\%
-  group_by(Urban, US) \%>\%
-  plot_correlate(Sales)
- 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  filter(smoking == "Yes") \%>\%
+  group_by(sex, death_event) \%>\%
+  plot_correlate(sodium)
+
+# Disconnect DBMS   
+DBI::dbDisconnect(con_sqlite)
+
 }
 \seealso{
 \code{\link{plot_correlate.data.frame}}, \code{\link{plot_outlier.tbl_dbi}}.

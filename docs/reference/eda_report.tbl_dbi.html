@@ -73,7 +73,7 @@ data analysis for object inheriting from the DBMS table through tbl_dbi" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
       </span>
     </div>
 
@@ -251,21 +251,21 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 <span class='co'># create pdf file. file name is EDA_Report.pdf</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='eda_report.data.frame.html'>eda_report</a></span>(<span class='no'>US</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+  <span class='fu'><a href='eda_report.data.frame.html'>eda_report</a></span>(<span class='no'>US</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: '/var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/figure' already exists</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA_Report.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...........................                                                     |  33%
+#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA_Report.Rnw</span></div><div class='output co'>#&gt;   |                                                                                             |                                                                                     |   0%  |                                                                                             |............................                                                         |  33%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt;   |                                                                                        |.....................................................                           |  67%
+#&gt;   |                                                                                             |.........................................................                            |  67%
 #&gt; label: child-section-application (with options) 
 #&gt; List of 1
 #&gt;  $ child: chr "02_RunEDA.Rnw"
 #&gt; </div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/02_RunEDA.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...                                                                             |   4%
+#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/02_RunEDA.Rnw</span></div><div class='output co'>#&gt;   |                                                                                             |                                                                                     |   0%  |                                                                                             |...                                                                                  |   4%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt;   |                                                                                        |......                                                                          |   7%
+#&gt;   |                                                                                             |......                                                                               |   7%
 #&gt; label: enrironment (with options) 
 #&gt; List of 3
 #&gt;  $ echo   : logi FALSE
@@ -274,130 +274,128 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 #&gt; </div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: 'gridExtra'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:dplyr':</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    combine</span></div><div class='output co'>#&gt;   |                                                                                        |.........                                                                       |  11%
+#&gt; <span class='message'>    combine</span></div><div class='output co'>#&gt;   |                                                                                             |.........                                                                            |  11%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt;   |                                                                                        |............                                                                    |  15%
+#&gt;   |                                                                                             |.............                                                                        |  15%
 #&gt; label: check_variables (with options) 
 #&gt; List of 1
 #&gt;  $ echo: logi FALSE
 #&gt; 
-#&gt;   |                                                                                        |...............                                                                 |  19%
+#&gt;   |                                                                                             |................                                                                     |  19%
 #&gt;    inline R code fragments
 #&gt; 
-#&gt;   |                                                                                        |..................                                                              |  22%
+#&gt;   |                                                                                             |...................                                                                  |  22%
 #&gt; label: info_variables (with options) 
 #&gt; List of 2
 #&gt;  $ echo   : logi FALSE
 #&gt;  $ results: chr "asis"
 #&gt; 
-#&gt;   |                                                                                        |.....................                                                           |  26%
+#&gt;   |                                                                                             |......................                                                               |  26%
 #&gt;    inline R code fragments
 #&gt; 
-#&gt;   |                                                                                        |........................                                                        |  30%
+#&gt;   |                                                                                             |.........................                                                            |  30%
 #&gt; label: describe_univariate (with options) 
 #&gt; List of 3
 #&gt;  $ echo   : logi FALSE
 #&gt;  $ comment: chr ""
 #&gt;  $ results: chr "asis"
 #&gt; 
-#&gt;   |                                                                                        |...........................                                                     |  33%
+#&gt;   |                                                                                             |............................                                                         |  33%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt;   |                                                                                        |..............................                                                  |  37%
+#&gt;   |                                                                                             |...............................                                                      |  37%
 #&gt; label: normality (with options) 
 #&gt; List of 2
 #&gt;  $ echo   : logi FALSE
 #&gt;  $ results: chr "asis"
-#&gt; </div><div class='output co'>#&gt;   |                                                                                        |.................................                                               |  41%
+#&gt; </div><div class='output co'>#&gt;   |                                                                                             |...................................                                                  |  41%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt;   |                                                                                        |....................................                                            |  44%
+#&gt;   |                                                                                             |......................................                                               |  44%
 #&gt; label: correlations (with options) 
 #&gt; List of 2
 #&gt;  $ echo   : logi FALSE
 #&gt;  $ results: chr "asis"
 #&gt; 
-#&gt;   |                                                                                        |.......................................                                         |  48%
+#&gt;   |                                                                                             |.........................................                                            |  48%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt;   |                                                                                        |.........................................                                       |  52%
+#&gt;   |                                                                                             |............................................                                         |  52%
 #&gt; label: plot_correlations (with options) 
 #&gt; List of 2
 #&gt;  $ echo   : logi FALSE
 #&gt;  $ results: chr "asis"
-#&gt; </div><div class='output co'>#&gt;   |                                                                                        |............................................                                    |  56%
+#&gt; </div><div class='output co'>#&gt;   |                                                                                             |...............................................                                      |  56%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt;   |                                                                                        |...............................................                                 |  59%
+#&gt;   |                                                                                             |..................................................                                   |  59%
 #&gt; label: create_target_by (with options) 
 #&gt; List of 2
 #&gt;  $ echo   : logi FALSE
 #&gt;  $ results: chr "asis"
 #&gt; 
-#&gt;   |                                                                                        |..................................................                              |  63%
+#&gt;   |                                                                                             |......................................................                               |  63%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt;   |                                                                                        |.....................................................                           |  67%
+#&gt;   |                                                                                             |.........................................................                            |  67%
 #&gt; label: numeric_variables (with options) 
-#&gt; List of 2
+#&gt; List of 4
 #&gt;  $ echo   : logi FALSE
 #&gt;  $ results: chr "asis"
-#&gt; </div><div class='output co'>#&gt;   |                                                                                        |........................................................                        |  70%
+#&gt;  $ message: logi FALSE
+#&gt;  $ warning: logi FALSE
+#&gt; </div><div class='output co'>#&gt;   |                                                                                             |............................................................                         |  70%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt;   |                                                                                        |...........................................................                     |  74%
+#&gt;   |                                                                                             |...............................................................                      |  74%
 #&gt; label: category_variables (with options) 
 #&gt; List of 2
 #&gt;  $ echo   : logi FALSE
 #&gt;  $ results: chr "asis"
-#&gt; </div><div class='output co'>#&gt;   |                                                                                        |..............................................................                  |  78%
+#&gt; </div><div class='output co'>#&gt;   |                                                                                             |..................................................................                   |  78%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt;   |                                                                                        |.................................................................               |  81%
+#&gt;   |                                                                                             |.....................................................................                |  81%
 #&gt; label: group_correlations (with options) 
 #&gt; List of 2
 #&gt;  $ echo   : logi FALSE
 #&gt;  $ results: chr "asis"
 #&gt; 
-#&gt;   |                                                                                        |....................................................................            |  85%
+#&gt;   |                                                                                             |........................................................................             |  85%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt;   |                                                                                        |.......................................................................         |  89%
+#&gt;   |                                                                                             |............................................................................         |  89%
 #&gt; label: plot_group_correlations (with options) 
 #&gt; List of 2
 #&gt;  $ echo   : logi FALSE
 #&gt;  $ results: chr "asis"
-#&gt; </div><div class='output co'>#&gt;   |                                                                                        |..........................................................................      |  93%
+#&gt; </div><div class='output co'>#&gt;   |                                                                                             |...............................................................................      |  93%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt;   |                                                                                        |.............................................................................   |  96%
+#&gt;   |                                                                                             |..................................................................................   |  96%
 #&gt; label: option_undo (with options) 
 #&gt; List of 1
 #&gt;  $ echo: logi FALSE
 #&gt; 
-#&gt;   |                                                                                        |................................................................................| 100%
+#&gt;   |                                                                                             |.....................................................................................| 100%
 #&gt;   ordinary text without R code
 #&gt; 
 #&gt; 
-#&gt;   |                                                                                        |................................................................................| 100%
+#&gt;   |                                                                                             |.....................................................................................| 100%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA_Report.tex</span></div><div class='output co'>#&gt; <span class='warning'>Warning: LaTeX Warning: Label `tab:numeric_variables1' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: Label `tab:numeric_variables2' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: Label `tab:numeric_variables3' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: Label `tab:numeric_variables4' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: Label `tab:numeric_variables5' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: Label `tab:numeric_variables6' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: Label `tab:numeric_variables8' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: Label `tab:numeric_variables9' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: There were multiply-defined labels.</span></div><div class='input'>
+#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA_Report.tex</span></div><div class='output co'>#&gt; <span class='message'>! Misplaced \noalign.</span>
+#&gt; <span class='message'>\rowcolor -&gt;\noalign </span>
+#&gt; <span class='message'>                     {\ifnum 0=`}\fi \global \let \CT@do@color \CT@@do@color...</span>
+#&gt; <span class='message'>l.854 \rowcolor</span>
+#&gt; <span class='message'>               {gray!6}  original &amp; 0.1849 &amp; 2.9052\\ </span></div><div class='output co'>#&gt; <span class='error'>Error: LaTeX failed to compile EDA_Report.tex. See https://yihui.org/tinytex/r/#debugging for debugging tips. See EDA_Report.log for more info.</span></div><div class='input'>
 <span class='co'># create pdf file. file name is EDA_TB_CARSEATS.pdf</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='eda_report.data.frame.html'>eda_report</a></span>(<span class='st'>"US"</span>, <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"EDA_TB_CARSEATS.pdf"</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+  <span class='fu'><a href='eda_report.data.frame.html'>eda_report</a></span>(<span class='st'>"US"</span>, <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"EDA_TB_CARSEATS.pdf"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: '/var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/figure' already exists</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA_Report.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...........................                                                     |  33%
+#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA_Report.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...........................                                                     |  33%
 #&gt;   ordinary text without R code
 #&gt; 
 #&gt;   |                                                                                        |.....................................................                           |  67%
@@ -406,7 +404,7 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 #&gt;  $ child: chr "02_RunEDA.Rnw"
 #&gt; </div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/02_RunEDA.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...                                                                             |   4%
+#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/02_RunEDA.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...                                                                             |   4%
 #&gt;   ordinary text without R code
 #&gt; 
 #&gt;   |                                                                                        |......                                                                          |   7%
@@ -482,9 +480,11 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 #&gt; 
 #&gt;   |                                                                                        |.....................................................                           |  67%
 #&gt; label: numeric_variables (with options) 
-#&gt; List of 2
+#&gt; List of 4
 #&gt;  $ echo   : logi FALSE
 #&gt;  $ results: chr "asis"
+#&gt;  $ message: logi FALSE
+#&gt;  $ warning: logi FALSE
 #&gt; </div><div class='output co'>#&gt;   |                                                                                        |........................................................                        |  70%
 #&gt;   ordinary text without R code
 #&gt; 
@@ -525,15 +525,11 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 #&gt;   |                                                                                        |................................................................................| 100%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA_TB_CARSEATS.tex</span></div><div class='output co'>#&gt; <span class='warning'>Warning: LaTeX Warning: Label `tab:numeric_variables1' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: Label `tab:numeric_variables2' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: Label `tab:numeric_variables3' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: Label `tab:numeric_variables4' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: Label `tab:numeric_variables5' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: Label `tab:numeric_variables6' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: Label `tab:numeric_variables8' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: Label `tab:numeric_variables9' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: There were multiply-defined labels.</span></div><div class='input'>
+#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA_TB_CARSEATS.tex</span></div><div class='output co'>#&gt; <span class='message'>! Misplaced \noalign.</span>
+#&gt; <span class='message'>\rowcolor -&gt;\noalign </span>
+#&gt; <span class='message'>                     {\ifnum 0=`}\fi \global \let \CT@do@color \CT@@do@color...</span>
+#&gt; <span class='message'>l.854 \rowcolor</span>
+#&gt; <span class='message'>               {gray!6}  original &amp; 0.1849 &amp; 2.9052\\ </span></div><div class='output co'>#&gt; <span class='error'>Error: LaTeX failed to compile EDA_TB_CARSEATS.tex. See https://yihui.org/tinytex/r/#debugging for debugging tips. See EDA_TB_CARSEATS.log for more info.</span></div><div class='input'>
 <span class='co'># create html file. file name is EDA_Report.html</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
@@ -698,8 +694,8 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 #&gt; </div><div class='output co'>#&gt;   |                                                                                        |................................................................................| 100%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: EDA_Report.knit.md</span></div><div class='output co'>#&gt; /Applications/RStudio.app/Contents/MacOS/pandoc/pandoc +RTS -K512m -RTS EDA_Report.utf8.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA_Report.html --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --self-contained --standalone --section-divs --table-of-contents --toc-depth 3 --template /Library/Frameworks/R.framework/Versions/4.0/Resources/library/prettydoc/resources/templates/cayman.html --highlight-style pygments --number-sections --include-in-header /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/rmarkdown-str134382df7fa1.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --css /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA_Report_files/style.css </div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Output created: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA_Report.html</span></div><div class='input'>
+#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: EDA_Report.knit.md</span></div><div class='output co'>#&gt; /Applications/RStudio.app/Contents/MacOS/pandoc/pandoc +RTS -K512m -RTS EDA_Report.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA_Report.html --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --self-contained --standalone --section-divs --table-of-contents --toc-depth 3 --template /Library/Frameworks/R.framework/Versions/4.0/Resources/library/prettydoc/resources/templates/cayman.html --highlight-style pygments --number-sections --include-in-header /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/rmarkdown-strdc261e414c45.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --css /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA_Report_files/style.css </div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Output created: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA_Report.html</span></div><div class='input'>
 <span class='co'># create html file. file name is EDA_TB_CARSEATS.html</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
@@ -864,15 +860,15 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 #&gt; </div><div class='output co'>#&gt;   |                                                                                        |................................................................................| 100%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: EDA_Report.knit.md</span></div><div class='output co'>#&gt; /Applications/RStudio.app/Contents/MacOS/pandoc/pandoc +RTS -K512m -RTS EDA_Report.utf8.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA_TB_CARSEATS.html --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --self-contained --standalone --section-divs --table-of-contents --toc-depth 3 --template /Library/Frameworks/R.framework/Versions/4.0/Resources/library/prettydoc/resources/templates/cayman.html --highlight-style pygments --number-sections --include-in-header /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/rmarkdown-str134382654f197.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --css /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA_TB_CARSEATS_files/style.css </div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Output created: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA_TB_CARSEATS.html</span></div><div class='input'>
+#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: EDA_Report.knit.md</span></div><div class='output co'>#&gt; /Applications/RStudio.app/Contents/MacOS/pandoc/pandoc +RTS -K512m -RTS EDA_Report.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA_TB_CARSEATS.html --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --self-contained --standalone --section-divs --table-of-contents --toc-depth 3 --template /Library/Frameworks/R.framework/Versions/4.0/Resources/library/prettydoc/resources/templates/cayman.html --highlight-style pygments --number-sections --include-in-header /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/rmarkdown-strdc261dc6a9b4.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --css /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA_TB_CARSEATS_files/style.css </div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Output created: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA_TB_CARSEATS.html</span></div><div class='input'>
 <span class='co'>## target variable is numerical variable</span>
 <span class='co'># reporting the EDA information, and collect size is 350</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='eda_report.data.frame.html'>eda_report</a></span>(<span class='no'>Sales</span>, <span class='kw'>collect_size</span> <span class='kw'>=</span> <span class='fl'>350</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+  <span class='fu'><a href='eda_report.data.frame.html'>eda_report</a></span>(<span class='no'>Sales</span>, <span class='kw'>collect_size</span> <span class='kw'>=</span> <span class='fl'>350</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: '/var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/figure' already exists</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA_Report.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...........................                                                     |  33%
+#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA_Report.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...........................                                                     |  33%
 #&gt;   ordinary text without R code
 #&gt; 
 #&gt;   |                                                                                        |.....................................................                           |  67%
@@ -881,7 +877,7 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 #&gt;  $ child: chr "02_RunEDA.Rnw"
 #&gt; </div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/02_RunEDA.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...                                                                             |   4%
+#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/02_RunEDA.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...                                                                             |   4%
 #&gt;   ordinary text without R code
 #&gt; 
 #&gt;   |                                                                                        |......                                                                          |   7%
@@ -957,9 +953,11 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 #&gt; 
 #&gt;   |                                                                                        |.....................................................                           |  67%
 #&gt; label: numeric_variables (with options) 
-#&gt; List of 2
+#&gt; List of 4
 #&gt;  $ echo   : logi FALSE
 #&gt;  $ results: chr "asis"
+#&gt;  $ message: logi FALSE
+#&gt;  $ warning: logi FALSE
 #&gt; </div><div class='output co'>#&gt;   |                                                                                        |........................................................                        |  70%
 #&gt;   ordinary text without R code
 #&gt; 
@@ -1001,46 +999,17 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 #&gt;   |                                                                                        |................................................................................| 100%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA_Report.tex</span></div><div class='output co'>#&gt; <span class='warning'>Warning: LaTeX Warning: Label `tab:numeric_variables2' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: Label `tab:numeric_variables3' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: Label `tab:numeric_variables4' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: Label `tab:numeric_variables5' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: Label `tab:numeric_variables6' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: Label `tab:numeric_variables8' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: Label `tab:numeric_variables9' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1111.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1111.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1146.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1146.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1181.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1181.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1216.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1216.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1251.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1251.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1286.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1286.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1321.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1321.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1357.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1357.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1375.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1375.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1404.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1404.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1422.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1422.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1450.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1450.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1468.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1468.</span>
-#&gt; <span class='warning'>LaTeX Warning: There were multiply-defined labels.</span></div><div class='input'>
+#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA_Report.tex</span></div><div class='output co'>#&gt; <span class='message'>! Misplaced \noalign.</span>
+#&gt; <span class='message'>\rowcolor -&gt;\noalign </span>
+#&gt; <span class='message'>                     {\ifnum 0=`}\fi \global \let \CT@do@color \CT@@do@color...</span>
+#&gt; <span class='message'>l.879 \rowcolor</span>
+#&gt; <span class='message'>               {gray!6}  original &amp; -0.0342 &amp; 3.0559\\ </span></div><div class='output co'>#&gt; <span class='error'>Error: LaTeX failed to compile EDA_Report.tex. See https://yihui.org/tinytex/r/#debugging for debugging tips. See EDA_Report.log for more info.</span></div><div class='input'>
 <span class='co'># create pdf file. file name is EDA2.pdf</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='eda_report.data.frame.html'>eda_report</a></span>(<span class='st'>"Sales"</span>, <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"EDA2.pdf"</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+  <span class='fu'><a href='eda_report.data.frame.html'>eda_report</a></span>(<span class='st'>"Sales"</span>, <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"EDA2.pdf"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: '/var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/figure' already exists</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA_Report.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...........................                                                     |  33%
+#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA_Report.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...........................                                                     |  33%
 #&gt;   ordinary text without R code
 #&gt; 
 #&gt;   |                                                                                        |.....................................................                           |  67%
@@ -1049,7 +1018,7 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 #&gt;  $ child: chr "02_RunEDA.Rnw"
 #&gt; </div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/02_RunEDA.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...                                                                             |   4%
+#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/02_RunEDA.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...                                                                             |   4%
 #&gt;   ordinary text without R code
 #&gt; 
 #&gt;   |                                                                                        |......                                                                          |   7%
@@ -1125,9 +1094,11 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 #&gt; 
 #&gt;   |                                                                                        |.....................................................                           |  67%
 #&gt; label: numeric_variables (with options) 
-#&gt; List of 2
+#&gt; List of 4
 #&gt;  $ echo   : logi FALSE
 #&gt;  $ results: chr "asis"
+#&gt;  $ message: logi FALSE
+#&gt;  $ warning: logi FALSE
 #&gt; </div><div class='output co'>#&gt;   |                                                                                        |........................................................                        |  70%
 #&gt;   ordinary text without R code
 #&gt; 
@@ -1169,40 +1140,11 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 #&gt;   |                                                                                        |................................................................................| 100%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA2.tex</span></div><div class='output co'>#&gt; <span class='warning'>Warning: LaTeX Warning: Label `tab:numeric_variables2' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: Label `tab:numeric_variables3' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: Label `tab:numeric_variables4' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: Label `tab:numeric_variables5' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: Label `tab:numeric_variables6' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: Label `tab:numeric_variables8' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: Label `tab:numeric_variables9' multiply defined.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1085.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1085.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1120.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1120.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1155.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1155.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1190.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1190.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1225.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1225.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1260.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1260.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1295.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1295.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1331.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1331.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1349.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1349.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1378.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1378.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1396.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1396.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1424.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1424.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1442.</span>
-#&gt; <span class='warning'>LaTeX Warning: Command \textgreater invalid in math mode on input line 1442.</span>
-#&gt; <span class='warning'>LaTeX Warning: There were multiply-defined labels.</span></div><div class='input'>
+#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA2.tex</span></div><div class='output co'>#&gt; <span class='message'>! Misplaced \noalign.</span>
+#&gt; <span class='message'>\rowcolor -&gt;\noalign </span>
+#&gt; <span class='message'>                     {\ifnum 0=`}\fi \global \let \CT@do@color \CT@@do@color...</span>
+#&gt; <span class='message'>l.854 \rowcolor</span>
+#&gt; <span class='message'>               {gray!6}  original &amp; -0.0426 &amp; 3.0262\\ </span></div><div class='output co'>#&gt; <span class='error'>Error: LaTeX failed to compile EDA2.tex. See https://yihui.org/tinytex/r/#debugging for debugging tips. See EDA2.log for more info.</span></div><div class='input'>
 <span class='co'># create html file. file name is EDA_Report.html</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
@@ -1368,8 +1310,8 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 #&gt;   |                                                                                        |................................................................................| 100%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: EDA_Report.knit.md</span></div><div class='output co'>#&gt; /Applications/RStudio.app/Contents/MacOS/pandoc/pandoc +RTS -K512m -RTS EDA_Report.utf8.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA_Report.html --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --self-contained --standalone --section-divs --table-of-contents --toc-depth 3 --template /Library/Frameworks/R.framework/Versions/4.0/Resources/library/prettydoc/resources/templates/cayman.html --highlight-style pygments --number-sections --include-in-header /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/rmarkdown-str134386b5ce53b.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --css /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA_Report_files/style.css </div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Output created: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA_Report.html</span></div><div class='input'>
+#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: EDA_Report.knit.md</span></div><div class='output co'>#&gt; /Applications/RStudio.app/Contents/MacOS/pandoc/pandoc +RTS -K512m -RTS EDA_Report.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA_Report.html --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --self-contained --standalone --section-divs --table-of-contents --toc-depth 3 --template /Library/Frameworks/R.framework/Versions/4.0/Resources/library/prettydoc/resources/templates/cayman.html --highlight-style pygments --number-sections --include-in-header /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/rmarkdown-strdc26a2be08f.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --css /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA_Report_files/style.css </div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Output created: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA_Report.html</span></div><div class='input'>
 <span class='co'># create html file. file name is EDA2.html</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
@@ -1535,15 +1477,15 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 #&gt;   |                                                                                        |................................................................................| 100%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: EDA_Report.knit.md</span></div><div class='output co'>#&gt; /Applications/RStudio.app/Contents/MacOS/pandoc/pandoc +RTS -K512m -RTS EDA_Report.utf8.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA2.html --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --self-contained --standalone --section-divs --table-of-contents --toc-depth 3 --template /Library/Frameworks/R.framework/Versions/4.0/Resources/library/prettydoc/resources/templates/cayman.html --highlight-style pygments --number-sections --include-in-header /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/rmarkdown-str1343870e933c8.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --css /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA2_files/style.css </div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Output created: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA2.html</span></div><div class='input'>
+#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: EDA_Report.knit.md</span></div><div class='output co'>#&gt; /Applications/RStudio.app/Contents/MacOS/pandoc/pandoc +RTS -K512m -RTS EDA_Report.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA2.html --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --self-contained --standalone --section-divs --table-of-contents --toc-depth 3 --template /Library/Frameworks/R.framework/Versions/4.0/Resources/library/prettydoc/resources/templates/cayman.html --highlight-style pygments --number-sections --include-in-header /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/rmarkdown-strdc2645046de.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --css /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA2_files/style.css </div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Output created: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA2.html</span></div><div class='input'>
 <span class='co'>## target variable is null</span>
 <span class='co'># reporting the EDA information</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='eda_report.data.frame.html'>eda_report</a></span>()</div><div class='output co'>#&gt; <span class='message'></span>
+  <span class='fu'><a href='eda_report.data.frame.html'>eda_report</a></span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: '/var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/figure' already exists</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA_Report.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...........................                                                     |  33%
+#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA_Report.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...........................                                                     |  33%
 #&gt;   ordinary text without R code
 #&gt; 
 #&gt;   |                                                                                        |.....................................................                           |  67%
@@ -1552,7 +1494,7 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 #&gt;  $ child: chr "02_RunEDA.Rnw"
 #&gt; </div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/02_RunEDA.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...                                                                             |   4%
+#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/02_RunEDA.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...                                                                             |   4%
 #&gt;   ordinary text without R code
 #&gt; 
 #&gt;   |                                                                                        |......                                                                          |   7%
@@ -1628,9 +1570,11 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 #&gt; 
 #&gt;   |                                                                                        |.....................................................                           |  67%
 #&gt; label: numeric_variables (with options) 
-#&gt; List of 2
+#&gt; List of 4
 #&gt;  $ echo   : logi FALSE
 #&gt;  $ results: chr "asis"
+#&gt;  $ message: logi FALSE
+#&gt;  $ warning: logi FALSE
 #&gt; 
 #&gt;   |                                                                                        |........................................................                        |  70%
 #&gt;   ordinary text without R code
@@ -1674,13 +1618,17 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 #&gt;   |                                                                                        |................................................................................| 100%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA_Report.tex</span></div><div class='input'>
+#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA_Report.tex</span></div><div class='output co'>#&gt; <span class='message'>! Misplaced \noalign.</span>
+#&gt; <span class='message'>\rowcolor -&gt;\noalign </span>
+#&gt; <span class='message'>                     {\ifnum 0=`}\fi \global \let \CT@do@color \CT@@do@color...</span>
+#&gt; <span class='message'>l.854 \rowcolor</span>
+#&gt; <span class='message'>               {gray!6}  original &amp; 0.1849 &amp; 2.9052\\ </span></div><div class='output co'>#&gt; <span class='error'>Error: LaTeX failed to compile EDA_Report.tex. See https://yihui.org/tinytex/r/#debugging for debugging tips. See EDA_Report.log for more info.</span></div><div class='input'>
 <span class='co'># create pdf file. file name is EDA2.pdf</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='eda_report.data.frame.html'>eda_report</a></span>(<span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"EDA2.pdf"</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+  <span class='fu'><a href='eda_report.data.frame.html'>eda_report</a></span>(<span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"EDA2.pdf"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: '/var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/figure' already exists</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA_Report.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...........................                                                     |  33%
+#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA_Report.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...........................                                                     |  33%
 #&gt;   ordinary text without R code
 #&gt; 
 #&gt;   |                                                                                        |.....................................................                           |  67%
@@ -1689,7 +1637,7 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 #&gt;  $ child: chr "02_RunEDA.Rnw"
 #&gt; </div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/02_RunEDA.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...                                                                             |   4%
+#&gt; <span class='message'>processing file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/02_RunEDA.Rnw</span></div><div class='output co'>#&gt;   |                                                                                        |                                                                                |   0%  |                                                                                        |...                                                                             |   4%
 #&gt;   ordinary text without R code
 #&gt; 
 #&gt;   |                                                                                        |......                                                                          |   7%
@@ -1765,9 +1713,11 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 #&gt; 
 #&gt;   |                                                                                        |.....................................................                           |  67%
 #&gt; label: numeric_variables (with options) 
-#&gt; List of 2
+#&gt; List of 4
 #&gt;  $ echo   : logi FALSE
 #&gt;  $ results: chr "asis"
+#&gt;  $ message: logi FALSE
+#&gt;  $ warning: logi FALSE
 #&gt; 
 #&gt;   |                                                                                        |........................................................                        |  70%
 #&gt;   ordinary text without R code
@@ -1811,7 +1761,11 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 #&gt;   |                                                                                        |................................................................................| 100%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA2.tex</span></div><div class='input'>
+#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA2.tex</span></div><div class='output co'>#&gt; <span class='message'>! Misplaced \noalign.</span>
+#&gt; <span class='message'>\rowcolor -&gt;\noalign </span>
+#&gt; <span class='message'>                     {\ifnum 0=`}\fi \global \let \CT@do@color \CT@@do@color...</span>
+#&gt; <span class='message'>l.854 \rowcolor</span>
+#&gt; <span class='message'>               {gray!6}  original &amp; 0.1849 &amp; 2.9052\\ </span></div><div class='output co'>#&gt; <span class='error'>Error: LaTeX failed to compile EDA2.tex. See https://yihui.org/tinytex/r/#debugging for debugging tips. See EDA2.log for more info.</span></div><div class='input'>
 <span class='co'># create html file. file name is EDA_Report.html</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
@@ -1979,8 +1933,8 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 #&gt;   |                                                                                        |................................................................................| 100%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: EDA_Report.knit.md</span></div><div class='output co'>#&gt; /Applications/RStudio.app/Contents/MacOS/pandoc/pandoc +RTS -K512m -RTS EDA_Report.utf8.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA_Report.html --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --self-contained --standalone --section-divs --table-of-contents --toc-depth 3 --template /Library/Frameworks/R.framework/Versions/4.0/Resources/library/prettydoc/resources/templates/cayman.html --highlight-style pygments --number-sections --include-in-header /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/rmarkdown-str134381d16941c.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --css /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA_Report_files/style.css </div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Output created: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA_Report.html</span></div><div class='input'>
+#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: EDA_Report.knit.md</span></div><div class='output co'>#&gt; /Applications/RStudio.app/Contents/MacOS/pandoc/pandoc +RTS -K512m -RTS EDA_Report.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA_Report.html --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --self-contained --standalone --section-divs --table-of-contents --toc-depth 3 --template /Library/Frameworks/R.framework/Versions/4.0/Resources/library/prettydoc/resources/templates/cayman.html --highlight-style pygments --number-sections --include-in-header /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/rmarkdown-strdc26809f40b.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --css /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA_Report_files/style.css </div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Output created: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA_Report.html</span></div><div class='input'>
 <span class='co'># create html file. file name is EDA2.html</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
@@ -2148,10 +2102,11 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 #&gt;   |                                                                                        |................................................................................| 100%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: EDA_Report.knit.md</span></div><div class='output co'>#&gt; /Applications/RStudio.app/Contents/MacOS/pandoc/pandoc +RTS -K512m -RTS EDA_Report.utf8.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA2.html --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --self-contained --standalone --section-divs --table-of-contents --toc-depth 3 --template /Library/Frameworks/R.framework/Versions/4.0/Resources/library/prettydoc/resources/templates/cayman.html --highlight-style pygments --number-sections --include-in-header /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/rmarkdown-str134383ce74ec4.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --css /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA2_files/style.css </div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Output created: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//Rtmp4A1Sys/EDA2.html</span></div><div class='input'># }
-
-</div></pre>
+#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: EDA_Report.knit.md</span></div><div class='output co'>#&gt; /Applications/RStudio.app/Contents/MacOS/pandoc/pandoc +RTS -K512m -RTS EDA_Report.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA2.html --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --self-contained --standalone --section-divs --table-of-contents --toc-depth 3 --template /Library/Frameworks/R.framework/Versions/4.0/Resources/library/prettydoc/resources/templates/cayman.html --highlight-style pygments --number-sections --include-in-header /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/rmarkdown-strdc2630422534.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --css /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA2_files/style.css </div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Output created: /var/folders/2g/sk4df3sn3bdbxh2rb9kdt_5c0000gn/T//RtmpWATuDg/EDA2.html</span></div><div class='input'>
+<span class='co'># Disconnect DBMS   </span>
+<span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://dbi.r-dbi.org/reference/dbDisconnect.html'>dbDisconnect</a></span>(<span class='no'>con_sqlite</span>)
+<span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

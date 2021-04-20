@@ -60,49 +60,47 @@ See vignette("diagonosis") for an introduction to these concepts.
 \examples{
 library(dplyr)
 
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-
 # connect DBMS
 con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 
-# copy carseats to the DBMS with a table named TB_CARSEATS
-copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
+# copy jobchange to the DBMS with a table named TB_JOBCHANGE
+copy_to(con_sqlite, jobchange, name = "TB_JOBCHANGE", overwrite = TRUE)
 
 # Using pipes ---------------------------------
 # Diagnosis of all columns
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
+  tbl("TB_JOBCHANGE") \%>\% 
   diagnose()
   
 # Positive values select columns
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
-  diagnose(Sales, Income, Age)
+  tbl("TB_JOBCHANGE") \%>\% 
+  diagnose(gender, education_level, company_size)
   
 # Negative values to drop columns
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
-  diagnose(-Sales, -Income, -Age)
+  tbl("TB_JOBCHANGE") \%>\% 
+  diagnose(-gender, -education_level, -company_size)
   
 # Positions values select columns, and In-memory mode
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
+  tbl("TB_JOBCHANGE") \%>\% 
   diagnose(1, 3, 8, in_database = FALSE)
   
 # Positions values select columns, and In-memory mode and collect size is 200
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
+  tbl("TB_JOBCHANGE") \%>\% 
   diagnose(-8, -9, -10, in_database = FALSE, collect_size = 200)
 
 # Using pipes & dplyr -------------------------
 # Diagnosis of missing variables
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
+  tbl("TB_JOBCHANGE") \%>\% 
   diagnose() \%>\%
   filter(missing_count > 0)
+  
+# Disconnect DBMS   
+DBI::dbDisconnect(con_sqlite)
   
 }
 \seealso{

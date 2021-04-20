@@ -90,6 +90,10 @@ num_cat <- relate(num, ShelveLoc)
 num_cat
 summary(num_cat)
 plot(num_cat)
+
+# Disconnect DBMS   
+DBI::dbDisconnect(con_sqlite)
+
 }
 \seealso{
 \code{\link{target_by.data.frame}}, \code{\link{relate}}.

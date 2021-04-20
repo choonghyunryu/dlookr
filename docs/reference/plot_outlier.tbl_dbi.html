@@ -74,7 +74,7 @@ of the DBMS table through tbl_dbi." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
       </span>
     </div>
 
@@ -202,60 +202,56 @@ one variable in the ... argument, the specified number of plots are drawn.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
-<span class='co'># Generate data for the example</span>
-<span class='no'>carseats</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ISLR</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/ISLR/man/Carseats.html'>Carseats</a></span>
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>20</span>), <span class='st'>"Income"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>5</span>), <span class='st'>"Urban"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-
 <span class='co'># connect DBMS</span>
 <span class='no'>con_sqlite</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://dbi.r-dbi.org/reference/dbConnect.html'>dbConnect</a></span>(<span class='kw pkg'>RSQLite</span><span class='kw ns'>::</span><span class='fu'><a href='https://rsqlite.r-dbi.org/reference/SQLite.html'>SQLite</a></span>(), <span class='st'>":memory:"</span>)
 
-<span class='co'># copy carseats to the DBMS with a table named TB_CARSEATS</span>
-<span class='fu'><a href='https://dplyr.tidyverse.org/reference/copy_to.html'>copy_to</a></span>(<span class='no'>con_sqlite</span>, <span class='no'>carseats</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"TB_CARSEATS"</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='co'># copy heartfailure to the DBMS with a table named TB_HEARTFAILURE</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/copy_to.html'>copy_to</a></span>(<span class='no'>con_sqlite</span>, <span class='no'>heartfailure</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"TB_HEARTFAILURE"</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># Using pipes ---------------------------------</span>
 <span class='co'># Visualization of all numerical variables</span>
 <span class='co'># con_sqlite %&gt;% </span>
-<span class='co'>#   tbl("TB_CARSEATS") %&gt;% </span>
+<span class='co'>#   tbl("TB_HEARTFAILURE") %&gt;% </span>
 <span class='co'>#   plot_outlier()</span>
 
 <span class='co'># Positive values select variables</span>
  <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
-   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
-   <span class='fu'><a href='plot_outlier.data.frame.html'>plot_outlier</a></span>(<span class='no'>Sales</span>, <span class='no'>Price</span>)</div><div class='img'><img src='plot_outlier.tbl_dbi-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.tbl_dbi-2.png' alt='' width='700' height='433' /></div><div class='input'>  
-# Negative values to drop variables, and In-memory mode and collect size is 200
-# con_sqlite %&gt;% 
-#   tbl("TB_CARSEATS") %&gt;% 
-#   plot_outlier(-Sales, -Price, collect_size = 200)
-  
-# Positions values select variables
-# con_sqlite %&gt;% 
-#   tbl("TB_CARSEATS") %&gt;% 
-#   plot_outlier(6)
-  
-# Positions values select variables
-# con_sqlite %&gt;% 
-#   tbl("TB_CARSEATS") %&gt;% 
-#   plot_outlier(-1, -5)
-  
-# Not allow the typographic elements
-#  con_sqlite %&gt;% 
-#   tbl("TB_CARSEATS") %&gt;% 
-#   plot_outlier(-1, -5, typographic = FALSE)
+   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
+   <span class='fu'><a href='plot_outlier.data.frame.html'>plot_outlier</a></span>(<span class='no'>platelets</span>, <span class='no'>sodium</span>)</div><div class='img'><img src='plot_outlier.tbl_dbi-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.tbl_dbi-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Negative values to drop variables, and In-memory mode and collect size is 200</span>
+<span class='co'># con_sqlite %&gt;% </span>
+<span class='co'>#   tbl("TB_HEARTFAILURE") %&gt;% </span>
+<span class='co'>#   plot_outlier(-platelets, -sodium, collect_size = 200)</span>
 
-# Using pipes &amp; dplyr -------------------------
-# Visualization of numerical variables with a ratio of
-# outliers greater than 1%
-# con_sqlite %&gt;% 
-#   tbl("TB_CARSEATS") %&gt;% 
-#   plot_outlier(con_sqlite %&gt;% 
-#                  tbl("TB_CARSEATS") %&gt;% 
-#                  diagnose_outlier() %&gt;%
-#                  filter(outliers_ratio &gt; 1) %&gt;%
-#                  select(variables) %&gt;%
-#                 pull())
-      
-</div></pre>
+<span class='co'># Positions values select variables</span>
+<span class='co'># con_sqlite %&gt;% </span>
+<span class='co'>#   tbl("TB_HEARTFAILURE") %&gt;% </span>
+<span class='co'>#   plot_outlier(6)</span>
+
+<span class='co'># Positions values select variables</span>
+<span class='co'># con_sqlite %&gt;% </span>
+<span class='co'>#   tbl("TB_HEARTFAILURE") %&gt;% </span>
+<span class='co'>#   plot_outlier(-1, -5)</span>
+
+<span class='co'># Not allow the typographic elements</span>
+<span class='co'>#  con_sqlite %&gt;% </span>
+<span class='co'>#   tbl("TB_HEARTFAILURE") %&gt;% </span>
+<span class='co'>#   plot_outlier(-1, -5, typographic = FALSE)</span>
+
+<span class='co'># Using pipes &amp; dplyr -------------------------</span>
+<span class='co'># Visualization of numerical variables with a ratio of</span>
+<span class='co'># outliers greater than 1%</span>
+<span class='co'># con_sqlite %&gt;% </span>
+<span class='co'>#   tbl("TB_HEARTFAILURE") %&gt;% </span>
+<span class='co'>#   plot_outlier(con_sqlite %&gt;% </span>
+<span class='co'>#                  tbl("TB_HEARTFAILURE") %&gt;% </span>
+<span class='co'>#                  diagnose_outlier() %&gt;%</span>
+<span class='co'>#                  filter(outliers_ratio &gt; 1) %&gt;%</span>
+<span class='co'>#                  select(variables) %&gt;%</span>
+<span class='co'>#                 pull())</span>
+
+<span class='co'># Disconnect DBMS   </span>
+<span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://dbi.r-dbi.org/reference/dbDisconnect.html'>dbDisconnect</a></span>(<span class='no'>con_sqlite</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

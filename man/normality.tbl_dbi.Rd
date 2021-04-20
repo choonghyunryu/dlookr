@@ -59,62 +59,60 @@ The number of observations supported by the stats::shapiro.test function is 3 to
 \donttest{
 library(dplyr)
 
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-
 # connect DBMS
 con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 
-# copy carseats to the DBMS with a table named TB_CARSEATS
-copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
+# copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
 
 # Using pipes ---------------------------------
 # Normality test of all numerical variables
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
   normality()
 
 # Positive values select variables, and In-memory mode and collect size is 200
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
-  normality(Sales, Price, collect_size  = 200)
+  tbl("TB_HEARTFAILURE") \%>\% 
+  normality(platelets, sodium, collect_size  = 200)
 
 # Positions values select variables
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
   normality(1)
 
 # Using pipes & dplyr -------------------------
-# Test all numerical variables by 'ShelveLoc' and 'US',
-# and extract only those with 'ShelveLoc' variable level is "Good".
+# Test all numerical variables by 'smoking' and 'death_event',
+# and extract only those with 'smoking' variable level is "Yes".
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
-  group_by(ShelveLoc, US) \%>\%
+  tbl("TB_HEARTFAILURE") \%>\% 
+  group_by(smoking, death_event) \%>\%
   normality() \%>\%
-  filter(ShelveLoc == "Good")
+  filter(smoking == "Yes")
 
-# extract only those with 'Urban' variable level is "Yes",
-# and test 'Sales' by 'ShelveLoc' and 'US'
+# extract only those with 'sex' variable level is "Male",
+# and test 'sodium' by 'smoking' and 'death_event'
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
-  filter(Urban == "Yes") \%>\%
-  group_by(ShelveLoc, US) \%>\%
-  normality(Sales)
+  tbl("TB_HEARTFAILURE") \%>\% 
+  filter(sex == "Male") \%>\%
+  group_by(smoking, death_event) \%>\%
+  normality(sodium)
 
-# Test log(Income) variables by 'ShelveLoc' and 'US',
+# Test log(sodium) variables by 'smoking' and 'death_event',
 # and extract only p.value greater than 0.01.
 
 # SQLite extension functions for log
 RSQLite::initExtension(con_sqlite)
 
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
-  mutate(log_income = log(Income)) \%>\%
-  group_by(ShelveLoc, US) \%>\%
-  normality(log_income) \%>\%
+  tbl("TB_HEARTFAILURE") \%>\% 
+  mutate(log_sodium = log(sodium)) \%>\%
+  group_by(smoking, death_event) \%>\%
+  normality(log_sodium) \%>\%
   filter(p_value > 0.01)
+ 
+# Disconnect DBMS   
+DBI::dbDisconnect(con_sqlite)
 }
 
 }

@@ -64,49 +64,47 @@ See vignette("diagonosis") for an introduction to these concepts.
 \examples{
 library(dplyr)
 
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-
 # connect DBMS
 con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 
-# copy carseats to the DBMS with a table named TB_CARSEATS
-copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
+# copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
 
 # Using pipes ---------------------------------
 # Diagnosis of all numerical variables
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
   diagnose_numeric()
   
 # Positive values select variables, and In-memory mode and collect size is 200
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
-  diagnose_numeric(Sales, Income, collect_size = 200)
+  tbl("TB_HEARTFAILURE") \%>\% 
+  diagnose_numeric(age, sodium, collect_size = 200)
   
 # Negative values to drop variables
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
-  diagnose_numeric(-Sales, -Income)
+  tbl("TB_HEARTFAILURE") \%>\% 
+  diagnose_numeric(-age, -sodium)
   
 # Positions values select variables
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
   diagnose_numeric(5)
   
 # Positions values select variables
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
   diagnose_numeric(-1, -5)
 
 # Using pipes & dplyr -------------------------
-# Information records of zero variable more than 0
+# List of variables containing outliers
 con_sqlite \%>\% 
-  tbl("TB_CARSEATS") \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
   diagnose_numeric()  \%>\%
-  filter(zero > 0)
+  filter(outlier > 0)
+
+# Disconnect DBMS   
+DBI::dbDisconnect(con_sqlite)
   
 }
 \seealso{

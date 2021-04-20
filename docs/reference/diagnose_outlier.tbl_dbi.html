@@ -74,7 +74,7 @@ of the DBMS table through tbl_dbi." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
       </span>
     </div>
 
@@ -192,81 +192,77 @@ it is necessary to eliminate or replace the outliers.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
-<span class='co'># Generate data for the example</span>
-<span class='no'>carseats</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ISLR</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/ISLR/man/Carseats.html'>Carseats</a></span>
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>20</span>), <span class='st'>"Income"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>5</span>), <span class='st'>"Urban"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-
 <span class='co'># connect DBMS</span>
 <span class='no'>con_sqlite</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://dbi.r-dbi.org/reference/dbConnect.html'>dbConnect</a></span>(<span class='kw pkg'>RSQLite</span><span class='kw ns'>::</span><span class='fu'><a href='https://rsqlite.r-dbi.org/reference/SQLite.html'>SQLite</a></span>(), <span class='st'>":memory:"</span>)
 
-<span class='co'># copy carseats to the DBMS with a table named TB_CARSEATS</span>
-<span class='fu'><a href='https://dplyr.tidyverse.org/reference/copy_to.html'>copy_to</a></span>(<span class='no'>con_sqlite</span>, <span class='no'>carseats</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"TB_CARSEATS"</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='co'># copy heartfailure to the DBMS with a table named TB_HEARTFAILURE</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/copy_to.html'>copy_to</a></span>(<span class='no'>con_sqlite</span>, <span class='no'>heartfailure</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"TB_HEARTFAILURE"</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># Using pipes ---------------------------------</span>
 <span class='co'># Diagnosis of all numerical variables</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='diagnose_outlier.data.frame.html'>diagnose_outlier</a></span>()</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 8 x 6</span><span>
-#&gt;   variables   outliers_cnt outliers_ratio outliers_mean with_mean without_mean
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Sales                  2           0.5           16.0      7.50         7.45
-#&gt; </span><span style='color: #555555;'>2</span><span> CompPrice              2           0.5          126      125.         125.  
-#&gt; </span><span style='color: #555555;'>3</span><span> Income                 0           0            </span><span style='color: #BB0000;'>NaN</span><span>       68.8         68.8 
-#&gt; </span><span style='color: #555555;'>4</span><span> Advertising            0           0            </span><span style='color: #BB0000;'>NaN</span><span>        6.64         6.64
-#&gt; </span><span style='color: #555555;'>5</span><span> Population             0           0            </span><span style='color: #BB0000;'>NaN</span><span>      265.         265.  
-#&gt; </span><span style='color: #555555;'>6</span><span> Price                  5           1.25         100.     116.         116.  
-#&gt; </span><span style='color: #555555;'>7</span><span> Age                    0           0            </span><span style='color: #BB0000;'>NaN</span><span>       53.3         53.3 
-#&gt; </span><span style='color: #555555;'>8</span><span> Education              0           0            </span><span style='color: #BB0000;'>NaN</span><span>       13.9         13.9 </div><div class='input'>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='diagnose_outlier.data.frame.html'>diagnose_outlier</a></span>()</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 7 x 6</span><span>
+#&gt;   variables     outliers_cnt outliers_ratio outliers_mean with_mean without_mean
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> age                      0          0            </span><span style='color: #BB0000;'>NaN</span><span>        60.8         60.8 
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> cpk_enzyme              29          9.70        </span><span style='text-decoration: underline;'>2</span><span>905.      582.         332.  
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> ejection_fra…            2          0.669         75        38.1         37.8 
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> platelets               21          7.02      </span><span style='text-decoration: underline;'>378</span><span>386.   </span><span style='text-decoration: underline;'>263</span><span>358.      </span><span style='text-decoration: underline;'>254</span><span>669.  
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> creatinine              29          9.70           3.79      1.39         1.14
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> sodium                   4          1.34         118.      137.         137.  
+#&gt; </span><span style='color: #BCBCBC;'>7</span><span> time                     0          0            </span><span style='color: #BB0000;'>NaN</span><span>       130.         130.  </div><div class='input'>
 <span class='co'># Positive values select variables, and In-memory mode and collect size is 200</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='diagnose_outlier.data.frame.html'>diagnose_outlier</a></span>(<span class='no'>Sales</span>, <span class='no'>Income</span>, <span class='kw'>collect_size</span> <span class='kw'>=</span> <span class='fl'>200</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 6</span><span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='diagnose_outlier.data.frame.html'>diagnose_outlier</a></span>(<span class='no'>platelets</span>, <span class='no'>sodium</span>, <span class='kw'>collect_size</span> <span class='kw'>=</span> <span class='fl'>200</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 6</span><span>
 #&gt;   variables outliers_cnt outliers_ratio outliers_mean with_mean without_mean
-#&gt; </span><span style='color: #555555;'>*</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Sales                0              0           </span><span style='color: #BB0000;'>NaN</span><span>      7.42         7.42
-#&gt; </span><span style='color: #555555;'>2</span><span> Income               0              0           </span><span style='color: #BB0000;'>NaN</span><span>     71.3         71.3 </div><div class='input'>
+#&gt; </span><span style='color: #BCBCBC;'>*</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> platelets           11            5.5       </span><span style='text-decoration: underline;'>407</span><span>364.   </span><span style='text-decoration: underline;'>261</span><span>477.      </span><span style='text-decoration: underline;'>252</span><span>986.
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> sodium               5            2.5          120       137.         137.</div><div class='input'>
 <span class='co'># Negative values to drop variables</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='diagnose_outlier.data.frame.html'>diagnose_outlier</a></span>(-<span class='no'>Sales</span>, -<span class='no'>Income</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 6</span><span>
-#&gt;   variables   outliers_cnt outliers_ratio outliers_mean with_mean without_mean
-#&gt; </span><span style='color: #555555;'>*</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> CompPrice              2           0.5           126     125.         125.  
-#&gt; </span><span style='color: #555555;'>2</span><span> Advertising            0           0             </span><span style='color: #BB0000;'>NaN</span><span>       6.64         6.64
-#&gt; </span><span style='color: #555555;'>3</span><span> Population             0           0             </span><span style='color: #BB0000;'>NaN</span><span>     265.         265.  
-#&gt; </span><span style='color: #555555;'>4</span><span> Price                  5           1.25          100.    116.         116.  
-#&gt; </span><span style='color: #555555;'>5</span><span> Age                    0           0             </span><span style='color: #BB0000;'>NaN</span><span>      53.3         53.3 
-#&gt; </span><span style='color: #555555;'>6</span><span> Education              0           0             </span><span style='color: #BB0000;'>NaN</span><span>      13.9         13.9 </div><div class='input'>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='diagnose_outlier.data.frame.html'>diagnose_outlier</a></span>(-<span class='no'>platelets</span>, -<span class='no'>sodium</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 5 x 6</span><span>
+#&gt;   variables     outliers_cnt outliers_ratio outliers_mean with_mean without_mean
+#&gt; </span><span style='color: #BCBCBC;'>*</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> age                      0          0            </span><span style='color: #BB0000;'>NaN</span><span>        60.8         60.8 
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> cpk_enzyme              29          9.70        </span><span style='text-decoration: underline;'>2</span><span>905.      582.         332.  
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> ejection_fra…            2          0.669         75        38.1         37.8 
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> creatinine              29          9.70           3.79      1.39         1.14
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> time                     0          0            </span><span style='color: #BB0000;'>NaN</span><span>       130.         130.  </div><div class='input'>
 <span class='co'># Positions values select variables</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='diagnose_outlier.data.frame.html'>diagnose_outlier</a></span>(<span class='fl'>5</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 6</span><span>
-#&gt;   variables  outliers_cnt outliers_ratio outliers_mean with_mean without_mean
-#&gt; </span><span style='color: #555555;'>*</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Population            0              0           </span><span style='color: #BB0000;'>NaN</span><span>      265.         265.</div><div class='input'><span class='co'># Positions values select variables</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='diagnose_outlier.data.frame.html'>diagnose_outlier</a></span>(<span class='fl'>5</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 6</span><span>
+#&gt;   variables     outliers_cnt outliers_ratio outliers_mean with_mean without_mean
+#&gt; </span><span style='color: #BCBCBC;'>*</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> ejection_fra…            2          0.669            75      38.1         37.8</div><div class='input'><span class='co'># Positions values select variables</span>
 
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='diagnose_outlier.data.frame.html'>diagnose_outlier</a></span>(-<span class='fl'>1</span>, -<span class='fl'>5</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 6</span><span>
-#&gt;   variables   outliers_cnt outliers_ratio outliers_mean with_mean without_mean
-#&gt; </span><span style='color: #555555;'>*</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> CompPrice              2           0.5           126     125.         125.  
-#&gt; </span><span style='color: #555555;'>2</span><span> Income                 0           0             </span><span style='color: #BB0000;'>NaN</span><span>      68.8         68.8 
-#&gt; </span><span style='color: #555555;'>3</span><span> Advertising            0           0             </span><span style='color: #BB0000;'>NaN</span><span>       6.64         6.64
-#&gt; </span><span style='color: #555555;'>4</span><span> Price                  5           1.25          100.    116.         116.  
-#&gt; </span><span style='color: #555555;'>5</span><span> Age                    0           0             </span><span style='color: #BB0000;'>NaN</span><span>      53.3         53.3 
-#&gt; </span><span style='color: #555555;'>6</span><span> Education              0           0             </span><span style='color: #BB0000;'>NaN</span><span>      13.9         13.9 </div><div class='input'>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='diagnose_outlier.data.frame.html'>diagnose_outlier</a></span>(-<span class='fl'>1</span>, -<span class='fl'>5</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 5 x 6</span><span>
+#&gt;   variables  outliers_cnt outliers_ratio outliers_mean with_mean without_mean
+#&gt; </span><span style='color: #BCBCBC;'>*</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> cpk_enzyme           29           9.70       </span><span style='text-decoration: underline;'>2</span><span>905.      582.         332.  
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> platelets            21           7.02     </span><span style='text-decoration: underline;'>378</span><span>386.   </span><span style='text-decoration: underline;'>263</span><span>358.      </span><span style='text-decoration: underline;'>254</span><span>669.  
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> creatinine           29           9.70          3.79      1.39         1.14
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> sodium                4           1.34        118.      137.         137.  
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> time                  0           0           </span><span style='color: #BB0000;'>NaN</span><span>       130.         130.  </div><div class='input'>
 <span class='co'># Using pipes &amp; dplyr -------------------------</span>
 <span class='co'># outlier_ratio is more than 1%</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_CARSEATS"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='diagnose_outlier.data.frame.html'>diagnose_outlier</a></span>()  <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>outliers_ratio</span> <span class='kw'>&gt;</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 6</span><span>
-#&gt;   variables outliers_cnt outliers_ratio outliers_mean with_mean without_mean
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Price                5           1.25          100.      116.         116.</div><div class='input'>  
-</div></span></pre>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>outliers_ratio</span> <span class='kw'>&gt;</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 4 x 6</span><span>
+#&gt;   variables  outliers_cnt outliers_ratio outliers_mean with_mean without_mean
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> cpk_enzyme           29           9.70       </span><span style='text-decoration: underline;'>2</span><span>905.      582.         332.  
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> platelets            21           7.02     </span><span style='text-decoration: underline;'>378</span><span>386.   </span><span style='text-decoration: underline;'>263</span><span>358.      </span><span style='text-decoration: underline;'>254</span><span>669.  
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> creatinine           29           9.70          3.79      1.39         1.14
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> sodium                4           1.34        118.      137.         137.  </div><div class='input'>
+<span class='co'># Disconnect DBMS   </span>
+<span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://dbi.r-dbi.org/reference/dbDisconnect.html'>dbDisconnect</a></span>(<span class='no'>con_sqlite</span>)</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

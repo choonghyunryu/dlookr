@@ -118,6 +118,9 @@ con_sqlite \%>\%
 con_sqlite \%>\% 
   tbl("TB_CARSEATS") \%>\% 
   diagnose_report(output_format = "html", output_file = "Diagn.html")
+  
+# Disconnect DBMS   
+DBI::dbDisconnect(con_sqlite)
 }
 
 }

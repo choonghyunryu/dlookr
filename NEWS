@@ -20,7 +20,11 @@ CHANGES IN R VERSION 0.4.5:
       normality(), plot_normality(), transform(), summary.transform(),
       plot.transform(), transformation_report(), compare_category(), 
       compare_numeric(), summary.compare_category(), summary.compare_numeric(),
-      plot.compare_category(), plot.compare_numeric().
+      plot.compare_category(), plot.compare_numeric(), get_column_info(), 
+      diagnose.tbl_dbi(), diagnose_category.tbl_dbi(), diagnose_numeric.tbl_dbi(),
+      diagnose_outlier.tbl_dbi(), plot_outlier.tbl_dbi(), normality.tbl_dbi(), 
+      plot_normality.tbl_dbi(), correlate.tbl_dbi(), plot_correlate.tbl_dbi(), 
+      describe.tbl_dbi(),.
       
     * Changed default type of diagnose_category() from "rank" to "n". 
     
