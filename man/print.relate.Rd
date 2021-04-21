@@ -20,57 +20,48 @@ summary.relate() tries to be smart about formatting four kinds of relate.
 }
 \examples{
 \dontrun{
-# Generate data for the example
-diamonds2 <- diamonds
-diamonds2[sample(seq(NROW(diamonds2)), 250), "price"] <- NA
-diamonds2[sample(seq(NROW(diamonds2)), 20), "clarity"] <- NA
+# If the target variable is a categorical variable
+categ <- target_by(heartfailure, death_event)
 
-# Binning the carat variable. default type argument is "quantile"
-bin <- binning(diamonds2$carat)
+# If the variable of interest is a categorical variable
+cat_cat <- relate(categ, hblood_pressure)
 
 # Print bins class object
-bin
+cat_cat
 
-# Summarize bins class object
-summary(bin)
+summary(cat_cat)
 }
 
-
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-
 # If the target variable is a categorical variable
-categ <- target_by(carseats, US)
+categ <- target_by(heartfailure, death_event)
 
 # If the variable of interest is a numerical variable
-cat_num <- relate(categ, Sales)
+cat_num <- relate(categ, sodium)
 cat_num
 summary(cat_num)
 
 # plot(cat_num)
 
 # If the variable of interest is a categorical variable
-cat_cat <- relate(categ, ShelveLoc)
+cat_cat <- relate(categ, hblood_pressure)
 cat_cat
 summary(cat_cat)
-
+ 
 # plot(cat_cat)
 
 ##---------------------------------------------------
-# If the target variable is a categorical variable
-num <- target_by(carseats, Sales)
+# If the target variable is a numerical variable
+num <- target_by(heartfailure, creatinine)
 
 # If the variable of interest is a numerical variable
-num_num <- relate(num, Price)
+num_num <- relate(num, sodium)
 num_num
 summary(num_num)
 
 # plot(num_num)
 
 # If the variable of interest is a categorical variable
-num_cat <- relate(num, ShelveLoc)
+num_cat <- relate(num, smoking)
 num_cat
 summary(num_cat)
 
