@@ -24,8 +24,12 @@ CHANGES IN R VERSION 0.4.5:
       diagnose.tbl_dbi(), diagnose_category.tbl_dbi(), diagnose_numeric.tbl_dbi(),
       diagnose_outlier.tbl_dbi(), plot_outlier.tbl_dbi(), normality.tbl_dbi(), 
       plot_normality.tbl_dbi(), correlate.tbl_dbi(), plot_correlate.tbl_dbi(), 
-      describe.tbl_dbi(), target_by.tbl_dbi(), target_by.data.frame(), relate(), 
-      print.relate(), plot.relate().
+      describe.tbl_dbi(), target_by.tbl_dbi(), diagnose_report.tbl_dbi(),
+      eda_report.tbl_dbi(), target_by.data.frame(), relate(), print.relate(), 
+      plot.relate(), binning(), summary.bins(), plot.bins(), binning_by(), 
+      summary.optimal_bins(), plot.optimal_bins(), plot.optimal_bins(),
+      extract.bins(), performance_bin(), summary.performance_bin(),
+      plot.performance_bin().
       
     * Changed default type of diagnose_category() from "rank" to "n". 
     

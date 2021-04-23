@@ -21,25 +21,24 @@ The plot at the bottom is a bar chart representing the frequency of the level.
 }
 \examples{
 # Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+heartfailure2 <- heartfailure
+heartfailure2[sample(seq(NROW(heartfailure2)), 20), "platelets"] <- NA
 
 # Binning the carat variable. default type argument is "quantile"
-bin <- binning(carseats$Income, nbins = 5)
+bin <- binning(heartfailure2$platelets, nbins = 5)
 plot(bin)
 
 # Using another type arguments
-bin <- binning(carseats$Income, nbins = 5, type = "equal")
+bin <- binning(heartfailure2$platelets, nbins = 5, type = "equal")
 plot(bin)
 
-#bin <- binning(carseats$Income, nbins = 5, type = "pretty")
+#bin <- binning(heartfailure2$platelets, nbins = 5, type = "pretty")
 #plot(bin)
 
-#bin <- binning(carseats$Income, nbins = 5, type = "kmeans")
+#bin <- binning(heartfailure2$platelets, nbins = 5, type = "kmeans")
 #plot(bin)
 
-bin <- binning(carseats$Income, nbins = 5, type = "bclust")
+bin <- binning(heartfailure2$platelets, nbins = 5, type = "bclust")
 plot(bin)
 
 }

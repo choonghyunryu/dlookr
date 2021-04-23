@@ -68,12 +68,11 @@ See vignette("transformation") for an introduction to these concepts.
 
 \examples{
 # Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+heartfailure2 <- heartfailure
+heartfailure2[sample(seq(NROW(heartfailure2)), 20), "platelets"] <- NA
 
 # Binning the carat variable. default type argument is "quantile"
-bin <- binning(carseats$Income)
+bin <- binning(heartfailure2$platelets)
 # Print bins class object
 bin
 
@@ -84,17 +83,17 @@ summary(bin)
 plot(bin)
 
 # Using labels argument
-bin <- binning(carseats$Income, nbins = 4,
+bin <- binning(heartfailure2$platelets, nbins = 4,
               labels = c("LQ1", "UQ1", "LQ3", "UQ3"))
 bin
 # Using another type argument
-bin <- binning(carseats$Income, nbins = 5, type = "equal")
+bin <- binning(heartfailure2$platelets, nbins = 5, type = "equal")
 bin
-# bin <- binning(carseats$Income, nbins = 5, type = "pretty")
+# bin <- binning(heartfailure2$platelets, nbins = 5, type = "pretty")
 # bin
-# bin <- binning(carseats$Income, nbins = 5, type = "kmeans")
+# bin <- binning(heartfailure2$platelets, nbins = 5, type = "kmeans")
 # bin
-# bin <- binning(carseats$Income, nbins = 5, type = "bclust")
+# bin <- binning(heartfailure2$platelets, nbins = 5, type = "bclust")
 # bin
 
 x <- sample(1:1000, size = 50) * 12345679
@@ -111,21 +110,21 @@ extract(bin)
 # -------------------------
 library(dplyr)
 
-# Compare binned frequency by ShelveLoc
-carseats \%>\%
- mutate(Income_bin = binning(carseats$Income) \%>\% 
+# Compare binned frequency by death_event
+heartfailure2 \%>\%
+ mutate(platelets_bin = binning(heartfailure2$platelets) \%>\% 
                      extract()) \%>\%
- group_by(ShelveLoc, Income_bin) \%>\%
+ group_by(death_event, platelets_bin) \%>\%
  summarise(freq = n()) \%>\%
  arrange(desc(freq)) \%>\%
  head(10)
  
- # Compare binned frequency by ShelveLoc using Viz
- carseats \%>\%
-   mutate(Income_bin = binning(carseats$Income) \%>\% 
+ # Compare binned frequency by death_event using Viz
+ heartfailure2 \%>\%
+   mutate(platelets_bin = binning(heartfailure2$platelets) \%>\% 
            extract()) \%>\%
-   target_by(ShelveLoc) \%>\% 
-   relate(Income_bin) \%>\% 
+   target_by(death_event) \%>\% 
+   relate(platelets_bin) \%>\% 
    plot()
  
 }

@@ -40,15 +40,14 @@ summary.performance_bin() includes general metrics and result of significance te
 }
 }
 \examples{
-# Generate data for the example
 library(dplyr)
 
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+# Generate data for the example
+heartfailure2 <- heartfailure
+heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] <- NA
 
 # optimal binning
-bin <- binning_by(carseats, "US", "Advertising")
+bin <- binning_by(heartfailure2, "death_event", "creatinine")
 bin
 
 # summary optimal_bins class
@@ -67,8 +66,8 @@ attr(bin, "performance")
 # plot(bin, typographic = FALSE)
 
 # extract binned results
-# extract(bin) \%>\% 
-#   head(20)
+extract(bin) \%>\% 
+  head(20)
 
 }
 \seealso{

@@ -39,17 +39,16 @@ See vignette("transformation") for an introduction to these concepts.
 }
 \examples{
 # Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+heartfailure2 <- heartfailure
+heartfailure2[sample(seq(NROW(heartfailure2)), 20), "platelets"] <- NA
 
 # Binning the carat variable. default type argument is "quantile"
-bin <- binning(carseats$Income)
+bin <- binning(heartfailure2$platelets)
 
 # Print bins class object
 bin
 
-# Summarise bins class object
+# Summarize bins class object
 summary(bin)
 
 }

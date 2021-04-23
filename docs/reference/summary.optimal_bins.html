@@ -73,7 +73,7 @@ of binomial classification model." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
       </span>
     </div>
 
@@ -168,66 +168,76 @@ summary.performance_bin() includes general metrics and result of significance te
     <div class='dont-index'><p><code><a href='binning_by.html'>binning_by</a></code>, <code><a href='plot.optimal_bins.html'>plot.optimal_bins</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Generate data for the example</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
-<span class='no'>carseats</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ISLR</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/ISLR/man/Carseats.html'>Carseats</a></span>
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>20</span>), <span class='st'>"Income"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>5</span>), <span class='st'>"Urban"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
+<span class='co'># Generate data for the example</span>
+<span class='no'>heartfailure2</span> <span class='kw'>&lt;-</span> <span class='no'>heartfailure</span>
+<span class='no'>heartfailure2</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>heartfailure2</span>)), <span class='fl'>5</span>), <span class='st'>"creatinine"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
 
 <span class='co'># optimal binning</span>
-<span class='no'>bin</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='binning_by.html'>binning_by</a></span>(<span class='no'>carseats</span>, <span class='st'>"US"</span>, <span class='st'>"Advertising"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The factor y has been changed to a numeric vector consisting of 0 and 1.</span>
+<span class='no'>bin</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='binning_by.html'>binning_by</a></span>(<span class='no'>heartfailure2</span>, <span class='st'>"death_event"</span>, <span class='st'>"creatinine"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The factor y has been changed to a numeric vector consisting of 0 and 1.</span>
 #&gt; <span class='warning'>'Yes' changed to 1 (positive) and 'No' changed to 0 (negative).</span></div><div class='input'><span class='no'>bin</span></div><div class='output co'>#&gt; binned type: optimal
 #&gt; number of bins: 3
 #&gt; x
-#&gt; [-1,0]  (0,6] (6,29] 
-#&gt;    144     69    187 </div><div class='input'>
+#&gt; [0.5,0.9] (0.9,1.8] (1.8,9.4]      &lt;NA&gt; 
+#&gt;        79       169        46         5 </div><div class='input'>
 <span class='co'># summary optimal_bins class</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>bin</span>)</div><div class='output co'>#&gt; ── Binning Table ──────────────────────── Several Metrics ──
-#&gt;      Bin CntRec CntPos CntNeg RatePos RateNeg    Odds      WoE      IV     JSD     AUC
-#&gt; 1 [-1,0]    144     19    125 0.07364 0.88028  0.1520 -2.48101 2.00128 0.20093 0.03241
-#&gt; 2  (0,6]     69     54     15 0.20930 0.10563  3.6000  0.68380 0.07089 0.00869 0.01883
-#&gt; 3 (6,29]    187    185      2 0.71705 0.01408 92.5000  3.93008 2.76272 0.21861 0.00903
-#&gt; 4  Total    400    258    142 1.00000 1.00000  1.8169       NA 4.83489 0.42823 0.06028
+#&gt;         Bin CntRec CntPos CntNeg RatePos RateNeg    Odds      WoE      IV
+#&gt; 1 [0.5,0.9]     79      9     70 0.09375 0.34483 0.12857 -1.30241 0.32701
+#&gt; 2 (0.9,1.8]    169     52    117 0.54167 0.57635 0.44444 -0.06207 0.00215
+#&gt; 3 (1.8,9.4]     46     33     13 0.34375 0.06404 2.53846  1.68042 0.47003
+#&gt; 4      &lt;NA&gt;      5      2      3 0.02083 0.01478 0.66667  0.34339 0.00208
+#&gt; 5     Total    299     96    203 1.00000 1.00000 0.47291       NA 0.80127
+#&gt;       JSD     AUC
+#&gt; 1 0.03821 0.01616
+#&gt; 2 0.00027 0.21013
+#&gt; 3 0.05269 0.05170
+#&gt; 4 0.00026 0.01462
+#&gt; 5 0.09143 0.29262
 #&gt; 
 #&gt; ── General Metrics ─────────────────────────────────────────
-#&gt; ● Gini index                       :  -0.87944
-#&gt; ● IV (Jeffrey)                     :  4.83489
-#&gt; ● JS (Jensen-Shannon) Divergence   :  0.42823
-#&gt; ● Kolmogorov-Smirnov Statistics    :  0.80664
-#&gt; ● HHI (Herfindahl-Hirschman Index) :  0.37791
-#&gt; ● HHI (normalized)                 :  0.06687
-#&gt; ● Cramer's V                       :  0.81863
+#&gt; ● Gini index                       :  -0.41477
+#&gt; ● IV (Jeffrey)                     :  0.80127
+#&gt; ● JS (Jensen-Shannon) Divergence   :  0.09143
+#&gt; ● Kolmogorov-Smirnov Statistics    :  0.28577
+#&gt; ● HHI (Herfindahl-Hirschman Index) :  0.41323
+#&gt; ● HHI (normalized)                 :  0.21764
+#&gt; ● Cramer's V                       :  0.408
 #&gt; 
 #&gt; ── Significance Tests ──────────────────── Chisquare Test ──
-#&gt;    Bin A  Bin B statistics      p_value
-#&gt; 1 [-1,0]  (0,6]   87.67064 7.731349e-21
-#&gt; 2  (0,6] (6,29]   34.73349 3.780706e-09
+#&gt;       Bin A     Bin B statistics      p_value
+#&gt; 1 [0.5,0.9] (0.9,1.8]   10.89831 9.625185e-04
+#&gt; 2 (0.9,1.8] (1.8,9.4]   25.38929 4.685125e-07
 #&gt; </div><div class='input'>
 <span class='co'># performance table</span>
-<span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>bin</span>, <span class='st'>"performance"</span>)</div><div class='output co'>#&gt;      Bin CntRec CntPos CntNeg CntCumPos CntCumNeg RatePos RateNeg RateCumPos RateCumNeg
-#&gt; 1 [-1,0]    144     19    125        19       125 0.07364 0.88028    0.07364    0.88028
-#&gt; 2  (0,6]     69     54     15        73       140 0.20930 0.10563    0.28295    0.98592
-#&gt; 3 (6,29]    187    185      2       258       142 0.71705 0.01408    1.00000    1.00000
-#&gt; 4  Total    400    258    142        NA        NA 1.00000 1.00000         NA         NA
-#&gt;      Odds   LnOdds      WoE      IV     JSD     AUC
-#&gt; 1  0.1520 -1.88387 -2.48101 2.00128 0.20093 0.03241
-#&gt; 2  3.6000  1.28093  0.68380 0.07089 0.00869 0.01883
-#&gt; 3 92.5000  4.52721  3.93008 2.76272 0.21861 0.00903
-#&gt; 4  1.8169  0.59713       NA 4.83489 0.42823 0.06028</div><div class='input'>
-# visualize all information for optimal_bins class
-# plot(bin)
+<span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>bin</span>, <span class='st'>"performance"</span>)</div><div class='output co'>#&gt;         Bin CntRec CntPos CntNeg CntCumPos CntCumNeg RatePos RateNeg RateCumPos
+#&gt; 1 [0.5,0.9]     79      9     70         9        70 0.09375 0.34483    0.09375
+#&gt; 2 (0.9,1.8]    169     52    117        61       187 0.54167 0.57635    0.63542
+#&gt; 3 (1.8,9.4]     46     33     13        94       200 0.34375 0.06404    0.97917
+#&gt; 4      &lt;NA&gt;      5      2      3        96       203 0.02083 0.01478    1.00000
+#&gt; 5     Total    299     96    203        NA        NA 1.00000 1.00000         NA
+#&gt;   RateCumNeg    Odds   LnOdds      WoE      IV     JSD     AUC
+#&gt; 1    0.34483 0.12857 -2.05127 -1.30241 0.32701 0.03821 0.01616
+#&gt; 2    0.92118 0.44444 -0.81093 -0.06207 0.00215 0.00027 0.21013
+#&gt; 3    0.98522 2.53846  0.93156  1.68042 0.47003 0.05269 0.05170
+#&gt; 4    1.00000 0.66667 -0.40547  0.34339 0.00208 0.00026 0.01462
+#&gt; 5         NA 0.47291 -0.74886       NA 0.80127 0.09143 0.29262</div><div class='input'>
+<span class='co'># visualize all information for optimal_bins class</span>
+<span class='co'># plot(bin)</span>
 
-# visualize WoE information for optimal_bins class
-# plot(bin, type = "WoE")
+<span class='co'># visualize WoE information for optimal_bins class</span>
+<span class='co'># plot(bin, type = "WoE")</span>
 
-# visualize all information without typographic
-# plot(bin, typographic = FALSE)
+<span class='co'># visualize all information without typographic</span>
+<span class='co'># plot(bin, typographic = FALSE)</span>
 
-# extract binned results
-# extract(bin) %&gt;% 
-#   head(20)
-
+<span class='co'># extract binned results</span>
+<span class='fu'><a href='extract.bins.html'>extract</a></span>(<span class='no'>bin</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fl'>20</span>)</div><div class='output co'>#&gt;  [1] (1.8,9.4] (0.9,1.8] (0.9,1.8] (1.8,9.4] &lt;NA&gt;      (1.8,9.4] (0.9,1.8]
+#&gt;  [8] (0.9,1.8] (0.9,1.8] (1.8,9.4] (1.8,9.4] [0.5,0.9] (0.9,1.8] (0.9,1.8]
+#&gt; [15] (0.9,1.8] (0.9,1.8] [0.5,0.9] [0.5,0.9] (0.9,1.8] (1.8,9.4]
+#&gt; Levels: [0.5,0.9] &lt; (0.9,1.8] &lt; (1.8,9.4]</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

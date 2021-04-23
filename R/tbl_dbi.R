@@ -1502,35 +1502,35 @@ target_by.tbl_dbi <- function(.data, target, in_database = FALSE, collect_size =
 #' library(dplyr)
 #' 
 #' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+#' heartfailure2 <- heartfailure
+#' heartfailure2[sample(seq(NROW(heartfailure2)), 20), "platelets"] <- NA
+#' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
 #'
 #' # connect DBMS
 #' con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 #' 
-#' # copy carseats to the DBMS with a table named TB_CARSEATS
-#' copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
+#' # copy heartfailure2 to the DBMS with a table named TB_HEARTFAILURE
+#' copy_to(con_sqlite, heartfailure2, name = "TB_HEARTFAILURE", overwrite = TRUE)
 #'
 #' # reporting the diagnosis information -------------------------
 #' # create pdf file. file name is DataDiagnosis_Report.pdf
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   diagnose_report()
 #'   
 #' # create pdf file. file name is Diagn.pdf, and collect size is 350
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   diagnose_report(collect_size = 350, output_file = "Diagn.pdf")
 #' 
 #' # create html file. file name is Diagnosis_Report.html
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   diagnose_report(output_format = "html")
 #' 
 #' # create html file. file name is Diagn.html
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   diagnose_report(output_format = "html", output_file = "Diagn.html")
 #'   
 #' # Disconnect DBMS   
@@ -1627,78 +1627,78 @@ diagnose_report.tbl_dbi <- function(.data, output_format = c("pdf", "html"),
 #' library(dplyr)
 #' 
 #' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+#' heartfailure2 <- heartfailure
+#' heartfailure2[sample(seq(NROW(heartfailure2)), 20), "platelets"] <- NA
+#' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
 #'
 #' # connect DBMS
 #' con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 #' 
-#' # copy carseats to the DBMS with a table named TB_CARSEATS
-#' copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
+#' # copy heartfailure2 to the DBMS with a table named TB_HEARTFAILURE
+#' copy_to(con_sqlite, heartfailure2, name = "TB_HEARTFAILURE", overwrite = TRUE)
 #'
 #' ## target variable is categorical variable
 #' # reporting the EDA information
 #' # create pdf file. file name is EDA_Report.pdf
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   eda_report(US)
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   eda_report(death_event)
 #' 
-#' # create pdf file. file name is EDA_TB_CARSEATS.pdf
+#' # create pdf file. file name is EDA_TB_HEARTFAILURE.pdf
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   eda_report("US", output_file = "EDA_TB_CARSEATS.pdf")
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   eda_report("death_event", output_file = "EDA_TB_HEARTFAILURE.pdf")
 #' 
 #' # create html file. file name is EDA_Report.html
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   eda_report("US", output_format = "html")
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   eda_report("death_event", output_format = "html")
 #' 
-#' # create html file. file name is EDA_TB_CARSEATS.html
+#' # create html file. file name is EDA_TB_HEARTFAILURE.html
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   eda_report(US, output_format = "html", output_file = "EDA_TB_CARSEATS.html")
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   eda_report(death_event, output_format = "html", output_file = "EDA_TB_HEARTFAILURE.html")
 #'
 #' ## target variable is numerical variable
-#' # reporting the EDA information, and collect size is 350
+#' # reporting the EDA information, and collect size is 250
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   eda_report(Sales, collect_size = 350)
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   eda_report(sodium, collect_size = 250)
 #' 
 #' # create pdf file. file name is EDA2.pdf
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   eda_report("Sales", output_file = "EDA2.pdf")
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   eda_report("sodium", output_file = "EDA2.pdf")
 #' 
 #' # create html file. file name is EDA_Report.html
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   eda_report("Sales", output_format = "html")
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   eda_report("sodium", output_format = "html")
 #' 
 #' # create html file. file name is EDA2.html
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
-#'   eda_report(Sales, output_format = "html", output_file = "EDA2.html")
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   eda_report(sodium, output_format = "html", output_file = "EDA2.html")
 #'
 #' ## target variable is null
 #' # reporting the EDA information
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   eda_report()
 #' 
 #' # create pdf file. file name is EDA2.pdf
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   eda_report(output_file = "EDA2.pdf")
 #' 
 #' # create html file. file name is EDA_Report.html
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   eda_report(output_format = "html")
 #' 
 #' # create html file. file name is EDA2.html
 #' con_sqlite %>% 
-#'   tbl("TB_CARSEATS") %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
 #'   eda_report(output_format = "html", output_file = "EDA2.html")
 #'   
 #' # Disconnect DBMS   
@@ -1729,7 +1729,3 @@ eda_report.tbl_dbi <- function(.data, target = NULL,  output_format = c("pdf", "
       output_file, output_dir, font_family)    
   }
 }
-
-
-
-

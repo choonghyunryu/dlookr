@@ -45,12 +45,11 @@
 #' @export
 #' @examples
 #' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+#' heartfailure2 <- heartfailure
+#' heartfailure2[sample(seq(NROW(heartfailure2)), 20), "platelets"] <- NA
 #' 
 #' # Binning the carat variable. default type argument is "quantile"
-#' bin <- binning(carseats$Income)
+#' bin <- binning(heartfailure2$platelets)
 #' # Print bins class object
 #' bin
 #' 
@@ -61,17 +60,17 @@
 #' plot(bin)
 #' 
 #' # Using labels argument
-#' bin <- binning(carseats$Income, nbins = 4,
+#' bin <- binning(heartfailure2$platelets, nbins = 4,
 #'               labels = c("LQ1", "UQ1", "LQ3", "UQ3"))
 #' bin
 #' # Using another type argument
-#' bin <- binning(carseats$Income, nbins = 5, type = "equal")
+#' bin <- binning(heartfailure2$platelets, nbins = 5, type = "equal")
 #' bin
-#' # bin <- binning(carseats$Income, nbins = 5, type = "pretty")
+#' # bin <- binning(heartfailure2$platelets, nbins = 5, type = "pretty")
 #' # bin
-#' # bin <- binning(carseats$Income, nbins = 5, type = "kmeans")
+#' # bin <- binning(heartfailure2$platelets, nbins = 5, type = "kmeans")
 #' # bin
-#' # bin <- binning(carseats$Income, nbins = 5, type = "bclust")
+#' # bin <- binning(heartfailure2$platelets, nbins = 5, type = "bclust")
 #' # bin
 #' 
 #' x <- sample(1:1000, size = 50) * 12345679
@@ -88,21 +87,21 @@
 #' # -------------------------
 #' library(dplyr)
 #'
-#' # Compare binned frequency by ShelveLoc
-#' carseats %>%
-#'  mutate(Income_bin = binning(carseats$Income) %>% 
+#' # Compare binned frequency by death_event
+#' heartfailure2 %>%
+#'  mutate(platelets_bin = binning(heartfailure2$platelets) %>% 
 #'                      extract()) %>%
-#'  group_by(ShelveLoc, Income_bin) %>%
+#'  group_by(death_event, platelets_bin) %>%
 #'  summarise(freq = n()) %>%
 #'  arrange(desc(freq)) %>%
 #'  head(10)
 #'  
-#'  # Compare binned frequency by ShelveLoc using Viz
-#'  carseats %>%
-#'    mutate(Income_bin = binning(carseats$Income) %>% 
+#'  # Compare binned frequency by death_event using Viz
+#'  heartfailure2 %>%
+#'    mutate(platelets_bin = binning(heartfailure2$platelets) %>% 
 #'            extract()) %>%
-#'    target_by(ShelveLoc) %>% 
-#'    relate(Income_bin) %>% 
+#'    target_by(death_event) %>% 
+#'    relate(platelets_bin) %>% 
 #'    plot()
 #'  
 #' @importFrom grDevices nclass.Sturges
@@ -248,17 +247,16 @@ binning <- function(x, nbins,
 #' @seealso \code{\link{binning}}
 #' @examples
 #' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+#' heartfailure2 <- heartfailure
+#' heartfailure2[sample(seq(NROW(heartfailure2)), 20), "platelets"] <- NA
 #'
 #' # Binning the carat variable. default type argument is "quantile"
-#' bin <- binning(carseats$Income)
+#' bin <- binning(heartfailure2$platelets)
 #'
 #' # Print bins class object
 #' bin
 #'
-#' # Summarise bins class object
+#' # Summarize bins class object
 #' summary(bin)
 #' 
 #' @method summary bins
@@ -296,25 +294,24 @@ print.bins <- function(x, ...) {
 #' @seealso \code{\link{binning}}, \code{\link{print.bins}}, \code{\link{summary.bins}}.
 #' @examples
 #' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+#' heartfailure2 <- heartfailure
+#' heartfailure2[sample(seq(NROW(heartfailure2)), 20), "platelets"] <- NA
 #'
 #' # Binning the carat variable. default type argument is "quantile"
-#' bin <- binning(carseats$Income, nbins = 5)
+#' bin <- binning(heartfailure2$platelets, nbins = 5)
 #' plot(bin)
 #' 
 #' # Using another type arguments
-#' bin <- binning(carseats$Income, nbins = 5, type = "equal")
+#' bin <- binning(heartfailure2$platelets, nbins = 5, type = "equal")
 #' plot(bin)
 #' 
-#' #bin <- binning(carseats$Income, nbins = 5, type = "pretty")
+#' #bin <- binning(heartfailure2$platelets, nbins = 5, type = "pretty")
 #' #plot(bin)
 #' 
-#' #bin <- binning(carseats$Income, nbins = 5, type = "kmeans")
+#' #bin <- binning(heartfailure2$platelets, nbins = 5, type = "kmeans")
 #' #plot(bin)
 #' 
-#' bin <- binning(carseats$Income, nbins = 5, type = "bclust")
+#' bin <- binning(heartfailure2$platelets, nbins = 5, type = "bclust")
 #' plot(bin)
 #' 
 #' @export
@@ -422,18 +419,17 @@ plot.bins <- function(x, typographic = TRUE, ...) {
 #' }
 #' @seealso \code{\link{binning}}, \code{\link{plot.optimal_bins}}.
 #' @examples
-#' # Generate data for the example
 #' library(dplyr)
 #' 
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+#' # Generate data for the example
+#' heartfailure2 <- heartfailure
+#' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] <- NA
 #'
 #' # optimal binning using character
-#' bin <- binning_by(carseats, "US", "Advertising")
+#' bin <- binning_by(heartfailure2, "death_event", "creatinine")
 #' 
 #' # optimal binning using name
-#' bin <- binning_by(carseats, US, Advertising)
+#' bin <- binning_by(heartfailure2, death_event, creatinine)
 #' bin
 #' 
 #' # performance table
@@ -597,15 +593,14 @@ binning_by <- function(.data, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
 #' @return NULL.
 #' @seealso \code{\link{binning_by}}, \code{\link{plot.optimal_bins}}
 #' @examples
-#' # Generate data for the example
 #' library(dplyr)
 #' 
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+#' # Generate data for the example
+#' heartfailure2 <- heartfailure
+#' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] <- NA
 #'
 #' # optimal binning
-#' bin <- binning_by(carseats, "US", "Advertising")
+#' bin <- binning_by(heartfailure2, "death_event", "creatinine")
 #' bin
 #'
 #' # summary optimal_bins class
@@ -624,8 +619,8 @@ binning_by <- function(.data, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
 #' # plot(bin, typographic = FALSE)
 #' 
 #' # extract binned results
-#' # extract(bin) %>% 
-#' #   head(20)
+#' extract(bin) %>% 
+#'   head(20)
 #' 
 #' @method summary optimal_bins
 #' @export
@@ -651,14 +646,11 @@ summary.optimal_bins <- function(object, ...) {
 #' @seealso \code{\link{binning_by}}, \code{\link{summary.optimal_bins}}
 #' @examples
 #' # Generate data for the example
-#' library(dplyr)
-#' 
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+#' heartfailure2 <- heartfailure
+#' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] <- NA
 #'
 #' # optimal binning using binning_by()
-#' bin <- binning_by(carseats, "US", "Advertising")
+#' bin <- binning_by(heartfailure2, "death_event", "creatinine")
 #' bin
 #' 
 #' # summary optimal_bins class.
@@ -672,10 +664,6 @@ summary.optimal_bins <- function(object, ...) {
 #' 
 #' # visualize all information with typographic
 #' plot(bin)
-#' 
-#' # extract binned results
-#' extract(bin) %>% 
-#'   head(20)
 #' 
 #' @import ggplot2
 #' @import hrbrthemes
@@ -838,26 +826,19 @@ extract <- function(x) {
 #' @seealso \code{\link{binning}}, \code{\link{binning_by}}.
 #' @export
 #' @examples
-#' # Generate data for the example
 #' library(dplyr)
 #' 
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+#' # Generate data for the example
+#' heartfailure2 <- heartfailure
+#' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] <- NA
 #'
-#' # optimal binning
-#' bin <- binning_by(carseats, "US", "Advertising")
+#' # optimal binning using binning_by()
+#' bin <- binning_by(heartfailure2, "death_event", "creatinine")
 #' bin
 #'
-#' # summary optimal_bins class
-#' summary(bin)
-#'
-#' # visualize all information for optimal_bins class
-#' # plot(bin)
-#' 
 #' # extract binning result
-#' # extract(bin) %>% 
-#' #   head(20)
+#' extract(bin) %>% 
+#'   head(20)
 #' 
 #' @export
 #' @method extract bins
@@ -929,27 +910,27 @@ extract.bins <- function(x) {
 #' @seealso \code{\link{summary.performance_bin}}, \code{\link{plot.performance_bin}}, \code{\link{binning_by}}.
 #' @examples
 #' # Generate data for the example
-#' carseats <- ISLR::Carseats
+#' heartfailure2 <- heartfailure
 #' 
 #' set.seed(123)
-#' carseats[sample(seq(NROW(carseats)), 20), "Advertising"] <- NA
+#' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] <- NA
 #' 
 #' # Change the target variable to 0(negative) and 1(positive).
-#' carseats$US_2 <- ifelse(carseats$US %in% "Yes", 1, 0)
+#' heartfailure2$death_event_2 <- ifelse(heartfailure2$death_event %in% "Yes", 1, 0)
 #' 
-#' # Binnig from Advertising to Advertising_bin.
-#' breaks <- c(-1,  0,  6, 29)
-#' carseats$Advertising_bin <- cut(carseats$Advertising, breaks)
+#' # Binnig from creatinine to platelets_bin.
+#' breaks <- c(0,  1,  2, 10)
+#' heartfailure2$creatinine_bin <- cut(heartfailure2$creatinine, breaks)
 #' 
 #' # Diagnose performance binned variable
-#' perf <- performance_bin(carseats$US_2, carseats$Advertising_bin) 
+#' perf <- performance_bin(heartfailure2$death_event_2, heartfailure2$creatinine_bin) 
 #' perf
 #' summary(perf)
 #' 
 #' # plot(perf)
 #' 
 #' # Diagnose performance binned variable without NA
-#' perf <- performance_bin(carseats$US_2, carseats$Advertising_bin, na.rm = TRUE) 
+#' perf <- performance_bin(heartfailure2$death_event_2, heartfailure2$creatinine_bin, na.rm = TRUE) 
 #' perf
 #' summary(perf)
 #' 
@@ -1160,27 +1141,27 @@ performance_bin <- function (y, x, na.rm = FALSE) {
 #' \code{\link{summary.optimal_bins}}.
 #' @examples
 #' # Generate data for the example
-#' carseats <- ISLR::Carseats
+#' heartfailure2 <- heartfailure
 #' 
 #' set.seed(123)
-#' carseats[sample(seq(NROW(carseats)), 20), "Advertising"] <- NA
+#' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] <- NA
 #' 
 #' # Change the target variable to 0(negative) and 1(positive).
-#' carseats$US_2 <- ifelse(carseats$US %in% "Yes", 1, 0)
+#' heartfailure2$death_event_2 <- ifelse(heartfailure2$death_event %in% "Yes", 1, 0)
 #' 
-#' # Binnig from Advertising to Advertising_bin.
-#' breaks <- c(-1,  0,  6, 29)
-#' carseats$Advertising_bin <- cut(carseats$Advertising, breaks)
+#' # Binnig from creatinine to platelets_bin.
+#' breaks <- c(0,  1,  2, 10)
+#' heartfailure2$creatinine_bin <- cut(heartfailure2$creatinine, breaks)
 #' 
 #' # Diagnose performance binned variable
-#' perf <- performance_bin(carseats$US_2, carseats$Advertising_bin) 
+#' perf <- performance_bin(heartfailure2$death_event_2, heartfailure2$creatinine_bin) 
 #' perf
 #' summary(perf)
 #' 
 #' # plot(perf)
 #' 
 #' # Diagnose performance binned variable without NA
-#' perf <- performance_bin(carseats$US_2, carseats$Advertising_bin, na.rm = TRUE) 
+#' perf <- performance_bin(heartfailure2$death_event_2, heartfailure2$creatinine_bin, na.rm = TRUE) 
 #' perf
 #' summary(perf)
 #' 
@@ -1251,27 +1232,27 @@ summary.performance_bin <- function(object, ...) {
 #' \code{\link{plot.optimal_bins}}.
 #' @examples
 #' # Generate data for the example
-#' carseats <- ISLR::Carseats
+#' heartfailure2 <- heartfailure
 #' 
 #' set.seed(123)
-#' carseats[sample(seq(NROW(carseats)), 20), "Advertising"] <- NA
+#' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] <- NA
 #' 
 #' # Change the target variable to 0(negative) and 1(positive).
-#' carseats$US_2 <- ifelse(carseats$US %in% "Yes", 1, 0)
+#' heartfailure2$death_event_2 <- ifelse(heartfailure2$death_event %in% "Yes", 1, 0)
 #' 
-#' # Binnig from Advertising to Advertising_bin.
-#' breaks <- c(-1,  0,  6, 29)
-#' carseats$Advertising_bin <- cut(carseats$Advertising, breaks)
+#' # Binnig from creatinine to platelets_bin.
+#' breaks <- c(0,  1,  2, 10)
+#' heartfailure2$creatinine_bin <- cut(heartfailure2$creatinine, breaks)
 #' 
-#' # Diagnose performance binned variable.
-#' perf <- performance_bin(carseats$US_2, carseats$Advertising_bin) 
+#' # Diagnose performance binned variable
+#' perf <- performance_bin(heartfailure2$death_event_2, heartfailure2$creatinine_bin) 
 #' perf
 #' summary(perf)
 #' 
 #' plot(perf)
 #' 
 #' # Diagnose performance binned variable without NA
-#' perf <- performance_bin(carseats$US_2, carseats$Advertising_bin, na.rm = TRUE) 
+#' perf <- performance_bin(heartfailure2$death_event_2, heartfailure2$creatinine_bin, na.rm = TRUE) 
 #' perf
 #' summary(perf)
 #' 

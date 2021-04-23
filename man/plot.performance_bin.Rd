@@ -19,27 +19,27 @@ It generates plots for understand frequency, WoE by bins using performance_bin.
 }
 \examples{
 # Generate data for the example
-carseats <- ISLR::Carseats
+heartfailure2 <- heartfailure
 
 set.seed(123)
-carseats[sample(seq(NROW(carseats)), 20), "Advertising"] <- NA
+heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] <- NA
 
 # Change the target variable to 0(negative) and 1(positive).
-carseats$US_2 <- ifelse(carseats$US \%in\% "Yes", 1, 0)
+heartfailure2$death_event_2 <- ifelse(heartfailure2$death_event \%in\% "Yes", 1, 0)
 
-# Binnig from Advertising to Advertising_bin.
-breaks <- c(-1,  0,  6, 29)
-carseats$Advertising_bin <- cut(carseats$Advertising, breaks)
+# Binnig from creatinine to platelets_bin.
+breaks <- c(0,  1,  2, 10)
+heartfailure2$creatinine_bin <- cut(heartfailure2$creatinine, breaks)
 
-# Diagnose performance binned variable.
-perf <- performance_bin(carseats$US_2, carseats$Advertising_bin) 
+# Diagnose performance binned variable
+perf <- performance_bin(heartfailure2$death_event_2, heartfailure2$creatinine_bin) 
 perf
 summary(perf)
 
 plot(perf)
 
 # Diagnose performance binned variable without NA
-perf <- performance_bin(carseats$US_2, carseats$Advertising_bin, na.rm = TRUE) 
+perf <- performance_bin(heartfailure2$death_event_2, heartfailure2$creatinine_bin, na.rm = TRUE) 
 perf
 summary(perf)
 

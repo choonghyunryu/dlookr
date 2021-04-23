@@ -73,7 +73,7 @@ of binomial classification model." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
       </span>
     </div>
 
@@ -170,86 +170,97 @@ summary.performance_bin() includes general metrics and result of significance te
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Generate data for the example</span>
-<span class='no'>carseats</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ISLR</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/ISLR/man/Carseats.html'>Carseats</a></span>
+<span class='no'>heartfailure2</span> <span class='kw'>&lt;-</span> <span class='no'>heartfailure</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>123</span>)
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>20</span>), <span class='st'>"Advertising"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
+<span class='no'>heartfailure2</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>heartfailure2</span>)), <span class='fl'>5</span>), <span class='st'>"creatinine"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
 
 <span class='co'># Change the target variable to 0(negative) and 1(positive).</span>
-<span class='no'>carseats</span>$<span class='no'>US_2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>carseats</span>$<span class='no'>US</span> <span class='kw'>%in%</span> <span class='st'>"Yes"</span>, <span class='fl'>1</span>, <span class='fl'>0</span>)
+<span class='no'>heartfailure2</span>$<span class='no'>death_event_2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>heartfailure2</span>$<span class='no'>death_event</span> <span class='kw'>%in%</span> <span class='st'>"Yes"</span>, <span class='fl'>1</span>, <span class='fl'>0</span>)
 
-<span class='co'># Binnig from Advertising to Advertising_bin.</span>
-<span class='no'>breaks</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>1</span>,  <span class='fl'>0</span>,  <span class='fl'>6</span>, <span class='fl'>29</span>)
-<span class='no'>carseats</span>$<span class='no'>Advertising_bin</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cut.html'>cut</a></span>(<span class='no'>carseats</span>$<span class='no'>Advertising</span>, <span class='no'>breaks</span>)
+<span class='co'># Binnig from creatinine to platelets_bin.</span>
+<span class='no'>breaks</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,  <span class='fl'>1</span>,  <span class='fl'>2</span>, <span class='fl'>10</span>)
+<span class='no'>heartfailure2</span>$<span class='no'>creatinine_bin</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cut.html'>cut</a></span>(<span class='no'>heartfailure2</span>$<span class='no'>creatinine</span>, <span class='no'>breaks</span>)
 
 <span class='co'># Diagnose performance binned variable</span>
-<span class='no'>perf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='performance_bin.html'>performance_bin</a></span>(<span class='no'>carseats</span>$<span class='no'>US_2</span>, <span class='no'>carseats</span>$<span class='no'>Advertising_bin</span>)
-<span class='no'>perf</span></div><div class='output co'>#&gt;      Bin CntRec CntPos CntNeg CntCumPos CntCumNeg RatePos RateNeg RateCumPos RateCumNeg
-#&gt; 1 (-1,0]    133     19    114        19       114 0.07364 0.80282    0.07364    0.80282
-#&gt; 2  (0,6]     66     52     14        71       128 0.20155 0.09859    0.27519    0.90141
-#&gt; 3 (6,29]    181    179      2       250       130 0.69380 0.01408    0.96899    0.91549
-#&gt; 4   &lt;NA&gt;     20      8     12       258       142 0.03101 0.08451    1.00000    1.00000
-#&gt; 5  Total    400    258    142        NA        NA 1.00000 1.00000         NA         NA
-#&gt;       Odds   LnOdds      WoE      IV     JSD     AUC
-#&gt; 1  0.16667 -1.79176 -2.38889 1.74192 0.17733 0.02956
-#&gt; 2  3.71429  1.31219  0.71505 0.07362 0.00901 0.01720
-#&gt; 3 89.50000  4.49424  3.89711 2.64892 0.21078 0.00876
-#&gt; 4  0.66667 -0.40547 -1.00260 0.05364 0.00644 0.08320
-#&gt; 5  1.81690  0.59713       NA 4.51809 0.40356 0.13872</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>perf</span>)</div><div class='output co'>#&gt; ── Binning Table ──────────────────────── Several Metrics ──
-#&gt;      Bin CntRec CntPos CntNeg RatePos RateNeg     Odds      WoE      IV     JSD     AUC
-#&gt; 1 (-1,0]    133     19    114 0.07364 0.80282  0.16667 -2.38889 1.74192 0.17733 0.02956
-#&gt; 2  (0,6]     66     52     14 0.20155 0.09859  3.71429  0.71505 0.07362 0.00901 0.01720
-#&gt; 3 (6,29]    181    179      2 0.69380 0.01408 89.50000  3.89711 2.64892 0.21078 0.00876
-#&gt; 4   &lt;NA&gt;     20      8     12 0.03101 0.08451  0.66667 -1.00260 0.05364 0.00644 0.08320
-#&gt; 5  Total    400    258    142 1.00000 1.00000  1.81690       NA 4.51809 0.40356 0.13872
+<span class='no'>perf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='performance_bin.html'>performance_bin</a></span>(<span class='no'>heartfailure2</span>$<span class='no'>death_event_2</span>, <span class='no'>heartfailure2</span>$<span class='no'>creatinine_bin</span>)
+<span class='no'>perf</span></div><div class='output co'>#&gt;      Bin CntRec CntPos CntNeg CntCumPos CntCumNeg RatePos RateNeg RateCumPos
+#&gt; 1  (0,1]    131     24    107        24       107 0.25000 0.52709    0.25000
+#&gt; 2  (1,2]    131     49     82        73       189 0.51042 0.40394    0.76042
+#&gt; 3 (2,10]     32     21     11        94       200 0.21875 0.05419    0.97917
+#&gt; 4   &lt;NA&gt;      5      2      3        96       203 0.02083 0.01478    1.00000
+#&gt; 5  Total    299     96    203        NA        NA 1.00000 1.00000         NA
+#&gt;   RateCumNeg    Odds   LnOdds      WoE      IV     JSD     AUC
+#&gt; 1    0.52709 0.22430 -1.49478 -0.74592 0.20669 0.02525 0.06589
+#&gt; 2    0.93103 0.59756 -0.51490  0.23396 0.02491 0.00311 0.20407
+#&gt; 3    0.98522 1.90909  0.64663  1.39548 0.22964 0.02658 0.04713
+#&gt; 4    1.00000 0.66667 -0.40547  0.34339 0.00208 0.00026 0.01462
+#&gt; 5         NA 0.47291 -0.74886       NA 0.46332 0.05520 0.33172</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>perf</span>)</div><div class='output co'>#&gt; ── Binning Table ──────────────────────── Several Metrics ──
+#&gt;      Bin CntRec CntPos CntNeg RatePos RateNeg    Odds      WoE      IV     JSD
+#&gt; 1  (0,1]    131     24    107 0.25000 0.52709 0.22430 -0.74592 0.20669 0.02525
+#&gt; 2  (1,2]    131     49     82 0.51042 0.40394 0.59756  0.23396 0.02491 0.00311
+#&gt; 3 (2,10]     32     21     11 0.21875 0.05419 1.90909  1.39548 0.22964 0.02658
+#&gt; 4   &lt;NA&gt;      5      2      3 0.02083 0.01478 0.66667  0.34339 0.00208 0.00026
+#&gt; 5  Total    299     96    203 1.00000 1.00000 0.47291       NA 0.46332 0.05520
+#&gt;       AUC
+#&gt; 1 0.06589
+#&gt; 2 0.20407
+#&gt; 3 0.04713
+#&gt; 4 0.01462
+#&gt; 5 0.33172
 #&gt; 
 #&gt; ── General Metrics ─────────────────────────────────────────
-#&gt; ● Gini index                       :  -0.72257
-#&gt; ● IV (Jeffrey)                     :  4.51809
-#&gt; ● JS (Jensen-Shannon) Divergence   :  0.40356
-#&gt; ● Kolmogorov-Smirnov Statistics    :  0.72917
-#&gt; ● HHI (Herfindahl-Hirschman Index) :  0.34504
-#&gt; ● HHI (normalized)                 :  0.12672
-#&gt; ● Cramer's V                       :  0.81086
+#&gt; ● Gini index                       :  -0.33657
+#&gt; ● IV (Jeffrey)                     :  0.46332
+#&gt; ● JS (Jensen-Shannon) Divergence   :  0.0552
+#&gt; ● Kolmogorov-Smirnov Statistics    :  0.27709
+#&gt; ● HHI (Herfindahl-Hirschman Index) :  0.39564
+#&gt; ● HHI (normalized)                 :  0.19419
+#&gt; ● Cramer's V                       :  0.31765
 #&gt; 
 #&gt; ── Significance Tests ──────────────────── Chisquare Test ──
-#&gt;    Bin A  Bin B statistics      p_value
-#&gt; 1 (-1,0]  (0,6]   79.97033 3.800735e-19
-#&gt; 2  (0,6] (6,29]   32.27665 1.337104e-08
+#&gt;   Bin A  Bin B statistics     p_value
+#&gt; 1 (0,1]  (1,2]   11.86852 0.000570907
+#&gt; 2 (1,2] (2,10]    8.35901 0.003837797
 #&gt; </div><div class='input'>
 <span class='co'># plot(perf)</span>
 
 <span class='co'># Diagnose performance binned variable without NA</span>
-<span class='no'>perf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='performance_bin.html'>performance_bin</a></span>(<span class='no'>carseats</span>$<span class='no'>US_2</span>, <span class='no'>carseats</span>$<span class='no'>Advertising_bin</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>perf</span></div><div class='output co'>#&gt;      Bin CntRec CntPos CntNeg CntCumPos CntCumNeg RatePos RateNeg RateCumPos RateCumNeg
-#&gt; 1 (-1,0]    133     19    114        19       114   0.076 0.87692      0.076    0.87692
-#&gt; 2  (0,6]     66     52     14        71       128   0.208 0.10769      0.284    0.98462
-#&gt; 3 (6,29]    181    179      2       250       130   0.716 0.01538      1.000    1.00000
-#&gt; 4  Total    380    250    130        NA        NA   1.000 1.00000         NA         NA
-#&gt;       Odds   LnOdds      WoE      IV     JSD     AUC
-#&gt; 1  0.16667 -1.79176 -2.44569 1.95881 0.19772 0.03332
-#&gt; 2  3.71429  1.31219  0.65826 0.06603 0.00811 0.01938
-#&gt; 3 89.50000  4.49424  3.84031 2.69058 0.21616 0.00988
-#&gt; 4  1.92308  0.65393       NA 4.71542 0.42199 0.06258</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>perf</span>)</div><div class='output co'>#&gt; ── Binning Table ──────────────────────── Several Metrics ──
-#&gt;      Bin CntRec CntPos CntNeg RatePos RateNeg     Odds      WoE      IV     JSD     AUC
-#&gt; 1 (-1,0]    133     19    114   0.076 0.87692  0.16667 -2.44569 1.95881 0.19772 0.03332
-#&gt; 2  (0,6]     66     52     14   0.208 0.10769  3.71429  0.65826 0.06603 0.00811 0.01938
-#&gt; 3 (6,29]    181    179      2   0.716 0.01538 89.50000  3.84031 2.69058 0.21616 0.00988
-#&gt; 4  Total    380    250    130   1.000 1.00000  1.92308       NA 4.71542 0.42199 0.06258
+<span class='no'>perf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='performance_bin.html'>performance_bin</a></span>(<span class='no'>heartfailure2</span>$<span class='no'>death_event_2</span>, <span class='no'>heartfailure2</span>$<span class='no'>creatinine_bin</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>perf</span></div><div class='output co'>#&gt;      Bin CntRec CntPos CntNeg CntCumPos CntCumNeg RatePos RateNeg RateCumPos
+#&gt; 1  (0,1]    131     24    107        24       107 0.25532   0.535    0.25532
+#&gt; 2  (1,2]    131     49     82        73       189 0.52128   0.410    0.77660
+#&gt; 3 (2,10]     32     21     11        94       200 0.22340   0.055    1.00000
+#&gt; 4  Total    294     94    200        NA        NA 1.00000   1.000         NA
+#&gt;   RateCumNeg    Odds   LnOdds      WoE      IV     JSD     AUC
+#&gt; 1      0.535 0.22430 -1.49478 -0.73975 0.20689 0.02529 0.06830
+#&gt; 2      0.945 0.59756 -0.51490  0.24012 0.02672 0.00333 0.21154
+#&gt; 3      1.000 1.90909  0.64663  1.40165 0.23604 0.02731 0.04886
+#&gt; 4         NA 0.47000 -0.75502       NA 0.46966 0.05592 0.32870</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>perf</span>)</div><div class='output co'>#&gt; ── Binning Table ──────────────────────── Several Metrics ──
+#&gt;      Bin CntRec CntPos CntNeg RatePos RateNeg    Odds      WoE      IV     JSD
+#&gt; 1  (0,1]    131     24    107 0.25532   0.535 0.22430 -0.73975 0.20689 0.02529
+#&gt; 2  (1,2]    131     49     82 0.52128   0.410 0.59756  0.24012 0.02672 0.00333
+#&gt; 3 (2,10]     32     21     11 0.22340   0.055 1.90909  1.40165 0.23604 0.02731
+#&gt; 4  Total    294     94    200 1.00000   1.000 0.47000       NA 0.46966 0.05592
+#&gt;       AUC
+#&gt; 1 0.06830
+#&gt; 2 0.21154
+#&gt; 3 0.04886
+#&gt; 4 0.32870
 #&gt; 
 #&gt; ── General Metrics ─────────────────────────────────────────
-#&gt; ● Gini index                       :  -0.87483
-#&gt; ● IV (Jeffrey)                     :  4.71542
-#&gt; ● JS (Jensen-Shannon) Divergence   :  0.42199
-#&gt; ● Kolmogorov-Smirnov Statistics    :  0.80092
-#&gt; ● HHI (Herfindahl-Hirschman Index) :  0.37954
-#&gt; ● HHI (normalized)                 :  0.06931
-#&gt; ● Cramer's V                       :  0.81086
+#&gt; ● Gini index                       :  -0.34261
+#&gt; ● IV (Jeffrey)                     :  0.46966
+#&gt; ● JS (Jensen-Shannon) Divergence   :  0.05592
+#&gt; ● Kolmogorov-Smirnov Statistics    :  0.27968
+#&gt; ● HHI (Herfindahl-Hirschman Index) :  0.40893
+#&gt; ● HHI (normalized)                 :  0.11339
+#&gt; ● Cramer's V                       :  0.31765
 #&gt; 
 #&gt; ── Significance Tests ──────────────────── Chisquare Test ──
-#&gt;    Bin A  Bin B statistics      p_value
-#&gt; 1 (-1,0]  (0,6]   79.97033 3.800735e-19
-#&gt; 2  (0,6] (6,29]   32.27665 1.337104e-08
+#&gt;   Bin A  Bin B statistics     p_value
+#&gt; 1 (0,1]  (1,2]   11.86852 0.000570907
+#&gt; 2 (1,2] (2,10]    8.35901 0.003837797
 #&gt; </div><div class='input'>
 # plot(perf)
 

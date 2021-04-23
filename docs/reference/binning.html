@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
       </span>
     </div>
 
@@ -204,53 +204,56 @@ function of the dplyr package.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Generate data for the example</span>
-<span class='no'>carseats</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ISLR</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/ISLR/man/Carseats.html'>Carseats</a></span>
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>20</span>), <span class='st'>"Income"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>5</span>), <span class='st'>"Urban"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
+<span class='no'>heartfailure2</span> <span class='kw'>&lt;-</span> <span class='no'>heartfailure</span>
+<span class='no'>heartfailure2</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>heartfailure2</span>)), <span class='fl'>20</span>), <span class='st'>"platelets"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
 
 <span class='co'># Binning the carat variable. default type argument is "quantile"</span>
-<span class='no'>bin</span> <span class='kw'>&lt;-</span> <span class='fu'>binning</span>(<span class='no'>carseats</span>$<span class='no'>Income</span>)
+<span class='no'>bin</span> <span class='kw'>&lt;-</span> <span class='fu'>binning</span>(<span class='no'>heartfailure2</span>$<span class='no'>platelets</span>)
 <span class='co'># Print bins class object</span>
 <span class='no'>bin</span></div><div class='output co'>#&gt; binned type: quantile
 #&gt; number of bins: 10
 #&gt; x
-#&gt;   [21,30.4]   (30.4,40]   (40,50.4]   (50.4,62]     (62,69]   (69,77.5] 
-#&gt;          38          41          35          41          40          33 
-#&gt; (77.5,85.1]   (85.1,96]    (96,107]   (107,120]        &lt;NA&gt; 
-#&gt;          38          40          39          35          20 </div><div class='input'>
+#&gt; [2.51e+04,1.52e+05] (1.52e+05,1.96e+05] (1.96e+05,2.21e+05] (2.21e+05,2.36e+05] 
+#&gt;                  28                  29                  29                  26 
+#&gt;  (2.36e+05,2.6e+05]  (2.6e+05,2.65e+05] (2.65e+05,2.83e+05] (2.83e+05,3.19e+05] 
+#&gt;                  28                  29                  27                  28 
+#&gt; (3.19e+05,3.76e+05]  (3.76e+05,8.5e+05]                &lt;NA&gt; 
+#&gt;                  27                  28                  20 </div><div class='input'>
 <span class='co'># Summarise bins class object</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>bin</span>)</div><div class='output co'>#&gt;         levels freq   rate
-#&gt; 1    [21,30.4]   38 0.0950
-#&gt; 2    (30.4,40]   41 0.1025
-#&gt; 3    (40,50.4]   35 0.0875
-#&gt; 4    (50.4,62]   41 0.1025
-#&gt; 5      (62,69]   40 0.1000
-#&gt; 6    (69,77.5]   33 0.0825
-#&gt; 7  (77.5,85.1]   38 0.0950
-#&gt; 8    (85.1,96]   40 0.1000
-#&gt; 9     (96,107]   39 0.0975
-#&gt; 10   (107,120]   35 0.0875
-#&gt; 11        &lt;NA&gt;   20 0.0500</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>bin</span>)</div><div class='output co'>#&gt;                 levels freq       rate
+#&gt; 1  [2.51e+04,1.52e+05]   28 0.09364548
+#&gt; 2  (1.52e+05,1.96e+05]   29 0.09698997
+#&gt; 3  (1.96e+05,2.21e+05]   29 0.09698997
+#&gt; 4  (2.21e+05,2.36e+05]   26 0.08695652
+#&gt; 5   (2.36e+05,2.6e+05]   28 0.09364548
+#&gt; 6   (2.6e+05,2.65e+05]   29 0.09698997
+#&gt; 7  (2.65e+05,2.83e+05]   27 0.09030100
+#&gt; 8  (2.83e+05,3.19e+05]   28 0.09364548
+#&gt; 9  (3.19e+05,3.76e+05]   27 0.09030100
+#&gt; 10  (3.76e+05,8.5e+05]   28 0.09364548
+#&gt; 11                &lt;NA&gt;   20 0.06688963</div><div class='input'>
 <span class='co'># Plot bins class object</span>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bin</span>)</div><div class='img'><img src='binning-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Using labels argument</span>
-<span class='no'>bin</span> <span class='kw'>&lt;-</span> <span class='fu'>binning</span>(<span class='no'>carseats</span>$<span class='no'>Income</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>4</span>,
+<span class='no'>bin</span> <span class='kw'>&lt;-</span> <span class='fu'>binning</span>(<span class='no'>heartfailure2</span>$<span class='no'>platelets</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>4</span>,
               <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"LQ1"</span>, <span class='st'>"UQ1"</span>, <span class='st'>"LQ3"</span>, <span class='st'>"UQ3"</span>))
 <span class='no'>bin</span></div><div class='output co'>#&gt; binned type: quantile
 #&gt; number of bins: 4
 #&gt; x
 #&gt;  LQ1  UQ1  LQ3  UQ3 &lt;NA&gt; 
-#&gt;   98   97   90   95   20 </div><div class='input'><span class='co'># Using another type argument</span>
-<span class='no'>bin</span> <span class='kw'>&lt;-</span> <span class='fu'>binning</span>(<span class='no'>carseats</span>$<span class='no'>Income</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"equal"</span>)
+#&gt;   70   70   70   69   20 </div><div class='input'><span class='co'># Using another type argument</span>
+<span class='no'>bin</span> <span class='kw'>&lt;-</span> <span class='fu'>binning</span>(<span class='no'>heartfailure2</span>$<span class='no'>platelets</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"equal"</span>)
 <span class='no'>bin</span></div><div class='output co'>#&gt; binned type: equal
 #&gt; number of bins: 5
 #&gt; x
-#&gt;   [21,40.8] (40.8,60.6] (60.6,80.4]  (80.4,100]   (100,120]        &lt;NA&gt; 
-#&gt;          79          67          97          80          57          20 </div><div class='input'><span class='co'># bin &lt;- binning(carseats$Income, nbins = 5, type = "pretty")</span>
+#&gt; [2.51e+04,1.9e+05] (1.9e+05,3.55e+05] (3.55e+05,5.2e+05] (5.2e+05,6.85e+05] 
+#&gt;                 51                191                 32                  3 
+#&gt; (6.85e+05,8.5e+05]               &lt;NA&gt; 
+#&gt;                  2                 20 </div><div class='input'><span class='co'># bin &lt;- binning(heartfailure2$platelets, nbins = 5, type = "pretty")</span>
 <span class='co'># bin</span>
-<span class='co'># bin &lt;- binning(carseats$Income, nbins = 5, type = "kmeans")</span>
+<span class='co'># bin &lt;- binning(heartfailure2$platelets, nbins = 5, type = "kmeans")</span>
 <span class='co'># bin</span>
-<span class='co'># bin &lt;- binning(carseats$Income, nbins = 5, type = "bclust")</span>
+<span class='co'># bin &lt;- binning(heartfailure2$platelets, nbins = 5, type = "bclust")</span>
 <span class='co'># bin</span>
 
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>1</span>:<span class='fl'>1000</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>50</span>) * <span class='fl'>12345679</span>
@@ -258,70 +261,78 @@ function of the dplyr package.</p>
 <span class='no'>bin</span></div><div class='output co'>#&gt; binned type: quantile
 #&gt; number of bins: 7
 #&gt; x
-#&gt; [3.33e+08,2.24e+09] (2.24e+09,3.77e+09] (3.77e+09,5.28e+09] (5.28e+09,6.42e+09] 
+#&gt; [2.72e+08,2.22e+09] (2.22e+09,5.45e+09]  (5.45e+09,7.1e+09]  (7.1e+09,8.34e+09] 
 #&gt;                   7                   7                   7                   8 
-#&gt; (6.42e+09,8.09e+09] (8.09e+09,9.29e+09]  (9.29e+09,1.2e+10] 
+#&gt; (8.34e+09,9.86e+09] (9.86e+09,1.08e+10] (1.08e+10,1.23e+10] 
 #&gt;                   7                   7                   7 </div><div class='input'><span class='no'>bin</span> <span class='kw'>&lt;-</span> <span class='fu'>binning</span>(<span class='no'>x</span>, <span class='kw'>approxy.lab</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='no'>bin</span></div><div class='output co'>#&gt; binned type: quantile
 #&gt; number of bins: 7
 #&gt; x
-#&gt;   [333333333,2236331567]  (2236331567,3770723100]  (3770723100,5282774833] 
-#&gt;                        7                        7                        7 
-#&gt;  (5282774833,6422104638]  (6422104638,8086419745]  (8086419745,9289241613] 
-#&gt;                        8                        7                        7 
-#&gt; (9289241613,11962962951] 
-#&gt;                        7 </div><div class='input'>
+#&gt;    [271604938,2216343325]   (2216343325,5453262781]   (5453262781,7097589646] 
+#&gt;                         7                         7                         7 
+#&gt;   (7097589646,8335096993]   (8335096993,9862433853]  (9862433853,10801881236] 
+#&gt;                         8                         7                         7 
+#&gt; (10801881236,12283950605] 
+#&gt;                         7 </div><div class='input'>
 <span class='co'># extract binned results</span>
-<span class='fu'><a href='extract.bins.html'>extract</a></span>(<span class='no'>bin</span>)</div><div class='output co'>#&gt;  [1] (8086419745,9289241613]  [333333333,2236331567]   (6422104638,8086419745] 
-#&gt;  [4] (8086419745,9289241613]  (8086419745,9289241613]  [333333333,2236331567]  
-#&gt;  [7] (2236331567,3770723100]  (2236331567,3770723100]  (6422104638,8086419745] 
-#&gt; [10] (5282774833,6422104638]  (5282774833,6422104638]  (8086419745,9289241613] 
-#&gt; [13] (9289241613,11962962951] [333333333,2236331567]   (2236331567,3770723100] 
-#&gt; [16] (8086419745,9289241613]  (5282774833,6422104638]  (6422104638,8086419745] 
-#&gt; [19] (6422104638,8086419745]  [333333333,2236331567]   (8086419745,9289241613] 
-#&gt; [22] (9289241613,11962962951] (9289241613,11962962951] (9289241613,11962962951]
-#&gt; [25] (3770723100,5282774833]  (5282774833,6422104638]  (3770723100,5282774833] 
-#&gt; [28] [333333333,2236331567]   (5282774833,6422104638]  (5282774833,6422104638] 
-#&gt; [31] (9289241613,11962962951] (2236331567,3770723100]  (8086419745,9289241613] 
-#&gt; [34] [333333333,2236331567]   (3770723100,5282774833]  (9289241613,11962962951]
-#&gt; [37] (2236331567,3770723100]  (6422104638,8086419745]  (3770723100,5282774833] 
-#&gt; [40] (6422104638,8086419745]  (2236331567,3770723100]  (9289241613,11962962951]
-#&gt; [43] (5282774833,6422104638]  (6422104638,8086419745]  (2236331567,3770723100] 
-#&gt; [46] (3770723100,5282774833]  (3770723100,5282774833]  [333333333,2236331567]  
-#&gt; [49] (5282774833,6422104638]  (3770723100,5282774833] 
-#&gt; 7 Levels: [333333333,2236331567] &lt; ... &lt; (9289241613,11962962951]</div><div class='input'>
+<span class='fu'><a href='extract.bins.html'>extract</a></span>(<span class='no'>bin</span>)</div><div class='output co'>#&gt;  [1] (8335096993,9862433853]   (5453262781,7097589646]  
+#&gt;  [3] (10801881236,12283950605] (5453262781,7097589646]  
+#&gt;  [5] (10801881236,12283950605] [271604938,2216343325]   
+#&gt;  [7] (2216343325,5453262781]   [271604938,2216343325]   
+#&gt;  [9] (2216343325,5453262781]   (2216343325,5453262781]  
+#&gt; [11] [271604938,2216343325]    (10801881236,12283950605]
+#&gt; [13] (5453262781,7097589646]   (2216343325,5453262781]  
+#&gt; [15] (2216343325,5453262781]   [271604938,2216343325]   
+#&gt; [17] (7097589646,8335096993]   (10801881236,12283950605]
+#&gt; [19] (10801881236,12283950605] (7097589646,8335096993]  
+#&gt; [21] [271604938,2216343325]    (8335096993,9862433853]  
+#&gt; [23] (9862433853,10801881236]  (5453262781,7097589646]  
+#&gt; [25] (5453262781,7097589646]   (5453262781,7097589646]  
+#&gt; [27] [271604938,2216343325]    (2216343325,5453262781]  
+#&gt; [29] (7097589646,8335096993]   (8335096993,9862433853]  
+#&gt; [31] (10801881236,12283950605] (9862433853,10801881236] 
+#&gt; [33] (7097589646,8335096993]   (8335096993,9862433853]  
+#&gt; [35] (9862433853,10801881236]  (9862433853,10801881236] 
+#&gt; [37] (2216343325,5453262781]   [271604938,2216343325]   
+#&gt; [39] (9862433853,10801881236]  (9862433853,10801881236] 
+#&gt; [41] (7097589646,8335096993]   (9862433853,10801881236] 
+#&gt; [43] (5453262781,7097589646]   (8335096993,9862433853]  
+#&gt; [45] (7097589646,8335096993]   (8335096993,9862433853]  
+#&gt; [47] (10801881236,12283950605] (7097589646,8335096993]  
+#&gt; [49] (7097589646,8335096993]   (8335096993,9862433853]  
+#&gt; 7 Levels: [271604938,2216343325] &lt; ... &lt; (10801881236,12283950605]</div><div class='input'>
 <span class='co'># -------------------------</span>
 <span class='co'># Using pipes &amp; dplyr</span>
 <span class='co'># -------------------------</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
-<span class='co'># Compare binned frequency by ShelveLoc</span>
-<span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>Income_bin</span> <span class='kw'>=</span> <span class='fu'>binning</span>(<span class='no'>carseats</span>$<span class='no'>Income</span>) <span class='kw'>%&gt;%</span>
+<span class='co'># Compare binned frequency by death_event</span>
+<span class='no'>heartfailure2</span> <span class='kw'>%&gt;%</span>
+ <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>platelets_bin</span> <span class='kw'>=</span> <span class='fu'>binning</span>(<span class='no'>heartfailure2</span>$<span class='no'>platelets</span>) <span class='kw'>%&gt;%</span>
                      <span class='fu'><a href='extract.bins.html'>extract</a></span>()) <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>ShelveLoc</span>, <span class='no'>Income_bin</span>) <span class='kw'>%&gt;%</span>
+ <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>death_event</span>, <span class='no'>platelets_bin</span>) <span class='kw'>%&gt;%</span>
  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>freq</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span>()) <span class='kw'>%&gt;%</span>
  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span>(<span class='no'>freq</span>)) <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='message'>`summarise()` regrouping output by 'ShelveLoc' (override with `.groups` argument)</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 10 x 3</span><span>
-#&gt; </span><span style='color: #555555;'># Groups:   ShelveLoc [1]</span><span>
-#&gt;    ShelveLoc Income_bin   freq
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;ord&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> Medium    [21,30.4]      26
-#&gt; </span><span style='color: #555555;'> 2</span><span> Medium    (50.4,62]      23
-#&gt; </span><span style='color: #555555;'> 3</span><span> Medium    (62,69]        23
-#&gt; </span><span style='color: #555555;'> 4</span><span> Medium    (30.4,40]      22
-#&gt; </span><span style='color: #555555;'> 5</span><span> Medium    (96,107]       21
-#&gt; </span><span style='color: #555555;'> 6</span><span> Medium    (40,50.4]      20
-#&gt; </span><span style='color: #555555;'> 7</span><span> Medium    (69,77.5]      20
-#&gt; </span><span style='color: #555555;'> 8</span><span> Medium    (85.1,96]      20
-#&gt; </span><span style='color: #555555;'> 9</span><span> Medium    (77.5,85.1]    18
-#&gt; </span><span style='color: #555555;'>10</span><span> Medium    (107,120]      18</div><div class='input'>
- <span class='co'># Compare binned frequency by ShelveLoc using Viz</span>
- <span class='no'>carseats</span> <span class='kw'>%&gt;%</span>
-   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>Income_bin</span> <span class='kw'>=</span> <span class='fu'>binning</span>(<span class='no'>carseats</span>$<span class='no'>Income</span>) <span class='kw'>%&gt;%</span>
+ <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='message'>`summarise()` has grouped output by 'death_event'. You can override using the `.groups` argument.</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 10 x 3</span><span>
+#&gt; </span><span style='color: #949494;'># Groups:   death_event [1]</span><span>
+#&gt;    death_event platelets_bin        freq
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;ord&gt;</span><span>               </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> No          (2.65e+05,2.83e+05]    23
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> No          (2.36e+05,2.6e+05]     22
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> No          (2.21e+05,2.36e+05]    20
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> No          (1.96e+05,2.21e+05]    19
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> No          (2.83e+05,3.19e+05]    19
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> No          (1.52e+05,1.96e+05]    18
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> No          (3.19e+05,3.76e+05]    18
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> No          (3.76e+05,8.5e+05]     18
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> No          [2.51e+04,1.52e+05]    16
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> No          (2.6e+05,2.65e+05]     16</div><div class='input'>
+ <span class='co'># Compare binned frequency by death_event using Viz</span>
+ <span class='no'>heartfailure2</span> <span class='kw'>%&gt;%</span>
+   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>platelets_bin</span> <span class='kw'>=</span> <span class='fu'>binning</span>(<span class='no'>heartfailure2</span>$<span class='no'>platelets</span>) <span class='kw'>%&gt;%</span>
            <span class='fu'><a href='extract.bins.html'>extract</a></span>()) <span class='kw'>%&gt;%</span>
-   <span class='fu'><a href='target_by.data.frame.html'>target_by</a></span>(<span class='no'>ShelveLoc</span>) <span class='kw'>%&gt;%</span>
-   <span class='fu'><a href='relate.html'>relate</a></span>(<span class='no'>Income_bin</span>) <span class='kw'>%&gt;%</span>
+   <span class='fu'><a href='target_by.data.frame.html'>target_by</a></span>(<span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
+   <span class='fu'><a href='relate.html'>relate</a></span>(<span class='no'>platelets_bin</span>) <span class='kw'>%&gt;%</span>
    <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>()</div><div class='img'><img src='binning-2.png' alt='' width='700' height='433' /></div><div class='input'> 
 </div></span></pre>
   </div>

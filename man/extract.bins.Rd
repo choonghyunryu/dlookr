@@ -24,26 +24,19 @@ the performance of binned results. This function is used to extract the binned r
 with the result.
 }
 \examples{
-# Generate data for the example
 library(dplyr)
 
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+# Generate data for the example
+heartfailure2 <- heartfailure
+heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] <- NA
 
-# optimal binning
-bin <- binning_by(carseats, "US", "Advertising")
+# optimal binning using binning_by()
+bin <- binning_by(heartfailure2, "death_event", "creatinine")
 bin
 
-# summary optimal_bins class
-summary(bin)
-
-# visualize all information for optimal_bins class
-# plot(bin)
-
 # extract binning result
-# extract(bin) \%>\% 
-#   head(20)
+extract(bin) \%>\% 
+  head(20)
 
 }
 \seealso{

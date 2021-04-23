@@ -29,14 +29,11 @@ See vignette("transformation") for an introduction to these concepts.
 }
 \examples{
 # Generate data for the example
-library(dplyr)
-
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+heartfailure2 <- heartfailure
+heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] <- NA
 
 # optimal binning using binning_by()
-bin <- binning_by(carseats, "US", "Advertising")
+bin <- binning_by(heartfailure2, "death_event", "creatinine")
 bin
 
 # summary optimal_bins class.
@@ -50,10 +47,6 @@ plot(bin, type = "WoE")
 
 # visualize all information with typographic
 plot(bin)
-
-# extract binned results
-extract(bin) \%>\% 
-  head(20)
 
 }
 \seealso{

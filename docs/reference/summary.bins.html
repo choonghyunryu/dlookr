@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
       </span>
     </div>
 
@@ -169,34 +169,35 @@ summary.bins() returns data.frame including frequency and relative frequency for
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Generate data for the example</span>
-<span class='no'>carseats</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ISLR</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/ISLR/man/Carseats.html'>Carseats</a></span>
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>20</span>), <span class='st'>"Income"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>5</span>), <span class='st'>"Urban"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
+<span class='no'>heartfailure2</span> <span class='kw'>&lt;-</span> <span class='no'>heartfailure</span>
+<span class='no'>heartfailure2</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>heartfailure2</span>)), <span class='fl'>20</span>), <span class='st'>"platelets"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
 
 <span class='co'># Binning the carat variable. default type argument is "quantile"</span>
-<span class='no'>bin</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='binning.html'>binning</a></span>(<span class='no'>carseats</span>$<span class='no'>Income</span>)
+<span class='no'>bin</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='binning.html'>binning</a></span>(<span class='no'>heartfailure2</span>$<span class='no'>platelets</span>)
 
 <span class='co'># Print bins class object</span>
 <span class='no'>bin</span></div><div class='output co'>#&gt; binned type: quantile
 #&gt; number of bins: 10
 #&gt; x
-#&gt;   [21,30] (30,39.4] (39.4,48]   (48,62]   (62,69] (69,76.5] (76.5,84]   (84,96]  (96,107] 
-#&gt;        39        37        39        41        41        31        40        37        39 
-#&gt; (107,120]      &lt;NA&gt; 
-#&gt;        36        20 </div><div class='input'>
-<span class='co'># Summarise bins class object</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>bin</span>)</div><div class='output co'>#&gt;       levels freq   rate
-#&gt; 1    [21,30]   39 0.0975
-#&gt; 2  (30,39.4]   37 0.0925
-#&gt; 3  (39.4,48]   39 0.0975
-#&gt; 4    (48,62]   41 0.1025
-#&gt; 5    (62,69]   41 0.1025
-#&gt; 6  (69,76.5]   31 0.0775
-#&gt; 7  (76.5,84]   40 0.1000
-#&gt; 8    (84,96]   37 0.0925
-#&gt; 9   (96,107]   39 0.0975
-#&gt; 10 (107,120]   36 0.0900
-#&gt; 11      &lt;NA&gt;   20 0.0500</div><div class='input'>
+#&gt; [2.51e+04,1.53e+05] (1.53e+05,1.96e+05] (1.96e+05,2.21e+05] (2.21e+05,2.37e+05] 
+#&gt;                  29                  28                  29                  29 
+#&gt; (2.37e+05,2.62e+05] (2.62e+05,2.64e+05] (2.64e+05,2.83e+05] (2.83e+05,3.19e+05] 
+#&gt;                  26                  27                  29                  28 
+#&gt; (3.19e+05,3.81e+05]  (3.81e+05,8.5e+05]                &lt;NA&gt; 
+#&gt;                  26                  28                  20 </div><div class='input'>
+<span class='co'># Summarize bins class object</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>bin</span>)</div><div class='output co'>#&gt;                 levels freq       rate
+#&gt; 1  [2.51e+04,1.53e+05]   29 0.09698997
+#&gt; 2  (1.53e+05,1.96e+05]   28 0.09364548
+#&gt; 3  (1.96e+05,2.21e+05]   29 0.09698997
+#&gt; 4  (2.21e+05,2.37e+05]   29 0.09698997
+#&gt; 5  (2.37e+05,2.62e+05]   26 0.08695652
+#&gt; 6  (2.62e+05,2.64e+05]   27 0.09030100
+#&gt; 7  (2.64e+05,2.83e+05]   29 0.09698997
+#&gt; 8  (2.83e+05,3.19e+05]   28 0.09364548
+#&gt; 9  (3.19e+05,3.81e+05]   26 0.08695652
+#&gt; 10  (3.81e+05,8.5e+05]   28 0.09364548
+#&gt; 11                &lt;NA&gt;   20 0.06688963</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
