@@ -35,59 +35,55 @@ Since the plot is drawn for each variable, if you specify more than
 one variable in the ... argument, the specified number of plots are drawn.
 }
 \examples{
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-
 # Visualize correlation plot of all numerical variables
-plot_correlate(carseats)
+plot_correlate(heartfailure)
 
 # Select the variable to compute
-plot_correlate(carseats, Sales, Price)
-plot_correlate(carseats, -Sales, -Price)
-plot_correlate(carseats, "Sales", "Price")
-plot_correlate(carseats, 1)
-plot_correlate(carseats, Sales, Price, method = "spearman")
+plot_correlate(heartfailure, creatinine, sodium)
+plot_correlate(heartfailure, -creatinine, -sodium)
+plot_correlate(heartfailure, "creatinine", "sodium")
+plot_correlate(heartfailure, 1)
+plot_correlate(heartfailure, creatinine, sodium, method = "spearman")
 
 # Using dplyr::grouped_dt
 library(dplyr)
 
-gdata <- group_by(carseats, ShelveLoc, US)
-plot_correlate(gdata, "Sales")
+gdata <- group_by(heartfailure, smoking, death_event)
+plot_correlate(gdata, "creatinine")
 plot_correlate(gdata)
 
 # Using pipes ---------------------------------
 # Visualize correlation plot of all numerical variables
-carseats \%>\%
+heartfailure \%>\%
   plot_correlate()
 # Positive values select variables
-carseats \%>\%
-  plot_correlate(Sales, Price)
+heartfailure \%>\%
+  plot_correlate(creatinine, sodium)
 # Negative values to drop variables
-carseats \%>\%
-  plot_correlate(-Sales, -Price)
+heartfailure \%>\%
+  plot_correlate(-creatinine, -sodium)
 # Positions values select variables
-carseats \%>\%
+heartfailure \%>\%
   plot_correlate(1)
 # Positions values select variables
-carseats \%>\%
-  plot_correlate(-1, -2, -3, -5, -6)
+heartfailure \%>\%
+  plot_correlate(-1, -3, -5, -7)
 
 # Using pipes & dplyr -------------------------
-# Visualize correlation plot of 'Sales' variable by 'ShelveLoc'
-# and 'US' variables.
-carseats \%>\%
-group_by(ShelveLoc, US) \%>\%
-plot_correlate(Sales)
+# Visualize correlation plot of 'creatinine' variable by 'smoking'
+# and 'death_event' variables.
+heartfailure \%>\%
+group_by(smoking, death_event) \%>\%
+plot_correlate(creatinine)
 
-# Extract only those with 'ShelveLoc' variable level is "Good",
-# and visualize correlation plot of 'Sales' variable by 'Urban'
-# and 'US' variables.
-carseats \%>\%
- filter(ShelveLoc == "Good") \%>\%
- group_by(Urban, US) \%>\%
- plot_correlate(Sales)
+# Extract only those with 'smoking' variable level is "Yes",
+# and visualize correlation plot of 'creatinine' variable by 'hblood_pressure'
+# and 'death_event' variables.
+heartfailure \%>\%
+ filter(smoking == "Yes") \%>\%
+ group_by(hblood_pressure, death_event) \%>\%
+ plot_correlate(creatinine)
+ 
 }
 \seealso{
 \code{\link{plot_correlate.tbl_dbi}}, \code{\link{plot_outlier.data.frame}}.

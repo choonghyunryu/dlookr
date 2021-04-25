@@ -47,77 +47,72 @@ The information derived from the numerical data compute is as follows.
 }
 
 \examples{
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-
 # Correlation coefficients of all numerical variables
-correlate(carseats)
+correlate(heartfailure)
 
 # Select the variable to compute
-correlate(carseats, Sales, Price)
-correlate(carseats, -Sales, -Price)
-correlate(carseats, "Sales", "Price")
-correlate(carseats, 1)
+correlate(heartfailure, creatinine, sodium)
+correlate(heartfailure, -creatinine, -sodium)
+correlate(heartfailure, "creatinine", "sodium")
+correlate(heartfailure, 1)
 # Non-parametric correlation coefficient by kendall method
-correlate(carseats, Sales, method = "kendall")
+correlate(heartfailure, creatinine, method = "kendall")
  
 # Using dplyr::grouped_dt
 library(dplyr)
 
-gdata <- group_by(carseats, ShelveLoc, US)
-correlate(gdata, "Sales")
+gdata <- group_by(heartfailure, smoking, death_event)
+correlate(gdata, "creatinine")
 correlate(gdata)
 
 # Using pipes ---------------------------------
 # Correlation coefficients of all numerical variables
-carseats \%>\%
+heartfailure \%>\%
  correlate()
 # Positive values select variables
-carseats \%>\%
- correlate(Sales, Price)
+heartfailure \%>\%
+ correlate(creatinine, sodium)
 # Negative values to drop variables
-carseats \%>\%
- correlate(-Sales, -Price)
+heartfailure \%>\%
+ correlate(-creatinine, -sodium)
 # Positions values select variables
-carseats \%>\%
+heartfailure \%>\%
  correlate(1)
 # Positions values select variables
-carseats \%>\%
- correlate(-1, -2, -3, -5, -6)
+heartfailure \%>\%
+ correlate(-1, -3, -5, -7)
 # Non-parametric correlation coefficient by spearman method
-carseats \%>\%
- correlate(Sales, Price, method = "spearman")
+heartfailure \%>\%
+ correlate(creatinine, sodium, method = "spearman")
  
 # ---------------------------------------------
 # Correlation coefficient
 # that eliminates redundant combination of variables
-carseats \%>\%
+heartfailure \%>\%
  correlate() \%>\%
  filter(as.integer(var1) > as.integer(var2))
 
-carseats \%>\%
- correlate(Sales, Price) \%>\%
+heartfailure \%>\%
+ correlate(creatinine, sodium) \%>\%
  filter(as.integer(var1) > as.integer(var2))
 
 # Using pipes & dplyr -------------------------
-# Compute the correlation coefficient of Sales variable by 'ShelveLoc'
-# and 'US' variables. And extract only those with absolute
-# value of correlation coefficient is greater than 0.5
-carseats \%>\%
- group_by(ShelveLoc, US) \%>\%
- correlate(Sales) \%>\%
- filter(abs(coef_corr) >= 0.5)
+# Compute the correlation coefficient of Sales variable by 'smoking'
+# and 'death_event' variables. And extract only those with absolute
+# value of correlation coefficient is greater than 0.2
+heartfailure \%>\%
+ group_by(smoking, death_event) \%>\%
+ correlate(creatinine) \%>\%
+ filter(abs(coef_corr) >= 0.2)
 
-# extract only those with 'ShelveLoc' variable level is "Good",
+# extract only those with 'smoking' variable level is "Yes",
 # and compute the correlation coefficient of 'Sales' variable
-# by 'Urban' and 'US' variables.
+# by 'hblood_pressure' and 'death_event' variables.
 # And the correlation coefficient is negative and smaller than 0.5
-carseats \%>\%
- filter(ShelveLoc == "Good") \%>\%
- group_by(Urban, US) \%>\%
- correlate(Sales) \%>\%
+heartfailure \%>\%
+ filter(smoking == "Yes") \%>\%
+ group_by(hblood_pressure, death_event) \%>\%
+ correlate(creatinine) \%>\%
  filter(coef_corr < 0) \%>\%
  filter(abs(coef_corr) > 0.5)
 }

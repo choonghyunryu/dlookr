@@ -30,7 +30,7 @@ CHANGES IN R VERSION 0.4.5:
       summary.optimal_bins(), plot.optimal_bins(), plot.optimal_bins(),
       extract.bins(), performance_bin(), summary.performance_bin(),
       plot.performance_bin(), get_class(), find_na(), find_outliers(), 
-      find_skewness().
+      find_skewness(), correlate.data.frame(), plot_correlate.data.frame().
       
     * Changed default type of diagnose_category() from "rank" to "n". 
     
