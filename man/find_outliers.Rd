@@ -25,22 +25,17 @@ that inherits the data.frame or data.frame.
 }
 \examples{
 \dontrun{
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+find_outliers(heartfailure)
 
-find_outliers(carseats)
+find_outliers(heartfailure, index = FALSE)
 
-find_outliers(carseats, index = FALSE)
-
-find_outliers(carseats, rate = TRUE)
+find_outliers(heartfailure, rate = TRUE)
 
 ## using dplyr -------------------------------------
 library(dplyr)
 
 # Perform simple data quality diagnosis of variables with outliers.
-carseats \%>\%
+heartfailure \%>\%
   select(find_outliers(.)) \%>\%
   diagnose()
 }

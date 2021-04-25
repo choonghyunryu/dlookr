@@ -29,7 +29,8 @@ get_class(iris)
 get_class(ggplot2::diamonds)
 
 library(dplyr)
-get_class(ggplot2::diamonds) \%>\%
+ggplot2::diamonds \%>\%
+  get_class() \%>\% 
   filter(class \%in\% c("integer", "numeric"))
 }
 }

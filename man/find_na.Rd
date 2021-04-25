@@ -25,22 +25,17 @@ that inherits the data.frame or data.frame.
 }
 \examples{
 \dontrun{
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+find_na(jobchange)
 
-find_na(carseats)
+find_na(jobchange, index = FALSE)
 
-find_na(carseats, index = FALSE)
-
-find_na(carseats, rate = TRUE)
+find_na(jobchange, rate = TRUE)
 
 ## using dplyr -------------------------------------
 library(dplyr)
 
 # Perform simple data quality diagnosis of variables with missing values.
-carseats \%>\%
+jobchange \%>\%
   select(find_na(.)) \%>\%
   diagnose()
 }

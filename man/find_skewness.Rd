@@ -29,26 +29,21 @@ that inherits the data.frame or data.frame.
 }
 \examples{
 \dontrun{
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+find_skewness(heartfailure)
 
-find_skewness(carseats)
+find_skewness(heartfailure, index = FALSE)
 
-find_skewness(carseats, index = FALSE)
+find_skewness(heartfailure, thres = 0.1)
 
-find_skewness(carseats, thres = 0.1)
+find_skewness(heartfailure, value = TRUE)
 
-find_skewness(carseats, value = TRUE)
-
-find_skewness(carseats, value = TRUE, thres = 0.1)
+find_skewness(heartfailure, value = TRUE, thres = 0.1)
 
 ## using dplyr -------------------------------------
 library(dplyr)
 
 # Perform simple data quality diagnosis of variables with outliers.
-carseats \%>\%
+heartfailure \%>\%
   select(find_skewness(.)) \%>\%
   diagnose()
 }
