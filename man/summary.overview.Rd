@@ -19,12 +19,7 @@ summary.overview() tries to be smart about formatting 14 information of overview
 }
 \examples{
 \donttest{
-# Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-
-ov <- overview(carseats)
+ov <- overview(jobchange)
 ov
 
 summary(ov)

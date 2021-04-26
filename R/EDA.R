@@ -70,58 +70,53 @@ eda_report <- function(.data, ...) {
 #' @param ... arguments to be passed to methods.
 #' 
 #' @examples
-#' \dontrun{
+#' if (FALSE) {
 #' library(dplyr)
-#'
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
 #' ## target variable is categorical variable
 #' # reporting the EDA information
 #' # create pdf file. file name is EDA_Report.pdf
-#' eda_report(carseats, US)
+#' eda_report(heartfailure, death_event)
 #' 
-#' # create pdf file. file name is EDA_carseats.pdf
-#' eda_report(carseats, "US", output_file = "EDA_carseats.pdf")
+#' # create pdf file. file name is EDA_heartfailure.pdf
+#' eda_report(heartfailure, "death_event", output_file = "EDA_heartfailure.pdf")
 #' 
-#' # create pdf file. file name is EDA_carseats.pdf and not browse
-#' # eda_report(carseats, "US", output_dir = ".", output_file = "EDA_carseats.pdf", browse = FALSE)
+#' # create pdf file. file name is EDA_heartfailure.pdf and not browse
+#' # eda_report(heartfailure, "death_event", output_dir = ".", 
+#'     output_file = "EDA_heartfailure.pdf", browse = FALSE)
 #' 
 #' # create html file. file name is EDA_Report.html
-#' eda_report(carseats, "US", output_format = "html")
+#' eda_report(heartfailure, "death_event", output_format = "html")
 #' 
 #' # create html file. file name is EDA_carseats.html
-#' eda_report(carseats, US, output_format = "html", output_file = "EDA_carseats.html")
-#'
+#' eda_report(heartfailure, death_event, output_format = "html", 
+#'    output_file = "EDA_heartfailure.html")
 #'
 #' ## target variable is numerical variable
 #' # reporting the EDA information
-#' eda_report(carseats, Sales)
+#' eda_report(heartfailure, sodium)
 #' 
 #' # create pdf file. file name is EDA2.pdf
-#' eda_report(carseats, "Sales", output_file = "EDA2.pdf")
+#' eda_report(heartfailure, "sodium", output_file = "EDA2.pdf")
 #' 
 #' # create html file. file name is EDA_Report.html
-#' eda_report(carseats, "Sales", output_format = "html")
+#' eda_report(heartfailure, "sodium", output_format = "html")
 #' 
 #' # create html file. file name is EDA2.html
-#' eda_report(carseats, Sales, output_format = "html", output_file = "EDA2.html")
+#' eda_report(heartfailure, sodium, output_format = "html", output_file = "EDA2.html")
 #'
 #' ## target variable is null
 #' # reporting the EDA information
-#' eda_report(carseats)
+#' eda_report(heartfailure)
 #' 
 #' 
 #' # create pdf file. file name is EDA2.pdf
-#' eda_report(carseats, output_file = "EDA2.pdf")
+#' eda_report(heartfailure, output_file = "EDA2.pdf")
 #' 
 #' # create html file. file name is EDA_Report.html
-#' eda_report(carseats, output_format = "html")
+#' eda_report(heartfailure, output_format = "html")
 #' 
 #' # create html file. file name is EDA2.html
-#' eda_report(carseats, output_format = "html", output_file = "EDA2.html")
+#' eda_report(heartfailure, output_format = "html", output_file = "EDA2.html")
 #' }
 #'
 #' @importFrom knitr knit2pdf

@@ -1498,7 +1498,7 @@ target_by.tbl_dbi <- function(.data, target, in_database = FALSE, collect_size =
 #' 
 #' @seealso \code{\link{diagnose_report.data.frame}}.
 #' @examples
-#' \donttest{
+#' if (FALSE) {
 #' library(dplyr)
 #' 
 #' # Generate data for the example
@@ -1623,7 +1623,7 @@ diagnose_report.tbl_dbi <- function(.data, output_format = c("pdf", "html"),
 #' 
 #' @seealso \code{\link{eda_report.data.frame}}.
 #' @examples
-#' \donttest{
+#' if (FALSE) {
 #' library(dplyr)
 #' 
 #' # Generate data for the example

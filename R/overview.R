@@ -53,12 +53,7 @@
 #' @seealso \code{\link{summary.overview}}, \code{\link{plot.overview}}.
 #' @examples
 #' \donttest{
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
-#' ov <- overview(carseats)
+#' ov <- overview(jobchange)
 #' ov
 #' 
 #' summary(ov)
@@ -120,12 +115,7 @@ overview <- function(.data) {
 #' @seealso \code{\link{overview}}, \code{\link{plot.overview}}.
 #' @examples
 #' \donttest{
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
-#' ov <- overview(carseats)
+#' ov <- overview(jobchange)
 #' ov
 #' 
 #' summary(ov)
@@ -206,12 +196,7 @@ summary.overview <- function(object, ...)  {
 #' @seealso \code{\link{overview}}, \code{\link{summary.overview}}.
 #' @examples
 #' \donttest{
-#' # Generate data for the example
-#' carseats <- ISLR::Carseats
-#' carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#' carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#'
-#' ov <- overview(carseats)
+#' ov <- overview(jobchange)
 #' ov
 #' 
 #' summary(ov)

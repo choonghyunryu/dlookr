@@ -97,7 +97,7 @@ See vignette("EDA") for an introduction to these concepts.
 }
 
 \examples{
-\donttest{
+if (FALSE) {
 library(dplyr)
 
 # Generate data for the example
