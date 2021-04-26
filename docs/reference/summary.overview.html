@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
       </span>
     </div>
 
@@ -148,58 +148,56 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='co'># Generate data for the example</span>
-<span class='no'>carseats</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ISLR</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/ISLR/man/Carseats.html'>Carseats</a></span>
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>20</span>), <span class='st'>"Income"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-<span class='no'>carseats</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>carseats</span>)), <span class='fl'>5</span>), <span class='st'>"Urban"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-
-<span class='no'>ov</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='overview.html'>overview</a></span>(<span class='no'>carseats</span>)
-<span class='no'>ov</span></div><div class='output co'>#&gt;     division        metrics value
-#&gt; 1       size   observations   400
-#&gt; 2       size      variables    11
-#&gt; 3       size         values  4400
-#&gt; 4       size    memory_size 59648
-#&gt; 5    missing   complete_obs   377
-#&gt; 6    missing    missing_obs    23
-#&gt; 7    missing   missing_vars     2
-#&gt; 8    missing missing_values    25
-#&gt; 9  data_type       numerics     8
-#&gt; 10 data_type       integers     0
-#&gt; 11 data_type        factors     3
-#&gt; 12 data_type     characters     0
-#&gt; 13 data_type         others     0</div><div class='input'>
+<span class='no'>ov</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='overview.html'>overview</a></span>(<span class='no'>jobchange</span>)
+<span class='no'>ov</span></div><div class='output co'>#&gt;     division        metrics   value
+#&gt; 1       size   observations   19158
+#&gt; 2       size      variables      14
+#&gt; 3       size         values  268212
+#&gt; 4       size    memory_size 2318464
+#&gt; 5    missing   complete_obs    8955
+#&gt; 6    missing    missing_obs   10203
+#&gt; 7    missing   missing_vars       8
+#&gt; 8    missing missing_values   20733
+#&gt; 9  data_type       numerics       1
+#&gt; 10 data_type       integers       1
+#&gt; 11 data_type        factors       7
+#&gt; 12 data_type     characters       1
+#&gt; 13 data_type         others       4</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>ov</span>)</div><div class='output co'>#&gt; ── Data Scale ──────────────────────────────────────────────
-#&gt; ● Number of observations           :     400
-#&gt; ● Number of variables              :      11
-#&gt; ● Number of values                 :   4,400
-#&gt; ● Size of located memory(bytes)    :  59,648
+#&gt; ● Number of observations           :     19,158
+#&gt; ● Number of variables              :         14
+#&gt; ● Number of values                 :    268,212
+#&gt; ● Size of located memory(bytes)    :  2,318,464
 #&gt; 
 #&gt; ── Missing Data ────────────────────────────────────────────
-#&gt; ● Number of completed observations :     377
-#&gt; ● Number of observations with N/A  :      23
-#&gt; ● Number of variables with N/A     :       2
-#&gt; ● Number of N/A                    :      25
+#&gt; ● Number of completed observations :      8,955
+#&gt; ● Number of observations with N/A  :     10,203
+#&gt; ● Number of variables with N/A     :          8
+#&gt; ● Number of N/A                    :     20,733
 #&gt; 
 #&gt; ── Data Type ───────────────────────────────────────────────
-#&gt; ● Number of numeric variables      :       8
-#&gt; ● Number of integer variables      :       0
-#&gt; ● Number of factors variables      :       3
-#&gt; ● Number of character variables    :       0
-#&gt; ● Number of other variables        :       0
+#&gt; ● Number of numeric variables      :          1
+#&gt; ● Number of integer variables      :          1
+#&gt; ● Number of factors variables      :          7
+#&gt; ● Number of character variables    :          1
+#&gt; ● Number of other variables        :          4
 #&gt; 
 #&gt; ── Individual variables ────────────────────────────────────
-#&gt;      Variables Data Type
-#&gt; 1        Sales   numeric
-#&gt; 2    CompPrice   numeric
-#&gt; 3       Income   numeric
-#&gt; 4  Advertising   numeric
-#&gt; 5   Population   numeric
-#&gt; 6        Price   numeric
-#&gt; 7    ShelveLoc    factor
-#&gt; 8          Age   numeric
-#&gt; 9    Education   numeric
-#&gt; 10       Urban    factor
-#&gt; 11          US    factor</div><div class='input'># }
+#&gt;              Variables Data Type
+#&gt; 1          enrollee_id character
+#&gt; 2                 city    factor
+#&gt; 3       city_dev_index   numeric
+#&gt; 4               gender    factor
+#&gt; 5  relevent_experience    factor
+#&gt; 6  enrolled_university    factor
+#&gt; 7      education_level   ordered
+#&gt; 8     major_discipline    factor
+#&gt; 9           experience   ordered
+#&gt; 10        company_size   ordered
+#&gt; 11        company_type    factor
+#&gt; 12        last_new_job   ordered
+#&gt; 13      training_hours   integer
+#&gt; 14           job_chnge    factor</div><div class='input'># }
 
 </div></pre>
   </div>
