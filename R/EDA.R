@@ -108,7 +108,6 @@ eda_report <- function(.data, ...) {
 #' # reporting the EDA information
 #' eda_report(heartfailure)
 #' 
-#' 
 #' # create pdf file. file name is EDA2.pdf
 #' eda_report(heartfailure, output_file = "EDA2.pdf")
 #' 

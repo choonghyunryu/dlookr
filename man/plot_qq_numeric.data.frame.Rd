@@ -67,7 +67,7 @@ categorical variable.
 # plot_qq_numeric(heartfailure)
 
 # Select the variable to diagnose
-# plot_qq_numeric(carseats, "age", "time")
+# plot_qq_numeric(heartfailure, "age", "time")
 plot_qq_numeric(heartfailure, -age, -time)
 
 # Not allow the typographic elements

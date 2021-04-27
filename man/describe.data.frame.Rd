@@ -64,47 +64,47 @@ The information derived from the numerical data describe is as follows.
 
 \examples{
 # Generate data for the example
-carseats <- ISLR::Carseats
-carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+heartfailure2 <- heartfailure
+heartfailure2[sample(seq(NROW(heartfailure2)), 20), "sodium"] <- NA
+heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
 
 # Describe descriptive statistics of numerical variables
-describe(carseats)
+describe(heartfailure2)
 
 # Select the variable to describe
-describe(carseats, Sales, Price)
-describe(carseats, -Sales, -Price)
-describe(carseats, 5)
+describe(heartfailure2, sodium, platelets)
+describe(heartfailure2, -sodium, -platelets)
+describe(heartfailure2, 5)
 
 # Using dplyr::grouped_dt
 library(dplyr)
 
-gdata <- group_by(carseats, ShelveLoc, US)
-describe(gdata, "Income")
+gdata <- group_by(heartfailure2, hblood_pressure, death_event)
+describe(gdata, "creatinine")
 
 # Using pipes ---------------------------------
 # Positive values select variables
-carseats \%>\%
- describe(Sales, CompPrice, Income)
+heartfailure2 \%>\%
+ describe(platelets, sodium, creatinine)
 
 # Negative values to drop variables
-carseats \%>\%
- describe(-Sales, -CompPrice, -Income)
+heartfailure2 \%>\%
+ describe(-platelets, -sodium, -creatinine)
 
 # Using pipes & dplyr -------------------------
-# Find the statistic of all numerical variables by 'ShelveLoc' and 'US',
-# and extract only those with 'ShelveLoc' variable level is "Good".
-carseats \%>\%
- group_by(ShelveLoc, US) \%>\%
+# Find the statistic of all numerical variables by 'hblood_pressure' and 'death_event',
+# and extract only those with 'hblood_pressure' variable level is "Yes".
+heartfailure2 \%>\%
+ group_by(hblood_pressure, death_event) \%>\%
    describe() \%>\%
-   filter(ShelveLoc == "Good")
+   filter(hblood_pressure == "Yes")
 
-# extract only those with 'Urban' variable level is "Yes",
-# and find 'Sales' statistics by 'ShelveLoc' and 'US'
-carseats \%>\%
- filter(Urban == "Yes") \%>\%
- group_by(ShelveLoc, US) \%>\%
- describe(Sales)
+# extract only those with 'smoking' variable level is "Yes",
+# and find 'creatinine' statistics by 'hblood_pressure' and 'death_event'
+heartfailure2 \%>\%
+ filter(smoking == "Yes") \%>\%
+ group_by(hblood_pressure, death_event) \%>\%
+ describe(creatinine)
 }
 \seealso{
 \code{\link{describe.tbl_dbi}}, \code{\link{diagnose_numeric.data.frame}}.
