@@ -110,7 +110,7 @@ eda_report(heartfailure, "death_event", output_file = "EDA_heartfailure.pdf")
 # create html file. file name is EDA_Report.html
 eda_report(heartfailure, "death_event", output_format = "html")
 
-# create html file. file name is EDA_carseats.html
+# create html file. file name is EDA_heartfailure.html
 eda_report(heartfailure, death_event, output_format = "html", 
    output_file = "EDA_heartfailure.html")
 
