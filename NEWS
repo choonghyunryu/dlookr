@@ -5,6 +5,9 @@ CHANGES IN R VERSION 0.4.5:
     * Fixed an error that is in plot.univar_category(), if the number of 
       categories is more than 10, no output after 10.
       
+    * Fixed a bug where the bar color of NA was not displayed in 
+      plot.optimal_bins(). (#39)
+      
   MINOR CHANGES:
     
     * Added datasets that are 'heartfailure' and 'jobchange'. 

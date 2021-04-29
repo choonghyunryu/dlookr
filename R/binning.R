@@ -708,7 +708,7 @@ plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE
         mutate(add_pos = max(PctRec) * 0.1) %>% 
         ggplot(aes(x = Bin, y = PctRec, fill = Bin)) +
         geom_bar(stat = "identity", width = 0.5) +
-        scale_fill_brewer() +    
+        scale_fill_brewer(na.value = "grey") +    
         geom_text(aes(label = PctRec, y = PctRec + add_pos)) +
         xlab("") +
         ylab("") +
@@ -735,7 +735,7 @@ plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE
         mutate(add_pos = max(PctPos) * 0.1) %>%         
         ggplot(aes(x = Bin, y = PctPos, fill = Bin)) +
         geom_bar(stat = "identity", width = 0.5) +
-        scale_fill_brewer() +
+        scale_fill_brewer(na.value = "grey") +
         geom_text(aes(label = PctPos, y = PctPos + add_pos)) +
         xlab("") +
         ylab("") +
@@ -761,7 +761,7 @@ plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE
         mutate(add_pos = max(WoE) * 0.1) %>%  
         ggplot(aes(x = Bin, y = WoE, fill = Bin)) +
         geom_bar(stat = "identity", width = 0.5) +
-        scale_fill_brewer() +
+        scale_fill_brewer(na.value = "grey") +
         geom_text(aes(label = round(WoE, 2), y = WoE + add_pos)) +
         xlab("") +
         ylab("") +
