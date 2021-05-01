@@ -43,10 +43,10 @@ find_class(iris, "categorical")
 find_class(iris, "categorical", index = FALSE)
 
 # tbl_df
-find_class(ISLR::Carseats, "numerical")
-find_class(ISLR::Carseats, "numerical", index = FALSE)
-find_class(ISLR::Carseats, "categorical")
-find_class(ISLR::Carseats, "categorical", index = FALSE)
+find_class(ggplot2::diamonds, "numerical")
+find_class(ggplot2::diamonds, "numerical", index = FALSE)
+find_class(ggplot2::diamonds, "categorical")
+find_class(ggplot2::diamonds, "categorical", index = FALSE)
 
 # type is "categorical2"
 iris2 <- data.frame(iris, char = "chars",

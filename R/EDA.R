@@ -72,7 +72,8 @@ eda_report <- function(.data, ...) {
 #' @examples
 #' if (FALSE) {
 #' library(dplyr)
-#' ## target variable is categorical variable
+#' 
+#' ## target variable is categorical variable ----------------------------------
 #' # reporting the EDA information
 #' # create pdf file. file name is EDA_Report.pdf
 #' eda_report(heartfailure, death_event)
@@ -81,7 +82,7 @@ eda_report <- function(.data, ...) {
 #' eda_report(heartfailure, "death_event", output_file = "EDA_heartfailure.pdf")
 #' 
 #' # create pdf file. file name is EDA_heartfailure.pdf and not browse
-#' # eda_report(heartfailure, "death_event", output_dir = ".", 
+#' eda_report(heartfailure, "death_event", output_dir = ".", 
 #'     output_file = "EDA_heartfailure.pdf", browse = FALSE)
 #' 
 #' # create html file. file name is EDA_Report.html
@@ -91,7 +92,7 @@ eda_report <- function(.data, ...) {
 #' eda_report(heartfailure, death_event, output_format = "html", 
 #'    output_file = "EDA_heartfailure.html")
 #'
-#' ## target variable is numerical variable
+#' ## target variable is numerical variable ------------------------------------
 #' # reporting the EDA information
 #' eda_report(heartfailure, sodium)
 #' 
