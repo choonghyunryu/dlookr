@@ -1,5 +1,11 @@
 CHANGES IN R VERSION 0.4.5:
-      
+
+  NEW FEATURES:
+  
+    * Add a new function diagnose_sparese() checks cases that do not occur in 
+      observations for all possible combinations of levels of categorical 
+      variables. (#35, thanks HyoJin Song)
+    
   BUG FIXES:
 
     * Fixed an error that is in plot.univar_category(), if the number of 

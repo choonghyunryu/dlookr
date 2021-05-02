@@ -60,6 +60,7 @@ diagnose data quality of numerical variables | descriptive statistics, number of
 diagnose data quality for outlier  | number of outliers, ratio, mean of outliers, mean with outliers, mean without outliers | `diagnose_outlier()` | x
 plot outliers information of numerical data  | box plot and histogram whith outliers, without outliers | `plot_outlier.data.frame()` | x
 plot outliers information of numerical data by target variable  | box plot and density plot whith outliers, without outliers | `plot_outlier.target_df()` | x
+diagnose combination of categorical variables | Check for sparse cases of level combinations of categorical variables | `diagnose_sparese()` | 
 
 #### Visualize Missing Values
 Tasks | Descriptions | Functions | Support DBI
