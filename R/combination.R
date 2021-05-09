@@ -133,10 +133,12 @@ diagnose_sparese_impl <- function(df, vars, type, add_character, limit) {
   if (type %in% ("sparse")) {
     setdiff(all_case, agg_case %>% select(-n))    
   } else if (type %in% ("all")) {
-    all_case %>% 
-      left_join(agg_case) %>% 
-      rename(n_case = n) %>% 
-      mutate(n_case = ifelse(is.na(n_case), 0 , n_case))
+    suppressMessages(
+      all_case %>% 
+        left_join(agg_case) %>% 
+        rename(n_case = n) %>% 
+        mutate(n_case = ifelse(is.na(n_case), 0 , n_case))
+    )
   }
 }
 
