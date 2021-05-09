@@ -73,6 +73,7 @@ diagnose_sparese <- function(.data, ...) {
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
 #' @importFrom purrr map
+#' @importFrom tibble is_tibble
 #' @export
 diagnose_sparese.data.frame <- function(.data, ..., type = c("all", "sparse")[2], 
                                          add_character = FALSE, limit = 500) {
@@ -99,6 +100,8 @@ diagnose_sparese_impl <- function(df, vars, type, add_character, limit) {
   }
   
   get_levels <- function(x) {
+    if (tibble::is_tibble(x)) x <- pull(x)
+    
     if (is.factor(x)) levels(x) else unique(x)
   }
   
