@@ -113,7 +113,7 @@ find_class <- function(df, type = c("numerical", "categorical", "categorical2"),
 #' @param rate logical. If TRUE, returns the percentage of missing values
 #' in the individual variable.
 #' @return Information on variables including missing values.
-#' @seealso \code{\link{imputate_na}}, \code{\link{find_na}}.
+#' @seealso \code{\link{imputate_na}}, \code{\link{find_outliers}}.
 #' @examples
 #' \dontrun{
 #' find_na(jobchange)

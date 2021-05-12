@@ -41,5 +41,5 @@ jobchange \%>\%
 }
 }
 \seealso{
-\code{\link{imputate_na}}, \code{\link{find_na}}.
+\code{\link{imputate_na}}, \code{\link{find_outliers}}.
 }
