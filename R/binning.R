@@ -179,7 +179,14 @@ binning <- function(x, nbins,
   }
   
   breaks <- unique(breaks)
-  fct <- cut(x, breaks = breaks, labels = labels, include.lowest = TRUE)
+  
+  dig.lab <- breaks %>% 
+    nchar() %>% 
+    max() %>% 
+    min(7)
+  
+  fct <- cut(x, breaks = breaks, labels = labels, include.lowest = TRUE, 
+             dig.lab = dig.lab)
   
   if (is.null(labels)) {
     pretty.lab <- levels(fct) %>% 
@@ -200,7 +207,7 @@ binning <- function(x, nbins,
       if (!all(pretty.lab == breaks)) {
         lab <- NULL
         for (i in 2:length(breaks)) {
-          lab <- c(lab, paste0("(", prettyNum(breaks[i-1]), ",", prettyNum(breaks[i]), "]"))
+          lab <- c(lab, paste0("(", prettyNum(breaks[i - 1]), ",", prettyNum(breaks[i]), "]"))
         }
         lab[1] <- sub("^\\(", "[", lab[1])
         
@@ -210,7 +217,7 @@ binning <- function(x, nbins,
   }
   
   if (ordered == TRUE)
-    fct <- ordered(fct)
+    fct <- ordered(fct, levels = levels(fct))
   
   results <- fct
   attr(results, "type") <- type
@@ -324,7 +331,7 @@ plot.bins <- function(x, typographic = TRUE, ...) {
   type <- attr(x, "type")
   levels <- attr(x, "levels")
   
-  bins <- factor(x)
+  bins <- factor(x, levels = levels(x))
   n <- seq(levels)
   
   deltas <- diff(brks)

@@ -14,6 +14,10 @@ CHANGES IN R VERSION 0.4.5:
     * Fixed a bug where the bar color of NA was not displayed in 
       plot.optimal_bins(). (#39)
       
+    * Fixed an error occurs when there are no observations corresponding to 
+      levels (may occur depending on data characteristics when the binning 
+      type is "equal") in plot.bins().  
+      
   MINOR CHANGES:
     
     * Added datasets that are 'heartfailure' and 'jobchange'. 

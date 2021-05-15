@@ -242,7 +242,7 @@ find_outliers <- function(.data, index = TRUE, rate = FALSE) {
 #' ## using dplyr -------------------------------------
 #' library(dplyr)
 #'
-#' # Perform simple data quality diagnosis of variables with outliers.
+#' # Perform simple data quality diagnosis of skewed variables
 #' heartfailure %>%
 #'   select(find_skewness(.)) %>%
 #'   diagnose()
