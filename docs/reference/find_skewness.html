@@ -175,7 +175,7 @@ but, If value = TRUE, default to 0.5.</p></td>
 <span class='co'>## using dplyr -------------------------------------</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
-<span class='co'># Perform simple data quality diagnosis of variables with outliers.</span>
+<span class='co'># Perform simple data quality diagnosis of skewed variables</span>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='fu'>find_skewness</span>(<span class='no'>.</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='diagnose.data.frame.html'>diagnose</a></span>()
