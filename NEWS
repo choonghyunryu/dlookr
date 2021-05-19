@@ -4,7 +4,7 @@ CHANGES IN R VERSION 0.4.5:
   
     * Add a new function diagnose_sparese() checks cases that do not occur in 
       observations for all possible combinations of levels of categorical 
-      variables. (#35, thanks HyoJin Song)
+      variables. (thanks HyoJin Song, #35)
     
   BUG FIXES:
 
@@ -17,6 +17,8 @@ CHANGES IN R VERSION 0.4.5:
     * Fixed an error occurs when there are no observations corresponding to 
       levels (may occur depending on data characteristics when the binning 
       type is "equal") in plot.bins().  
+      
+    * Fixed a miss typo in plot_outlier(). (thanks @jmanacup, #41)
       
   MINOR CHANGES:
     

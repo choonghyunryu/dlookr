@@ -701,7 +701,7 @@ plot_outlier_raw <- function(x, main = NULL, col = "steelblue", typographic = TR
     ggplot(aes(y = x)) +
     geom_boxplot(fill = col, color = "black", alpha = 0.8) +
     xlim(-0.7, 0.7) + 
-    labs(title = "With outliers", x = "", y = "") +
+    labs(title = "Without outliers", x = "", y = "") +
     theme(axis.text.x = element_blank(),
           axis.ticks.x = element_blank())
   
