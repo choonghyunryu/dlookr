@@ -19,7 +19,10 @@ CHANGES IN R VERSION 0.4.5:
       type is "equal") in plot.bins().  
       
     * Fixed a miss typo in plot_outlier(). (thanks @jmanacup, #41)
-      
+
+    * Fixed an error in the describe() for data containing variables 
+      with 3 or fewer complete cases. (thanks @davidfgeorge, #42)
+    
   MINOR CHANGES:
     
     * Added datasets that are 'heartfailure' and 'jobchange'. 

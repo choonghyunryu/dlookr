@@ -140,12 +140,12 @@ describe_impl <- function(df, vars) {
         result <- RcmdrMisc::numSummary(x, statistics = stats[1:5],
                                         quantiles = quant)
         numsum[, 3:6] <- as_tibble(result$table)[, 1:4]
-        numsum[, 9:(length(vname) + 2)] <- as_tibble(result$table)[, 7:21]
+        numsum[, 9:(length(vname) + 2)] <- as_tibble(result$table)[, 5:21]
       } else if (cnt_complete <= 3) {
         result <- RcmdrMisc::numSummary(x, statistics = stats[1:6],
                                         quantiles = quant)
         numsum[, 3:7] <- as_tibble(result$table)[, 1:5]
-        numsum[, 9:(length(vname) + 2)] <- as_tibble(result$table)[, 7:21]
+        numsum[, 9:(length(vname) + 2)] <- as_tibble(result$table)[, 6:22]
       }
     }
     
