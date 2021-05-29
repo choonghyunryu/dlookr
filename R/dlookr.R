@@ -35,7 +35,7 @@ if (getRversion() >= "2.15.1") {
     "RatePos", "WoE", "add_pos", "cnt", "datas", "diff_prim", "diff_sec",
     "flag", "indicator", "menas", "min_prim", "min_sec", "msg", "n_missing",
     "na.exclude", "na_flag", "object.size", "reformulate", "target", "x_end",
-    "x_start", "x_width", "AIC", "BIC", "deviance", "logLik"))
+    "x_start", "x_width", "AIC", "BIC", "deviance", "logLik", "n_case"))
 }
 
 # Adapted from hrbrthemes package's .onAttach
