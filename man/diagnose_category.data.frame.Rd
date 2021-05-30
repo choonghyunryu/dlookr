@@ -76,10 +76,10 @@ See vignette("diagonosis") for an introduction to these concepts.
 diagnose_category(jobchange)
 
 # Select the variable to diagnose
-diagnose_category(jobchange, education_level, company_type)
-diagnose_category(jobchange, -education_level, -company_type)
-diagnose_category(jobchange, "education_level", "company_type")
-diagnose_category(jobchange, 7)
+# diagnose_category(jobchange, education_level, company_type)
+# diagnose_category(jobchange, -education_level, -company_type)
+# diagnose_category(jobchange, "education_level", "company_type")
+# diagnose_category(jobchange, 7)
 
 # Using pipes ---------------------------------
 library(dplyr)
@@ -91,15 +91,18 @@ jobchange \%>\%
 # Positive values select variables
 jobchange \%>\%
  diagnose_category(company_type, job_chnge)
+ 
 # Negative values to drop variables
 jobchange \%>\%
   diagnose_category(-company_type, -job_chnge)
+  
 # Positions values select variables
-jobchange \%>\%
-  diagnose_category(7)
+# jobchange \%>\%
+#   diagnose_category(7)
+  
 # Positions values select variables
-jobchange \%>\%
-  diagnose_category(-7)
+# jobchange \%>\%
+#   diagnose_category(-7)
   
 # Top rank levels with top argument
 jobchange \%>\%

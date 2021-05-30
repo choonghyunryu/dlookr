@@ -95,17 +95,18 @@ library(dplyr)
 #   plot_bar_category()
 
 # Visualize just 7 levels of top frequency
-heartfailure2 \%>\%
-  plot_bar_category(top = 7)
+# heartfailure2 \%>\%
+#   plot_bar_category(top = 7)
   
 # Visualize only factor, not character
 # heartfailure2 \%>\%
 #   plot_bar_category(add_character = FALSE) 
 
 # Using groupd_df  ------------------------------
-heartfailure2 \%>\% 
-  group_by(death_event) \%>\% 
-  plot_bar_category(top = 5)
+# heartfailure2 \%>\% 
+#   group_by(death_event) \%>\% 
+#   plot_bar_category(top = 5)
+  
 # heartfailure2 \%>\% 
 #   group_by(death_event) \%>\% 
 #   plot_bar_category(each = TRUE, top = 5)  
