@@ -4,10 +4,13 @@
 \alias{summary.overview}
 \title{Summarizing overview information}
 \usage{
-\method{summary}{overview}(object, ...)
+\method{summary}{overview}(object, html = FALSE, ...)
 }
 \arguments{
 \item{object}{an object of class "overview", usually, a result of a call to overview().}
+
+\item{html}{logical. whether to send summary results to html. The default is FALSE, 
+which prints to the R console.}
 
 \item{...}{further arguments passed to or from other methods.}
 }

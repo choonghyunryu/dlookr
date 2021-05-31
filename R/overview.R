@@ -77,10 +77,10 @@ overview <- function(.data) {
   
   division_metric <- c("size", "size", "size", "size", 
                     "missing", "missing", "missing", "missing",
-                    "data_type", "data_type", "data_type", "data_type", "data_type")
-  name_metric <- c("observations", "variables", "values", "memory_size",
-                   "complete_obs", "missing_obs", "missing_vars", "missing_values",
-                   "numerics", "integers", "factors", "characters", "others")
+                    "data type", "data type", "data type", "data type", "data type")
+  name_metric <- c("observations", "variables", "values", "memory size",
+                   "complete observation", "missing observation", "missing variables", 
+                   "missing values", "numerics", "integers", "factors", "characters", "others")
   
   result <- data.frame(division = division_metric,
                        metrics = name_metric,
@@ -109,6 +109,8 @@ overview <- function(.data) {
 #'
 #' @description print and summary method for "overview" class.
 #' @param object an object of class "overview", usually, a result of a call to overview().
+#' @param html logical. whether to send summary results to html. The default is FALSE, 
+#' which prints to the R console.
 #' @param ... further arguments passed to or from other methods.
 #' @details
 #' summary.overview() tries to be smart about formatting 14 information of overview.
@@ -123,8 +125,10 @@ overview <- function(.data) {
 #' 
 #' @method summary overview
 #' @importFrom cli cat_rule cat_bullet cat_print
+#' @importFrom knitr kable
+#' @importFrom kableExtra kable_styling
 #' @export
-summary.overview <- function(object, ...)  {
+summary.overview <- function(object, html = FALSE, ...)  {
   nms <- c("Number of observations", 
            "Number of variables",
            "Number of values",
@@ -140,48 +144,115 @@ summary.overview <- function(object, ...)  {
            "Number of other variables") 
   nms <- format(nms)
   
+  line_break <- function(html = FALSE) {
+    if (!html) {
+      cat("\n")
+    } else {
+      cat("<br>")      
+    }  
+  }
+  
   vls <- format(object$value, big.mark = ",")
   
-  cli::cat_rule(
-    left = "Data Scale",
-    right = "",
-    width = 60
-  )
+  if (!html) {
+    cli::cat_rule(
+      left = "Data Scale",
+      right = "",
+      width = 60
+    )
+  } else {
+    cli::cat_rule(
+      left = "Data Scale",
+      right = "",
+      width = 60
+    ) %>% 
+      paste("<br>") %>% 
+      cat()
+  }
 
   info_scale <- paste0(nms[1:4], " :  ", vls[1:4])
-  cli::cat_bullet(info_scale)
-  cat("\n")
   
-  cli::cat_rule(
-    left = "Missing Data",
-    right = "",
-    width = 60
-  )
+  if (html) {
+    info_scale <- paste(info_scale, "<br>")
+  }
+  
+  cli::cat_bullet(info_scale)
+  line_break()
+  
+  if (!html) {
+    cli::cat_rule(
+      left = "Missing Data",
+      right = "",
+      width = 60
+    )
+  } else {
+    cli::cat_rule(
+      left = "Missing Data",
+      right = "",
+      width = 60
+    ) %>% 
+      paste("<br>") %>% 
+      cat()
+  }
   
   info_missing <- paste0(nms[5:8], " :  ", vls[5:8])
-  cli::cat_bullet(info_missing)
-  cat("\n")
+  if (html) {
+    info_missing <- paste(info_missing, "<br>")
+  }
   
-  cli::cat_rule(
-    left = "Data Type",
-    right = "",
-    width = 60
-  )  
+  cli::cat_bullet(info_missing)
+  line_break()
+  
+  if (!html) {
+    cli::cat_rule(
+      left = "Data Type",
+      right = "",
+      width = 60
+    )  
+  } else {
+    cli::cat_rule(
+      left = "Data Type",
+      right = "",
+      width = 60
+    ) %>% 
+      paste("<br>") %>% 
+      cat()
+  }  
 
   info_type <- paste0(nms[9:13], " :  ", vls[9:13])
-  cli::cat_bullet(info_type)
-  cat("\n")
+  if (html) {
+    info_type <- paste(info_type, "<br>")
+  }  
   
-  cli::cat_rule(
-    left = "Individual variables",
-    right = "",
-    width = 60
-  )    
+  cli::cat_bullet(info_type)
+  line_break()
+  
+  if (!html) {
+    cli::cat_rule(
+      left = "Individual variables",
+      right = "",
+      width = 60
+    ) 
+  } else {
+    cli::cat_rule(
+      left = "Individual variables",
+      right = "",
+      width = 60
+    ) %>% 
+      paste("<br>") %>% 
+      cat()
+  }    
   
   info_class <- attr(object, "info_class")
   names(info_class) <- c("Variables", "Data Type")
   
-  cli::cat_print(info_class)
+  if (!html) {
+    cli::cat_print(info_class)
+  } else {
+    info_class %>% 
+      knitr::kable(format = "html")%>% 
+      kableExtra::kable_styling(full_width = FALSE, font_size = 15, position = "left") 
+  }  
 }
 
 #' Visualize Information for an "overview" Object
