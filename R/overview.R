@@ -16,6 +16,7 @@
 #'   \item division : division of information.
 #'   \itemize{
 #'     \item size : indicators of related to data capacity 
+#'     \item duplicated : indicators of related to duplicated value 
 #'     \item missing : indicators of related to missing value 
 #'     \item data_type : indicators of related to data type 
 #'   }
@@ -24,11 +25,12 @@
 #'     \item observations : number of observations (number of rows)
 #'     \item variables : number of variables (number of columns)
 #'     \item values : number of values (number of cells. rows * columns)
-#'     \item memory_size : an estimate of the memory that is being used to store an R object.
-#'     \item complete_obs : number of complete cases(observations). i.e., have no missing values.
-#'     \item missing_obs : number of observations that has missing values.
-#'     \item missing_vars : number of variables that has missing values.
-#'     \item missing_values : number of values(cells) that has missing values.
+#'     \item memory size : an estimate of the memory that is being used to store an R object.
+#'     \item duplicate observation: number of duplicate cases(observations).
+#'     \item complete observation : number of complete cases(observations). i.e., have no missing values.
+#'     \item missing observation : number of observations that has missing values.
+#'     \item missing variables : number of variables that has missing values.
+#'     \item missing values : number of values(cells) that has missing values.
 #'     \item numerics : number of variables that is data type is numeric.
 #'     \item integers : number of variables that is data type is integer.
 #'     \item factors : number of variables that is data type is factor.
@@ -40,6 +42,7 @@
 #' 
 #' Attributes of overview class is as follows.:
 #' \itemize{
+#'   \item duplicated : the index of duplicated observations.
 #'   \item na_col : the data type of predictor to replace missing value.
 #'   \item info_class : data.frame. variable name and class name that describe the data type of variables.
 #'   \itemize{
@@ -70,32 +73,39 @@ overview <- function(.data) {
   
   complete <- complete.cases(.data)
   
+  duplicated <- which(duplicated(.data))
+  
   na_row <- apply(.data, 1, function(x) any(is.na(x)))
   na_col <- apply(.data, 2, function(x) sum(is.na(x)))
   
   info_class <- get_class(.data)
   
   division_metric <- c("size", "size", "size", "size", 
-                    "missing", "missing", "missing", "missing",
-                    "data type", "data type", "data type", "data type", "data type")
+                       "duplicated", "missing", "missing", "missing", "missing", 
+                       "data type", "data type", "data type", "data type", 
+                       "data type")
   name_metric <- c("observations", "variables", "values", "memory size",
-                   "complete observation", "missing observation", "missing variables", 
-                   "missing values", "numerics", "integers", "factors", "characters", "others")
+                   "duplicate observation", "complete observation", 
+                   "missing observation", "missing variables", "missing values", 
+                   "numerics", "integers", "factors", "characters", "others")
   
-  result <- data.frame(division = division_metric,
-                       metrics = name_metric,
-                       value = c(n_row, n_col, n_row * n_col, size,
-                                 sum(complete), sum(na_row >= 1), 
-                                 sum(na_col >= 1), sum(na_col),
-                                 sum(info_class$class == "numeric"),
-                                 sum(info_class$class == "integer"),
-                                 sum(info_class$class == "factor"),
-                                 sum(info_class$class == "character"),
-                                 sum(!info_class$class %in% 
-                                       c("numeric", "integer", "factor", "character"))
-                                 )
-                       )
+  result <- data.frame(
+    division = division_metric,
+    metrics = name_metric,
+    value = c(n_row, n_col, n_row * n_col, size,
+              length(duplicated),
+              sum(complete), sum(na_row >= 1), 
+              sum(na_col >= 1), sum(na_col),
+              sum(info_class$class == "numeric"),
+              sum(info_class$class == "integer"),
+              sum(info_class$class == "factor"),
+              sum(info_class$class == "character"),
+              sum(!info_class$class %in% 
+                    c("numeric", "integer", "factor", "character"))
+              )
+    )
   
+  attr(result, "duplicated") <- duplicated
   attr(result, "na_col") <- na_col
   attr(result, "info_class") <- info_class
 
@@ -133,15 +143,17 @@ summary.overview <- function(object, html = FALSE, ...)  {
            "Number of variables",
            "Number of values",
            "Size of located memory(bytes)",
+           "Number of duplicated observations",            
            "Number of completed observations", 
-           "Number of observations with N/A",
-           "Number of variables with N/A",
-           "Number of N/A",
+           "Number of observations with NA",
+           "Number of variables with NA",
+           "Number of NA",
            "Number of numeric variables",
            "Number of integer variables",
            "Number of factors variables",
            "Number of character variables",
            "Number of other variables") 
+  
   nms <- format(nms)
   
   line_break <- function(html = FALSE) {
@@ -153,6 +165,16 @@ summary.overview <- function(object, html = FALSE, ...)  {
   }
   
   vls <- format(object$value, big.mark = ",")
+  
+  N <- object$value[1]
+  n_dup <- object$value[5]
+  n_na <- object$value[7]
+  
+  p_dup <- paste0("(", round(n_dup / N * 100, 2), "%)")
+  p_na <- paste0("(", round(n_na / N * 100, 2), "%)")
+  
+  vls[5] <- paste(vls[5], p_dup)
+  vls[7] <- paste(vls[7], p_na)
   
   if (!html) {
     cli::cat_rule(
@@ -181,6 +203,31 @@ summary.overview <- function(object, html = FALSE, ...)  {
   
   if (!html) {
     cli::cat_rule(
+      left = "Duplicated Data",
+      right = "",
+      width = 60
+    )
+  } else {
+    cli::cat_rule(
+      left = "Duplicated Data",
+      right = "",
+      width = 60
+    ) %>% 
+      paste("<br>") %>% 
+      cat()
+  }
+  
+  duplicated <- paste0(nms[5], " :  ", vls[5])
+  
+  if (html) {
+    duplicated <- paste(duplicated, "<br>")
+  }
+  
+  cli::cat_bullet(duplicated)
+  line_break()
+  
+  if (!html) {
+    cli::cat_rule(
       left = "Missing Data",
       right = "",
       width = 60
@@ -195,7 +242,7 @@ summary.overview <- function(object, html = FALSE, ...)  {
       cat()
   }
   
-  info_missing <- paste0(nms[5:8], " :  ", vls[5:8])
+  info_missing <- paste0(nms[6:9], " :  ", vls[6:9])
   if (html) {
     info_missing <- paste(info_missing, "<br>")
   }
@@ -219,7 +266,7 @@ summary.overview <- function(object, html = FALSE, ...)  {
       cat()
   }  
 
-  info_type <- paste0(nms[9:13], " :  ", vls[9:13])
+  info_type <- paste0(nms[10:14], " :  ", vls[10:14])
   if (html) {
     info_type <- paste(info_type, "<br>")
   }  

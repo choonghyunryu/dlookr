@@ -1,3 +1,19 @@
+CHANGES IN R VERSION 0.5.0:
+
+  NEW FEATURES:
+  
+    * 
+    
+  BUG FIXES:
+
+    * 
+    
+  MINOR CHANGES:
+    
+    * Added the duplicated information in overview() and summary.overview().
+    
+    
+    
 CHANGES IN R VERSION 0.4.5:
 
   NEW FEATURES:

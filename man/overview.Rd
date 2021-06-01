@@ -17,6 +17,7 @@ data.frame is as follow.:
   \item division : division of information.
   \itemize{
     \item size : indicators of related to data capacity 
+    \item duplicated : indicators of related to duplicated value 
     \item missing : indicators of related to missing value 
     \item data_type : indicators of related to data type 
   }
@@ -25,11 +26,12 @@ data.frame is as follow.:
     \item observations : number of observations (number of rows)
     \item variables : number of variables (number of columns)
     \item values : number of values (number of cells. rows * columns)
-    \item memory_size : an estimate of the memory that is being used to store an R object.
-    \item complete_obs : number of complete cases(observations). i.e., have no missing values.
-    \item missing_obs : number of observations that has missing values.
-    \item missing_vars : number of variables that has missing values.
-    \item missing_values : number of values(cells) that has missing values.
+    \item memory size : an estimate of the memory that is being used to store an R object.
+    \item duplicate observation: number of duplicate cases(observations).
+    \item complete observation : number of complete cases(observations). i.e., have no missing values.
+    \item missing observation : number of observations that has missing values.
+    \item missing variables : number of variables that has missing values.
+    \item missing values : number of values(cells) that has missing values.
     \item numerics : number of variables that is data type is numeric.
     \item integers : number of variables that is data type is integer.
     \item factors : number of variables that is data type is factor.
@@ -41,6 +43,7 @@ data.frame is as follow.:
 
 Attributes of overview class is as follows.:
 \itemize{
+  \item duplicated : the index of duplicated observations.
   \item na_col : the data type of predictor to replace missing value.
   \item info_class : data.frame. variable name and class name that describe the data type of variables.
   \itemize{
