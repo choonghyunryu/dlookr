@@ -106,7 +106,6 @@ describe.data.frame <- function(.data, ...) {
 
 #' @import tibble
 #' @import dplyr
-#' @importFrom magrittr "%>%"
 #' @importFrom RcmdrMisc numSummary
 #' @importFrom tidyr unnest
 describe_impl <- function(df, vars) {

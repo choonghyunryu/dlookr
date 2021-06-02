@@ -29,7 +29,6 @@ Imports:
     hrbrthemes (>= 0.8.0),
     kableExtra,
     knitr (>= 1.22),
-    magrittr,
     methods,
     mice,    
     partykit,
