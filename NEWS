@@ -11,6 +11,8 @@ CHANGES IN R VERSION 0.5.0:
   MINOR CHANGES:
     
     * Added the duplicated information in overview() and summary.overview().
+
+    * In the result of overview(), included ordered in factor in data type.    
     
     
     

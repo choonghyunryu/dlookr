@@ -87,7 +87,7 @@ overview <- function(.data) {
   name_metric <- c("observations", "variables", "values", "memory size",
                    "duplicate observation", "complete observation", 
                    "missing observation", "missing variables", "missing values", 
-                   "numerics", "integers", "factors", "characters", "others")
+                   "numerics", "integers", "factors/ordered", "characters", "others")
   
   result <- data.frame(
     division = division_metric,
@@ -98,10 +98,10 @@ overview <- function(.data) {
               sum(na_col >= 1), sum(na_col),
               sum(info_class$class == "numeric"),
               sum(info_class$class == "integer"),
-              sum(info_class$class == "factor"),
+              sum(info_class$class %in% c("factor", "ordered")),
               sum(info_class$class == "character"),
               sum(!info_class$class %in% 
-                    c("numeric", "integer", "factor", "character"))
+                    c("numeric", "integer", "factor", "ordered", "character"))
               )
     )
   
