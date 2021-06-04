@@ -683,7 +683,7 @@ plot_box_numeric <- function(.data, ...) {
 #' @description The plot_box_numeric() to visualizes the box plot of numeric data or 
 #' relationship to specific categorical data.
 #' 
-#' @details The The box plot helps determine whether the distribution of a numeric variable. 
+#' @details The box plot helps determine whether the distribution of a numeric variable. 
 #' plot_box_numeric() shows box plots of several numeric variables 
 #' on one screen. This function can also display a box plot for each level of a specific 
 #' categorical variable.
@@ -744,7 +744,7 @@ plot_box_numeric <- function(.data, ...) {
 #' @rdname plot_box_numeric.data.frame 
 #' 
 plot_box_numeric.data.frame <- function(.data, ..., 
-                                        title = "Box plot by numerical variables",
+                                        title = "Distribution by numerical variables",
                                         each = FALSE, typographic = TRUE) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
   
@@ -839,7 +839,7 @@ plot_box_numeric_impl <- function(df, vars, title, each, typographic) {
 #' @export
 #' 
 plot_box_numeric.grouped_df <- function(.data, ..., 
-                                        title = "Box plot by numerical variables",
+                                        title = "Distribution by numerical variables",
                                         each = FALSE, typographic = TRUE) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
   
@@ -884,6 +884,273 @@ plot_box_numeric_group_impl <- function(df, vars, title, each, typographic) {
         geom_boxplot(alpha = 0.7) + 
         xlim(-0.7, 0.7) +
         coord_flip() +
+        facet_grid(reformulate("variables", group_key)) + 
+        labs(title = title, x = xlab, y = ylab) +        
+        theme(legend.position = "none",
+              axis.title.y = element_blank(),
+              axis.text.y = element_blank(),
+              axis.ticks.y = element_blank())
+      
+      if (typographic) {
+        p_box <- p_box + 
+          theme_typographic() +
+          scale_fill_ipsum() + 
+          theme(legend.position = "none",
+                axis.title.x = element_text(size = 12),
+                axis.text.y = element_blank(),
+                axis.ticks.y = element_blank())
+        
+        if (!each) {
+          p_box <- p_box +
+            theme(axis.text.x = element_text(size = 10),
+                  axis.text.y = element_blank(),
+                  axis.ticks.y = element_blank(),
+                  plot.margin = margin(0, 10, 0, 10),
+                  panel.spacing = grid::unit(0, "lines")
+            )
+        }
+      }
+      
+      p_box
+    }
+    )
+    
+    if (each) {
+      for (i in seq(plist))
+        do.call("print", plist[i])
+    } else {
+      n <- length(plist)
+      n_row <- floor(sqrt(n))
+      
+      if (typographic) {
+        fontfamily <- get_font_family()
+        
+        title <- grid::textGrob(title, gp = grid::gpar(fontfamily = fontfamily, 
+                                                       fontsize = 18, font = 2),
+                                x = unit(0.075, "npc"), just = "left")
+      }
+      
+      suppressWarnings(gridExtra::grid.arrange(
+        gridExtra::arrangeGrob(grobs = plist, nrow = n_row),
+        top = title, right = group_key))
+    }
+  }) # End of suppressWarnings()
+}
+
+
+##----------------------------------------------------------------------------------
+
+#' @rdname plot_hist_numeric.data.frame
+#' @export
+plot_hist_numeric <- function(.data, ...) {
+  UseMethod("plot_hist_numeric", .data)
+}
+
+#' Plot histogram of numerical variables 
+#'
+#' @description The plot_hist_numeric() to visualizes the histogram of numeric data or 
+#' relationship to specific categorical data.
+#' 
+#' @details The histogram helps determine whether the distribution of a numeric variable. 
+#' plot_hist_numeric() shows box plots of several numeric variables 
+#' on one screen. This function can also display a histogram for each level of a specific 
+#' categorical variable.
+#' The bin-width is set to the Freedman-Diaconis rule (2 * IQR(x) / length(x)^(1/3))
+#'
+#' @param .data data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.
+#' @param \dots one or more unquoted expressions separated by commas.
+#' You can treat variable names like they are positions.
+#' Positive values select variables; negative values to drop variables.
+#' If the first expression is negative, plot_hist_numeric() will automatically
+#' start with all variables.
+#' These arguments are automatically quoted and evaluated in a context where
+#' column names represent column positions.
+#' They support unquoting and splicing.
+#'
+#' @param title character. a main title for the plot. 
+#' @param each logical. Specifies whether to draw multiple plots on one screen. 
+#' The default is FALSE, which draws multiple plots on one screen.
+#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' @examples
+#' # Visualization of all numerical variables
+#' # plot_hist_numeric(heartfailure)
+#'
+#' # Select the variable to diagnose
+#' # plot_hist_numeric(heartfailure, "age", "time")
+#' plot_hist_numeric(heartfailure, -age, -time)
+#'
+#' # Visualize the each plots
+#' # plot_hist_numeric(heartfailure, "age", "time", each = TRUE)
+#' 
+#' # Not allow the typographic elements
+#' # plot_hist_numeric(heartfailure, typographic = FALSE)
+#' 
+#' # Using pipes ---------------------------------
+#' library(dplyr)
+#'
+#' # Plot of all numerical variables
+#' # heartfailure %>%
+#' #   plot_hist_numeric()
+#'   
+#' # Using groupd_df  ------------------------------
+#' heartfailure %>% 
+#'   group_by(smoking) %>% 
+#'   plot_hist_numeric()
+#'   
+#' # heartfailure %>% 
+#' #   group_by(smoking) %>% 
+#' #   plot_hist_numeric(each = TRUE)  
+#'   
+#' @method plot_hist_numeric data.frame
+#' @import ggplot2
+#' @import hrbrthemes
+#' @import dplyr
+#' @importFrom purrr map
+#' @importFrom gridExtra grid.arrange arrangeGrob
+#' @importFrom grid textGrob gpar
+#' @export
+#' @rdname plot_hist_numeric.data.frame 
+#' 
+plot_hist_numeric.data.frame <- function(.data, ..., 
+                                        title = "Distribution by numerical variables",
+                                        each = FALSE, typographic = TRUE) {
+  vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
+  
+  plot_hist_numeric_impl(.data, vars, title, each, typographic)
+}
+
+plot_hist_numeric_impl <- function(df, vars, title, each, typographic) {
+  if (length(vars) == 0) vars <- names(df)
+  
+  if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
+  
+  nm_numeric <- find_class(df[, vars], type = "numerical", index = FALSE)
+  
+  if (length(nm_numeric) == 0) {
+    message("There is no numerical variable in the data or variable list.\n")
+    return(NULL)
+  }
+  
+  suppressWarnings({
+    plist <- purrr::map(nm_numeric, function(var) {
+      if (each) {
+        xlab <- "" 
+      } else {
+        xlab <- ""
+        title <- ""
+      }
+      
+      p_box <- df %>% 
+        mutate(variables = var) %>% 
+        ggplot(aes_string(x = var)) +
+        geom_histogram(color="#e9ecef", fill = "steelblue", alpha = 0.8,
+                       binwidth = function(x) 2 * IQR(x) / (length(x)^(1/3))) +
+        labs(title = title, subtitle = var, x = xlab) +        
+        theme(axis.title.y = element_blank(),
+              axis.text.y = element_blank(),
+              axis.ticks.y = element_blank())
+      
+      if (typographic) {
+        p_box <- p_box + 
+          theme_typographic() +
+          theme(legend.position = "none",
+                axis.title.x = element_blank(),
+                axis.title.y = element_text(size = 12))
+        
+        if (!each) {
+          p_box <- p_box +
+            theme(plot.title = element_text(margin = margin(b = 0)),
+                  axis.title.y = element_blank(),
+                  axis.text.y = element_blank(),
+                  axis.ticks.y = element_blank(),
+                  axis.title.x = element_blank(),
+                  axis.text.x = element_text(size = 10),
+                  plot.margin = margin(10, 10, 10, 10)
+            )
+        }
+      } else {
+        p_box <- p_box +
+          theme(axis.title.x = element_blank())
+      }
+      
+      p_box
+    }
+    )
+    
+    if (each) {
+      for (i in seq(plist))
+        do.call("print", plist[i])
+    } else {
+      n <- length(plist)
+      n_row <- floor(sqrt(n))
+      
+      if (typographic) {
+        fontfamily <- get_font_family()
+        
+        title <- grid::textGrob(title, gp = grid::gpar(fontfamily = fontfamily, 
+                                                       fontsize = 18, font = 2),
+                                x = unit(0.075, "npc"), just = "left")
+      }
+      
+      suppressWarnings(gridExtra::grid.arrange(
+        gridExtra::arrangeGrob(grobs = plist, nrow = n_row), top = title))
+    }  
+  }) # End of suppressWarnings()
+}
+
+#' @method plot_hist_numeric grouped_df
+#' @rdname plot_hist_numeric.data.frame
+#' @importFrom tidyselect vars_select
+#' @importFrom rlang quos
+#' @importFrom tibble is_tibble
+#' @export
+#' 
+plot_hist_numeric.grouped_df <- function(.data, ..., 
+                                        title = "Distribution by numerical variables",
+                                        each = FALSE, typographic = TRUE) {
+  vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
+  
+  plot_hist_numeric_group_impl(.data, vars, title, each, typographic)
+}
+
+plot_hist_numeric_group_impl <- function(df, vars, title, each, typographic) {
+  if (utils::packageVersion("dplyr") >= "0.8.0") {
+    group_key <- setdiff(attr(df, "groups") %>% names(), ".rows")
+  } else {
+    group_key <- attr(df, "vars")
+  }
+  
+  n_levels <- attr(df, "group") %>% nrow() 
+  
+  if (length(vars) == 0) vars <- names(df)
+  
+  if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
+  
+  nm_numeric <- find_class(df[, vars], type = "numerical", index = FALSE)
+  
+  if (length(nm_numeric) == 0) {
+    message("There is no numerical variable in the data or variable list.\n")
+    return(NULL)
+  }
+  
+  suppressWarnings({
+    plist <- purrr::map(nm_numeric, function(var) {
+      if (each) {
+        xlab <- "" 
+        ylab <- ""
+        title <- paste(title, "(", paste("by", group_key), ")")      
+      } else {
+        xlab <- ""
+        ylab <- ""
+        title <- ""
+      }
+      
+      p_box <- df %>% 
+        mutate(variables = var) %>% 
+        ggplot(aes_string(x = var, fill = group_key)) +
+        geom_histogram(color="#e9ecef", alpha = 0.7,
+                       binwidth = function(x) 2 * IQR(x) / (length(x)^(1/3))) + 
         facet_grid(reformulate("variables", group_key)) + 
         labs(title = title, x = xlab, y = ylab) +        
         theme(legend.position = "none",

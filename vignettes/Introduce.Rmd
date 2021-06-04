@@ -91,6 +91,7 @@ numerical | summaries | descriptive statistics of standardized variable | `summa
 numerical | visualize | histogram, box plot | `plot.univar_numeric()` | 
 numerical | visualize | Q-Q plots | `plot_qq_numeric()` | 
 numerical | visualize | box plot | `plot_box_numeric()` | 
+numerical | visualize | histogram | `plot_hist_numeric()` | 
 
 #### Bivariate EDA
 Types | Tasks | Descriptions | Functions | Support DBI
@@ -124,6 +125,7 @@ numerical | numerical | simple linear model | `relate()` | x
 numerical | numerical | box plot | `plot.relate()` | x
 categorical | numerical | Q-Q plots | `plot_qq_numeric()` | 
 categorical | numerical | box plot | `plot_box_numeric()` | 
+categorical | numerical | histogram | `plot_hist_numeric()` | 
 
 #### Reporting
 Types | Descriptions | Functions | Support DBI

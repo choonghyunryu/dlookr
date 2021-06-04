@@ -2,7 +2,8 @@ CHANGES IN R VERSION 0.5.0:
 
   NEW FEATURES:
   
-    * 
+    * Add a new function plot_hist_numeric() to plot histogram of numerical 
+      variables.
     
   BUG FIXES:
 
