@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot bar chart of categorical variables — plot_bar_category • dlookr</title>
+<title>Plot histogram of numerical variables — plot_hist_numeric • dlookr</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,9 @@
 
 
 
-<meta property="og:title" content="Plot bar chart of categorical variables — plot_bar_category" />
-<meta property="og:description" content="The plot_bar_category() to visualizes the distribution of 
-categorical data by level or relationship to specific numerical data by level." />
+<meta property="og:title" content="Plot histogram of numerical variables — plot_hist_numeric" />
+<meta property="og:description" content="The plot_hist_numeric() to visualizes the histogram of numeric data or 
+relationship to specific categorical data." />
 
 
 
@@ -115,36 +115,32 @@ categorical data by level or relationship to specific numerical data by level." 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot bar chart of categorical variables</h1>
+    <h1>Plot histogram of numerical variables</h1>
     <small class="dont-index">Source: <a href='https://github.com/choonghyunryu/dlookr/blob/master/R/aggregate.R'><code>R/aggregate.R</code></a></small>
-    <div class="hidden name"><code>plot_bar_category.data.frame.Rd</code></div>
+    <div class="hidden name"><code>plot_hist_numeric.data.frame.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The plot_bar_category() to visualizes the distribution of 
-categorical data by level or relationship to specific numerical data by level.</p>
+    <p>The plot_hist_numeric() to visualizes the histogram of numeric data or 
+relationship to specific categorical data.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plot_bar_category</span>(<span class='no'>.data</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>plot_hist_numeric</span>(<span class='no'>.data</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>plot_bar_category</span>(
+<span class='fu'>plot_hist_numeric</span>(
   <span class='no'>.data</span>,
   <span class='no'>...</span>,
-  <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>add_character</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Frequency by levels of category"</span>,
+  <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Distribution by numerical variables"</span>,
   <span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )
 
 <span class='co'># S3 method for grouped_df</span>
-<span class='fu'>plot_bar_category</span>(
+<span class='fu'>plot_hist_numeric</span>(
   <span class='no'>.data</span>,
   <span class='no'>...</span>,
-  <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>add_character</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Frequency by levels of category"</span>,
+  <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Distribution by numerical variables"</span>,
   <span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</pre>
@@ -154,28 +150,18 @@ categorical data by level or relationship to specific numerical data by level.</
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>.data</th>
-      <td><p>a data.frame or a <code>tbl_df</code> or a <code>grouped_df</code>.</p></td>
+      <td><p>data.frame or a <code>tbl_df</code> or a <code>grouped_df</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
 Positive values select variables; negative values to drop variables.
-If the first expression is negative, plot_bar_category() will automatically
+If the first expression is negative, plot_hist_numeric() will automatically
 start with all variables.
 These arguments are automatically quoted and evaluated in a context where
 column names represent column positions.
 They support unquoting and splicing.</p></td>
-    </tr>
-    <tr>
-      <th>top</th>
-      <td><p>an integer. Specifies the upper top rank to extract.
-Default is 10.</p></td>
-    </tr>
-    <tr>
-      <th>add_character</th>
-      <td><p>logical. Decide whether to include text variables in the
-diagnosis of categorical data. The default value is TRUE, which also includes character variables.</p></td>
     </tr>
     <tr>
       <th>title</th>
@@ -195,56 +181,41 @@ The default is TRUE. if TRUE provides a base theme that focuses on typographic e
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The distribution of categorical variables can be understood by 
-comparing the frequency of each level. The frequency table helps with this. 
-As a visualization method, a bar graph can help you understand 
-the distribution of categorical data more easily than a frequency table.</p>
+    <p>The histogram helps determine whether the distribution of a numeric variable. 
+plot_hist_numeric() shows box plots of several numeric variables 
+on one screen. This function can also display a histogram for each level of a specific 
+categorical variable.
+The bin-width is set to the Freedman-Diaconis rule (2 * IQR(x) / length(x)^(1/3))</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Generate data for the example</span>
-<span class='no'>heartfailure2</span> <span class='kw'>&lt;-</span> <span class='no'>heartfailure</span>
-<span class='no'>heartfailure2</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>heartfailure2</span>)), <span class='fl'>20</span>), <span class='st'>"platelets"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-<span class='no'>heartfailure2</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>heartfailure2</span>)), <span class='fl'>5</span>), <span class='st'>"smoking"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
+    <pre class="examples"><div class='input'><span class='co'># Visualization of all numerical variables</span>
+<span class='co'># plot_hist_numeric(heartfailure)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>123</span>)
-<span class='no'>heartfailure2</span>$<span class='no'>test</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>15</span>], <span class='fl'>299</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>heartfailure2</span>$<span class='no'>test</span>[<span class='fl'>1</span>:<span class='fl'>30</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-
-<span class='co'># Visualization of all numerical variables</span>
-<span class='fu'>plot_bar_category</span>(<span class='no'>heartfailure2</span>)</div><div class='img'><img src='plot_bar_category.data.frame-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Select the variable to diagnose</span>
-<span class='co'># plot_bar_category(heartfailure2, "test", "smoking")</span>
-<span class='co'># plot_bar_category(heartfailure2, -test, -smoking)</span>
-
+<span class='co'># plot_hist_numeric(heartfailure, "age", "time")</span>
+<span class='fu'>plot_hist_numeric</span>(<span class='no'>heartfailure</span>, -<span class='no'>age</span>, -<span class='no'>time</span>)</div><div class='img'><img src='plot_hist_numeric.data.frame-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Visualize the each plots</span>
-<span class='co'># plot_bar_category(heartfailure2, each = TRUE)</span>
+<span class='co'># plot_hist_numeric(heartfailure, "age", "time", each = TRUE)</span>
 
-<span class='co'># Not allow typographic argument</span>
-<span class='co'># plot_bar_category(heartfailure2, typographic = FALSE)</span>
+<span class='co'># Not allow the typographic elements</span>
+<span class='co'># plot_hist_numeric(heartfailure, typographic = FALSE)</span>
 
 <span class='co'># Using pipes ---------------------------------</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
-<span class='co'># Plot of all categorical variables</span>
-<span class='co'># heartfailure2 %&gt;%</span>
-<span class='co'>#   plot_bar_category()</span>
-
-<span class='co'># Visualize just 7 levels of top frequency</span>
-<span class='co'># heartfailure2 %&gt;%</span>
-<span class='co'>#   plot_bar_category(top = 7)</span>
-
-<span class='co'># Visualize only factor, not character</span>
-<span class='co'># heartfailure2 %&gt;%</span>
-<span class='co'>#   plot_bar_category(add_character = FALSE) </span>
+<span class='co'># Plot of all numerical variables</span>
+<span class='co'># heartfailure %&gt;%</span>
+<span class='co'>#   plot_hist_numeric()</span>
 
 <span class='co'># Using groupd_df  ------------------------------</span>
-<span class='co'># heartfailure2 %&gt;% </span>
-<span class='co'>#   group_by(death_event) %&gt;% </span>
-<span class='co'>#   plot_bar_category(top = 5)</span>
-
-<span class='co'># heartfailure2 %&gt;% </span>
-<span class='co'>#   group_by(death_event) %&gt;% </span>
-<span class='co'>#   plot_bar_category(each = TRUE, top = 5)  </span></div></pre>
+<span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/group_by.html'>group_by</a></span>(<span class='no'>smoking</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>plot_hist_numeric</span>()</div><div class='img'><img src='plot_hist_numeric.data.frame-2.png' alt='' width='700' height='433' /></div><div class='input'>  
+# heartfailure %&gt;% 
+#   group_by(smoking) %&gt;% 
+#   plot_hist_numeric(each = TRUE)  
+  
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

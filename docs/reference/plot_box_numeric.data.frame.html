@@ -73,7 +73,7 @@ relationship to specific categorical data." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -131,7 +131,7 @@ relationship to specific categorical data.</p>
 <span class='fu'>plot_box_numeric</span>(
   <span class='no'>.data</span>,
   <span class='no'>...</span>,
-  <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Box plot by numerical variables"</span>,
+  <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Distribution by numerical variables"</span>,
   <span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )
@@ -140,7 +140,7 @@ relationship to specific categorical data.</p>
 <span class='fu'>plot_box_numeric</span>(
   <span class='no'>.data</span>,
   <span class='no'>...</span>,
-  <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Box plot by numerical variables"</span>,
+  <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Distribution by numerical variables"</span>,
   <span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</pre>
@@ -181,7 +181,7 @@ The default is TRUE. if TRUE provides a base theme that focuses on typographic e
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The The box plot helps determine whether the distribution of a numeric variable. 
+    <p>The box plot helps determine whether the distribution of a numeric variable. 
 plot_box_numeric() shows box plots of several numeric variables 
 on one screen. This function can also display a box plot for each level of a specific 
 categorical variable.</p>
@@ -208,7 +208,7 @@ categorical variable.</p>
 
 <span class='co'># Using groupd_df  ------------------------------</span>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>smoking</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/group_by.html'>group_by</a></span>(<span class='no'>smoking</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>plot_box_numeric</span>()</div><div class='img'><img src='plot_box_numeric.data.frame-2.png' alt='' width='700' height='433' /></div><div class='input'>  
 # heartfailure %&gt;% 
 #   group_by(smoking) %&gt;% 

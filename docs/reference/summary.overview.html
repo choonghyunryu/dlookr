@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -124,7 +124,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for overview</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>object</span>, <span class='kw'>html</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -132,6 +132,11 @@
     <tr>
       <th>object</th>
       <td><p>an object of class "overview", usually, a result of a call to overview().</p></td>
+    </tr>
+    <tr>
+      <th>html</th>
+      <td><p>logical. whether to send summary results to html. The default is FALSE, 
+which prints to the R console.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -149,38 +154,42 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='no'>ov</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='overview.html'>overview</a></span>(<span class='no'>jobchange</span>)
-<span class='no'>ov</span></div><div class='output co'>#&gt;     division        metrics   value
-#&gt; 1       size   observations   19158
-#&gt; 2       size      variables      14
-#&gt; 3       size         values  268212
-#&gt; 4       size    memory_size 2318464
-#&gt; 5    missing   complete_obs    8955
-#&gt; 6    missing    missing_obs   10203
-#&gt; 7    missing   missing_vars       8
-#&gt; 8    missing missing_values   20733
-#&gt; 9  data_type       numerics       1
-#&gt; 10 data_type       integers       1
-#&gt; 11 data_type        factors       7
-#&gt; 12 data_type     characters       1
-#&gt; 13 data_type         others       4</div><div class='input'>
+<span class='no'>ov</span></div><div class='output co'>#&gt;      division               metrics   value
+#&gt; 1        size          observations   19158
+#&gt; 2        size             variables      14
+#&gt; 3        size                values  268212
+#&gt; 4        size           memory size 2318464
+#&gt; 5  duplicated duplicate observation       0
+#&gt; 6     missing  complete observation    8955
+#&gt; 7     missing   missing observation   10203
+#&gt; 8     missing     missing variables       8
+#&gt; 9     missing        missing values   20733
+#&gt; 10  data type              numerics       1
+#&gt; 11  data type              integers       1
+#&gt; 12  data type       factors/ordered      11
+#&gt; 13  data type            characters       1
+#&gt; 14  data type                others       0</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>ov</span>)</div><div class='output co'>#&gt; ── Data Scale ──────────────────────────────────────────────
-#&gt; ● Number of observations           :     19,158
-#&gt; ● Number of variables              :         14
-#&gt; ● Number of values                 :    268,212
-#&gt; ● Size of located memory(bytes)    :  2,318,464
+#&gt; • Number of observations            :     19,158
+#&gt; • Number of variables               :         14
+#&gt; • Number of values                  :    268,212
+#&gt; • Size of located memory(bytes)     :  2,318,464
+#&gt; 
+#&gt; ── Duplicated Data ─────────────────────────────────────────
+#&gt; • Number of duplicated observations :          0 (0%)
 #&gt; 
 #&gt; ── Missing Data ────────────────────────────────────────────
-#&gt; ● Number of completed observations :      8,955
-#&gt; ● Number of observations with N/A  :     10,203
-#&gt; ● Number of variables with N/A     :          8
-#&gt; ● Number of N/A                    :     20,733
+#&gt; • Number of completed observations  :      8,955
+#&gt; • Number of observations with NA    :     10,203 (53.26%)
+#&gt; • Number of variables with NA       :          8
+#&gt; • Number of NA                      :     20,733
 #&gt; 
 #&gt; ── Data Type ───────────────────────────────────────────────
-#&gt; ● Number of numeric variables      :          1
-#&gt; ● Number of integer variables      :          1
-#&gt; ● Number of factors variables      :          7
-#&gt; ● Number of character variables    :          1
-#&gt; ● Number of other variables        :          4
+#&gt; • Number of numeric variables       :          1
+#&gt; • Number of integer variables       :          1
+#&gt; • Number of factors variables       :         11
+#&gt; • Number of character variables     :          1
+#&gt; • Number of other variables         :          0
 #&gt; 
 #&gt; ── Individual variables ────────────────────────────────────
 #&gt;              Variables Data Type
