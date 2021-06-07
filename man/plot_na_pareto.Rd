@@ -10,7 +10,7 @@ plot_na_pareto(
   relative = FALSE,
   main = NULL,
   col = "black",
-  grade = list(Good = 0.05, OK = 0.4, Bad = 0.8, Remove = 1),
+  grade = list(Good = 0.05, OK = 0.1, NotBad = 0.2, Bad = 0.5, Remove = 1),
   plot = TRUE,
   typographic = TRUE
 )
@@ -30,7 +30,7 @@ In case of FALSE, set it to frequency.}
 \item{col}{character. The color of line for display the cumulative percentage.}
 
 \item{grade}{list. Specifies the cut-off to set the grade of the variable according to the ratio of missing values.
-The default values are Good: [0, 0.05], OK: (0.05, 0.4], Bad: (0.4, 0.8], Remove: (0.8, 1].}
+The default values are Good: [0, 0.05], OK: (0.05, 0.1], NotBad: (0.1, 0.2], Bad: (0.2, 0.5], Remove: (0.5, 1].}
 
 \item{plot}{logical. If this value is TRUE then visualize plot. else if FALSE, return aggregate information about missing values.}
 
