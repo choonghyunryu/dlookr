@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -129,7 +129,7 @@
   <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
-  <span class='kw'>grade</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>Good</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>OK</span> <span class='kw'>=</span> <span class='fl'>0.4</span>, <span class='kw'>Bad</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>Remove</span> <span class='kw'>=</span> <span class='fl'>1</span>),
+  <span class='kw'>grade</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>Good</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>OK</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>NotBad</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>Bad</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>Remove</span> <span class='kw'>=</span> <span class='fl'>1</span>),
   <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</pre>
@@ -163,7 +163,7 @@ In case of FALSE, set it to frequency.</p></td>
     <tr>
       <th>grade</th>
       <td><p>list. Specifies the cut-off to set the grade of the variable according to the ratio of missing values.
-The default values are Good: [0, 0.05], OK: (0.05, 0.4], Bad: (0.4, 0.8], Remove: (0.8, 1].</p></td>
+The default values are Good: [0, 0.05], OK: (0.05, 0.1], NotBad: (0.1, 0.2], Bad: (0.2, 0.5], Remove: (0.5, 1].</p></td>
     </tr>
     <tr>
       <th>plot</th>
@@ -187,23 +187,23 @@ The default is TRUE. if TRUE provides a base theme that focuses on typographic e
 
 <span class='no'>jobchange2</span> <span class='kw'>%&gt;%</span>
   <span class='no'>diagnose</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span>(<span class='no'>missing_count</span>))</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 14 x 6</span><span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span>(<span class='no'>missing_count</span>))</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 14 x 6</span>
 #&gt;    variables      types   missing_count missing_percent unique_count unique_rate
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> company_type   factor            325           32.5             7       0.007
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> company_size   ordered           313           31.3             9       0.009
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> gender         factor            227           22.7             4       0.004
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> major_discipl… factor            161           16.1             7       0.007
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> last_new_job   ordered            24            2.4             7       0.007
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> education_lev… ordered            17            1.7             6       0.006
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> enrolled_univ… factor             11            1.10            4       0.004
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> experience     ordered             3            0.3            23       0.023
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> enrollee_id    charac…             0            0            </span><span style='text-decoration: underline;'>1</span><span>000       1    
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> city           factor              0            0              88       0.088
-#&gt; </span><span style='color: #BCBCBC;'>11</span><span> city_dev_index numeric             0            0              72       0.072
-#&gt; </span><span style='color: #BCBCBC;'>12</span><span> relevent_expe… factor              0            0               2       0.002
-#&gt; </span><span style='color: #BCBCBC;'>13</span><span> training_hours integer             0            0             194       0.194
-#&gt; </span><span style='color: #BCBCBC;'>14</span><span> job_chnge      factor              0            0               2       0.002</div><div class='input'>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> company_type   factor            325            32.5            7       0.007
+#&gt; <span style='color: #BCBCBC;'> 2</span> company_size   ordered           313            31.3            9       0.009
+#&gt; <span style='color: #BCBCBC;'> 3</span> gender         factor            227            22.7            4       0.004
+#&gt; <span style='color: #BCBCBC;'> 4</span> major_discipl… factor            161            16.1            7       0.007
+#&gt; <span style='color: #BCBCBC;'> 5</span> last_new_job   ordered            24             2.4            7       0.007
+#&gt; <span style='color: #BCBCBC;'> 6</span> education_lev… ordered            17             1.7            6       0.006
+#&gt; <span style='color: #BCBCBC;'> 7</span> enrolled_univ… factor             11             1.1            4       0.004
+#&gt; <span style='color: #BCBCBC;'> 8</span> experience     ordered             3             0.3           23       0.023
+#&gt; <span style='color: #BCBCBC;'> 9</span> enrollee_id    charac…             0             0           <span style='text-decoration: underline;'>1</span>000       1    
+#&gt; <span style='color: #BCBCBC;'>10</span> city           factor              0             0             88       0.088
+#&gt; <span style='color: #BCBCBC;'>11</span> city_dev_index numeric             0             0             72       0.072
+#&gt; <span style='color: #BCBCBC;'>12</span> relevent_expe… factor              0             0              2       0.002
+#&gt; <span style='color: #BCBCBC;'>13</span> training_hours integer             0             0            194       0.194
+#&gt; <span style='color: #BCBCBC;'>14</span> job_chnge      factor              0             0              2       0.002</div><div class='input'>
 <span class='co'># Visualize pareto chart for variables with missing value.</span>
 <span class='fu'>plot_na_pareto</span>(<span class='no'>jobchange2</span>)</div><div class='img'><img src='plot_na_pareto-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Visualize pareto chart for variables with missing value.</span>
@@ -218,20 +218,20 @@ The default is TRUE. if TRUE provides a base theme that focuses on typographic e
 <span class='fu'>plot_na_pareto</span>(<span class='no'>jobchange2</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>only_na</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
                <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"Pareto Chart for jobchange"</span>)</div><div class='img'><img src='plot_na_pareto-6.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Return the aggregate information about missing values.</span>
-<span class='fu'>plot_na_pareto</span>(<span class='no'>jobchange2</span>, <span class='kw'>only_na</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 8 x 5</span><span>
-#&gt;   variable            frequencies ratio grade cumulative
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>                     </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> company_type                325 0.325 OK          30.1
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> company_size                313 0.313 OK          59.0
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> gender                      227 0.227 OK          80.0
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> major_discipline            161 0.161 OK          94.9
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> last_new_job                 24 0.024 Good        97.1
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> education_level              17 0.017 Good        98.7
-#&gt; </span><span style='color: #BCBCBC;'>7</span><span> enrolled_university          11 0.011 Good        99.7
-#&gt; </span><span style='color: #BCBCBC;'>8</span><span> experience                    3 0.003 Good       100  </div><div class='input'>
+<span class='fu'>plot_na_pareto</span>(<span class='no'>jobchange2</span>, <span class='kw'>only_na</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 8 x 5</span>
+#&gt;   variable            frequencies ratio grade  cumulative
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>                     <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> company_type                325 0.325 Bad          30.1
+#&gt; <span style='color: #BCBCBC;'>2</span> company_size                313 0.313 Bad          59.0
+#&gt; <span style='color: #BCBCBC;'>3</span> gender                      227 0.227 Bad          80.0
+#&gt; <span style='color: #BCBCBC;'>4</span> major_discipline            161 0.161 NotBad       94.9
+#&gt; <span style='color: #BCBCBC;'>5</span> last_new_job                 24 0.024 Good         97.1
+#&gt; <span style='color: #BCBCBC;'>6</span> education_level              17 0.017 Good         98.7
+#&gt; <span style='color: #BCBCBC;'>7</span> enrolled_university          11 0.011 Good         99.7
+#&gt; <span style='color: #BCBCBC;'>8</span> experience                    3 0.003 Good        100  </div><div class='input'>
 <span class='co'># Not support typographic elements</span>
 <span class='fu'>plot_na_pareto</span>(<span class='no'>jobchange2</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot_na_pareto-7.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

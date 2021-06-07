@@ -129,7 +129,7 @@ plot_na_hclust <- function (x, main = NULL, col.left = "#009E73", col.right = "#
 #' @param relative logical. If this argument is TRUE, it sets the unit of the left y-axis to relative frequency. 
 #' In case of FALSE, set it to frequency.
 #' @param grade list. Specifies the cut-off to set the grade of the variable according to the ratio of missing values.
-#' The default values are Good: [0, 0.05], OK: (0.05, 0.4], Bad: (0.4, 0.8], Remove: (0.8, 1].
+#' The default values are Good: [0, 0.05], OK: (0.05, 0.1], NotBad: (0.1, 0.2], Bad: (0.2, 0.5], Remove: (0.5, 1].
 #' @param main character. Main title.
 #' @param col character. The color of line for display the cumulative percentage.
 #' @param plot logical. If this value is TRUE then visualize plot. else if FALSE, return aggregate information about missing values.
@@ -178,7 +178,7 @@ plot_na_hclust <- function (x, main = NULL, col.left = "#009E73", col.right = "#
 #' @import ggplot2
 #' @export
 plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, col = "black",
-                            grade = list(Good = 0.05, OK = 0.4, Bad = 0.8, Remove = 1),
+                            grade = list(Good = 0.05, OK = 0.1, NotBad = 0.2, Bad = 0.5, Remove = 1),
                             plot = TRUE, typographic = TRUE)
 {
   if (sum(is.na(x)) == 0) {
@@ -266,7 +266,8 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
       theme(legend.position = "top",
             axis.title.x = element_text(size = 12),
             axis.title.y = element_text(size = 12),
-            axis.title.y.right = element_text(size = 12))
+            axis.title.y.right = element_text(size = 12),
+            axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
   }
   
   suppressWarnings(p)

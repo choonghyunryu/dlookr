@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -70,13 +70,13 @@
 
       
 
-      </header><script src="diagonosis_files/header-attrs-2.6.4/header-attrs.js"></script><div class="row">
+      </header><script src="diagonosis_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Data quality diagnosis</h1>
                         <h4 class="author">Choonghyun Ryu</h4>
             
-            <h4 class="date">2021-01-30</h4>
+            <h4 class="date">2021-06-07</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/choonghyunryu/dlookr/blob/master/vignettes/diagonosis.Rmd"><code>vignettes/diagonosis.Rmd</code></a></small>
       <div class="hidden name"><code>diagonosis.Rmd</code></div>
@@ -439,12 +439,12 @@ diagnose(flights, -(year:day))
 <p>If the <code>plot</code> argument is set to FALSE, information about missing values is returned instead of plotting.</p>
 <div class="sourceCode" id="cb18"><html><body><pre class="r">plot_na_pareto(mice::boys, only_na = TRUE, plot = FALSE)
 # A tibble: 8 x 5
-  variable frequencies  ratio grade cumulative
-  &lt;fct&gt;          &lt;int&gt;  &lt;dbl&gt; &lt;fct&gt;      &lt;dbl&gt;
-1 tv               522 0.698  Bad         32.2
-2 gen              503 0.672  Bad         63.2
-3 phb              503 0.672  Bad         94.2
-4 hc                46 0.0615 OK          97.0
+  variable frequencies  ratio grade  cumulative
+  &lt;fct&gt;          &lt;int&gt;  &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;
+1 tv               522 0.698  Remove       32.2
+2 gen              503 0.672  Remove       63.2
+3 phb              503 0.672  Remove       94.2
+4 hc                46 0.0615 OK           97.0
 # … with 4 more rows</pre></body></html></div>
 </div>
 <div id="visualize-combination-chart-using-plot_na_hclust" class="section level4">
@@ -652,10 +652,10 @@ con_sqlite %&gt;%
 # A tibble: 8 x 6
   variables   types   missing_count missing_percent unique_count unique_rate
   &lt;chr&gt;       &lt;chr&gt;           &lt;int&gt;           &lt;dbl&gt;        &lt;int&gt;       &lt;dbl&gt;
-1 Sales       numeric             0              0           182       0.91 
-2 CompPrice   numeric             0              0            65       0.325
-3 Income      numeric            14              7.           81       0.405
-4 Advertising numeric             0              0            23       0.115
+1 Sales       numeric             0               0          182       0.91 
+2 CompPrice   numeric             0               0           65       0.325
+3 Income      numeric            10               5           83       0.415
+4 Advertising numeric             0               0           23       0.115
 # … with 4 more rows</pre></body></html></div>
 </div>
 <div id="diagnose-data-quality-of-categorical-variables-in-the-dbms" class="section level3">
@@ -667,7 +667,7 @@ con_sqlite %&gt;%
   diagnose_category(7, in_database = FALSE, collect_size = 200) 
 # A tibble: 3 x 6
   variables levels     N  freq ratio  rank
-* &lt;chr&gt;     &lt;chr&gt;  &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt;
+  &lt;chr&gt;     &lt;chr&gt;  &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt;
 1 ShelveLoc Medium   200   113  56.5     1
 2 ShelveLoc Bad      200    47  23.5     2
 3 ShelveLoc Good     200    40  20       3
@@ -697,7 +697,7 @@ con_sqlite %&gt;%
   &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt;   &lt;int&gt;
 1 Sales           0   5.39   7.50   7.49   9.32  16.3     1     0       2
 2 CompPrice      77 115    125.   125    135    175       0     0       2
-3 Income         21  42     68.5   69     91    120       0     0       0
+3 Income         21  42     68.8   69     92    120       0     0       0
 4 Advertising     0   0      6.64   5     12     29     144     0       0
 # … with 4 more rows
   
@@ -709,7 +709,7 @@ con_sqlite %&gt;%
   variables   min    Q1  mean median    Q3   max  zero minus outlier
 * &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt;   &lt;int&gt;
 1 Sales         0  5.26  7.42   7.50  9.10  14.9     1     0       0
-2 Income       21 46.2  71.0   73.5  92.8  120       0     0       0</pre></body></html></div>
+2 Income       21 48    71.6   74    93    120       0     0       0</pre></body></html></div>
 </div>
 <div id="diagnose-outlier-of-numerical-variables-in-the-dbms" class="section level3">
 <h3 class="hasAnchor">
