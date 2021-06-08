@@ -73,7 +73,7 @@ certain class from an object inheriting data.frame." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -127,7 +127,8 @@ certain class from an object inheriting data.frame.</p>
 
     <pre class="usage"><span class='fu'>find_class</span>(
   <span class='no'>df</span>,
-  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"numerical"</span>, <span class='st'>"categorical"</span>, <span class='st'>"categorical2"</span>),
+  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"numerical"</span>, <span class='st'>"categorical"</span>, <span class='st'>"categorical2"</span>, <span class='st'>"date_categorical"</span>,
+    <span class='st'>"date_categorical2"</span>),
   <span class='kw'>index</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</pre>
 
@@ -143,7 +144,9 @@ certain class from an object inheriting data.frame.</p>
       <td><p>character. Defines a group of classes to be searched.
 "numerical" searches for "numeric" and "integer" classes,
 "categorical" searches for "factor" and "ordered" classes.
-"categorical2" adds "character" class to "categorical".</p></td>
+"categorical2" adds "character" class to "categorical".
+"date_categorical" adds result of "categorical2" and "Date", "POSIXct".
+"date_categorical2" adds result of "categorical" and "Date", "POSIXct".</p></td>
     </tr>
     <tr>
       <th>index</th>

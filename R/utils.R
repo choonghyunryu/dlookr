@@ -42,6 +42,8 @@ get_class <- function(df) {
 #' "numerical" searches for "numeric" and "integer" classes,
 #' "categorical" searches for "factor" and "ordered" classes.
 #' "categorical2" adds "character" class to "categorical".
+#' "date_categorical" adds result of "categorical2" and "Date", "POSIXct".
+#' "date_categorical2" adds result of "categorical" and "Date", "POSIXct".
 #' @param index logical. If TRUE is return numeric vector that is variables index.
 #' and if FALSE is return character vector that is variables name.
 #' default is TRUE.
@@ -76,7 +78,8 @@ get_class <- function(df) {
 #' }
 #' @importFrom methods is
 #' @export
-find_class <- function(df, type = c("numerical", "categorical", "categorical2"),
+find_class <- function(df, type = c("numerical", "categorical", "categorical2",
+                                    "date_categorical", "date_categorical2"), 
                        index = TRUE) {
   if (!is.data.frame(df)) {
     stop("The argument 'df' is not an object inheriting from data.frame.")
@@ -92,6 +95,11 @@ find_class <- function(df, type = c("numerical", "categorical", "categorical2"),
     idx <- which(clist %in% c("factor", "ordered", "labelled"))
   } else if (type == "categorical2") {
     idx <- which(clist %in% c("factor", "ordered", "labelled", "character"))
+  } else if (type == "date_categorical") {
+    idx <- which(clist %in% c("factor", "ordered", "labelled", "Date", "POSIXct"))
+  } else if (type == "date_categorical2") {
+    idx <- which(clist %in% c("factor", "ordered", "labelled", "character",
+                              "Date", "POSIXct"))
   }
 
   if (!index) idx <- names(df)[idx]

@@ -163,6 +163,8 @@ diagnose_category <- function(.data, ...) {
 #' you can adjust the returned rows appropriately by using "n".
 #' @param add_character logical. Decide whether to include text variables in the
 #' diagnosis of categorical data. The default value is TRUE, which also includes character variables.
+#' @param add_date ogical. Decide whether to include Date and POSIXct variables in the
+#' diagnosis of categorical data. The default value is TRUE, which also includes character variables.
 #' @return an object of tbl_df.
 #' @seealso \code{\link{diagnose_category.tbl_dbi}}, \code{\link{diagnose.data.frame}}, \code{\link{diagnose_numeric.data.frame}}, \code{\link{diagnose_outlier.data.frame}}.
 #' @export
@@ -231,18 +233,22 @@ diagnose_category <- function(.data, ...) {
 #' @importFrom rlang quos
 #' @export
 diagnose_category.data.frame <- function(.data, ..., top = 10, type = c("rank", "n")[2], 
-                                         add_character = TRUE) {
+                                         add_character = TRUE, add_date = TRUE) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
-  diagn_category_impl(.data, vars, top, type, add_character)
+  diagn_category_impl(.data, vars, top, type, add_character, add_date)
 }
 
-diagn_category_impl <- function(df, vars, top, type, add_character) {
+diagn_category_impl <- function(df, vars, top, type, add_character, add_date) {
   if (length(vars) == 0) vars <- names(df)
 
   if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
 
-  if (add_character)
+  if (add_date & add_character)
+    idx_factor <- find_class(df[, vars], type = "date_categorical2")  
+  else if (add_character & !add_date)
     idx_factor <- find_class(df[, vars], type = "categorical2")
+  else if (!add_character & add_date)
+    idx_factor <- find_class(df[, vars], type = "date_categorical")
   else
     idx_factor <- find_class(df[, vars], type = "categorical")
   
@@ -259,6 +265,7 @@ diagn_category_impl <- function(df, vars, top, type, add_character) {
   get_topn <- function(df, var, top, type) {
     tab <- df %>%
       select(variable = var) %>%
+      mutate(variable = as.character(variable)) %>% 
       count(variable, sort = TRUE) %>%
       transmute(variables = var, levels = variable, N = sum(n), freq = n,
                 ratio = n / sum(n) * 100, 

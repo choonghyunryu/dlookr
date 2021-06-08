@@ -6,7 +6,8 @@
 \usage{
 find_class(
   df,
-  type = c("numerical", "categorical", "categorical2"),
+  type = c("numerical", "categorical", "categorical2", "date_categorical",
+    "date_categorical2"),
   index = TRUE
 )
 }
@@ -16,7 +17,9 @@ find_class(
 \item{type}{character. Defines a group of classes to be searched.
 "numerical" searches for "numeric" and "integer" classes,
 "categorical" searches for "factor" and "ordered" classes.
-"categorical2" adds "character" class to "categorical".}
+"categorical2" adds "character" class to "categorical".
+"date_categorical" adds result of "categorical2" and "Date", "POSIXct".
+"date_categorical2" adds result of "categorical" and "Date", "POSIXct".}
 
 \item{index}{logical. If TRUE is return numeric vector that is variables index.
 and if FALSE is return character vector that is variables name.

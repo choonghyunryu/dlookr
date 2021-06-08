@@ -12,7 +12,8 @@ diagnose_category(.data, ...)
   ...,
   top = 10,
   type = c("rank", "n")[2],
-  add_character = TRUE
+  add_character = TRUE,
+  add_date = TRUE
 )
 }
 \arguments{
@@ -39,6 +40,9 @@ If there are too many rows to be returned because there are too many ties,
 you can adjust the returned rows appropriately by using "n".}
 
 \item{add_character}{logical. Decide whether to include text variables in the
+diagnosis of categorical data. The default value is TRUE, which also includes character variables.}
+
+\item{add_date}{ogical. Decide whether to include Date and POSIXct variables in the
 diagnosis of categorical data. The default value is TRUE, which also includes character variables.}
 }
 \value{

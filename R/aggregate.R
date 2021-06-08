@@ -1045,7 +1045,7 @@ plot_hist_numeric_impl <- function(df, vars, title, each, typographic) {
         mutate(variables = var) %>% 
         ggplot(aes_string(x = var)) +
         geom_histogram(color="#e9ecef", fill = "steelblue", alpha = 0.8,
-                       binwidth = function(x) 2 * IQR(x) / (length(x)^(1/3))) +
+                       bins = round(log2(nrow(df)) + 1)) +
         labs(title = title, subtitle = var, x = xlab) +        
         theme(axis.title.y = element_blank(),
               axis.text.y = element_blank(),

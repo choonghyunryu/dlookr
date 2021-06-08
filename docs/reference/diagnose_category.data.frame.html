@@ -133,7 +133,8 @@ diagnosing the quality of the variables of data.frame or tbl_df.</p>
   <span class='no'>...</span>,
   <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>10</span>,
   <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"rank"</span>, <span class='st'>"n"</span>)[<span class='fl'>2</span>],
-  <span class='kw'>add_character</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  <span class='kw'>add_character</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>add_date</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -172,6 +173,11 @@ you can adjust the returned rows appropriately by using "n".</p></td>
     <tr>
       <th>add_character</th>
       <td><p>logical. Decide whether to include text variables in the
+diagnosis of categorical data. The default value is TRUE, which also includes character variables.</p></td>
+    </tr>
+    <tr>
+      <th>add_date</th>
+      <td><p>ogical. Decide whether to include Date and POSIXct variables in the
 diagnosis of categorical data. The default value is TRUE, which also includes character variables.</p></td>
     </tr>
     </table>
@@ -228,8 +234,12 @@ variable is likely to be an identifier.</p>
 <span class='co'># diagnose_category(jobchange, 7)</span>
 
 <span class='co'># Using pipes ---------------------------------</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
-
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'>
 <span class='co'># Diagnosis of all categorical variables</span>
 <span class='no'>jobchange</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>diagnose_category</span>()</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 78 x 6</span>
