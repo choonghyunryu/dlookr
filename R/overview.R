@@ -35,6 +35,8 @@
 #'     \item integers : number of variables that is data type is integer.
 #'     \item factors : number of variables that is data type is factor.
 #'     \item characters : number of variables that is data type is character.
+#'     \item Dates : number of variables that is data type is Date.
+#'     \item POSIXcts : number of variables that is data type is POSIXct.
 #'     \item others : number of variables that is not above.
 #'   }
 #'   \item value : value of metrics.
@@ -83,11 +85,12 @@ overview <- function(.data) {
   division_metric <- c("size", "size", "size", "size", 
                        "duplicated", "missing", "missing", "missing", "missing", 
                        "data type", "data type", "data type", "data type", 
-                       "data type")
+                       "data type", "data type", "data type")
   name_metric <- c("observations", "variables", "values", "memory size",
                    "duplicate observation", "complete observation", 
                    "missing observation", "missing variables", "missing values", 
-                   "numerics", "integers", "factors/ordered", "characters", "others")
+                   "numerics", "integers", "factors/ordered", "characters", 
+                   "Dates", "POSIXcts", "others")
   
   result <- data.frame(
     division = division_metric,
@@ -100,10 +103,14 @@ overview <- function(.data) {
               sum(info_class$class == "integer"),
               sum(info_class$class %in% c("factor", "ordered")),
               sum(info_class$class == "character"),
+              sum(info_class$class == "Date"),     
+              sum(info_class$class == "POSIXct"),                   
               sum(!info_class$class %in% 
-                    c("numeric", "integer", "factor", "ordered", "character"))
-              )
-    )
+                    c("numeric", "integer", "factor", "ordered", "character",
+                      "Date", "POSIXct"))
+              ),
+    stringsAsFactors = FALSE
+  )
   
   attr(result, "duplicated") <- duplicated
   attr(result, "na_col") <- na_col
@@ -152,6 +159,8 @@ summary.overview <- function(object, html = FALSE, ...)  {
            "Number of integer variables",
            "Number of factors variables",
            "Number of character variables",
+           "Number of Date variables",  
+           "Number of POSIXct variables",             
            "Number of other variables") 
   
   nms <- format(nms)
@@ -266,7 +275,7 @@ summary.overview <- function(object, html = FALSE, ...)  {
       cat()
   }  
 
-  info_type <- paste0(nms[10:14], " :  ", vls[10:14])
+  info_type <- paste0(nms[10:16], " :  ", vls[10:16])
   if (html) {
     info_type <- paste(info_type, "<br>")
   }  

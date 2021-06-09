@@ -159,6 +159,8 @@ data.frame is as follow.:</p><ul>
 <li><p>integers : number of variables that is data type is integer.</p></li>
 <li><p>factors : number of variables that is data type is factor.</p></li>
 <li><p>characters : number of variables that is data type is character.</p></li>
+<li><p>Dates : number of variables that is data type is Date.</p></li>
+<li><p>POSIXcts : number of variables that is data type is POSIXct.</p></li>
 <li><p>others : number of variables that is not above.</p></li>
 </ul></li>
 <li><p>value : value of metrics.</p></li>
@@ -201,7 +203,9 @@ and the data types of variables.</p>
 #&gt; 11  data type              integers       1
 #&gt; 12  data type       factors/ordered      11
 #&gt; 13  data type            characters       1
-#&gt; 14  data type                others       0</div><div class='input'>
+#&gt; 14  data type                 Dates       0
+#&gt; 15  data type              POSIXcts       0
+#&gt; 16  data type                others       0</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>ov</span>)</div><div class='output co'>#&gt; ── Data Scale ──────────────────────────────────────────────
 #&gt; • Number of observations            :     19,158
 #&gt; • Number of variables               :         14
@@ -222,6 +226,8 @@ and the data types of variables.</p>
 #&gt; • Number of integer variables       :          1
 #&gt; • Number of factors variables       :         11
 #&gt; • Number of character variables     :          1
+#&gt; • Number of Date variables          :          0
+#&gt; • Number of POSIXct variables       :          0
 #&gt; • Number of other variables         :          0
 #&gt; 
 #&gt; ── Individual variables ────────────────────────────────────

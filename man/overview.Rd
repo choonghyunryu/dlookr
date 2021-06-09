@@ -36,6 +36,8 @@ data.frame is as follow.:
     \item integers : number of variables that is data type is integer.
     \item factors : number of variables that is data type is factor.
     \item characters : number of variables that is data type is character.
+    \item Dates : number of variables that is data type is Date.
+    \item POSIXcts : number of variables that is data type is POSIXct.
     \item others : number of variables that is not above.
   }
   \item value : value of metrics.
