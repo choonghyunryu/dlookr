@@ -12,7 +12,7 @@
 
 <meta name="author" content="Choonghyun Ryu" />
 
-<meta name="date" content="2021-06-07" />
+<meta name="date" content="2021-06-22" />
 
 <title>Data quality diagnosis</title>
 
@@ -140,7 +140,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <h1 class="title toc-ignore">Data quality diagnosis</h1>
 <h4 class="author">Choonghyun Ryu</h4>
-<h4 class="date">2021-06-07</h4>
+<h4 class="date">2021-06-22</h4>
 
 
 
@@ -326,14 +326,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>`<code>diagnose_category()</code> can diagnose all categorical variables of <code>flights</code> as follows.:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">diagnose_category</span>(flights)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 33 x 6</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 43 x 6</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  variables levels      N  freq ratio  rank</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>chr<span class="sc">&gt;</span>   <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> carrier   UA     <span class="dv">336776</span> <span class="dv">58665</span>  <span class="fl">17.4</span>     <span class="dv">1</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> carrier   B6     <span class="dv">336776</span> <span class="dv">54635</span>  <span class="fl">16.2</span>     <span class="dv">2</span></span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> carrier   EV     <span class="dv">336776</span> <span class="dv">54173</span>  <span class="fl">16.1</span>     <span class="dv">3</span></span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> carrier   DL     <span class="dv">336776</span> <span class="dv">48110</span>  <span class="fl">14.3</span>     <span class="dv">4</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 29 more rows</span></span></code></pre></div>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 39 more rows</span></span></code></pre></div>
 <p>In collaboration with <code>filter()</code> in the <code>dplyr</code> package, we can see that the <code>tailnum</code> variable is ranked in top 1 with 2,512 missing values in the case where the missing value is included in the top 10:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">diagnose_category</span>(flights) <span class="sc">%&gt;%</span> </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(levels))</span>
@@ -644,7 +644,7 @@ Data diagnosis report outlier diagnosis contents
 <span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>       <span class="er">&lt;</span>chr<span class="sc">&gt;</span>           <span class="er">&lt;</span>int<span class="sc">&gt;</span>           <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>        <span class="er">&lt;</span>int<span class="sc">&gt;</span>       <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
 <span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> Sales       numeric             <span class="dv">0</span>               <span class="dv">0</span>          <span class="dv">182</span>       <span class="fl">0.91</span> </span>
 <span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> CompPrice   numeric             <span class="dv">0</span>               <span class="dv">0</span>           <span class="dv">65</span>       <span class="fl">0.325</span></span>
-<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> Income      numeric             <span class="dv">6</span>               <span class="dv">3</span>           <span class="dv">82</span>       <span class="fl">0.41</span> </span>
+<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> Income      numeric             <span class="dv">8</span>               <span class="dv">4</span>           <span class="dv">84</span>       <span class="fl">0.42</span> </span>
 <span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> Advertising numeric             <span class="dv">0</span>               <span class="dv">0</span>           <span class="dv">23</span>       <span class="fl">0.115</span></span>
 <span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 4 more rows</span></span></code></pre></div>
 </div>
@@ -685,7 +685,7 @@ Data diagnosis report outlier diagnosis contents
 <span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>       <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>  <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>  <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>  <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>  <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span>   <span class="er">&lt;</span>int<span class="sc">&gt;</span></span>
 <span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> Sales           <span class="dv">0</span>   <span class="fl">5.39</span>   <span class="fl">7.50</span>   <span class="fl">7.49</span>   <span class="fl">9.32</span>  <span class="fl">16.3</span>     <span class="dv">1</span>     <span class="dv">0</span>       <span class="dv">2</span></span>
 <span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> CompPrice      <span class="dv">77</span> <span class="dv">115</span>    <span class="fl">125.</span>   <span class="dv">125</span>    <span class="dv">135</span>    <span class="dv">175</span>       <span class="dv">0</span>     <span class="dv">0</span>       <span class="dv">2</span></span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> Income         <span class="dv">21</span>  <span class="dv">42</span>     <span class="fl">68.5</span>   <span class="dv">69</span>     <span class="fl">90.2</span>  <span class="dv">120</span>       <span class="dv">0</span>     <span class="dv">0</span>       <span class="dv">0</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> Income         <span class="dv">21</span>  <span class="fl">43.8</span>   <span class="fl">69.2</span>   <span class="dv">70</span>     <span class="dv">92</span>    <span class="dv">120</span>       <span class="dv">0</span>     <span class="dv">0</span>       <span class="dv">0</span></span>
 <span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> Advertising     <span class="dv">0</span>   <span class="dv">0</span>      <span class="fl">6.64</span>   <span class="dv">5</span>     <span class="dv">12</span>     <span class="dv">29</span>     <span class="dv">144</span>     <span class="dv">0</span>       <span class="dv">0</span></span>
 <span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 4 more rows</span></span>
 <span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>  </span>
@@ -697,7 +697,7 @@ Data diagnosis report outlier diagnosis contents
 <span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>  variables   min    Q1  mean median    Q3   max  zero minus outlier</span>
 <span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>  <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span>   <span class="er">&lt;</span>int<span class="sc">&gt;</span></span>
 <span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> Sales         <span class="dv">0</span>  <span class="fl">5.26</span>  <span class="fl">7.42</span>   <span class="fl">7.50</span>  <span class="fl">9.10</span>  <span class="fl">14.9</span>     <span class="dv">1</span>     <span class="dv">0</span>       <span class="dv">0</span></span>
-<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> Income       <span class="dv">21</span> <span class="dv">48</span>    <span class="fl">71.7</span>   <span class="dv">74</span>    <span class="dv">93</span>    <span class="dv">120</span>       <span class="dv">0</span>     <span class="dv">0</span>       <span class="dv">0</span></span></code></pre></div>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> Income       <span class="dv">21</span> <span class="dv">48</span>    <span class="fl">72.1</span>   <span class="dv">74</span>    <span class="dv">93</span>    <span class="dv">120</span>       <span class="dv">0</span>     <span class="dv">0</span>       <span class="dv">0</span></span></code></pre></div>
 </div>
 <div id="diagnose-outlier-of-numerical-variables-in-the-dbms" class="section level3">
 <h3>Diagnose outlier of numerical variables in the DBMS</h3>
