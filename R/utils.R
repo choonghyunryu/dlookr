@@ -535,3 +535,117 @@ imputation_knn <- function (data, k = 10)
 }
 
 
+#' @import dplyr
+#' @importFrom tibble rownames_to_column as_tibble
+#' @importFrom purrr map_df
+num_summarise <- function (.data, 
+                           statistics = c("mean", "sd", "se_mean", "IQR", 
+                                          "skewness", "kurtosis", "quantiles"), 
+                           quantiles = c(0, 0.25, 0.5, 0.75, 1)) {
+  if (missing(statistics)) 
+    statistics <- c("mean", "sd", "quantiles", "IQR")
+  
+  stats <- c("mean", "sd", "se_mean", "IQR", "skewness", 
+             "kurtosis", "quantiles")
+  
+  statistics <- base::intersect(statistics, stats)
+  
+  n <- function(x, ...) {
+    apply(as.matrix(x), 2, function(x) sum(!is.na(x)))
+  }
+  
+  na <- function(x, ...) {
+    apply(as.matrix(x), 2, function(x) sum(is.na(x)))
+  }
+  
+  mean <- function(x, ...) {
+    colMeans(as.matrix(x), na.rm = TRUE)
+  }
+  
+  sd <- function(x, ...) {
+    apply(as.matrix(x), 2, stats::sd, na.rm = TRUE)
+  }
+  
+  IQR <- function(x, ...) {
+    apply(as.matrix(x), 2, stats::IQR, na.rm = TRUE)
+  }
+  
+  se_mean <- function(x, ...) {
+    x <- as.matrix(x)
+    
+    n <- colSums(!is.na(x))
+    sd(x) / sqrt(n)
+  }
+  
+  # modified e1071::skewness
+  skewness <- function(x, ...) {
+    if (is.vector(x))  {
+      if (any(ina <- is.na(x))) {
+        x <- x[!ina]
+      }
+      
+      n <- length(x)
+      if (n < 3) 
+        return(NA)
+      
+      residual <- x - mean(x)
+      y <- sqrt(n) * sum(residual ^ 3) / (sum(residual ^ 2) ^ (3 / 2))
+      
+      return(y * sqrt(n * (n - 1)) / (n - 2))
+    }
+    
+    apply(x, 2, skewness)
+  }
+  
+  # modified e1071::kurtosis  
+  kurtosis <- function(x, ...) {
+    if (is.vector(x)) {
+      if (any(ina <- is.na(x))) {
+        x <- x[!ina]
+      }
+      
+      n <- length(x)
+      if (n < 4) 
+        return(NA)
+      
+      residual <- x - mean(x)
+      r <- n * sum(residual ^ 4) / (sum(residual ^ 2) ^ 2)
+      
+      return(((n + 1) * (r - 3) + 6) * (n - 1)/((n - 2) * (n - 3)))
+    }
+    
+    apply(x, 2, kurtosis)
+  }
+  
+  .data <- as.data.frame(.data)
+  
+  if ("quantiles" %in% statistics & length(quantiles) >= 1) {
+    df_quantiles <- .data %>% 
+      apply(2, quantile, probs = quantiles, na.rm = TRUE) %>% 
+      t() %>% 
+      tibble::as_tibble()
+    
+    names(df_quantiles) <- paste0("p", quantiles * 100) %>% 
+      ifelse(nchar(.) < 3, sub("p", "p0", .), .)
+  } else {
+    df_quantiles <- NULL
+  }
+  
+  statistics <- c("n", "na", setdiff(statistics, "quantiles"))
+  
+  df_stats <- statistics %>% 
+    purrr::map_df(
+      function(x) do.call(x, list(.data))
+    ) %>% 
+    t() %>% 
+    as.data.frame()
+  
+  names(df_stats) <- statistics
+  
+  df_stats %>% 
+    bind_cols(df_quantiles) %>% 
+    mutate_at(vars(matches("^n")), as.integer) %>% 
+    tibble::rownames_to_column(var = "variable") %>% 
+    tibble::as_tibble()
+}
+
