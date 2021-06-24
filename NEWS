@@ -21,8 +21,9 @@ CHANGES IN R VERSION 0.5.0:
     * Added the "date_categorical", "date_categorical2" for type argument 
       that find Date and POSIXct classes in find_class().
       
-    * Added the 'add_date' argument for Date, POSIXct class in diagnose_category() . 
-    
+    * Added the 'add_date' argument for Date, POSIXct class in diagnose_category(). 
+
+    * Recreated the logic in describe().     
 
 
 CHANGES IN R VERSION 0.4.5:

@@ -1328,7 +1328,7 @@ describe.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = Inf
         dplyr::collect(n = collect_size) %>%
         describe_impl(vars)
     } else {
-      group <- .data$ops$dots[[1]]
+      group <- .data$ops$dots
       
       .data %>% 
         group_by(group) %>% 

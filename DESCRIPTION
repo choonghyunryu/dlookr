@@ -34,7 +34,6 @@ Imports:
     partykit,
     prettydoc,
     purrr,
-    RcmdrMisc,
     rlang,
     rmarkdown,
     tibble,

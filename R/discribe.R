@@ -106,8 +106,6 @@ describe.data.frame <- function(.data, ...) {
 
 #' @import tibble
 #' @import dplyr
-#' @importFrom RcmdrMisc numSummary
-#' @importFrom tidyr unnest
 describe_impl <- function(df, vars) {
   if (length(vars) == 0) vars <- names(df)
 
@@ -115,54 +113,11 @@ describe_impl <- function(df, vars) {
 
   idx_numeric <- find_class(df[, vars], type = "numerical")
 
-  num_summary <- function(x) {
-    stats <- c("mean", "sd", "se(mean)", "IQR", "quantiles",
-      "skewness", "kurtosis")
-    quant <- c(0, .01, .05, .1, .2, .25, .3, .4, .5,
-      .6, .7, .75, .8, .9, .95, .99, 1)
-    vname <- c("mean", "sd", "se_mean", "IQR", "skewness", "kurtosis",
-      "p00", "p01", "p05", "p10", "p20", "p25", "p30", "p40", "p50",
-      "p60", "p70", "p75", "p80", "p90", "p95", "p99", "p100")
-    
-    cnt_complete <- sum(complete.cases(x))
-    
-    numsum <- matrix(NA, ncol = length(vname) + 2, nrow = 1,
-                     dimnames = list(NULL, paste0("C", seq(length(vname) + 2))))
-    numsum <- as_tibble(numsum)
-    
-    if (cnt_complete >= 4) {
-      result <- RcmdrMisc::numSummary(x, statistics = stats,
-                                      quantiles = quant)
-      numsum[, 3:(length(vname) + 2)] <- as_tibble(result$table)
-    } else {
-      if (cnt_complete <= 2) {
-        result <- RcmdrMisc::numSummary(x, statistics = stats[1:5],
-                                        quantiles = quant)
-        numsum[, 3:6] <- as_tibble(result$table)[, 1:4]
-        numsum[, 9:(length(vname) + 2)] <- as_tibble(result$table)[, 5:21]
-      } else if (cnt_complete <= 3) {
-        result <- RcmdrMisc::numSummary(x, statistics = stats[1:6],
-                                        quantiles = quant)
-        numsum[, 3:7] <- as_tibble(result$table)[, 1:5]
-        numsum[, 9:(length(vname) + 2)] <- as_tibble(result$table)[, 6:22]
-      }
-    }
-    
-    names(numsum)[3:(length(vname) + 2)] <- vname
-
-    numsum[, 1] <- cnt_complete
-    numsum[, 2] <- length(x) - cnt_complete
-
-    names(numsum)[1:2] <- c("n", "na")
-    
-    numsum
-  }
-
-  statistic <- lapply(vars[idx_numeric],
-                      function(x) num_summary(pull(df, x)))
-
-  tibble(variable = vars[idx_numeric], statistic) %>%
-    tidyr::unnest(cols = c(statistic))
+  quan <- c(0, .01, .05, 0.1, 0.2, 0.25, 0.3, 0.4, 0.5,
+            0.6, 0.7, 0.75, 0.8, 0.9, 0.95, 0.99, 1)
+  stats <- c("mean", "sd", "se_mean", "IQR", "skewness", 
+             "kurtosis", "quantiles")
+  num_summarise(df[, vars][idx_numeric], statistics = stats, quan)
 }
 
 #' @rdname describe.data.frame
@@ -177,81 +132,45 @@ describe.grouped_df <- function(.data, ...) {
 
 #' @import tibble
 #' @import dplyr
-#' @importFrom RcmdrMisc numSummary
 #' @importFrom purrr map_df
-#' @importFrom tidyr unnest
+#' @importFrom tibble is_tibble as_tibble
+#' @importFrom tidyselect matches
 describe_group_impl <- function(df, vars, margin) {
   if (length(vars) == 0) vars <- names(df)
-
-  if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
-
+  
+  if (length(vars) == 1 & !tibble::is_tibble(df)) df <- tibble::as_tibble(df)
+  
   idx_numeric <- find_class(df[, vars], type = "numerical")
-
-  num_summary <- function(x, .data, vars) {
-    stats <- c("mean", "sd", "se(mean)", "IQR", "quantiles",
-      "skewness", "kurtosis")
-
-    quant <- c(0, .01, .05, .1, .2, .25, .3, .4, .5,
-      .6, .7, .75, .8, .9, .95, .99, 1)
-
-    vname <- c("mean", "sd", "se_mean", "IQR", "skewness", "kurtosis",
-      "p00", "p01", "p05", "p10", "p20", "p25", "p30", "p40", "p50",
-      "p60", "p70", "p75", "p80", "p90", "p95", "p99", "p100")
-
-    if (utils::packageVersion("dplyr") >= "0.8.0") flag <- 0
-    else flag <- 1
+  
+  quan <- c(0, .01, .05, 0.1, 0.2, 0.25, 0.3, 0.4, 0.5,
+            0.6, 0.7, 0.75, 0.8, 0.9, 0.95, 0.99, 1)
+  stats <- c("mean", "sd", "se_mean", "IQR", "skewness", 
+             "kurtosis", "quantiles")
+  
+  .data <- df[, vars][idx_numeric]
+  
+  if (utils::packageVersion("dplyr") >= "0.8.0") {
+    gdf <- attr(df, "groups")
+    statistic <- purrr::map_df(seq(nrow(gdf)), function(x) 
+      gdf[x, ] %>% select(-tidyselect::matches("\\.rows")) %>% 
+        cbind(num_summarise(.data[gdf$.rows[[x]], ], stats, quan))
+    )
+  } else {
+    gdf_index <- attr(df, "indices")
+    glables <- attr(df, "labels")
     
-    cnt_complete <- sum(complete.cases(.data[x + flag, vars]))
-    
-    if (cnt_complete <= 2) {
-      stats <- stats[-c(6:7)]
-    } else if (cnt_complete <= 3) {
-      stats <- stats[-c(7)]
-    }
-    
-    result <- RcmdrMisc::numSummary(.data[x + flag, vars],
-      statistics = stats, quantiles = quant)
-
-    numsum <- as_tibble(result$table)
-
-    if (cnt_complete <= 2) {
-      numsum <- cbind(numsum[, 1:4], skewness = NA,
-        kurtosis = NA, numsum[, 5:21])
-    } else if (cnt_complete <= 3) {
-      numsum <- cbind(numsum[, 1:5], kurtosis = NA, numsum[, 5:21])
-    }
-
-    names(numsum) <- vname
-
-    add_column(numsum, n = result$n,
-      na = ifelse(is.null(result$NAs), 0, result$NAs),
-      .before = 1)
-  }
-
-  call_summary <- function(vars) {
-    if (utils::packageVersion("dplyr") >= "0.8.0") {
-      statistic <- purrr::map_df(attr(df, "groups") %>% 
-                                   select(tidyselect::matches("\\.rows")) %>% 
-                                   pull, num_summary, df, vars)
-      
-      glables <- attr(df, "groups") %>% 
-        select(-tidyselect::matches("\\.rows"))
-    } else {
-      statistic <- purrr::map_df(attr(df, "indices"),
-                                 num_summary, df, vars)
-      
-      glables <- attr(df, "labels")
-    }  
-
-    dplyr::bind_cols(tibble(variable = rep(vars, nrow(statistic))),
-      as_tibble(glables), statistic)
-  }
-
-  statistic <- lapply(vars[idx_numeric], function(x) call_summary(x))
-
-  desc <- tibble(statistic) %>%
-    tidyr::unnest(cols = c(statistic))
-
-  desc
+    statistic <- purrr::map_df(seq(nrow(glables)), function(x) 
+      glables[x, ] %>% 
+        cbind(num_summarise(.data[gdf_index[[x]], ], stats, quan))
+    )
+  } 
+  
+  pos <- names(statistic) %in% "variable" %>% 
+    which()
+  
+  cbind(variable = statistic[, pos], statistic[, seq(pos - 1)], 
+        statistic[, (pos + 1):ncol(statistic)]) %>%
+    tibble::as_tibble() %>%
+    arrange(variable)
 }
 
