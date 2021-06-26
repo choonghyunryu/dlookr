@@ -634,18 +634,22 @@ num_summarise <- function (.data,
   statistics <- c("n", "na", setdiff(statistics, "quantiles"))
   
   df_stats <- statistics %>% 
-    purrr::map_df(
-      function(x) do.call(x, list(.data))
-    ) %>% 
+    sapply(
+      function(x) {
+        do.call(x, list(.data))
+      }  
+    ) 
+  
+  if (is.vector(df_stats)) 
+    df_stats <- as.numeric(df_stats) %>% 
     t() %>% 
     as.data.frame()
   
   names(df_stats) <- statistics
   
-  df_stats %>% 
-    bind_cols(df_quantiles) %>% 
+  bind_cols(data.frame(variable = names(.data)), 
+            df_stats %>% as.data.frame(), 
+            df_quantiles) %>% 
     mutate_at(vars(matches("^n")), as.integer) %>% 
-    tibble::rownames_to_column(var = "variable") %>% 
     tibble::as_tibble()
 }
-

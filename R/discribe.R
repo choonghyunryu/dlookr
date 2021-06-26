@@ -138,7 +138,7 @@ describe.grouped_df <- function(.data, ...) {
 describe_group_impl <- function(df, vars, margin) {
   if (length(vars) == 0) vars <- names(df)
   
-  if (length(vars) == 1 & !tibble::is_tibble(df)) df <- tibble::as_tibble(df)
+  if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
   
   idx_numeric <- find_class(df[, vars], type = "numerical")
   
@@ -149,21 +149,23 @@ describe_group_impl <- function(df, vars, margin) {
   
   .data <- df[, vars][idx_numeric]
   
-  if (utils::packageVersion("dplyr") >= "0.8.0") {
-    gdf <- attr(df, "groups")
-    statistic <- purrr::map_df(seq(nrow(gdf)), function(x) 
-      gdf[x, ] %>% select(-tidyselect::matches("\\.rows")) %>% 
-        cbind(num_summarise(.data[gdf$.rows[[x]], ], stats, quan))
-    )
-  } else {
-    gdf_index <- attr(df, "indices")
-    glables <- attr(df, "labels")
-    
-    statistic <- purrr::map_df(seq(nrow(glables)), function(x) 
-      glables[x, ] %>% 
-        cbind(num_summarise(.data[gdf_index[[x]], ], stats, quan))
-    )
-  } 
+  suppressWarnings(
+    if (utils::packageVersion("dplyr") >= "0.8.0") {
+      gdf <- attr(df, "groups")
+      statistic <- purrr::map_df(seq(nrow(gdf)), function(x) 
+        gdf[x, ] %>% select(-tidyselect::matches("\\.rows")) %>% 
+          cbind(num_summarise(.data[gdf$.rows[[x]], ], stats, quan))
+      )
+    } else {
+      gdf_index <- attr(df, "indices")
+      glables <- attr(df, "labels")
+      
+      statistic <- purrr::map_df(seq(nrow(glables)), function(x) 
+        glables[x, ] %>% 
+          cbind(num_summarise(.data[gdf_index[[x]], ], stats, quan))
+      )
+    } 
+  )
   
   pos <- names(statistic) %in% "variable" %>% 
     which()
@@ -171,6 +173,6 @@ describe_group_impl <- function(df, vars, margin) {
   cbind(variable = statistic[, pos], statistic[, seq(pos - 1)], 
         statistic[, (pos + 1):ncol(statistic)]) %>%
     tibble::as_tibble() %>%
-    arrange(variable)
+    arrange(variable) 
 }
 
