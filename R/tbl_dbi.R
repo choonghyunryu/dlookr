@@ -1266,6 +1266,8 @@ plot_correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
 #' These arguments are automatically quoted and evaluated in a context where column names
 #' represent column positions.
 #' They support unquoting and splicing.
+#' @param statistics character. the name of the descriptive statistic to calculate. The defaults is c("mean", "sd", "se_mean", "IQR", "skewness", "kurtosis", "quantiles")
+#' @param quantiles numeric. list of quantiles to calculate. The values of elements must be between 0 and 1. and to calculate quantiles, you must include "quantiles" in the statistics argument value. The default is c(0, .01, .05, 0.1, 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.9, 0.95, 0.99, 1).
 #' @param in_database Specifies whether to perform in-database operations. 
 #' If TRUE, most operations are performed in the DBMS. if FALSE, 
 #' table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.
@@ -1291,6 +1293,11 @@ plot_correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
 #' con_sqlite %>% 
 #'   tbl("TB_HEARTFAILURE") %>% 
 #'   describe(platelets, creatinine, sodium)
+#'   
+#' con_sqlite %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   describe(platelets, creatinine, sodium, 
+#'     statistics = c("mean", "sd", "quantiles"), quantiles = 0.1)
 #'
 #' # Negative values to drop variables, and In-memory mode and collect size is 200
 #' con_sqlite %>% 
@@ -1317,8 +1324,18 @@ plot_correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
 #' # Disconnect DBMS   
 #' DBI::dbDisconnect(con_sqlite)
 #'
-describe.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = Inf) {
+describe.tbl_dbi <- function(.data, ..., statistics = NULL, quantiles = NULL,
+                             in_database = FALSE, collect_size = Inf) {
   vars <- tidyselect::vars_select(colnames(.data), !!! rlang::quos(...))
+  
+  if (is.null(statistics))
+    statistics <- c("mean", "sd", "se_mean", "IQR", "skewness",
+                    "kurtosis", "quantiles")
+  
+  if (is.null(quantiles))
+    quantiles <- c(0, .01, .05, 0.1, 0.2, 0.25, 0.3, 0.4, 0.5,
+                   0.6, 0.7, 0.75, 0.8, 0.9, 0.95, 0.99, 1)
+  quantiles <- unique(quantiles)
   
   if (in_database) {
     stop("It does not yet support in-database mode. Use in_database = FALSE.")
@@ -1326,14 +1343,14 @@ describe.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = Inf
     if (class(.data$ops)[1] != "op_group_by") {
       .data %>% 
         dplyr::collect(n = collect_size) %>%
-        describe_impl(vars)
+        describe_impl(vars, statistics, quantiles)
     } else {
       group <- .data$ops$dots
       
       .data %>% 
         group_by(group) %>% 
         dplyr::collect(n = collect_size) %>%
-        describe(vars)
+        describe(vars, statistics = statistics, quantiles = quantiles)
     }
   }
 }

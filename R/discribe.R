@@ -38,6 +38,8 @@ describe <- function(.data, ...) {
 #' }
 #'
 #' @param .data a data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.
+#' @param statistics character. the name of the descriptive statistic to calculate. The defaults is c("mean", "sd", "se_mean", "IQR", "skewness", "kurtosis", "quantiles")
+#' @param quantiles numeric. list of quantiles to calculate. The values of elements must be between 0 and 1. and to calculate quantiles, you must include "quantiles" in the statistics argument value. The default is c(0, .01, .05, 0.1, 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.9, 0.95, 0.99, 1).
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
 #' Positive values select variables; negative values to drop variables.
@@ -61,9 +63,9 @@ describe <- function(.data, ...) {
 #' describe(heartfailure2)
 #'
 #' # Select the variable to describe
-#' describe(heartfailure2, sodium, platelets)
+#' describe(heartfailure2, sodium, platelets, statistics = c("mean", "sd", "quantiles"))
 #' describe(heartfailure2, -sodium, -platelets)
-#' describe(heartfailure2, 5)
+#' describe(heartfailure2, 5, statistics = c("mean", "sd", "quantiles"), quantiles = c(0.01, 0.1))
 #'
 #' # Using dplyr::grouped_dt
 #' library(dplyr)
@@ -99,25 +101,30 @@ describe <- function(.data, ...) {
 #' @importFrom rlang quos
 #' @export
 #' @rdname describe.data.frame
-describe.data.frame <- function(.data, ...) {
+describe.data.frame <- function(.data, ..., statistics = NULL, quantiles = NULL) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
-  describe_impl(.data, vars)
+  describe_impl(.data, vars, statistics, quantiles)
 }
 
 #' @import tibble
 #' @import dplyr
-describe_impl <- function(df, vars) {
+describe_impl <- function(df, vars, statistics, quantiles) {
   if (length(vars) == 0) vars <- names(df)
 
   if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
 
   idx_numeric <- find_class(df[, vars], type = "numerical")
 
-  quan <- c(0, .01, .05, 0.1, 0.2, 0.25, 0.3, 0.4, 0.5,
-            0.6, 0.7, 0.75, 0.8, 0.9, 0.95, 0.99, 1)
-  stats <- c("mean", "sd", "se_mean", "IQR", "skewness", 
-             "kurtosis", "quantiles")
-  num_summarise(df[, vars][idx_numeric], statistics = stats, quan)
+  if (is.null(statistics))
+    statistics <- c("mean", "sd", "se_mean", "IQR", "skewness",
+                    "kurtosis", "quantiles")
+  
+  if (is.null(quantiles))
+    quantiles <- c(0, .01, .05, 0.1, 0.2, 0.25, 0.3, 0.4, 0.5,
+                   0.6, 0.7, 0.75, 0.8, 0.9, 0.95, 0.99, 1)
+  quantiles <- unique(quantiles)
+
+  num_summarise(df[, vars][idx_numeric], statistics, quantiles)
 }
 
 #' @rdname describe.data.frame
@@ -125,9 +132,9 @@ describe_impl <- function(df, vars) {
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
 #' @export
-describe.grouped_df <- function(.data, ...) {
+describe.grouped_df <- function(.data, ..., statistics = NULL, quantiles = NULL) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
-  describe_group_impl(.data, vars)
+  describe_group_impl(.data, vars, statistics, quantiles)
 }
 
 #' @import tibble
@@ -135,17 +142,21 @@ describe.grouped_df <- function(.data, ...) {
 #' @importFrom purrr map_df
 #' @importFrom tibble is_tibble as_tibble
 #' @importFrom tidyselect matches
-describe_group_impl <- function(df, vars, margin) {
+describe_group_impl <- function(df, vars, statistics, quantiles, margin) {
   if (length(vars) == 0) vars <- names(df)
   
   if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
   
   idx_numeric <- find_class(df[, vars], type = "numerical")
   
-  quan <- c(0, .01, .05, 0.1, 0.2, 0.25, 0.3, 0.4, 0.5,
-            0.6, 0.7, 0.75, 0.8, 0.9, 0.95, 0.99, 1)
-  stats <- c("mean", "sd", "se_mean", "IQR", "skewness", 
-             "kurtosis", "quantiles")
+  if (is.null(statistics))
+    statistics <- c("mean", "sd", "se_mean", "IQR", "skewness",
+                    "kurtosis", "quantiles")
+  
+  if (is.null(quantiles))
+    quantiles <- c(0, .01, .05, 0.1, 0.2, 0.25, 0.3, 0.4, 0.5,
+                   0.6, 0.7, 0.75, 0.8, 0.9, 0.95, 0.99, 1)
+  quantiles <- unique(quantiles)
   
   .data <- df[, vars][idx_numeric]
   
@@ -154,7 +165,7 @@ describe_group_impl <- function(df, vars, margin) {
       gdf <- attr(df, "groups")
       statistic <- purrr::map_df(seq(nrow(gdf)), function(x) 
         gdf[x, ] %>% select(-tidyselect::matches("\\.rows")) %>% 
-          cbind(num_summarise(.data[gdf$.rows[[x]], ], stats, quan))
+          cbind(num_summarise(.data[gdf$.rows[[x]], ], statistics, quantiles))
       )
     } else {
       gdf_index <- attr(df, "indices")
@@ -162,7 +173,7 @@ describe_group_impl <- function(df, vars, margin) {
       
       statistic <- purrr::map_df(seq(nrow(glables)), function(x) 
         glables[x, ] %>% 
-          cbind(num_summarise(.data[gdf_index[[x]], ], stats, quan))
+          cbind(num_summarise(.data[gdf_index[[x]], ], statistics, quantiles))
       )
     } 
   )

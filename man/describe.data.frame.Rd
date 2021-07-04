@@ -8,7 +8,7 @@
 \usage{
 describe(.data, ...)
 
-\method{describe}{data.frame}(.data, ...)
+\method{describe}{data.frame}(.data, ..., statistics = NULL, quantiles = NULL)
 
 \method{describe}{grouped_df}(.data, ...)
 }
@@ -24,6 +24,10 @@ represent column positions.
 They support unquoting and splicing.
 
 See vignette("EDA") for an introduction to these concepts.}
+
+\item{statistics}{character. the name of the descriptive statistic to calculate. The defaults is c("mean", "sd", "se_mean", "IQR", "skewness", "kurtosis", "quantiles")}
+
+\item{quantiles}{numeric. list of quantiles to calculate. The values of elements must be between 0 and 1. and to calculate quantiles, you must include "quantiles" in the statistics argument value. The default is c(0, .01, .05, 0.1, 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.9, 0.95, 0.99, 1).}
 }
 \value{
 An object of the same class as .data.
@@ -72,9 +76,9 @@ heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
 describe(heartfailure2)
 
 # Select the variable to describe
-describe(heartfailure2, sodium, platelets)
+describe(heartfailure2, sodium, platelets, statistics = c("mean", "sd", "quantiles"))
 describe(heartfailure2, -sodium, -platelets)
-describe(heartfailure2, 5)
+describe(heartfailure2, 5, statistics = c("mean", "sd", "quantiles"), quantiles = c(0.01, 0.1))
 
 # Using dplyr::grouped_dt
 library(dplyr)

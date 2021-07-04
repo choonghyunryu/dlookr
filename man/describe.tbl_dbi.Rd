@@ -4,7 +4,14 @@
 \alias{describe.tbl_dbi}
 \title{Compute descriptive statistic}
 \usage{
-\method{describe}{tbl_dbi}(.data, ..., in_database = FALSE, collect_size = Inf)
+\method{describe}{tbl_dbi}(
+  .data,
+  ...,
+  statistics = NULL,
+  quantiles = NULL,
+  in_database = FALSE,
+  collect_size = Inf
+)
 }
 \arguments{
 \item{.data}{a tbl_dbi.}
@@ -16,6 +23,10 @@ If the first expression is negative, describe() will automatically start with al
 These arguments are automatically quoted and evaluated in a context where column names
 represent column positions.
 They support unquoting and splicing.}
+
+\item{statistics}{character. the name of the descriptive statistic to calculate. The defaults is c("mean", "sd", "se_mean", "IQR", "skewness", "kurtosis", "quantiles")}
+
+\item{quantiles}{numeric. list of quantiles to calculate. The values of elements must be between 0 and 1. and to calculate quantiles, you must include "quantiles" in the statistics argument value. The default is c(0, .01, .05, 0.1, 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.9, 0.95, 0.99, 1).}
 
 \item{in_database}{Specifies whether to perform in-database operations. 
 If TRUE, most operations are performed in the DBMS. if FALSE, 
@@ -77,6 +88,11 @@ copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
 con_sqlite \%>\% 
   tbl("TB_HEARTFAILURE") \%>\% 
   describe(platelets, creatinine, sodium)
+  
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  describe(platelets, creatinine, sodium, 
+    statistics = c("mean", "sd", "quantiles"), quantiles = 0.1)
 
 # Negative values to drop variables, and In-memory mode and collect size is 200
 con_sqlite \%>\% 

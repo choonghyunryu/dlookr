@@ -541,12 +541,19 @@ imputation_knn <- function (data, k = 10)
 num_summarise <- function (.data, 
                            statistics = c("mean", "sd", "se_mean", "IQR", 
                                           "skewness", "kurtosis", "quantiles"), 
-                           quantiles = c(0, 0.25, 0.5, 0.75, 1)) {
+                           quantiles = c(0, .01, .05, 0.1, 0.2, 0.25, 0.3, 0.4, 
+                                         0.5, 0.6, 0.7, 0.75, 0.8, 0.9, 0.95, 
+                                         0.99, 1)) {
   if (missing(statistics)) 
-    statistics <- c("mean", "sd", "quantiles", "IQR")
+    statistics <- c("mean", "sd", "se_mean", "IQR", "skewness", 
+                    "kurtosis", "quantiles")
   
   stats <- c("mean", "sd", "se_mean", "IQR", "skewness", 
              "kurtosis", "quantiles")
+  
+  if (missing(quantiles)) 
+    quantiles <- c(0, .01, .05, 0.1, 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 
+                   0.75, 0.8, 0.9, 0.95, 0.99, 1)
   
   statistics <- base::intersect(statistics, stats)
   
@@ -621,8 +628,13 @@ num_summarise <- function (.data,
   
   if ("quantiles" %in% statistics & length(quantiles) >= 1) {
     df_quantiles <- .data %>% 
-      apply(2, quantile, probs = quantiles, na.rm = TRUE) %>% 
-      t() %>% 
+      apply(2, quantile, probs = quantiles, na.rm = TRUE) 
+    
+    if (length(quantiles) > 1) 
+      df_quantiles <- df_quantiles %>% 
+        t()
+    
+    df_quantiles <- df_quantiles %>% 
       tibble::as_tibble()
     
     names(df_quantiles) <- paste0("p", quantiles * 100) %>% 

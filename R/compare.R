@@ -513,9 +513,9 @@ summary.compare_category <- function(object, method = c("all", "table", "relativ
     if (na.rm) {
       contingency[[j]] <- object[[i]] %>% 
         select(1:2, n) %>% 
-        filter(!is.na(.[, 1])) %>% 
-        filter(!is.na(.[, 2])) %>% 
         tidyr::spread(2, n, fill = 0) %>% 
+        select(!contains("<NA>")) %>% 
+        .[!is.na(.[, 1]), ] %>% 
         select(-1) %>% 
         as.matrix %>% 
         as.table()
