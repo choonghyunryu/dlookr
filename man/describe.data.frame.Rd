@@ -10,7 +10,7 @@ describe(.data, ...)
 
 \method{describe}{data.frame}(.data, ..., statistics = NULL, quantiles = NULL)
 
-\method{describe}{grouped_df}(.data, ...)
+\method{describe}{grouped_df}(.data, ..., statistics = NULL, quantiles = NULL)
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.}
