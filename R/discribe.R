@@ -163,6 +163,8 @@ describe_group_impl <- function(df, vars, statistics, quantiles, margin) {
   suppressWarnings(
     if (utils::packageVersion("dplyr") >= "0.8.0") {
       gdf <- attr(df, "groups")
+      n_group <- ncol(gdf) - 1
+      
       statistic <- purrr::map_df(seq(nrow(gdf)), function(x) 
         gdf[x, ] %>% select(-tidyselect::matches("\\.rows")) %>% 
           cbind(num_summarise(.data[gdf$.rows[[x]], ], statistics, quantiles))
@@ -170,6 +172,7 @@ describe_group_impl <- function(df, vars, statistics, quantiles, margin) {
     } else {
       gdf_index <- attr(df, "indices")
       glables <- attr(df, "labels")
+      n_group <- ncol(glables)
       
       statistic <- purrr::map_df(seq(nrow(glables)), function(x) 
         glables[x, ] %>% 
@@ -178,12 +181,9 @@ describe_group_impl <- function(df, vars, statistics, quantiles, margin) {
     } 
   )
   
-  pos <- names(statistic) %in% "variable" %>% 
-    which()
-  
-  cbind(variable = statistic[, pos], statistic[, seq(pos - 1)], 
-        statistic[, (pos + 1):ncol(statistic)]) %>%
-    tibble::as_tibble() %>%
-    arrange(variable) 
+  statistic %>% 
+    select(n_group + 1, seq(n_group), (n_group + 1):ncol(statistic))%>% 
+    tibble::as_tibble() %>% 
+    arrange(variable)
 }
 

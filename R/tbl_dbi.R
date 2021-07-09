@@ -1345,10 +1345,11 @@ describe.tbl_dbi <- function(.data, ..., statistics = NULL, quantiles = NULL,
         dplyr::collect(n = collect_size) %>%
         describe_impl(vars, statistics, quantiles)
     } else {
-      group <- .data$ops$dots
+      group <- .data$ops$dots %>% 
+        names()
       
       .data %>% 
-        group_by(group) %>% 
+        group_by_at(group) %>% 
         dplyr::collect(n = collect_size) %>%
         describe(vars, statistics = statistics, quantiles = quantiles)
     }
