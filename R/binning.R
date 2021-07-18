@@ -649,6 +649,9 @@ summary.optimal_bins <- function(object, ...) {
 #' Positive Rate ("posrate"), and Weight of Evidence ("WoE"). and default "all" draw all plot.
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' @param rotate_angle integer. specifies the rotation angle of the x-axis label. 
+#' This is useful when the x-axis labels are long and overlap. 
+#' The default is 0 to not rotate the label.
 #' @param ... further arguments to be passed from or to other methods.
 #' @seealso \code{\link{binning_by}}, \code{\link{summary.optimal_bins}}
 #' @examples
@@ -666,6 +669,9 @@ summary.optimal_bins <- function(object, ...) {
 #' # visualize all information for optimal_bins class
 #' plot(bin)
 #' 
+#' # rotate the x-axis labels by 45 degrees so that they do not overlap.
+#' plot(bin, rotate_angle = 45)
+#' 
 #' # visualize WoE information for optimal_bins class
 #' plot(bin, type = "WoE")
 #' 
@@ -678,7 +684,8 @@ summary.optimal_bins <- function(object, ...) {
 #' @export
 #' @method plot optimal_bins
 plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE"), 
-                              typographic = TRUE, ...) {
+                              typographic = TRUE, 
+                              rotate_angle = 0, ...) {
   if (is.character(x)) {
     cat("binn is the optimal_bins object that can not be binned : \n",
         x, "\n", sep = "")
@@ -692,11 +699,15 @@ plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE
         ggplot(aes(x = target, y= indicator, group = target)) +
         geom_boxplot(fill = "slategrey", color = "darkslategrey", width = 0.3) +
         coord_flip() +
-        ggtitle("Distribution of target")
+        ggtitle("Distribution of target") +
+        theme(axis.text.x = element_text(angle = rotate_angle, 
+                                         vjust = 0.5, hjust = 0.5)) 
       
       if (typographic) {
         p_dist <- p_dist +
-          theme_typographic() 
+          theme_typographic() +
+          theme(axis.text.x = element_text(angle = rotate_angle, 
+                                           vjust = 0.5, hjust = 0.5)) 
         
         if (type %in% c("all")) {
           p_dist <- p_dist +
@@ -720,11 +731,15 @@ plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE
         xlab("") +
         ylab("") +
         ggtitle("Percentage of frequency") +
-        theme(legend.position = "none")
+        theme(legend.position = "none") +
+        theme(axis.text.x = element_text(angle = rotate_angle, 
+                                         vjust = 0.5, hjust = 0.5)) 
       
       if (typographic) {
         p_freq <- p_freq +
-          theme_typographic() 
+          theme_typographic() +
+          theme(axis.text.x = element_text(angle = rotate_angle, 
+                                           vjust = 0.5, hjust = 0.5)) 
         
         if (type %in% c("all")) {
           p_freq <- p_freq +
@@ -747,11 +762,15 @@ plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE
         xlab("") +
         ylab("") +
         ggtitle("Percentage of positive") +
-        theme(legend.position = "none")
+        theme(legend.position = "none") +
+        theme(axis.text.x = element_text(angle = rotate_angle, 
+                                         vjust = 0.5, hjust = 0.5)) 
       
       if (typographic) {
         p_badrate <- p_badrate +
-          theme_typographic() 
+          theme_typographic() +
+          theme(axis.text.x = element_text(angle = rotate_angle, 
+                                           vjust = 0.5, hjust = 0.5)) 
         
         if (type %in% c("all")) {
           p_badrate <- p_badrate +
@@ -773,11 +792,15 @@ plot.optimal_bins <- function(x, type = c("all", "dist", "freq", "posrate", "WoE
         xlab("") +
         ylab("") +
         ggtitle("Weight of Evidence") +
-        theme(legend.position = "none")
+        theme(legend.position = "none") +
+        theme(axis.text.x = element_text(angle = rotate_angle, 
+                                         vjust = 0.5, hjust = 0.5)) 
       
       if (typographic) {
         p_woe <- p_woe +
-          theme_typographic()
+          theme_typographic() +
+          theme(axis.text.x = element_text(angle = rotate_angle, 
+                                           vjust = 0.5, hjust = 0.5)) 
         
         if (type %in% c("all")) {
           p_woe <- p_woe +

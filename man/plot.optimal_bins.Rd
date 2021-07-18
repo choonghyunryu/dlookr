@@ -8,6 +8,7 @@
   x,
   type = c("all", "dist", "freq", "posrate", "WoE"),
   typographic = TRUE,
+  rotate_angle = 0,
   ...
 )
 }
@@ -19,6 +20,10 @@ Positive Rate ("posrate"), and Weight of Evidence ("WoE"). and default "all" dra
 
 \item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
+
+\item{rotate_angle}{integer. specifies the rotation angle of the x-axis label. 
+This is useful when the x-axis labels are long and overlap. 
+The default is 0 to not rotate the label.}
 
 \item{...}{further arguments to be passed from or to other methods.}
 }
@@ -41,6 +46,9 @@ summary(bin)
 
 # visualize all information for optimal_bins class
 plot(bin)
+
+# rotate the x-axis labels by 45 degrees so that they do not overlap.
+plot(bin, rotate_angle = 45)
 
 # visualize WoE information for optimal_bins class
 plot(bin, type = "WoE")

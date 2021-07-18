@@ -24,6 +24,10 @@ CHANGES IN R VERSION 0.5.0:
     * Added the 'add_date' argument for Date, POSIXct class in diagnose_category(). 
 
     * In describe(), the user can select the type of statistic.
+    
+    * Added the ability to set x-axis labels in plot.optimal_bins(). 
+      This is a useful function when labels overlap because they are long.
+
 
 
 CHANGES IN R VERSION 0.4.5:
