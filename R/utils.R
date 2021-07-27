@@ -665,3 +665,80 @@ num_summarise <- function (.data,
     mutate_at(vars(matches("^n")), as.integer) %>% 
     tibble::as_tibble()
 }
+
+
+# reference : https://github.com/r-lib/testthat/blob/717b02164def5c1f027d3a20b889dae35428b6d7/R/colour-text.r
+set_color <- function(x, fg = "black") {
+  term <- Sys.getenv()["TERM"]
+  colour_terms <- c("xterm-color", "xterm-256color", "screen", "screen-256color")
+  
+  if(!any(term %in% colour_terms, na.rm = TRUE)) {
+    return(x)
+  }
+  
+  .fg_colours <- c(
+    "black" = "0;30",
+    "blue" = "0;34",
+    "green" = "0;32",
+    "cyan" = "0;36",
+    "red" = "0;31",
+    "purple" = "0;35",
+    "brown" = "0;33",
+    "light gray" = "0;37",
+    "dark gray" = "1;30",
+    "light blue" = "1;34",
+    "light green" = "1;32",
+    "light cyan" = "1;36",
+    "light red" = "1;31",
+    "light purple" = "1;35",
+    "yellow" = "1;33",
+    "white" = "1;37"
+  )
+  
+  start <- col <- paste0("\033[", .fg_colours[tolower(fg)], "m")
+  end <- "\033[0m"
+  
+  paste0(start, x, end)
+}
+
+
+cat_rule <- function(left = "", right = "", width = 80, char = "\u2500",
+                     prefix = 2, postfix = 2, space = 1, col = NULL) {
+  length_left <- nchar(left, type = "width")
+  length_right <- nchar(right, type = "width")
+  
+  str_prefix <- paste(rep(char, prefix), collapse = "")
+  str_postfix <- paste(rep(char, postfix), collapse = "")
+  
+  str_collapse <- paste(rep(" ", space), collapse = "")
+  
+  if (length_left & length_right) {
+    str_line <- paste(rep(char, (width - length_left - length_right - 
+                                   prefix - postfix - 4 * space)), collapse = "")
+    str <- paste(str_prefix, left, str_line, right, str_postfix, 
+                 collapse = str_collapse)
+  } else if (!length_right & length_left) {
+    str <- paste(str_prefix, left,
+                 paste(rep(char, (width - length_left - prefix - 2 * space)), 
+                       collapse = ""), collapse = str_collapse)
+  } else if (!length_left & length_right) {
+    str <- paste(paste(rep(char, (width - length_right - prefix - 2 * space)), 
+                       collapse = ""), right, str_postfix, collapse = str_collapse)
+  } else {
+    str <- paste(rep(char, width), collapse = "")
+  }
+  
+  if (!is.null(col)) {
+    cat(set_color(str, fg = col), "\n")
+  } else {
+    cat(str, "\n")
+  }
+}
+
+
+cat_bullet <- function(x, bullet = "\u2022") {
+  str <- paste(bullet, x, collapse = "\n")
+  
+  cat(str, "\n")
+}
+

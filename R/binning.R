@@ -1203,7 +1203,7 @@ performance_bin <- function (y, x, na.rm = FALSE) {
 summary.performance_bin <- function(object, ...) {
   x <- object
   
-  cli::cat_rule(
+  cat_rule(
     left = "Binning Table",
     right = "Several Metrics",
     width = 60
@@ -1227,17 +1227,17 @@ summary.performance_bin <- function(object, ...) {
   vls <- c(attr(x, "gini"), max(x[, "IV"]), max(x[, "JSD"]),
            attr(x, "KS"), attr(x, "HHI"), attr(x, "HHI_norm"), attr(x, "Cramer_V"))
   
-  cli::cat_rule(
+  cat_rule(
     left = "General Metrics",
     right = "",
     width = 60
   )
   
   info_scale <- paste0(nms, " :  ", round(vls, 5))
-  cli::cat_bullet(info_scale)
+  cat_bullet(info_scale)
   cat("\n")
   
-  cli::cat_rule(
+  cat_rule(
     left = "Significance Tests",
     right = "Chisquare Test",
     width = 60

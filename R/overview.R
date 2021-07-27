@@ -141,7 +141,6 @@ overview <- function(.data) {
 #' }
 #' 
 #' @method summary overview
-#' @importFrom cli cat_rule cat_bullet cat_print
 #' @importFrom knitr kable
 #' @importFrom kableExtra kable_styling
 #' @export
@@ -186,13 +185,13 @@ summary.overview <- function(object, html = FALSE, ...)  {
   vls[7] <- paste(vls[7], p_na)
   
   if (!html) {
-    cli::cat_rule(
+    cat_rule(
       left = "Data Scale",
       right = "",
       width = 60
     )
   } else {
-    cli::cat_rule(
+    cat_rule(
       left = "Data Scale",
       right = "",
       width = 60
@@ -207,17 +206,17 @@ summary.overview <- function(object, html = FALSE, ...)  {
     info_scale <- paste(info_scale, "<br>")
   }
   
-  cli::cat_bullet(info_scale)
+  cat_bullet(info_scale)
   line_break()
   
   if (!html) {
-    cli::cat_rule(
+    cat_rule(
       left = "Duplicated Data",
       right = "",
       width = 60
     )
   } else {
-    cli::cat_rule(
+    cat_rule(
       left = "Duplicated Data",
       right = "",
       width = 60
@@ -232,17 +231,17 @@ summary.overview <- function(object, html = FALSE, ...)  {
     duplicated <- paste(duplicated, "<br>")
   }
   
-  cli::cat_bullet(duplicated)
+  cat_bullet(duplicated)
   line_break()
   
   if (!html) {
-    cli::cat_rule(
+    cat_rule(
       left = "Missing Data",
       right = "",
       width = 60
     )
   } else {
-    cli::cat_rule(
+    cat_rule(
       left = "Missing Data",
       right = "",
       width = 60
@@ -256,17 +255,17 @@ summary.overview <- function(object, html = FALSE, ...)  {
     info_missing <- paste(info_missing, "<br>")
   }
   
-  cli::cat_bullet(info_missing)
+  cat_bullet(info_missing)
   line_break()
   
   if (!html) {
-    cli::cat_rule(
+    cat_rule(
       left = "Data Type",
       right = "",
       width = 60
     )  
   } else {
-    cli::cat_rule(
+    cat_rule(
       left = "Data Type",
       right = "",
       width = 60
@@ -280,17 +279,17 @@ summary.overview <- function(object, html = FALSE, ...)  {
     info_type <- paste(info_type, "<br>")
   }  
   
-  cli::cat_bullet(info_type)
+  cat_bullet(info_type)
   line_break()
   
   if (!html) {
-    cli::cat_rule(
+    cat_rule(
       left = "Individual variables",
       right = "",
       width = 60
     ) 
   } else {
-    cli::cat_rule(
+    cat_rule(
       left = "Individual variables",
       right = "",
       width = 60
@@ -303,7 +302,7 @@ summary.overview <- function(object, html = FALSE, ...)  {
   names(info_class) <- c("Variables", "Data Type")
   
   if (!html) {
-    cli::cat_print(info_class)
+    print(info_class)
   } else {
     info_class %>% 
       knitr::kable(format = "html")%>% 

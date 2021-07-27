@@ -969,6 +969,7 @@ plot_outlier_target_impl <- function(df, vars, typographic = TRUE) {
 #' @rdname diagnose_report.data.frame
 #' @export
 diagnose_report <- function(.data, output_format, output_file, output_dir, ...) {
+  .Deprecated("diagnose_web_report", msg = "'diagnose_report' is deprecated. \nUse 'diagnose_web_report' and 'diagnose_paged_report' instead.\nSee help(\"Deprecated\")")
   UseMethod("diagnose_report", .data)
 }
 
@@ -1045,7 +1046,6 @@ diagnose_report <- function(.data, output_format, output_file, output_dir, ...) 
 #'
 #' @importFrom knitr knit2pdf
 #' @importFrom rmarkdown render
-#' @importFrom prettydoc html_pretty
 #' @importFrom kableExtra kable_styling
 #' @importFrom utils browseURL
 #' @method diagnose_report data.frame
@@ -1121,6 +1121,11 @@ diagnose_report.data.frame <- function(.data, output_format = c("pdf", "html"),
     
     Rmd_file <- file.path(system.file(package = "dlookr"), "report", rmd)
     file.copy(from = Rmd_file, to = path, recursive = TRUE)
+    
+    if (!requireNamespace("forecast", quietly = TRUE)) {
+      stop("Package \"forecast\" needed for this function to work. Please install it.",
+           call. = FALSE)
+    }
     
     rmarkdown::render(paste(path, rmd, sep = "/"),
       output_format = prettydoc::html_pretty(toc = TRUE, number_sections = TRUE),

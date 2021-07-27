@@ -1,0 +1,169 @@
+---
+title: "$title$"
+subtitle: "$subtitle$"
+abstract-title: "$abstract_title$"
+abstract: "$abstract$"
+date: "`r Sys.Date()`"
+output: 
+  dlookr::dlookr_$theme$_paged: 
+    # Change to point to your cover file
+    front_cover: $cover$
+    toc: true
+    # Change to true to add number in front of chapters
+    number_sections: false
+    # Change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
+    self_contained: true
+# Set  toc title, default none
+toc-title: Contents
+#knit: pagedown::chrome_print
+---
+
+```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = FALSE, 
+                      message = FALSE, 
+                      warning = FALSE, 
+                      collapse = FALSE,
+                      comment = "#>",
+                      fig.align = "center")
+knitr::opts_chunk$set(fig.width = 12, fig.height = 9)
+```
+
+```{r packages, include=FALSE, message=FALSE, warning=FALSE}
+# Load required packages
+library(dplyr)
+library(ggplot2)
+library(kableExtra)
+library(dlookr)
+library(htmltools)
+library(reactable)
+
+reportData <- get("reportData", .dlookrEnv)
+targetVariable <- get("targetVariable", .dlookrEnv)
+sample_percent <- get("sample_percent", .dlookrEnv)
+author <- get("author", .dlookrEnv)
+```
+
+
+```{css, echo=FALSE}
+.pagedjs_page.pagedjs_first_page .pagedjs_margin-top-right>.pagedjs_margin-content::after {
+    content: url("$logo$");
+}
+
+.title {
+  color: $title_color$;
+}
+
+.subtitle {
+  color: $subtitle_color$;
+}
+```
+
+# Overview
+## Data Structures
+
+```{r overview-pre, results='asis'}
+# Number of observations
+N <- NROW(reportData)
+
+# sampling with sample_percent
+if (sample_percent < 100) {
+  N_sample <- ceiling(N * sample_percent / 100)
+  idx <- sample(seq(N), size = N_sample)
+  
+  reportData <- reportData[idx, ]
+} else {
+  N_sample <- N
+}
+
+if (length(targetVariable) == 0) targetVariable <- NULL
+```
+
+```{r overview, results='asis'}
+# solve the overview
+ov <- overview(reportData)
+
+tab_left <- ov[1:9, ]
+tab_right <- ov[10:nrow(ov), ]
+rownames(tab_right) <- seq(nrow(tab_right))
+
+tab_left <- tab_left %>% 
+  mutate(value = ifelse (metrics %in% "observations", N, value)) %>%   
+  mutate(value = ifelse (metrics %in% "memory size", 
+                         ifelse(value / 1024^2 > 0, round(value / 1024^2),
+                                round(value / 1024)), value)) %>%   
+  mutate(metrics = ifelse (metrics %in% "memory size", 
+                         ifelse(value / 1024^2 > 0, "memory size (MB)",
+                                "memory size (KB)"), metrics))
+
+knitr::kables(format = "html",
+  list(
+    knitr::kable(tab_left, digits = 2, format = "html", valign = "t",
+                 format.args = list(big.mark = ","),
+                 table.attr = "style=\"margin-right:40px !important;\"") %>% 
+      kable_styling(full_width = FALSE, font_size = 15), 
+    knitr::kable(tab_right, digits = 2, format = "html", valign = "t",
+                 format.args = list(big.mark = ",")) %>% 
+      kable_styling(full_width = FALSE, font_size = 15) 
+    ),
+  caption = "Data structures and types") %>% 
+  gsub("font-size: initial !important;",
+       "font-size: 12px !important;", .) %>%    
+  cat()
+```
+
+## Job Informations
+
+```{r overview-job, results='asis'}
+division <- c("dataset" ,"dataset" ,"dataset", "job", "job", "job")
+metrics <- c("dataset" ,"dataset type", "target", "samples", 
+             "created", "created by")
+
+value <- c("$dataset$", 
+           class(reportData)[1], 
+           ifelse(is.null(targetVariable), "not defied", targetVariable),
+           paste0(N_sample, " / ", format(N, big.mark = ","), " (",
+                  sample_percent, "%)"),
+           "$date$",
+           ifelse(author == "", "dlookr", author))
+
+info_job <- data.frame(division = division, metrics = metrics, value = value)
+
+cap <- "Job informations"
+
+print_tab(info_job, caption = cap)
+```
+
+# Imputation
+## Missing Values
+
+```{r impute-missing, results='asis', dpi=300, fig.height=5, fig.width=7, out.width="90%"}
+html_paged_impute_missing(reportData, target = targetVariable)
+```
+
+## Outliers
+
+```{r impute-outlier, results='asis', dpi=300, fig.height=5, fig.width=7, out.width="90%"}
+html_paged_impute_outlier(reportData)
+```
+
+# Resolving Skewness
+
+```{r resolve-skewness, results='asis', dpi=300, fig.height=5, fig.width=7, out.width="80%"}
+html_paged_resolve_skewness(reportData)
+```
+
+# Binning
+
+```{r binning, results='asis', dpi=300, fig.height=5, fig.width=7, out.width="80%"}
+html_paged_binning(reportData)
+```
+
+$targeted_eda$
+
+# Optimal Binning
+
+```{r optimal-binning, results='asis', dpi=300, fig.height=5, fig.width=7, out.width="80%"}
+html_paged_optimal_binning(reportData, target = targetVariable)
+```
+
+$targeted_eda$

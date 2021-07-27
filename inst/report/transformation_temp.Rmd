@@ -1,0 +1,293 @@
+---
+title: "dlookr: Transformation"
+author: ""
+always_allow_html: yes
+output:
+  dlookr::dlookr_templ_html:
+    toc: false
+---
+
+```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = FALSE, 
+                      message = FALSE, 
+                      warning = FALSE, 
+                      collapse = FALSE,
+                      comment = "#>",
+                      fig.align = "center")
+knitr::opts_chunk$set(fig.width = 12, fig.height = 9)
+```
+
+```{r load_packages}
+options(warn = -1)
+
+if (!requireNamespace("mice", quietly = TRUE)) {
+  stop("Package 'mice' needed for this function to work. Please install it.", 
+       call. = FALSE)
+} else {
+  library(mice)
+}
+
+if (!requireNamespace("rpart", quietly = TRUE)) {
+  stop("Package 'rpart' needed for this function to work. Please install it.", 
+       call. = FALSE)
+}
+
+if (!requireNamespace("DMwR", quietly = TRUE)) {
+  stop("Package 'DMwR' needed for this function to work. Please install it.", 
+       call. = FALSE)
+}
+
+library(dlookr)
+library(dplyr)
+```
+
+```{css, echo=FALSE}
+:root {
+  --custom-grey60: rgb(102, 102, 102);
+  --custom-grey20: rgb(204, 204, 204);
+  --custom-grey10: rgb(230, 230, 230);
+  --custom-blue: rgb(0, 114, 188);
+  --custom-lightblue: rgb(204, 227, 242);
+  --custom-orange: rgb(255, 127, 42); 
+  --custom-lightorange: rgb(255, 204, 170); 
+}
+
+#header .title{
+  color: $title_color$;
+}
+
+.navbar {
+    background-color: #f0f0f0;  
+    border-bottom : 2px solid $customColor$ !important;
+}
+
+.nav>li>a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+}
+
+a {
+    color: #337ab7 !important;
+    background-color: transparent !important;
+    text-decoration: none;
+}
+
+a.disable-links {
+  pointer-events: none;
+  color: var(--custom-grey60) !important;
+}
+
+/* Warnings */
+.tag {
+  display: inline-block;
+  padding: 2px 12px;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.variables {
+  font-size: 16px;
+  color: hsl(358, 42%, 56%);
+}
+
+.box-type {
+  margin-right: 4px;
+  padding: 0 4px;
+  border: 1px solid hsl(0, 0%, 75%);
+  border-radius: 2px;
+}
+
+.variable-info-details {
+  margin-top: 2px;
+  font-size: 14px;
+  font-weight: 400;
+  color: hsl(0, 0%, 40%);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.variable-info-text {
+  margin-left: 12px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.variable-info {
+  display: flex;
+  align-items: center;
+}
+
+.variables-tbl {
+  margin-top: 16px;
+}
+
+.value-info-text {
+  margin-top: 2px;
+  font-size: 14px;
+  font-weight: 400;
+  color: hsl(0, 0%, 40%);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: right;
+}
+
+/* Defined title with H1, H2, H3 */
+.title-h1 {
+  font-size: 2.5em;
+  color: $customColor$;
+}
+
+.title-h2 {
+  font-size: 2.0em;
+  font-weight: 400;
+  color: $customColor$;
+}
+
+.title-h3 {
+  font-size: 1.75em;
+  font-weight: 400;
+  color: rgb(102, 102, 102);
+}
+```
+
+
+```{r udf, echo=FALSE, warning=FALSE, message=FALSE}
+reportData <- as.data.frame(get("reportData", .dlookrEnv))
+targetVariable <- get("targetVariable", .dlookrEnv)
+
+if (length(targetVariable) == 0) targetVariable <- NULL
+
+# sampling with sample_percent
+N <- nrow(reportData)
+
+# solve the overview
+ov <- overview(reportData)
+
+if (sample_percent < 100) {
+  N_sample <- ceiling(N * sample_percent / 100)
+  idx <- sample(seq(N), size = N_sample)
+  
+  reportData <- reportData[idx, ]
+} else {
+  N_sample <- N
+}
+
+```
+
+```{r create-overview}
+division <- c("dataset" ,"dataset" ,"dataset", "job", "job", "job")
+metrics <- c("dataset" ,"dataset type", "target", "samples", 
+             "created", "created by")
+
+value <- c("$dataset$", 
+           class(reportData)[1], 
+           ifelse(is.null(targetVariable), "not defied", targetVariable),
+           paste0(N_sample, " / ", format(N, big.mark = ","), " (",
+                  sample_percent, "%)"),
+           "$date$",
+           ifelse(author == "", "dlookr", author))
+
+overview <- data.frame(Divisions = division, Metrics = metrics, Values = value)
+```
+
+```{r overview, results='asis'}
+h1("Overview", id = "ID-h1-overview", class = "title-h1")
+```
+
+```{r overview-pre, results='asis'}
+tab_left <- ov[1:9, ]
+tab_right <- ov[10:nrow(ov), ]
+rownames(tab_right) <- seq(nrow(tab_right))
+
+tab_left <- tab_left %>% 
+  mutate(value = ifelse (metrics %in% "observations", N, value)) %>%
+  mutate(value = ifelse (metrics %in% "memory size", 
+                         ifelse(value / 1024^2 > 0, round(value / 1024^2),
+                                round(value / 1024)), value)) %>% 
+  mutate(metrics = ifelse (metrics %in% "memory size", 
+                         ifelse(value / 1024^2 > 0, "memory size (MB)",
+                                "memory size (KB)"), metrics))
+
+cap <- "Data Structures"
+knitr::kable(tab_left, digits = 2, caption = cap, format = "html",
+             format.args = list(big.mark = ","),
+             col.names = c("Divisions", "Metrics", "Values"),
+             table.attr = "style=\"color: hsl(0, 0%, 40%);margin-right:30px !important;\"") %>% 
+  kable_styling(full_width = FALSE, font_size = 14, position = "float_left") 
+
+cap <- "Data Types"
+knitr::kable(tab_right, digits = 2, caption = cap, format = "html",
+             col.names = c("Divisions", "Metrics", "Values"),
+             format.args = list(big.mark = ","),
+             table.attr = "style=\"color: hsl(0, 0%, 40%);margin-right:30px !important;\"") %>% 
+  kable_styling(full_width = FALSE, font_size = 14, position = "float_left") 
+
+cap <- "Job Informations"
+knitr::kable(overview, caption = cap, format = "html",
+             table.attr = "style=\"color: hsl(0, 0%, 40%);\"") %>% 
+  kable_styling(full_width = FALSE, font_size = 14, position = "left") 
+
+breaks <- 9 - nrow(overview) + 2
+break_line_asis(breaks)
+```
+
+```{r, results='asis'}
+break_line_asis(1)
+```
+
+```{r, results='asis'}
+h1("Imputation", id = "ID-h1-imputation", class = "title-h1")
+```
+
+```{r, results='asis'}
+h2("Missing Values", id = "ID-h2-missing", class = "title-h2")
+```
+
+```{r nalist, results='asis'}
+html_impute_missing(reportData, targetVariable)
+break_line_asis(1)
+```
+
+```{r, results='asis'}
+h2("Outliers", id = "ID-h2-outlier", class = "title-h2")
+```
+
+```{r outlist, results='asis'}
+html_impute_outlier(reportData)
+break_line_asis(1)
+```
+
+```{r, results='asis'}
+h1("Resolving Skewness", id = "ID-h1-skewness", class = "title-h1")
+```
+
+```{r skweness, results='asis'}
+html_resolve_skewness(reportData)
+break_line_asis(1)
+```
+
+```{r, results='asis'}
+h1("Binning", id = "ID-h1-binning", class = "title-h1")
+```
+
+```{r binning, results='asis'}
+html_binning(reportData)
+break_line_asis(1)
+```
+
+```{r, results='asis'}
+if (!is.null(targetVariable)) {
+  h1("Optimal Binning", id = "ID-h1-optimal-binning", class = "title-h1")
+}
+```
+
+```{r optimal-binning, results='asis'}
+if (!is.null(targetVariable)) {
+  html_optimal_binning(reportData, targetVariable)
+}
+```
+
+

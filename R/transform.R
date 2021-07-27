@@ -352,13 +352,13 @@ plot.transform <- function(x, typographic = TRUE, ...) {
 #' @importFrom grDevices cairo_pdf
 #' @importFrom gridExtra grid.arrange
 #' @importFrom knitr kable
-#' @importFrom prettydoc html_pretty
 #' @importFrom kableExtra kable_styling
 #' @importFrom utils browseURL
-#'
+#' 
 #' @export
 transformation_report <- function(.data, target = NULL, output_format = c("pdf", "html"),
   output_file = NULL, output_dir = tempdir(), font_family = NULL, browse = TRUE) {
+  .Deprecated("transformation_web_report", msg = "'transformation_report' is deprecated. \nUse 'transformation_web_report' and 'transformation_paged_report' instead.\nSee help(\"Deprecated\")")
   tryCatch(vars <- tidyselect::vars_select(names(.data), !! rlang::enquo(target)),
     error = function(e) {
       pram <- as.character(substitute(target))
@@ -432,6 +432,11 @@ transformation_report <- function(.data, target = NULL, output_format = c("pdf",
     Rmd_file <- file.path(system.file(package = "dlookr"), "report", rmd)
     file.copy(from = Rmd_file, to = path, recursive = TRUE)
 
+    if (!requireNamespace("forecast", quietly = TRUE)) {
+      stop("Package \"forecast\" needed for this function to work. Please install it.",
+           call. = FALSE)
+    }
+    
     rmarkdown::render(paste(path, rmd, sep = "/"),
       prettydoc::html_pretty(toc = TRUE, number_sections = TRUE),
       output_file = paste(path, output_file, sep = "/"))

@@ -1,6 +1,7 @@
 #' @rdname eda_report.data.frame
 #' @export
 eda_report <- function(.data, ...) {
+  .Deprecated("eda_web_report", msg = "'eda_report' is deprecated. \nUse 'eda_web_report' and 'eda_paged_report' instead.\nSee help(\"Deprecated\")")
   UseMethod("eda_report")
 }
 
@@ -122,7 +123,6 @@ eda_report <- function(.data, ...) {
 #' @importFrom knitr knit2pdf
 #' @importFrom rmarkdown render
 #' @importFrom grDevices cairo_pdf
-#' @importFrom prettydoc html_pretty
 #' @importFrom kableExtra kable_styling
 #' @importFrom utils browseURL
 #' @method eda_report data.frame
@@ -207,6 +207,11 @@ eda_report.data.frame <- function(.data, target = NULL, output_format = c("pdf",
     
     Rmd_file <- file.path(system.file(package = "dlookr"), "report", rmd)
     file.copy(from = Rmd_file, to = path, recursive = TRUE)
+    
+    if (!requireNamespace("prettydoc", quietly = TRUE)) {
+      stop("Package \"prettydoc\" needed for this function to work. Please install it.",
+           call. = FALSE)
+    }
     
     rmarkdown::render(paste(path, rmd, sep = "/"),
       prettydoc::html_pretty(toc = TRUE, number_sections = TRUE),

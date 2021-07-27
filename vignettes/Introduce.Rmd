@@ -75,6 +75,9 @@ Types | Descriptions | Functions | Support DBI
 :-----|:-------|:---|:---:
 reporting the information of data diagnosis into pdf file | report the information for diagnosing the quality of the data. | `diagnose_report()` | x
 reporting the information of data diagnosis into html file | report the information for diagnosing the quality of the data. | `diagnose_report()` | x
+reporting the information of data diagnosis into html file | dynamic report the information for diagnosing the quality of the data. | `diagnose_web_report()` | x
+reporting the information of data diagnosis into pdf and html file | paged report the information for diagnosing the quality of the data. | `diagnose_paged_report()` | x
+
 
 ### EDA
 
@@ -132,6 +135,8 @@ Types | Descriptions | Functions | Support DBI
 :-----|:--------|:---|:---:
 reporting the information of EDA into pdf file | reporting the information of EDA. | `eda_report()` | x
 reporting the information of EDA into html file | reporting the information of EDA. | `eda_report()` | x
+reporting the information of EDA into pdf file | dynamic reporting the information of EDA. | `eda_web_report()` | x
+reporting the information of EDA into html file | paged reporting the information of EDA. | `eda_paged_report()` | x
 
 
 ### Transform Data
@@ -185,6 +190,8 @@ Types | Descriptions | Functions | Support DBI
 :-----|:--------|:---|:---:
 reporting the information of transformation into pdf | reporting the information of transformation. | `transformation_report()` | 
 reporting the information of transformation into html | reporting the information of transformation. | `transformation_report()` | 
+reporting the information of transformation into pdf | dynamic reporting the information of transformation. | `transformation_web_report()` | 
+reporting the information of transformation into html | paged reporting the information of transformation. | `transformation_paged_report()` | 
 
 
 ### Miscellaneous

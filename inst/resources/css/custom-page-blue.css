@@ -1,0 +1,197 @@
+/*****
+ Main page size
+ *****/
+@page {
+  size: A4 portrait; /* var(--pagedjs-width) doesn't work in browser when printing */
+  margin: 40mm 25mm 25mm 25mm;
+}
+@page :blank {
+
+}
+
+/*****
+ Store some string variables
+ *****/
+.date {
+  string-set: date-text content(text);
+}
+
+.title {
+  string-set: title-text content(text);
+}
+
+.subtitle {
+  string-set: subtitle-text content(text);
+}
+
+.shorttitle1 {
+  string-set: h1-text content(text);
+}
+
+.shorttitle2 {
+  string-set: h2-text content(text);
+}
+
+@page chapter:left {
+  @top-left {
+    content: string(title-text) " > " string(subtitle-text);
+    margin-left: -10mm;
+    margin-top: 10mm;
+    color: var(--custom-grey60);
+    font-size: 0.8em;
+    text-transform: uppercase;
+    vertical-align: top;
+  }
+  @top-right {
+    content: none;
+    margin-right: -10mm;
+    margin-top: 10mm;
+    color: var(--custom-grey60);
+    font-size: 0.8em;
+    text-transform: uppercase;
+    vertical-align: top;
+  }  
+  @bottom-right {
+    content: "dlookr / " string(date-text);
+    margin-right: -10mm;
+    margin-top: 10mm;
+    padding-top: 1.5mm;
+    color: var(--custom-blue);
+    font-size: 0.7em;
+    vertical-align: top;
+    border-top: 0.5px solid var(--custom-blue);
+  }
+  @bottom-left {
+    content: counter(page);
+    margin-left: -10mm;
+    margin-top: 10mm;
+    padding-top: 1.5mm;
+    color: var(--custom-blue);
+    font-size: 0.7em;
+    vertical-align: top;
+    border-top: 0.5px solid var(--custom-blue);
+  }
+      /*background-image: url(../image/header-ruler-left-blue.svg);
+   ## We put the SVG directly in the CSS - with Base 64 - so that it works in all browser..*/
+  background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBkYXRhLW5hbWU9IkxheWVyIDMiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDUxMC4yNCA5LjM5IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOmNjPSJodHRwOi8vY3JlYXRpdmVjb21tb25zLm9yZy9ucyMiIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KIDxtZXRhZGF0YT4KICA8cmRmOlJERj4KICAgPGNjOldvcmsgcmRmOmFib3V0PSIiPgogICAgPGRjOmZvcm1hdD5pbWFnZS9zdmcreG1sPC9kYzpmb3JtYXQ+CiAgICA8ZGM6dHlwZSByZGY6cmVzb3VyY2U9Imh0dHA6Ly9wdXJsLm9yZy9kYy9kY21pdHlwZS9TdGlsbEltYWdlIi8+CiAgICA8ZGM6dGl0bGUvPgogICA8L2NjOldvcms+CiAgPC9yZGY6UkRGPgogPC9tZXRhZGF0YT4KIDxkZWZzPgogIDxzdHlsZT4uY2xzLTF7ZmlsbDpub25lO3N0cm9rZTojMDg3MmI5O3N0cm9rZS13aWR0aDowLjVweDt9PC9zdHlsZT4KIDwvZGVmcz4KIDxwYXRoIGQ9Im0wIDBoNTEwLjIzIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDcyYmMiIHN0cm9rZS13aWR0aD0iLjk0NDg3Ii8+CiA8cGF0aCBkPSJtMCAxLjQ0NTFoMjAwIiBmaWxsPSIjNjgzYzNjIiBzdHJva2U9IiMwMDcyYmMiIHN0cm9rZS13aWR0aD0iMi42MDYzIi8+Cjwvc3ZnPgo=");
+  
+  background-position: 15mm 15mm;
+  background-size: 180mm;
+  background-repeat: no-repeat;
+}
+
+@page chapter:right {
+  @top-right {
+    content: string(title-text) " > " string(subtitle-text);
+    margin-right: -10mm;
+    margin-top: 10mm;
+    color: var(--custom-grey60);
+    font-size: 0.8em;
+    text-transform: uppercase;
+    vertical-align: top;
+  }
+  @bottom-left {
+    content: "dlookr / " string(date-text);
+    margin-left: -10mm;
+    margin-top: 10mm;
+    padding-top: 1.5mm;
+    color: var(--custom-blue);
+    font-size: 0.7em;
+    vertical-align: top;
+    border-top: 0.5px solid var(--custom-blue);    
+  }
+  @bottom-right {
+    content: counter(page);
+    margin-right: -10mm;
+    margin-top: 10mm;
+    padding-top: 1.5mm;
+    color: var(--custom-blue);
+    font-size: 0.7em;
+    vertical-align: top;
+    border-top: 0.5px solid var(--custom-blue);
+  }
+  /*background-image: url(../image/header-ruler-right-blue.svg);
+   ## We put the SVG directly in the CSS - with Base 64 - so that it works in all browser..*/
+  background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBkYXRhLW5hbWU9IkxheWVyIDMiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDUxMC4yNCA5LjM5IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOmNjPSJodHRwOi8vY3JlYXRpdmVjb21tb25zLm9yZy9ucyMiIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KIDxtZXRhZGF0YT4KICA8cmRmOlJERj4KICAgPGNjOldvcmsgcmRmOmFib3V0PSIiPgogICAgPGRjOmZvcm1hdD5pbWFnZS9zdmcreG1sPC9kYzpmb3JtYXQ+CiAgICA8ZGM6dHlwZSByZGY6cmVzb3VyY2U9Imh0dHA6Ly9wdXJsLm9yZy9kYy9kY21pdHlwZS9TdGlsbEltYWdlIi8+CiAgICA8ZGM6dGl0bGUvPgogICA8L2NjOldvcms+CiAgPC9yZGY6UkRGPgogPC9tZXRhZGF0YT4KIDxkZWZzPgogIDxzdHlsZT4uY2xzLTF7ZmlsbDpub25lO3N0cm9rZTojMDg3MmI5O3N0cm9rZS13aWR0aDowLjVweDt9PC9zdHlsZT4KIDwvZGVmcz4KIDxwYXRoIGQ9Im0wIDBoNTEwLjIzIiBmaWxsPSIjMDA3MmJjIiBzdHJva2U9IiMwMDcyYmMiIHN0cm9rZS13aWR0aD0iLjk0NDg3Ii8+CiA8cGF0aCBkPSJtMzEwLjIyIDEuNDQ1MWgyMDAiIGZpbGw9IiMwMDcyYmMiIHN0cm9rZT0iIzAwNzJiYyIgc3Ryb2tlLXdpZHRoPSIyLjYwNjMiLz4KPC9zdmc+Cg==");
+
+
+  background-position: 15mm 15mm;
+  background-size: 180mm;
+  background-repeat: no-repeat;
+}
+
+
+@page :first {
+  margin: 30mm 10mm 10mm 10mm;
+  @top-left {
+  /*content: url("../image/R_logo.svg");
+   ## We put the SVG directly in the CSS - with Base 64 - so that it works in all browser..   */
+    content: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNzJwdCIgaGVpZ2h0PSI1NXB0IiB2aWV3Qm94PSIwIDAgNzIgNTUiIHZlcnNpb249IjEuMSI+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImxpbmVhcjAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iMC4zNzk3MjYiIHkxPSIwLjE2OTk4OSIgeDI9IjAuOTExMjA4IiB5Mj0iMC43NjMyNiIgZ3JhZGllbnRUcmFuc2Zvcm09Im1hdHJpeCg3MiwwLDAsNDcuOTYwOTM4LDAsMCkiPgo8c3RvcCBvZmZzZXQ9IjAiIHN0eWxlPSJzdG9wLWNvbG9yOnJnYig3OC44MjM1MjklLDc5LjYwNzg0MyUsODAuNzg0MzE0JSk7c3RvcC1vcGFjaXR5OjE7Ii8+CjxzdG9wIG9mZnNldD0iMSIgc3R5bGU9InN0b3AtY29sb3I6cmdiKDQ4LjIzNTI5NCUsNDcuODQzMTM3JSw1MC41ODgyMzUlKTtzdG9wLW9wYWNpdHk6MTsiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8ZyBpZD0ic3VyZmFjZTEiPgo8cGF0aCBzdHlsZT0iIHN0cm9rZTpub25lO2ZpbGwtcnVsZTpub256ZXJvO2ZpbGw6dXJsKCNsaW5lYXIwKTsiIGQ9Ik0gNDIgNDIuNTU0Njg4IEMgMjcgNDIuNTU0Njg4IDE0LjI1MzkwNiAzNC45NDUzMTIgMTQuMjUzOTA2IDI1LjgyNDIxOSBDIDE0LjI1MzkwNiAxNi43MDcwMzEgMjUuNSA5LjEyMTA5NCA0MC41IDkuMTIxMDk0IEMgNTkuNDQ1MzEyIDkuMTIxMDk0IDY4LjIyMjY1NiAxNi41MDM5MDYgNjguMjIyNjU2IDI1LjYyMTA5NCBDIDY4LjIyMjY1NiAzNC43NDIxODggNTguNTQ2ODc1IDQyLjU1NDY4OCA0MiA0Mi41NTQ2ODggTSAzNiAwIEMgMTYuNSAwIDAgMTAuNjQwNjI1IDAgMjQuMzE2NDA2IEMgMCAzNy4yMzgyODEgMTYuMzk4NDM4IDQ3Ljk2MDkzOCAzNS45MDIzNDQgNDcuOTYwOTM4IEMgNTUuMzk4NDM4IDQ3Ljk2MDkzOCA3MiAzNy45OTYwOTQgNzIgMjQuMzE2NDA2IEMgNzIgMTAuNjQwNjI1IDU1LjUgMCAzNiAwICIvPgo8cGF0aCBzdHlsZT0iIHN0cm9rZTpub25lO2ZpbGwtcnVsZTpub256ZXJvO2ZpbGw6cmdiKDEyLjk0MTE3NiUsMzkuNjA3ODQzJSw3MS4zNzI1NDklKTtmaWxsLW9wYWNpdHk6MTsiIGQ9Ik0gMjkuNzk2ODc1IDE0Ljc2OTUzMSBMIDI5Ljc5Njg3NSA1NC45ODA0NjkgTCA0MS43ODkwNjIgNTQuOTgwNDY5IEwgNDEuNzg5MDYyIDM5LjM0Mzc1IEMgNDQuNzg5MDYyIDM5LjM0Mzc1IDQ2LjU3NDIxOSAzOC42Nzk2ODggNDguNTM1MTU2IDQyLjMyNDIxOSBDIDUxLjUzNTE1NiA0Ny41MzUxNTYgNTUuMjgxMjUgNTQuOTgwNDY5IDU1LjI4MTI1IDU0Ljk4MDQ2OSBMIDY5LjUyMzQzOCA1NC45ODA0NjkgQyA2OS41MjM0MzggNTQuOTgwNDY5IDYwLjUzMTI1IDQwLjA4OTg0NCA1OS43ODEyNSAzOS4zNDM3NSBDIDU4LjM5ODQzOCAzNy44NTU0NjkgNTYuNzgxMjUgMzcuODU1NDY5IDU0LjUzNTE1NiAzNy4xMDkzNzUgQyA1OS4wMzEyNSAzNi4zNjcxODggNjMuMjIyNjU2IDM0LjQ3NjU2MiA2NC42Nzk2ODggMzAuNDIxODc1IEMgNjUuOTU3MDMxIDI2LjY5OTIxOSA2NS44MDQ2ODggMjEuOTY0ODQ0IDYzLjA3NDIxOSAxOC43ODkwNjIgQyA2MC43MDcwMzEgMTYuMjczNDM4IDU4LjI4MTI1IDE0Ljc2OTUzMSA1Mi4yODUxNTYgMTQuNzY5NTMxIFogTSA0MS43ODkwNjIgMjMuMTQ0NTMxIEwgNDkuNjYwMTU2IDIzLjE0NDUzMSBDIDUxLjUyNzM0NCAyMy4xNDQ1MzEgNTMuMDM1MTU2IDI1LjAwNzgxMiA1My4wMzUxNTYgMjYuODY3MTg4IEMgNTMuMDM1MTU2IDI4LjczMDQ2OSA1MS41MzUxNTYgMzAuNTg5ODQ0IDQ5LjY2MDE1NiAzMC41ODk4NDQgTCA0MS43ODkwNjIgMzAuNTg5ODQ0IFogTSA0MS43ODkwNjIgMjMuMTQ0NTMxICIvPgo8L2c+Cjwvc3ZnPgo=");
+
+    width: 62.5mm;
+    margin-top: 7mm;
+  }
+  @top-right {
+    content: url("../image/dlookr.svg"); 
+    width: 62.5mm;
+    margin-top: 7mm;
+  }
+  @bottom-left {
+    content: none !important;
+  }
+  @bottom-right {
+    content: none !important;
+  }
+  background-image: var(--front-cover);
+  background-position: 10mm 30mm;
+  background-size: 190mm 257mm;
+  background-repeat: no-repeat;
+}
+
+/* Front cover */
+.front-cover {
+  break-after: recto;
+}
+
+/* Front page or title page */
+.front-page {
+  counter-reset: page;
+  break-after: page;
+}
+
+/* page breaks; aka CSS fragmentation */
+.level1 {
+  /* break-before: recto; */
+  page: chapter;
+}
+.front-matter-container .level1 {
+  page: frontmatter;
+}
+.section > h1, .section > h2, .section > h3, .section > h4, .section > h5, .section > h6 {
+  break-after: avoid;
+}
+.footenotes {
+  break-before: always;
+  break-after: always;
+}
+.figure {
+  break-inside: avoid;
+}
+
+/* do not break captions */
+caption {
+  break-inside: avoid;
+  break-after: avoid;
+}
+
+/* reset page numbering for main content */
+/*.main .level1:first-child h1 {
+  counter-reset: page;
+} */
+
+/* do not break captions */
+caption,
+.caption {
+  break-inside: avoid;
+  break-after: avoid;
+}

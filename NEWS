@@ -2,8 +2,27 @@ CHANGES IN R VERSION 0.5.0:
 
   NEW FEATURES:
   
-    * Add a new function plot_hist_numeric() to plot histogram of numerical 
+    * Add a new function plot_hist_numeric() to report histogram of numerical 
       variables.
+      
+    * Add a new function diagnose_web_report() to report the information of 
+      data diagnosis with wep page that support dynamic analytics.   
+      
+    * Add a new function eda_web_report() to report the information of 
+      exploratory data analysis with wep page that support dynamic analytics.   
+      
+    * Add a new function transformation_web_report() to report the information 
+      of transform numerical variables with wep page that support dynamic 
+      analytics.  
+      
+    * Add a new function diagnose_paged_report() to report the information of 
+      data diagnosis with static pages.   
+      
+    * Add a new function eda_paged_report() to report the information of 
+      exploratory data analysis with static pages.   
+      
+    * Add a new function transformation_paged_report() to report the information 
+      of transform numerical variables with static pages.        
     
   BUG FIXES:
 

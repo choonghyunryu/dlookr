@@ -35,7 +35,14 @@ if (getRversion() >= "2.15.1") {
     "RatePos", "WoE", "add_pos", "cnt", "datas", "diff_prim", "diff_sec",
     "flag", "indicator", "menas", "min_prim", "min_sec", "msg", "n_missing",
     "na.exclude", "na_flag", "object.size", "reformulate", "target", "x_end",
-    "x_start", "x_width", "AIC", "BIC", "deviance", "logLik", "n_case"))
+    "x_start", "x_width", "AIC", "BIC", "deviance", "logLik", "n_case",
+    "IQR", "addmargins", "cardinality", "df", "df.residual", "metric", 
+    "minus_count", "missing_count", "missing_percent", "n_character", "n_word", 
+    "na", "nobs", "other_freq", "outlier_count", "p.value", "p00", "p10", "p100",
+    "p20", "p25", "p30", "p40", "p50", "p60", "p70", "p75", "p80", "p90", 
+    "rate_missing", "rate_outlier", "rgb", "runif", "se_mean", "statistic", 
+    "status", "top_freq", "types", "unique_count", "unique_rate", "variable_1", 
+    "variable_2", "variables", "zero_count"))
 }
 
 # Adapted from hrbrthemes package's .onAttach

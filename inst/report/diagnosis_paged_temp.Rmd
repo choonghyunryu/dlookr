@@ -1,0 +1,647 @@
+---
+title: "$title$"
+subtitle: "$subtitle$"
+abstract-title: "$abstract_title$"
+abstract: "$abstract$"
+date: "`r Sys.Date()`"
+output: 
+  dlookr::dlookr_$theme$_paged: 
+    # Change to point to your cover file
+    front_cover: $cover$
+    toc: true
+    # Change to true to add number in front of chapters
+    number_sections: false
+    # Change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
+    self_contained: true
+# Set  toc title, default none
+toc-title: Contents
+#knit: pagedown::chrome_print
+---
+
+```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = FALSE, 
+                      message = FALSE, 
+                      warning = FALSE, 
+                      collapse = FALSE,
+                      comment = "#>",
+                      fig.align = "center")
+knitr::opts_chunk$set(fig.width = 12, fig.height = 9)
+```
+
+```{r packages, include=FALSE, message=FALSE, warning=FALSE}
+# Load required packages for charts with UNHCR style 
+library(dplyr)
+library(ggplot2)
+library(kableExtra)
+library(dlookr)
+library(htmltools)
+library(reactable)
+
+reportData <- get("reportData", .dlookrEnv)
+sample_percent <- get("sample_percent", .dlookrEnv)
+author <- get("author", .dlookrEnv)
+thres_uniq_cat <- get("thres_uniq_cat", .dlookrEnv)
+thres_uniq_num <- get("thres_uniq_num", .dlookrEnv)
+```
+
+
+```{css, echo=FALSE}
+.pagedjs_page.pagedjs_first_page .pagedjs_margin-top-right>.pagedjs_margin-content::after {
+    content: url("$logo$");
+}
+
+.title {
+  color: $title_color$;
+}
+
+.subtitle {
+  color: $subtitle_color$;
+}
+
+/* Warnings */
+.tag {
+  display: inline-block;
+  padding: 2px 12px;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.recommand-check {
+  background: hsl(116, 60%, 90%);
+  color: hsl(116, 30%, 25%);
+}
+
+.recommand-judgement {
+  background: hsl(230, 70%, 90%);
+  color: hsl(230, 45%, 30%);
+}
+
+.recommand-remove {
+  background: hsl(350, 70%, 90%);
+  color: hsl(350, 45%, 30%);
+}
+```
+
+```{r diagose}
+# Number of observations
+N <- NROW(reportData)
+
+# sampling with sample_percent
+if (sample_percent < 100) {
+  N_sample <- ceiling(N * sample_percent / 100)
+  idx <- sample(seq(N), size = N_sample)
+  
+  reportData <- reportData[idx, ]
+} else {
+  N_sample <- N
+}
+
+# solve the overview
+ov <- overview(reportData)
+
+# diagnose the missing & unique
+diagn_na_unique <- diagnose(reportData)
+
+# diagnose the numeric
+diagn_numeric <- diagnose_numeric(reportData)
+
+tab_warning <- data.frame(
+  warnings = character(5000), status = character(5000), variables = character(5000),
+  types = character(5000), indicator = numeric(5000), ratio = numeric(5000), 
+  recommand = character(5000), stringsAsFactors = FALSE)
+
+# duplicate --------------------------------------------------------------------
+idx_last <- 0
+n_duplicate <- length(attr(ov, "duplicate"))
+
+if (n_duplicate > 0) {
+  idx <- 1
+  
+  tab_warning$status[idx]    <- "duplicate"
+  tab_warning$variables[idx] <- NA
+  tab_warning$types[idx] <- NA  
+  tab_warning$indicator[idx] <- n_duplicate
+  tab_warning$ratio[idx]     <- n_duplicate / N
+  tab_warning$warnings[idx]  <- sprintf(
+    "dataset has %s (%s%%) duplicated observations", 
+    format(n_duplicate, big.mark = ","),
+    round(n_duplicate / N * 100, 1))
+  tab_warning$recommand[idx]  <- "check"  
+} else {
+  idx <- NULL
+}
+
+# missing ----------------------------------------------------------------------
+idx_last <- idx_last + length(idx)
+
+warn_miss <- diagn_na_unique %>% 
+  filter(missing_count > 0) %>% 
+  select(variables, types, missing_count, missing_percent) %>% 
+  arrange(desc(missing_count))
+
+if (nrow(warn_miss) > 0) {
+  idx <- seq(nrow(warn_miss)) + idx_last
+  
+  tab_warning$status[idx]    <- "missing"
+  tab_warning$variables[idx] <- warn_miss$variables
+  tab_warning$types[idx]     <- warn_miss$types  
+  tab_warning$indicator[idx] <- warn_miss$missing_count
+  tab_warning$ratio[idx]     <- warn_miss$missing_percent / 100
+  tab_warning$warnings[idx]  <- sprintf(
+    "%s has %s (%s%%) missing values", warn_miss$variables,
+    format(warn_miss$missing_count, big.mark = ","),
+    round(warn_miss$missing_percent, 1))
+  tab_warning$recommand[idx]  <- "judgement"
+} else {
+  idx <- NULL
+}
+
+# cardinality: identifier ------------------------------------------------------
+idx_last <- idx_last + length(idx)
+
+warn_identifier <- diagn_na_unique %>% 
+  filter(unique_rate == 1) %>% 
+  select(variables, types, unique_count, unique_rate)
+
+if (nrow(warn_identifier) > 0) {
+  idx <- seq(nrow(warn_identifier)) + idx_last
+  
+  tab_warning$status[idx]     <- "cardinality"
+  tab_warning$variables[idx]  <- warn_identifier$variables
+  tab_warning$types[idx]      <- warn_identifier$types    
+  tab_warning$indicator[idx]  <- warn_identifier$unique_count
+  tab_warning$ratio[idx]      <- warn_identifier$unique_rate 
+  tab_warning$warnings[idx]   <- sprintf(
+    "%s has high(%.2f) cardinality, Maybe identifier",
+    warn_identifier$variables, warn_identifier$unique_rate)
+  tab_warning$recommand[idx]  <- "check"  
+} else {
+  idx <- NULL
+}
+
+# cardinality: constant --------------------------------------------------------
+idx_last <- idx_last + length(idx)
+
+warn_constant <- diagn_na_unique %>% 
+  filter(unique_count == 1) %>% 
+  select(variables, types, unique_count, unique_rate)
+
+if (nrow(warn_constant) > 0) {
+  idx <- seq(nrow(warn_constant)) + idx_last
+  
+  tab_warning$status[idx]     <- "cardinality"
+  tab_warning$variables[idx]  <- warn_constant$variables
+  tab_warning$types[idx]      <- warn_constant$types   
+  tab_warning$indicator[idx]  <- warn_constant$unique_count
+  tab_warning$ratio[idx]      <- warn_constant$unique_rate 
+  tab_warning$warnings[idx]   <- sprintf(
+    "%s has constant value \"%s\"",
+    warn_constant$variables, 
+    reportData[1, warn_constant$variables %>% as.character()] %>% 
+      t() %>% 
+      as.vector()
+    )  
+  tab_warning$recommand[idx]  <- "remove"
+} else {
+  idx <- NULL
+}
+
+# cardinally: high cardinality(category) ---------------------------------------
+idx_last <- idx_last + length(idx)
+
+warn_unique_cat <- diagn_na_unique %>% 
+  filter(types %in% c("character", "factor", "ordered", "Date", "POSIXct")) %>%
+  filter(unique_rate >= thres_uniq_cat & unique_rate < 1) %>%
+  select(variables, types, unique_count, unique_rate)
+
+if (nrow(warn_unique_cat) > 0) {
+  idx <- seq(nrow(warn_unique_cat)) + idx_last
+  
+  tab_warning$status[idx]     <- "cardinality"
+  tab_warning$variables[idx]  <- warn_unique_cat$variables
+  tab_warning$types[idx]      <- warn_unique_cat$types   
+  tab_warning$indicator[idx]  <- warn_unique_cat$unique_count
+  tab_warning$ratio[idx]      <- warn_unique_cat$unique_rate 
+  tab_warning$warnings[idx]   <- sprintf(
+    "%s has a high cardinality. %s (%s%%) distinct values",
+    warn_unique_cat$variables, 
+    format(warn_unique_cat$unique_count, big.mark = ","),
+    round(warn_unique_cat$unique_rate * 100, 1))  
+  tab_warning$recommand[idx]  <- "judgement"
+} else {
+  idx <- NULL
+}
+
+# cardinally: low cardinality(numerical) ---------------------------------------
+warn_unique_num <- diagn_na_unique %>% 
+  filter(types %in% c("numeric", "integer")) %>%
+  filter(unique_count <= thres_uniq_num & unique_count > 1) %>%
+  select(variables, types, unique_count, unique_rate)
+
+if (nrow(warn_unique_num) > 0) {
+  idx <- seq(nrow(warn_unique_num)) + idx_last
+  
+  tab_warning$status[idx]     <- "cardinality"
+  tab_warning$variables[idx]  <- warn_unique_num$variables
+  tab_warning$types[idx]      <- warn_unique_num$types   
+  tab_warning$indicator[idx]  <- warn_unique_num$unique_count
+  tab_warning$ratio[idx]      <- warn_unique_num$unique_rate 
+  tab_warning$warnings[idx]   <- sprintf(
+    "%s has a low cardinality. %s (%s%%) distinct values",
+    warn_unique_num$variables, 
+    format(warn_unique_num$unique_count, big.mark = ","),
+    round(warn_unique_num$unique_rate * 100, 1))  
+  tab_warning$recommand[idx]  <- "judgement"
+} else {
+  idx <- NULL
+}
+
+# zeros ------------------------------------------------------------------------
+idx_last <- idx_last + length(idx)
+
+warn_zero <- diagn_numeric %>% 
+  filter(zero > 0) %>% 
+  select(variables, zero) %>% 
+  arrange(desc(zero))
+
+if (nrow(warn_zero) > 0) {
+  idx <- seq(nrow(warn_zero)) + idx_last
+  
+  tab_warning$status[idx]     <- "zero"
+  tab_warning$variables[idx]  <- warn_zero$variables
+  tab_warning$types[idx]      <- NA  
+  tab_warning$indicator[idx]  <- warn_zero$zero
+  tab_warning$ratio[idx]      <- warn_zero$zero / N 
+  tab_warning$warnings[idx]   <- sprintf(
+    "%s has %s (%s%%) zeros", warn_zero$variables, 
+    format(warn_zero$zero, big.mark = ","), round(warn_zero$zero / N * 100, 2))  
+  tab_warning$recommand[idx]  <- "check"
+} else {
+  idx <- NULL
+}
+
+# cardinally: negative ---------------------------------------------------------
+idx_last <- idx_last + length(idx)
+
+warn_minus <- diagn_numeric %>% 
+  filter(minus > 0) %>% 
+  select(variables, minus) %>% 
+  arrange(desc(minus))
+
+if (nrow(warn_minus) > 0) {
+  idx <- seq(nrow(warn_minus)) + idx_last
+  
+  tab_warning$status[idx]     <- "negative"
+  tab_warning$variables[idx]  <- warn_minus$variables
+  tab_warning$types[idx]      <- NA    
+  tab_warning$indicator[idx]  <- warn_minus$minus
+  tab_warning$ratio[idx]      <- warn_minus$minus / N 
+  tab_warning$warnings[idx]   <- sprintf(
+    "%s has %s (%s%%) negatives",
+    warn_minus$variables, format(warn_minus$minus, big.mark = ","),
+    round(warn_minus$minus / N * 100, 2))  
+  tab_warning$recommand[idx]  <- "check"
+} else {
+  idx <- NULL
+}
+
+# outlier ----------------------------------------------------------------------
+idx_last <- idx_last + length(idx)
+
+warn_outlier <- diagn_numeric %>% 
+  filter(outlier > 0) %>% 
+  select(variables, outlier) %>% 
+  arrange(desc(outlier))
+
+if (nrow(warn_outlier) > 0) {
+  idx <- seq(nrow(warn_outlier)) + idx_last
+  
+  tab_warning$status[idx]     <- "outlier"
+  tab_warning$variables[idx]  <- warn_outlier$variables
+  tab_warning$types[idx]      <- NA    
+  tab_warning$indicator[idx]  <- warn_outlier$outlier
+  tab_warning$ratio[idx]      <- warn_outlier$outlier / N 
+  tab_warning$warnings[idx]   <- sprintf(
+    "%s has %s (%s%%) outliers",
+    warn_outlier$variables, format(warn_outlier$outlier, big.mark = ","),
+    round(warn_outlier$outlier / N * 100, 2))  
+  tab_warning$recommand[idx]  <- "judgement"
+} else {
+  idx <- NULL
+}
+
+tab_warning <- tab_warning %>% 
+  filter(status != "")
+```
+
+# Overview
+## Data Structures
+
+```{r overview-pre, results='asis'}
+tab_left <- ov[1:9, ]
+tab_right <- ov[10:nrow(ov), ]
+rownames(tab_right) <- seq(nrow(tab_right))
+
+tab_left <- tab_left %>% 
+  mutate(value = ifelse (metrics %in% "observations", N, value)) %>%   
+  mutate(value = ifelse (metrics %in% "memory size", 
+                         ifelse(value / 1024^2 > 0, round(value / 1024^2),
+                                round(value / 1024)), value)) %>%   
+  mutate(metrics = ifelse (metrics %in% "memory size", 
+                         ifelse(value / 1024^2 > 0, "memory size (MB)",
+                                "memory size (KB)"), metrics))
+
+knitr::kables(format = "html",
+  list(
+    knitr::kable(tab_left, digits = 2, format = "html", valign = "t",
+                 format.args = list(big.mark = ","),
+                 table.attr = "style=\"margin-right:40px !important;\"") %>% 
+      kable_styling(full_width = FALSE, font_size = 15), 
+    knitr::kable(tab_right, digits = 2, format = "html", valign = "t",
+                 format.args = list(big.mark = ",")) %>% 
+      kable_styling(full_width = FALSE, font_size = 15) 
+    ),
+  caption = "Data structures and types") %>% 
+  gsub("font-size: initial !important;",
+       "font-size: 12px !important;", .) %>%
+  cat()
+```
+
+## Job Informations
+
+```{r overview-job, results='asis'}
+division <- c("dataset" ,"dataset", "job", "job", "job")
+metrics <- c("dataset" ,"dataset type", "samples", "created", "created by")
+
+value <- c("$dataset$", 
+           "$datatype$",
+           paste0(N_sample, " / ", format(N, big.mark = ","), " (",
+                  sample_percent, "%)"),
+           "$date$",
+           ifelse(author == "", "dlookr", author))
+
+info_job <- data.frame(division = division, metrics = metrics, value = value)
+
+cap <- "Job informations"
+
+print_tab(info_job, caption = cap)
+```
+
+## Warnings
+
+```{r warnings-summary, results='asis'}
+if (NROW(tab_warning) < 1) {
+  html_cat("No warnings")
+} else {
+  tab <- tab_warning %>%
+    count(recommand) %>% 
+    right_join(data.frame(recommand = c("check", "judgement", "remove")),
+               by = "recommand") %>% 
+    tidyr::spread(recommand, n) %>% 
+    mutate_all(function(x) ifelse(is.na(x), 0, x))
+
+  knitr::kable(tab, format = "html", caption = "Summary of warnings",
+               col.names = c("checks", "judgements", "removes"),
+               format.args = list(big.mark = ",")) %>% 
+    kableExtra::kable_styling(full_width = TRUE, font_size = 14, 
+                              position = "left") %>% 
+    gsub("font-size: initial !important;",
+         "font-size: 12px !important;", .) %>%
+      cat()
+}
+```
+
+```{r warnings, results='asis'}
+tab_warning <- tab_warning %>% 
+  select(warnings, status, recommand)
+
+if (NROW(tab_warning) > 0) {
+  cap <- "Warnings in dataset and variables"
+  
+  print_tab(tab_warning, caption = cap, n_rows = 22, add_row = 6)
+} else {
+  html_cat("No warnings in dataset and variables")
+  break_page_asis()
+}
+```
+
+## Variables
+
+```{r variables, results='asis'}
+cap <- "List of variables diagnosis"
+
+html_paged_variable(reportData, caption = cap, n_rows = 25)
+```
+
+$content_missing$
+# Missing Values
+## List of Missing Values
+
+```{r missing-list, results='asis'}
+cap <- "List of variables including missing values"
+
+html_paged_missing(diagn_na_unique, caption = cap, n_rows = 23, add_row = 5)
+```
+
+## Visualization
+
+```{r missing-viz, dpi=400, fig.height=9, fig.width=9, out.width="80%", results='asis'}
+diagn_missing <- diagn_na_unique %>% 
+  filter(missing_count > 0)
+
+if (NROW(diagn_missing) > 0) {
+  break_line_asis(1)
+  plot_na_intersect(reportData)
+} else {
+  html_cat("No variables including missing values")
+  break_line_asis(1)
+}
+
+break_page_asis()
+```
+$content_missing$
+
+# Unique Values
+## Categorical Vaiables
+
+```{r unique-date-category, results='asis'}
+html_paged_unique_cat(diagn_na_unique, thres_uniq_cat, n_rows = 25, add_row = 4)  
+```
+
+## Numerical Vaiables
+
+```{r unique-data-numeric, results='asis'}
+html_paged_unique_num(diagn_na_unique, thres_uniq_num, n_rows = 24, add_row = 5)  
+```
+
+# Categorical Variable Diagnosis
+## Top Ranks
+
+```{r diagnose-catagory, results='asis'}
+diagn_category <- html_paged_toprank(reportData, top = 10, type = "n")
+
+if (NROW(diagn_category) > 0) {
+  cap <- "Top 10 levels of categorical variables"
+  
+  print_tab(diagn_category, caption = cap, n_rows = 25, add_row = 4)
+} else {
+  html_cat("No categorical variable")
+  break_page_asis()
+}
+```
+
+# Numerical Variable Diagnosis
+## Distributions
+
+```{r diagnose-numeric, results='asis'}
+diagn_numeric <- diagnose_numeric(reportData)
+
+if (NROW(diagn_numeric) > 0) {
+  cap <- "General list of numerical diagnosis"
+  
+  print_tab(diagn_numeric, caption = cap, font_size = 13, n_rows = 25, add_row = 4)
+} else {
+  html_cat("No numerical variable")
+  break_page_asis()  
+}
+```
+
+$content_zero$
+### Zero Values
+
+```{r numeric-zero, results='asis'}
+if (NROW(diagn_numeric) > 0) {
+  diagn_zero <- diagn_numeric %>%
+    filter(zero > 0) %>%
+    select(variables, min, median, max, zero) %>%
+    mutate(`zero (%)` = round(zero / N * 100, 1)) %>%
+    arrange(desc(zero))
+
+  if (NROW(diagn_zero) > 0) {
+    cap <- "List of numerical diagnosis (zero)"
+  
+    print_tab(diagn_zero, caption = cap, n_rows = 25, add_row = 4)
+  } else {
+    html_cat("No numeric variable with zero value")
+    break_page_asis()      
+  }
+} else {
+  html_cat("No numerical variable")
+  break_page_asis()    
+}
+```
+$content_zero$
+
+$content_minus$
+
+### Negative Values
+
+```{r numeric-minus, results='asis'}
+if (NROW(diagn_numeric) > 0) {
+  diagn_minus <- diagn_numeric %>%
+    filter(minus > 0) %>%
+    select(variables, min, median, max, minus) %>%
+    mutate(`minus (%)` = round(minus / N * 100, 1)) %>%
+    arrange(desc(minus))
+
+  if (NROW(diagn_minus) > 0) {
+    cap <- "List of numerical diagnosis (minus)"
+  
+    print_tab(diagn_minus, caption = cap, n_rows = 25, add_row = 4)
+  } else {
+    html_cat("No numeric variable with negative value")
+    break_page_asis()   
+  }
+} else {
+  html_cat("No numerical variable")
+  break_page_asis()     
+}
+```
+$content_minus$
+
+## Outliers
+### List of Outliers
+
+```{r outliers, results='asis'}
+if (NROW(diagn_numeric) > 0) {
+  diagn_outlier <- diagn_numeric %>%
+    filter(outlier > 0) %>%
+    select(variables, min, median, max, outlier) %>%
+    mutate(`outlier (%)` = round(outlier / N * 100, 1)) %>%
+    arrange(desc(outlier))
+
+  if (NROW(diagn_outlier) > 0) {
+    cap <- "Diagnosis of numerical variable outliers"
+  
+    print_tab(diagn_outlier, caption = cap, n_rows = 25, add_row = 4)
+  } else {
+    html_cat("No numeric variables including outliers")
+    break_page_asis() 
+  }
+} else {
+  html_cat("No numerical variable")
+  break_page_asis() 
+}
+```
+
+### Individual Outliers
+
+```{r detail-outliers, fig.height=4, fig.width=6, results='asis'}
+if (NROW(diagn_numeric) > 0) {
+  diagn_outlier2 <- reportData %>%
+    diagnose_outlier(diagn_outlier$variables)
+
+  cols <- c("Outliers count", "Outliers ratio (%)", "Mean of outliers",
+            "Mean with outliers", "Mean without outliers")
+
+  if (NROW(diagn_outlier2) > 0) {
+    variables <- diagn_outlier2 %>%
+      select(variables) %>%
+      unlist
+
+    for (i in seq(variables)) {
+      cap <- sprintf("variable: %s", variables[i])
+      cat(sprintf("<h3>%s</h3>", cap))
+
+      outlier_df <- data.frame(Measures = cols,
+                               Values = as.vector(t(diagn_outlier2[i, -1])))
+      
+      values <- outlier_df$Values
+
+      outlier_df$Values[1] <- round(values[1]) %>% 
+        format(big.mark = ",")
+      outlier_df$Values[2] <- round(values[2], 2) %>% 
+        as.character() %>% 
+        paste0("%")
+      outlier_df$Values[3] <- values[3] %>% 
+        format() %>% 
+        as.character()
+      outlier_df$Values[4] <- values[4] %>% 
+        format() %>% 
+        as.character()
+      outlier_df$Values[5] <- values[5] %>% 
+        format() %>% 
+        as.character()
+        
+      knitr::kable(outlier_df, digits = 2, caption = variables[i], format = "html",
+                   table.attr = "class=\"table table-width\"", align = "lr") %>% 
+        kable_styling(full_width = FALSE, font_size = 14, position = "center") %>% 
+        gsub("font-size: initial !important;",
+             "font-size: 12px !important;", .) %>%
+        cat()
+
+      cat("<br><br>")
+      
+      plot_outlier(reportData, variables[i])
+      
+      break_page_asis()
+    }
+  } else {
+    html_cat("No numeric variables including outliers")
+  }
+} else {
+  html_cat("No numerical variable")
+}
+```
+

@@ -19,23 +19,24 @@ LazyData: true
 Depends:
     R (>= 3.2.0)
 Imports: 
-    cli,
-    corrplot (>= 0.84),
     dplyr (>= 0.7.6),
     extrafont (>= 0.17),
     ggplot2 (>= 3.0.0),
     grid,
     gridExtra,
     hrbrthemes (>= 0.8.0),
+    htmltools,
     kableExtra,
     knitr (>= 1.22),
     methods,
-    mice,    
+    mice,      
+    pagedown (>= 0.15),
     partykit,
-    prettydoc,
     purrr,
+    reactable,
     rlang,
     rmarkdown,
+    shiny,
     tibble,
     tidyr,
     tidyselect,
@@ -49,6 +50,7 @@ Suggests:
     nycflights13,
     randomForest,
     rpart,
+    prettydoc,    
     RSQLite
 Author: Choonghyun Ryu [aut, cre]
 Maintainer: Choonghyun Ryu <choonghyun.ryu@gmail.com>    

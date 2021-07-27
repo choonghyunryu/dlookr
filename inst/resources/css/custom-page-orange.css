@@ -1,0 +1,197 @@
+/*****
+ Main page size
+ *****/
+@page {
+  size: A4 portrait; /* var(--pagedjs-width) doesn't work in browser when printing */
+  margin: 40mm 25mm 25mm 25mm;
+}
+@page :blank {
+
+}
+
+/*****
+ Store some string variables
+ *****/
+.date {
+  string-set: date-text content(text);
+}
+
+.title {
+  string-set: title-text content(text);
+}
+
+.subtitle {
+  string-set: subtitle-text content(text);
+}
+
+.shorttitle1 {
+  string-set: h1-text content(text);
+}
+
+.shorttitle2 {
+  string-set: h2-text content(text);
+}
+
+@page chapter:left {
+  @top-left {
+    content: string(title-text) " > " string(subtitle-text);
+    margin-left: -10mm;
+    margin-top: 10mm;
+    color: var(--custom-grey60);
+    font-size: 0.8em;
+    text-transform: uppercase;
+    vertical-align: top;
+  }
+  @top-right {
+    content: none;
+    margin-right: -10mm;
+    margin-top: 10mm;
+    color: var(--custom-grey60);
+    font-size: 0.8em;
+    text-transform: uppercase;
+    vertical-align: top;
+  }  
+  @bottom-right {
+    content: "dlookr / " string(date-text);
+    margin-right: -10mm;
+    margin-top: 10mm;
+    padding-top: 1.5mm;
+    color: var(--custom-orange);
+    font-size: 0.7em;
+    vertical-align: top;
+    border-top: 0.5px solid var(--custom-orange);
+  }
+  @bottom-left {
+    content: counter(page);
+    margin-left: -10mm;
+    margin-top: 10mm;
+    padding-top: 1.5mm;
+    color: var(--custom-orange);
+    font-size: 0.7em;
+    vertical-align: top;
+    border-top: 0.5px solid var(--custom-orange);
+  }
+      /*background-image: url(../image/header-ruler-left-orange.svg);
+   ## We put the SVG directly in the CSS - with Base 64 - so that it works in all browser..*/
+  background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgeG1sbnM6c29kaXBvZGk9Imh0dHA6Ly9zb2RpcG9kaS5zb3VyY2Vmb3JnZS5uZXQvRFREL3NvZGlwb2RpLTAuZHRkIgogICB4bWxuczppbmtzY2FwZT0iaHR0cDovL3d3dy5pbmtzY2FwZS5vcmcvbmFtZXNwYWNlcy9pbmtzY2FwZSIKICAgaWQ9IkxheWVyXzMiCiAgIGRhdGEtbmFtZT0iTGF5ZXIgMyIKICAgdmlld0JveD0iMCAwIDUxMC4yNCA5LjM5IgogICB2ZXJzaW9uPSIxLjEiCiAgIHNvZGlwb2RpOmRvY25hbWU9ImhlYWRlci1ydWxlci1sZWZ0Mi5zdmciCiAgIGlua3NjYXBlOnZlcnNpb249IjEuMC4yIChlODZjODcwOCwgMjAyMS0wMS0xNSkiPgogIDxtZXRhZGF0YQogICAgIGlkPSJtZXRhZGF0YTEyMiI+CiAgICA8cmRmOlJERj4KICAgICAgPGNjOldvcmsKICAgICAgICAgcmRmOmFib3V0PSIiPgogICAgICAgIDxkYzpmb3JtYXQ+aW1hZ2Uvc3ZnK3htbDwvZGM6Zm9ybWF0PgogICAgICAgIDxkYzp0eXBlCiAgICAgICAgICAgcmRmOnJlc291cmNlPSJodHRwOi8vcHVybC5vcmcvZGMvZGNtaXR5cGUvU3RpbGxJbWFnZSIgLz4KICAgICAgICA8ZGM6dGl0bGU+PC9kYzp0aXRsZT4KICAgICAgPC9jYzpXb3JrPgogICAgPC9yZGY6UkRGPgogIDwvbWV0YWRhdGE+CiAgPHNvZGlwb2RpOm5hbWVkdmlldwogICAgIHBhZ2Vjb2xvcj0iI2ZmZmZmZiIKICAgICBib3JkZXJjb2xvcj0iIzY2NjY2NiIKICAgICBib3JkZXJvcGFjaXR5PSIxIgogICAgIG9iamVjdHRvbGVyYW5jZT0iMTAiCiAgICAgZ3JpZHRvbGVyYW5jZT0iMTAiCiAgICAgZ3VpZGV0b2xlcmFuY2U9IjEwIgogICAgIGlua3NjYXBlOnBhZ2VvcGFjaXR5PSIwIgogICAgIGlua3NjYXBlOnBhZ2VzaGFkb3c9IjIiCiAgICAgaW5rc2NhcGU6d2luZG93LXdpZHRoPSIyMTc0IgogICAgIGlua3NjYXBlOndpbmRvdy1oZWlnaHQ9Ijk5OSIKICAgICBpZD0ibmFtZWR2aWV3MTIwIgogICAgIHNob3dncmlkPSJmYWxzZSIKICAgICBpbmtzY2FwZTp6b29tPSIzMiIKICAgICBpbmtzY2FwZTpjeD0iMTEwLjUxMDM0IgogICAgIGlua3NjYXBlOmN5PSI5LjQ3NTUxNjQiCiAgICAgaW5rc2NhcGU6d2luZG93LXg9IjIzNjciCiAgICAgaW5rc2NhcGU6d2luZG93LXk9IjIzMCIKICAgICBpbmtzY2FwZTp3aW5kb3ctbWF4aW1pemVkPSIwIgogICAgIGlua3NjYXBlOmN1cnJlbnQtbGF5ZXI9IkxheWVyXzMiCiAgICAgaW5rc2NhcGU6ZG9jdW1lbnQtcm90YXRpb249IjAiIC8+CiAgPGRlZnMKICAgICBpZD0iZGVmczExNSI+CiAgICA8c3R5bGUKICAgICAgIGlkPSJzdHlsZTExMyI+LmNscy0xe2ZpbGw6bm9uZTtzdHJva2U6IzA4NzJiOTtzdHJva2Utd2lkdGg6MC41cHg7fTwvc3R5bGU+CiAgPC9kZWZzPgogIDxwYXRoCiAgICAgc3R5bGU9ImZpbGw6bm9uZTtzdHJva2U6I2ZmNjYwMDtzdHJva2Utd2lkdGg6MC45NDQ4NzM7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7c3Ryb2tlLW1pdGVybGltaXQ6NDtzdHJva2UtZGFzaGFycmF5Om5vbmU7c3Ryb2tlLW9wYWNpdHk6MSIKICAgICBkPSJNIDAsMCBDIDUxMC4yMywwIDUxMC4yMywwIDUxMC4yMywwIgogICAgIGlkPSJwYXRoOTI3IiAvPgogIDxwYXRoCiAgICAgc3R5bGU9ImZpbGw6bm9uZTtzdHJva2U6I2ZmNjYwMDtzdHJva2Utd2lkdGg6Mi42MDYyNztzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6bm9uZTtzdHJva2Utb3BhY2l0eToxIgogICAgIGQ9Im0gMCwxLjQ0NTEzNSBjIDIwMCwwIDIwMCwwIDIwMCwwIgogICAgIGlkPSJwYXRoOTg0IiAvPgo8L3N2Zz4K");
+  
+  background-position: 15mm 15mm;
+  background-size: 180mm;
+  background-repeat: no-repeat;
+}
+
+@page chapter:right {
+  @top-right {
+    content: string(title-text) " > " string(subtitle-text);
+    margin-right: -10mm;
+    margin-top: 10mm;
+    color: var(--custom-grey60);
+    font-size: 0.8em;
+    text-transform: uppercase;
+    vertical-align: top;
+  }
+  @bottom-left {
+    content: "dlookr / " string(date-text);
+    margin-left: -10mm;
+    margin-top: 10mm;
+    padding-top: 1.5mm;
+    color: var(--custom-orange);
+    font-size: 0.7em;
+    vertical-align: top;
+    border-top: 0.5px solid var(--custom-orange);    
+  }
+  @bottom-right {
+    content: counter(page);
+    margin-right: -10mm;
+    margin-top: 10mm;
+    padding-top: 1.5mm;
+    color: var(--custom-orange);
+    font-size: 0.7em;
+    vertical-align: top;
+    border-top: 0.5px solid var(--custom-orange);
+  }
+  /*background-image: url(../image/header-ruler-right-orange.svg);
+   ## We put the SVG directly in the CSS - with Base 64 - so that it works in all browser..*/
+  background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgeG1sbnM6c29kaXBvZGk9Imh0dHA6Ly9zb2RpcG9kaS5zb3VyY2Vmb3JnZS5uZXQvRFREL3NvZGlwb2RpLTAuZHRkIgogICB4bWxuczppbmtzY2FwZT0iaHR0cDovL3d3dy5pbmtzY2FwZS5vcmcvbmFtZXNwYWNlcy9pbmtzY2FwZSIKICAgaWQ9IkxheWVyXzMiCiAgIGRhdGEtbmFtZT0iTGF5ZXIgMyIKICAgdmlld0JveD0iMCAwIDUxMC4yNCA5LjM5IgogICB2ZXJzaW9uPSIxLjEiCiAgIHNvZGlwb2RpOmRvY25hbWU9ImhlYWRlci1ydWxlci1yaWdodDIuc3ZnIgogICBpbmtzY2FwZTp2ZXJzaW9uPSIxLjAuMiAoZTg2Yzg3MDgsIDIwMjEtMDEtMTUpIj4KICA8bWV0YWRhdGEKICAgICBpZD0ibWV0YWRhdGExMjIiPgogICAgPHJkZjpSREY+CiAgICAgIDxjYzpXb3JrCiAgICAgICAgIHJkZjphYm91dD0iIj4KICAgICAgICA8ZGM6Zm9ybWF0PmltYWdlL3N2Zyt4bWw8L2RjOmZvcm1hdD4KICAgICAgICA8ZGM6dHlwZQogICAgICAgICAgIHJkZjpyZXNvdXJjZT0iaHR0cDovL3B1cmwub3JnL2RjL2RjbWl0eXBlL1N0aWxsSW1hZ2UiIC8+CiAgICAgICAgPGRjOnRpdGxlPjwvZGM6dGl0bGU+CiAgICAgIDwvY2M6V29yaz4KICAgIDwvcmRmOlJERj4KICA8L21ldGFkYXRhPgogIDxzb2RpcG9kaTpuYW1lZHZpZXcKICAgICBwYWdlY29sb3I9IiNmZmZmZmYiCiAgICAgYm9yZGVyY29sb3I9IiM2NjY2NjYiCiAgICAgYm9yZGVyb3BhY2l0eT0iMSIKICAgICBvYmplY3R0b2xlcmFuY2U9IjEwIgogICAgIGdyaWR0b2xlcmFuY2U9IjEwIgogICAgIGd1aWRldG9sZXJhbmNlPSIxMCIKICAgICBpbmtzY2FwZTpwYWdlb3BhY2l0eT0iMCIKICAgICBpbmtzY2FwZTpwYWdlc2hhZG93PSIyIgogICAgIGlua3NjYXBlOndpbmRvdy13aWR0aD0iMjE3NCIKICAgICBpbmtzY2FwZTp3aW5kb3ctaGVpZ2h0PSI5OTkiCiAgICAgaWQ9Im5hbWVkdmlldzEyMCIKICAgICBzaG93Z3JpZD0iZmFsc2UiCiAgICAgaW5rc2NhcGU6em9vbT0iMzIiCiAgICAgaW5rc2NhcGU6Y3g9IjUwNC4xOTc4NCIKICAgICBpbmtzY2FwZTpjeT0iOS40NzU1MTY0IgogICAgIGlua3NjYXBlOndpbmRvdy14PSIyMDk1IgogICAgIGlua3NjYXBlOndpbmRvdy15PSIyMDkiCiAgICAgaW5rc2NhcGU6d2luZG93LW1heGltaXplZD0iMCIKICAgICBpbmtzY2FwZTpjdXJyZW50LWxheWVyPSJMYXllcl8zIgogICAgIGlua3NjYXBlOmRvY3VtZW50LXJvdGF0aW9uPSIwIiAvPgogIDxkZWZzCiAgICAgaWQ9ImRlZnMxMTUiPgogICAgPHN0eWxlCiAgICAgICBpZD0ic3R5bGUxMTMiPi5jbHMtMXtmaWxsOm5vbmU7c3Ryb2tlOiMwODcyYjk7c3Ryb2tlLXdpZHRoOjAuNXB4O308L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aAogICAgIHN0eWxlPSJmaWxsOm5vbmU7c3Ryb2tlOiNmZjY2MDA7c3Ryb2tlLXdpZHRoOjAuOTQ0ODczO3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO3N0cm9rZS1taXRlcmxpbWl0OjQ7c3Ryb2tlLWRhc2hhcnJheTpub25lO3N0cm9rZS1vcGFjaXR5OjEiCiAgICAgZD0iTSAwLDAgQyA1MTAuMjMsMCA1MTAuMjMsMCA1MTAuMjMsMCIKICAgICBpZD0icGF0aDkyNyIgLz4KICA8cGF0aAogICAgIHN0eWxlPSJmaWxsOm5vbmU7c3Ryb2tlOiNmZjY2MDA7c3Ryb2tlLXdpZHRoOjIuNjA2Mjc7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7c3Ryb2tlLW1pdGVybGltaXQ6NDtzdHJva2UtZGFzaGFycmF5Om5vbmU7c3Ryb2tlLW9wYWNpdHk6MSIKICAgICBkPSJtIDMxMC4yMiwxLjQ0NTEzNSBjIDIwMCwwIDIwMCwwIDIwMCwwIgogICAgIGlkPSJwYXRoOTg0IiAvPgo8L3N2Zz4K");
+
+
+  background-position: 15mm 15mm;
+  background-size: 180mm;
+  background-repeat: no-repeat;
+}
+
+
+@page :first {
+  margin: 30mm 10mm 10mm 10mm;
+  @top-left {
+  /*content: url("../image/R_logo.svg");
+   ## We put the SVG directly in the CSS - with Base 64 - so that it works in all browser..   */
+    content: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNzJwdCIgaGVpZ2h0PSI1NXB0IiB2aWV3Qm94PSIwIDAgNzIgNTUiIHZlcnNpb249IjEuMSI+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImxpbmVhcjAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iMC4zNzk3MjYiIHkxPSIwLjE2OTk4OSIgeDI9IjAuOTExMjA4IiB5Mj0iMC43NjMyNiIgZ3JhZGllbnRUcmFuc2Zvcm09Im1hdHJpeCg3MiwwLDAsNDcuOTYwOTM4LDAsMCkiPgo8c3RvcCBvZmZzZXQ9IjAiIHN0eWxlPSJzdG9wLWNvbG9yOnJnYig3OC44MjM1MjklLDc5LjYwNzg0MyUsODAuNzg0MzE0JSk7c3RvcC1vcGFjaXR5OjE7Ii8+CjxzdG9wIG9mZnNldD0iMSIgc3R5bGU9InN0b3AtY29sb3I6cmdiKDQ4LjIzNTI5NCUsNDcuODQzMTM3JSw1MC41ODgyMzUlKTtzdG9wLW9wYWNpdHk6MTsiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8ZyBpZD0ic3VyZmFjZTEiPgo8cGF0aCBzdHlsZT0iIHN0cm9rZTpub25lO2ZpbGwtcnVsZTpub256ZXJvO2ZpbGw6dXJsKCNsaW5lYXIwKTsiIGQ9Ik0gNDIgNDIuNTU0Njg4IEMgMjcgNDIuNTU0Njg4IDE0LjI1MzkwNiAzNC45NDUzMTIgMTQuMjUzOTA2IDI1LjgyNDIxOSBDIDE0LjI1MzkwNiAxNi43MDcwMzEgMjUuNSA5LjEyMTA5NCA0MC41IDkuMTIxMDk0IEMgNTkuNDQ1MzEyIDkuMTIxMDk0IDY4LjIyMjY1NiAxNi41MDM5MDYgNjguMjIyNjU2IDI1LjYyMTA5NCBDIDY4LjIyMjY1NiAzNC43NDIxODggNTguNTQ2ODc1IDQyLjU1NDY4OCA0MiA0Mi41NTQ2ODggTSAzNiAwIEMgMTYuNSAwIDAgMTAuNjQwNjI1IDAgMjQuMzE2NDA2IEMgMCAzNy4yMzgyODEgMTYuMzk4NDM4IDQ3Ljk2MDkzOCAzNS45MDIzNDQgNDcuOTYwOTM4IEMgNTUuMzk4NDM4IDQ3Ljk2MDkzOCA3MiAzNy45OTYwOTQgNzIgMjQuMzE2NDA2IEMgNzIgMTAuNjQwNjI1IDU1LjUgMCAzNiAwICIvPgo8cGF0aCBzdHlsZT0iIHN0cm9rZTpub25lO2ZpbGwtcnVsZTpub256ZXJvO2ZpbGw6cmdiKDEyLjk0MTE3NiUsMzkuNjA3ODQzJSw3MS4zNzI1NDklKTtmaWxsLW9wYWNpdHk6MTsiIGQ9Ik0gMjkuNzk2ODc1IDE0Ljc2OTUzMSBMIDI5Ljc5Njg3NSA1NC45ODA0NjkgTCA0MS43ODkwNjIgNTQuOTgwNDY5IEwgNDEuNzg5MDYyIDM5LjM0Mzc1IEMgNDQuNzg5MDYyIDM5LjM0Mzc1IDQ2LjU3NDIxOSAzOC42Nzk2ODggNDguNTM1MTU2IDQyLjMyNDIxOSBDIDUxLjUzNTE1NiA0Ny41MzUxNTYgNTUuMjgxMjUgNTQuOTgwNDY5IDU1LjI4MTI1IDU0Ljk4MDQ2OSBMIDY5LjUyMzQzOCA1NC45ODA0NjkgQyA2OS41MjM0MzggNTQuOTgwNDY5IDYwLjUzMTI1IDQwLjA4OTg0NCA1OS43ODEyNSAzOS4zNDM3NSBDIDU4LjM5ODQzOCAzNy44NTU0NjkgNTYuNzgxMjUgMzcuODU1NDY5IDU0LjUzNTE1NiAzNy4xMDkzNzUgQyA1OS4wMzEyNSAzNi4zNjcxODggNjMuMjIyNjU2IDM0LjQ3NjU2MiA2NC42Nzk2ODggMzAuNDIxODc1IEMgNjUuOTU3MDMxIDI2LjY5OTIxOSA2NS44MDQ2ODggMjEuOTY0ODQ0IDYzLjA3NDIxOSAxOC43ODkwNjIgQyA2MC43MDcwMzEgMTYuMjczNDM4IDU4LjI4MTI1IDE0Ljc2OTUzMSA1Mi4yODUxNTYgMTQuNzY5NTMxIFogTSA0MS43ODkwNjIgMjMuMTQ0NTMxIEwgNDkuNjYwMTU2IDIzLjE0NDUzMSBDIDUxLjUyNzM0NCAyMy4xNDQ1MzEgNTMuMDM1MTU2IDI1LjAwNzgxMiA1My4wMzUxNTYgMjYuODY3MTg4IEMgNTMuMDM1MTU2IDI4LjczMDQ2OSA1MS41MzUxNTYgMzAuNTg5ODQ0IDQ5LjY2MDE1NiAzMC41ODk4NDQgTCA0MS43ODkwNjIgMzAuNTg5ODQ0IFogTSA0MS43ODkwNjIgMjMuMTQ0NTMxICIvPgo8L2c+Cjwvc3ZnPgo=");
+
+    width: 62.5mm;
+    margin-top: 7mm;
+  }
+  @top-right {
+    content: url("../image/dlookr.svg"); 
+    width: 62.5mm;
+    margin-top: 7mm;
+  }
+  @bottom-left {
+    content: none !important;
+  }
+  @bottom-right {
+    content: none !important;
+  }
+  background-image: var(--front-cover);
+  background-position: 10mm 30mm;
+  background-size: 190mm 257mm;
+  background-repeat: no-repeat;
+}
+
+/* Front cover */
+.front-cover {
+  break-after: recto;
+}
+
+/* Front page or title page */
+.front-page {
+  counter-reset: page;
+  break-after: page;
+}
+
+/* page breaks; aka CSS fragmentation */
+.level1 {
+  /* break-before: recto; */
+  page: chapter;
+}
+.front-matter-container .level1 {
+  page: frontmatter;
+}
+.section > h1, .section > h2, .section > h3, .section > h4, .section > h5, .section > h6 {
+  break-after: avoid;
+}
+.footenotes {
+  break-before: always;
+  break-after: always;
+}
+.figure {
+  break-inside: avoid;
+}
+
+/* do not break captions */
+caption {
+  break-inside: avoid;
+  break-after: avoid;
+}
+
+/* reset page numbering for main content */
+/*.main .level1:first-child h1 {
+  counter-reset: page;
+} */
+
+/* do not break captions */
+caption,
+.caption {
+  break-inside: avoid;
+  break-after: avoid;
+}

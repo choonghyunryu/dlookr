@@ -308,32 +308,28 @@ plot_correlate.data.frame <- function(.data, ..., method = c("pearson", "kendall
 }
 
 
-#' @importFrom corrplot corrplot
-#' @importFrom stats cor
+#' @import ggplot2
+#' 
 plot_correlate_impl <- function(df, vars, method) {
   if (length(vars) == 0) vars <- names(df)
-
-  idx_numeric <- find_class(df, type = "numerical")
-
-  M <- cor(df[, names(df)[idx_numeric]],
-    use = "pairwise.complete.obs", method = method)
-
-  M2 <- M[row.names(M) %in% vars, ]
-
-  if (!is.matrix(M2)) {
-    M2 <- t(as.matrix(M2))
-    row.names(M2) <- vars
-  }
-
-  if (nrow(M2) >= 20) {
-    corrplot::corrplot(M2, is.corr = FALSE, tl.cex = 0.5, tl.srt = 45, 
-                       method = "color", tl.col="black",
-                       mar = c(0, 0, 1, 0))
-  } else {
-    corrplot::corrplot(M2, method = "ellipse", diag = FALSE, tl.cex = 0.7, 
-                       tl.col="black", tl.srt = 45, type = "upper", 
-                       mar = c(0, 0, 1, 0)) 
-  }
+  
+  df %>% 
+    correlate(method = method) %>% 
+    filter(var2 %in% vars) %>% 
+    ggplot(aes(var1, var2, fill = coef_corr, label = round(coef_corr, 2))) +
+    geom_tile(col = "black") + 
+    scale_fill_gradient2(low = "blue", mid = "white", high = "red", 
+                         limits = c(-1, 1)) +
+    geom_text() +
+    scale_x_discrete(expand = c(0, 0)) +
+    scale_y_discrete(expand = c(0, 0)) +
+    labs(fill = "Correlation\nCoefficient") + 
+    coord_equal() +
+    theme_typographic() +
+    theme(axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.x = element_text(angle = 40, hjust = 1),
+          panel.grid.major = element_blank())
 }
 
 
@@ -350,7 +346,9 @@ plot_correlate.grouped_df <- function(.data, ..., method = c("pearson", "kendall
 }
 
 
-#' @importFrom stats cor
+#' @import ggplot2
+#' @import dplyr
+#' @importFrom utils packageVersion
 plot_correlate_group_impl <- function(df, vars, method) {
   if (length(vars) == 0) vars <- names(df)
 
@@ -388,20 +386,30 @@ plot_correlate_group_impl <- function(df, vars, method) {
         label <- paste(names(attr(df, "labels")), "==", label, collapse = ",")
       }  
 
-      M <- cor(df[idx, names(df)[idx_numeric]],
-        use = "pairwise.complete.obs", method = method)
-
-      M2 <- M[row.names(M) %in% vars, ]
-
-      if (any(complete.cases(M2))) {
-        if (!is.matrix(M2)) {
-          M2 <- t(as.matrix(M2))
-          row.names(M2) <- vars
-        }
+      df_corr <- df[idx, ] %>% 
+        correlate(method = method) %>% 
+        filter(var2 %in% vars)
         
-        corrplot::corrplot(M2, method = "ellipse", diag = FALSE, tl.srt = 45, 
-                           type = "upper", mar = c(0, 0, 1, 0), title = label)
-      } 
+      if (NROW(df_corr) > 0) {
+        p <- df_corr %>%   
+          ggplot(aes(var1, var2, fill = coef_corr, label = round(coef_corr, 2))) +
+          geom_tile(col = "black") + 
+          scale_fill_gradient2(low = "blue", mid = "white", high = "red", 
+                               limits = c(-1, 1)) +
+          geom_text() +
+          scale_x_discrete(expand = c(0, 0)) +
+          scale_y_discrete(expand = c(0, 0)) +
+          labs(title = label, 
+               fill = "Correlation\nCoefficient") + 
+          coord_equal() +
+          theme_typographic() +
+          theme(axis.title.x = element_blank(),
+                axis.title.y = element_blank(),
+                axis.text.x = element_text(angle = 40, hjust = 1),
+                panel.grid.major = element_blank())
+        
+        print(p)        
+      }
     }
   }
 

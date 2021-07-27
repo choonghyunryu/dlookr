@@ -1114,6 +1114,8 @@ plot_hist_numeric.grouped_df <- function(.data, ...,
   plot_hist_numeric_group_impl(.data, vars, title, each, typographic)
 }
 
+#' @importFrom stats IQR
+#' 
 plot_hist_numeric_group_impl <- function(df, vars, title, each, typographic) {
   if (utils::packageVersion("dplyr") >= "0.8.0") {
     group_key <- setdiff(attr(df, "groups") %>% names(), ".rows")
@@ -1150,7 +1152,7 @@ plot_hist_numeric_group_impl <- function(df, vars, title, each, typographic) {
         mutate(variables = var) %>% 
         ggplot(aes_string(x = var, fill = group_key)) +
         geom_histogram(color="#e9ecef", alpha = 0.7,
-                       binwidth = function(x) 2 * IQR(x) / (length(x)^(1/3))) + 
+                       binwidth = function(x) 2 * stats::IQR(x) / (length(x)^(1/3))) + 
         facet_grid(reformulate("variables", group_key)) + 
         labs(title = title, x = xlab, y = ylab) +        
         theme(legend.position = "none",

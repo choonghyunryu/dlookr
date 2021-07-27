@@ -597,7 +597,7 @@ summary.compare_category <- function(object, method = c("all", "table", "relativ
   
   if (verbose) {
     if (method %in% c("all", "table")) {
-      cli::cat_rule(
+      cat_rule(
         left = "Contingency tables",
         right = paste("Number of table is", n),
         col = "cyan",
@@ -607,7 +607,7 @@ summary.compare_category <- function(object, method = c("all", "table", "relativ
     }
     
     if (method %in% c("all", "relative")) {
-      cli::cat_rule(
+      cat_rule(
         left = "Relative contingency tables",
         right = paste("Number of table is", n),
         col = "cyan",
@@ -617,7 +617,7 @@ summary.compare_category <- function(object, method = c("all", "table", "relativ
     }
     
     if (method %in% c("all", "chisq")) {
-      cli::cat_rule(
+      cat_rule(
         left = "Chi-squared contingency table tests",
         right = paste("Number of table is", n),
         col = "cyan",
@@ -771,7 +771,7 @@ summary.compare_numeric <- function(object, method = c("all", "correlation", "li
   
   if (verbose) {
     if (method %in% c("all", "correlation")) {
-      cli::cat_rule(
+      cat_rule(
         left = sprintf("Correlation check : abs(r) > %g", thres_corr),
         right = sprintf("Number of pairs is %d/%d", nrow(correlation), n),
         col = "cyan",
@@ -781,7 +781,7 @@ summary.compare_numeric <- function(object, method = c("all", "correlation", "li
     }
     
     if (method %in% c("all", "linear")) {
-      cli::cat_rule(
+      cat_rule(
         left = sprintf("R.squared check : R^2 > %g", thres_rs),
         right = sprintf("Number of pairs is %d/%d", nrow(linear), n),
         col = "cyan",

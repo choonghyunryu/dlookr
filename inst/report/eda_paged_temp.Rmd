@@ -1,0 +1,261 @@
+---
+title: "$title$"
+subtitle: "$subtitle$"
+abstract-title: "$abstract_title$"
+abstract: "$abstract$"
+date: "`r Sys.Date()`"
+output: 
+  dlookr::dlookr_$theme$_paged: 
+    # Change to point to your cover file
+    front_cover: $cover$
+    toc: true
+    # Change to true to add number in front of chapters
+    number_sections: false
+    # Change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
+    self_contained: true
+# Set  toc title, default none
+toc-title: Contents
+#knit: pagedown::chrome_print
+---
+
+```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = FALSE, 
+                      message = FALSE, 
+                      warning = FALSE, 
+                      collapse = FALSE,
+                      comment = "#>",
+                      fig.align = "center")
+knitr::opts_chunk$set(fig.width = 12, fig.height = 9)
+```
+
+```{r packages, include=FALSE, message=FALSE, warning=FALSE}
+# Load required packages for charts with UNHCR style 
+library(dplyr)
+library(ggplot2)
+library(kableExtra)
+library(dlookr)
+library(htmltools)
+library(reactable)
+
+reportData <- get("reportData", .dlookrEnv)
+targetVariable <- get("targetVariable", .dlookrEnv)
+sample_percent <- get("sample_percent", .dlookrEnv)
+author <- get("author", .dlookrEnv)
+```
+
+
+```{css, echo=FALSE}
+.pagedjs_page.pagedjs_first_page .pagedjs_margin-top-right>.pagedjs_margin-content::after {
+    content: url("$logo$");
+}
+
+.title {
+  color: $title_color$;
+}
+
+.subtitle {
+  color: $subtitle_color$;
+}
+```
+
+# Overview
+## Data Structures
+
+```{r overview-pre, results='asis'}
+# Number of observations
+N <- NROW(reportData)
+
+# sampling with sample_percent
+if (sample_percent < 100) {
+  N_sample <- ceiling(N * sample_percent / 100)
+  idx <- sample(seq(N), size = N_sample)
+  
+  reportData <- reportData[idx, ]
+} else {
+  N_sample <- N
+}
+
+if (length(targetVariable) == 0) targetVariable <- NULL
+```
+
+```{r overview, results='asis'}
+# solve the overview
+ov <- overview(reportData)
+
+tab_left <- ov[1:9, ]
+tab_right <- ov[10:nrow(ov), ]
+rownames(tab_right) <- seq(nrow(tab_right))
+
+tab_left <- tab_left %>% 
+  mutate(value = ifelse (metrics %in% "observations", N, value)) %>%   
+  mutate(value = ifelse (metrics %in% "memory size", 
+                         ifelse(value / 1024^2 > 0, round(value / 1024^2),
+                                round(value / 1024)), value)) %>%   
+  mutate(metrics = ifelse (metrics %in% "memory size", 
+                         ifelse(value / 1024^2 > 0, "memory size (MB)",
+                                "memory size (KB)"), metrics))
+
+knitr::kables(format = "html",
+  list(
+    knitr::kable(tab_left, digits = 2, format = "html", valign = "t",
+                 format.args = list(big.mark = ","),
+                 table.attr = "style=\"margin-right:40px !important;\"") %>% 
+      kable_styling(full_width = FALSE, font_size = 15), 
+    knitr::kable(tab_right, digits = 2, format = "html", valign = "t",
+                 format.args = list(big.mark = ",")) %>% 
+      kable_styling(full_width = FALSE, font_size = 15) 
+    ),
+  caption = "Data structures and types") %>% 
+  gsub("font-size: initial !important;",
+       "font-size: 12px !important;", .) %>%  
+  cat()
+```
+
+## Job Informations
+
+```{r overview-job, results='asis'}
+division <- c("dataset" ,"dataset" ,"dataset", "job", "job", "job")
+metrics <- c("dataset" ,"dataset type", "target", "samples", 
+             "created", "created by")
+
+value <- c("$dataset$", 
+           "$datatype$",
+           ifelse(is.null(targetVariable), "not defied", targetVariable),
+           paste0(N_sample, " / ", format(N, big.mark = ","), " (",
+                  sample_percent, "%)"),
+           "$date$",
+           ifelse(author == "", "dlookr", author))
+
+info_job <- data.frame(division = division, metrics = metrics, value = value)
+
+cap <- "Job informations"
+
+print_tab(info_job, caption = cap)
+```
+
+```{r check_variables}
+idx.numeric <- find_class(reportData, type = "numerical")
+nm.numeric <- find_class(reportData, type = "numerical", index = FALSE)
+
+if (!is.null(targetVariable)) {
+  # remove target variable from variable index
+  idx.numeric <- idx.numeric[nm.numeric != targetVariable]
+  
+  factor_flag <- class(pull(reportData, targetVariable))[1] %in% c("factor", "ordered")
+  numeric_flag <- class(pull(reportData, targetVariable))[1] %in% c("integer", "numeric")
+  
+  target <- if (!factor_flag & numeric_flag) 
+    factor(pull(reportData, targetVariable)) else
+      pull(reportData, targetVariable)
+}
+
+# if all elements of a numerical variable are NA,
+# remove from correlation coefficient calculation
+idx.numeric <- idx.numeric[apply(as.data.frame(reportData[, idx.numeric]), 2,
+                                 function(x) !all(is.na(x)))]
+
+# if all elements of the numerical variable are the same value,
+# remove from the correlation coefficient calculation
+idx.numeric <- idx.numeric[apply(as.data.frame(reportData[, idx.numeric]), 2,
+                                 function(x) diff(range(x, na.rm = TRUE)) > 0)]
+```
+
+# Univariate Analysis
+## Descriptive Statistics
+### Numerical Variables
+
+```{r descriptive-numerical, results='asis'}
+cap <- "Descriptive statistics of numerical variables"
+
+html_paged_describe(reportData, caption = cap, font_size = 13)
+```
+
+```{r descriptive-numerical-detail, results='asis', dpi=300, fig.height=5, fig.width=5, out.width="80%"}
+# cap <- "Descriptive Statistics of Numerical Variables"
+html_paged_describe_detail(reportData)
+```
+
+### Categorical Variables
+
+```{r descriptive-categorical, results='asis'}
+cap <- "Top rank levels of categorical variables"
+
+html_paged_categorical(reportData, caption = cap, font_size = 13)
+```
+
+```{r descriptive-categorical-detail, results='asis', dpi=300, fig.height=5, fig.width=5, out.width="80%"}
+# cap <- "Descriptive Statistics of Categorical Variables"
+html_paged_categorical_detail(reportData)
+```
+
+## Normality Test
+```{r normality, results='asis'}
+cap <- "Descriptive statistics of numerical variables"
+
+html_paged_normality(reportData, caption = cap, font_size = 13)
+```
+
+```{r normality-detail, results='asis', dpi=300, fig.height=5, fig.width=7, out.width="90%"}
+suppressWarnings({
+  html_paged_normality_detail(reportData)
+})
+```
+
+
+# Bivariate Analysis
+## Compare Numerical Variables
+```{r compare-numerical, results='asis'}
+cap <- "Correlation coefficient"
+
+html_paged_compare_numerical(reportData, caption = cap, font_size = 13)
+```
+
+## Compare Categorical Variables
+```{r compare-categorical, results='asis', dpi=300, fig.height=5, fig.width=5, out.width="70%"}
+cap <- "Chisqure-test"
+
+html_paged_compare_categorical(reportData, caption = cap, font_size = 13)
+```
+
+# Multivariate Analysis
+## Correlation Analysis
+### Correlation Coefficient Matrix
+
+```{r correlation, results='asis'}
+html_paged_correlation(reportData) 
+```
+
+### Correlation Plot
+
+```{r plot-correlation, results='asis', dpi=300, fig.height=5, fig.width=5, out.width="85%"}
+if (length(idx.numeric) < 2) {
+  html_cat("The number of numerical variables is less than 2.")
+} else {
+  dlookr::plot_correlate(reportData)  
+}
+
+break_page_asis()
+```
+
+$targeted_eda$
+
+# Target based Analysis
+## Grouped Numerical Variables
+
+```{r group-numerical, results='asis', dpi=400, fig.height=5, fig.width=7, out.width="85%"}
+html_paged_target_numerical(reportData, targetVariable)  
+```
+
+## Grouped Categorical Variables
+
+```{r group-categorical, results='asis', dpi=400, fig.height=6, fig.width=7, out.width="85%"}
+html_paged_target_categorical(reportData, targetVariable)  
+```
+
+## Grouped Correlation
+
+```{r group-correlation, results='asis', dpi=400, fig.height=6, fig.width=6, out.width="95%"}
+html_paged_target_correlation(reportData, targetVariable)  
+```
+
+$targeted_eda$
