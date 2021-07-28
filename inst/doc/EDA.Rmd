@@ -159,13 +159,13 @@ carseats %>%
 
 The `describe()` function supports the `group_by()` function syntax of the `dplyr` package.
 
-```{r diagnose_pipe2}
+```{r describe_pipe2}
 carseats %>%
   group_by(US) %>% 
   describe(Sales, Income) 
 ```
 
-```{r diagnose_pipe3}
+```{r describe_pipe3}
 carseats %>%
   group_by(US, Urban) %>% 
   describe(Sales, Income) 
@@ -255,7 +255,7 @@ plot_normality(carseats, Sales, CompPrice)
 
 The `plot_normality()` function also supports the `group_by()` function syntax in the `dplyr` package.
 
-```{r plot_normality2, fig.align='center', fig.width = 7, fig.height = 5}
+```{r plot_normality2, fig.align='center', fig.width = 7, fig.height = 5, eval=FALSE}
 carseats %>%
   filter(ShelveLoc == "Good") %>%
   group_by(US) %>%
@@ -315,14 +315,14 @@ plot_correlate(carseats)
 `plot_correlate()` can also specify multiple variables, like the `correlate()` function.
 The following is a visualization of the correlation matrix including several selected variables.
 
-```{r plot_correlate2, fig.align='center', fig.width = 6, fig.height = 4}
+```{r plot_correlate2, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE}
 # Select columns by name
 plot_correlate(carseats, Sales, Price)
 ```
 
 The `plot_correlate()` function also supports the `group_by()` function syntax in the `dplyr` package.
 
-```{r plot_correlate3, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE}
+```{r plot_correlate3, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE, eval=FALSE}
 carseats %>%
   filter(ShelveLoc == "Good") %>%
   group_by(Urban) %>%
@@ -436,97 +436,163 @@ plot(num_cat)
 ```
 
 
-## Creating an EDA report using `eda_report()`
+## Automated report
 
-`eda_report()` performs EDA on all variables of the data frame or object (`tbl_df`,` tbl`, etc.) that inherits the data frame.
+dlookr provides two automated EDA reports:
 
-`eda_report()` creates an EDA report in two forms:
+* Web page-based dynamic reports can perform in-depth analysis through visualization and statistical tables.
+* Static reports generated as pdf files or html files can be archived as output of data analysis.
 
-* pdf file based on Latex
-* html file
+### Create a dynamic report using `eda_web_report()`
+`eda_web_report()` create dynamic report for object inherited from data.frame(`tbl_df`, `tbl`, etc) or data.frame.
 
+#### Contents of dynamic web report
 The contents of the report are as follows.:
 
-* introduction
-    + Information of Dataset
-    + Information of Variables
-    + Numerical Variables
+* Overview
+    + Data Structures
+    + Data Types
+    + Job Informations
 * Univariate Analysis
     + Descriptive Statistics
-    + Normality Test of Numerical Variables
-        + Statistics and Visualization of (Sample) Data
-* Relationship Between Variables
-    + Correlation Coefficient
-        + Correlation Coefficient by Variable Combination
-        + Correlation Plot of Numerical Variables
+    + Normality Test
+* Bivariate Analysis
+    + Compare Numerical Variables
+    + Compare Categorical Variables
+* Multivariate Analysis
+    + Correlation Analysis
+        + Correlation Matrix
+        + Correlation Plot
 * Target based Analysis
-    + Gruoped Descriptive Statistics
-        + Gruoped Numerical Variables
-        + Gruoped Categorical Variables
-    + Gruoped Relationship Between Variables
-        + Grouped Correlation Coefficient
-        + Grouped Correlation Plot of Numerical Variables
+    + Grouped Numerical Variables
+    + Grouped Categorical Variables
+    + Grouped Correlation
 
-The following example generates an EDA report for `carseats`. The file format is `pdf`, and the file name is `EDA_Report.pdf`.
+#### Some arguments for dynamic web report
+eda_web_report() generates various reports with the following arguments.
 
-```{r eda_report, eval=FALSE}
-carseats %>%
-  eda_report(target = Sales)
+* target
+    + target variable
+* output_file
+    + name of generated file.
+* output_dir
+    + name of directory to generate report file.
+* title
+    + title of report. 
+* subtitle
+    + subtitle of report. 
+* author
+    + author of report. 
+* title_color
+    + color of title.
+* logo_img
+    + name of logo image file on top left.
+* create_date
+    + The date on which the report is generated.
+* theme
+    + name of theme for report. support "orange" and "blue". 
+* sample_percent
+    + Sample percent of data for performing EDA.
+
+
+The following script creates a EDA report for the `data.frame` class object, `heartfailure`.
+
+```{r eda_web_report, eval=FALSE}
+heartfailure %>%
+  eda_web_report(target = "death_event", subtitle = "heartfailure", 
+                 output_dir = "./", output_file = "EDA.html", theme = "blue")
 ```
 
-The following example generates an HTML-formatted report named `EDA_carseats.html`.
+#### Screenshot of dynamic report
 
-```{r, eval=FALSE}
-carseats %>%
-  eda_report(target = Sales, output_format = "html", output_file = "EDA_carseats.html")
+* The dynamic contents of the report is shown in the following figure.:
+
+```{r eda_web_title, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The part of the report"}
+knitr::include_graphics('img/eda_web_title.jpg')
 ```
 
-The EDA report is an automated report to assist in the EDA process. Design the data analysis scenario with reference to the report results.
+### Create a EDA report using `eda_paged_report()`
+`eda_paged_report()` create static report for object inherited from data.frame(`tbl_df`, `tbl`, etc) or data.frame.
 
-### EDA report contents
-#### Contents of pdf file
+#### Contents of static paged report
+The contents of the report are as follows.:
 
-* The cover of the report is shown in the following figure.
+* Overview
+    + Data Structures
+    + Job Informations
+* Univariate Analysis
+    + Descriptive Statistics
+        + Numerical Variables
+        + Categorical Variables
+    + Normality Test    
+* Bivariate Analysis
+    + Compare Numerical Variables
+    + Compare Categorical Variables
+* Multivariate Analysis  
+    + Correlation Analysis
+        + Correlation Coefficient Matrix
+        + Correlation Plot
+* Target based Analysis
+    + Grouped Numerical Variables
+    + Grouped Categorical Variables
+    + Grouped Correlation
 
-```{r eda_title_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="EDA report cover"}
-knitr::include_graphics('img/eda_title_pdf.png')
+#### Some arguments for static paged report
+eda_paged_report() generates various reports with the following arguments.
+
+* target
+    + target variable
+* output_format
+    + report output type. Choose either "pdf" and "html".
+* output_file
+    + name of generated file.
+* output_dir
+    + name of directory to generate report file.
+* title
+    + title of report. 
+* subtitle
+    + subtitle of report. 
+* abstract_title
+    + abstract of report
+* author
+    + author of report. 
+* title_color
+    + color of title.
+* subtitle_color
+    + color of subtitle.
+* logo_img
+    + name of logo image file on top left.
+* cover_img
+    + name of cover image file on center.
+* create_date
+    + The date on which the report is generated.
+* theme
+    + name of theme for report. support "orange" and "blue". 
+* sample_percent
+    + Sample percent of data for performing EDA.
+
+The following script creates a EDA report for the `data.frame` class object, `heartfailure`.
+
+```{r eda_paged_report, eval=FALSE}
+heartfailure %>%
+  eda_paged_report(target = "death_event", subtitle = "heartfailure", 
+                   output_dir = "./", output_file = "EDA.pdf", theme = "blue")
 ```
 
-* The report's agenda is shown in the following figure.
+#### Screenshot of static report
 
-```{r eda_agenda_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="EDA Report Contents"}
-knitr::include_graphics('img/eda_agenda_pdf.png')
+* The cover of the report is shown in the following figure.:
+
+```{r eda_paged_cover, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The part of the report"}
+knitr::include_graphics('img/eda_paged_cover.jpg')
 ```
 
-* Much information is represented in tables in the report. An example of the table is shown in the following figure.
+* The contents of the report is shown in the following figure.:
 
-```{r eda_intro_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Example EDA report table"}
-knitr::include_graphics('img/eda_intro_pdf.png')
+```{r eda_paged_cntent, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The dynamic contents of the report"}
+knitr::include_graphics('img/eda_paged_content.jpg')
 ```
 
-* In the EDA report, the normality test content includes visualization results. The result is shown in the following figure.
-
-```{r eda_normality_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Normality test information in EDA reports"}
-knitr::include_graphics('img/eda_normality_pdf.png')
-```
-
-#* Correlation information in EDA reports includes visualization results. The result is shown in the following #figure.
-
-```{r eda_correlation_pdf, echo=FALSE, eval=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Correlation information in EDA reports"}
-knitr::include_graphics('img/eda_correlation_pdf.png')
-```
-
-* In EDA reports, information on linear relationships includes tables and visualization results. The result is shown in the following figure.
-
-```{r eda_lm_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Linear relationship information in EDA reports"}
-knitr::include_graphics('img/eda_lm_pdf.png')
-```
-
-* In EDA reports, ANOVA information includes tables and visualization results. The result is shown in the following figure.
-
-```{r eda_anova_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Information about ANOVA in EDA reports"}
-knitr::include_graphics('img/eda_anova_pdf.png')
-```
 
 ## Exploratory data analysis for tables in DBMS
 
@@ -543,7 +609,8 @@ In this case, if the data size is large, the execution speed may be slow. It sup
     + `correlate()`  
     + `plot_correlate()`
     + `describe()`
-    + `eda_report()`
+    + `eda_web_report()`
+    + `eda_paged_report()`
     
 ### Preparing table data
 Copy the `carseats` data frame to the SQLite DBMS and create it as a table named `TB_CARSEATS`.
@@ -717,70 +784,16 @@ The following shows several examples of creating an EDA report for a DBMS table.
 Using the `collect_size` argument, you can perform EDA with the corresponding number of sample data.
 If the number of data is very large, use `collect_size`.
 
-```{r dbi_diag_report, eval=FALSE}
-## target variable is categorical variable
-# reporting the EDA information
-# create pdf file. file name is EDA_Report.pdf
+```{r dbi_eda_report, eval=FALSE}
+# create web report file. 
 con_sqlite %>% 
   tbl("TB_CARSEATS") %>% 
-  eda_report(US)
-
-# create pdf file. file name is EDA_TB_CARSEATS.pdf
+  eda_web_report()
+  
+# create pdf file. file name is EDA.pdf, and collect size is 350
 con_sqlite %>% 
   tbl("TB_CARSEATS") %>% 
-  eda_report("US", output_file = "EDA_TB_CARSEATS.pdf")
-
-# create html file. file name is EDA_Report.html
-con_sqlite %>% 
-  tbl("TB_CARSEATS") %>% 
-  eda_report("US", output_format = "html")
-
-# create html file. file name is EDA_TB_CARSEATS.html
-con_sqlite %>% 
-  tbl("TB_CARSEATS") %>% 
-  eda_report(US, output_format = "html", output_file = "EDA_TB_CARSEATS.html")
-
-## target variable is numerical variable
-# reporting the EDA information, and collect size is 350
-con_sqlite %>% 
-  tbl("TB_CARSEATS") %>% 
-  eda_report(Sales, collect_size = 350)
-
-# create pdf file. file name is EDA2.pdf
-con_sqlite %>% 
-  tbl("TB_CARSEATS") %>% 
-  eda_report("Sales", output_file = "EDA2.pdf")
-
-# create html file. file name is EDA_Report.html
-con_sqlite %>% 
-  tbl("TB_CARSEATS") %>% 
-  eda_report("Sales", output_format = "html")
-
-# create html file. file name is EDA2.html
-con_sqlite %>% 
-  tbl("TB_CARSEATS") %>% 
-  eda_report(Sales, output_format = "html", output_file = "EDA2.html")
-
-## target variable is null
-# reporting the EDA information
-con_sqlite %>% 
-  tbl("TB_CARSEATS") %>% 
-  eda_report()
-
-# create pdf file. file name is EDA2.pdf
-con_sqlite %>% 
-  tbl("TB_CARSEATS") %>% 
-  eda_report(output_file = "EDA2.pdf")
-
-# create html file. file name is EDA_Report.html
-con_sqlite %>% 
-  tbl("TB_CARSEATS") %>% 
-  eda_report(output_format = "html")
-
-# create html file. file name is EDA2.html
-con_sqlite %>% 
-  tbl("TB_CARSEATS") %>% 
-  eda_report(output_format = "html", output_file = "EDA2.html")
+  eda_paged_report(collect_size = 350, output_file = "EDA.pdf")
 ```
 
 

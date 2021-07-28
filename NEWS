@@ -28,6 +28,9 @@ CHANGES IN R VERSION 0.5.0:
 
     * Fixed an error that is in diagnose_category.tbl_dbi(), when in_database 
       argument is FALSE. (thanks @verajosemanuel, #43)
+      
+    * Fixed an issue that is x axis overlaps labels in plot.optimal_bins() 
+      (thanks @verajosemanuel, #45)      
     
   MINOR CHANGES:
     
@@ -46,6 +49,9 @@ CHANGES IN R VERSION 0.5.0:
     
     * Added the ability to set x-axis labels in plot.optimal_bins(). 
       This is a useful function when labels overlap because they are long.
+
+    * plot_correlate() changed the look & feel that draw 
+      the viz from high-level graphic function to ggplot2.
 
 
 

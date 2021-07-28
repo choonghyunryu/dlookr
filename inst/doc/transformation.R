@@ -182,21 +182,24 @@ plot(bin)
 extract(bin) %>% 
   head(20)
 
-## ----trans_report, eval=FALSE-------------------------------------------------
-#  carseats %>%
-#    transformation_report(target = US)
+## ----trans_web_report, eval=FALSE---------------------------------------------
+#  heartfailure %>%
+#    transformation_web_report(target = "death_event", subtitle = "heartfailure",
+#                              output_dir = "./", output_file = "transformation.html",
+#                              theme = "blue")
 
-## ---- eval=FALSE--------------------------------------------------------------
-#  carseats %>%
-#    transformation_report(target = US, output_format = "html",
-#      output_file = "transformation_carseats.html")
+## ----trans_web_title, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The part of the report"----
+knitr::include_graphics('img/transformation_web_title.jpg')
 
-## ----trans_title_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Data transformation report cover"----
-knitr::include_graphics('img/trans_title_pdf.png')
+## ----trans_paged_report, eval=FALSE-------------------------------------------
+#  heartfailure %>%
+#    transformation_paged_report(target = "death_event", subtitle = "heartfailure",
+#                                output_dir = "./", output_file = "transformation.pdf",
+#                                theme = "blue")
 
-## ----trans_agenda_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Table of Contents"----
-knitr::include_graphics('img/trans_agenda_pdf.png')
+## ----trans_paged_cover, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The part of the report"----
+knitr::include_graphics('img/transformation_paged_cover.jpg')
 
-## ----trans_content_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Data Transformation Report Table and Visualization Example"----
-knitr::include_graphics('img/trans_content_pdf.png')
+## ----trans_paged_cntent, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The dynamic contents of the report"----
+knitr::include_graphics('img/transformation_paged_content.jpg')
 

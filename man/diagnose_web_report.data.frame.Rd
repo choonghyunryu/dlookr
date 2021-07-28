@@ -20,7 +20,7 @@ diagnose_web_report(.data, ...)
   thres_uniq_num = 5,
   logo_img = NULL,
   create_date = Sys.time(),
-  theme = c("orange", "blue")[1],
+  theme = c("orange", "blue"),
   sample_percent = 100,
   is_tbl_dbi = FALSE,
   ...
@@ -51,7 +51,7 @@ Categorical Variables". default is 0.5.}
 \item{thres_uniq_num}{numeric. threshold to use for "Unique Values - 
 Numerical Variables". default is 5.}
 
-\item{logo_img}{character. name of logo image on top right.}
+\item{logo_img}{character. name of logo image file on top left.}
 
 \item{create_date}{Date or POSIXct, character. The date on which the report is generated. 
 The default value is the result of Sys.time().}
@@ -92,13 +92,9 @@ Reported from the data diagnosis is as follows.
   }
   \item Missing Values
   \itemize{
-    \item Top Ranks
-  }   
-  \item Numerical Variable Diagnosis
-  \itemize{
     \item List of Missing Values
     \item Visualization
-  }
+  }   
   \item Unique Values
   \itemize{
     \item Categorical Variables

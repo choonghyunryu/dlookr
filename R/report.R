@@ -52,13 +52,9 @@ eda_paged_report <- function(.data, ...) {
 #'   }
 #'   \item Missing Values
 #'   \itemize{
-#'     \item Top Ranks
-#'   }   
-#'   \item Numerical Variable Diagnosis
-#'   \itemize{
 #'     \item List of Missing Values
 #'     \item Visualization
-#'   }
+#'   }   
 #'   \item Unique Values
 #'   \itemize{
 #'     \item Categorical Variables
@@ -89,7 +85,7 @@ eda_paged_report <- function(.data, ...) {
 #' Numerical Variables". default is 5.
 #' @param create_date Date or POSIXct, character. The date on which the report is generated. 
 #' The default value is the result of Sys.time().
-#' @param logo_img character. name of logo image on top right.
+#' @param logo_img character. name of logo image file on top left.
 #' @param theme character. name of theme for report. support "orange" and "blue". 
 #' default is "orange".
 #' @param sample_percent numeric. Sample percent of data for performing Diagnosis. 
@@ -130,8 +126,10 @@ diagnose_web_report.data.frame <- function(.data, output_file = NULL, output_dir
                             title_color = "gray", thres_uniq_cat = 0.5, 
                             thres_uniq_num = 5, logo_img = NULL, 
                             create_date = Sys.time(),
-                            theme = c("orange", "blue")[1], 
+                            theme = c("orange", "blue"), 
                             sample_percent = 100, is_tbl_dbi = FALSE, ...) {
+  theme <- match.arg(theme)
+  
   if (sample_percent > 100 | sample_percent <= 0) {
     stop("sample_percent must be a value between (0, 100].")
   }
@@ -315,7 +313,7 @@ diagnose_web_report.data.frame <- function(.data, output_file = NULL, output_dir
 #' "Report Overview".
 #' @param abstract character. abstract of report. 
 #' @param title_color character. color of title. default is "white".
-#' @param subtitle_color character. color of title. default is "gold".
+#' @param subtitle_color character. color of subtitle. default is "gold".
 #' @param thres_uniq_cat numeric. threshold to use for "Unique Values - 
 #' Categorical Variables". default is 0.5.
 #' @param thres_uniq_num numeric. threshold to use for "Unique Values - 
@@ -329,7 +327,7 @@ diagnose_web_report.data.frame <- function(.data, output_file = NULL, output_dir
 #' @param flag_content_minus logical. whether to output "Minus Values" information. 
 #' the default value is TRUE, and the information is displayed.
 #' @param cover_img character. name of cover image. 
-#' @param logo_img character. name of logo image on top right.
+#' @param logo_img character. name of logo image file on top right.
 #' @param theme character. name of theme for report. support "orange" and "blue". 
 #' default is "orange".
 #' @param sample_percent numeric. Sample percent of data for performing Diagnosis. 
@@ -370,7 +368,7 @@ diagnose_web_report.data.frame <- function(.data, output_file = NULL, output_dir
 #' @importFrom knitr image_uri
 #' @method diagnose_paged_report data.frame
 #' @export
-diagnose_paged_report.data.frame <- function(.data, output_format = c("pdf", "html")[1],
+diagnose_paged_report.data.frame <- function(.data, output_format = c("pdf", "html"),
                            output_file = NULL, output_dir = tempdir(),   
                            browse = TRUE, title = "Data Diagnosis Report",
                            subtitle = deparse(substitute(.data)), author = "dlookr",
@@ -380,13 +378,14 @@ diagnose_paged_report.data.frame <- function(.data, output_format = c("pdf", "ht
                            flag_content_zero = TRUE, flag_content_minus = TRUE,
                            flag_content_missing = TRUE, cover_img = NULL, 
                            create_date = Sys.time(),
-                           logo_img = NULL, theme = c("orange", "blue")[1],
+                           logo_img = NULL, theme = c("orange", "blue"),
                            sample_percent = 100, is_tbl_dbi = FALSE, ...) {
+  output_format <- match.arg(output_format)
+  theme <- match.arg(theme)
+  
   if (output_format == "pdf") {
     browser <- pagedown::find_chrome()    
   }
-  
-  output_format <- match.arg(output_format)
   
   if (sample_percent > 100 | sample_percent <= 0) {
     stop("sample_percent must be a value between (0, 100].")
@@ -605,7 +604,7 @@ diagnose_paged_report.data.frame <- function(.data, output_format = c("pdf", "ht
 #' @param title_color character. color of title. default is "gray".
 #' @param create_date Date or POSIXct, character. The date on which the report is generated. 
 #' The default value is the result of Sys.time().
-#' @param logo_img character. name of logo image on top right.
+#' @param logo_img character. name of logo image file on top left.
 #' @param theme character. name of theme for report. support "orange" and "blue". 
 #' default is "orange".
 #' @param sample_percent numeric. Sample percent of data for performing EDA. 
@@ -645,8 +644,10 @@ eda_web_report.data.frame <- function(.data, target = NULL, output_file = NULL,
                        output_dir = tempdir(), browse = TRUE, 
                        title = "EDA", subtitle = deparse(substitute(.data)), 
                        author = "dlookr", title_color = "gray", logo_img = NULL, 
-                       create_date = Sys.time(), theme = c("orange", "blue")[1], 
+                       create_date = Sys.time(), theme = c("orange", "blue"), 
                        sample_percent = 100, is_tbl_dbi = FALSE, ...) {
+  theme <- match.arg(theme)
+  
   tryCatch(vars <- tidyselect::vars_select(names(.data),
                                            !! rlang::enquo(target)),
            error = function(e) {
@@ -843,11 +844,11 @@ eda_web_report.data.frame <- function(.data, target = NULL, output_file = NULL,
 #' "Report Overview".
 #' @param abstract character. abstract of report. 
 #' @param title_color character. color of title. default is "black".
-#' @param subtitle_color character. color of title. default is "blue".
+#' @param subtitle_color character. color of subtitle. default is "blue".
 #' @param create_date Date or POSIXct, character. The date on which the report is generated. 
 #' The default value is the result of Sys.time().
 #' @param cover_img character. name of cover image. 
-#' @param logo_img character. name of logo image on top right.
+#' @param logo_img character. name of logo image file on top right.
 #' @param theme character. name of theme for report. support "orange" and "blue". 
 #' default is "orange".
 #' @param sample_percent numeric. Sample percent of data for performing Diagnosis. 
@@ -886,20 +887,21 @@ eda_web_report.data.frame <- function(.data, target = NULL, output_file = NULL,
 #' @importFrom knitr image_uri
 #' @method eda_paged_report data.frame
 #' @export
-eda_paged_report.data.frame <- function(.data, target = NULL, output_format = c("pdf", "html")[1],
+eda_paged_report.data.frame <- function(.data, target = NULL, output_format = c("pdf", "html"),
                              output_file = NULL, output_dir = tempdir(),   
                              browse = TRUE, title = "EDA Report",
                              subtitle = deparse(substitute(.data)), author = "dlookr",
                              abstract_title = "Report Overview", abstract = NULL,
                              title_color = "black", subtitle_color = "blue",
                              cover_img = NULL, create_date = Sys.time(),
-                             logo_img = NULL, theme = c("orange", "blue")[1],
+                             logo_img = NULL, theme = c("orange", "blue"),
                              sample_percent = 100, is_tbl_dbi = FALSE, ...) {
+  output_format <- match.arg(output_format)
+  theme <- match.arg(theme)
+  
   if (output_format == "pdf") {
     browser <- pagedown::find_chrome()    
   }
-  
-  output_format <- match.arg(output_format)
   
   if (sample_percent > 100 | sample_percent <= 0) {
     stop("sample_percent must be a value between (0, 100].")
@@ -1083,7 +1085,7 @@ eda_paged_report.data.frame <- function(.data, target = NULL, output_format = c(
 #' @param title_color character. color of title. default is "gray".
 #' @param create_date Date or POSIXct, character. The date on which the report is generated. 
 #' The default value is the result of Sys.time().
-#' @param logo_img character. name of logo image on top right.
+#' @param logo_img character. name of logo image file on top left.
 #' @param theme character. name of theme for report. support "orange" and "blue". 
 #' default is "orange".
 #' @param sample_percent numeric. Sample percent of data for performing EDA. 
@@ -1114,8 +1116,10 @@ transformation_web_report <- function(.data, target = NULL, output_file = NULL,
                        output_dir = tempdir(), browse = TRUE, 
                        title = "Transformation", subtitle = deparse(substitute(.data)), 
                        author = "dlookr", title_color = "gray", logo_img = NULL, 
-                       create_date = Sys.time(), theme = c("orange", "blue")[1], 
+                       create_date = Sys.time(), theme = c("orange", "blue"), 
                        sample_percent = 100, ...) {
+  theme <- match.arg(theme)
+  
   tryCatch(vars <- tidyselect::vars_select(names(.data),
                                            !! rlang::enquo(target)),
            error = function(e) {
@@ -1285,11 +1289,11 @@ transformation_web_report <- function(.data, target = NULL, output_file = NULL,
 #' "Report Overview".
 #' @param abstract character. abstract of report. 
 #' @param title_color character. color of title. default is "white".
-#' @param subtitle_color character. color of title. default is "tomato1".
+#' @param subtitle_color character. color of subtitle. default is "tomato1".
 #' @param create_date Date or POSIXct, character. The date on which the report is generated. 
 #' The default value is the result of Sys.time().
 #' @param cover_img character. name of cover image. 
-#' @param logo_img character. name of logo image on top right.
+#' @param logo_img character. name of logo image file on top right.
 #' @param theme character. name of theme for report. support "orange" and "blue". 
 #' default is "orange".
 #' @param sample_percent numeric. Sample percent of data for performing Diagnosis. 
@@ -1321,20 +1325,22 @@ transformation_web_report <- function(.data, target = NULL, output_file = NULL,
 #' @importFrom knitr image_uri
 #' @export
 transformation_paged_report <- function(.data, target = NULL, 
-                             output_format = c("pdf", "html")[1],
+                             output_format = c("pdf", "html"),
                              output_file = NULL, output_dir = tempdir(),   
                              browse = TRUE, title = "Transformation Report",
                              subtitle = deparse(substitute(.data)), author = "dlookr",
                              abstract_title = "Report Overview", abstract = NULL,
                              title_color = "white", subtitle_color = "tomato1",
                              cover_img = NULL, create_date = Sys.time(),
-                             logo_img = NULL, theme = c("orange", "blue")[1],
+                             logo_img = NULL, theme = c("orange", "blue"),
                              sample_percent = 100, ...) {
+
+  output_format <- match.arg(output_format)
+  theme <- match.arg(theme)
+  
   if (output_format == "pdf") {
     browser <- pagedown::find_chrome()    
   }
-  
-  output_format <- match.arg(output_format)
   
   if (sample_percent > 100 | sample_percent <= 0) {
     stop("sample_percent must be a value between (0, 100].")

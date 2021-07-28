@@ -9,7 +9,7 @@ diagnose_paged_report(.data, ...)
 
 \method{diagnose_paged_report}{data.frame}(
   .data,
-  output_format = c("pdf", "html")[1],
+  output_format = c("pdf", "html"),
   output_file = NULL,
   output_dir = tempdir(),
   browse = TRUE,
@@ -28,7 +28,7 @@ diagnose_paged_report(.data, ...)
   cover_img = NULL,
   create_date = Sys.time(),
   logo_img = NULL,
-  theme = c("orange", "blue")[1],
+  theme = c("orange", "blue"),
   sample_percent = 100,
   is_tbl_dbi = FALSE,
   ...
@@ -63,7 +63,7 @@ you needed Chrome web browser on computer.
 
 \item{title_color}{character. color of title. default is "white".}
 
-\item{subtitle_color}{character. color of title. default is "gold".}
+\item{subtitle_color}{character. color of subtitle. default is "gold".}
 
 \item{thres_uniq_cat}{numeric. threshold to use for "Unique Values - 
 Categorical Variables". default is 0.5.}
@@ -85,7 +85,7 @@ the default value is TRUE, and the information is displayed.}
 \item{create_date}{Date or POSIXct, character. The date on which the report is generated. 
 The default value is the result of Sys.time().}
 
-\item{logo_img}{character. name of logo image on top right.}
+\item{logo_img}{character. name of logo image file on top right.}
 
 \item{theme}{character. name of theme for report. support "orange" and "blue". 
 default is "orange".}

@@ -237,7 +237,7 @@ flights %>%
 
 The following example uses `diagnose_outlier()`, `plot_outlier()`, and `dplyr` packages to visualize all numerical variables with an outlier ratio of 5% or higher.
 
-```{r plot_outlier_pipe, fig.align='center', fig.width = 7, fig.height = 5}
+```{r plot_outlier_pipe, fig.align='center', fig.width = 7, fig.height = 5, eval=FALSE}
 flights %>%
   plot_outlier(diagnose_outlier(flights) %>% 
                  filter(outliers_ratio >= 5) %>% 
@@ -265,7 +265,7 @@ mice::boys %>%
 
 The default value of the `only_na` argument is FALSE, which includes variables that do not contain missing values, but if this value is set to TRUE, only variables containing missing values are visualized. The variable `age` was excluded from this plot.
 
-```{r plot_na_pareto2, fig.align='center', fig.width = 7, fig.height = 5}
+```{r plot_na_pareto2, fig.align='center', fig.width = 7, fig.height = 5, eval=FALSE}
 mice::boys %>% 
   plot_na_pareto(only_na = TRUE, main = "Pareto Chart for mice::boys")
 ```
@@ -274,14 +274,14 @@ The rating of the variable is expressed as a proportion of missing values. It is
  If it is [0, 0.05), it is `Good`, if it is [0.05, 0.4) it is `OK`, if it is [0.4, 0.8) it is `Bad`, and if it is [0.8, 1.0] it is `Remove`. 
 You can override this grade using the `grade` argument as follows:
 
-```{r plot_na_pareto3, fig.align='center', fig.width = 7, fig.height = 5}
+```{r plot_na_pareto3, fig.align='center', fig.width = 7, fig.height = 5, eval=FALSE}
 mice::boys %>% 
   plot_na_pareto(grade = list(High = 0.1, Middle = 0.6, Low = 1), relative = TRUE)
 ```
 
 If the `plot` argument is set to FALSE, information about missing values is returned instead of plotting.
 
-```{r plot_na_pareto4, fig.align='center', fig.width = 7, fig.height = 5}
+```{r plot_na_pareto4, fig.align='center', fig.width = 7, fig.height = 5, eval=FALSE}
 plot_na_pareto(mice::boys, only_na = TRUE, plot = FALSE)
 ```
 
@@ -312,93 +312,204 @@ mice::boys %>%
 
 If the `n_vars` argument is used, only the top `n` variables containing many missing values are visualized.
 
-```{r plot_na_hclust3, fig.align='center', fig.width = 7, fig.height = 5}
+```{r plot_na_hclust3, fig.align='center', fig.width = 7, fig.height = 5, eval=FALSE}
 mice::boys %>%
   plot_na_intersect(n_vars = 5)
 ```
 
 If you use the `n_intersacts` argument, only the top n numbers of variable combinations(intersection) including missing values are visualized. and If you want to visualize the combination variables that is include missing value and complete case. You just add only_na = FALSE.
 
-```{r plot_na_hclust4, fig.align='center', fig.width = 7, fig.height = 5}
+```{r plot_na_hclust4, fig.align='center', fig.width = 7, fig.height = 5, eval=FALSE}
 mice::boys %>%
   plot_na_intersect(only_na = FALSE, n_intersacts = 7)
 ```
 
-### Create a diagnostic report using `diagnose_report()`
-`diagnose_report()` performs data diagnosis of all variables of object inherited from data.frame(`tbl_df`, `tbl`, etc) or data.frame.
+## Automated report
 
-`diagnose_report()` writes the report in two formats:
+dlookr provides two automated data diagnostic reports:
 
-* pdf file based on LaTeX
-* html file
+* Web page-based dynamic reports can perform in-depth analysis through visualization and statistical tables.
+* Static reports generated as pdf files or html files can be archived as output of data analysis.
 
+### Create a diagnostic report using `diagnose_web_report()`
+`diagnose_web_report()` create dynamic report for object inherited from data.frame(`tbl_df`, `tbl`, etc) or data.frame.
+
+#### Contents of dynamic web report
 The contents of the report are as follows.:
 
-* Diagnose Data
-    + Overview of Diagnosis
-        + List of all variables quality
-        + Diagnosing Missing Data
-        + Diagnosis of unique data(Text and Category)
-        + Diagnosis of unique data(Numerical)
-    + Detailed data diagnosis
-        + Diagnosis of categorical variables
-        + Diagnosis of numerical variables
-        + List of numerical diagnosis (zero)
-        + List of numerical diagnosis (minus)
-* Diagnose Outliers
-    + Overview of Diagnosis
-        + Diagnosis of numerical variable outliers
-        + Detailed outliers diagnosis
+* Overview
+    + Data Structures
+        + Data Structures
+        + Data Types
+        + Job Informations
+    + Warnings
+    + Variables
+* Missing Values
+    + List of Missing Values
+    + Visualization
+* Unique Values
+    + Categorical Variables
+    + Numerical Variables
+* Outliers
+* Samples
+    + Duplicated
+    + Heads
+    + Tails
 
-The following script creates a quality diagnosis report for the `tbl_df` class object, `flights`. The file format is pdf, and the file name is DataDiagnosis_Report.pdf.
+#### Some arguments for dynamic web report
+diagnose_web_report() generates various reports with the following arguments.
 
-```{r diagnose_report, eval=FALSE}
+* output_file
+    + name of generated file.
+* output_dir
+    + name of directory to generate report file.
+ 
+* title
+    + title of report. 
+
+* subtitle
+    + subtitle of report. 
+
+* author
+    + author of report. 
+
+* title_color
+    + color of title.
+
+* thres_uniq_cat
+    + threshold to use for "Unique Values - Categorical Variables".
+
+* thres_uniq_num
+    + threshold to use for "Unique Values - Numerical Variables".
+
+* logo_img
+    + name of logo image file on top left.
+
+* create_date
+    + The date on which the report is generated.
+
+* theme
+    + name of theme for report. support "orange" and "blue". 
+
+* sample_percent
+    + Sample percent of data for performing Diagnosis.
+
+
+The following script creates a quality diagnosis report for the `tbl_df` class object, `flights`.
+
+```{r diagnose_web_report, eval=FALSE}
 flights %>%
-  diagnose_report()
+  diagnose_web_report(subtitle = "flights", output_dir = "./", 
+                      output_file = "Diagn.html", theme = "blue")
 ```
 
-The following script creates a html report named `DataDiagnosis_Report.html`.
+#### Screenshot of dynamic report
 
-```{r, eval=FALSE}
-flights %>%
-  diagnose_report(output_format = "html")
+* The part of the report is shown in the following figure.:
+
+```{r diag_web_title, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The part of the report"}
+knitr::include_graphics('img/diag_web_title.jpg')
 ```
 
-The following script creates a HTML report named `Diagn.html`.
+* The dynamic contents of the report is shown in the following figure.:
 
-```{r, eval=FALSE}
-flights %>%
-  diagnose_report(output_format = "html", output_file = "Diagn.html")
+```{r diag_web_content, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The dynamic contents of the report"}
+knitr::include_graphics('img/diag_web_content.jpg')
 ```
 
-The `data diagnostic report` is an automated report to aid in the data diagnostic process. Refer to this report to judge data replenishment or re-acquisition.
 
-### Diagnostic report contents
-#### Contents of pdf file
+### Create a diagnostic report using `diagnose_paged_report()`
+`diagnose_paged_report()` create static report for object inherited from data.frame(`tbl_df`, `tbl`, etc) or data.frame.
+
+#### Contents of static paged report
+The contents of the report are as follows.:
+
+* Overview
+    + Data Structures
+    + Job Informations
+    + Warnings
+    + Variables
+* Missing Values
+    + List of Missing Values
+    + Visualization
+* Unique Values
+    + Categorical Variables
+    + Numerical Variables  
+* Categorical Variable Diagnosis   
+    + Top Ranks
+* Numerical Variable Diagnosis
+    + Distribution
+        + Zero Values
+        + Minus Values
+    + Outliers
+        + List of Outliers
+        + Individual Outliers
+
+#### Some arguments for static paged report
+diagnose_paged_report() generates various reports with the following arguments.
+
+* output_format
+    + report output type. Choose either "pdf" and "html".
+* output_file
+    + name of generated file.
+* output_dir
+    + name of directory to generate report file.
+* title
+    + title of report. 
+* subtitle
+    + subtitle of report. 
+* abstract_title
+    + abstract of report
+* author
+    + author of report. 
+* title_color
+    + color of title.
+* subtitle_color
+    + color of subtitle.
+* thres_uniq_cat
+    + threshold to use for "Unique Values - Categorical Variables".
+* thres_uniq_num
+    + threshold to use for "Unique Values - Numerical Variables".
+* flag_content_zero	
+    + whether to output "Zero Values" information. 
+* flag_content_minus	
+    + whether to output "Minus Values" information. 
+* flag_content_missing	
+    + whether to output "Missing Value" information.  
+* logo_img
+    + name of logo image file on top left.
+* cover_img
+    + name of cover image file on center.
+* create_date
+    + The date on which the report is generated.
+* theme
+    + name of theme for report. support "orange" and "blue". 
+* sample_percent
+    + Sample percent of data for performing Diagnosis.
+
+The following script creates a quality diagnosis report for the `tbl_df` class object, `flights`.
+
+```{r diagnose_paged_report, eval=FALSE}
+flights %>%
+  diagnose_paged_report(subtitle = "flights", output_dir = "./",
+                        output_file = "Diagn.pdf", theme = "blue")
+```
+
+#### Screenshot of static report
 
 * The cover of the report is shown in the following figure.:
 
-```{r diag_title_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Data Diagnostic Report Cover"}
-knitr::include_graphics('img/diagn_title_pdf.png')
+```{r diag_paged_cover, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The part of the report"}
+knitr::include_graphics('img/diag_paged_cover.jpg')
 ```
 
 * The contents of the report is shown in the following figure.:
 
-```{r diag_agenda_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Data Diagnostic Report Contents"}
-knitr::include_graphics('img/diagn_agenda_pdf.png')
+```{r diag_paged_cntent, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The dynamic contents of the report"}
+knitr::include_graphics('img/diag_paged_content.jpg')
 ```
 
-* Most information is represented in the report as a table. An example of a table is shown in the following figure.:
 
-```{r diag_intro_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Sample data diagnostic report table"}
-knitr::include_graphics('img/diag_intro_pdf.png')
-```
-
-* In the data diagnosis report, the outlier diagnostic contents include visualization. The result is shown in the following figure.:
-
-```{r diag_outlier_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Data diagnosis report outlier diagnosis contents"}
-knitr::include_graphics('img/diag_outlier_pdf.png')
-```
 
 ## Diagnosing tables in DBMS
 The DBMS table diagnostic function supports In-database mode that performs SQL operations on the DBMS side. If the size of the data is large, using In-database mode is faster.
@@ -413,8 +524,9 @@ In this case, if the data size is large, the execution speed may be slow. It sup
     + `diagnose_numeric()`
     + `diagnose_outlier()`    
     + `plot_outlier()`  
-    + `diagnose_report()`
-
+    + `diagnose_web_report()`
+    + `diagnose_paged_report()`
+    
 ### Preparing table data
 Copy the `carseats` data frame to the SQLite DBMS and create it as a table named `TB_CARSEATS`.
 Mysql/MariaDB, PostgreSQL, Oracle DBMS, other DBMS are also available for your environment. 
@@ -514,23 +626,13 @@ Using the `collect_size` argument, you can perform data diagnosis with the corre
 If the number of data is very large, use `collect_size`.
 
 ```{r dbi_diag_report, eval=FALSE}
-# create pdf file. file name is DataDiagnosis_Report.pdf
+# create web report file. 
 con_sqlite %>% 
   tbl("TB_CARSEATS") %>% 
-  diagnose_report()
+  diagnose_web_report()
   
 # create pdf file. file name is Diagn.pdf, and collect size is 350
 con_sqlite %>% 
   tbl("TB_CARSEATS") %>% 
-  diagnose_report(collect_size = 350, output_file = "Diagn.pdf")
-
-# create html file. file name is Diagnosis_Report.html
-con_sqlite %>% 
-  tbl("TB_CARSEATS") %>% 
-  diagnose_report(output_format = "html")
-
-# create html file. file name is Diagn.html
-con_sqlite %>% 
-  tbl("TB_CARSEATS") %>% 
-  diagnose_report(output_format = "html", output_file = "Diagn.html")
+  diagnose_paged_report(collect_size = 350, output_file = "Diagn.pdf")
 ```

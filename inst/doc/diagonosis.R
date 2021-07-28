@@ -66,27 +66,27 @@ diagnose_outlier(flights) %>%
 flights %>%
   plot_outlier(arr_delay) 
 
-## ----plot_outlier_pipe, fig.align='center', fig.width = 7, fig.height = 5-----
-flights %>%
-  plot_outlier(diagnose_outlier(flights) %>% 
-                 filter(outliers_ratio >= 5) %>% 
-                 select(variables) %>% 
-                 unlist())
+## ----plot_outlier_pipe, fig.align='center', fig.width = 7, fig.height = 5, eval=FALSE----
+#  flights %>%
+#    plot_outlier(diagnose_outlier(flights) %>%
+#                   filter(outliers_ratio >= 5) %>%
+#                   select(variables) %>%
+#                   unlist())
 
 ## ----plot_na_pareto1, fig.align='center', fig.width = 7, fig.height = 5-------
 mice::boys %>% 
   plot_na_pareto(col = "blue")
 
-## ----plot_na_pareto2, fig.align='center', fig.width = 7, fig.height = 5-------
-mice::boys %>% 
-  plot_na_pareto(only_na = TRUE, main = "Pareto Chart for mice::boys")
+## ----plot_na_pareto2, fig.align='center', fig.width = 7, fig.height = 5, eval=FALSE----
+#  mice::boys %>%
+#    plot_na_pareto(only_na = TRUE, main = "Pareto Chart for mice::boys")
 
-## ----plot_na_pareto3, fig.align='center', fig.width = 7, fig.height = 5-------
-mice::boys %>% 
-  plot_na_pareto(grade = list(High = 0.1, Middle = 0.6, Low = 1), relative = TRUE)
+## ----plot_na_pareto3, fig.align='center', fig.width = 7, fig.height = 5, eval=FALSE----
+#  mice::boys %>%
+#    plot_na_pareto(grade = list(High = 0.1, Middle = 0.6, Low = 1), relative = TRUE)
 
-## ----plot_na_pareto4, fig.align='center', fig.width = 7, fig.height = 5-------
-plot_na_pareto(mice::boys, only_na = TRUE, plot = FALSE)
+## ----plot_na_pareto4, fig.align='center', fig.width = 7, fig.height = 5, eval=FALSE----
+#  plot_na_pareto(mice::boys, only_na = TRUE, plot = FALSE)
 
 ## ----plot_na_hclust, fig.align='center', fig.width = 7, fig.height = 5--------
 mice::boys %>% 
@@ -96,37 +96,35 @@ mice::boys %>%
 mice::boys %>% 
   plot_na_intersect()
 
-## ----plot_na_hclust3, fig.align='center', fig.width = 7, fig.height = 5-------
-mice::boys %>%
-  plot_na_intersect(n_vars = 5)
+## ----plot_na_hclust3, fig.align='center', fig.width = 7, fig.height = 5, eval=FALSE----
+#  mice::boys %>%
+#    plot_na_intersect(n_vars = 5)
 
-## ----plot_na_hclust4, fig.align='center', fig.width = 7, fig.height = 5-------
-mice::boys %>%
-  plot_na_intersect(only_na = FALSE, n_intersacts = 7)
+## ----plot_na_hclust4, fig.align='center', fig.width = 7, fig.height = 5, eval=FALSE----
+#  mice::boys %>%
+#    plot_na_intersect(only_na = FALSE, n_intersacts = 7)
 
-## ----diagnose_report, eval=FALSE----------------------------------------------
+## ----diagnose_web_report, eval=FALSE------------------------------------------
 #  flights %>%
-#    diagnose_report()
+#    diagnose_web_report(subtitle = "flights", output_dir = "./",
+#                        output_file = "Diagn.html", theme = "blue")
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----diag_web_title, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The part of the report"----
+knitr::include_graphics('img/diag_web_title.jpg')
+
+## ----diag_web_content, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The dynamic contents of the report"----
+knitr::include_graphics('img/diag_web_content.jpg')
+
+## ----diagnose_paged_report, eval=FALSE----------------------------------------
 #  flights %>%
-#    diagnose_report(output_format = "html")
+#    diagnose_paged_report(subtitle = "flights", output_dir = "./",
+#                          output_file = "Diagn.pdf", theme = "blue")
 
-## ---- eval=FALSE--------------------------------------------------------------
-#  flights %>%
-#    diagnose_report(output_format = "html", output_file = "Diagn.html")
+## ----diag_paged_cover, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The part of the report"----
+knitr::include_graphics('img/diag_paged_cover.jpg')
 
-## ----diag_title_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Data Diagnostic Report Cover"----
-knitr::include_graphics('img/diagn_title_pdf.png')
-
-## ----diag_agenda_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Data Diagnostic Report Contents"----
-knitr::include_graphics('img/diagn_agenda_pdf.png')
-
-## ----diag_intro_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Sample data diagnostic report table"----
-knitr::include_graphics('img/diag_intro_pdf.png')
-
-## ----diag_outlier_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Data diagnosis report outlier diagnosis contents"----
-knitr::include_graphics('img/diag_outlier_pdf.png')
+## ----diag_paged_cntent, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The dynamic contents of the report"----
+knitr::include_graphics('img/diag_paged_content.jpg')
 
 ## ----dbi_table, warning=FALSE, message=FALSE----------------------------------
 if (!require(DBI)) install.packages('DBI')
@@ -204,23 +202,13 @@ con_sqlite %>%
 #                   pull())
 
 ## ----dbi_diag_report, eval=FALSE----------------------------------------------
-#  # create pdf file. file name is DataDiagnosis_Report.pdf
+#  # create web report file.
 #  con_sqlite %>%
 #    tbl("TB_CARSEATS") %>%
-#    diagnose_report()
+#    diagnose_web_report()
 #  
 #  # create pdf file. file name is Diagn.pdf, and collect size is 350
 #  con_sqlite %>%
 #    tbl("TB_CARSEATS") %>%
-#    diagnose_report(collect_size = 350, output_file = "Diagn.pdf")
-#  
-#  # create html file. file name is Diagnosis_Report.html
-#  con_sqlite %>%
-#    tbl("TB_CARSEATS") %>%
-#    diagnose_report(output_format = "html")
-#  
-#  # create html file. file name is Diagn.html
-#  con_sqlite %>%
-#    tbl("TB_CARSEATS") %>%
-#    diagnose_report(output_format = "html", output_file = "Diagn.html")
+#    diagnose_paged_report(collect_size = 350, output_file = "Diagn.pdf")
 

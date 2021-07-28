@@ -38,7 +38,7 @@ This document introduces **data transformation** methods provided by the dlookr 
 dlookr increases synergy with `dplyr`. Particularly in data transformation and data wrangle, it increases the efficiency of the `tidyverse` package group.
 
 ## datasets
-To illustrate the basic use of EDA in the dlookr package, I use a `Carseats` dataset.
+To illustrate the basic use of data transformation in the dlookr package, I use a `Carseats` dataset.
 `Carseats` in the `ISLR` package is simulation dataset that sells children's car seats at 400 stores. This data is a data.frame created for the purpose of predicting sales volume.
 
 ```{r import_data}
@@ -368,67 +368,144 @@ extract(bin) %>%
   head(20)
 ```
 
-## Creating a data transformation report using `transformation_report()`
-`transformation_report()` generates a data transformation report for all the variables in the data frame or objects that inherit the data frame (`tbl_df`, `tbl`, etc.).
 
-`transformation_report()` generates a data transformation report in two forms:
+## Automated report
 
-* pdf file based on Latex
-* html file
+dlookr provides two automated data transformation reports:
 
+* Web page-based dynamic reports can perform in-depth analysis through visualization and statistical tables.
+* Static reports generated as pdf files or html files can be archived as output of data analysis.
+
+### Create a dynamic report using `transformation_web_report()`
+`transformation_web_report()` create dynamic report for object inherited from data.frame(`tbl_df`, `tbl`, etc) or data.frame.
+
+#### Contents of dynamic web report
 The contents of the report are as follows.:
 
+* Overview
+    + Data Structures
+    + Data Types
+    + Job Informations
 * Imputation
     + Missing Values
-        + Missing values imputation information
-        + (variable names)
     + Outliers
-        + Outliers imputation information
-        + (variable names)
 * Resolving Skewness
-    + Skewed variables information
-        + (variable names)
 * Binning
-    + Numerical Variables for Binning
-    + Binning
-        + (variable names)
-    + Optimal Binning
-        + (variable names)
+* Optimal Binning
 
-The following generates a data transformation report for `carseats`. The file format is pdf, and the file name is `Transformation_Report.pdf`.
+#### Some arguments for dynamic web report
+transformation_web_report() generates various reports with the following arguments.
 
-```{r trans_report, eval=FALSE}
-carseats %>%
-  transformation_report(target = US)
+* target
+    + target variable
+* output_file
+    + name of generated file.
+* output_dir
+    + name of directory to generate report file.
+* title
+    + title of report. 
+* subtitle
+    + subtitle of report. 
+* author
+    + author of report. 
+* title_color
+    + color of title.
+* logo_img
+    + name of logo image file on top left.
+* create_date
+    + The date on which the report is generated.
+* theme
+    + name of theme for report. support "orange" and "blue". 
+* sample_percent
+    + Sample percent of data for performing data transformation.
+
+
+The following script creates a data transformation report for the `tbl_df` class object, `heartfailure`.
+
+```{r trans_web_report, eval=FALSE}
+heartfailure %>%
+  transformation_web_report(target = "death_event", subtitle = "heartfailure",
+                            output_dir = "./", output_file = "transformation.html", 
+                            theme = "blue")
 ```
 
-The following generates a report in html format called `transformation_carseats.html`.
+#### Screenshot of dynamic report
 
-```{r, eval=FALSE}
-carseats %>%
-  transformation_report(target = US, output_format = "html", 
-    output_file = "transformation_carseats.html")
+* The dynamic contents of the report is shown in the following figure.:
+
+```{r trans_web_title, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The part of the report"}
+knitr::include_graphics('img/transformation_web_title.jpg')
 ```
 
-Data transformation reports are automated reports to assist in the data transformation process. Design data conversion scenarios by referring to the report results.
+### Create a static report using `transformation_paged_report()`
+`transformation_paged_report()` create static report for object inherited from data.frame(`tbl_df`, `tbl`, etc) or data.frame.
 
-### Data transformation report contents
-#### Contents of pdf file
-* The cover of the report is shown in the following figure.
+#### Contents of static paged report
+The contents of the report are as follows.:
 
-```{r trans_title_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Data transformation report cover"}
-knitr::include_graphics('img/trans_title_pdf.png')
+* Overview
+    + Data Structures
+    + Job Informations
+* Imputation
+    + Missing Values
+    + Outliers
+* Resolving Skewness
+* Binning
+* Optimal Binning
+
+#### Some arguments for static paged report
+transformation_paged_report() generates various reports with the following arguments.
+
+* target
+    + target variable
+* output_format
+    + report output type. Choose either "pdf" and "html".
+* output_file
+    + name of generated file.
+* output_dir
+    + name of directory to generate report file.
+* title
+    + title of report. 
+* subtitle
+    + subtitle of report. 
+* abstract_title
+    + abstract of report
+* author
+    + author of report. 
+* title_color
+    + color of title.
+* subtitle_color
+    + color of subtitle.
+* logo_img
+    + name of logo image file on top left.
+* cover_img
+    + name of cover image file on center.
+* create_date
+    + The date on which the report is generated.
+* theme
+    + name of theme for report. support "orange" and "blue". 
+* sample_percent
+    + Sample percent of data for performing data tansformation.
+
+The following script creates a data transformation report for the `data.frame` class object, `heartfailure`.
+
+```{r trans_paged_report, eval=FALSE}
+heartfailure %>%
+  transformation_paged_report(target = "death_event", subtitle = "heartfailure",
+                              output_dir = "./", output_file = "transformation.pdf", 
+                              theme = "blue")
 ```
 
-* The report's agenda is shown in the following figure.
+#### Screenshot of static report
 
-```{r trans_agenda_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Table of Contents"}
-knitr::include_graphics('img/trans_agenda_pdf.png')
+* The cover of the report is shown in the following figure.:
+
+```{r trans_paged_cover, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The part of the report"}
+knitr::include_graphics('img/transformation_paged_cover.jpg')
 ```
 
-* Much of the information is displayed in tables and visualization results in reports. An example is shown in the following figure.
+* The contents of the report is shown in the following figure.:
 
-```{r trans_content_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Data Transformation Report Table and Visualization Example"}
-knitr::include_graphics('img/trans_content_pdf.png')
+```{r trans_paged_cntent, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The dynamic contents of the report"}
+knitr::include_graphics('img/transformation_paged_content.jpg')
 ```
-

@@ -39,12 +39,12 @@ carseats %>%
   filter(!is.na(skewness)) %>% 
   arrange(desc(abs(skewness)))
 
-## ----diagnose_pipe2-----------------------------------------------------------
+## ----describe_pipe2-----------------------------------------------------------
 carseats %>%
   group_by(US) %>% 
   describe(Sales, Income) 
 
-## ----diagnose_pipe3-----------------------------------------------------------
+## ----describe_pipe3-----------------------------------------------------------
 carseats %>%
   group_by(US, Urban) %>% 
   describe(Sales, Income) 
@@ -87,11 +87,11 @@ carseats %>%
 # Select columns by name
 plot_normality(carseats, Sales, CompPrice)
 
-## ----plot_normality2, fig.align='center', fig.width = 7, fig.height = 5-------
-carseats %>%
-  filter(ShelveLoc == "Good") %>%
-  group_by(US) %>%
-  plot_normality(Income)
+## ----plot_normality2, fig.align='center', fig.width = 7, fig.height = 5, eval=FALSE----
+#  carseats %>%
+#    filter(ShelveLoc == "Good") %>%
+#    group_by(US) %>%
+#    plot_normality(Income)
 
 ## ----correlate----------------------------------------------------------------
 correlate(carseats)
@@ -121,15 +121,15 @@ carseats %>%
 ## ----plot_correlate, fig.align='center', fig.width = 7, fig.height = 5--------
 plot_correlate(carseats)
 
-## ----plot_correlate2, fig.align='center', fig.width = 6, fig.height = 4-------
-# Select columns by name
-plot_correlate(carseats, Sales, Price)
+## ----plot_correlate2, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE----
+#  # Select columns by name
+#  plot_correlate(carseats, Sales, Price)
 
-## ----plot_correlate3, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE----
-carseats %>%
-  filter(ShelveLoc == "Good") %>%
-  group_by(Urban) %>%
-  plot_correlate(Sales)
+## ----plot_correlate3, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE, eval=FALSE----
+#  carseats %>%
+#    filter(ShelveLoc == "Good") %>%
+#    group_by(Urban) %>%
+#    plot_correlate(Sales)
 
 ## ----target_by----------------------------------------------------------------
 categ <- target_by(carseats, US)
@@ -177,34 +177,24 @@ summary(num_cat)
 ## ----target_by10, fig.align='center', fig.width = 7, fig.height = 5, warning=FALSE----
 plot(num_cat)
 
-## ----eda_report, eval=FALSE---------------------------------------------------
-#  carseats %>%
-#    eda_report(target = Sales)
+## ----eda_web_report, eval=FALSE-----------------------------------------------
+#  heartfailure %>%
+#    eda_web_report(target = "death_event", subtitle = "heartfailure",
+#                   output_dir = "./", output_file = "EDA.html", theme = "blue")
 
-## ---- eval=FALSE--------------------------------------------------------------
-#  carseats %>%
-#    eda_report(target = Sales, output_format = "html", output_file = "EDA_carseats.html")
+## ----eda_web_title, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The part of the report"----
+knitr::include_graphics('img/eda_web_title.jpg')
 
-## ----eda_title_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="EDA report cover"----
-knitr::include_graphics('img/eda_title_pdf.png')
+## ----eda_paged_report, eval=FALSE---------------------------------------------
+#  heartfailure %>%
+#    eda_paged_report(target = "death_event", subtitle = "heartfailure",
+#                     output_dir = "./", output_file = "EDA.pdf", theme = "blue")
 
-## ----eda_agenda_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="EDA Report Contents"----
-knitr::include_graphics('img/eda_agenda_pdf.png')
+## ----eda_paged_cover, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The part of the report"----
+knitr::include_graphics('img/eda_paged_cover.jpg')
 
-## ----eda_intro_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Example EDA report table"----
-knitr::include_graphics('img/eda_intro_pdf.png')
-
-## ----eda_normality_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Normality test information in EDA reports"----
-knitr::include_graphics('img/eda_normality_pdf.png')
-
-## ----eda_correlation_pdf, echo=FALSE, eval=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Correlation information in EDA reports"----
-#  knitr::include_graphics('img/eda_correlation_pdf.png')
-
-## ----eda_lm_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Linear relationship information in EDA reports"----
-knitr::include_graphics('img/eda_lm_pdf.png')
-
-## ----eda_anova_pdf, echo=FALSE, out.width='60%', fig.align='center', fig.pos="!h", fig.cap="Information about ANOVA in EDA reports"----
-knitr::include_graphics('img/eda_anova_pdf.png')
+## ----eda_paged_cntent, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The dynamic contents of the report"----
+knitr::include_graphics('img/eda_paged_content.jpg')
 
 ## ----dbi_table, warning=FALSE, message=FALSE----------------------------------
 if (!require(DBI)) install.packages('DBI')
@@ -349,68 +339,14 @@ summary(cat_num)
 #  # the result is same as a data.frame, but not display here. reference above in document.
 #  plot(cat_num)
 
-## ----dbi_diag_report, eval=FALSE----------------------------------------------
-#  ## target variable is categorical variable
-#  # reporting the EDA information
-#  # create pdf file. file name is EDA_Report.pdf
+## ----dbi_eda_report, eval=FALSE-----------------------------------------------
+#  # create web report file.
 #  con_sqlite %>%
 #    tbl("TB_CARSEATS") %>%
-#    eda_report(US)
+#    eda_web_report()
 #  
-#  # create pdf file. file name is EDA_TB_CARSEATS.pdf
+#  # create pdf file. file name is EDA.pdf, and collect size is 350
 #  con_sqlite %>%
 #    tbl("TB_CARSEATS") %>%
-#    eda_report("US", output_file = "EDA_TB_CARSEATS.pdf")
-#  
-#  # create html file. file name is EDA_Report.html
-#  con_sqlite %>%
-#    tbl("TB_CARSEATS") %>%
-#    eda_report("US", output_format = "html")
-#  
-#  # create html file. file name is EDA_TB_CARSEATS.html
-#  con_sqlite %>%
-#    tbl("TB_CARSEATS") %>%
-#    eda_report(US, output_format = "html", output_file = "EDA_TB_CARSEATS.html")
-#  
-#  ## target variable is numerical variable
-#  # reporting the EDA information, and collect size is 350
-#  con_sqlite %>%
-#    tbl("TB_CARSEATS") %>%
-#    eda_report(Sales, collect_size = 350)
-#  
-#  # create pdf file. file name is EDA2.pdf
-#  con_sqlite %>%
-#    tbl("TB_CARSEATS") %>%
-#    eda_report("Sales", output_file = "EDA2.pdf")
-#  
-#  # create html file. file name is EDA_Report.html
-#  con_sqlite %>%
-#    tbl("TB_CARSEATS") %>%
-#    eda_report("Sales", output_format = "html")
-#  
-#  # create html file. file name is EDA2.html
-#  con_sqlite %>%
-#    tbl("TB_CARSEATS") %>%
-#    eda_report(Sales, output_format = "html", output_file = "EDA2.html")
-#  
-#  ## target variable is null
-#  # reporting the EDA information
-#  con_sqlite %>%
-#    tbl("TB_CARSEATS") %>%
-#    eda_report()
-#  
-#  # create pdf file. file name is EDA2.pdf
-#  con_sqlite %>%
-#    tbl("TB_CARSEATS") %>%
-#    eda_report(output_file = "EDA2.pdf")
-#  
-#  # create html file. file name is EDA_Report.html
-#  con_sqlite %>%
-#    tbl("TB_CARSEATS") %>%
-#    eda_report(output_format = "html")
-#  
-#  # create html file. file name is EDA2.html
-#  con_sqlite %>%
-#    tbl("TB_CARSEATS") %>%
-#    eda_report(output_format = "html", output_file = "EDA2.html")
+#    eda_paged_report(collect_size = 350, output_file = "EDA.pdf")
 

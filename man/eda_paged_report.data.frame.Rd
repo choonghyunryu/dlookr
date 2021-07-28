@@ -10,7 +10,7 @@ eda_paged_report(.data, ...)
 \method{eda_paged_report}{data.frame}(
   .data,
   target = NULL,
-  output_format = c("pdf", "html")[1],
+  output_format = c("pdf", "html"),
   output_file = NULL,
   output_dir = tempdir(),
   browse = TRUE,
@@ -24,7 +24,7 @@ eda_paged_report(.data, ...)
   cover_img = NULL,
   create_date = Sys.time(),
   logo_img = NULL,
-  theme = c("orange", "blue")[1],
+  theme = c("orange", "blue"),
   sample_percent = 100,
   is_tbl_dbi = FALSE,
   ...
@@ -61,14 +61,14 @@ you needed Chrome web browser on computer.
 
 \item{title_color}{character. color of title. default is "black".}
 
-\item{subtitle_color}{character. color of title. default is "blue".}
+\item{subtitle_color}{character. color of subtitle. default is "blue".}
 
 \item{cover_img}{character. name of cover image.}
 
 \item{create_date}{Date or POSIXct, character. The date on which the report is generated. 
 The default value is the result of Sys.time().}
 
-\item{logo_img}{character. name of logo image on top right.}
+\item{logo_img}{character. name of logo image file on top right.}
 
 \item{theme}{character. name of theme for report. support "orange" and "blue". 
 default is "orange".}

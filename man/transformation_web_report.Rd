@@ -16,7 +16,7 @@ transformation_web_report(
   title_color = "gray",
   logo_img = NULL,
   create_date = Sys.time(),
-  theme = c("orange", "blue")[1],
+  theme = c("orange", "blue"),
   sample_percent = 100,
   ...
 )
@@ -40,7 +40,7 @@ transformation_web_report(
 
 \item{title_color}{character. color of title. default is "gray".}
 
-\item{logo_img}{character. name of logo image on top right.}
+\item{logo_img}{character. name of logo image file on top left.}
 
 \item{create_date}{Date or POSIXct, character. The date on which the report is generated. 
 The default value is the result of Sys.time().}
