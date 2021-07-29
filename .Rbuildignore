@@ -12,3 +12,4 @@
 ^docs$
 ^pkgdown$
 ^pkg_data$
+^figures$

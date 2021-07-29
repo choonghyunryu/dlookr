@@ -227,7 +227,7 @@ html_paged_correlation(reportData)
 
 ### Correlation Plot
 
-```{r plot-correlation, results='asis', dpi=300, fig.height=5, fig.width=5, out.width="85%"}
+```{r plot-correlation, results='asis', dpi=300, fig.height=7, fig.width=7, out.width="100%"}
 if (length(idx.numeric) < 2) {
   html_cat("The number of numerical variables is less than 2.")
 } else {
