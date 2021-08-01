@@ -73,7 +73,7 @@ for diagnosing the quality of the numerical data with target_df class." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
       </span>
     </div>
 
@@ -189,10 +189,10 @@ one variable in the ... argument, the specified number of plots are drawn.</p>
 <span class='no'>con_sqlite</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://dbi.r-dbi.org/reference/dbConnect.html'>dbConnect</a></span>(<span class='kw pkg'>RSQLite</span><span class='kw ns'>::</span><span class='fu'><a href='https://rsqlite.r-dbi.org/reference/SQLite.html'>SQLite</a></span>(), <span class='st'>":memory:"</span>)
 
 <span class='co'># copy heartfailure to the DBMS with a table named TB_HEARTFAILURE</span>
-<span class='fu'><a href='https://dplyr.tidyverse.org/reference/copy_to.html'>copy_to</a></span>(<span class='no'>con_sqlite</span>, <span class='no'>heartfailure</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"TB_HEARTFAILURE"</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/copy_to.html'>copy_to</a></span>(<span class='no'>con_sqlite</span>, <span class='no'>heartfailure</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"TB_HEARTFAILURE"</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># If the target variable is a categorical variable</span>
-<span class='no'>categ</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='target_by.data.frame.html'>target_by</a></span>(<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) , <span class='no'>death_event</span>)
+<span class='no'>categ</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='target_by.data.frame.html'>target_by</a></span>(<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) , <span class='no'>death_event</span>)
 
 <span class='fu'><a href='plot_outlier.data.frame.html'>plot_outlier</a></span>(<span class='no'>categ</span>, <span class='no'>sodium</span>)</div><div class='img'><img src='plot_outlier.target_df-5.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>

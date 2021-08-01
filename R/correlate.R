@@ -146,7 +146,7 @@ correlate_impl <- function(df, vars, method) {
     filter(var1 %in% vars)
 }
 
-
+#' @rdname correlate.data.frame
 #' @method correlate grouped_df
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
@@ -333,6 +333,7 @@ plot_correlate_impl <- function(df, vars, method) {
 }
 
 
+#' @rdname plot_correlate.data.frame
 #' @method plot_correlate grouped_df
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos warn

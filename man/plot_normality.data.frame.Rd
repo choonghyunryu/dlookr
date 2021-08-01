@@ -3,11 +3,23 @@
 \name{plot_normality}
 \alias{plot_normality}
 \alias{plot_normality.data.frame}
+\alias{plot_normality.grouped_df}
 \title{Plot distribution information of numerical data}
 \usage{
 plot_normality(.data, ...)
 
 \method{plot_normality}{data.frame}(
+  .data,
+  ...,
+  left = c("log", "sqrt", "log+1", "log+a", "1/x", "x^2", "x^3", "Box-Cox",
+    "Yeo-Johnson"),
+  right = c("sqrt", "log", "log+1", "log+a", "1/x", "x^2", "x^3", "Box-Cox",
+    "Yeo-Johnson"),
+  col = "steelblue",
+  typographic = TRUE
+)
+
+\method{plot_normality}{grouped_df}(
   .data,
   ...,
   left = c("log", "sqrt", "log+1", "log+a", "1/x", "x^2", "x^3", "Box-Cox",

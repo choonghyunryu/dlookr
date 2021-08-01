@@ -140,6 +140,7 @@ normality_impl <- function(df, vars, sample) {
 }
 
 
+#' @rdname normality.data.frame
 #' @method normality grouped_df
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
@@ -496,6 +497,7 @@ plot_normality_raw <- function(x, left = c("log", "sqrt", "log+1", "log+a", "1/x
                                            ncol = 2, nrow = 2, top = top))
 }
 
+#' @rdname plot_normality.data.frame
 #' @method plot_normality grouped_df
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos

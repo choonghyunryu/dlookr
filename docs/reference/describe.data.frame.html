@@ -73,7 +73,7 @@ variable for exploratory data analysis." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
       </span>
     </div>
 
@@ -131,7 +131,7 @@ variable for exploratory data analysis.</p>
 <span class='fu'>describe</span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='kw'>statistics</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>quantiles</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='co'># S3 method for grouped_df</span>
-<span class='fu'>describe</span>(<span class='no'>.data</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>describe</span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='kw'>statistics</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>quantiles</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,7 +166,7 @@ They support unquoting and splicing.</p>
     <p>An object of the same class as .data.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function is useful when used with the <code><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></code> function
+    <p>This function is useful when used with the <code><a href='https://rdrr.io/pkg/dplyr/man/group_by.html'>group_by</a></code> function
 of the dplyr package.
 If you want to calculate the statistic by level of the categorical data
 you are interested in, rather than the whole statistic, you can use
@@ -242,7 +242,7 @@ grouped_df as the group_by() function.</p>
 <span class='co'># Using dplyr::grouped_dt</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
-<span class='no'>gdata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>heartfailure2</span>, <span class='no'>hblood_pressure</span>, <span class='no'>death_event</span>)
+<span class='no'>gdata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/group_by.html'>group_by</a></span>(<span class='no'>heartfailure2</span>, <span class='no'>hblood_pressure</span>, <span class='no'>death_event</span>)
 <span class='fu'>describe</span>(<span class='no'>gdata</span>, <span class='st'>"creatinine"</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 4 x 28</span>
 #&gt;   variable   hblood_pressure death_event     n    na  mean    sd se_mean   IQR
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
@@ -282,9 +282,9 @@ grouped_df as the group_by() function.</p>
 <span class='co'># Find the statistic of all numerical variables by 'hblood_pressure' and 'death_event',</span>
 <span class='co'># and extract only those with 'hblood_pressure' variable level is "Yes".</span>
 <span class='no'>heartfailure2</span> <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hblood_pressure</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
+ <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/group_by.html'>group_by</a></span>(<span class='no'>hblood_pressure</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
    <span class='fu'>describe</span>() <span class='kw'>%&gt;%</span>
-   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>hblood_pressure</span> <span class='kw'>==</span> <span class='st'>"Yes"</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 14 x 28</span>
+   <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/filter.html'>filter</a></span>(<span class='no'>hblood_pressure</span> <span class='kw'>==</span> <span class='st'>"Yes"</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 14 x 28</span>
 #&gt;    variable     hblood_pressure death_event     n    na    mean      sd  se_mean
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> age          Yes             No             66     0  6.01<span style='color: #949494;'>e</span>1 9.42<span style='color: #949494;'>e</span>+0  1.16<span style='color: #949494;'>e</span>+0
@@ -308,8 +308,8 @@ grouped_df as the group_by() function.</p>
 <span class='co'># extract only those with 'smoking' variable level is "Yes",</span>
 <span class='co'># and find 'creatinine' statistics by 'hblood_pressure' and 'death_event'</span>
 <span class='no'>heartfailure2</span> <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>smoking</span> <span class='kw'>==</span> <span class='st'>"Yes"</span>) <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hblood_pressure</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
+ <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/filter.html'>filter</a></span>(<span class='no'>smoking</span> <span class='kw'>==</span> <span class='st'>"Yes"</span>) <span class='kw'>%&gt;%</span>
+ <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/group_by.html'>group_by</a></span>(<span class='no'>hblood_pressure</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
  <span class='fu'>describe</span>(<span class='no'>creatinine</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 4 x 28</span>
 #&gt;   variable   hblood_pressure death_event     n    na  mean    sd se_mean   IQR
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>

@@ -73,7 +73,7 @@ the variable of interest (predictor) is briefly analyzed." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
       </span>
     </div>
 
@@ -125,7 +125,10 @@ the variable of interest (predictor) is briefly analyzed." />
 the variable of interest (predictor) is briefly analyzed.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>relate</span>(<span class='no'>.data</span>, <span class='no'>predictor</span>)</pre>
+    <pre class="usage"><span class='fu'>relate</span>(<span class='no'>.data</span>, <span class='no'>predictor</span>)
+
+<span class='co'># S3 method for target_df</span>
+<span class='fu'>relate</span>(<span class='no'>.data</span>, <span class='no'>predictor</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -205,16 +208,16 @@ of the target variable and the data type of the variable of interest.</p>
 
 <span class='co'># If the variable of interest is a numerical variable</span>
 <span class='no'>cat_num</span> <span class='kw'>&lt;-</span> <span class='fu'>relate</span>(<span class='no'>categ</span>, <span class='no'>sodium</span>)
-<span class='no'>cat_num</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 3 x 27</span><span>
+<span class='no'>cat_num</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 3 x 27</span>
 #&gt;   variable death_event     n    na  mean    sd se_mean   IQR skewness kurtosis
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> sodium   No            203     0  137.  3.98   0.280  4.5    -</span><span style='color: #BB0000;'>1.22</span><span>      6.49
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> sodium   Yes            96     0  135.  5.00   0.510  5.25   -</span><span style='color: #BB0000;'>0.677</span><span>     2.08
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> sodium   total         299     0  137.  4.41   0.255  6      -</span><span style='color: #BB0000;'>1.05</span><span>      4.12
-#&gt; </span><span style='color: #949494;'># … with 17 more variables: p00 &lt;dbl&gt;, p01 &lt;dbl&gt;, p05 &lt;dbl&gt;, p10 &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   p20 &lt;dbl&gt;, p25 &lt;dbl&gt;, p30 &lt;dbl&gt;, p40 &lt;dbl&gt;, p50 &lt;dbl&gt;, p60 &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   p70 &lt;dbl&gt;, p75 &lt;dbl&gt;, p80 &lt;dbl&gt;, p90 &lt;dbl&gt;, p95 &lt;dbl&gt;, p99 &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   p100 &lt;dbl&gt;</span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>cat_num</span>)</div><div class='output co'>#&gt;    variable         death_event       n               na         mean      
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> sodium   No            203     0  137.  3.98   0.280  4.5    -<span style='color: #BB0000;'>1.22</span>      6.49
+#&gt; <span style='color: #BCBCBC;'>2</span> sodium   Yes            96     0  135.  5.00   0.510  5.25   -<span style='color: #BB0000;'>0.677</span>     2.08
+#&gt; <span style='color: #BCBCBC;'>3</span> sodium   total         299     0  137.  4.41   0.255  6      -<span style='color: #BB0000;'>1.05</span>      4.12
+#&gt; <span style='color: #949494;'># … with 17 more variables: p00 &lt;dbl&gt;, p01 &lt;dbl&gt;, p05 &lt;dbl&gt;, p10 &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   p20 &lt;dbl&gt;, p25 &lt;dbl&gt;, p30 &lt;dbl&gt;, p40 &lt;dbl&gt;, p50 &lt;dbl&gt;, p60 &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   p70 &lt;dbl&gt;, p75 &lt;dbl&gt;, p80 &lt;dbl&gt;, p90 &lt;dbl&gt;, p95 &lt;dbl&gt;, p99 &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   p100 &lt;dbl&gt;</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>cat_num</span>)</div><div class='output co'>#&gt;    variable         death_event       n               na         mean      
 #&gt;  Length:3           No   :1     Min.   : 96.0   Min.   :0   Min.   :135.4  
 #&gt;  Class :character   Yes  :1     1st Qu.:149.5   1st Qu.:0   1st Qu.:136.0  
 #&gt;  Mode  :character   total:1     Median :203.0   Median :0   Median :136.6  
@@ -342,7 +345,7 @@ of the target variable and the data type of the variable of interest.</p>
 # Not allow typographic
 # plot(num_cat, typographic = FALSE)
 
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

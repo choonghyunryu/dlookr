@@ -3,11 +3,14 @@
 \name{plot_correlate}
 \alias{plot_correlate}
 \alias{plot_correlate.data.frame}
+\alias{plot_correlate.grouped_df}
 \title{Visualize correlation plot of numerical data}
 \usage{
 plot_correlate(.data, ...)
 
 \method{plot_correlate}{data.frame}(.data, ..., method = c("pearson", "kendall", "spearman"))
+
+\method{plot_correlate}{grouped_df}(.data, ..., method = c("pearson", "kendall", "spearman"))
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}

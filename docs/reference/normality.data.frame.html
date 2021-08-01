@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
       </span>
     </div>
 
@@ -126,6 +126,9 @@
     <pre class="usage"><span class='fu'>normality</span>(<span class='no'>.data</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for data.frame</span>
+<span class='fu'>normality</span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='kw'>sample</span> <span class='kw'>=</span> <span class='fl'>5000</span>)
+
+<span class='co'># S3 method for grouped_df</span>
 <span class='fu'>normality</span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='kw'>sample</span> <span class='kw'>=</span> <span class='fl'>5000</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -157,7 +160,7 @@ They support unquoting and splicing.</p></td>
     <p>An object of the same class as .data.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function is useful when used with the <code><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></code>
+    <p>This function is useful when used with the <code><a href='https://rdrr.io/pkg/dplyr/man/group_by.html'>group_by</a></code>
 function of the dplyr package. If you want to test by level of the categorical
 data you are interested in, rather than the whole observation,
 you can use group_tf as the group_by function.
@@ -182,137 +185,133 @@ The number of observations supported by the stats::shapiro.test function is 3 to
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='co'># Normality test of numerical variables</span>
-<span class='fu'>normality</span>(<span class='no'>heartfailure</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 7 x 4</span><span>
+<span class='fu'>normality</span>(<span class='no'>heartfailure</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 7 x 4</span>
 #&gt;   vars              statistic  p_value sample
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> age                   0.975 5.11</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 5</span><span>    299
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> cpk_enzyme            0.514 7.05</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-28</span><span>    299
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> ejection_fraction     0.947 7.22</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 9</span><span>    299
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> platelets             0.912 2.88</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-12</span><span>    299
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> creatinine            0.551 5.39</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-27</span><span>    299
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> sodium                0.939 9.21</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-10</span><span>    299
-#&gt; </span><span style='color: #BCBCBC;'>7</span><span> time                  0.947 6.28</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 9</span><span>    299</div><div class='input'>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                 <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> age                   0.975 5.11<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 5</span>    299
+#&gt; <span style='color: #BCBCBC;'>2</span> cpk_enzyme            0.514 7.05<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-28</span>    299
+#&gt; <span style='color: #BCBCBC;'>3</span> ejection_fraction     0.947 7.22<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 9</span>    299
+#&gt; <span style='color: #BCBCBC;'>4</span> platelets             0.912 2.88<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-12</span>    299
+#&gt; <span style='color: #BCBCBC;'>5</span> creatinine            0.551 5.39<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-27</span>    299
+#&gt; <span style='color: #BCBCBC;'>6</span> sodium                0.939 9.21<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-10</span>    299
+#&gt; <span style='color: #BCBCBC;'>7</span> time                  0.947 6.28<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 9</span>    299</div><div class='input'>
 <span class='co'># Select the variable to describe</span>
-<span class='fu'>normality</span>(<span class='no'>heartfailure</span>, <span class='no'>platelets</span>, <span class='no'>sodium</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 4</span><span>
+<span class='fu'>normality</span>(<span class='no'>heartfailure</span>, <span class='no'>platelets</span>, <span class='no'>sodium</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 x 4</span>
 #&gt;   vars      statistic  p_value sample
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> platelets     0.912 2.88</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-12</span><span>    299
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> sodium        0.939 9.21</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-10</span><span>    299</div><div class='input'><span class='fu'>normality</span>(<span class='no'>heartfailure</span>, -<span class='no'>platelets</span>, -<span class='no'>sodium</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 5 x 4</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> platelets     0.912 2.88<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-12</span>    299
+#&gt; <span style='color: #BCBCBC;'>2</span> sodium        0.939 9.21<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-10</span>    299</div><div class='input'><span class='fu'>normality</span>(<span class='no'>heartfailure</span>, -<span class='no'>platelets</span>, -<span class='no'>sodium</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5 x 4</span>
 #&gt;   vars              statistic  p_value sample
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> age                   0.975 5.11</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 5</span><span>    299
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> cpk_enzyme            0.514 7.05</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-28</span><span>    299
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> ejection_fraction     0.947 7.22</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 9</span><span>    299
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> creatinine            0.551 5.39</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-27</span><span>    299
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> time                  0.947 6.28</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 9</span><span>    299</div><div class='input'><span class='fu'>normality</span>(<span class='no'>heartfailure</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 4</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                 <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> age                   0.975 5.11<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 5</span>    299
+#&gt; <span style='color: #BCBCBC;'>2</span> cpk_enzyme            0.514 7.05<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-28</span>    299
+#&gt; <span style='color: #BCBCBC;'>3</span> ejection_fraction     0.947 7.22<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 9</span>    299
+#&gt; <span style='color: #BCBCBC;'>4</span> creatinine            0.551 5.39<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-27</span>    299
+#&gt; <span style='color: #BCBCBC;'>5</span> time                  0.947 6.28<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 9</span>    299</div><div class='input'><span class='fu'>normality</span>(<span class='no'>heartfailure</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 4</span>
 #&gt;   vars  statistic   p_value sample
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> age       0.975 0.000</span><span style='text-decoration: underline;'>051</span><span>1    299</div><div class='input'><span class='fu'>normality</span>(<span class='no'>heartfailure</span>, <span class='no'>platelets</span>, <span class='no'>sodium</span>, <span class='kw'>sample</span> <span class='kw'>=</span> <span class='fl'>200</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 4</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> age       0.975 0.000<span style='text-decoration: underline;'>051</span>1    299</div><div class='input'><span class='fu'>normality</span>(<span class='no'>heartfailure</span>, <span class='no'>platelets</span>, <span class='no'>sodium</span>, <span class='kw'>sample</span> <span class='kw'>=</span> <span class='fl'>200</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 x 4</span>
 #&gt;   vars      statistic  p_value sample
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> platelets     0.884 2.70</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-11</span><span>    200
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> sodium        0.943 4.30</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 7</span><span>    200</div><div class='input'>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> platelets     0.876 9.26<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-12</span>    200
+#&gt; <span style='color: #BCBCBC;'>2</span> sodium        0.946 8.41<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 7</span>    200</div><div class='input'>
 <span class='co'># death_eventing dplyr::grouped_dt</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'>
-<span class='no'>gdata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>heartfailure</span>, <span class='no'>smoking</span>, <span class='no'>death_event</span>)
-<span class='fu'>normality</span>(<span class='no'>gdata</span>, <span class='st'>"platelets"</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 4 x 6</span><span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+
+<span class='no'>gdata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/group_by.html'>group_by</a></span>(<span class='no'>heartfailure</span>, <span class='no'>smoking</span>, <span class='no'>death_event</span>)
+<span class='fu'>normality</span>(<span class='no'>gdata</span>, <span class='st'>"platelets"</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 4 x 6</span>
 #&gt;   variable  smoking death_event statistic      p_value sample
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> platelets No      No              0.892 0.000</span><span style='text-decoration: underline;'>000</span><span>016</span><span style='text-decoration: underline;'>1</span><span>    137
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> platelets No      Yes             0.987 0.704            66
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> platelets Yes     No              0.834 0.000</span><span style='text-decoration: underline;'>000</span><span>404      66
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> platelets Yes     Yes             0.900 0.008</span><span style='text-decoration: underline;'>36</span><span>          30</div><div class='input'><span class='fu'>normality</span>(<span class='no'>gdata</span>, <span class='kw'>sample</span> <span class='kw'>=</span> <span class='fl'>250</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 28 x 6</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> platelets No      No              0.892 0.000<span style='text-decoration: underline;'>000</span>016<span style='text-decoration: underline;'>1</span>    137
+#&gt; <span style='color: #BCBCBC;'>2</span> platelets No      Yes             0.987 0.704            66
+#&gt; <span style='color: #BCBCBC;'>3</span> platelets Yes     No              0.834 0.000<span style='text-decoration: underline;'>000</span>404      66
+#&gt; <span style='color: #BCBCBC;'>4</span> platelets Yes     Yes             0.900 0.008<span style='text-decoration: underline;'>36</span>          30</div><div class='input'><span class='fu'>normality</span>(<span class='no'>gdata</span>, <span class='kw'>sample</span> <span class='kw'>=</span> <span class='fl'>250</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 28 x 6</span>
 #&gt;    variable          smoking death_event statistic  p_value sample
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> age               No      No              0.978 2.49</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 2</span><span>    137
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> age               No      Yes             0.955 1.70</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 2</span><span>     66
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> age               Yes     No              0.972 1.46</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 1</span><span>     66
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> age               Yes     Yes             0.967 4.61</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 1</span><span>     30
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> cpk_enzyme        No      No              0.715 5.49</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-15</span><span>    137
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> cpk_enzyme        No      Yes             0.458 3.20</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-14</span><span>     66
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> cpk_enzyme        Yes     No              0.563 1.03</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-12</span><span>     66
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> cpk_enzyme        Yes     Yes             0.391 4.50</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-10</span><span>     30
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> ejection_fraction No      No              0.918 4.26</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 7</span><span>    137
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> ejection_fraction No      Yes             0.941 3.44</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 3</span><span>     66
-#&gt; </span><span style='color: #949494;'># … with 18 more rows</span><span></div><div class='input'>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> age               No      No              0.978 2.49<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 2</span>    137
+#&gt; <span style='color: #BCBCBC;'> 2</span> age               No      Yes             0.955 1.70<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 2</span>     66
+#&gt; <span style='color: #BCBCBC;'> 3</span> age               Yes     No              0.972 1.46<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 1</span>     66
+#&gt; <span style='color: #BCBCBC;'> 4</span> age               Yes     Yes             0.967 4.61<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 1</span>     30
+#&gt; <span style='color: #BCBCBC;'> 5</span> cpk_enzyme        No      No              0.715 5.49<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-15</span>    137
+#&gt; <span style='color: #BCBCBC;'> 6</span> cpk_enzyme        No      Yes             0.458 3.20<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-14</span>     66
+#&gt; <span style='color: #BCBCBC;'> 7</span> cpk_enzyme        Yes     No              0.563 1.03<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-12</span>     66
+#&gt; <span style='color: #BCBCBC;'> 8</span> cpk_enzyme        Yes     Yes             0.391 4.50<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-10</span>     30
+#&gt; <span style='color: #BCBCBC;'> 9</span> ejection_fraction No      No              0.918 4.26<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 7</span>    137
+#&gt; <span style='color: #BCBCBC;'>10</span> ejection_fraction No      Yes             0.941 3.44<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 3</span>     66
+#&gt; <span style='color: #949494;'># … with 18 more rows</span></div><div class='input'>
 <span class='co'># death_eventing pipes ---------------------------------</span>
 <span class='co'># Normality test of all numerical variables</span>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>normality</span>()</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 7 x 4</span><span>
+  <span class='fu'>normality</span>()</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 7 x 4</span>
 #&gt;   vars              statistic  p_value sample
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> age                   0.975 5.11</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 5</span><span>    299
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> cpk_enzyme            0.514 7.05</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-28</span><span>    299
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> ejection_fraction     0.947 7.22</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 9</span><span>    299
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> platelets             0.912 2.88</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-12</span><span>    299
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> creatinine            0.551 5.39</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-27</span><span>    299
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> sodium                0.939 9.21</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-10</span><span>    299
-#&gt; </span><span style='color: #BCBCBC;'>7</span><span> time                  0.947 6.28</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 9</span><span>    299</div><div class='input'>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                 <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> age                   0.975 5.11<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 5</span>    299
+#&gt; <span style='color: #BCBCBC;'>2</span> cpk_enzyme            0.514 7.05<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-28</span>    299
+#&gt; <span style='color: #BCBCBC;'>3</span> ejection_fraction     0.947 7.22<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 9</span>    299
+#&gt; <span style='color: #BCBCBC;'>4</span> platelets             0.912 2.88<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-12</span>    299
+#&gt; <span style='color: #BCBCBC;'>5</span> creatinine            0.551 5.39<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-27</span>    299
+#&gt; <span style='color: #BCBCBC;'>6</span> sodium                0.939 9.21<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-10</span>    299
+#&gt; <span style='color: #BCBCBC;'>7</span> time                  0.947 6.28<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 9</span>    299</div><div class='input'>
 <span class='co'># Positive values select variables</span>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>normality</span>(<span class='no'>platelets</span>, <span class='no'>sodium</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 4</span><span>
+  <span class='fu'>normality</span>(<span class='no'>platelets</span>, <span class='no'>sodium</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 x 4</span>
 #&gt;   vars      statistic  p_value sample
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> platelets     0.912 2.88</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-12</span><span>    299
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> sodium        0.939 9.21</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-10</span><span>    299</div><div class='input'>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> platelets     0.912 2.88<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-12</span>    299
+#&gt; <span style='color: #BCBCBC;'>2</span> sodium        0.939 9.21<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-10</span>    299</div><div class='input'>
 <span class='co'># Positions values select variables</span>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>normality</span>(<span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 4</span><span>
+  <span class='fu'>normality</span>(<span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 4</span>
 #&gt;   vars  statistic   p_value sample
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> age       0.975 0.000</span><span style='text-decoration: underline;'>051</span><span>1    299</div><div class='input'>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> age       0.975 0.000<span style='text-decoration: underline;'>051</span>1    299</div><div class='input'>
 <span class='co'># death_eventing pipes &amp; dplyr -------------------------</span>
 <span class='co'># Test all numerical variables by 'smoking' and 'death_event',</span>
 <span class='co'># and extract only those with 'smoking' variable level is "No".</span>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>smoking</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/group_by.html'>group_by</a></span>(<span class='no'>smoking</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>normality</span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>smoking</span> <span class='kw'>==</span> <span class='st'>"No"</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 14 x 6</span><span>
+  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/filter.html'>filter</a></span>(<span class='no'>smoking</span> <span class='kw'>==</span> <span class='st'>"No"</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 14 x 6</span>
 #&gt;    variable          smoking death_event statistic  p_value sample
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> age               No      No              0.978 2.49</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 2</span><span>    137
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> age               No      Yes             0.955 1.70</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 2</span><span>     66
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> cpk_enzyme        No      No              0.715 5.49</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-15</span><span>    137
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> cpk_enzyme        No      Yes             0.458 3.20</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-14</span><span>     66
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> ejection_fraction No      No              0.918 4.26</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 7</span><span>    137
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> ejection_fraction No      Yes             0.941 3.44</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 3</span><span>     66
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> platelets         No      No              0.892 1.61</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 8</span><span>    137
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> platelets         No      Yes             0.987 7.04</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 1</span><span>     66
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> creatinine        No      No              0.550 1.00</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-18</span><span>    137
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> creatinine        No      Yes             0.655 3.52</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-11</span><span>     66
-#&gt; </span><span style='color: #BCBCBC;'>11</span><span> sodium            No      No              0.980 4.11</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 2</span><span>    137
-#&gt; </span><span style='color: #BCBCBC;'>12</span><span> sodium            No      Yes             0.948 7.83</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 3</span><span>     66
-#&gt; </span><span style='color: #BCBCBC;'>13</span><span> time              No      No              0.929 2.29</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 6</span><span>    137
-#&gt; </span><span style='color: #BCBCBC;'>14</span><span> time              No      Yes             0.870 5.24</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 6</span><span>     66</div><div class='input'>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> age               No      No              0.978 2.49<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 2</span>    137
+#&gt; <span style='color: #BCBCBC;'> 2</span> age               No      Yes             0.955 1.70<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 2</span>     66
+#&gt; <span style='color: #BCBCBC;'> 3</span> cpk_enzyme        No      No              0.715 5.49<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-15</span>    137
+#&gt; <span style='color: #BCBCBC;'> 4</span> cpk_enzyme        No      Yes             0.458 3.20<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-14</span>     66
+#&gt; <span style='color: #BCBCBC;'> 5</span> ejection_fraction No      No              0.918 4.26<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 7</span>    137
+#&gt; <span style='color: #BCBCBC;'> 6</span> ejection_fraction No      Yes             0.941 3.44<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 3</span>     66
+#&gt; <span style='color: #BCBCBC;'> 7</span> platelets         No      No              0.892 1.61<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 8</span>    137
+#&gt; <span style='color: #BCBCBC;'> 8</span> platelets         No      Yes             0.987 7.04<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 1</span>     66
+#&gt; <span style='color: #BCBCBC;'> 9</span> creatinine        No      No              0.550 1.00<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-18</span>    137
+#&gt; <span style='color: #BCBCBC;'>10</span> creatinine        No      Yes             0.655 3.52<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-11</span>     66
+#&gt; <span style='color: #BCBCBC;'>11</span> sodium            No      No              0.980 4.11<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 2</span>    137
+#&gt; <span style='color: #BCBCBC;'>12</span> sodium            No      Yes             0.948 7.83<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 3</span>     66
+#&gt; <span style='color: #BCBCBC;'>13</span> time              No      No              0.929 2.29<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 6</span>    137
+#&gt; <span style='color: #BCBCBC;'>14</span> time              No      Yes             0.870 5.24<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 6</span>     66</div><div class='input'>
 <span class='co'># extract only those with 'sex' variable level is "Male",</span>
 <span class='co'># and test 'platelets' by 'smoking' and 'death_event'</span>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>sex</span> <span class='kw'>==</span> <span class='st'>"Male"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>smoking</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>normality</span>(<span class='no'>platelets</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 4 x 6</span><span>
+  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/filter.html'>filter</a></span>(<span class='no'>sex</span> <span class='kw'>==</span> <span class='st'>"Male"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/group_by.html'>group_by</a></span>(<span class='no'>smoking</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>normality</span>(<span class='no'>platelets</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 4 x 6</span>
 #&gt;   variable  smoking death_event statistic     p_value sample
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> platelets No      No              0.963 0.042</span><span style='text-decoration: underline;'>9</span><span>          67
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> platelets No      Yes             0.966 0.349           35
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> platelets Yes     No              0.832 0.000</span><span style='text-decoration: underline;'>000</span><span>406     65
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> platelets Yes     Yes             0.963 0.429           27</div><div class='input'>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> platelets No      No              0.963 0.042<span style='text-decoration: underline;'>9</span>          67
+#&gt; <span style='color: #BCBCBC;'>2</span> platelets No      Yes             0.966 0.349           35
+#&gt; <span style='color: #BCBCBC;'>3</span> platelets Yes     No              0.832 0.000<span style='text-decoration: underline;'>000</span>406     65
+#&gt; <span style='color: #BCBCBC;'>4</span> platelets Yes     Yes             0.963 0.429           27</div><div class='input'>
 <span class='co'># Test log(platelets) variables by 'smoking' and 'death_event',</span>
 <span class='co'># and extract only p.value greater than 0.01.</span>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>platelets_income</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='no'>platelets</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>smoking</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/mutate.html'>mutate</a></span>(<span class='kw'>platelets_income</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='no'>platelets</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/group_by.html'>group_by</a></span>(<span class='no'>smoking</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>normality</span>(<span class='no'>platelets_income</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>p_value</span> <span class='kw'>&gt;</span> <span class='fl'>0.01</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 6</span><span>
+  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/filter.html'>filter</a></span>(<span class='no'>p_value</span> <span class='kw'>&gt;</span> <span class='fl'>0.01</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 6</span>
 #&gt;   variable         smoking death_event statistic p_value sample
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> platelets_income Yes     Yes             0.983   0.907     30</div><div class='input'># }
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> platelets_income Yes     Yes             0.983   0.907     30</div><div class='input'># }
 
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -73,7 +73,7 @@ for normality test of the numerical data." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
       </span>
     </div>
 
@@ -128,6 +128,18 @@ for normality test of the numerical data.</p>
     <pre class="usage"><span class='fu'>plot_normality</span>(<span class='no'>.data</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for data.frame</span>
+<span class='fu'>plot_normality</span>(
+  <span class='no'>.data</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>left</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"log"</span>, <span class='st'>"sqrt"</span>, <span class='st'>"log+1"</span>, <span class='st'>"log+a"</span>, <span class='st'>"1/x"</span>, <span class='st'>"x^2"</span>, <span class='st'>"x^3"</span>, <span class='st'>"Box-Cox"</span>,
+    <span class='st'>"Yeo-Johnson"</span>),
+  <span class='kw'>right</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sqrt"</span>, <span class='st'>"log"</span>, <span class='st'>"log+1"</span>, <span class='st'>"log+a"</span>, <span class='st'>"1/x"</span>, <span class='st'>"x^2"</span>, <span class='st'>"x^3"</span>, <span class='st'>"Box-Cox"</span>,
+    <span class='st'>"Yeo-Johnson"</span>),
+  <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"steelblue"</span>,
+  <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)
+
+<span class='co'># S3 method for grouped_df</span>
 <span class='fu'>plot_normality</span>(
   <span class='no'>.data</span>,
   <span class='no'>...</span>,
@@ -226,12 +238,14 @@ one variable in the ... argument, the specified number of plots are drawn.</p>
   <span class='fu'>plot_normality</span>(<span class='no'>heartfailure2</span>, <span class='no'>platelets</span>, <span class='kw'>left</span> <span class='kw'>=</span> <span class='st'>"Box-Cox"</span>, <span class='kw'>right</span> <span class='kw'>=</span> <span class='st'>"Yeo-Johnson"</span>)
 } <span class='kw'>else</span> {
   <span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span>(<span class='st'>"If you want to use this feature, you need to install the rpart package.\n"</span>)
-}</div><div class='img'><img src='plot_normality.data.frame-9.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Not allow typographic elements</span>
+}</div><div class='output co'>#&gt; <span class='message'>Registered S3 method overwritten by 'quantmod':</span>
+#&gt; <span class='message'>  method            from</span>
+#&gt; <span class='message'>  as.zoo.data.frame zoo </span></div><div class='img'><img src='plot_normality.data.frame-9.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Not allow typographic elements</span>
 <span class='fu'>plot_normality</span>(<span class='no'>heartfailure2</span>, <span class='no'>platelets</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot_normality.data.frame-10.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Using dplyr::grouped_df</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
-<span class='no'>gdata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>heartfailure2</span>, <span class='no'>sex</span>, <span class='no'>smoking</span>)
+<span class='no'>gdata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/group_by.html'>group_by</a></span>(<span class='no'>heartfailure2</span>, <span class='no'>sex</span>, <span class='no'>smoking</span>)
 <span class='fu'>plot_normality</span>(<span class='no'>gdata</span>)</div><div class='img'><img src='plot_normality.data.frame-11.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_normality.data.frame-12.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_normality.data.frame-13.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_normality.data.frame-14.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_normality.data.frame-15.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_normality.data.frame-16.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_normality.data.frame-17.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_normality.data.frame-18.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_normality.data.frame-19.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_normality.data.frame-20.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_normality.data.frame-21.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_normality.data.frame-22.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot_normality</span>(<span class='no'>gdata</span>, <span class='st'>"creatinine"</span>)</div><div class='img'><img src='plot_normality.data.frame-23.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_normality.data.frame-24.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_normality.data.frame-25.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_normality.data.frame-26.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Using pipes ---------------------------------</span>
 <span class='co'># Visualization of all numerical variables</span>
@@ -247,14 +261,14 @@ one variable in the ... argument, the specified number of plots are drawn.</p>
 <span class='co'># Using pipes &amp; dplyr -------------------------</span>
 <span class='co'># Plot 'creatinine' variable by 'sex' and 'smoking'</span>
 <span class='no'>heartfailure2</span> <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>sex</span>, <span class='no'>smoking</span>) <span class='kw'>%&gt;%</span>
+ <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/group_by.html'>group_by</a></span>(<span class='no'>sex</span>, <span class='no'>smoking</span>) <span class='kw'>%&gt;%</span>
  <span class='fu'>plot_normality</span>(<span class='no'>creatinine</span>)</div><div class='img'><img src='plot_normality.data.frame-32.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_normality.data.frame-33.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_normality.data.frame-34.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_normality.data.frame-35.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># extract only those with 'sex' variable level is "Male",</span>
 <span class='co'># and plot 'platelets' by 'smoking'</span>
 <span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"forecast"</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)) {
   <span class='no'>heartfailure2</span> <span class='kw'>%&gt;%</span>
-   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>sex</span> <span class='kw'>==</span> <span class='st'>"Male"</span>) <span class='kw'>%&gt;%</span>
-   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>smoking</span>) <span class='kw'>%&gt;%</span>
+   <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/filter.html'>filter</a></span>(<span class='no'>sex</span> <span class='kw'>==</span> <span class='st'>"Male"</span>) <span class='kw'>%&gt;%</span>
+   <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/group_by.html'>group_by</a></span>(<span class='no'>smoking</span>) <span class='kw'>%&gt;%</span>
    <span class='fu'>plot_normality</span>(<span class='no'>platelets</span>, <span class='kw'>right</span> <span class='kw'>=</span> <span class='st'>"Box-Cox"</span>)
 } <span class='kw'>else</span> {
   <span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span>(<span class='st'>"If you want to use this feature, you need to install the rpart package.\n"</span>)

@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
       </span>
     </div>
 
@@ -76,7 +76,7 @@
       <h1 data-toc-skip>Data quality diagnosis</h1>
                         <h4 class="author">Choonghyun Ryu</h4>
             
-            <h4 class="date">2021-06-07</h4>
+            <h4 class="date">2021-08-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/choonghyunryu/dlookr/blob/master/vignettes/diagonosis.Rmd"><code>vignettes/diagonosis.Rmd</code></a></small>
       <div class="hidden name"><code>diagonosis.Rmd</code></div>
@@ -104,7 +104,7 @@
 <ul>
 <li><strong>Performs a data diagnosis or automatically generates a data diagnosis report.</strong></li>
 <li>Discover data in a variety of ways, and automatically generate EDA(exploratory data analysis) report.</li>
-<li>Impute missing values and outliers, resolve skewed data, and binarize continuous variables into categorical variables. And generates an automated report to support it.</li>
+<li>Impute missing values and outliers, resolve skewed data, and categorize continuous variables into categorical variables. And generates an automated report to support it.</li>
 </ul>
 <p>This document introduces <strong>Data Quality Diagnosis</strong> methods provided by the dlookr package. You will learn how to diagnose the quality of <code>tbl_df</code> data that inherits from data.frame and <code>data.frame</code> with functions provided by dlookr.</p>
 <p>dlookr increases synergy with <code>dplyr</code>. Particularly in data exploration and data wrangle, it increases the efficiency of the <code>tidyverse</code> package group.</p>
@@ -275,7 +275,7 @@ diagnose(flights, -(year:day))
 3 day           1     8   15.7      16    23    31     0     0       0
 4 dep_time      1   907 1349.     1401  1744  2400     0     0       0
 # … with 10 more rows</pre></body></html></div>
-<p>If a numeric variable can not logically have a negative or zero value, it can be used with <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> to easily find a variable that does not logically match:</p>
+<p>If a numeric variable can not logically have a negative or zero value, it can be used with <code><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter()</a></code> to easily find a variable that does not logically match:</p>
 <div class="sourceCode" id="cb6"><html><body><pre class="r">diagnose_numeric(flights) %&gt;% 
   filter(minus &gt; 0 | zero &gt; 0) 
 # A tibble: 3 x 10
@@ -308,15 +308,15 @@ diagnose(flights, -(year:day))
 </ul>
 <p>`<code><a href="../reference/diagnose_category.data.frame.html">diagnose_category()</a></code> can diagnose all categorical variables of <code>flights</code> as follows.:</p>
 <div class="sourceCode" id="cb7"><html><body><pre class="r">diagnose_category(flights)
-# A tibble: 33 x 6
+# A tibble: 43 x 6
   variables levels      N  freq ratio  rank
   &lt;chr&gt;     &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt;
 1 carrier   UA     336776 58665  17.4     1
 2 carrier   B6     336776 54635  16.2     2
 3 carrier   EV     336776 54173  16.1     3
 4 carrier   DL     336776 48110  14.3     4
-# … with 29 more rows</pre></body></html></div>
-<p>In collaboration with <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> in the <code>dplyr</code> package, we can see that the <code>tailnum</code> variable is ranked in top 1 with 2,512 missing values in the case where the missing value is included in the top 10:</p>
+# … with 39 more rows</pre></body></html></div>
+<p>In collaboration with <code><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter()</a></code> in the <code>dplyr</code> package, we can see that the <code>tailnum</code> variable is ranked in top 1 with 2,512 missing values in the case where the missing value is included in the top 10:</p>
 <div class="sourceCode" id="cb8"><html><body><pre class="r">diagnose_category(flights) %&gt;% 
   filter(is.na(levels))
 # A tibble: 1 x 6
@@ -365,7 +365,7 @@ diagnose(flights, -(year:day))
 3 day                  0              0           NaN     15.7         15.7 
 4 dep_time             0              0           NaN   1349.        1349.  
 # … with 10 more rows</pre></body></html></div>
-<p>Numeric variables that contained outliers are easily found with <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>.:</p>
+<p>Numeric variables that contained outliers are easily found with <code><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter()</a></code>.:</p>
 <div class="sourceCode" id="cb11"><html><body><pre class="r">diagnose_outlier(flights) %&gt;% 
   filter(outliers_cnt &gt; 0) 
 # A tibble: 5 x 6
@@ -411,7 +411,6 @@ diagnose(flights, -(year:day))
                  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">outliers_ratio</span> <span class="kw">&gt;=</span> <span class="fl">5</span>) <span class="kw">%&gt;%</span>
                  <span class="fu">select</span>(<span class="no">variables</span>) <span class="kw">%&gt;%</span>
                  <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>())</pre></body></html></div>
-<p><img src="diagonosis_files/figure-html/plot_outlier_pipe-1.png" width="600px" style="display: block; margin: auto;"><img src="diagonosis_files/figure-html/plot_outlier_pipe-2.png" width="600px" style="display: block; margin: auto;"></p>
 <p>Analysts should look at the results of the visualization to decide whether to remove or replace outliers. In some cases, you should consider removing variables with outliers from the data analysis model.</p>
 <p>Looking at the results of the visualization, <code>arr_delay</code> shows that the observed values without outliers are similar to the normal distribution. In the case of a linear model, we might consider removing or imputing outliers.</p>
 </div>
@@ -431,21 +430,11 @@ diagnose(flights, -(year:day))
 <p>The default value of the <code>only_na</code> argument is FALSE, which includes variables that do not contain missing values, but if this value is set to TRUE, only variables containing missing values are visualized. The variable <code>age</code> was excluded from this plot.</p>
 <div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="kw pkg">mice</span><span class="kw ns">::</span><span class="no"><a href="https://amices.org/mice/reference/boys.html">boys</a></span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/plot_na_pareto.html">plot_na_pareto</a></span>(<span class="kw">only_na</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">main</span> <span class="kw">=</span> <span class="st">"Pareto Chart for mice::boys"</span>)</pre></body></html></div>
-<p><img src="diagonosis_files/figure-html/plot_na_pareto2-1.png" width="600px" style="display: block; margin: auto;"></p>
 <p>The rating of the variable is expressed as a proportion of missing values. It is calculated as the ratio of missing values. If it is [0, 0.05), it is <code>Good</code>, if it is [0.05, 0.4) it is <code>OK</code>, if it is [0.4, 0.8) it is <code>Bad</code>, and if it is [0.8, 1.0] it is <code>Remove</code>. You can override this grade using the <code>grade</code> argument as follows:</p>
 <div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="kw pkg">mice</span><span class="kw ns">::</span><span class="no"><a href="https://amices.org/mice/reference/boys.html">boys</a></span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/plot_na_pareto.html">plot_na_pareto</a></span>(<span class="kw">grade</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">High</span> <span class="kw">=</span> <span class="fl">0.1</span>, <span class="kw">Middle</span> <span class="kw">=</span> <span class="fl">0.6</span>, <span class="kw">Low</span> <span class="kw">=</span> <span class="fl">1</span>), <span class="kw">relative</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
-<p><img src="diagonosis_files/figure-html/plot_na_pareto3-1.png" width="600px" style="display: block; margin: auto;"></p>
 <p>If the <code>plot</code> argument is set to FALSE, information about missing values is returned instead of plotting.</p>
-<div class="sourceCode" id="cb18"><html><body><pre class="r">plot_na_pareto(mice::boys, only_na = TRUE, plot = FALSE)
-# A tibble: 8 x 5
-  variable frequencies  ratio grade  cumulative
-  &lt;fct&gt;          &lt;int&gt;  &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;
-1 tv               522 0.698  Remove       32.2
-2 gen              503 0.672  Remove       63.2
-3 phb              503 0.672  Remove       94.2
-4 hc                46 0.0615 OK           97.0
-# … with 4 more rows</pre></body></html></div>
+<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="fu"><a href="../reference/plot_na_pareto.html">plot_na_pareto</a></span>(<span class="kw pkg">mice</span><span class="kw ns">::</span><span class="no"><a href="https://amices.org/mice/reference/boys.html">boys</a></span>, <span class="kw">only_na</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">plot</span> <span class="kw">=</span> <span class="fl">FALSE</span>)</pre></body></html></div>
 </div>
 <div id="visualize-combination-chart-using-plot_na_hclust" class="section level4">
 <h4 class="hasAnchor">
@@ -469,103 +458,335 @@ diagnose(flights, -(year:day))
 <p>If the <code>n_vars</code> argument is used, only the top <code>n</code> variables containing many missing values are visualized.</p>
 <div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="kw pkg">mice</span><span class="kw ns">::</span><span class="no"><a href="https://amices.org/mice/reference/boys.html">boys</a></span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/plot_na_intersect.html">plot_na_intersect</a></span>(<span class="kw">n_vars</span> <span class="kw">=</span> <span class="fl">5</span>)</pre></body></html></div>
-<p><img src="diagonosis_files/figure-html/plot_na_hclust3-1.png" width="600px" style="display: block; margin: auto;"></p>
 <p>If you use the <code>n_intersacts</code> argument, only the top n numbers of variable combinations(intersection) including missing values are visualized. and If you want to visualize the combination variables that is include missing value and complete case. You just add only_na = FALSE.</p>
 <div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="kw pkg">mice</span><span class="kw ns">::</span><span class="no"><a href="https://amices.org/mice/reference/boys.html">boys</a></span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/plot_na_intersect.html">plot_na_intersect</a></span>(<span class="kw">only_na</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">n_intersacts</span> <span class="kw">=</span> <span class="fl">7</span>)</pre></body></html></div>
-<p><img src="diagonosis_files/figure-html/plot_na_hclust4-1.png" width="600px" style="display: block; margin: auto;"></p>
 </div>
 </div>
-<div id="create-a-diagnostic-report-using-diagnose_report" class="section level3">
-<h3 class="hasAnchor">
-<a href="#create-a-diagnostic-report-using-diagnose_report" class="anchor"></a>Create a diagnostic report using <code>diagnose_report()</code>
-</h3>
-<p><code><a href="../reference/diagnose_report.data.frame.html">diagnose_report()</a></code> performs data diagnosis of all variables of object inherited from data.frame(<code>tbl_df</code>, <code>tbl</code>, etc) or data.frame.</p>
-<p><code><a href="../reference/diagnose_report.data.frame.html">diagnose_report()</a></code> writes the report in two formats:</p>
+</div>
+<div id="automated-report" class="section level2">
+<h2 class="hasAnchor">
+<a href="#automated-report" class="anchor"></a>Automated report</h2>
+<p>dlookr provides two automated data diagnostic reports:</p>
 <ul>
-<li>pdf file based on LaTeX</li>
-<li>html file</li>
+<li>Web page-based dynamic reports can perform in-depth analysis through visualization and statistical tables.</li>
+<li>Static reports generated as pdf files or html files can be archived as output of data analysis.</li>
 </ul>
+<div id="create-a-diagnostic-report-using-diagnose_web_report" class="section level3">
+<h3 class="hasAnchor">
+<a href="#create-a-diagnostic-report-using-diagnose_web_report" class="anchor"></a>Create a diagnostic report using <code>diagnose_web_report()</code>
+</h3>
+<p><code><a href="../reference/diagnose_web_report.data.frame.html">diagnose_web_report()</a></code> create dynamic report for object inherited from data.frame(<code>tbl_df</code>, <code>tbl</code>, etc) or data.frame.</p>
+<div id="contents-of-dynamic-web-report" class="section level4">
+<h4 class="hasAnchor">
+<a href="#contents-of-dynamic-web-report" class="anchor"></a>Contents of dynamic web report</h4>
 <p>The contents of the report are as follows.:</p>
 <ul>
-<li>Diagnose Data
+<li>Overview
 <ul>
-<li>Overview of Diagnosis
+<li>Data Structures
 <ul>
-<li>List of all variables quality</li>
-<li>Diagnosing Missing Data</li>
-<li>Diagnosis of unique data(Text and Category)</li>
-<li>Diagnosis of unique data(Numerical)</li>
+<li>Data Structures</li>
+<li>Data Types</li>
+<li>Job Informations</li>
 </ul>
 </li>
-<li>Detailed data diagnosis
+<li>Warnings</li>
+<li>Variables</li>
+</ul>
+</li>
+<li>Missing Values
 <ul>
-<li>Diagnosis of categorical variables</li>
-<li>Diagnosis of numerical variables</li>
-<li>List of numerical diagnosis (zero)</li>
-<li>List of numerical diagnosis (minus)</li>
+<li>List of Missing Values</li>
+<li>Visualization</li>
 </ul>
 </li>
-</ul>
-</li>
-<li>Diagnose Outliers
+<li>Unique Values
 <ul>
-<li>Overview of Diagnosis
+<li>Categorical Variables</li>
+<li>Numerical Variables</li>
+</ul>
+</li>
+<li>Outliers</li>
+<li>Samples
 <ul>
-<li>Diagnosis of numerical variable outliers</li>
-<li>Detailed outliers diagnosis</li>
+<li>Duplicated</li>
+<li>Heads</li>
+<li>Tails</li>
 </ul>
 </li>
 </ul>
-</li>
-</ul>
-<p>The following script creates a quality diagnosis report for the <code>tbl_df</code> class object, <code>flights</code>. The file format is pdf, and the file name is DataDiagnosis_Report.pdf.</p>
-<div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="no">flights</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/diagnose_report.data.frame.html">diagnose_report</a></span>()</pre></body></html></div>
-<p>The following script creates a html report named <code>DataDiagnosis_Report.html</code>.</p>
-<div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="no">flights</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/diagnose_report.data.frame.html">diagnose_report</a></span>(<span class="kw">output_format</span> <span class="kw">=</span> <span class="st">"html"</span>)</pre></body></html></div>
-<p>The following script creates a HTML report named <code>Diagn.html</code>.</p>
-<div class="sourceCode" id="cb25"><html><body><pre class="r"><span class="no">flights</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/diagnose_report.data.frame.html">diagnose_report</a></span>(<span class="kw">output_format</span> <span class="kw">=</span> <span class="st">"html"</span>, <span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"Diagn.html"</span>)</pre></body></html></div>
-<p>The <code>data diagnostic report</code> is an automated report to aid in the data diagnostic process. Refer to this report to judge data replenishment or re-acquisition.</p>
 </div>
-<div id="diagnostic-report-contents" class="section level3">
-<h3 class="hasAnchor">
-<a href="#diagnostic-report-contents" class="anchor"></a>Diagnostic report contents</h3>
-<div id="contents-of-pdf-file" class="section level4">
+<div id="some-arguments-for-dynamic-web-report" class="section level4">
 <h4 class="hasAnchor">
-<a href="#contents-of-pdf-file" class="anchor"></a>Contents of pdf file</h4>
+<a href="#some-arguments-for-dynamic-web-report" class="anchor"></a>Some arguments for dynamic web report</h4>
+<p>diagnose_web_report() generates various reports with the following arguments.</p>
+<ul>
+<li>output_file
+<ul>
+<li>name of generated file.</li>
+</ul>
+</li>
+<li>output_dir
+<ul>
+<li>name of directory to generate report file.</li>
+</ul>
+</li>
+<li>title
+<ul>
+<li>title of report.</li>
+</ul>
+</li>
+<li>subtitle
+<ul>
+<li>subtitle of report.</li>
+</ul>
+</li>
+<li>author
+<ul>
+<li>author of report.</li>
+</ul>
+</li>
+<li>title_color
+<ul>
+<li>color of title.</li>
+</ul>
+</li>
+<li>thres_uniq_cat
+<ul>
+<li>threshold to use for “Unique Values - Categorical Variables”.</li>
+</ul>
+</li>
+<li>thres_uniq_num
+<ul>
+<li>threshold to use for “Unique Values - Numerical Variables”.</li>
+</ul>
+</li>
+<li>logo_img
+<ul>
+<li>name of logo image file on top left.</li>
+</ul>
+</li>
+<li>create_date
+<ul>
+<li>The date on which the report is generated.</li>
+</ul>
+</li>
+<li>theme
+<ul>
+<li>name of theme for report. support “orange” and “blue”.</li>
+</ul>
+</li>
+<li>sample_percent
+<ul>
+<li>Sample percent of data for performing Diagnosis.</li>
+</ul>
+</li>
+</ul>
+<p>The following script creates a quality diagnosis report for the <code>tbl_df</code> class object, <code>flights</code>.</p>
+<div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="no">flights</span> <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="../reference/diagnose_web_report.data.frame.html">diagnose_web_report</a></span>(<span class="kw">subtitle</span> <span class="kw">=</span> <span class="st">"flights"</span>, <span class="kw">output_dir</span> <span class="kw">=</span> <span class="st">"./"</span>,
+                      <span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"Diagn.html"</span>, <span class="kw">theme</span> <span class="kw">=</span> <span class="st">"blue"</span>)</pre></body></html></div>
+</div>
+<div id="screenshot-of-dynamic-report" class="section level4">
+<h4 class="hasAnchor">
+<a href="#screenshot-of-dynamic-report" class="anchor"></a>Screenshot of dynamic report</h4>
+<ul>
+<li>The part of the report is shown in the following figure.:</li>
+</ul>
+<div class="figure" style="text-align: center">
+<img src="img/diag_web_title.jpg" alt="The part of the report" width="80%"><p class="caption">
+The part of the report
+</p>
+</div>
+<ul>
+<li>The dynamic contents of the report is shown in the following figure.:</li>
+</ul>
+<div class="figure" style="text-align: center">
+<img src="img/diag_web_content.jpg" alt="The dynamic contents of the report" width="80%"><p class="caption">
+The dynamic contents of the report
+</p>
+</div>
+</div>
+</div>
+<div id="create-a-diagnostic-report-using-diagnose_paged_report" class="section level3">
+<h3 class="hasAnchor">
+<a href="#create-a-diagnostic-report-using-diagnose_paged_report" class="anchor"></a>Create a diagnostic report using <code>diagnose_paged_report()</code>
+</h3>
+<p><code><a href="../reference/diagnose_paged_report.data.frame.html">diagnose_paged_report()</a></code> create static report for object inherited from data.frame(<code>tbl_df</code>, <code>tbl</code>, etc) or data.frame.</p>
+<div id="contents-of-static-paged-report" class="section level4">
+<h4 class="hasAnchor">
+<a href="#contents-of-static-paged-report" class="anchor"></a>Contents of static paged report</h4>
+<p>The contents of the report are as follows.:</p>
+<ul>
+<li>Overview
+<ul>
+<li>Data Structures</li>
+<li>Job Informations</li>
+<li>Warnings</li>
+<li>Variables</li>
+</ul>
+</li>
+<li>Missing Values
+<ul>
+<li>List of Missing Values</li>
+<li>Visualization</li>
+</ul>
+</li>
+<li>Unique Values
+<ul>
+<li>Categorical Variables</li>
+<li>Numerical Variables<br>
+</li>
+</ul>
+</li>
+<li>Categorical Variable Diagnosis
+<ul>
+<li>Top Ranks</li>
+</ul>
+</li>
+<li>Numerical Variable Diagnosis
+<ul>
+<li>Distribution
+<ul>
+<li>Zero Values</li>
+<li>Minus Values</li>
+</ul>
+</li>
+<li>Outliers
+<ul>
+<li>List of Outliers</li>
+<li>Individual Outliers</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="some-arguments-for-static-paged-report" class="section level4">
+<h4 class="hasAnchor">
+<a href="#some-arguments-for-static-paged-report" class="anchor"></a>Some arguments for static paged report</h4>
+<p>diagnose_paged_report() generates various reports with the following arguments.</p>
+<ul>
+<li>output_format
+<ul>
+<li>report output type. Choose either “pdf” and “html”.</li>
+</ul>
+</li>
+<li>output_file
+<ul>
+<li>name of generated file.</li>
+</ul>
+</li>
+<li>output_dir
+<ul>
+<li>name of directory to generate report file.</li>
+</ul>
+</li>
+<li>title
+<ul>
+<li>title of report.</li>
+</ul>
+</li>
+<li>subtitle
+<ul>
+<li>subtitle of report.</li>
+</ul>
+</li>
+<li>abstract_title
+<ul>
+<li>abstract of report</li>
+</ul>
+</li>
+<li>author
+<ul>
+<li>author of report.</li>
+</ul>
+</li>
+<li>title_color
+<ul>
+<li>color of title.</li>
+</ul>
+</li>
+<li>subtitle_color
+<ul>
+<li>color of subtitle.</li>
+</ul>
+</li>
+<li>thres_uniq_cat
+<ul>
+<li>threshold to use for “Unique Values - Categorical Variables”.</li>
+</ul>
+</li>
+<li>thres_uniq_num
+<ul>
+<li>threshold to use for “Unique Values - Numerical Variables”.</li>
+</ul>
+</li>
+<li>flag_content_zero
+<ul>
+<li>whether to output “Zero Values” information.</li>
+</ul>
+</li>
+<li>flag_content_minus
+<ul>
+<li>whether to output “Minus Values” information.</li>
+</ul>
+</li>
+<li>flag_content_missing
+<ul>
+<li>whether to output “Missing Value” information.<br>
+</li>
+</ul>
+</li>
+<li>logo_img
+<ul>
+<li>name of logo image file on top left.</li>
+</ul>
+</li>
+<li>cover_img
+<ul>
+<li>name of cover image file on center.</li>
+</ul>
+</li>
+<li>create_date
+<ul>
+<li>The date on which the report is generated.</li>
+</ul>
+</li>
+<li>theme
+<ul>
+<li>name of theme for report. support “orange” and “blue”.</li>
+</ul>
+</li>
+<li>sample_percent
+<ul>
+<li>Sample percent of data for performing Diagnosis.</li>
+</ul>
+</li>
+</ul>
+<p>The following script creates a quality diagnosis report for the <code>tbl_df</code> class object, <code>flights</code>.</p>
+<div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="no">flights</span> <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="../reference/diagnose_paged_report.data.frame.html">diagnose_paged_report</a></span>(<span class="kw">subtitle</span> <span class="kw">=</span> <span class="st">"flights"</span>, <span class="kw">output_dir</span> <span class="kw">=</span> <span class="st">"./"</span>,
+                        <span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"Diagn.pdf"</span>, <span class="kw">theme</span> <span class="kw">=</span> <span class="st">"blue"</span>)</pre></body></html></div>
+</div>
+<div id="screenshot-of-static-report" class="section level4">
+<h4 class="hasAnchor">
+<a href="#screenshot-of-static-report" class="anchor"></a>Screenshot of static report</h4>
 <ul>
 <li>The cover of the report is shown in the following figure.:</li>
 </ul>
 <div class="figure" style="text-align: center">
-<img src="img/diagn_title_pdf.png" alt="Data Diagnostic Report Cover" width="60%"><p class="caption">
-Data Diagnostic Report Cover
+<img src="img/diag_paged_cover.jpg" alt="The part of the report" width="80%"><p class="caption">
+The part of the report
 </p>
 </div>
 <ul>
 <li>The contents of the report is shown in the following figure.:</li>
 </ul>
 <div class="figure" style="text-align: center">
-<img src="img/diagn_agenda_pdf.png" alt="Data Diagnostic Report Contents" width="60%"><p class="caption">
-Data Diagnostic Report Contents
-</p>
-</div>
-<ul>
-<li>Most information is represented in the report as a table. An example of a table is shown in the following figure.:</li>
-</ul>
-<div class="figure" style="text-align: center">
-<img src="img/diag_intro_pdf.png" alt="Sample data diagnostic report table" width="60%"><p class="caption">
-Sample data diagnostic report table
-</p>
-</div>
-<ul>
-<li>In the data diagnosis report, the outlier diagnostic contents include visualization. The result is shown in the following figure.:</li>
-</ul>
-<div class="figure" style="text-align: center">
-<img src="img/diag_outlier_pdf.png" alt="Data diagnosis report outlier diagnosis contents" width="60%"><p class="caption">
-Data diagnosis report outlier diagnosis contents
+<img src="img/diag_paged_content.jpg" alt="The dynamic contents of the report" width="80%"><p class="caption">
+The dynamic contents of the report
 </p>
 </div>
 </div>
@@ -592,7 +813,8 @@ Data diagnosis report outlier diagnosis contents
 <li>
 <code><a href="../reference/plot_outlier.data.frame.html">plot_outlier()</a></code><br>
 </li>
-<li><code><a href="../reference/diagnose_report.data.frame.html">diagnose_report()</a></code></li>
+<li><code><a href="../reference/diagnose_web_report.data.frame.html">diagnose_web_report()</a></code></li>
+<li><code><a href="../reference/diagnose_paged_report.data.frame.html">diagnose_paged_report()</a></code></li>
 </ul>
 </li>
 </ul>
@@ -600,7 +822,7 @@ Data diagnosis report outlier diagnosis contents
 <h3 class="hasAnchor">
 <a href="#preparing-table-data" class="anchor"></a>Preparing table data</h3>
 <p>Copy the <code>carseats</code> data frame to the SQLite DBMS and create it as a table named <code>TB_CARSEATS</code>. Mysql/MariaDB, PostgreSQL, Oracle DBMS, other DBMS are also available for your environment.</p>
-<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="kw">if</span> (!<span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="no">DBI</span>)) <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">'DBI'</span>)
+<div class="sourceCode" id="cb25"><html><body><pre class="r"><span class="kw">if</span> (!<span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="no">DBI</span>)) <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">'DBI'</span>)
 <span class="kw">if</span> (!<span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="no">RSQLite</span>)) <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">'RSQLite'</span>)
 <span class="kw">if</span> (!<span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="no">dplyr</span>)) <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">'dplyr'</span>)
 <span class="kw">if</span> (!<span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="no">dbplyr</span>)) <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">'dbplyr'</span>)
@@ -615,13 +837,13 @@ Data diagnosis report outlier diagnosis contents
 <span class="no">con_sqlite</span> <span class="kw">&lt;-</span> <span class="kw pkg">DBI</span><span class="kw ns">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html">dbConnect</a></span>(<span class="kw pkg">RSQLite</span><span class="kw ns">::</span><span class="fu"><a href="https://rsqlite.r-dbi.org/reference/SQLite.html">SQLite</a></span>(), <span class="st">":memory:"</span>)
 
 <span class="co"># copy carseats to the DBMS with a table named TB_CARSEATS</span>
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/copy_to.html">copy_to</a></span>(<span class="no">con_sqlite</span>, <span class="no">carseats</span>, <span class="kw">name</span> <span class="kw">=</span> <span class="st">"TB_CARSEATS"</span>, <span class="kw">overwrite</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/copy_to.html">copy_to</a></span>(<span class="no">con_sqlite</span>, <span class="no">carseats</span>, <span class="kw">name</span> <span class="kw">=</span> <span class="st">"TB_CARSEATS"</span>, <span class="kw">overwrite</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 </div>
 <div id="diagnose-data-quality-of-variables-in-the-dbms" class="section level3">
 <h3 class="hasAnchor">
 <a href="#diagnose-data-quality-of-variables-in-the-dbms" class="anchor"></a>Diagnose data quality of variables in the DBMS</h3>
-<p>Use <code><a href="https://dplyr.tidyverse.org/reference/tbl.html">dplyr::tbl()</a></code> to create a tbl_dbi object, then use it as a data frame object. That is, the data argument of all diagnose function is specified as tbl_dbi object instead of data frame object.</p>
-<div class="sourceCode" id="cb27"><html><body><pre class="r"># Diagnosis of all columns
+<p>Use <code><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">dplyr::tbl()</a></code> to create a tbl_dbi object, then use it as a data frame object. That is, the data argument of all diagnose function is specified as tbl_dbi object instead of data frame object.</p>
+<div class="sourceCode" id="cb26"><html><body><pre class="r"># Diagnosis of all columns
 con_sqlite %&gt;% 
   tbl("TB_CARSEATS") %&gt;% 
   diagnose()
@@ -630,7 +852,7 @@ con_sqlite %&gt;%
   &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;           &lt;dbl&gt;        &lt;int&gt;       &lt;dbl&gt;
 1 Sales       double             0               0          336       0.84 
 2 CompPrice   double             0               0           73       0.182
-3 Income      double            20               5           98       0.245
+3 Income      double            20               5           99       0.248
 4 Advertising double             0               0           28       0.07 
 # … with 7 more rows
 
@@ -642,7 +864,7 @@ con_sqlite %&gt;%
   variables types   missing_count missing_percent unique_count unique_rate
   &lt;chr&gt;     &lt;chr&gt;           &lt;int&gt;           &lt;dbl&gt;        &lt;int&gt;       &lt;dbl&gt;
 1 Sales     numeric             0               0          336       0.84 
-2 Income    numeric            20               5           98       0.245
+2 Income    numeric            20               5           99       0.248
 3 Age       numeric             0               0           56       0.14 
   
 # Positions values select columns, and In-memory mode and collect size is 200
@@ -654,14 +876,14 @@ con_sqlite %&gt;%
   &lt;chr&gt;       &lt;chr&gt;           &lt;int&gt;           &lt;dbl&gt;        &lt;int&gt;       &lt;dbl&gt;
 1 Sales       numeric             0               0          182       0.91 
 2 CompPrice   numeric             0               0           65       0.325
-3 Income      numeric            10               5           83       0.415
+3 Income      numeric             8               4           83       0.415
 4 Advertising numeric             0               0           23       0.115
 # … with 4 more rows</pre></body></html></div>
 </div>
 <div id="diagnose-data-quality-of-categorical-variables-in-the-dbms" class="section level3">
 <h3 class="hasAnchor">
 <a href="#diagnose-data-quality-of-categorical-variables-in-the-dbms" class="anchor"></a>Diagnose data quality of categorical variables in the DBMS</h3>
-<div class="sourceCode" id="cb28"><html><body><pre class="r"># Positions values select variables, and In-memory mode and collect size is 200
+<div class="sourceCode" id="cb27"><html><body><pre class="r"># Positions values select variables, and In-memory mode and collect size is 200
 con_sqlite %&gt;% 
   tbl("TB_CARSEATS") %&gt;% 
   diagnose_category(7, in_database = FALSE, collect_size = 200) 
@@ -679,8 +901,8 @@ con_sqlite %&gt;%
 # A tibble: 5 x 6
   variables levels     N  freq ratio  rank
   &lt;chr&gt;     &lt;chr&gt;  &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt;
-1 Urban     Yes      400   278 69.5      1
-2 Urban     No       400   117 29.2      2
+1 Urban     Yes      400   280 70        1
+2 Urban     No       400   115 28.7      2
 3 Urban     &lt;NA&gt;     400     5  1.25     3
 4 US        Yes      400   258 64.5      1
 # … with 1 more row</pre></body></html></div>
@@ -688,7 +910,7 @@ con_sqlite %&gt;%
 <div id="diagnose-data-quality-of-numerical-variables-in-the-dbms" class="section level3">
 <h3 class="hasAnchor">
 <a href="#diagnose-data-quality-of-numerical-variables-in-the-dbms" class="anchor"></a>Diagnose data quality of numerical variables in the DBMS</h3>
-<div class="sourceCode" id="cb29"><html><body><pre class="r"># Diagnosis of all numerical variables
+<div class="sourceCode" id="cb28"><html><body><pre class="r"># Diagnosis of all numerical variables
 con_sqlite %&gt;% 
   tbl("TB_CARSEATS") %&gt;% 
   diagnose_numeric()
@@ -697,7 +919,7 @@ con_sqlite %&gt;%
   &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt;   &lt;int&gt;
 1 Sales           0   5.39   7.50   7.49   9.32  16.3     1     0       2
 2 CompPrice      77 115    125.   125    135    175       0     0       2
-3 Income         21  42     68.8   69     92    120       0     0       0
+3 Income         21  42     68.1   69     90.2  120       0     0       0
 4 Advertising     0   0      6.64   5     12     29     144     0       0
 # … with 4 more rows
   
@@ -709,12 +931,12 @@ con_sqlite %&gt;%
   variables   min    Q1  mean median    Q3   max  zero minus outlier
 * &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt;   &lt;int&gt;
 1 Sales         0  5.26  7.42   7.50  9.10  14.9     1     0       0
-2 Income       21 48    71.6   74    93    120       0     0       0</pre></body></html></div>
+2 Income       21 46.8  71.3   73.5  93    120       0     0       0</pre></body></html></div>
 </div>
 <div id="diagnose-outlier-of-numerical-variables-in-the-dbms" class="section level3">
 <h3 class="hasAnchor">
 <a href="#diagnose-outlier-of-numerical-variables-in-the-dbms" class="anchor"></a>Diagnose outlier of numerical variables in the DBMS</h3>
-<div class="sourceCode" id="cb30"><html><body><pre class="r">con_sqlite %&gt;% 
+<div class="sourceCode" id="cb29"><html><body><pre class="r">con_sqlite %&gt;% 
   tbl("TB_CARSEATS") %&gt;% 
   diagnose_outlier()  %&gt;%
   filter(outliers_ratio &gt; 1)
@@ -726,42 +948,32 @@ con_sqlite %&gt;%
 <div id="plot-outlier-information-of-numerical-data-diagnosis-in-the-dbms" class="section level3">
 <h3 class="hasAnchor">
 <a href="#plot-outlier-information-of-numerical-data-diagnosis-in-the-dbms" class="anchor"></a>Plot outlier information of numerical data diagnosis in the DBMS</h3>
-<div class="sourceCode" id="cb31"><html><body><pre class="r"><span class="co"># Visualization of numerical variables with a ratio of</span>
+<div class="sourceCode" id="cb30"><html><body><pre class="r"><span class="co"># Visualization of numerical variables with a ratio of</span>
 <span class="co"># outliers greater than 1%</span>
 <span class="co"># the result is same as a data.frame, but not display here. reference above in document.</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/plot_outlier.data.frame.html">plot_outlier</a></span>(<span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-                 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+                 <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
                  <span class="fu"><a href="../reference/diagnose_outlier.data.frame.html">diagnose_outlier</a></span>() <span class="kw">%&gt;%</span>
-                 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">outliers_ratio</span> <span class="kw">&gt;</span> <span class="fl">1</span>) <span class="kw">%&gt;%</span>
-                 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">variables</span>) <span class="kw">%&gt;%</span>
-                 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span>())</pre></body></html></div>
+                 <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="no">outliers_ratio</span> <span class="kw">&gt;</span> <span class="fl">1</span>) <span class="kw">%&gt;%</span>
+                 <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/select.html">select</a></span>(<span class="no">variables</span>) <span class="kw">%&gt;%</span>
+                 <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/pull.html">pull</a></span>())</pre></body></html></div>
 </div>
 <div id="reporting-the-information-of-data-diagnosis-for-table-of-thr-dbms" class="section level3">
 <h3 class="hasAnchor">
 <a href="#reporting-the-information-of-data-diagnosis-for-table-of-thr-dbms" class="anchor"></a>Reporting the information of data diagnosis for table of thr DBMS</h3>
 <p>The following shows several examples of creating an data diagnosis report for a DBMS table.</p>
 <p>Using the <code>collect_size</code> argument, you can perform data diagnosis with the corresponding number of sample data. If the number of data is very large, use <code>collect_size</code>.</p>
-<div class="sourceCode" id="cb32"><html><body><pre class="r"><span class="co"># create pdf file. file name is DataDiagnosis_Report.pdf</span>
+<div class="sourceCode" id="cb31"><html><body><pre class="r"><span class="co"># create web report file. </span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/diagnose_report.data.frame.html">diagnose_report</a></span>()
+  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="../reference/diagnose_web_report.data.frame.html">diagnose_web_report</a></span>()
 
 <span class="co"># create pdf file. file name is Diagn.pdf, and collect size is 350</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/diagnose_report.data.frame.html">diagnose_report</a></span>(<span class="kw">collect_size</span> <span class="kw">=</span> <span class="fl">350</span>, <span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"Diagn.pdf"</span>)
-
-<span class="co"># create html file. file name is Diagnosis_Report.html</span>
-<span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/diagnose_report.data.frame.html">diagnose_report</a></span>(<span class="kw">output_format</span> <span class="kw">=</span> <span class="st">"html"</span>)
-
-<span class="co"># create html file. file name is Diagn.html</span>
-<span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/diagnose_report.data.frame.html">diagnose_report</a></span>(<span class="kw">output_format</span> <span class="kw">=</span> <span class="st">"html"</span>, <span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"Diagn.html"</span>)</pre></body></html></div>
+  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="../reference/diagnose_paged_report.data.frame.html">diagnose_paged_report</a></span>(<span class="kw">collect_size</span> <span class="kw">=</span> <span class="fl">350</span>, <span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"Diagn.pdf"</span>)</pre></body></html></div>
 </div>
 </div>
   </div>

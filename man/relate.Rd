@@ -2,9 +2,12 @@
 % Please edit documentation in R/target_by.R
 \name{relate}
 \alias{relate}
+\alias{relate.target_df}
 \title{Relationship between target variable and variable of interest}
 \usage{
 relate(.data, predictor)
+
+\method{relate}{target_df}(.data, predictor)
 }
 \arguments{
 \item{.data}{a target_df.}

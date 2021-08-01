@@ -73,7 +73,7 @@ coefficient of the numerical data." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
       </span>
     </div>
 
@@ -128,6 +128,9 @@ coefficient of the numerical data.</p>
     <pre class="usage"><span class='fu'>correlate</span>(<span class='no'>.data</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for data.frame</span>
+<span class='fu'>correlate</span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pearson"</span>, <span class='st'>"kendall"</span>, <span class='st'>"spearman"</span>))
+
+<span class='co'># S3 method for grouped_df</span>
 <span class='fu'>correlate</span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pearson"</span>, <span class='st'>"kendall"</span>, <span class='st'>"spearman"</span>))</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -159,7 +162,7 @@ to be computed. One of "pearson" (default), "kendall", or "spearman": can be abb
 
     <p>This function is useful when used with the group_by() function of the dplyr package.
 If you want to compute by level of the categorical data you are interested in,
-rather than the whole observation, you can use <code><a href='https://dplyr.tidyverse.org/reference/grouped_df.html'>grouped_df</a></code> as the group_by() function.
+rather than the whole observation, you can use <code><a href='https://rdrr.io/pkg/dplyr/man/grouped_df.html'>grouped_df</a></code> as the group_by() function.
 This function is computed stats::cor() function by use = "pairwise.complete.obs" option.</p>
     <h2 class="hasAnchor" id="correlation-coefficient-information"><a class="anchor" href="#correlation-coefficient-information"></a>Correlation coefficient information</h2>
 
@@ -178,270 +181,274 @@ This function is computed stats::cor() function by use = "pairwise.complete.obs"
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Correlation coefficients of all numerical variables</span>
-<span class='fu'>correlate</span>(<span class='no'>heartfailure</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 42 x 3</span><span>
+<span class='fu'>correlate</span>(<span class='no'>heartfailure</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 42 x 3</span>
 #&gt;    var1              var2       coef_corr
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> cpk_enzyme        age          -</span><span style='color: #BB0000;'>0.081</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> ejection_fraction age           0.060</span><span style='text-decoration: underline;'>2</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> platelets         age          -</span><span style='color: #BB0000;'>0.052</span><span style='color: #BB0000;text-decoration: underline;'>5</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> creatinine        age           0.159 
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> sodium            age          -</span><span style='color: #BB0000;'>0.045</span><span style='color: #BB0000;text-decoration: underline;'>9</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> time              age          -</span><span style='color: #BB0000;'>0.224</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> age               cpk_enzyme   -</span><span style='color: #BB0000;'>0.081</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> ejection_fraction cpk_enzyme   -</span><span style='color: #BB0000;'>0.044</span><span style='color: #BB0000;text-decoration: underline;'>1</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> platelets         cpk_enzyme    0.024</span><span style='text-decoration: underline;'>5</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> creatinine        cpk_enzyme   -</span><span style='color: #BB0000;'>0.016</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span>
-#&gt; </span><span style='color: #949494;'># … with 32 more rows</span><span></div><div class='input'>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> cpk_enzyme        age          -<span style='color: #BB0000;'>0.081</span><span style='color: #BB0000; text-decoration: underline;'>4</span>
+#&gt; <span style='color: #BCBCBC;'> 2</span> ejection_fraction age           0.060<span style='text-decoration: underline;'>2</span>
+#&gt; <span style='color: #BCBCBC;'> 3</span> platelets         age          -<span style='color: #BB0000;'>0.052</span><span style='color: #BB0000; text-decoration: underline;'>5</span>
+#&gt; <span style='color: #BCBCBC;'> 4</span> creatinine        age           0.159 
+#&gt; <span style='color: #BCBCBC;'> 5</span> sodium            age          -<span style='color: #BB0000;'>0.045</span><span style='color: #BB0000; text-decoration: underline;'>9</span>
+#&gt; <span style='color: #BCBCBC;'> 6</span> time              age          -<span style='color: #BB0000;'>0.224</span> 
+#&gt; <span style='color: #BCBCBC;'> 7</span> age               cpk_enzyme   -<span style='color: #BB0000;'>0.081</span><span style='color: #BB0000; text-decoration: underline;'>4</span>
+#&gt; <span style='color: #BCBCBC;'> 8</span> ejection_fraction cpk_enzyme   -<span style='color: #BB0000;'>0.044</span><span style='color: #BB0000; text-decoration: underline;'>1</span>
+#&gt; <span style='color: #BCBCBC;'> 9</span> platelets         cpk_enzyme    0.024<span style='text-decoration: underline;'>5</span>
+#&gt; <span style='color: #BCBCBC;'>10</span> creatinine        cpk_enzyme   -<span style='color: #BB0000;'>0.016</span><span style='color: #BB0000; text-decoration: underline;'>4</span>
+#&gt; <span style='color: #949494;'># … with 32 more rows</span></div><div class='input'>
 <span class='co'># Select the variable to compute</span>
-<span class='fu'>correlate</span>(<span class='no'>heartfailure</span>, <span class='no'>creatinine</span>, <span class='no'>sodium</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 12 x 3</span><span>
+<span class='fu'>correlate</span>(<span class='no'>heartfailure</span>, <span class='no'>creatinine</span>, <span class='no'>sodium</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 12 x 3</span>
 #&gt;    var1       var2              coef_corr
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> creatinine age                  0.159 
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> sodium     age                 -</span><span style='color: #BB0000;'>0.045</span><span style='color: #BB0000;text-decoration: underline;'>9</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> creatinine cpk_enzyme          -</span><span style='color: #BB0000;'>0.016</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> sodium     cpk_enzyme           0.059</span><span style='text-decoration: underline;'>6</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> creatinine ejection_fraction   -</span><span style='color: #BB0000;'>0.011</span><span style='color: #BB0000;text-decoration: underline;'>3</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> sodium     ejection_fraction    0.176 
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> creatinine platelets           -</span><span style='color: #BB0000;'>0.041</span><span style='color: #BB0000;text-decoration: underline;'>2</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> sodium     platelets            0.062</span><span style='text-decoration: underline;'>1</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> sodium     creatinine          -</span><span style='color: #BB0000;'>0.189</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> creatinine sodium              -</span><span style='color: #BB0000;'>0.189</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'>11</span><span> creatinine time                -</span><span style='color: #BB0000;'>0.149</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'>12</span><span> sodium     time                 0.087</span><span style='text-decoration: underline;'>6</span><span></div><div class='input'><span class='fu'>correlate</span>(<span class='no'>heartfailure</span>, -<span class='no'>creatinine</span>, -<span class='no'>sodium</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 30 x 3</span><span>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>                 <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> creatinine age                  0.159 
+#&gt; <span style='color: #BCBCBC;'> 2</span> sodium     age                 -<span style='color: #BB0000;'>0.045</span><span style='color: #BB0000; text-decoration: underline;'>9</span>
+#&gt; <span style='color: #BCBCBC;'> 3</span> creatinine cpk_enzyme          -<span style='color: #BB0000;'>0.016</span><span style='color: #BB0000; text-decoration: underline;'>4</span>
+#&gt; <span style='color: #BCBCBC;'> 4</span> sodium     cpk_enzyme           0.059<span style='text-decoration: underline;'>6</span>
+#&gt; <span style='color: #BCBCBC;'> 5</span> creatinine ejection_fraction   -<span style='color: #BB0000;'>0.011</span><span style='color: #BB0000; text-decoration: underline;'>3</span>
+#&gt; <span style='color: #BCBCBC;'> 6</span> sodium     ejection_fraction    0.176 
+#&gt; <span style='color: #BCBCBC;'> 7</span> creatinine platelets           -<span style='color: #BB0000;'>0.041</span><span style='color: #BB0000; text-decoration: underline;'>2</span>
+#&gt; <span style='color: #BCBCBC;'> 8</span> sodium     platelets            0.062<span style='text-decoration: underline;'>1</span>
+#&gt; <span style='color: #BCBCBC;'> 9</span> sodium     creatinine          -<span style='color: #BB0000;'>0.189</span> 
+#&gt; <span style='color: #BCBCBC;'>10</span> creatinine sodium              -<span style='color: #BB0000;'>0.189</span> 
+#&gt; <span style='color: #BCBCBC;'>11</span> creatinine time                -<span style='color: #BB0000;'>0.149</span> 
+#&gt; <span style='color: #BCBCBC;'>12</span> sodium     time                 0.087<span style='text-decoration: underline;'>6</span></div><div class='input'><span class='fu'>correlate</span>(<span class='no'>heartfailure</span>, -<span class='no'>creatinine</span>, -<span class='no'>sodium</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 30 x 3</span>
 #&gt;    var1              var2              coef_corr
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> cpk_enzyme        age                -</span><span style='color: #BB0000;'>0.081</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> ejection_fraction age                 0.060</span><span style='text-decoration: underline;'>2</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> platelets         age                -</span><span style='color: #BB0000;'>0.052</span><span style='color: #BB0000;text-decoration: underline;'>5</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> time              age                -</span><span style='color: #BB0000;'>0.224</span><span>  
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> age               cpk_enzyme         -</span><span style='color: #BB0000;'>0.081</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> ejection_fraction cpk_enzyme         -</span><span style='color: #BB0000;'>0.044</span><span style='color: #BB0000;text-decoration: underline;'>1</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> platelets         cpk_enzyme          0.024</span><span style='text-decoration: underline;'>5</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> time              cpk_enzyme         -</span><span style='color: #BB0000;'>0.009</span><span style='color: #BB0000;text-decoration: underline;'>35</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> age               ejection_fraction   0.060</span><span style='text-decoration: underline;'>2</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> cpk_enzyme        ejection_fraction  -</span><span style='color: #BB0000;'>0.044</span><span style='color: #BB0000;text-decoration: underline;'>1</span><span> 
-#&gt; </span><span style='color: #949494;'># … with 20 more rows</span><span></div><div class='input'><span class='fu'>correlate</span>(<span class='no'>heartfailure</span>, <span class='st'>"creatinine"</span>, <span class='st'>"sodium"</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 12 x 3</span><span>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>                 <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> cpk_enzyme        age                -<span style='color: #BB0000;'>0.081</span><span style='color: #BB0000; text-decoration: underline;'>4</span> 
+#&gt; <span style='color: #BCBCBC;'> 2</span> ejection_fraction age                 0.060<span style='text-decoration: underline;'>2</span> 
+#&gt; <span style='color: #BCBCBC;'> 3</span> platelets         age                -<span style='color: #BB0000;'>0.052</span><span style='color: #BB0000; text-decoration: underline;'>5</span> 
+#&gt; <span style='color: #BCBCBC;'> 4</span> time              age                -<span style='color: #BB0000;'>0.224</span>  
+#&gt; <span style='color: #BCBCBC;'> 5</span> age               cpk_enzyme         -<span style='color: #BB0000;'>0.081</span><span style='color: #BB0000; text-decoration: underline;'>4</span> 
+#&gt; <span style='color: #BCBCBC;'> 6</span> ejection_fraction cpk_enzyme         -<span style='color: #BB0000;'>0.044</span><span style='color: #BB0000; text-decoration: underline;'>1</span> 
+#&gt; <span style='color: #BCBCBC;'> 7</span> platelets         cpk_enzyme          0.024<span style='text-decoration: underline;'>5</span> 
+#&gt; <span style='color: #BCBCBC;'> 8</span> time              cpk_enzyme         -<span style='color: #BB0000;'>0.009</span><span style='color: #BB0000; text-decoration: underline;'>35</span>
+#&gt; <span style='color: #BCBCBC;'> 9</span> age               ejection_fraction   0.060<span style='text-decoration: underline;'>2</span> 
+#&gt; <span style='color: #BCBCBC;'>10</span> cpk_enzyme        ejection_fraction  -<span style='color: #BB0000;'>0.044</span><span style='color: #BB0000; text-decoration: underline;'>1</span> 
+#&gt; <span style='color: #949494;'># … with 20 more rows</span></div><div class='input'><span class='fu'>correlate</span>(<span class='no'>heartfailure</span>, <span class='st'>"creatinine"</span>, <span class='st'>"sodium"</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 12 x 3</span>
 #&gt;    var1       var2              coef_corr
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> creatinine age                  0.159 
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> sodium     age                 -</span><span style='color: #BB0000;'>0.045</span><span style='color: #BB0000;text-decoration: underline;'>9</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> creatinine cpk_enzyme          -</span><span style='color: #BB0000;'>0.016</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> sodium     cpk_enzyme           0.059</span><span style='text-decoration: underline;'>6</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> creatinine ejection_fraction   -</span><span style='color: #BB0000;'>0.011</span><span style='color: #BB0000;text-decoration: underline;'>3</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> sodium     ejection_fraction    0.176 
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> creatinine platelets           -</span><span style='color: #BB0000;'>0.041</span><span style='color: #BB0000;text-decoration: underline;'>2</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> sodium     platelets            0.062</span><span style='text-decoration: underline;'>1</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> sodium     creatinine          -</span><span style='color: #BB0000;'>0.189</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> creatinine sodium              -</span><span style='color: #BB0000;'>0.189</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'>11</span><span> creatinine time                -</span><span style='color: #BB0000;'>0.149</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'>12</span><span> sodium     time                 0.087</span><span style='text-decoration: underline;'>6</span><span></div><div class='input'><span class='fu'>correlate</span>(<span class='no'>heartfailure</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 6 x 3</span><span>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>                 <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> creatinine age                  0.159 
+#&gt; <span style='color: #BCBCBC;'> 2</span> sodium     age                 -<span style='color: #BB0000;'>0.045</span><span style='color: #BB0000; text-decoration: underline;'>9</span>
+#&gt; <span style='color: #BCBCBC;'> 3</span> creatinine cpk_enzyme          -<span style='color: #BB0000;'>0.016</span><span style='color: #BB0000; text-decoration: underline;'>4</span>
+#&gt; <span style='color: #BCBCBC;'> 4</span> sodium     cpk_enzyme           0.059<span style='text-decoration: underline;'>6</span>
+#&gt; <span style='color: #BCBCBC;'> 5</span> creatinine ejection_fraction   -<span style='color: #BB0000;'>0.011</span><span style='color: #BB0000; text-decoration: underline;'>3</span>
+#&gt; <span style='color: #BCBCBC;'> 6</span> sodium     ejection_fraction    0.176 
+#&gt; <span style='color: #BCBCBC;'> 7</span> creatinine platelets           -<span style='color: #BB0000;'>0.041</span><span style='color: #BB0000; text-decoration: underline;'>2</span>
+#&gt; <span style='color: #BCBCBC;'> 8</span> sodium     platelets            0.062<span style='text-decoration: underline;'>1</span>
+#&gt; <span style='color: #BCBCBC;'> 9</span> sodium     creatinine          -<span style='color: #BB0000;'>0.189</span> 
+#&gt; <span style='color: #BCBCBC;'>10</span> creatinine sodium              -<span style='color: #BB0000;'>0.189</span> 
+#&gt; <span style='color: #BCBCBC;'>11</span> creatinine time                -<span style='color: #BB0000;'>0.149</span> 
+#&gt; <span style='color: #BCBCBC;'>12</span> sodium     time                 0.087<span style='text-decoration: underline;'>6</span></div><div class='input'><span class='fu'>correlate</span>(<span class='no'>heartfailure</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 6 x 3</span>
 #&gt;   var1  var2              coef_corr
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> age   cpk_enzyme          -</span><span style='color: #BB0000;'>0.081</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> age   ejection_fraction    0.060</span><span style='text-decoration: underline;'>2</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> age   platelets           -</span><span style='color: #BB0000;'>0.052</span><span style='color: #BB0000;text-decoration: underline;'>5</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> age   creatinine           0.159 
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> age   sodium              -</span><span style='color: #BB0000;'>0.045</span><span style='color: #BB0000;text-decoration: underline;'>9</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> age   time                -</span><span style='color: #BB0000;'>0.224</span><span> </div><div class='input'><span class='co'># Non-parametric correlation coefficient by kendall method</span>
-<span class='fu'>correlate</span>(<span class='no'>heartfailure</span>, <span class='no'>creatinine</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kendall"</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 6 x 3</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>                 <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> age   cpk_enzyme          -<span style='color: #BB0000;'>0.081</span><span style='color: #BB0000; text-decoration: underline;'>4</span>
+#&gt; <span style='color: #BCBCBC;'>2</span> age   ejection_fraction    0.060<span style='text-decoration: underline;'>2</span>
+#&gt; <span style='color: #BCBCBC;'>3</span> age   platelets           -<span style='color: #BB0000;'>0.052</span><span style='color: #BB0000; text-decoration: underline;'>5</span>
+#&gt; <span style='color: #BCBCBC;'>4</span> age   creatinine           0.159 
+#&gt; <span style='color: #BCBCBC;'>5</span> age   sodium              -<span style='color: #BB0000;'>0.045</span><span style='color: #BB0000; text-decoration: underline;'>9</span>
+#&gt; <span style='color: #BCBCBC;'>6</span> age   time                -<span style='color: #BB0000;'>0.224</span> </div><div class='input'><span class='co'># Non-parametric correlation coefficient by kendall method</span>
+<span class='fu'>correlate</span>(<span class='no'>heartfailure</span>, <span class='no'>creatinine</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kendall"</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 6 x 3</span>
 #&gt;   var1       var2              coef_corr
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> creatinine age                  0.191 
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> creatinine cpk_enzyme          -</span><span style='color: #BB0000;'>0.035</span><span style='color: #BB0000;text-decoration: underline;'>1</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> creatinine ejection_fraction   -</span><span style='color: #BB0000;'>0.130</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> creatinine platelets           -</span><span style='color: #BB0000;'>0.035</span><span style='color: #BB0000;text-decoration: underline;'>7</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> creatinine sodium              -</span><span style='color: #BB0000;'>0.223</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> creatinine time                -</span><span style='color: #BB0000;'>0.110</span><span> </div><div class='input'>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>                 <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> creatinine age                  0.191 
+#&gt; <span style='color: #BCBCBC;'>2</span> creatinine cpk_enzyme          -<span style='color: #BB0000;'>0.035</span><span style='color: #BB0000; text-decoration: underline;'>1</span>
+#&gt; <span style='color: #BCBCBC;'>3</span> creatinine ejection_fraction   -<span style='color: #BB0000;'>0.130</span> 
+#&gt; <span style='color: #BCBCBC;'>4</span> creatinine platelets           -<span style='color: #BB0000;'>0.035</span><span style='color: #BB0000; text-decoration: underline;'>7</span>
+#&gt; <span style='color: #BCBCBC;'>5</span> creatinine sodium              -<span style='color: #BB0000;'>0.223</span> 
+#&gt; <span style='color: #BCBCBC;'>6</span> creatinine time                -<span style='color: #BB0000;'>0.110</span> </div><div class='input'>
 <span class='co'># Using dplyr::grouped_dt</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
-
-<span class='no'>gdata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>heartfailure</span>, <span class='no'>smoking</span>, <span class='no'>death_event</span>)
-<span class='fu'>correlate</span>(<span class='no'>gdata</span>, <span class='st'>"creatinine"</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 24 x 5</span><span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'>
+<span class='no'>gdata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/group_by.html'>group_by</a></span>(<span class='no'>heartfailure</span>, <span class='no'>smoking</span>, <span class='no'>death_event</span>)
+<span class='fu'>correlate</span>(<span class='no'>gdata</span>, <span class='st'>"creatinine"</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 24 x 5</span>
 #&gt;    smoking death_event var1       var2              coef_corr
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> No      No          creatinine age                 0.199  
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> No      No          creatinine cpk_enzyme         -</span><span style='color: #BB0000;'>0.033</span><span style='color: #BB0000;text-decoration: underline;'>9</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> No      No          creatinine ejection_fraction  -</span><span style='color: #BB0000;'>0.073</span><span style='color: #BB0000;text-decoration: underline;'>2</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> No      No          creatinine platelets           0.008</span><span style='text-decoration: underline;'>96</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> No      No          creatinine sodium             -</span><span style='color: #BB0000;'>0.183</span><span>  
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> No      No          creatinine time               -</span><span style='color: #BB0000;'>0.097</span><span style='color: #BB0000;text-decoration: underline;'>1</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> No      Yes         creatinine age                -</span><span style='color: #BB0000;'>0.001</span><span style='color: #BB0000;text-decoration: underline;'>14</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> No      Yes         creatinine cpk_enzyme         -</span><span style='color: #BB0000;'>0.005</span><span style='color: #BB0000;text-decoration: underline;'>66</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> No      Yes         creatinine ejection_fraction   0.298  
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> No      Yes         creatinine platelets          -</span><span style='color: #BB0000;'>0.134</span><span>  
-#&gt; </span><span style='color: #949494;'># … with 14 more rows</span><span></div><div class='input'><span class='fu'>correlate</span>(<span class='no'>gdata</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 168 x 5</span><span>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>                 <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> No      No          creatinine age                 0.199  
+#&gt; <span style='color: #BCBCBC;'> 2</span> No      No          creatinine cpk_enzyme         -<span style='color: #BB0000;'>0.033</span><span style='color: #BB0000; text-decoration: underline;'>9</span> 
+#&gt; <span style='color: #BCBCBC;'> 3</span> No      No          creatinine ejection_fraction  -<span style='color: #BB0000;'>0.073</span><span style='color: #BB0000; text-decoration: underline;'>2</span> 
+#&gt; <span style='color: #BCBCBC;'> 4</span> No      No          creatinine platelets           0.008<span style='text-decoration: underline;'>96</span>
+#&gt; <span style='color: #BCBCBC;'> 5</span> No      No          creatinine sodium             -<span style='color: #BB0000;'>0.183</span>  
+#&gt; <span style='color: #BCBCBC;'> 6</span> No      No          creatinine time               -<span style='color: #BB0000;'>0.097</span><span style='color: #BB0000; text-decoration: underline;'>1</span> 
+#&gt; <span style='color: #BCBCBC;'> 7</span> No      Yes         creatinine age                -<span style='color: #BB0000;'>0.001</span><span style='color: #BB0000; text-decoration: underline;'>14</span>
+#&gt; <span style='color: #BCBCBC;'> 8</span> No      Yes         creatinine cpk_enzyme         -<span style='color: #BB0000;'>0.005</span><span style='color: #BB0000; text-decoration: underline;'>66</span>
+#&gt; <span style='color: #BCBCBC;'> 9</span> No      Yes         creatinine ejection_fraction   0.298  
+#&gt; <span style='color: #BCBCBC;'>10</span> No      Yes         creatinine platelets          -<span style='color: #BB0000;'>0.134</span>  
+#&gt; <span style='color: #949494;'># … with 14 more rows</span></div><div class='input'><span class='fu'>correlate</span>(<span class='no'>gdata</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 168 x 5</span>
 #&gt;    smoking death_event var1              var2       coef_corr
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> No      No          cpk_enzyme        age          -</span><span style='color: #BB0000;'>0.039</span><span style='color: #BB0000;text-decoration: underline;'>3</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> No      No          ejection_fraction age           0.074</span><span style='text-decoration: underline;'>9</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> No      No          platelets         age          -</span><span style='color: #BB0000;'>0.057</span><span style='color: #BB0000;text-decoration: underline;'>9</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> No      No          creatinine        age           0.199 
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> No      No          sodium            age          -</span><span style='color: #BB0000;'>0.042</span><span style='color: #BB0000;text-decoration: underline;'>7</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> No      No          time              age          -</span><span style='color: #BB0000;'>0.019</span><span style='color: #BB0000;text-decoration: underline;'>3</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> No      No          age               cpk_enzyme   -</span><span style='color: #BB0000;'>0.039</span><span style='color: #BB0000;text-decoration: underline;'>3</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> No      No          ejection_fraction cpk_enzyme   -</span><span style='color: #BB0000;'>0.081</span><span style='color: #BB0000;text-decoration: underline;'>9</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> No      No          platelets         cpk_enzyme    0.061</span><span style='text-decoration: underline;'>0</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> No      No          creatinine        cpk_enzyme   -</span><span style='color: #BB0000;'>0.033</span><span style='color: #BB0000;text-decoration: underline;'>9</span><span>
-#&gt; </span><span style='color: #949494;'># … with 158 more rows</span><span></div><div class='input'>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> No      No          cpk_enzyme        age          -<span style='color: #BB0000;'>0.039</span><span style='color: #BB0000; text-decoration: underline;'>3</span>
+#&gt; <span style='color: #BCBCBC;'> 2</span> No      No          ejection_fraction age           0.074<span style='text-decoration: underline;'>9</span>
+#&gt; <span style='color: #BCBCBC;'> 3</span> No      No          platelets         age          -<span style='color: #BB0000;'>0.057</span><span style='color: #BB0000; text-decoration: underline;'>9</span>
+#&gt; <span style='color: #BCBCBC;'> 4</span> No      No          creatinine        age           0.199 
+#&gt; <span style='color: #BCBCBC;'> 5</span> No      No          sodium            age          -<span style='color: #BB0000;'>0.042</span><span style='color: #BB0000; text-decoration: underline;'>7</span>
+#&gt; <span style='color: #BCBCBC;'> 6</span> No      No          time              age          -<span style='color: #BB0000;'>0.019</span><span style='color: #BB0000; text-decoration: underline;'>3</span>
+#&gt; <span style='color: #BCBCBC;'> 7</span> No      No          age               cpk_enzyme   -<span style='color: #BB0000;'>0.039</span><span style='color: #BB0000; text-decoration: underline;'>3</span>
+#&gt; <span style='color: #BCBCBC;'> 8</span> No      No          ejection_fraction cpk_enzyme   -<span style='color: #BB0000;'>0.081</span><span style='color: #BB0000; text-decoration: underline;'>9</span>
+#&gt; <span style='color: #BCBCBC;'> 9</span> No      No          platelets         cpk_enzyme    0.061<span style='text-decoration: underline;'>0</span>
+#&gt; <span style='color: #BCBCBC;'>10</span> No      No          creatinine        cpk_enzyme   -<span style='color: #BB0000;'>0.033</span><span style='color: #BB0000; text-decoration: underline;'>9</span>
+#&gt; <span style='color: #949494;'># … with 158 more rows</span></div><div class='input'>
 <span class='co'># Using pipes ---------------------------------</span>
 <span class='co'># Correlation coefficients of all numerical variables</span>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
- <span class='fu'>correlate</span>()</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 42 x 3</span><span>
+ <span class='fu'>correlate</span>()</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 42 x 3</span>
 #&gt;    var1              var2       coef_corr
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> cpk_enzyme        age          -</span><span style='color: #BB0000;'>0.081</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> ejection_fraction age           0.060</span><span style='text-decoration: underline;'>2</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> platelets         age          -</span><span style='color: #BB0000;'>0.052</span><span style='color: #BB0000;text-decoration: underline;'>5</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> creatinine        age           0.159 
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> sodium            age          -</span><span style='color: #BB0000;'>0.045</span><span style='color: #BB0000;text-decoration: underline;'>9</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> time              age          -</span><span style='color: #BB0000;'>0.224</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> age               cpk_enzyme   -</span><span style='color: #BB0000;'>0.081</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> ejection_fraction cpk_enzyme   -</span><span style='color: #BB0000;'>0.044</span><span style='color: #BB0000;text-decoration: underline;'>1</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> platelets         cpk_enzyme    0.024</span><span style='text-decoration: underline;'>5</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> creatinine        cpk_enzyme   -</span><span style='color: #BB0000;'>0.016</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span>
-#&gt; </span><span style='color: #949494;'># … with 32 more rows</span><span></div><div class='input'><span class='co'># Positive values select variables</span>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> cpk_enzyme        age          -<span style='color: #BB0000;'>0.081</span><span style='color: #BB0000; text-decoration: underline;'>4</span>
+#&gt; <span style='color: #BCBCBC;'> 2</span> ejection_fraction age           0.060<span style='text-decoration: underline;'>2</span>
+#&gt; <span style='color: #BCBCBC;'> 3</span> platelets         age          -<span style='color: #BB0000;'>0.052</span><span style='color: #BB0000; text-decoration: underline;'>5</span>
+#&gt; <span style='color: #BCBCBC;'> 4</span> creatinine        age           0.159 
+#&gt; <span style='color: #BCBCBC;'> 5</span> sodium            age          -<span style='color: #BB0000;'>0.045</span><span style='color: #BB0000; text-decoration: underline;'>9</span>
+#&gt; <span style='color: #BCBCBC;'> 6</span> time              age          -<span style='color: #BB0000;'>0.224</span> 
+#&gt; <span style='color: #BCBCBC;'> 7</span> age               cpk_enzyme   -<span style='color: #BB0000;'>0.081</span><span style='color: #BB0000; text-decoration: underline;'>4</span>
+#&gt; <span style='color: #BCBCBC;'> 8</span> ejection_fraction cpk_enzyme   -<span style='color: #BB0000;'>0.044</span><span style='color: #BB0000; text-decoration: underline;'>1</span>
+#&gt; <span style='color: #BCBCBC;'> 9</span> platelets         cpk_enzyme    0.024<span style='text-decoration: underline;'>5</span>
+#&gt; <span style='color: #BCBCBC;'>10</span> creatinine        cpk_enzyme   -<span style='color: #BB0000;'>0.016</span><span style='color: #BB0000; text-decoration: underline;'>4</span>
+#&gt; <span style='color: #949494;'># … with 32 more rows</span></div><div class='input'><span class='co'># Positive values select variables</span>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
- <span class='fu'>correlate</span>(<span class='no'>creatinine</span>, <span class='no'>sodium</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 12 x 3</span><span>
+ <span class='fu'>correlate</span>(<span class='no'>creatinine</span>, <span class='no'>sodium</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 12 x 3</span>
 #&gt;    var1       var2              coef_corr
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> creatinine age                  0.159 
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> sodium     age                 -</span><span style='color: #BB0000;'>0.045</span><span style='color: #BB0000;text-decoration: underline;'>9</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> creatinine cpk_enzyme          -</span><span style='color: #BB0000;'>0.016</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> sodium     cpk_enzyme           0.059</span><span style='text-decoration: underline;'>6</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> creatinine ejection_fraction   -</span><span style='color: #BB0000;'>0.011</span><span style='color: #BB0000;text-decoration: underline;'>3</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> sodium     ejection_fraction    0.176 
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> creatinine platelets           -</span><span style='color: #BB0000;'>0.041</span><span style='color: #BB0000;text-decoration: underline;'>2</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> sodium     platelets            0.062</span><span style='text-decoration: underline;'>1</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> sodium     creatinine          -</span><span style='color: #BB0000;'>0.189</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> creatinine sodium              -</span><span style='color: #BB0000;'>0.189</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'>11</span><span> creatinine time                -</span><span style='color: #BB0000;'>0.149</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'>12</span><span> sodium     time                 0.087</span><span style='text-decoration: underline;'>6</span><span></div><div class='input'><span class='co'># Negative values to drop variables</span>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>                 <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> creatinine age                  0.159 
+#&gt; <span style='color: #BCBCBC;'> 2</span> sodium     age                 -<span style='color: #BB0000;'>0.045</span><span style='color: #BB0000; text-decoration: underline;'>9</span>
+#&gt; <span style='color: #BCBCBC;'> 3</span> creatinine cpk_enzyme          -<span style='color: #BB0000;'>0.016</span><span style='color: #BB0000; text-decoration: underline;'>4</span>
+#&gt; <span style='color: #BCBCBC;'> 4</span> sodium     cpk_enzyme           0.059<span style='text-decoration: underline;'>6</span>
+#&gt; <span style='color: #BCBCBC;'> 5</span> creatinine ejection_fraction   -<span style='color: #BB0000;'>0.011</span><span style='color: #BB0000; text-decoration: underline;'>3</span>
+#&gt; <span style='color: #BCBCBC;'> 6</span> sodium     ejection_fraction    0.176 
+#&gt; <span style='color: #BCBCBC;'> 7</span> creatinine platelets           -<span style='color: #BB0000;'>0.041</span><span style='color: #BB0000; text-decoration: underline;'>2</span>
+#&gt; <span style='color: #BCBCBC;'> 8</span> sodium     platelets            0.062<span style='text-decoration: underline;'>1</span>
+#&gt; <span style='color: #BCBCBC;'> 9</span> sodium     creatinine          -<span style='color: #BB0000;'>0.189</span> 
+#&gt; <span style='color: #BCBCBC;'>10</span> creatinine sodium              -<span style='color: #BB0000;'>0.189</span> 
+#&gt; <span style='color: #BCBCBC;'>11</span> creatinine time                -<span style='color: #BB0000;'>0.149</span> 
+#&gt; <span style='color: #BCBCBC;'>12</span> sodium     time                 0.087<span style='text-decoration: underline;'>6</span></div><div class='input'><span class='co'># Negative values to drop variables</span>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
- <span class='fu'>correlate</span>(-<span class='no'>creatinine</span>, -<span class='no'>sodium</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 30 x 3</span><span>
+ <span class='fu'>correlate</span>(-<span class='no'>creatinine</span>, -<span class='no'>sodium</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 30 x 3</span>
 #&gt;    var1              var2              coef_corr
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> cpk_enzyme        age                -</span><span style='color: #BB0000;'>0.081</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> ejection_fraction age                 0.060</span><span style='text-decoration: underline;'>2</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> platelets         age                -</span><span style='color: #BB0000;'>0.052</span><span style='color: #BB0000;text-decoration: underline;'>5</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> time              age                -</span><span style='color: #BB0000;'>0.224</span><span>  
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> age               cpk_enzyme         -</span><span style='color: #BB0000;'>0.081</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> ejection_fraction cpk_enzyme         -</span><span style='color: #BB0000;'>0.044</span><span style='color: #BB0000;text-decoration: underline;'>1</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> platelets         cpk_enzyme          0.024</span><span style='text-decoration: underline;'>5</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> time              cpk_enzyme         -</span><span style='color: #BB0000;'>0.009</span><span style='color: #BB0000;text-decoration: underline;'>35</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> age               ejection_fraction   0.060</span><span style='text-decoration: underline;'>2</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> cpk_enzyme        ejection_fraction  -</span><span style='color: #BB0000;'>0.044</span><span style='color: #BB0000;text-decoration: underline;'>1</span><span> 
-#&gt; </span><span style='color: #949494;'># … with 20 more rows</span><span></div><div class='input'><span class='co'># Positions values select variables</span>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>                 <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> cpk_enzyme        age                -<span style='color: #BB0000;'>0.081</span><span style='color: #BB0000; text-decoration: underline;'>4</span> 
+#&gt; <span style='color: #BCBCBC;'> 2</span> ejection_fraction age                 0.060<span style='text-decoration: underline;'>2</span> 
+#&gt; <span style='color: #BCBCBC;'> 3</span> platelets         age                -<span style='color: #BB0000;'>0.052</span><span style='color: #BB0000; text-decoration: underline;'>5</span> 
+#&gt; <span style='color: #BCBCBC;'> 4</span> time              age                -<span style='color: #BB0000;'>0.224</span>  
+#&gt; <span style='color: #BCBCBC;'> 5</span> age               cpk_enzyme         -<span style='color: #BB0000;'>0.081</span><span style='color: #BB0000; text-decoration: underline;'>4</span> 
+#&gt; <span style='color: #BCBCBC;'> 6</span> ejection_fraction cpk_enzyme         -<span style='color: #BB0000;'>0.044</span><span style='color: #BB0000; text-decoration: underline;'>1</span> 
+#&gt; <span style='color: #BCBCBC;'> 7</span> platelets         cpk_enzyme          0.024<span style='text-decoration: underline;'>5</span> 
+#&gt; <span style='color: #BCBCBC;'> 8</span> time              cpk_enzyme         -<span style='color: #BB0000;'>0.009</span><span style='color: #BB0000; text-decoration: underline;'>35</span>
+#&gt; <span style='color: #BCBCBC;'> 9</span> age               ejection_fraction   0.060<span style='text-decoration: underline;'>2</span> 
+#&gt; <span style='color: #BCBCBC;'>10</span> cpk_enzyme        ejection_fraction  -<span style='color: #BB0000;'>0.044</span><span style='color: #BB0000; text-decoration: underline;'>1</span> 
+#&gt; <span style='color: #949494;'># … with 20 more rows</span></div><div class='input'><span class='co'># Positions values select variables</span>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
- <span class='fu'>correlate</span>(<span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 6 x 3</span><span>
+ <span class='fu'>correlate</span>(<span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 6 x 3</span>
 #&gt;   var1  var2              coef_corr
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> age   cpk_enzyme          -</span><span style='color: #BB0000;'>0.081</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> age   ejection_fraction    0.060</span><span style='text-decoration: underline;'>2</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> age   platelets           -</span><span style='color: #BB0000;'>0.052</span><span style='color: #BB0000;text-decoration: underline;'>5</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> age   creatinine           0.159 
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> age   sodium              -</span><span style='color: #BB0000;'>0.045</span><span style='color: #BB0000;text-decoration: underline;'>9</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> age   time                -</span><span style='color: #BB0000;'>0.224</span><span> </div><div class='input'><span class='co'># Positions values select variables</span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>                 <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> age   cpk_enzyme          -<span style='color: #BB0000;'>0.081</span><span style='color: #BB0000; text-decoration: underline;'>4</span>
+#&gt; <span style='color: #BCBCBC;'>2</span> age   ejection_fraction    0.060<span style='text-decoration: underline;'>2</span>
+#&gt; <span style='color: #BCBCBC;'>3</span> age   platelets           -<span style='color: #BB0000;'>0.052</span><span style='color: #BB0000; text-decoration: underline;'>5</span>
+#&gt; <span style='color: #BCBCBC;'>4</span> age   creatinine           0.159 
+#&gt; <span style='color: #BCBCBC;'>5</span> age   sodium              -<span style='color: #BB0000;'>0.045</span><span style='color: #BB0000; text-decoration: underline;'>9</span>
+#&gt; <span style='color: #BCBCBC;'>6</span> age   time                -<span style='color: #BB0000;'>0.224</span> </div><div class='input'><span class='co'># Positions values select variables</span>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
- <span class='fu'>correlate</span>(-<span class='fl'>1</span>, -<span class='fl'>3</span>, -<span class='fl'>5</span>, -<span class='fl'>7</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 18 x 3</span><span>
+ <span class='fu'>correlate</span>(-<span class='fl'>1</span>, -<span class='fl'>3</span>, -<span class='fl'>5</span>, -<span class='fl'>7</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 18 x 3</span>
 #&gt;    var1       var2              coef_corr
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> creatinine age                 0.159  
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> sodium     age                -</span><span style='color: #BB0000;'>0.045</span><span style='color: #BB0000;text-decoration: underline;'>9</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> time       age                -</span><span style='color: #BB0000;'>0.224</span><span>  
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> creatinine cpk_enzyme         -</span><span style='color: #BB0000;'>0.016</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> sodium     cpk_enzyme          0.059</span><span style='text-decoration: underline;'>6</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> time       cpk_enzyme         -</span><span style='color: #BB0000;'>0.009</span><span style='color: #BB0000;text-decoration: underline;'>35</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> creatinine ejection_fraction  -</span><span style='color: #BB0000;'>0.011</span><span style='color: #BB0000;text-decoration: underline;'>3</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> sodium     ejection_fraction   0.176  
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> time       ejection_fraction   0.041</span><span style='text-decoration: underline;'>7</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> creatinine platelets          -</span><span style='color: #BB0000;'>0.041</span><span style='color: #BB0000;text-decoration: underline;'>2</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'>11</span><span> sodium     platelets           0.062</span><span style='text-decoration: underline;'>1</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'>12</span><span> time       platelets           0.010</span><span style='text-decoration: underline;'>5</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'>13</span><span> sodium     creatinine         -</span><span style='color: #BB0000;'>0.189</span><span>  
-#&gt; </span><span style='color: #BCBCBC;'>14</span><span> time       creatinine         -</span><span style='color: #BB0000;'>0.149</span><span>  
-#&gt; </span><span style='color: #BCBCBC;'>15</span><span> creatinine sodium             -</span><span style='color: #BB0000;'>0.189</span><span>  
-#&gt; </span><span style='color: #BCBCBC;'>16</span><span> time       sodium              0.087</span><span style='text-decoration: underline;'>6</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'>17</span><span> creatinine time               -</span><span style='color: #BB0000;'>0.149</span><span>  
-#&gt; </span><span style='color: #BCBCBC;'>18</span><span> sodium     time                0.087</span><span style='text-decoration: underline;'>6</span><span> </div><div class='input'><span class='co'># Non-parametric correlation coefficient by spearman method</span>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>                 <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> creatinine age                 0.159  
+#&gt; <span style='color: #BCBCBC;'> 2</span> sodium     age                -<span style='color: #BB0000;'>0.045</span><span style='color: #BB0000; text-decoration: underline;'>9</span> 
+#&gt; <span style='color: #BCBCBC;'> 3</span> time       age                -<span style='color: #BB0000;'>0.224</span>  
+#&gt; <span style='color: #BCBCBC;'> 4</span> creatinine cpk_enzyme         -<span style='color: #BB0000;'>0.016</span><span style='color: #BB0000; text-decoration: underline;'>4</span> 
+#&gt; <span style='color: #BCBCBC;'> 5</span> sodium     cpk_enzyme          0.059<span style='text-decoration: underline;'>6</span> 
+#&gt; <span style='color: #BCBCBC;'> 6</span> time       cpk_enzyme         -<span style='color: #BB0000;'>0.009</span><span style='color: #BB0000; text-decoration: underline;'>35</span>
+#&gt; <span style='color: #BCBCBC;'> 7</span> creatinine ejection_fraction  -<span style='color: #BB0000;'>0.011</span><span style='color: #BB0000; text-decoration: underline;'>3</span> 
+#&gt; <span style='color: #BCBCBC;'> 8</span> sodium     ejection_fraction   0.176  
+#&gt; <span style='color: #BCBCBC;'> 9</span> time       ejection_fraction   0.041<span style='text-decoration: underline;'>7</span> 
+#&gt; <span style='color: #BCBCBC;'>10</span> creatinine platelets          -<span style='color: #BB0000;'>0.041</span><span style='color: #BB0000; text-decoration: underline;'>2</span> 
+#&gt; <span style='color: #BCBCBC;'>11</span> sodium     platelets           0.062<span style='text-decoration: underline;'>1</span> 
+#&gt; <span style='color: #BCBCBC;'>12</span> time       platelets           0.010<span style='text-decoration: underline;'>5</span> 
+#&gt; <span style='color: #BCBCBC;'>13</span> sodium     creatinine         -<span style='color: #BB0000;'>0.189</span>  
+#&gt; <span style='color: #BCBCBC;'>14</span> time       creatinine         -<span style='color: #BB0000;'>0.149</span>  
+#&gt; <span style='color: #BCBCBC;'>15</span> creatinine sodium             -<span style='color: #BB0000;'>0.189</span>  
+#&gt; <span style='color: #BCBCBC;'>16</span> time       sodium              0.087<span style='text-decoration: underline;'>6</span> 
+#&gt; <span style='color: #BCBCBC;'>17</span> creatinine time               -<span style='color: #BB0000;'>0.149</span>  
+#&gt; <span style='color: #BCBCBC;'>18</span> sodium     time                0.087<span style='text-decoration: underline;'>6</span> </div><div class='input'><span class='co'># Non-parametric correlation coefficient by spearman method</span>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
- <span class='fu'>correlate</span>(<span class='no'>creatinine</span>, <span class='no'>sodium</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 12 x 3</span><span>
+ <span class='fu'>correlate</span>(<span class='no'>creatinine</span>, <span class='no'>sodium</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 12 x 3</span>
 #&gt;    var1       var2              coef_corr
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> creatinine age                  0.271 
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> sodium     age                 -</span><span style='color: #BB0000;'>0.101</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> creatinine cpk_enzyme          -</span><span style='color: #BB0000;'>0.049</span><span style='color: #BB0000;text-decoration: underline;'>9</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> sodium     cpk_enzyme           0.016</span><span style='text-decoration: underline;'>9</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> creatinine ejection_fraction   -</span><span style='color: #BB0000;'>0.178</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> sodium     ejection_fraction    0.162 
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> creatinine platelets           -</span><span style='color: #BB0000;'>0.051</span><span style='color: #BB0000;text-decoration: underline;'>0</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> sodium     platelets            0.049</span><span style='text-decoration: underline;'>5</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> sodium     creatinine          -</span><span style='color: #BB0000;'>0.300</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> creatinine sodium              -</span><span style='color: #BB0000;'>0.300</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'>11</span><span> creatinine time                -</span><span style='color: #BB0000;'>0.161</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'>12</span><span> sodium     time                 0.086</span><span style='text-decoration: underline;'>4</span><span></div><div class='input'>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>                 <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> creatinine age                  0.271 
+#&gt; <span style='color: #BCBCBC;'> 2</span> sodium     age                 -<span style='color: #BB0000;'>0.101</span> 
+#&gt; <span style='color: #BCBCBC;'> 3</span> creatinine cpk_enzyme          -<span style='color: #BB0000;'>0.049</span><span style='color: #BB0000; text-decoration: underline;'>9</span>
+#&gt; <span style='color: #BCBCBC;'> 4</span> sodium     cpk_enzyme           0.016<span style='text-decoration: underline;'>9</span>
+#&gt; <span style='color: #BCBCBC;'> 5</span> creatinine ejection_fraction   -<span style='color: #BB0000;'>0.178</span> 
+#&gt; <span style='color: #BCBCBC;'> 6</span> sodium     ejection_fraction    0.162 
+#&gt; <span style='color: #BCBCBC;'> 7</span> creatinine platelets           -<span style='color: #BB0000;'>0.051</span><span style='color: #BB0000; text-decoration: underline;'>0</span>
+#&gt; <span style='color: #BCBCBC;'> 8</span> sodium     platelets            0.049<span style='text-decoration: underline;'>5</span>
+#&gt; <span style='color: #BCBCBC;'> 9</span> sodium     creatinine          -<span style='color: #BB0000;'>0.300</span> 
+#&gt; <span style='color: #BCBCBC;'>10</span> creatinine sodium              -<span style='color: #BB0000;'>0.300</span> 
+#&gt; <span style='color: #BCBCBC;'>11</span> creatinine time                -<span style='color: #BB0000;'>0.161</span> 
+#&gt; <span style='color: #BCBCBC;'>12</span> sodium     time                 0.086<span style='text-decoration: underline;'>4</span></div><div class='input'>
 <span class='co'># ---------------------------------------------</span>
 <span class='co'># Correlation coefficient</span>
 <span class='co'># that eliminates redundant combination of variables</span>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
  <span class='fu'>correlate</span>() <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='no'>var1</span>) <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='no'>var2</span>))</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 21 x 3</span><span>
+ <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/filter.html'>filter</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='no'>var1</span>) <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='no'>var2</span>))</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 21 x 3</span>
 #&gt;    var1              var2       coef_corr
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> cpk_enzyme        age          -</span><span style='color: #BB0000;'>0.081</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> ejection_fraction age           0.060</span><span style='text-decoration: underline;'>2</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> platelets         age          -</span><span style='color: #BB0000;'>0.052</span><span style='color: #BB0000;text-decoration: underline;'>5</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> creatinine        age           0.159 
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> sodium            age          -</span><span style='color: #BB0000;'>0.045</span><span style='color: #BB0000;text-decoration: underline;'>9</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> time              age          -</span><span style='color: #BB0000;'>0.224</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> ejection_fraction cpk_enzyme   -</span><span style='color: #BB0000;'>0.044</span><span style='color: #BB0000;text-decoration: underline;'>1</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> platelets         cpk_enzyme    0.024</span><span style='text-decoration: underline;'>5</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> creatinine        cpk_enzyme   -</span><span style='color: #BB0000;'>0.016</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> sodium            cpk_enzyme    0.059</span><span style='text-decoration: underline;'>6</span><span>
-#&gt; </span><span style='color: #949494;'># … with 11 more rows</span><span></div><div class='input'>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> cpk_enzyme        age          -<span style='color: #BB0000;'>0.081</span><span style='color: #BB0000; text-decoration: underline;'>4</span>
+#&gt; <span style='color: #BCBCBC;'> 2</span> ejection_fraction age           0.060<span style='text-decoration: underline;'>2</span>
+#&gt; <span style='color: #BCBCBC;'> 3</span> platelets         age          -<span style='color: #BB0000;'>0.052</span><span style='color: #BB0000; text-decoration: underline;'>5</span>
+#&gt; <span style='color: #BCBCBC;'> 4</span> creatinine        age           0.159 
+#&gt; <span style='color: #BCBCBC;'> 5</span> sodium            age          -<span style='color: #BB0000;'>0.045</span><span style='color: #BB0000; text-decoration: underline;'>9</span>
+#&gt; <span style='color: #BCBCBC;'> 6</span> time              age          -<span style='color: #BB0000;'>0.224</span> 
+#&gt; <span style='color: #BCBCBC;'> 7</span> ejection_fraction cpk_enzyme   -<span style='color: #BB0000;'>0.044</span><span style='color: #BB0000; text-decoration: underline;'>1</span>
+#&gt; <span style='color: #BCBCBC;'> 8</span> platelets         cpk_enzyme    0.024<span style='text-decoration: underline;'>5</span>
+#&gt; <span style='color: #BCBCBC;'> 9</span> creatinine        cpk_enzyme   -<span style='color: #BB0000;'>0.016</span><span style='color: #BB0000; text-decoration: underline;'>4</span>
+#&gt; <span style='color: #BCBCBC;'>10</span> sodium            cpk_enzyme    0.059<span style='text-decoration: underline;'>6</span>
+#&gt; <span style='color: #949494;'># … with 11 more rows</span></div><div class='input'>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
  <span class='fu'>correlate</span>(<span class='no'>creatinine</span>, <span class='no'>sodium</span>) <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='no'>var1</span>) <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='no'>var2</span>))</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 9 x 3</span><span>
+ <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/filter.html'>filter</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='no'>var1</span>) <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='no'>var2</span>))</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 9 x 3</span>
 #&gt;   var1       var2              coef_corr
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> creatinine age                  0.159 
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> sodium     age                 -</span><span style='color: #BB0000;'>0.045</span><span style='color: #BB0000;text-decoration: underline;'>9</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> creatinine cpk_enzyme          -</span><span style='color: #BB0000;'>0.016</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> sodium     cpk_enzyme           0.059</span><span style='text-decoration: underline;'>6</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> creatinine ejection_fraction   -</span><span style='color: #BB0000;'>0.011</span><span style='color: #BB0000;text-decoration: underline;'>3</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> sodium     ejection_fraction    0.176 
-#&gt; </span><span style='color: #BCBCBC;'>7</span><span> creatinine platelets           -</span><span style='color: #BB0000;'>0.041</span><span style='color: #BB0000;text-decoration: underline;'>2</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>8</span><span> sodium     platelets            0.062</span><span style='text-decoration: underline;'>1</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>9</span><span> sodium     creatinine          -</span><span style='color: #BB0000;'>0.189</span><span> </div><div class='input'>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>                 <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> creatinine age                  0.159 
+#&gt; <span style='color: #BCBCBC;'>2</span> sodium     age                 -<span style='color: #BB0000;'>0.045</span><span style='color: #BB0000; text-decoration: underline;'>9</span>
+#&gt; <span style='color: #BCBCBC;'>3</span> creatinine cpk_enzyme          -<span style='color: #BB0000;'>0.016</span><span style='color: #BB0000; text-decoration: underline;'>4</span>
+#&gt; <span style='color: #BCBCBC;'>4</span> sodium     cpk_enzyme           0.059<span style='text-decoration: underline;'>6</span>
+#&gt; <span style='color: #BCBCBC;'>5</span> creatinine ejection_fraction   -<span style='color: #BB0000;'>0.011</span><span style='color: #BB0000; text-decoration: underline;'>3</span>
+#&gt; <span style='color: #BCBCBC;'>6</span> sodium     ejection_fraction    0.176 
+#&gt; <span style='color: #BCBCBC;'>7</span> creatinine platelets           -<span style='color: #BB0000;'>0.041</span><span style='color: #BB0000; text-decoration: underline;'>2</span>
+#&gt; <span style='color: #BCBCBC;'>8</span> sodium     platelets            0.062<span style='text-decoration: underline;'>1</span>
+#&gt; <span style='color: #BCBCBC;'>9</span> sodium     creatinine          -<span style='color: #BB0000;'>0.189</span> </div><div class='input'>
 <span class='co'># Using pipes &amp; dplyr -------------------------</span>
 <span class='co'># Compute the correlation coefficient of Sales variable by 'smoking'</span>
 <span class='co'># and 'death_event' variables. And extract only those with absolute</span>
 <span class='co'># value of correlation coefficient is greater than 0.2</span>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>smoking</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
+ <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/group_by.html'>group_by</a></span>(<span class='no'>smoking</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
  <span class='fu'>correlate</span>(<span class='no'>creatinine</span>) <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='no'>coef_corr</span>) <span class='kw'>&gt;=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 7 x 5</span><span>
+ <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/filter.html'>filter</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='no'>coef_corr</span>) <span class='kw'>&gt;=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 7 x 5</span>
 #&gt;   smoking death_event var1       var2              coef_corr
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No      Yes         creatinine ejection_fraction     0.298
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> Yes     No          creatinine ejection_fraction    -</span><span style='color: #BB0000;'>0.201</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Yes     No          creatinine sodium               -</span><span style='color: #BB0000;'>0.290</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Yes     No          creatinine time                  0.246
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> Yes     Yes         creatinine age                   0.255
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> Yes     Yes         creatinine sodium               -</span><span style='color: #BB0000;'>0.286</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>7</span><span> Yes     Yes         creatinine time                 -</span><span style='color: #BB0000;'>0.201</span><span></div><div class='input'>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>                 <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> No      Yes         creatinine ejection_fraction     0.298
+#&gt; <span style='color: #BCBCBC;'>2</span> Yes     No          creatinine ejection_fraction    -<span style='color: #BB0000;'>0.201</span>
+#&gt; <span style='color: #BCBCBC;'>3</span> Yes     No          creatinine sodium               -<span style='color: #BB0000;'>0.290</span>
+#&gt; <span style='color: #BCBCBC;'>4</span> Yes     No          creatinine time                  0.246
+#&gt; <span style='color: #BCBCBC;'>5</span> Yes     Yes         creatinine age                   0.255
+#&gt; <span style='color: #BCBCBC;'>6</span> Yes     Yes         creatinine sodium               -<span style='color: #BB0000;'>0.286</span>
+#&gt; <span style='color: #BCBCBC;'>7</span> Yes     Yes         creatinine time                 -<span style='color: #BB0000;'>0.201</span></div><div class='input'>
 <span class='co'># extract only those with 'smoking' variable level is "Yes",</span>
 <span class='co'># and compute the correlation coefficient of 'Sales' variable</span>
 <span class='co'># by 'hblood_pressure' and 'death_event' variables.</span>
 <span class='co'># And the correlation coefficient is negative and smaller than 0.5</span>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>smoking</span> <span class='kw'>==</span> <span class='st'>"Yes"</span>) <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hblood_pressure</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
+ <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/filter.html'>filter</a></span>(<span class='no'>smoking</span> <span class='kw'>==</span> <span class='st'>"Yes"</span>) <span class='kw'>%&gt;%</span>
+ <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/group_by.html'>group_by</a></span>(<span class='no'>hblood_pressure</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
  <span class='fu'>correlate</span>(<span class='no'>creatinine</span>) <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>coef_corr</span> <span class='kw'>&lt;</span> <span class='fl'>0</span>) <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='no'>coef_corr</span>) <span class='kw'>&gt;</span> <span class='fl'>0.5</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 5</span><span>
+ <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/filter.html'>filter</a></span>(<span class='no'>coef_corr</span> <span class='kw'>&lt;</span> <span class='fl'>0</span>) <span class='kw'>%&gt;%</span>
+ <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/filter.html'>filter</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='no'>coef_corr</span>) <span class='kw'>&gt;</span> <span class='fl'>0.5</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 5</span>
 #&gt;   hblood_pressure death_event var1       var2   coef_corr
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> Yes             Yes         creatinine sodium    -</span><span style='color: #BB0000;'>0.561</span><span></div></span></pre>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> Yes             Yes         creatinine sodium    -<span style='color: #BB0000;'>0.561</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

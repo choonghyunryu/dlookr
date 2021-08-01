@@ -220,6 +220,7 @@ relate <- function(.data, predictor) {
 }
 
 
+#' @rdname relate
 #' @method relate target_df
 #' @export
 relate.target_df <- function(.data, predictor) {

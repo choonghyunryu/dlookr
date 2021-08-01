@@ -3,11 +3,14 @@
 \name{correlate}
 \alias{correlate}
 \alias{correlate.data.frame}
+\alias{correlate.grouped_df}
 \title{Compute the correlation coefficient between two numerical data}
 \usage{
 correlate(.data, ...)
 
 \method{correlate}{data.frame}(.data, ..., method = c("pearson", "kendall", "spearman"))
+
+\method{correlate}{grouped_df}(.data, ..., method = c("pearson", "kendall", "spearman"))
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}

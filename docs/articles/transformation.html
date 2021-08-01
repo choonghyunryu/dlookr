@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
       </span>
     </div>
 
@@ -70,13 +70,13 @@
 
       
 
-      </header><script src="transformation_files/header-attrs-2.7.4/header-attrs.js"></script><div class="row">
+      </header><script src="transformation_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Data Transformation</h1>
                         <h4 class="author">Choonghyun Ryu</h4>
             
-            <h4 class="date">2021-03-24</h4>
+            <h4 class="date">2021-08-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/choonghyunryu/dlookr/blob/master/vignettes/transformation.Rmd"><code>vignettes/transformation.Rmd</code></a></small>
       <div class="hidden name"><code>transformation.Rmd</code></div>
@@ -103,7 +103,7 @@
 <ul>
 <li>Performs an data diagnosis or automatically generates a data diagnosis report.</li>
 <li>Discover data in a variety of ways, and automatically generate EDA(exploratory data analysis) report.</li>
-<li><strong>Impute missing values and outliers, resolve skewed data, and binarize continuous variables into categorical variables. And generates an automated report to support it.</strong></li>
+<li><strong>Impute missing values and outliers, resolve skewed data, and categorize continuous variables into categorical variables. And generates an automated report to support it.</strong></li>
 </ul>
 <p>This document introduces <strong>data transformation</strong> methods provided by the dlookr package. You will learn how to transform of <code>tbl_df</code> data that inherits from data.frame and <code>data.frame</code> with functions provided by dlookr.</p>
 <p>dlookr increases synergy with <code>dplyr</code>. Particularly in data transformation and data wrangle, it increases the efficiency of the <code>tidyverse</code> package group.</p>
@@ -111,7 +111,7 @@
 <div id="datasets" class="section level2">
 <h2 class="hasAnchor">
 <a href="#datasets" class="anchor"></a>datasets</h2>
-<p>To illustrate the basic use of EDA in the dlookr package, I use a <code>Carseats</code> dataset. <code>Carseats</code> in the <code>ISLR</code> package is simulation dataset that sells children’s car seats at 400 stores. This data is a data.frame created for the purpose of predicting sales volume.</p>
+<p>To illustrate the basic use of data transformation in the dlookr package, I use a <code>Carseats</code> dataset. <code>Carseats</code> in the <code>ISLR</code> package is simulation dataset that sells children’s car seats at 400 stores. This data is a data.frame created for the purpose of predicting sales volume.</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r">library(ISLR)
 str(Carseats)
 'data.frame':   400 obs. of  11 variables:
@@ -369,7 +369,7 @@ urban
  [37] No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes
  [55] No  Yes Yes Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes Yes Yes Yes No 
  [73] Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes No  No  Yes No  Yes No 
- [91] No  Yes Yes Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes
+ [91] No  Yes Yes No  Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes
 [109] Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes No 
 [127] Yes Yes Yes No  Yes Yes Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes
 [145] No  Yes Yes No  No  Yes Yes No  No  No  No  Yes Yes No  No  No  No  No 
@@ -381,8 +381,8 @@ urban
 [253] Yes No  Yes Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes No  No  Yes Yes
 [271] Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes No  No  Yes No  Yes
 [289] No  Yes No  No  Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
-[307] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes No  No  No  Yes Yes Yes Yes
-[325] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No 
+[307] Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No  No  No  Yes Yes Yes Yes
+[325] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No 
 [343] No  Yes No  Yes No  No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes
 [361] No  No  Yes Yes Yes No  No  Yes No  Yes Yes Yes No  Yes Yes Yes Yes No 
 [379] Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes No  Yes Yes
@@ -411,9 +411,9 @@ summary(urban)
 
 * Information of Imputation (before vs after)
      original imputation original_percent imputation_percent
-No        115        119            28.75              29.75
-Yes       275        281            68.75              70.25
-&lt;NA&gt;       10          0             2.50               0.00
+No        115        118            28.75               29.5
+Yes       275        282            68.75               70.5
+&lt;NA&gt;       10          0             2.50                0.0
 
 # viz of imputation
 plot(urban)</pre></body></html></div>
@@ -431,7 +431,7 @@ carseats %&gt;%
             imputation = mean(Income_imp))
 # A tibble: 2 x 3
   US     orig imputation
-* &lt;fct&gt; &lt;dbl&gt;      &lt;dbl&gt;
+  &lt;fct&gt; &lt;dbl&gt;      &lt;dbl&gt;
 1 No     65.8       66.1
 2 Yes    70.4       70.5</pre></body></html></div>
 </div>
@@ -564,7 +564,7 @@ carseats %&gt;%
     imputation = mean(Price_imp, na.rm = TRUE))
 # A tibble: 2 x 3
   US     orig imputation
-* &lt;fct&gt; &lt;dbl&gt;      &lt;dbl&gt;
+  &lt;fct&gt; &lt;dbl&gt;      &lt;dbl&gt;
 1 No     114.       114.
 2 Yes    117.       117.</pre></body></html></div>
 </div>
@@ -736,24 +736,26 @@ bin
 binned type: quantile
 number of bins: 10
 x
-    [21,30]     (30,39]     (39,48]     (48,62]     (62,69]     (69,78] 
-         40          37          38          40          42          33 
-  (78,86.6] (86.6,96.6]  (96.6,109]   (109,120]        &lt;NA&gt; 
-         36          38          39          37          20 
+        [21,30]         (30,39]         (39,48]         (48,62]         (62,69] 
+             40              37              38              40              42 
+        (69,78]   (78,86.56667] (86.56667,96.6] (96.6,108.6333]  (108.6333,120] 
+             33              36              38              38              38 
+           &lt;NA&gt; 
+             20 
 # Summarize bins class object
 summary(bin)
-        levels freq   rate
-1      [21,30]   40 0.1000
-2      (30,39]   37 0.0925
-3      (39,48]   38 0.0950
-4      (48,62]   40 0.1000
-5      (62,69]   42 0.1050
-6      (69,78]   33 0.0825
-7    (78,86.6]   36 0.0900
-8  (86.6,96.6]   38 0.0950
-9   (96.6,109]   39 0.0975
-10   (109,120]   37 0.0925
-11        &lt;NA&gt;   20 0.0500
+            levels freq   rate
+1          [21,30]   40 0.1000
+2          (30,39]   37 0.0925
+3          (39,48]   38 0.0950
+4          (48,62]   40 0.1000
+5          (62,69]   42 0.1050
+6          (69,78]   33 0.0825
+7    (78,86.56667]   36 0.0900
+8  (86.56667,96.6]   38 0.0950
+9  (96.6,108.6333]   38 0.0950
+10  (108.6333,120]   38 0.0950
+11            &lt;NA&gt;   20 0.0500
 # Plot bins class object
 plot(bin)</pre></body></html></div>
 <p><img src="transformation_files/figure-html/binning-1.png" width="600px"></p>
@@ -771,8 +773,8 @@ binning(carseats$Income, nbins = 5, type = "equal")
 binned type: equal
 number of bins: 5
 x
-  [21,40.8] (40.8,60.6] (60.6,80.4]  (80.4,100]   (100,120]        &lt;NA&gt; 
-         81          65          94          80          60          20 
+   [21,40.8]  (40.8,60.6]  (60.6,80.4] (80.4,100.2]  (100.2,120]         &lt;NA&gt; 
+          81           65           94           80           60           20 
 binning(carseats$Income, nbins = 5, type = "pretty")
 binned type: pretty
 number of bins: 5
@@ -789,8 +791,8 @@ if (requireNamespace("classInt", quietly = TRUE)) {
 binned type: bclust
 number of bins: 5
 x
-  [21,33.5] (33.5,54.5]   (54.5,85]    (85,108]   (108,120]        &lt;NA&gt; 
-         55          72         137          78          38          20 
+  [21,35.5]   (35.5,49]   (49,76.5] (76.5,97.5]  (97.5,120]        &lt;NA&gt; 
+         62          53         108          82          75          20 
 
 # Extract the binned results
 extract(bin)
@@ -872,7 +874,7 @@ x
 
 # summary optimal_bins class
 summary(bin)
-── Binning Table ──────────────────────── Several Metrics ──
+── Binning Table ──────────────────────── Several Metrics ── 
      Bin CntRec CntPos CntNeg RatePos RateNeg    Odds      WoE      IV     JSD
 1 [-1,0]    144     19    125 0.07364 0.88028  0.1520 -2.48101 2.00128 0.20093
 2  (0,6]     69     54     15 0.20930 0.10563  3.6000  0.68380 0.07089 0.00869
@@ -884,16 +886,16 @@ summary(bin)
 3 0.00903
 4 0.06028
 
-── General Metrics ─────────────────────────────────────────
-● Gini index                       :  -0.87944
-● IV (Jeffrey)                     :  4.83489
-● JS (Jensen-Shannon) Divergence   :  0.42823
-● Kolmogorov-Smirnov Statistics    :  0.80664
-● HHI (Herfindahl-Hirschman Index) :  0.37791
-● HHI (normalized)                 :  0.06687
-● Cramer's V                       :  0.81863
+── General Metrics ───────────────────────────────────────── 
+• Gini index                       :  -0.87944
+• IV (Jeffrey)                     :  4.83489
+• JS (Jensen-Shannon) Divergence   :  0.42823
+• Kolmogorov-Smirnov Statistics    :  0.80664
+• HHI (Herfindahl-Hirschman Index) :  0.37791
+• HHI (normalized)                 :  0.06687
+• Cramer's V                       :  0.81863 
 
-── Significance Tests ──────────────────── Chisquare Test ──
+── Significance Tests ──────────────────── Chisquare Test ── 
    Bin A  Bin B statistics      p_value
 1 [-1,0]  (0,6]   87.67064 7.731349e-21
 2  (0,6] (6,29]   34.73349 3.780706e-09
@@ -923,95 +925,253 @@ extract(bin) %&gt;%
 Levels: [-1,0] &lt; (0,6] &lt; (6,29]</pre></body></html></div>
 </div>
 </div>
-<div id="creating-a-data-transformation-report-using-transformation_report" class="section level2">
+<div id="automated-report" class="section level2">
 <h2 class="hasAnchor">
-<a href="#creating-a-data-transformation-report-using-transformation_report" class="anchor"></a>Creating a data transformation report using <code>transformation_report()</code>
-</h2>
-<p><code><a href="../reference/transformation_report.html">transformation_report()</a></code> generates a data transformation report for all the variables in the data frame or objects that inherit the data frame (<code>tbl_df</code>, <code>tbl</code>, etc.).</p>
-<p><code><a href="../reference/transformation_report.html">transformation_report()</a></code> generates a data transformation report in two forms:</p>
+<a href="#automated-report" class="anchor"></a>Automated report</h2>
+<p>dlookr provides two automated data transformation reports:</p>
 <ul>
-<li>pdf file based on Latex</li>
-<li>html file</li>
+<li>Web page-based dynamic reports can perform in-depth analysis through visualization and statistical tables.</li>
+<li>Static reports generated as pdf files or html files can be archived as output of data analysis.</li>
 </ul>
+<div id="create-a-dynamic-report-using-transformation_web_report" class="section level3">
+<h3 class="hasAnchor">
+<a href="#create-a-dynamic-report-using-transformation_web_report" class="anchor"></a>Create a dynamic report using <code>transformation_web_report()</code>
+</h3>
+<p><code><a href="../reference/transformation_web_report.html">transformation_web_report()</a></code> create dynamic report for object inherited from data.frame(<code>tbl_df</code>, <code>tbl</code>, etc) or data.frame.</p>
+<div id="contents-of-dynamic-web-report" class="section level4">
+<h4 class="hasAnchor">
+<a href="#contents-of-dynamic-web-report" class="anchor"></a>Contents of dynamic web report</h4>
 <p>The contents of the report are as follows.:</p>
 <ul>
+<li>Overview
+<ul>
+<li>Data Structures</li>
+<li>Data Types</li>
+<li>Job Informations</li>
+</ul>
+</li>
 <li>Imputation
 <ul>
-<li>Missing Values
-<ul>
-<li>Missing values imputation information</li>
-<li>(variable names)</li>
+<li>Missing Values</li>
+<li>Outliers</li>
 </ul>
 </li>
-<li>Outliers
-<ul>
-<li>Outliers imputation information</li>
-<li>(variable names)</li>
+<li>Resolving Skewness</li>
+<li>Binning</li>
+<li>Optimal Binning</li>
 </ul>
-</li>
-</ul>
-</li>
-<li>Resolving Skewness
-<ul>
-<li>Skewed variables information
-<ul>
-<li>(variable names)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Binning
-<ul>
-<li>Numerical Variables for Binning</li>
-<li>Binning
-<ul>
-<li>(variable names)</li>
-</ul>
-</li>
-<li>Optimal Binning
-<ul>
-<li>(variable names)</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>The following generates a data transformation report for <code>carseats</code>. The file format is pdf, and the file name is <code>Transformation_Report.pdf</code>.</p>
-<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/transformation_report.html">transformation_report</a></span>(<span class="kw">target</span> <span class="kw">=</span> <span class="no">US</span>)</pre></body></html></div>
-<p>The following generates a report in html format called <code>transformation_carseats.html</code>.</p>
-<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/transformation_report.html">transformation_report</a></span>(<span class="kw">target</span> <span class="kw">=</span> <span class="no">US</span>, <span class="kw">output_format</span> <span class="kw">=</span> <span class="st">"html"</span>,
-    <span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"transformation_carseats.html"</span>)</pre></body></html></div>
-<p>Data transformation reports are automated reports to assist in the data transformation process. Design data conversion scenarios by referring to the report results.</p>
-<div id="data-transformation-report-contents" class="section level3">
-<h3 class="hasAnchor">
-<a href="#data-transformation-report-contents" class="anchor"></a>Data transformation report contents</h3>
-<div id="contents-of-pdf-file" class="section level4">
+</div>
+<div id="some-arguments-for-dynamic-web-report" class="section level4">
 <h4 class="hasAnchor">
-<a href="#contents-of-pdf-file" class="anchor"></a>Contents of pdf file</h4>
+<a href="#some-arguments-for-dynamic-web-report" class="anchor"></a>Some arguments for dynamic web report</h4>
+<p>transformation_web_report() generates various reports with the following arguments.</p>
 <ul>
-<li>The cover of the report is shown in the following figure.</li>
+<li>target
+<ul>
+<li>target variable</li>
+</ul>
+</li>
+<li>output_file
+<ul>
+<li>name of generated file.</li>
+</ul>
+</li>
+<li>output_dir
+<ul>
+<li>name of directory to generate report file.</li>
+</ul>
+</li>
+<li>title
+<ul>
+<li>title of report.</li>
+</ul>
+</li>
+<li>subtitle
+<ul>
+<li>subtitle of report.</li>
+</ul>
+</li>
+<li>author
+<ul>
+<li>author of report.</li>
+</ul>
+</li>
+<li>title_color
+<ul>
+<li>color of title.</li>
+</ul>
+</li>
+<li>logo_img
+<ul>
+<li>name of logo image file on top left.</li>
+</ul>
+</li>
+<li>create_date
+<ul>
+<li>The date on which the report is generated.</li>
+</ul>
+</li>
+<li>theme
+<ul>
+<li>name of theme for report. support “orange” and “blue”.</li>
+</ul>
+</li>
+<li>sample_percent
+<ul>
+<li>Sample percent of data for performing data transformation.</li>
+</ul>
+</li>
+</ul>
+<p>The following script creates a data transformation report for the <code>tbl_df</code> class object, <code>heartfailure</code>.</p>
+<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="no">heartfailure</span> <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="../reference/transformation_web_report.html">transformation_web_report</a></span>(<span class="kw">target</span> <span class="kw">=</span> <span class="st">"death_event"</span>, <span class="kw">subtitle</span> <span class="kw">=</span> <span class="st">"heartfailure"</span>,
+                            <span class="kw">output_dir</span> <span class="kw">=</span> <span class="st">"./"</span>, <span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"transformation.html"</span>,
+                            <span class="kw">theme</span> <span class="kw">=</span> <span class="st">"blue"</span>)</pre></body></html></div>
+</div>
+<div id="screenshot-of-dynamic-report" class="section level4">
+<h4 class="hasAnchor">
+<a href="#screenshot-of-dynamic-report" class="anchor"></a>Screenshot of dynamic report</h4>
+<ul>
+<li>The dynamic contents of the report is shown in the following figure.:</li>
 </ul>
 <div class="figure" style="text-align: center">
-<img src="img/trans_title_pdf.png" alt="Data transformation report cover" width="60%"><p class="caption">
-Data transformation report cover
+<img src="img/transformation_web_title.jpg" alt="The part of the report" width="80%"><p class="caption">
+The part of the report
+</p>
+</div>
+</div>
+</div>
+<div id="create-a-static-report-using-transformation_paged_report" class="section level3">
+<h3 class="hasAnchor">
+<a href="#create-a-static-report-using-transformation_paged_report" class="anchor"></a>Create a static report using <code>transformation_paged_report()</code>
+</h3>
+<p><code><a href="../reference/transformation_paged_report.html">transformation_paged_report()</a></code> create static report for object inherited from data.frame(<code>tbl_df</code>, <code>tbl</code>, etc) or data.frame.</p>
+<div id="contents-of-static-paged-report" class="section level4">
+<h4 class="hasAnchor">
+<a href="#contents-of-static-paged-report" class="anchor"></a>Contents of static paged report</h4>
+<p>The contents of the report are as follows.:</p>
+<ul>
+<li>Overview
+<ul>
+<li>Data Structures</li>
+<li>Job Informations</li>
+</ul>
+</li>
+<li>Imputation
+<ul>
+<li>Missing Values</li>
+<li>Outliers</li>
+</ul>
+</li>
+<li>Resolving Skewness</li>
+<li>Binning</li>
+<li>Optimal Binning</li>
+</ul>
+</div>
+<div id="some-arguments-for-static-paged-report" class="section level4">
+<h4 class="hasAnchor">
+<a href="#some-arguments-for-static-paged-report" class="anchor"></a>Some arguments for static paged report</h4>
+<p>transformation_paged_report() generates various reports with the following arguments.</p>
+<ul>
+<li>target
+<ul>
+<li>target variable</li>
+</ul>
+</li>
+<li>output_format
+<ul>
+<li>report output type. Choose either “pdf” and “html”.</li>
+</ul>
+</li>
+<li>output_file
+<ul>
+<li>name of generated file.</li>
+</ul>
+</li>
+<li>output_dir
+<ul>
+<li>name of directory to generate report file.</li>
+</ul>
+</li>
+<li>title
+<ul>
+<li>title of report.</li>
+</ul>
+</li>
+<li>subtitle
+<ul>
+<li>subtitle of report.</li>
+</ul>
+</li>
+<li>abstract_title
+<ul>
+<li>abstract of report</li>
+</ul>
+</li>
+<li>author
+<ul>
+<li>author of report.</li>
+</ul>
+</li>
+<li>title_color
+<ul>
+<li>color of title.</li>
+</ul>
+</li>
+<li>subtitle_color
+<ul>
+<li>color of subtitle.</li>
+</ul>
+</li>
+<li>logo_img
+<ul>
+<li>name of logo image file on top left.</li>
+</ul>
+</li>
+<li>cover_img
+<ul>
+<li>name of cover image file on center.</li>
+</ul>
+</li>
+<li>create_date
+<ul>
+<li>The date on which the report is generated.</li>
+</ul>
+</li>
+<li>theme
+<ul>
+<li>name of theme for report. support “orange” and “blue”.</li>
+</ul>
+</li>
+<li>sample_percent
+<ul>
+<li>Sample percent of data for performing data tansformation.</li>
+</ul>
+</li>
+</ul>
+<p>The following script creates a data transformation report for the <code>data.frame</code> class object, <code>heartfailure</code>.</p>
+<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="no">heartfailure</span> <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="../reference/transformation_paged_report.html">transformation_paged_report</a></span>(<span class="kw">target</span> <span class="kw">=</span> <span class="st">"death_event"</span>, <span class="kw">subtitle</span> <span class="kw">=</span> <span class="st">"heartfailure"</span>,
+                              <span class="kw">output_dir</span> <span class="kw">=</span> <span class="st">"./"</span>, <span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"transformation.pdf"</span>,
+                              <span class="kw">theme</span> <span class="kw">=</span> <span class="st">"blue"</span>)</pre></body></html></div>
+</div>
+<div id="screenshot-of-static-report" class="section level4">
+<h4 class="hasAnchor">
+<a href="#screenshot-of-static-report" class="anchor"></a>Screenshot of static report</h4>
+<ul>
+<li>The cover of the report is shown in the following figure.:</li>
+</ul>
+<div class="figure" style="text-align: center">
+<img src="img/transformation_paged_cover.jpg" alt="The part of the report" width="80%"><p class="caption">
+The part of the report
 </p>
 </div>
 <ul>
-<li>The report’s agenda is shown in the following figure.</li>
+<li>The contents of the report is shown in the following figure.:</li>
 </ul>
 <div class="figure" style="text-align: center">
-<img src="img/trans_agenda_pdf.png" alt="Table of Contents" width="60%"><p class="caption">
-Table of Contents
-</p>
-</div>
-<ul>
-<li>Much of the information is displayed in tables and visualization results in reports. An example is shown in the following figure.</li>
-</ul>
-<div class="figure" style="text-align: center">
-<img src="img/trans_content_pdf.png" alt="Data Transformation Report Table and Visualization Example" width="60%"><p class="caption">
-Data Transformation Report Table and Visualization Example
+<img src="img/transformation_paged_content.jpg" alt="The dynamic contents of the report" width="80%"><p class="caption">
+The dynamic contents of the report
 </p>
 </div>
 </div>

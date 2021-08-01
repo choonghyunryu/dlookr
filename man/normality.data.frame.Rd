@@ -3,11 +3,14 @@
 \name{normality}
 \alias{normality}
 \alias{normality.data.frame}
+\alias{normality.grouped_df}
 \title{Performs the Shapiro-Wilk test of normality}
 \usage{
 normality(.data, ...)
 
 \method{normality}{data.frame}(.data, ..., sample = 5000)
+
+\method{normality}{grouped_df}(.data, ..., sample = 5000)
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}
