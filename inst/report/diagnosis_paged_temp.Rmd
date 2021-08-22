@@ -260,48 +260,57 @@ if (nrow(warn_unique_num) > 0) {
 # zeros ------------------------------------------------------------------------
 idx_last <- idx_last + length(idx)
 
-warn_zero <- diagn_numeric %>% 
+if (!is.null(diagn_numeric)) {
+  warn_zero <- diagn_numeric %>% 
   filter(zero > 0) %>% 
   select(variables, zero) %>% 
   arrange(desc(zero))
 
-if (nrow(warn_zero) > 0) {
-  idx <- seq(nrow(warn_zero)) + idx_last
+  if (nrow(warn_zero) > 0) {
+    idx <- seq(nrow(warn_zero)) + idx_last
   
-  tab_warning$status[idx]     <- "zero"
-  tab_warning$variables[idx]  <- warn_zero$variables
-  tab_warning$types[idx]      <- NA  
-  tab_warning$indicator[idx]  <- warn_zero$zero
-  tab_warning$ratio[idx]      <- warn_zero$zero / N 
-  tab_warning$warnings[idx]   <- sprintf(
-    "%s has %s (%s%%) zeros", warn_zero$variables, 
-    format(warn_zero$zero, big.mark = ","), round(warn_zero$zero / N * 100, 2))  
-  tab_warning$recommand[idx]  <- "check"
+    tab_warning$status[idx]     <- "zero"
+    tab_warning$variables[idx]  <- warn_zero$variables
+    tab_warning$types[idx]      <- NA  
+    tab_warning$indicator[idx]  <- warn_zero$zero
+    tab_warning$ratio[idx]      <- warn_zero$zero / N 
+    tab_warning$warnings[idx]   <- sprintf(
+      "%s has %s (%s%%) zeros", warn_zero$variables, 
+      format(warn_zero$zero, big.mark = ","), round(warn_zero$zero / N * 100, 2))  
+    tab_warning$recommand[idx]  <- "check"
+  } else {
+    idx <- NULL
+  }
 } else {
   idx <- NULL
 }
 
+
 # cardinally: negative ---------------------------------------------------------
 idx_last <- idx_last + length(idx)
 
-warn_minus <- diagn_numeric %>% 
-  filter(minus > 0) %>% 
-  select(variables, minus) %>% 
-  arrange(desc(minus))
-
-if (nrow(warn_minus) > 0) {
-  idx <- seq(nrow(warn_minus)) + idx_last
+if (!is.null(diagn_numeric)) {
+  warn_minus <- diagn_numeric %>% 
+    filter(minus > 0) %>% 
+    select(variables, minus) %>% 
+    arrange(desc(minus))
   
-  tab_warning$status[idx]     <- "negative"
-  tab_warning$variables[idx]  <- warn_minus$variables
-  tab_warning$types[idx]      <- NA    
-  tab_warning$indicator[idx]  <- warn_minus$minus
-  tab_warning$ratio[idx]      <- warn_minus$minus / N 
-  tab_warning$warnings[idx]   <- sprintf(
-    "%s has %s (%s%%) negatives",
-    warn_minus$variables, format(warn_minus$minus, big.mark = ","),
-    round(warn_minus$minus / N * 100, 2))  
-  tab_warning$recommand[idx]  <- "check"
+  if (nrow(warn_minus) > 0) {
+    idx <- seq(nrow(warn_minus)) + idx_last
+    
+    tab_warning$status[idx]     <- "negative"
+    tab_warning$variables[idx]  <- warn_minus$variables
+    tab_warning$types[idx]      <- NA    
+    tab_warning$indicator[idx]  <- warn_minus$minus
+    tab_warning$ratio[idx]      <- warn_minus$minus / N 
+    tab_warning$warnings[idx]   <- sprintf(
+      "%s has %s (%s%%) negatives",
+      warn_minus$variables, format(warn_minus$minus, big.mark = ","),
+      round(warn_minus$minus / N * 100, 2))  
+    tab_warning$recommand[idx]  <- "check"
+  } else {
+    idx <- NULL
+  }
 } else {
   idx <- NULL
 }
@@ -309,24 +318,28 @@ if (nrow(warn_minus) > 0) {
 # outlier ----------------------------------------------------------------------
 idx_last <- idx_last + length(idx)
 
-warn_outlier <- diagn_numeric %>% 
-  filter(outlier > 0) %>% 
-  select(variables, outlier) %>% 
-  arrange(desc(outlier))
-
-if (nrow(warn_outlier) > 0) {
-  idx <- seq(nrow(warn_outlier)) + idx_last
+if (!is.null(diagn_numeric)) {
+  warn_outlier <- diagn_numeric %>% 
+    filter(outlier > 0) %>% 
+    select(variables, outlier) %>% 
+    arrange(desc(outlier))
   
-  tab_warning$status[idx]     <- "outlier"
-  tab_warning$variables[idx]  <- warn_outlier$variables
-  tab_warning$types[idx]      <- NA    
-  tab_warning$indicator[idx]  <- warn_outlier$outlier
-  tab_warning$ratio[idx]      <- warn_outlier$outlier / N 
-  tab_warning$warnings[idx]   <- sprintf(
-    "%s has %s (%s%%) outliers",
-    warn_outlier$variables, format(warn_outlier$outlier, big.mark = ","),
-    round(warn_outlier$outlier / N * 100, 2))  
-  tab_warning$recommand[idx]  <- "judgement"
+  if (nrow(warn_outlier) > 0) {
+    idx <- seq(nrow(warn_outlier)) + idx_last
+    
+    tab_warning$status[idx]     <- "outlier"
+    tab_warning$variables[idx]  <- warn_outlier$variables
+    tab_warning$types[idx]      <- NA    
+    tab_warning$indicator[idx]  <- warn_outlier$outlier
+    tab_warning$ratio[idx]      <- warn_outlier$outlier / N 
+    tab_warning$warnings[idx]   <- sprintf(
+      "%s has %s (%s%%) outliers",
+      warn_outlier$variables, format(warn_outlier$outlier, big.mark = ","),
+      round(warn_outlier$outlier / N * 100, 2))  
+    tab_warning$recommand[idx]  <- "judgement"
+  } else {
+    idx <- NULL
+  }
 } else {
   idx <- NULL
 }

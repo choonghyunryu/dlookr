@@ -422,18 +422,36 @@ html_variable <- function(.data, thres_uniq_cat = 0.5, thres_uniq_num = 5,
 html_paged_variable <- function(.data, thres_uniq_cat = 0.5, thres_uniq_num = 5,
                                 n_rows = 25, add_row = 3, caption = "", 
                                 full_width = TRUE, font_size = 14) {
+  in_numeric <- find_class(insurance2, "numeric") %>% 
+    length() %>% 
+    as.logical()
+  
   N <- nrow(.data)
   
-  raws <- .data %>% 
-    diagnose() %>% 
-    left_join(
-      .data %>% 
-        diagnose_numeric(),
-      by = "variables"
-    ) %>% 
-    rename("zero_count" = zero,
-           "minus_count" = minus,
-           "outlier_count" = outlier)
+  if (in_numeric) {
+    raws <- .data %>% 
+      diagnose() %>% 
+      left_join(
+        .data %>% 
+          diagnose_numeric(),
+        by = "variables"
+      ) %>% 
+      rename("zero_count" = zero,
+             "minus_count" = minus,
+             "outlier_count" = outlier)
+  } else {
+    raws <- .data %>% 
+      diagnose() %>% 
+      mutate(min = NA,
+             Q1 = NA,
+             mean = NA,
+             median = NA,
+             Q3 = NA,
+             max = NA,
+             zero_count = NA,
+             minus_count = NA,
+             outlier_count = NA)
+  }
   
   tabs <- raws %>% 
     mutate(missing = ifelse(missing_count > 0, "X", "")) %>% 
