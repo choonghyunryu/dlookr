@@ -4,7 +4,22 @@ CHANGES IN R VERSION 0.5.1:
   
   BUG FIXES:
     * Fixed an error that is in diagnose_paged_report(), when there are no 
-      numeric variables in the dataset. (#49)
+      numerical variables in the dataset. (#49)
+      
+    * Fixed an error that is in diagnose_paged_report(), when there are no 
+      categorical variables in the dataset.
+      
+    * Fixed an error that is in diagnose_web_report(), when there are no 
+      numerical variables in the dataset.  
+      
+    * Fixed an error that is in eda_paged_report(), when there are no 
+      categorical variables in the dataset.
+      
+    * Fixed an error that is in eda_paged_report(), when there are no numerical
+      variables in the dataset.
+      
+    * Fixed an error that is in eda_web_report(), when there are no numerical 
+      variables in the dataset.
       
   MINOR CHANGES:
     

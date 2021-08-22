@@ -1175,16 +1175,25 @@ html_target_correlation <- function(.data, target) {
 #' @import dplyr
 html_paged_describe <- function(.data, n_rows = 25, add_row = 3, caption = "", 
                                 full_width = TRUE, font_size = 14) {
-  tabs <- .data %>% 
-    dlookr::describe(statistics = c("mean", "sd", "quantiles"),
-                     quantiles = c(0, 0.25, 0.5, 0.75, 1)) %>% 
-    select(-n)
+  in_numerical <- find_class(reportData, type = "numerical") %>%
+    length() %>% 
+    as.logical()
   
-  colums <- c("variables", "missing", "mean", "sd", "min", "Q1", 
-              "median", "Q3", "max")
+  if (in_numerical) {
+    tabs <- .data %>% 
+      dlookr::describe(statistics = c("mean", "sd", "quantiles"),
+                       quantiles = c(0, 0.25, 0.5, 0.75, 1)) %>% 
+      select(-n)
     
-  print_tab(tabs, n_rows = n_rows, add_row = 3, caption = caption, 
-            col.names =  colums, full_width = full_width, font_size = font_size)
+    colums <- c("variables", "missing", "mean", "sd", "min", "Q1", 
+                "median", "Q3", "max")
+      
+    print_tab(tabs, n_rows = n_rows, add_row = 3, caption = caption, 
+              col.names =  colums, full_width = full_width, font_size = font_size)
+  } else {
+    html_cat("There are no numerical variables.")   
+    break_page_asis()
+  }  
 }
 
 
@@ -1250,13 +1259,22 @@ html_paged_describe_detail <- function(.data, n_ind = 4, caption = "",
 #' @import dplyr
 html_paged_categorical <- function(.data, n_rows = 25, add_row = 3, caption = "", 
                                 full_width = TRUE, font_size = 14) {
-  tabs <- .data %>% 
-    diagnose_category()
+  in_category <- find_class(reportData, type = "date_categorical2") %>%
+    length() %>% 
+    as.logical()
   
-  colums <- c("variables", "levels", "observations", "frequency", "frequency(%)", "rank")
-  
-  print_tab(tabs, n_rows = n_rows, add_row = 3, caption = caption, 
-            col.names =  colums, full_width = full_width, font_size = font_size)
+  if (in_category) {
+    tabs <- .data %>% 
+      diagnose_category()
+    
+    colums <- c("variables", "levels", "observations", "frequency", "frequency(%)", "rank")
+    
+    print_tab(tabs, n_rows = n_rows, add_row = 3, caption = caption, 
+              col.names =  colums, full_width = full_width, font_size = font_size)
+  } else {
+    html_cat("There are no categorical variables.")   
+    break_page_asis()
+  }  
 }
 
 
@@ -1306,23 +1324,32 @@ html_paged_categorical_detail <- function(.data, n_ind = 4, caption = "",
 #' @import dplyr
 html_paged_normality <- function(.data, n_rows = 25, add_row = 3, caption = "", 
                                  full_width = TRUE, digits = 1, font_size = 13) {
-  tabs <- dlookr::describe(.data) %>% 
-    select(variable, p00, p25, p50,  p75, p100, skewness, kurtosis) %>% 
-    rename("min" = p00,
-           "max" = p100,
-           "median" = p50,
-           "Q1" = p25,
-           "Q3" = p75) %>% 
-    mutate(balance = case_when(
-      abs(skewness) <= 1.2 ~ "Balanced",
-      skewness > 1.2 ~ "Right-Skewed",
-      skewness < 1.2 ~ "Left-Skewed",
-      is.na(skewness) ~ "Invalid"
-    )) 
+  in_numerical <- find_class(reportData, type = "numerical") %>%
+    length() %>% 
+    as.logical()
   
-  print_tab(tabs, n_rows = n_rows, add_row = add_row, caption = caption, 
-            full_width = full_width, font_size = font_size, 
-            digits = digits, big_mark = FALSE)
+  if (in_numerical) {
+    tabs <- dlookr::describe(.data) %>% 
+      select(variable, p00, p25, p50,  p75, p100, skewness, kurtosis) %>% 
+      rename("min" = p00,
+             "max" = p100,
+             "median" = p50,
+             "Q1" = p25,
+             "Q3" = p75) %>% 
+      mutate(balance = case_when(
+        abs(skewness) <= 1.2 ~ "Balanced",
+        skewness > 1.2 ~ "Right-Skewed",
+        skewness < 1.2 ~ "Left-Skewed",
+        is.na(skewness) ~ "Invalid"
+      )) 
+    
+    print_tab(tabs, n_rows = n_rows, add_row = add_row, caption = caption, 
+              full_width = full_width, font_size = font_size, 
+              digits = digits, big_mark = FALSE)
+  } else {
+    html_cat("There are no numerical variables.")   
+    break_page_asis()
+  }  
 } 
 
 

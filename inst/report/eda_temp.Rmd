@@ -253,9 +253,17 @@ h2("Descriptive Statistics", id = "ID-h2-descriptive", class = "title-h2")
 ```
 
 ```{r variables, results='asis'}
-html_descriptive(reportData)
+in_numerical <- find_class(reportData, type = "numerical") %>%
+  length() %>% 
+  as.logical()
+  
+if (in_numerical) {
+  html_descriptive(reportData)
+} else {
+  html_cat("No numerical variable.")   
+}
 
-break_line_asis(2)
+break_line_asis(1)
 ```
 
 ```{r normality, results='asis'}
@@ -269,7 +277,7 @@ if (length(idx.numeric) > 0) {
     html_normality(theme = "$theme$")
   })
 } else {
-  h5("No numerical variable")
+  html_cat("No numerical variable.")
 }
 
 break_line_asis(1)
@@ -323,7 +331,7 @@ h3("Correlation Plot", id = "ID-h3-correlation-plot", class = "title-h3")
 
 ```{r plot-correlation, results='asis'}
 if (length(idx.numeric) < 2) {
-  htmltools::h5("The number of numerical variables is less than 2.")
+  html_cat("The number of numerical variables is less than 2.")
 } else {
   cap <- "Correlation coefficient matrix plot"
   html_cat(cap)

@@ -492,9 +492,13 @@ html_paged_unique_num(diagn_na_unique, thres_uniq_num, n_rows = 24, add_row = 5)
 ## Top Ranks
 
 ```{r diagnose-catagory, results='asis'}
-diagn_category <- html_paged_toprank(reportData, top = 10, type = "n")
+in_category <- find_class(reportData, type = "date_categorical2") %>%
+  length() %>% 
+  as.logical()
 
-if (NROW(diagn_category) > 0) {
+if (in_category) {
+  diagn_category <- html_paged_toprank(reportData, top = 10, type = "n")
+  
   cap <- "Top 10 levels of categorical variables"
   
   print_tab(diagn_category, caption = cap, n_rows = 25, add_row = 4)
