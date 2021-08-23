@@ -207,7 +207,7 @@ html_variable <- function(.data, thres_uniq_cat = 0.5, thres_uniq_num = 5,
     do.call(span, args)
   }
   
-  in_numeric <- find_class(insurance2, "numeric") %>% 
+  in_numeric <- find_class(.data, "numeric") %>% 
     length() %>% 
     as.logical()
   
@@ -440,7 +440,7 @@ html_variable <- function(.data, thres_uniq_cat = 0.5, thres_uniq_num = 5,
 html_paged_variable <- function(.data, thres_uniq_cat = 0.5, thres_uniq_num = 5,
                                 n_rows = 25, add_row = 3, caption = "", 
                                 full_width = TRUE, font_size = 14) {
-  in_numeric <- find_class(insurance2, "numeric") %>% 
+  in_numeric <- find_class(.data, "numeric") %>% 
     length() %>% 
     as.logical()
   

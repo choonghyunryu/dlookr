@@ -330,7 +330,7 @@ con_sqlite %>%
 # If the target variable is a categorical variable
 categ <- target_by(con_sqlite %>% tbl("TB_CARSEATS") , US)
 
-# If the variable of interest is a numarical variable
+# If the variable of interest is a numerical variable
 cat_num <- relate(categ, Sales)
 cat_num
 summary(cat_num)
