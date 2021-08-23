@@ -463,9 +463,12 @@ html_paged_missing(diagn_na_unique, caption = cap, n_rows = 23, add_row = 5)
 diagn_missing <- diagn_na_unique %>% 
   filter(missing_count > 0)
 
-if (NROW(diagn_missing) > 0) {
+if (NROW(diagn_missing) > 1) {
   break_line_asis(1)
   plot_na_intersect(reportData)
+} else if (NROW(diagn_missing) == 1) {
+  html_cat("Supported only when the number of variables including missing values is 2 or more.")
+  break_line_asis(1)
 } else {
   html_cat("No variables including missing values")
   break_line_asis(1)

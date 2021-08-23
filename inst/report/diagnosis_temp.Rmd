@@ -563,12 +563,15 @@ h2("Visualization", id = "ID-h2-missing-viz", class = "title-h2")
 diagn_missing <- diagn_na_unique %>% 
   filter(missing_count > 0)
 
-if (NROW(diagn_missing) > 0) {
+if (NROW(diagn_missing) > 1) {
   cap <- "Interaction of variables including missing values"
   html_cat(cap)
 
   break_line_asis(1)
   plot_na_intersect(reportData)
+} else if (NROW(diagn_missing) == 1) {
+  html_cat("upported only when the number of variables including missing values is 2 or more")
+  break_line_asis(1)
 } else {
   html_cat("No variables including missing values")
   break_line_asis(1)
