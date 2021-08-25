@@ -22,8 +22,10 @@ import_liberation <- function() {
 }
 
 #' @importFrom hrbrthemes theme_ipsum
-theme_typographic <- function () {
-  base_family <- get_font_family()
+theme_typographic <- function (base_family = NULL) {
+  if (is.null(base_family)) {
+    base_family <- get_font_family() 
+  }
   
   hrbrthemes::theme_ipsum(base_family = base_family)
 }
