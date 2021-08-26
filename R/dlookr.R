@@ -146,20 +146,25 @@ if (getRversion() >= "2.15.1") {
     }
   }
   
-  sucess <- TRUE
-  result <- try(load_fonts())
-  
-  if (class(result) == "try-error") {
-    sucess <- FALSE
-  }
-  
-  flag <- try(import_arial_narrow())
-  
-  if (class(flag) == "try-error") {
-    sucess <- FALSE
-  } else {
-    if (flag) {
-      try(load_fonts())
-    }    
-  }
+  # sucess <- TRUE
+  # result <- try(load_fonts())
+  # 
+  # if (class(result) == "try-error") {
+  #   sucess <- FALSE
+  # }
+  # 
+  # flag <- try(import_arial_narrow())
+  # 
+  # if (class(flag) == "try-error") {
+  #   sucess <- FALSE
+  # } else {
+  #   if (flag) {
+  #     try(load_fonts())
+  #   }    
+  # }
+  msg <- paste0(sprintf("Either %s or %s fonts are required to Viz.\n",
+                        "Arial Narrow", "Liberation Sans Narrow"),
+                sprintf("Please use %s to install Liberation Sans Narrow font.",
+                        "dlookr::import_liberation()"))
+  packageStartupMessage(msg)  
 }
