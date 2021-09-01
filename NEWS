@@ -1,3 +1,9 @@
+CHANGES IN R VERSION 0.5.2:
+  
+  BUG FIXES:
+      
+      
+      
 CHANGES IN R VERSION 0.5.1:
   
   BUG FIXES:
@@ -15,10 +21,7 @@ CHANGES IN R VERSION 0.5.1:
       
     * Fixed an error that is in diagnose_paged_report(), diagnose_web_report(), 
       when there are only one variable that include missing values. (#50)
-      
-  MINOR CHANGES:
     
-
 
 CHANGES IN R VERSION 0.5.0:
 
