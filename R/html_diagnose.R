@@ -627,6 +627,8 @@ html_outlier <- function(.data, theme = c("orange", "blue")[1]) {
     div(args, paste("", value))
   }
   
+  .data <- as.data.frame(.data)
+  
   N <- nrow(.data)
   
   list_outlier <- diagnose_numeric(.data) %>% 

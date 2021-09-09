@@ -1,11 +1,15 @@
 CHANGES IN R VERSION 0.5.2:
+  BUG FIXES:
   
+    * Fixed an error that occurred when generating outliers information 
+      in diagnose_paged_report() in case of a tibble object
+      
   MINOR CHANGES:
     
     * Reduce the font size of subtitle in paged reports (diagnose_paged_report(),
       eda_paged_report(), transformation_paged_report()).
       
-      
+
       
 CHANGES IN R VERSION 0.5.1:
   
