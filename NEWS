@@ -1,6 +1,9 @@
 CHANGES IN R VERSION 0.5.2:
   
-  BUG FIXES:
+  MINOR CHANGES:
+    
+    * Reduce the font size of subtitle in paged reports (diagnose_paged_report(),
+      eda_paged_report(), transformation_paged_report()).
       
       
       

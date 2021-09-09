@@ -56,6 +56,7 @@ thres_uniq_num <- get("thres_uniq_num", .dlookrEnv)
 
 .subtitle {
   color: $subtitle_color$;
+  font-size: 2.5em !important;  
 }
 
 /* Warnings */

@@ -55,6 +55,7 @@ author <- get("author", .dlookrEnv)
 
 .subtitle {
   color: $subtitle_color$;
+  font-size: 2.5em !important;
 }
 ```
 
