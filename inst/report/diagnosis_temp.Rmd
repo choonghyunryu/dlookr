@@ -379,8 +379,8 @@ metrics <- c("dataset" ,"dataset type", "samples", "created", "created by")
 
 value <- c("$dataset$", 
            "$datatype$", 
-           paste0(N_sample, " / ", format(N, big.mark = ","), " (",
-                  sample_percent, "%)"),
+           paste0(format(N_sample, big.mark = ","), " / ", 
+                  format(N, big.mark = ","), " (", sample_percent, "%)"),
            "$date$",
            ifelse(author == "", "dlookr", author))
 

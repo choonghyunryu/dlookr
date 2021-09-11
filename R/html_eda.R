@@ -1175,7 +1175,7 @@ html_target_correlation <- function(.data, target) {
 #' @import dplyr
 html_paged_describe <- function(.data, n_rows = 25, add_row = 3, caption = "", 
                                 full_width = TRUE, font_size = 14) {
-  in_numerical <- find_class(reportData, type = "numerical") %>%
+  in_numerical <- find_class(.data, type = "numerical") %>%
     length() %>% 
     as.logical()
   
@@ -1259,7 +1259,7 @@ html_paged_describe_detail <- function(.data, n_ind = 4, caption = "",
 #' @import dplyr
 html_paged_categorical <- function(.data, n_rows = 25, add_row = 3, caption = "", 
                                 full_width = TRUE, font_size = 14) {
-  in_category <- find_class(reportData, type = "date_categorical2") %>%
+  in_category <- find_class(.data, type = "date_categorical2") %>%
     length() %>% 
     as.logical()
   
@@ -1324,7 +1324,7 @@ html_paged_categorical_detail <- function(.data, n_ind = 4, caption = "",
 #' @import dplyr
 html_paged_normality <- function(.data, n_rows = 25, add_row = 3, caption = "", 
                                  full_width = TRUE, digits = 1, font_size = 13) {
-  in_numerical <- find_class(reportData, type = "numerical") %>%
+  in_numerical <- find_class(.data, type = "numerical") %>%
     length() %>% 
     as.logical()
   
@@ -1612,6 +1612,8 @@ html_paged_compare_categorical <- function(.data, n_rows = 25, add_row = 3,
     suppressWarnings(print(p))
   }
   
+  .data <- as.data.frame(.data)
+  
   idx <- .data %>% 
     find_class("categorical")
   
@@ -1629,7 +1631,7 @@ html_paged_compare_categorical <- function(.data, n_rows = 25, add_row = 3,
       idx[.]
     
     if (length(idx_target) < 2) {
-      html_cat("The valid categorical variables is less than 2.")
+      html_cat(sprintf("Fewer than 2 categorical variables with %d or fewer levels.", thres_levels))
       break_page_asis()
     } else {
       cat_compares <-  compare_category(.data[, idx_target]) 
@@ -1639,86 +1641,91 @@ html_paged_compare_categorical <- function(.data, n_rows = 25, add_row = 3,
         filter(df <= thres_cells) %>% 
         filter(!is.nan(statistic))
       
-      tab_compare <- tab_compare %>% 
-        select(1, 2, 5, 3, 4) %>% 
-        rename("first variable" = variable_1,
-               "second variable" = variable_2,
-               "degree of freedom" = df,
-               "p-value" = p.value) 
-      
-      print_tab(tab_compare, n_rows = n_rows, add_row = add_row, caption = caption, 
-                full_width = full_width, font_size = font_size, 
-                digits = digits, big_mark = FALSE)
-      
-      for (i in seq(NROW(tab_compare))) {
-        el <- div(h3(paste0("'", tab_compare[i, 1], "' vs '", tab_compare[i, 2], "'")))
-        cat(as.character(el))
+      if (NROW(tab_compare) == 0) {
+        html_cat(sprintf("There is no combination of categorical variables with %d or fewer intersecting cells.", thres_cells))
+        break_page_asis()
+      } else {
+        tab_compare <- tab_compare %>% 
+          select(1, 2, 5, 3, 4) %>% 
+          rename("first variable" = variable_1,
+                 "second variable" = variable_2,
+                 "degree of freedom" = df,
+                 "p-value" = p.value) 
         
-        ctable <- tabs$table[[i]]
+        print_tab(tab_compare, n_rows = n_rows, add_row = add_row, caption = caption, 
+                  full_width = full_width, font_size = font_size, 
+                  digits = digits, big_mark = FALSE)
         
-        contingency <- function(tab, relate = FALSE) {
-          dname <-  tab %>% dimnames()
-          dframe <- tab %>% data.frame()
+        for (i in seq(NROW(tab_compare))) {
+          el <- div(h3(paste0("'", tab_compare[i, 1], "' vs '", tab_compare[i, 2], "'")))
+          cat(as.character(el))
           
-          if (relate) {
-            dframe <- round(dframe / dframe[nrow(dframe), ncol(dframe)] * 100, 2)
+          ctable <- tabs$table[[i]]
+          
+          contingency <- function(tab, relate = FALSE) {
+            dname <-  tab %>% dimnames()
+            dframe <- tab %>% data.frame()
+            
+            if (relate) {
+              dframe <- round(dframe / dframe[nrow(dframe), ncol(dframe)] * 100, 2)
+            }
+            
+            rownames(dframe) <- tab %>% 
+              rownames() %>% 
+              ifelse(is.na(.), "<NA>", .)
+            
+            rname <- dname %>% names() %>% "["(1)
+            varname <- ifelse(is.na(dname[[2]]), "<NA>", dname[[2]])
+            
+            colum_list <- seq(ncol(dframe)) %>% 
+              lapply(function(x) {
+                colDef(
+                  name = varname[x],
+                  format = colFormat(
+                    separators = TRUE
+                  ),
+                  sortable = FALSE
+                )
+              }) 
+            names(colum_list) <- names(dframe)
+            
+            cname <- list(
+              colGroup(name = dname %>% names() %>% "["(2), 
+                       columns = names(dframe))
+            )
+            
+            dframe
           }
           
-          rownames(dframe) <- tab %>% 
-            rownames() %>% 
-            ifelse(is.na(.), "<NA>", .)
+          x <- ctable %>% dimnames() %>% names() %>% "["(1)
+          y <- ctable %>% dimnames() %>% names() %>% "["(2)
+          idx_nm <- paste(x, y, sep = " vs ")
           
-          rname <- dname %>% names() %>% "["(1)
-          varname <- ifelse(is.na(dname[[2]]), "<NA>", dname[[2]])
+          header_above <- c(1, NCOL(ctable))
+          names(header_above) <- c(tab_compare[i, 1], tab_compare[i, 2])
           
-          colum_list <- seq(ncol(dframe)) %>% 
-            lapply(function(x) {
-              colDef(
-                name = varname[x],
-                format = colFormat(
-                  separators = TRUE
-                ),
-                sortable = FALSE
-              )
-            }) 
-          names(colum_list) <- names(dframe)
+          ctable %>% 
+            knitr::kable(format = "html") %>% 
+            kableExtra::add_header_above(header_above) %>% 
+            kableExtra::kable_styling(full_width = TRUE, font_size = font_size, 
+                                      position = "left") %>%
+            cat() 
+          break_line_asis(1)  
           
-          cname <- list(
-            colGroup(name = dname %>% names() %>% "["(2), 
-                     columns = names(dframe))
-          )
+          total <- ctable[NROW(ctable),  NCOL(ctable)]
           
-          dframe
-        }
-        
-        x <- ctable %>% dimnames() %>% names() %>% "["(1)
-        y <- ctable %>% dimnames() %>% names() %>% "["(2)
-        idx_nm <- paste(x, y, sep = " vs ")
-        
-        header_above <- c(1, NCOL(ctable))
-        names(header_above) <- c(tab_compare[i, 1], tab_compare[i, 2])
-        
-        ctable %>% 
-          knitr::kable(format = "html") %>% 
-          kableExtra::add_header_above(header_above) %>% 
-          kableExtra::kable_styling(full_width = TRUE, font_size = font_size, 
-                                    position = "left") %>%
-          cat() 
-        break_line_asis(1)  
-        
-        total <- ctable[NROW(ctable),  NCOL(ctable)]
-        
-        round(ctable / total * 100, 2) %>% 
-          knitr::kable(format = "html") %>% 
-          kableExtra::add_header_above(header_above) %>% 
-          kableExtra::kable_styling(full_width = TRUE, font_size = font_size, 
-                                    position = "left") %>%
-          cat() 
-        break_line_asis(1)  
-        
-        plot_compare(x, y, cat_compares[[i]])
-        break_page_asis()
-      } 
+          round(ctable / total * 100, 2) %>% 
+            knitr::kable(format = "html") %>% 
+            kableExtra::add_header_above(header_above) %>% 
+            kableExtra::kable_styling(full_width = TRUE, font_size = font_size, 
+                                      position = "left") %>%
+            cat() 
+          break_line_asis(1)  
+          
+          plot_compare(x, y, cat_compares[[i]])
+          break_page_asis()
+        } 
+      }
     }
   }
 }

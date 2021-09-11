@@ -363,7 +363,7 @@ compare_numeric_impl <- function(df, vars) {
     lm_formula <- formula(sprintf("%s ~ %s", x, y))
     
     agg_lm <- df %>% 
-      select(x, y) %>% 
+      select({{x}}, {{y}}) %>% 
       lm(lm_formula, data = .) %>% 
       get_tab_lm()
     

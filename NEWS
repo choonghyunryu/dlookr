@@ -1,8 +1,18 @@
 CHANGES IN R VERSION 0.5.2:
   BUG FIXES:
-  
+
+    * Fixed an error that occurred in compare_numeric() when using 
+      a tibble object as an argument. 
+      
+    * Fixed an error that occurred in eda_paged_report() and eda_web_report() 
+      when using a tibble object as an argument. 
+      
     * Fixed an error that occurred when generating outliers information 
-      in diagnose_paged_report() in case of a tibble object
+      in diagnose_paged_report() in case of a tibble object.
+      
+    * Fixed an error in calculating the location of outliers 
+      in the outliers section in the diagnose_paged_report() 
+      and diagnose_web_report().      
       
   MINOR CHANGES:
     

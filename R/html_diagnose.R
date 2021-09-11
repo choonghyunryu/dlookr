@@ -640,18 +640,19 @@ html_outlier <- function(.data, theme = c("orange", "blue")[1]) {
   out_position <- list_outlier$variables %>%  
     purrr::map_df(function(x){
       outs <- boxplot.stats(.data[, x])$out
-      
-      flag_lower <- list_outlier %>% 
+
+      Q1 <- list_outlier %>% 
         filter(variables %in% x) %>% 
         select(Q1) %>% 
-        pull() > outs %>% 
-        any()
+        pull()
       
-      flag_upper <- list_outlier %>% 
+      Q3 <- list_outlier %>% 
         filter(variables %in% x) %>% 
         select(Q3) %>% 
-        pull() < outs %>% 
-        any()
+        pull()      
+      
+      flag_lower <-any(Q1 > outs)
+      flag_upper <-any(Q3 < outs)
       
       position <- ifelse(flag_lower & flag_upper, "Both", 
                          ifelse(flag_lower, "Lower", "Upper"))
