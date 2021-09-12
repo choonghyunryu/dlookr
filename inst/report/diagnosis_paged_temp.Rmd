@@ -42,6 +42,7 @@ sample_percent <- get("sample_percent", .dlookrEnv)
 author <- get("author", .dlookrEnv)
 thres_uniq_cat <- get("thres_uniq_cat", .dlookrEnv)
 thres_uniq_num <- get("thres_uniq_num", .dlookrEnv)
+base_family <- get("base_family", .dlookrEnv)
 ```
 
 
@@ -654,7 +655,7 @@ if (NROW(diagn_numeric) > 0) {
 
       cat("<br><br>")
       
-      plot_outlier(reportData, variables[i])
+      plot_outlier(reportData, variables[i], base_family = base_family)
       
       break_page_asis()
     }

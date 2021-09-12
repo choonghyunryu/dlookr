@@ -972,6 +972,8 @@ plot_hist_numeric <- function(.data, ...) {
 #' The default is FALSE, which draws multiple plots on one screen.
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' @param base_family character. The name of the base font family to use 
+#' for the visualization. If not specified, the font defined in dlookr is applied. 
 #' @examples
 #' # Visualization of all numerical variables
 #' # plot_hist_numeric(heartfailure)
@@ -1014,13 +1016,14 @@ plot_hist_numeric <- function(.data, ...) {
 #' 
 plot_hist_numeric.data.frame <- function(.data, ..., 
                                         title = "Distribution by numerical variables",
-                                        each = FALSE, typographic = TRUE) {
+                                        each = FALSE, typographic = TRUE,
+                                        base_family = NULL) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
   
-  plot_hist_numeric_impl(.data, vars, title, each, typographic)
+  plot_hist_numeric_impl(.data, vars, title, each, typographic, base_family)
 }
 
-plot_hist_numeric_impl <- function(df, vars, title, each, typographic) {
+plot_hist_numeric_impl <- function(df, vars, title, each, typographic, base_family) {
   if (length(vars) == 0) vars <- names(df)
   
   if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
@@ -1042,18 +1045,19 @@ plot_hist_numeric_impl <- function(df, vars, title, each, typographic) {
       }
       
       p_box <- df %>% 
-        mutate(variables = var) %>% 
-        ggplot(aes_string(x = var)) +
+        rename(variables = {{var}}) %>% 
+        ggplot(aes(x = variables)) +
         geom_histogram(color="#e9ecef", fill = "steelblue", alpha = 0.8,
                        bins = round(log2(nrow(df)) + 1)) +
-        labs(title = title, subtitle = var, x = xlab) +        
+        labs(title = title, subtitle = var, x = xlab) +     
+        theme_grey(base_family = base_family) +
         theme(axis.title.y = element_blank(),
               axis.text.y = element_blank(),
               axis.ticks.y = element_blank())
       
       if (typographic) {
         p_box <- p_box + 
-          theme_typographic() +
+          theme_typographic(base_family) +
           theme(legend.position = "none",
                 axis.title.x = element_blank(),
                 axis.title.y = element_text(size = 12))
@@ -1108,15 +1112,16 @@ plot_hist_numeric_impl <- function(df, vars, title, each, typographic) {
 #' 
 plot_hist_numeric.grouped_df <- function(.data, ..., 
                                         title = "Distribution by numerical variables",
-                                        each = FALSE, typographic = TRUE) {
+                                        each = FALSE, typographic = TRUE, 
+                                        base_family = NULL) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
   
-  plot_hist_numeric_group_impl(.data, vars, title, each, typographic)
+  plot_hist_numeric_group_impl(.data, vars, title, each, typographic, base_family)
 }
 
 #' @importFrom stats IQR
 #' 
-plot_hist_numeric_group_impl <- function(df, vars, title, each, typographic) {
+plot_hist_numeric_group_impl <- function(df, vars, title, each, typographic, base_family) {
   if (utils::packageVersion("dplyr") >= "0.8.0") {
     group_key <- setdiff(attr(df, "groups") %>% names(), ".rows")
   } else {
@@ -1150,11 +1155,12 @@ plot_hist_numeric_group_impl <- function(df, vars, title, each, typographic) {
       
       p_box <- df %>% 
         mutate(variables = var) %>% 
-        ggplot(aes_string(x = var, fill = group_key)) +
+        ggplot(aes(x = !!sym(var), fill = !!sym(group_key))) +
         geom_histogram(color="#e9ecef", alpha = 0.7,
                        binwidth = function(x) 2 * stats::IQR(x) / (length(x)^(1/3))) + 
         facet_grid(reformulate("variables", group_key)) + 
-        labs(title = title, x = xlab, y = ylab) +        
+        labs(title = title, x = xlab, y = ylab) +    
+        theme_grey(base_family = base_family) + 
         theme(legend.position = "none",
               axis.title.y = element_blank(),
               axis.text.y = element_blank(),
@@ -1162,7 +1168,7 @@ plot_hist_numeric_group_impl <- function(df, vars, title, each, typographic) {
       
       if (typographic) {
         p_box <- p_box + 
-          theme_typographic() +
+          theme_typographic(base_family) +
           scale_fill_ipsum() + 
           theme(legend.position = "none",
                 axis.title.x = element_text(size = 12),

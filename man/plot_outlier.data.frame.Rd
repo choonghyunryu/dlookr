@@ -7,7 +7,13 @@
 \usage{
 plot_outlier(.data, ...)
 
-\method{plot_outlier}{data.frame}(.data, ..., col = "steelblue", typographic = TRUE)
+\method{plot_outlier}{data.frame}(
+  .data,
+  ...,
+  col = "steelblue",
+  typographic = TRUE,
+  base_family = NULL
+)
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}
@@ -23,7 +29,10 @@ They support unquoting and splicing.}
 
 \item{col}{a color to be used to fill the bars. The default is "steelblue".}
 
-\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization.}
+
+\item{base_family}{character. The name of the base font family to use 
+for the visualization. If not specified, the font defined in dlookr is applied. 
 The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
 }
 \description{

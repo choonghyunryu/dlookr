@@ -24,7 +24,7 @@ The plot at the bottom is a bar chart representing the frequency of the level.
 heartfailure2 <- heartfailure
 heartfailure2[sample(seq(NROW(heartfailure2)), 20), "platelets"] <- NA
 
-# Binning the carat variable. default type argument is "quantile"
+# Binning the platelets variable. default type argument is "quantile"
 bin <- binning(heartfailure2$platelets, nbins = 5)
 plot(bin)
 

@@ -585,6 +585,8 @@ plot_outlier <- function(.data, ...) {
 #' They support unquoting and splicing.
 #' @param col a color to be used to fill the bars. The default is "steelblue".
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+#' @param base_family character. The name of the base font family to use 
+#' for the visualization. If not specified, the font defined in dlookr is applied. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @seealso \code{\link{plot_outlier.tbl_dbi}}, \code{\link{diagnose_outlier.data.frame}}.
 #' @export
@@ -641,13 +643,15 @@ plot_outlier <- function(.data, ...) {
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
 #' @export
-plot_outlier.data.frame <- function(.data, ..., col = "steelblue", typographic = TRUE) {
+plot_outlier.data.frame <- function(.data, ..., col = "steelblue", 
+                                    typographic = TRUE, base_family = NULL) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
-  plot_outlier_impl(.data, vars, col, typographic)
+  plot_outlier_impl(.data, vars, col, typographic, base_family)
 }
 
 #' @importFrom graphics boxplot hist title par
-plot_outlier_impl <- function(df, vars, col = "steelblue", typographic = TRUE) {
+plot_outlier_impl <- function(df, vars, col = "steelblue", typographic = TRUE,
+                              base_family = NULL) {
   if (length(vars) == 0) vars <- names(df)
 
   if (length(vars) == 1 & !tibble::is_tibble(df)) 
@@ -655,11 +659,11 @@ plot_outlier_impl <- function(df, vars, col = "steelblue", typographic = TRUE) {
 
   idx_numeric <- find_class(df[, vars], type = "numerical")
   
-  plot_outliers <- function(df, var, col, typographic) {
+  plot_outliers <- function(df, var, col, typographic, base_family) {
     x <- dplyr::pull(df, var)
     main <- sprintf("Outlier Diagnosis Plot (%s)", var)
     
-    plot_outlier_raw(x, main, col, typographic)
+    plot_outlier_raw(x, main, col, typographic, base_family)
   }
 
   if (length(idx_numeric) == 0) {
@@ -677,7 +681,7 @@ plot_outlier_impl <- function(df, vars, col = "steelblue", typographic = TRUE) {
     }
     
     tmp <- lapply(vars[idx_numeric][!idx_na],
-                  function(x) plot_outliers(df, x, col, typographic))
+                  function(x) plot_outliers(df, x, col, typographic, base_family))
   }
 }
 
@@ -685,7 +689,8 @@ plot_outlier_impl <- function(df, vars, col = "steelblue", typographic = TRUE) {
 #' @import hrbrthemes
 #' @importFrom gridExtra grid.arrange
 #' @importFrom grid textGrob gpar
-plot_outlier_raw <- function(x, main = NULL, col = "steelblue", typographic = TRUE) {
+plot_outlier_raw <- function(x, main = NULL, col = "steelblue", 
+                             typographic = TRUE, base_family = NULL) {
   main <- ifelse(is.null(main), "Outlier Diagnose Plot", main)
   
   df_all <- data.frame(x = x) %>% 
@@ -695,7 +700,7 @@ plot_outlier_raw <- function(x, main = NULL, col = "steelblue", typographic = TR
     filter(!is.na(x)) %>% 
     filter(!x  %in% boxplot.stats(x)$out)
   
-  # calulate number of bins using Sturges' formula
+  # calculate number of bins using Sturges' formula
   n_bins_all <- round(log2(nrow(df_all)) + 1)
   n_bins_out <- round(log2(nrow(df_out)) + 1)
   
@@ -704,6 +709,7 @@ plot_outlier_raw <- function(x, main = NULL, col = "steelblue", typographic = TR
     geom_boxplot(fill = col, color = "black", alpha = 0.8) +
     xlim(-0.7, 0.7) + 
     labs(title = "With outliers", x = "", y = "") +
+    theme_grey(base_family = base_family) +
     theme(axis.text.x = element_blank(),
           axis.ticks.x = element_blank())
   
@@ -712,52 +718,55 @@ plot_outlier_raw <- function(x, main = NULL, col = "steelblue", typographic = TR
     geom_boxplot(fill = col, color = "black", alpha = 0.8) +
     xlim(-0.7, 0.7) + 
     labs(title = "Without outliers", x = "", y = "") +
+    theme_grey(base_family = base_family) +
     theme(axis.text.x = element_blank(),
           axis.ticks.x = element_blank())
   
   top_right <- df_all %>% 
     ggplot(aes(x)) +
     geom_histogram(fill = col, color = "black", alpha = 0.8, bins = n_bins_all) +
-    labs(title = "With outliers", x = "", y = "")
+    labs(title = "With outliers", x = "", y = "") +
+    theme_grey(base_family = base_family)
   
   bottom_right <- df_out %>% 
     ggplot(aes(x)) +
     geom_histogram(fill = col, color = "black", alpha = 0.8, bins = n_bins_out) +
-    labs(title = "Without outliers", x = "", y = "")
+    labs(title = "Without outliers", x = "", y = "") +
+    theme_grey(base_family = base_family)
   
   if (typographic) {
     top_left <- top_left +
-      theme_typographic() +
+      theme_typographic(base_family) +
       theme(plot.title = element_text(size = 15, face = "plain"),
             axis.text.x = element_blank(),
             axis.ticks.x = element_blank(),
             plot.margin = margin(10, 30, 10, 30))
     
     top_right <- top_right +
-      theme_typographic() +
+      theme_typographic(base_family) +
       theme(plot.title = element_text(size = 15, face = "plain"),
             plot.margin = margin(10, 30, 10, 30))
     
     bottom_left <- bottom_left +
-      theme_typographic() +
+      theme_typographic(base_family) +
       theme(plot.title = element_text(size = 15, face = "plain"),
             axis.text.x = element_blank(),
             axis.ticks.x = element_blank(),
             plot.margin = margin(10, 30, 10, 30))
     
     bottom_right <- bottom_right +
-      theme_typographic() +
+      theme_typographic(base_family) +
       theme(plot.title = element_text(size = 15, face = "plain"),
             plot.margin = margin(10, 30, 10, 30))    
-    
-    fontfamily <- get_font_family()
-    
-    top <- grid::textGrob(main, gp = grid::gpar(fontfamily = fontfamily, 
-                                                fontsize = 18, font = 2),
-                          x = unit(0.075, "npc"), just = "left")
-  } else {
-    top <- main
+  } 
+  
+  if (is.null(base_family)) {
+    base_family <- get_font_family()      
   }
+  
+  top <- grid::textGrob(main, gp = grid::gpar(fontfamily = base_family, 
+                                              fontsize = 18, font = 2),
+                        x = unit(0.075, "npc"), just = "left")    
   
   suppressWarnings(gridExtra::grid.arrange(top_left, top_right, bottom_left, bottom_right, 
                                            ncol = 2, nrow = 2, widths = c(2, 3), top = top))
@@ -793,6 +802,8 @@ plot_outlier_raw <- function(x, main = NULL, col = "steelblue", typographic = TR
 #' where column names represent column positions.
 #' They support unquoting and splicing.
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+#' @param base_family character. The name of the base font family to use 
+#' for the visualization. If not specified, the font defined in dlookr is applied. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @seealso \code{\link{plot_outlier.data.frame}}.
 #' @export
@@ -825,16 +836,16 @@ plot_outlier_raw <- function(x, main = NULL, col = "steelblue", typographic = TR
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
 #' @export
-plot_outlier.target_df <- function(.data, ..., typographic = TRUE) {
+plot_outlier.target_df <- function(.data, ..., typographic = TRUE, base_family = NULL) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
-  plot_outlier_target_impl(.data, vars, typographic)
+  plot_outlier_target_impl(.data, vars, typographic, base_family)
 }
 
 #' @import dplyr
 #' @import ggplot2
 #' @importFrom tibble is_tibble
 #' @importFrom gridExtra grid.arrange
-plot_outlier_target_impl <- function(df, vars, typographic = TRUE) {
+plot_outlier_target_impl <- function(df, vars, typographic = TRUE, base_family = NULL) {
   if (utils::packageVersion("dplyr") >= "0.8.0") {
     target <- setdiff(attr(df, "groups") %>% names(), ".rows")
   } else {
@@ -869,36 +880,36 @@ plot_outlier_target_impl <- function(df, vars, typographic = TRUE) {
     invisible(NULL)
   }
   
-  plot_outliers <- function(df, target, predictor, typographic = TRUE) {
+  plot_outliers <- function(df, target, predictor, typographic = TRUE, base_family = NULL) {
     data_with <- df %>% 
       ungroup() %>% 
       select(target, predictor) %>% 
       filter(!is.na(target))
     
-    box_with <- ggplot(data_with, aes_string(x = target, y = predictor, fill = target)) +
+    box_with <- ggplot(data_with, aes(x = !!sym(target), y = !!sym(predictor), fill = !!sym(target))) +
       geom_boxplot(alpha = 0.8) +
       labs(title = "boxplot with outliers") +
       theme(legend.position = "none")
     
-    density_with <- ggplot(data_with, aes_string(x = predictor, colour = target)) +
+    density_with <- ggplot(data_with, aes(x = !!sym(predictor), colour = !!sym(target))) +
       geom_density() +
       labs(title = "density with outliers") 
     
     flag <- !data_with[, predictor] %>% pull %in% boxplot.stats(data_with[, predictor] %>% pull)$out
     data_without <- data_with[flag, ]
     
-    box_without <- ggplot(data_without, aes_string(x = target, y = predictor, fill = target)) +
+    box_without <- ggplot(data_without, aes(x = !!sym(target), y = !!sym(predictor), fill = !!sym(target))) +
       geom_boxplot(alpha = 0.8) +
       labs(title = "boxplot without outliers") +
       theme(legend.position = "none")
     
-    density_without <- ggplot(data_without, aes_string(x = predictor, colour = target)) +
+    density_without <- ggplot(data_without, aes(x = !!sym(predictor), colour = !!sym(target))) +
       geom_density() +
       labs(title = "density with outliers") 
     
     if (typographic) {
       box_with <- box_with +
-        theme_typographic() +
+        theme_typographic(base_family) +
         scale_fill_ipsum() + 
         theme(legend.position = "none",
               plot.title = element_text(size = 15),
@@ -909,7 +920,7 @@ plot_outlier_target_impl <- function(df, vars, typographic = TRUE) {
               plot.margin = margin(10, 30, 10, 10))
       
       density_with <- density_with +
-        theme_typographic() +
+        theme_typographic(base_family) +
         scale_color_ipsum() +
         theme(plot.title = element_text(size = 15),
               axis.title.x = element_text(size = 12),
@@ -919,7 +930,7 @@ plot_outlier_target_impl <- function(df, vars, typographic = TRUE) {
               plot.margin = margin(10, 30, 10, 10))
       
       box_without <- box_without +
-        theme_typographic() +
+        theme_typographic(base_family) +
         scale_fill_ipsum() + 
         theme(legend.position = "none",
               plot.title = element_text(size = 15),
@@ -930,7 +941,7 @@ plot_outlier_target_impl <- function(df, vars, typographic = TRUE) {
               plot.margin = margin(10, 30, 10, 10))
       
       density_without <- density_without +
-        theme_typographic() +
+        theme_typographic(base_family) +
         scale_color_ipsum() +
         theme(plot.title = element_text(size = 15),
               axis.title.x = element_text(size = 12),
@@ -961,7 +972,7 @@ plot_outlier_target_impl <- function(df, vars, typographic = TRUE) {
     }
     
     tmp <- lapply(vars[idx_numeric][!idx_na],
-                  function(x) plot_outliers(df, target, x, typographic))
+                  function(x) plot_outliers(df, target, x, typographic, base_family))
   }
 }
 

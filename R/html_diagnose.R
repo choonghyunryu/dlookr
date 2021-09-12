@@ -188,7 +188,7 @@ html_paged_toprank <- function(.data, top = 10, type = "n", variable = NULL,
 #' @import ggplot2
 #' @import reactable
 html_variable <- function(.data, thres_uniq_cat = 0.5, thres_uniq_num = 5,
-                          theme = c("orange", "blue")[1]) {
+                          theme = c("orange", "blue")[1], base_family = NULL) {
   style <- ifelse(theme == "orange", "color: rgb(255, 127, 42)", 
                   "color: rgb(0, 114, 188)")
   
@@ -258,44 +258,46 @@ html_variable <- function(.data, thres_uniq_cat = 0.5, thres_uniq_num = 5,
   reactable(
     tabs,
     # defaultPageSize = nrow(tabs),
+    #fullWidth = FALSE,
     defaultColDef = colDef(style = "font-size: 14px;color: hsl(0, 0%, 40%);"),
     columns = list(
       variables = colDef(
       #   cell = function(value) a(name = value, value)
         name = "Variables",
+        #width = 250
       ),
       types = colDef(
         name = "Types",
-        width = 90
+        #width = 90
       ),      
       missing = colDef(
         name = "Missing",
         align = "center",
-        width = 100,
+        #width = 100,
         cell = function(value) alert_indicator(value)
       ),
       cardinality = colDef(
         name = "Cardinality",
         align = "center",
-        width = 120,
+        #width = 120,
         cell = function(value) unique_indicator(value, TRUE, theme)
       ),
       zero = colDef(
         name = "Zero",
         align = "center",
-        width = 90,
+        #width = 90,
         cell = function(value) alert_indicator(value)
       ),    
       minus = colDef(
         name = "Negative",
         align = "center",
-        width = 100,
+        #width = 100,
         cell = function(value) alert_indicator(value)
       ),
       outlier = colDef(
         name = "Outlier",
         align = "center",
-        width = 90,
+        #width = 90,
         cell = function(value) alert_indicator(value)
       )
     ),
@@ -415,7 +417,8 @@ html_variable <- function(.data, thres_uniq_cat = 0.5, thres_uniq_num = 5,
           )
 
         p_hist <- htmltools::plotTag({
-          plot_hist_numeric(.data, which(names(.data) == variable))
+          plot_hist_numeric(.data, which(names(.data) == variable), 
+                            base_family = base_family)
         }, sprintf("A plot of the %s variable", variable), width = 600, 
         height = 400, device = grDevices::png)
           
@@ -611,7 +614,8 @@ html_paged_missing <- function(tab, grade = c("Good" = 0.05, "OK" = 0.1,
 #' @importFrom purrr map_df
 #' @import dplyr
 #' @import htmltools
-html_outlier <- function(.data, theme = c("orange", "blue")[1]) {
+html_outlier <- function(.data, theme = c("orange", "blue")[1],
+                         base_family = NULL) {
   style <- ifelse(theme == "orange", "color: rgb(255, 127, 42)", 
                   "color: rgb(0, 114, 188)")
   
@@ -721,7 +725,7 @@ html_outlier <- function(.data, theme = c("orange", "blue")[1]) {
                     ))
         
         p_outlier <- htmltools::plotTag({
-          plot_outlier(.data, variable)
+          plot_outlier(.data, variable, base_family = base_family)
         }, sprintf("A plot of the %s variable", variable), width = 600,
         height = 400, device = grDevices::png)
         

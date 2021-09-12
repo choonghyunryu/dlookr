@@ -334,6 +334,8 @@ diagnose_web_report.data.frame <- function(.data, output_file = NULL, output_dir
 #' It has a value between (0, 100]. 100 means all data, and 5 means 5\% of sample data.
 #' This is useful for data with a large number of observations.
 #' @param is_tbl_dbi logical. whether .data is a tbl_dbi object.
+#' @param base_family character. The name of the base font family to use 
+#' for the visualization. If not specified, the font defined in dlookr is applied. 
 #' @param ... arguments to be passed to methods.
 #' 
 #' @seealso \code{\link{diagnose_paged_report.tbl_dbi}}.
@@ -379,7 +381,8 @@ diagnose_paged_report.data.frame <- function(.data, output_format = c("pdf", "ht
                            flag_content_missing = TRUE, cover_img = NULL, 
                            create_date = Sys.time(),
                            logo_img = NULL, theme = c("orange", "blue"),
-                           sample_percent = 100, is_tbl_dbi = FALSE, ...) {
+                           sample_percent = 100, is_tbl_dbi = FALSE, 
+                           base_family = NULL, ...) {
   output_format <- match.arg(output_format)
   theme <- match.arg(theme)
   
@@ -396,6 +399,7 @@ diagnose_paged_report.data.frame <- function(.data, output_format = c("pdf", "ht
   assign("thres_uniq_num", thres_uniq_num, .dlookrEnv) 
   assign("sample_percent", sample_percent, .dlookrEnv)  
   assign("author", author, .dlookrEnv)  
+  assign("base_family", base_family, .dlookrEnv)  
   
   path <- output_dir
   

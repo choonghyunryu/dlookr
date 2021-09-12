@@ -42,7 +42,7 @@ See vignette("transformation") for an introduction to these concepts.
 heartfailure2 <- heartfailure
 heartfailure2[sample(seq(NROW(heartfailure2)), 20), "platelets"] <- NA
 
-# Binning the carat variable. default type argument is "quantile"
+# Binning the platelets variable. default type argument is "quantile"
 bin <- binning(heartfailure2$platelets)
 
 # Print bins class object

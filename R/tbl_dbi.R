@@ -643,6 +643,8 @@ diagnose_outlier.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_si
 #' Applies only if in_database = FALSE.
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' @param base_family character. The name of the base font family to use 
+#' for the visualization. If not specified, the font defined in dlookr is applied. 
 #' 
 #' @seealso \code{\link{plot_outlier.data.frame}}, \code{\link{diagnose_outlier.tbl_dbi}}.
 #' @export
@@ -702,7 +704,7 @@ diagnose_outlier.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_si
 #' DBI::dbDisconnect(con_sqlite)
 #'          
 plot_outlier.tbl_dbi <- function(.data, ..., col = "steelblue", 
-  in_database = FALSE, collect_size = Inf, typographic = TRUE) {
+  in_database = FALSE, collect_size = Inf, typographic = TRUE, base_family = NULL) {
   vars <- tidyselect::vars_select(colnames(.data), !!! rlang::quos(...))
   
   if (in_database) {
@@ -710,7 +712,7 @@ plot_outlier.tbl_dbi <- function(.data, ..., col = "steelblue",
   } else {
     .data %>% 
       dplyr::collect(n = collect_size) %>%
-      plot_outlier_impl(vars, col, typographic)
+      plot_outlier_impl(vars, col, typographic, base_family)
   }
 }
 

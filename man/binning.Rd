@@ -18,7 +18,7 @@ binning(
 
 \item{nbins}{integer. number of intervals(bins). required. if missing, nclass.Sturges is used.}
 
-\item{type}{character. binning method. Choose from "quantile", "equal", "equal", "pretty", "kmeans" and "bclust".
+\item{type}{character. binning method. Choose from "quantile", "equal", "pretty", "kmeans" and "bclust".
 The "quantile" sets breaks with quantiles of the same interval.
 The "equal" sets breaks at the same interval.
 The "pretty" chooses a number of breaks not necessarily equal
@@ -38,8 +38,9 @@ If FALSE, the original breaks obtained by type are used.}
 An object of bins class.
 Attributes of bins class is as follows.
 \itemize{
+\item class : "bins"
 \item type : binning type, "quantile", "equal", "pretty", "kmeans", "bclust".
-\item breaks : the number of intervals into which x is to be cut.
+\item breaks : breaks for binning. the number of intervals into which x is to be cut.
 \item levels : levels of binned value.
 \item raw : raw data, numeric vector corresponding to x argument.
 }
@@ -50,28 +51,15 @@ The binning() converts a numeric variable to a categorization variable.
 \details{
 This function is useful when used with the mutate/transmute
 function of the dplyr package.
-}
-\section{"bins" class attributes information}{
-
-Attributes of the "bins" class that is as follows.
-
-\itemize{
-\item class : "bins"
-\item levels : levels of factor or ordered factor 
-\item type : binning method
-\item breaks : breaks for binning
-\item raw : raw data before binning
-}
 
 See vignette("transformation") for an introduction to these concepts.
 }
-
 \examples{
 # Generate data for the example
 heartfailure2 <- heartfailure
 heartfailure2[sample(seq(NROW(heartfailure2)), 20), "platelets"] <- NA
 
-# Binning the carat variable. default type argument is "quantile"
+# Binning the platelets variable. default type argument is "quantile"
 bin <- binning(heartfailure2$platelets)
 # Print bins class object
 bin

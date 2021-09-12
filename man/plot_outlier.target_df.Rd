@@ -4,7 +4,7 @@
 \alias{plot_outlier.target_df}
 \title{Plot outlier information of target_df}
 \usage{
-\method{plot_outlier}{target_df}(.data, ..., typographic = TRUE)
+\method{plot_outlier}{target_df}(.data, ..., typographic = TRUE, base_family = NULL)
 }
 \arguments{
 \item{.data}{a target_df. reference \code{\link{target_by}}.}
@@ -18,7 +18,10 @@ These arguments are automatically quoted and evaluated in a context
 where column names represent column positions.
 They support unquoting and splicing.}
 
-\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization.}
+
+\item{base_family}{character. The name of the base font family to use 
+for the visualization. If not specified, the font defined in dlookr is applied. 
 The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
 }
 \description{
