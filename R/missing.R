@@ -135,6 +135,8 @@ plot_na_hclust <- function (x, main = NULL, col.left = "#009E73", col.right = "#
 #' @param plot logical. If this value is TRUE then visualize plot. else if FALSE, return aggregate information about missing values.
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' @param base_family character. The name of the base font family to use 
+#' for the visualization. If not specified, the font defined in dlookr is applied. 
 #' @examples
 #' # Generate data for the example
 #' set.seed(123L)
@@ -179,7 +181,7 @@ plot_na_hclust <- function (x, main = NULL, col.left = "#009E73", col.right = "#
 #' @export
 plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, col = "black",
                             grade = list(Good = 0.05, OK = 0.1, NotBad = 0.2, Bad = 0.5, Remove = 1),
-                            plot = TRUE, typographic = TRUE)
+                            plot = TRUE, typographic = TRUE, base_family = NULL)
 {
   if (sum(is.na(x)) == 0) {
     stop("Data have no missing value.")
@@ -253,6 +255,7 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
                colour = col, size = 1.5) +
     scale_y_continuous(sec.axis = sec_axis(~.*scaleRight, name = "Cumulative (%)")) +
     labs(title = main, x = xlab, y = ylab) + 
+    theme_grey(base_family = base_family) +    
     theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
           legend.position = "top") +
     scale_fill_manual(values = pals, 
@@ -262,7 +265,7 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
   
   if (typographic) {
     p <- p +
-      theme_typographic() +
+      theme_typographic(base_family) +
       theme(legend.position = "top",
             axis.title.x = element_text(size = 12),
             axis.title.y = element_text(size = 12),
