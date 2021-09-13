@@ -31,6 +31,7 @@ sample_percent <- get("sample_percent", .dlookrEnv)
 author <- get("author", .dlookrEnv)
 thres_uniq_cat <- get("thres_uniq_cat", .dlookrEnv)
 thres_uniq_num <- get("thres_uniq_num", .dlookrEnv)
+base_family <- get("base_family", .dlookrEnv)
 ```
 
 ```{css, echo=FALSE}
@@ -536,7 +537,7 @@ h2("Variables", id = "ID-h2-variables", class = "title-h2")
 cap <- "Diagnostic overview of individual variables"
 html_cat(cap)
 
-html_variable(reportData, theme = "$theme$")
+html_variable(reportData, theme = "$theme$", base_family = base_family)
 
 break_line_asis(2)
 ```
@@ -568,7 +569,7 @@ if (NROW(diagn_missing) > 1) {
   html_cat(cap)
 
   break_line_asis(1)
-  plot_na_intersect(reportData)
+  plot_na_intersect(reportData, base_family = base_family)
 } else if (NROW(diagn_missing) == 1) {
   html_cat("upported only when the number of variables including missing values is 2 or more")
   break_line_asis(1)

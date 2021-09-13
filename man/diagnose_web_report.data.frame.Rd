@@ -23,6 +23,7 @@ diagnose_web_report(.data, ...)
   theme = c("orange", "blue"),
   sample_percent = 100,
   is_tbl_dbi = FALSE,
+  base_family = NULL,
   ...
 )
 }

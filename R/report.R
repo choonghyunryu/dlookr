@@ -127,7 +127,8 @@ diagnose_web_report.data.frame <- function(.data, output_file = NULL, output_dir
                             thres_uniq_num = 5, logo_img = NULL, 
                             create_date = Sys.time(),
                             theme = c("orange", "blue"), 
-                            sample_percent = 100, is_tbl_dbi = FALSE, ...) {
+                            sample_percent = 100, is_tbl_dbi = FALSE, 
+                            base_family = NULL, ...) {
   theme <- match.arg(theme)
   
   if (sample_percent > 100 | sample_percent <= 0) {
@@ -139,6 +140,7 @@ diagnose_web_report.data.frame <- function(.data, output_file = NULL, output_dir
   assign("thres_uniq_num", thres_uniq_num, .dlookrEnv) 
   assign("sample_percent", sample_percent, .dlookrEnv)  
   assign("author", author, .dlookrEnv)  
+  assign("base_family", base_family, .dlookrEnv)  
   
   path <- output_dir
   

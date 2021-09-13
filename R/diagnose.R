@@ -889,11 +889,13 @@ plot_outlier_target_impl <- function(df, vars, typographic = TRUE, base_family =
     box_with <- ggplot(data_with, aes(x = !!sym(target), y = !!sym(predictor), fill = !!sym(target))) +
       geom_boxplot(alpha = 0.8) +
       labs(title = "boxplot with outliers") +
+      theme_grey(base_family = base_family) +
       theme(legend.position = "none")
     
     density_with <- ggplot(data_with, aes(x = !!sym(predictor), colour = !!sym(target))) +
       geom_density() +
-      labs(title = "density with outliers") 
+      labs(title = "density with outliers") +
+      theme_grey(base_family = base_family)
     
     flag <- !data_with[, predictor] %>% pull %in% boxplot.stats(data_with[, predictor] %>% pull)$out
     data_without <- data_with[flag, ]
@@ -901,11 +903,13 @@ plot_outlier_target_impl <- function(df, vars, typographic = TRUE, base_family =
     box_without <- ggplot(data_without, aes(x = !!sym(target), y = !!sym(predictor), fill = !!sym(target))) +
       geom_boxplot(alpha = 0.8) +
       labs(title = "boxplot without outliers") +
+      theme_grey(base_family = base_family) +
       theme(legend.position = "none")
     
     density_without <- ggplot(data_without, aes(x = !!sym(predictor), colour = !!sym(target))) +
       geom_density() +
-      labs(title = "density with outliers") 
+      labs(title = "density with outliers") +
+      theme_grey(base_family = base_family)
     
     if (typographic) {
       box_with <- box_with +

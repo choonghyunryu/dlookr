@@ -21,11 +21,12 @@ CHANGES IN R VERSION 0.5.2:
     * Added the ability to specify the font family in the visualization function. 
       This feature is useful for visualization by users using non-ASCII characters.
       - plot_outlier.data.frame(), plot_outlier.target_df(), plot_outlier.tbl_dbi()
-      - plot_hist_numeric.data.frame(), plot_hist_numeric.grouped_df()
+      - plot_hist_numeric.data.frame(), plot_hist_numeric.grouped_df(),
+      - plot_na_intersect()
       
     * Added the ability to specify the font family in the reporting function. 
       This feature is useful for visualization by users using non-ASCII characters.
-      - diagnose_paged_report()
+      - diagnose_web_report(), diagnose_paged_report()
       
   MINOR CHANGES:
     

@@ -10,7 +10,8 @@ plot_na_intersect(
   n_intersacts = NULL,
   n_vars = NULL,
   main = NULL,
-  typographic = TRUE
+  typographic = TRUE,
+  base_family = NULL
 )
 }
 \arguments{
@@ -32,6 +33,9 @@ all variables containing missing values are visualized. Variables containing man
 
 \item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
+
+\item{base_family}{character. The name of the base font family to use 
+for the visualization. If not specified, the font defined in dlookr is applied.}
 }
 \description{
 Visualize the combinations of missing value across cases.
