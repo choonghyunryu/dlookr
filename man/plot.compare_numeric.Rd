@@ -4,7 +4,7 @@
 \alias{plot.compare_numeric}
 \title{Visualize Information for an "compare_numeric" Object}
 \usage{
-\method{plot}{compare_numeric}(x, prompt = FALSE, typographic = TRUE, ...)
+\method{plot}{compare_numeric}(x, prompt = FALSE, typographic = TRUE, base_family = NULL, ...)
 }
 \arguments{
 \item{x}{an object of class "compare_numeric", usually, a result of a call to compare_numeric().}

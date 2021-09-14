@@ -22,7 +22,9 @@ CHANGES IN R VERSION 0.5.2:
       This feature is useful for visualization by users using non-ASCII characters.
       - plot_outlier.data.frame(), plot_outlier.target_df(), plot_outlier.tbl_dbi()
       - plot_hist_numeric.data.frame(), plot_hist_numeric.grouped_df(),
-      - plot_na_intersect(), plot_na_pareto()
+      - plot_na_intersect(), plot_na_pareto(), plot_na_hclust()
+      - plot.compare_category(), plot.compare_numeric()
+      - plot.overview(), plot.relate()
       
     * Added the ability to specify the font family in the reporting function. 
       This feature is useful for visualization by users using non-ASCII characters.

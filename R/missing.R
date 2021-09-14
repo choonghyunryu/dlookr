@@ -14,6 +14,8 @@
 #' @param col.right character. The color of right legend that is percentage of NA. default is "#56B4E9".
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' @param base_family character. The name of the base font family to use 
+#' for the visualization. If not specified, the font defined in dlookr is applied. 
 #' @examples
 #' # Generate data for the example
 #' set.seed(123L)
@@ -33,7 +35,9 @@
 #' @import hrbrthemes
 #' @export
 #' 
-plot_na_hclust <- function (x, main = NULL, col.left = "#009E73", col.right = "#56B4E9", typographic = TRUE)
+plot_na_hclust <- function (x, main = NULL, col.left = "#009E73", 
+                            col.right = "#56B4E9", typographic = TRUE,
+                            base_family = NULL)
 {
   N <- nrow(x)
   
@@ -100,6 +104,7 @@ plot_na_hclust <- function (x, main = NULL, col.left = "#009E73", col.right = "#
                fontface = "bold") +
     labs(y = "Variables with missing values", 
          x = "Number of observations", title = main) +
+    theme_grey(base_family = base_family) +    
     theme(axis.text.x = element_text(size = 9, angle = 0, vjust = 0.3),
           axis.text.y = element_text(size = 10),
           plot.title = element_text(size = 11),
@@ -107,7 +112,7 @@ plot_na_hclust <- function (x, main = NULL, col.left = "#009E73", col.right = "#
   
   if (typographic) {
     p <- p +
-      theme_typographic() +
+      theme_typographic(base_family) +
       theme(legend.position = "none",
             axis.title.x = element_text(size = 12),
             axis.title.y = element_text(size = 12))

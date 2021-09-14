@@ -9,7 +9,8 @@ plot_na_hclust(
   main = NULL,
   col.left = "#009E73",
   col.right = "#56B4E9",
-  typographic = TRUE
+  typographic = TRUE,
+  base_family = NULL
 )
 }
 \arguments{
@@ -23,6 +24,9 @@ plot_na_hclust(
 
 \item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
+
+\item{base_family}{character. The name of the base font family to use 
+for the visualization. If not specified, the font defined in dlookr is applied.}
 }
 \description{
 Visualize distribution of missing value by combination of variables.

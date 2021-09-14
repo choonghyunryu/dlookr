@@ -360,7 +360,7 @@ compare_numeric_impl <- function(df, vars) {
   }
   
   get_lm <- function(x, y) {
-    lm_formula <- formula(sprintf("%s ~ %s", x, y))
+    lm_formula <- formula(sprintf("`%s` ~ `%s`", x, y))
     
     agg_lm <- df %>% 
       select({{x}}, {{y}}) %>% 
@@ -845,6 +845,8 @@ print.compare_numeric <- function(x, ...) {
 #' The default is FALSE, so plot NA.  
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' @param base_family character. The name of the base font family to use 
+#' for the visualization. If not specified, the font defined in dlookr is applied. 
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
 #' However, it only support las parameter. las is numeric in {0,1}; the style of axis labels.
 #' \itemize{
@@ -893,7 +895,7 @@ print.compare_numeric <- function(x, ...) {
 #' @method plot compare_category
 #' @export
 plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE, 
-                                  typographic = TRUE, ...) {
+                                  typographic = TRUE, base_family = NULL, ...) {
   combination <- attr(x, "combination")
   
   n <- nrow(combination)
@@ -914,7 +916,7 @@ plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE,
     }
     
     data <- x[[i]] %>% 
-      select(a = xvar, b = yvar, n) 
+      select(a = !!sym(xvar), b = !!sym(yvar), n) 
     
     if (na.rm) {
       data <- data %>% 
@@ -954,6 +956,7 @@ plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE,
         scale_x_discrete(name = xvar) +
         scale_y_continuous(name = yvar, breaks = y_pos, labels = y_lab) +
         labs(title = sprintf("Mosaics plot by '%s' vs '%s'", xvar, yvar)) +
+        theme_grey(base_family = base_family) +         
         theme(legend.position = "none",
               axis.text.x = element_blank(),
               axis.ticks.x = element_blank(),
@@ -963,7 +966,7 @@ plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE,
     
     if (typographic) {
       p <- p +
-        theme_typographic() +
+        theme_typographic(base_family) +
         scale_fill_ipsum(na.value = "grey80") +
         theme(legend.position = "none",
               panel.grid.major.x = element_blank(),
@@ -1036,7 +1039,8 @@ plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE,
 #' @import ggplot2
 #' @method plot compare_numeric
 #' @export
-plot.compare_numeric <- function(x, prompt = FALSE, typographic = TRUE, ...) {
+plot.compare_numeric <- function(x, prompt = FALSE, typographic = TRUE, 
+                                 base_family = NULL, ...) {
   combination <- attr(x, "combination")
   
   n <- nrow(combination)
@@ -1069,18 +1073,20 @@ plot.compare_numeric <- function(x, prompt = FALSE, typographic = TRUE, ...) {
       )
     
     p_scatter <- datas %>% 
-      ggplot(aes_string(x = xvar, y = yvar)) +
+      ggplot(aes(x = !!sym(xvar), y = !!sym(yvar))) +
       geom_point(color = "#FF9900") +
       stat_minmax_ellipse(geom = "polygon", alpha = 0.3, fill = "steelblue", color = "steelblue") + 
       stat_minmax_ellipse(level = 0.5, geom = "polygon", alpha = 0.5, 
                           fill = "steelblue", color = "steelblue") + 
-      stat_smooth(method = "lm", formula = y ~ x) 
+      stat_smooth(method = "lm", formula = y ~ x) +
+      theme_grey(base_family = base_family)
     
     box_bottom <- datas %>% 
-      ggplot(aes_string(y = xvar)) + 
+      ggplot(aes(y = !!sym(xvar))) + 
       geom_boxplot(size = 0.3, fill = "steelblue", alpha = 0.3) +
       xlab(xvar) +
       coord_flip() +      
+      theme_grey(base_family = base_family) +
       theme(
         axis.title.x = element_blank(),
         axis.text.x = element_blank(), 
@@ -1093,9 +1099,10 @@ plot.compare_numeric <- function(x, prompt = FALSE, typographic = TRUE, ...) {
         plot.background = element_rect(fill = "transparent", color = NA))
     
     box_left <- datas %>% 
-      ggplot(aes_string(y = yvar)) + 
+      ggplot(aes(y = !!sym(yvar))) + 
       geom_boxplot(size = 0.3, fill = "steelblue", alpha = 0.3) + 
       xlab("") +
+      theme_grey(base_family = base_family) +
       theme(
         axis.title.y = element_blank(),
         axis.text.y = element_blank(), 
@@ -1110,14 +1117,14 @@ plot.compare_numeric <- function(x, prompt = FALSE, typographic = TRUE, ...) {
     
     if (typographic) {
       p_scatter <- p_scatter +
-        theme_typographic() +
+        theme_typographic(base_family) +
         theme(
           axis.title.x = element_text(size = 11),
           axis.title.y = element_text(size = 13)
         )
       
       box_bottom <- box_bottom  +
-        theme_typographic() +
+        theme_typographic(base_family) +
         theme(axis.title.x = element_blank(),
               axis.text.x = element_blank(),
               axis.title.y = element_text(color = "transparent"),
@@ -1129,7 +1136,7 @@ plot.compare_numeric <- function(x, prompt = FALSE, typographic = TRUE, ...) {
               plot.margin = margin(0, 30, 0, 30))
       
       box_left <- box_left  +
-        theme_typographic() +
+        theme_typographic(base_family) +
         theme(axis.title.x = element_text(color = "transparent"),
               axis.text.x = element_text(color = "transparent"),
               axis.title.y = element_blank(),
@@ -1140,9 +1147,11 @@ plot.compare_numeric <- function(x, prompt = FALSE, typographic = TRUE, ...) {
               panel.background = element_blank(),              
               plot.margin = margin(30, 0, 30, 0))
       
-      fontfamily <- get_font_family()
+      if (is.null(base_family)) {
+        base_family <- get_font_family()
+      }
       
-      title <- grid::textGrob(title, gp = grid::gpar(fontfamily = fontfamily, fontsize = 18, font = 2),
+      title <- grid::textGrob(title, gp = grid::gpar(fontfamily = base_family, fontsize = 18, font = 2),
                               x = unit(0.075, "npc"), just = "left")
     }
     

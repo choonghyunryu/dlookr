@@ -1156,7 +1156,7 @@ plot_hist_numeric_group_impl <- function(df, vars, title, each, typographic, bas
       p_box <- df %>% 
         mutate(variables = var) %>% 
         ggplot(aes(x = !!sym(var), fill = !!sym(group_key))) +
-        geom_histogram(color="#e9ecef", alpha = 0.7,
+        geom_histogram(color="#e9ecef", alpha = 0.8,
                        binwidth = function(x) 2 * stats::IQR(x) / (length(x)^(1/3))) + 
         facet_grid(reformulate("variables", group_key)) + 
         labs(title = title, x = xlab, y = ylab) +    
@@ -1169,7 +1169,7 @@ plot_hist_numeric_group_impl <- function(df, vars, title, each, typographic, bas
       if (typographic) {
         p_box <- p_box + 
           theme_typographic(base_family) +
-          scale_fill_ipsum() + 
+          scale_fill_ipsum(na.value = "gray") + 
           theme(legend.position = "none",
                 axis.title.x = element_text(size = 12),
                 axis.text.y = element_blank(),

@@ -4,12 +4,24 @@
 \alias{plot.overview}
 \title{Visualize Information for an "overview" Object}
 \usage{
-\method{plot}{overview}(x, order_type = c("none", "name", "type"), ...)
+\method{plot}{overview}(
+  x,
+  order_type = c("none", "name", "type"),
+  typographic = TRUE,
+  base_family = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{an object of class "overview", usually, a result of a call to overview().}
 
 \item{order_type}{character. method of order of bars(variables).}
+
+\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
+
+\item{base_family}{character. The name of the base font family to use 
+for the visualization. If not specified, the font defined in dlookr is applied.}
 
 \item{...}{further arguments to be passed from or to other methods.}
 }

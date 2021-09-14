@@ -4,7 +4,14 @@
 \alias{plot.compare_category}
 \title{Visualize Information for an "compare_category" Object}
 \usage{
-\method{plot}{compare_category}(x, prompt = FALSE, na.rm = FALSE, typographic = TRUE, ...)
+\method{plot}{compare_category}(
+  x,
+  prompt = FALSE,
+  na.rm = FALSE,
+  typographic = TRUE,
+  base_family = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{an object of class "compare_category", usually, a result of a call to compare_category().}
@@ -16,6 +23,9 @@ The default is FALSE, so plot NA.}
 
 \item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
+
+\item{base_family}{character. The name of the base font family to use 
+for the visualization. If not specified, the font defined in dlookr is applied.}
 
 \item{...}{arguments to be passed to methods, such as graphical parameters (see par).
 However, it only support las parameter. las is numeric in {0,1}; the style of axis labels.

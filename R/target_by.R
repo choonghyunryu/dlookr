@@ -303,7 +303,7 @@ relate_impl <- function(.data, predictor) {
     correlation <- sapply(method, function(x)
       cor(pull(data, 1), pull(data, 2), method = x))
 
-    formula_str <- sprintf("%s ~ %s", target, predictor)
+    formula_str <- sprintf("`%s` ~ `%s`", target, predictor)
     relate <- lm(formula_str, data = data)
 
     attr(relate, "target") <- target
@@ -332,7 +332,7 @@ relate_impl <- function(.data, predictor) {
     class(tmp) <- "factor"
     data[, 2] <- tmp
 
-    formula_str <- sprintf("%s ~ %s", target, predictor)
+    formula_str <- sprintf("`%s` ~ `%s`", target, predictor)
     relate <- lm(formula(formula_str), data = data)
 
     attr(relate, "target") <- target
@@ -480,6 +480,8 @@ print.relate <- function(x, ...) {
 #' Applied only when the number of observations is greater than hex_thres.
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' @param base_family character. The name of the base font family to use 
+#' for the visualization. If not specified, the font defined in dlookr is applied. 
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
 #' only applies when the model argument is TRUE, and is used for ... of the plot.lm() function.
 #' @seealso \code{\link{relate}}, \code{\link{print.relate}}.
@@ -531,21 +533,21 @@ print.relate <- function(x, ...) {
 #' @export
 plot.relate <- function(x, model = FALSE, hex_thres = 1000, 
                         pal = c("#FFFFB2", "#FED976", "#FEB24C", "#FD8D3C", "#FC4E2A", "#E31A1C", "#B10026"), 
-                        typographic = TRUE, ...) {
+                        typographic = TRUE, base_family = NULL, ...) {
   type <- attr(x, "model")
   xvar <- attr(x, "predictor")
   yvar <- attr(x, "target")
   
   if (type == "describe") {
-    p_desc <- ggplot(aes_string(x = xvar, color = yvar), data = attr(x, "raw")) +
+    p_desc <- ggplot(aes(x = !!sym(xvar), color = !!sym(yvar)), data = attr(x, "raw")) +
       geom_density() +
       ggtitle(sprintf("%s's density plot by %s", yvar, xvar)) +
-      theme_bw() +
+      theme_bw(base_family = base_family) +
       theme(plot.title = element_text(hjust = 0.5))
     
     if (typographic) {
       p_desc <- p_desc +
-        theme_typographic() +
+        theme_typographic(base_family) +
         scale_color_ipsum() +
         theme(axis.title.x = element_text(size = 12),
               axis.title.y = element_text(size = 12))
@@ -588,6 +590,7 @@ plot.relate <- function(x, model = FALSE, hex_thres = 1000,
       scale_x_discrete(name = xvar) +
       scale_y_continuous(name = yvar, breaks = y_pos, labels = y_lab) +
       labs(title = sprintf("%s's mosaics plot by %s", yvar, xvar)) +
+      theme_grey(base_family = base_family) +    
       theme(legend.position = "none",
             axis.text.x = element_blank(),
             axis.ticks.x = element_blank(),
@@ -596,7 +599,7 @@ plot.relate <- function(x, model = FALSE, hex_thres = 1000,
     
     if (typographic) {
       p_cross <- p_cross +
-        theme_typographic() +
+        theme_typographic(base_family) +
         scale_fill_ipsum(na.value = "grey80") +
         theme(legend.position = "none",
               panel.grid.major.x = element_blank(),
@@ -621,7 +624,7 @@ plot.relate <- function(x, model = FALSE, hex_thres = 1000,
       plot(x, which = 3, ...)
       plot(x, which = 5, ...)
     } else {
-      fig1 <- ggplot(aes_string(x = yvar, y = xvar), data = attr(x, "raw")) 
+      fig1 <- ggplot(aes(x = !!sym(yvar), y = !!sym(xvar)), data = attr(x, "raw")) 
       if (NROW(attr(x, "raw")) >= hex_thres) {
         fig1 <- fig1 + 
           geom_hex(color = "grey") +
@@ -633,13 +636,13 @@ plot.relate <- function(x, model = FALSE, hex_thres = 1000,
       
       fig1 <- fig1 +   
         stat_smooth(method = lm, formula = 'y ~ x') +
-        theme_bw() +
+        theme_bw(base_family = base_family) +
         labs(title = sprintf("%s by %s", yvar, xvar)) +
         theme(plot.title = element_text(hjust = 0.5))
       
       if (typographic) {
         fig1 <- fig1 +
-          theme_typographic() +
+          theme_typographic(base_family) +
           theme(axis.title.x = element_text(size = 12),
                 axis.title.y = element_text(size = 12))
       }
@@ -666,7 +669,7 @@ plot.relate <- function(x, model = FALSE, hex_thres = 1000,
         xlim(min_x, max_x) +
         ylim(min_x, max_x) +
         geom_abline(intercept = 0, slope = 1, color = "red", linetype = 2) +
-        theme_bw() +
+        theme_bw(base_family = base_family) +
         labs(title = "Predicted vs Observed",
              x = sprintf("Observed (%s)", yvar),
              y = sprintf("Predicted (%s)", yvar))
@@ -674,7 +677,7 @@ plot.relate <- function(x, model = FALSE, hex_thres = 1000,
       
       if (typographic) {
         fig2 <- fig2 +
-          theme_typographic() +
+          theme_typographic(base_family) +
           theme(axis.title.x = element_text(size = 12),
                 axis.title.y = element_text(size = 12))
       }
@@ -694,15 +697,16 @@ plot.relate <- function(x, model = FALSE, hex_thres = 1000,
       plot(x, which = 3, ...)
       plot(x, which = 5, ...)
     } else {
-      p_box <- ggplot(aes_string(x = xvar, y = yvar, fill = xvar), data = attr(x, "raw")) +
+      p_box <- ggplot(aes(x = !!sym(xvar), y = !!sym(yvar), fill = !!sym(xvar)), 
+                      data = attr(x, "raw")) +
         geom_boxplot(alpha = 0.7) +
         ggtitle(sprintf("%s's box plot by %s", yvar, xvar)) +
-        theme_bw() +
+        theme_bw(base_family = base_family) +
         theme(plot.title = element_text(hjust = 0.5))
       
       if (typographic) {
         p_box <- p_box +
-          theme_typographic() +
+          theme_typographic(base_family) +
           scale_fill_ipsum() +
           theme(axis.title.x = element_text(size = 12),
                 axis.title.y = element_text(size = 12))
