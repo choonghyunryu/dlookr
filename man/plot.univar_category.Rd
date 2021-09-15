@@ -4,7 +4,14 @@
 \alias{plot.univar_category}
 \title{Visualize Information for an "univar_category" Object}
 \usage{
-\method{plot}{univar_category}(x, na.rm = TRUE, prompt = FALSE, typographic = TRUE, ...)
+\method{plot}{univar_category}(
+  x,
+  na.rm = TRUE,
+  prompt = FALSE,
+  typographic = TRUE,
+  base_family = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{an object of class "univar_category", usually, a result of a call to univar_category().}
@@ -17,6 +24,9 @@ if this argument value is TRUE, a prompt is output each time.}
 
 \item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
+
+\item{base_family}{character. The name of the base font family to use 
+for the visualization. If not specified, the font defined in dlookr is applied.}
 
 \item{...}{arguments to be passed to methods, such as graphical parameters (see par).
 However, it does not support all parameters.}

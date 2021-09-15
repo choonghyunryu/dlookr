@@ -490,6 +490,8 @@ print.univar_numeric <- function(x, ...) {
 #' The default is FALSE, so plot NA.  
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' @param base_family character. The name of the base font family to use 
+#' for the visualization. If not specified, the font defined in dlookr is applied. 
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
 #' However, it does not support all parameters.
 #' @seealso \code{\link{univar_category}}, \code{\link{print.univar_category}}, \code{\link{summary.univar_category}}.
@@ -516,7 +518,8 @@ print.univar_numeric <- function(x, ...) {
 #' @method plot univar_category
 #' @import ggplot2
 #' @export
-plot.univar_category <- function(x, na.rm = TRUE, prompt = FALSE, typographic = TRUE, ...) {
+plot.univar_category <- function(x, na.rm = TRUE, prompt = FALSE, 
+                                 typographic = TRUE, base_family = NULL, ...) {
   variables <- attr(x, "variables")
   
   n <- length(variables)
@@ -542,7 +545,7 @@ plot.univar_category <- function(x, na.rm = TRUE, prompt = FALSE, typographic = 
       ylab("Frequency") +
       ggtitle(sprintf("Bar plot of %s", variables[i])) +
       xlab(variables[i]) + 
-      theme_bw() +
+      theme_bw(base_family = base_family) +
       theme(legend.position = "None") +
       theme(plot.title = element_text(hjust = 0.5))
     
@@ -550,7 +553,7 @@ plot.univar_category <- function(x, na.rm = TRUE, prompt = FALSE, typographic = 
       n_level <- nrow(df) 
       if (n_level <= 9) {
         obj <- obj +
-          theme_typographic() +
+          theme_typographic(base_family) +
           scale_fill_ipsum() +
           theme(legend.position = "None",
                 axis.title.x = element_text(size = 13),
@@ -558,7 +561,7 @@ plot.univar_category <- function(x, na.rm = TRUE, prompt = FALSE, typographic = 
           )      
       } else {
         obj <- obj +
-          theme_typographic() +
+          theme_typographic(base_family) +
           scale_fill_manual(values = rep("#d18975", n_level)) + 
           theme(legend.position = "None",
                 axis.title.x = element_text(size = 13),
@@ -593,6 +596,8 @@ plot.univar_category <- function(x, na.rm = TRUE, prompt = FALSE, typographic = 
 #' if this argument value is TRUE, a prompt is output each time. 
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package. 
+#' @param base_family character. The name of the base font family to use 
+#' for the visualization. If not specified, the font defined in dlookr is applied. 
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
 #' However, it does not support.
 #' @seealso \code{\link{univar_numeric}}, \code{\link{print.univar_numeric}}, \code{\link{summary.univar_numeric}}.
@@ -644,9 +649,10 @@ plot.univar_category <- function(x, na.rm = TRUE, prompt = FALSE, typographic = 
 #' @method plot univar_numeric
 #' @export
 plot.univar_numeric <- function(x, indiv = FALSE, viz = c("hist", "boxplot"), 
-                                    stand = ifelse(rep(indiv, 4), c("none", "robust", "minmax", "zscore"),
-                                    c("robust", "minmax", "zscore", "none")), 
-                                    prompt = FALSE, typographic = TRUE, ...) {
+                                stand = ifelse(rep(indiv, 4), c("none", "robust", "minmax", "zscore"),
+                                c("robust", "minmax", "zscore", "none")), 
+                                prompt = FALSE, typographic = TRUE, 
+                                base_family = NULL, ...) {
   stand <- match.arg(stand)
   viz <- match.arg(viz)
   
@@ -697,22 +703,32 @@ plot.univar_numeric <- function(x, indiv = FALSE, viz = c("hist", "boxplot"),
     } 
 
     if (viz == "boxplot") {
-      p <- df %>% 
-        tidyr::gather(variable, obs) %>% 
-        ggplot(aes(variable, obs, fill = variable)) +
-        geom_boxplot(alpha = 0.8) +
+      if (ncol(df) > 9) {
+        p <- df %>% 
+          tidyr::gather(variable, obs) %>% 
+          ggplot(aes(variable, obs)) +
+          geom_boxplot(alpha = 0.8, fill = "#75b8d1")
+      } else {
+        p <- df %>% 
+          tidyr::gather(variable, obs) %>% 
+          ggplot(aes(variable, obs, fill = variable)) +
+          geom_boxplot(alpha = 0.8)
+      }
+        
+      p <- p +
         ylab(value) +
         xlab("Variables") + 
         ggtitle(sprintf("Boxplots of %s", value)) +
-        theme_bw() +
+        theme_bw(base_family = base_family) +
         theme(legend.position = "None") +
         theme(plot.title = element_text(hjust = 0.5))
       
       if (typographic) {
         p <- p +
-          theme_typographic() +
+          theme_typographic(base_family) +
           scale_fill_ipsum() +
           theme(legend.position = "None",
+                axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
                 axis.title.x = element_text(size = 13),
                 axis.title.y = element_text(size = 13)
           )  
@@ -729,12 +745,12 @@ plot.univar_numeric <- function(x, indiv = FALSE, viz = c("hist", "boxplot"),
         ylab("Frequency") +
         xlab(value) + 
         ggtitle(sprintf("Histogram of %s", value)) +
-        theme_bw() +
+        theme_bw(base_family = base_family) +
         theme(plot.title = element_text(hjust = 0.5))
       
       if (typographic) {
         p <- p +
-          theme_typographic() +
+          theme_typographic(base_family) +
           scale_fill_ipsum() +
           theme(legend.position = "None",
                 axis.title.x = element_text(size = 13),
@@ -781,13 +797,13 @@ plot.univar_numeric <- function(x, indiv = FALSE, viz = c("hist", "boxplot"),
           geom_boxplot(alpha = 0.8, fill = "steelblue") +
           xlim(-0.7, 0.7) +
           labs(title = sprintf("Boxplot of %s", variables[i]), x = "", y = "") +
-          theme_bw() +
+          theme_bw(base_family = base_family) +
           theme(legend.position = "None") +
           theme(axis.text.y = element_blank())
         
         if (typographic) {
           p <- p +
-            theme_typographic() +
+            theme_typographic(base_family) +
             theme(legend.position = "None",
                   axis.text.x = element_blank()
             )  
@@ -799,12 +815,12 @@ plot.univar_numeric <- function(x, indiv = FALSE, viz = c("hist", "boxplot"),
           ylab("Frequency") +
           xlab(value) + 
           ggtitle(sprintf("Histogram of %s", variables[i])) +
-          theme_bw() +
+          theme_bw(base_family = base_family) +
           theme(plot.title = element_text(hjust = 0.5))
         
         if (typographic) {
           p <- p +
-            theme_typographic() +
+            theme_typographic(base_family) +
             scale_fill_ipsum() +
             theme(legend.position = "None",
                   axis.title.x = element_text(size = 13),
