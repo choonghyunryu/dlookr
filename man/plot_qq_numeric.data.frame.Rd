@@ -15,7 +15,8 @@ plot_qq_numeric(.data, ...)
   col_line = "black",
   title = "Q-Q plot by numerical variables",
   each = FALSE,
-  typographic = TRUE
+  typographic = TRUE,
+  base_family = NULL
 )
 
 \method{plot_qq_numeric}{grouped_df}(
@@ -25,7 +26,8 @@ plot_qq_numeric(.data, ...)
   col_line = "black",
   title = "Q-Q plot by numerical variables",
   each = FALSE,
-  typographic = TRUE
+  typographic = TRUE,
+  base_family = NULL
 )
 }
 \arguments{
@@ -51,6 +53,9 @@ The default is FALSE, which draws multiple plots on one screen.}
 
 \item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
+
+\item{base_family}{character. The name of the base font family to use 
+for the visualization. If not specified, the font defined in dlookr is applied.}
 }
 \description{
 The plot_qq_numeric() to visualizes the Q-Q plot of numeric data or 
