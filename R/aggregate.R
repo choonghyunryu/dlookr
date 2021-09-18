@@ -424,8 +424,8 @@ plot_bar_category_group_impl <- function(df, vars, top, add_character, title, ea
     
     suppressWarnings(gridExtra::grid.arrange(
       gridExtra::arrangeGrob(grobs = plist, nrow = n_row), top = title, 
-      right = grid::grid.text(group_key, rot = 270,
-                              gp = gpar(fontfamily = base_family))))
+      right = grid::textGrob(group_key, rot = 270,
+                             gp = gpar(fontfamily = base_family))))
   }
 }
 
@@ -693,8 +693,9 @@ plot_qq_numeric_group_impl <- function(df, vars, col_point, col_line, title,
       }
       
       suppressWarnings(gridExtra::grid.arrange(
-        gridExtra::arrangeGrob(grobs = plist, nrow = n_row), 
-        top = title, right = group_key))
+        gridExtra::arrangeGrob(grobs = plist, nrow = n_row), top = title, 
+        right = grid::textGrob(group_key, rot = 270,
+                               gp = gpar(fontfamily = base_family))))
     }
   }) # End of suppressWarnings()
 }
@@ -970,8 +971,9 @@ plot_box_numeric_group_impl <- function(df, vars, title, each, typographic, base
       }
       
       suppressWarnings(gridExtra::grid.arrange(
-        gridExtra::arrangeGrob(grobs = plist, nrow = n_row),
-        top = title, right = group_key))
+        gridExtra::arrangeGrob(grobs = plist, nrow = n_row), top = title, 
+        right = grid::textGrob(group_key, rot = 270,
+                               gp = gpar(fontfamily = base_family))))
     }
   }) # End of suppressWarnings()
 }
@@ -1249,8 +1251,9 @@ plot_hist_numeric_group_impl <- function(df, vars, title, each, typographic, bas
       }
       
       suppressWarnings(gridExtra::grid.arrange(
-        gridExtra::arrangeGrob(grobs = plist, nrow = n_row),
-        top = title, right = group_key))
+        gridExtra::arrangeGrob(grobs = plist, nrow = n_row), top = title, 
+        right = grid::textGrob(group_key, rot = 270,
+                               gp = gpar(fontfamily = base_family))))
     }
   }) # End of suppressWarnings()
 }
