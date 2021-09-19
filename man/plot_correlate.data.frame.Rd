@@ -8,9 +8,21 @@
 \usage{
 plot_correlate(.data, ...)
 
-\method{plot_correlate}{data.frame}(.data, ..., method = c("pearson", "kendall", "spearman"))
+\method{plot_correlate}{data.frame}(
+  .data,
+  ...,
+  method = c("pearson", "kendall", "spearman"),
+  typographic = TRUE,
+  base_family = NULL
+)
 
-\method{plot_correlate}{grouped_df}(.data, ..., method = c("pearson", "kendall", "spearman"))
+\method{plot_correlate}{grouped_df}(
+  .data,
+  ...,
+  method = c("pearson", "kendall", "spearman"),
+  typographic = TRUE,
+  base_family = NULL
+)
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}
@@ -27,6 +39,12 @@ See vignette("EDA") for an introduction to these concepts.}
 
 \item{method}{a character string indicating which correlation coefficient (or covariance) is 
 to be computed. One of "pearson" (default), "kendall", or "spearman": can be abbreviated.}
+
+\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
+
+\item{base_family}{character. The name of the base font family to use 
+for the visualization. If not specified, the font defined in dlookr is applied.}
 }
 \description{
 The plot_correlate() visualize correlation plot

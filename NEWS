@@ -27,8 +27,11 @@ CHANGES IN R VERSION 0.5.2:
       - plot.overview(), plot.relate()
       - plot.univar_category(), plot.univar_numeric()
       - plot_bar_category.data.frame(), plot_bar_category.grouped_df()
-      - plot_qq_numeric.data.frame()
-      - plot_box_numeric.data.frame()
+      - plot_qq_numeric.data.frame(), plot_qq_numeric.grouped_df()
+      - plot_box_numeric.data.frame(), plot_box_numeric.grouped_df()
+      - plot_hist_numeric.data.frame(), plot_hist_numeric.grouped_df()
+      - plot_correlate.data.frame(), plot_correlate.grouped_df(),
+        plot_correlate.tbl_dbi() 
       
     * Added the ability to specify the font family in the reporting function. 
       This feature is useful for visualization by users using non-ASCII characters.

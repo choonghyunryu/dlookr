@@ -1139,6 +1139,10 @@ correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = In
 #' These arguments are automatically quoted and evaluated in a context where column names
 #' represent column positions.
 #' They support unquoting and splicing.
+#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' @param base_family character. The name of the base font family to use 
+#' for the visualization. If not specified, the font defined in dlookr is applied. 
 #' @param in_database Specifies whether to perform in-database operations. 
 #' If TRUE, most operations are performed in the DBMS. if FALSE, 
 #' table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.
@@ -1207,7 +1211,8 @@ correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = In
 #' DBI::dbDisconnect(con_sqlite)
 #'
 plot_correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = Inf,
-                                   method = c("pearson", "kendall", "spearman")) {
+                                   method = c("pearson", "kendall", "spearman"),
+                                   typographic = TRUE, base_family = NULL) {
   vars <- tidyselect::vars_select(colnames(.data), !!! rlang::quos(...))
   
   method <- match.arg(method)
@@ -1218,11 +1223,11 @@ plot_correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
     if (class(.data$ops)[1] != "op_group_by") {
       .data %>% 
         dplyr::collect(n = collect_size) %>%
-        plot_correlate_impl(vars, method)
+        plot_correlate_impl(vars, method, typographic, base_family)
     } else {
       .data %>% 
         dplyr::collect(n = collect_size) %>%
-        plot_correlate_group_impl(vars, method)
+        plot_correlate_group_impl(vars, method, typographic, base_family)
     }
   }  
 }
