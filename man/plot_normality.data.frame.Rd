@@ -16,7 +16,8 @@ plot_normality(.data, ...)
   right = c("sqrt", "log", "log+1", "log+a", "1/x", "x^2", "x^3", "Box-Cox",
     "Yeo-Johnson"),
   col = "steelblue",
-  typographic = TRUE
+  typographic = TRUE,
+  base_family = NULL
 )
 
 \method{plot_normality}{grouped_df}(
@@ -27,7 +28,8 @@ plot_normality(.data, ...)
   right = c("sqrt", "log", "log+1", "log+a", "1/x", "x^2", "x^3", "Box-Cox",
     "Yeo-Johnson"),
   col = "steelblue",
-  typographic = TRUE
+  typographic = TRUE,
+  base_family = NULL
 )
 }
 \arguments{
@@ -54,6 +56,9 @@ lower right corner. The default is "sqrt".}
 
 \item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
+
+\item{base_family}{character. The name of the base font family to use 
+for the visualization. If not specified, the font defined in dlookr is applied.}
 }
 \description{
 The plot_normality() visualize distribution information

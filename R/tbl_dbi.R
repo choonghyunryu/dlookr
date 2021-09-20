@@ -757,7 +757,7 @@ plot_outlier.tbl_dbi <- function(.data, ..., col = "steelblue",
 #' See vignette("EDA") for an introduction to these concepts.
 #'
 #' @return An object of the same class as .data.
-#' @seealso \code{\link{normality.data.frame}}, \code{\link{diagnose_numeric.tbl_dbi}}, \code{\link{describe.tbl_dbi}}, \code{\link{plot_normality.tbl_dbi}}.
+#' @seealso \code{\link{normality.data.frame}}, \code{\link{diagnose_numeric.tbl_dbi}}, \code{\link{describe.tbl_dbi}}, \code{\link{}}.
 #' @export
 #' @examples
 #' \donttest{
@@ -900,6 +900,8 @@ normality.tbl_dbi <- function(.data, ..., sample = 5000,
 #' lower right corner. The default is "sqrt".
 #' @param col a color to be used to fill the bars. The default is "steelblue".
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+#' @param base_family character. The name of the base font family to use 
+#' for the visualization. If not specified, the font defined in dlookr is applied. 
 #' 
 #' @seealso \code{\link{plot_normality.data.frame}}, \code{\link{plot_outlier.tbl_dbi}}.
 #' @export
@@ -964,7 +966,8 @@ plot_normality.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
                                             "x^3", "Box-Cox", "Yeo-Johnson"),
                                    right = c("sqrt", "log", "log+1", "1/x", "x^2", 
                                              "x^3", "Box-Cox", "Yeo-Johnson"),
-                                   col = "steelblue", typographic = TRUE) {
+                                   col = "steelblue", typographic = TRUE, 
+                                   base_family = NULL) {
   vars <- tidyselect::vars_select(colnames(.data), !!! rlang::quos(...))
   
   left <- match.arg(left)
@@ -976,11 +979,11 @@ plot_normality.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
     if (class(.data$ops)[1] != "op_group_by") {
       .data %>% 
         dplyr::collect(n = collect_size) %>%
-        plot_normality_impl(vars, left, right, col, typographic)
+        plot_normality_impl(vars, left, right, col, typographic, base_family)
     } else {
       .data %>% 
         dplyr::collect(n = collect_size) %>%
-        plot_normality_group_impl(vars, left, right, col, typographic)
+        plot_normality_group_impl(vars, left, right, col, typographic, base_family)
     }
   }
 }
