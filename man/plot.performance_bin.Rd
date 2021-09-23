@@ -4,13 +4,16 @@
 \alias{plot.performance_bin}
 \title{Visualize Performance for an "performance_bin" Object}
 \usage{
-\method{plot}{performance_bin}(x, typographic = TRUE, ...)
+\method{plot}{performance_bin}(x, typographic = TRUE, base_family = NULL, ...)
 }
 \arguments{
 \item{x}{an object of class "performance_bin", usually, a result of a call to performance_bin().}
 
 \item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
+
+\item{base_family}{character. The name of the base font family to use 
+for the visualization. If not specified, the font defined in dlookr is applied.}
 
 \item{...}{further arguments to be passed from or to other methods.}
 }

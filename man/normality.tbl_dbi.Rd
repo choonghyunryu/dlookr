@@ -117,5 +117,5 @@ DBI::dbDisconnect(con_sqlite)
 
 }
 \seealso{
-\code{\link{normality.data.frame}}, \code{\link{diagnose_numeric.tbl_dbi}}, \code{\link{describe.tbl_dbi}}, \code{\link{plot_normality.tbl_dbi}}.
+\code{\link{normality.data.frame}}, \code{\link{diagnose_numeric.tbl_dbi}}, \code{\link{describe.tbl_dbi}}, \code{\link{}}.
 }
