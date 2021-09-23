@@ -4,7 +4,7 @@
 \alias{plot.imputation}
 \title{Visualize Information for an "imputation" Object}
 \usage{
-\method{plot}{imputation}(x, typographic = TRUE, ...)
+\method{plot}{imputation}(x, typographic = TRUE, base_family = NULL, ...)
 }
 \arguments{
 \item{x}{an object of class "imputation", usually, a result of a call to imputate_na()
@@ -12,6 +12,9 @@ or imputate_outlier().}
 
 \item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
+
+\item{base_family}{character. The name of the base font family to use 
+for the visualization. If not specified, the font defined in dlookr is applied.}
 
 \item{...}{arguments to be passed to methods, such as graphical parameters (see par).
 only applies when the model argument is TRUE, and is used for ... of the plot.lm() function.}

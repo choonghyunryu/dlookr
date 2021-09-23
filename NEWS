@@ -35,6 +35,8 @@ CHANGES IN R VERSION 0.5.2:
       - plot_normality.data.frame(), plot_normality.grouped_df(), 
         plot_normality.tbl_dbi()
       - plot.bins(), plot.optimal_bins(), plot.performance_bin()
+      - plot.imputation()
+      - plot.transform()
       
     * Added the ability to specify the font family in the reporting function. 
       This feature is useful for visualization by users using non-ASCII characters.

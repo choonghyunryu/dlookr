@@ -222,7 +222,7 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL,
     }
     
     if (requireNamespace("rpart", quietly = TRUE)) {
-      model <- rpart::rpart(sprintf("%s ~ .", x),
+      model <- rpart::rpart(sprintf("`%s` ~ .", x),
                             data = df[!is.na(pull(df, x)), setdiff(intersect(names(df), complete_flag), y)],
                             method = method, na.action = na.omit)
     } else {
@@ -609,6 +609,8 @@ summary.imputation <- function(object, ...) {
 #' or imputate_outlier().
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' @param base_family character. The name of the base font family to use 
+#' for the visualization. If not specified, the font defined in dlookr is applied. 
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
 #' only applies when the model argument is TRUE, and is used for ... of the plot.lm() function.
 #' @seealso \code{\link{imputate_na}}, \code{\link{imputate_outlier}}, \code{\link{summary.imputation}}.
@@ -647,7 +649,7 @@ summary.imputation <- function(object, ...) {
 #' @import hrbrthemes
 #' @importFrom tidyr gather
 #' @export
-plot.imputation <- function(x, typographic = TRUE, ...) {
+plot.imputation <- function(x, typographic = TRUE, base_family = NULL, ...) {
   type <- attr(x, "type")
   var_type <- attr(x, "var_type")
   method <- attr(x, "method")
@@ -675,11 +677,12 @@ plot.imputation <- function(x, typographic = TRUE, ...) {
       tidyr::gather() %>%
       ggplot(aes(x = value, color = key)) +
       geom_density(na.rm = TRUE) +
-      labs(title = sprintf("imputation method : %s", method))})
+      labs(title = sprintf("imputation method : %s", method))}) +
+      theme_grey(base_family = base_family)
     
     if (typographic) {
       p <- p +
-        theme_typographic() +
+        theme_typographic(base_family) +
         scale_color_ipsum() +
         theme(
           axis.title.x = element_text(size = 13),
@@ -694,11 +697,12 @@ plot.imputation <- function(x, typographic = TRUE, ...) {
       ggplot(aes(x = value, fill = key)) +
       geom_bar(position = "dodge") +
       labs(title = sprintf("imputation method : %s", method),
-            x = "level", y = "frequency")})
+            x = "level", y = "frequency")}) +
+      theme_grey(base_family = base_family)
     
     if (typographic) {
       p <- p +
-        theme_typographic() +
+        theme_typographic(base_family) +
         scale_fill_ipsum() +
         theme(
           axis.title.x = element_text(size = 13),
