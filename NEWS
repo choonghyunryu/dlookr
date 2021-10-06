@@ -12,9 +12,8 @@ CHANGES IN R VERSION 0.5.2:
     * Fixed an error that occurred when generating outliers information 
       in diagnose_paged_report() in case of a tibble object.
       
-    * Fixed an error in calculating the location of outliers 
-      in the outliers section in the diagnose_paged_report() 
-      and diagnose_web_report().      
+    * Fixed an error where the base_family argument was not applied to the plot 
+      in the Outlier section in diagnose_web_report().   
 
   MAJOR CHANGES:
     

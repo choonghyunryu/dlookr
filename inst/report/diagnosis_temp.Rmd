@@ -618,7 +618,7 @@ if (NROW(diagn_numeric) > 0) {
     cap <- "Diagnosis of numerical variable outliers"
     html_cat(cap)
     
-    html_outlier(reportData, theme = "$theme$")
+    html_outlier(reportData, theme = "$theme$", base_family = base_family)
     
   } else {
     html_cat("No numeric variables including outliers")
