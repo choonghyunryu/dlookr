@@ -2,6 +2,7 @@ Package: dlookr
 Type: Package
 Title: Tools for Data Diagnosis, Exploration, Transformation
 Version: 0.5.2.9000
+Date: 2021-10-21
 Authors@R: c(
   person("Choonghyun", "Ryu",, "choonghyun.ryu@gmail.com", role = c("aut", "cre"))
   )
@@ -14,6 +15,8 @@ Description: A collection of tools that support data diagnosis, exploration, and
     for categorizing continuous variables, imputates missing values and outliers, resolving skewness. 
     And it creates automated reports that support these three tasks.
 License: GPL-2 | file LICENSE
+URL: https://github.com/choonghyunryu/dlookr,
+   https://choonghyunryu.github.io/dlookr
 Encoding: UTF-8
 LazyData: true
 Depends:
