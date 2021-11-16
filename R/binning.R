@@ -511,8 +511,6 @@ binning_by <- function(.data, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
   if (length(unique(.data[, x])) < 5) 
     stop("x must be number of unique values greater then 4.")
   
-  print(formula(paste("`", y,"`", "~", "`", x, "`")))
-  
   ctree <- partykit::ctree(
     formula(paste("`", y,"`", " ~ ", "`", x, "`", sep = "")), 
     data = .data, na.action = na.exclude,
