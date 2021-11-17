@@ -1980,7 +1980,7 @@ html_paged_target_correlation <- function(.data, target, full_width = TRUE,
         el <- div(h4("Correlation Plot"))
         cat(as.character(el))
         
-        plot_correlate(data_filterd)
+        print(plot_correlate(data_filterd))
         
         break_page_asis()
       }
