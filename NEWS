@@ -21,7 +21,20 @@ CHANGES IN R VERSION 0.5.2:
       report in "Grouped Correlation" sction in eda_web_report(). (#55)
 
   MAJOR CHANGES:
-    
+
+    * Changed the way fonts are imported into the R environment to insert fonts 
+      into the plot. For this method, the extrafont package was changed to the 
+      showtext package. (#48, #53)
+
+      The reason is that the extrafont package uses the Rttf2pt1 package, 
+      because Winston Chang, the author of the Rttf2pt1 package, says:
+
+      "ttf2pt1 has not been maintained since 2003, and it is getting 
+      increasingly difficult to make it compile without significant warnings on 
+      modern compilers, which in turn is making it difficult to maintain 
+      this package on CRAN. It is possible that in the future, 
+      I will not have time to keep this package on CRAN."
+      
     * Added the ability to specify the font family in the visualization function. 
       This feature is useful for visualization by users using non-ASCII characters.
       - plot_outlier.data.frame(), plot_outlier.target_df(), plot_outlier.tbl_dbi()
@@ -51,7 +64,11 @@ CHANGES IN R VERSION 0.5.2:
     * Reduce the font size of subtitle in paged reports (diagnose_paged_report(),
       eda_paged_report(), transformation_paged_report()).
       
+  DEFUNCT:
+  
+    * defuncted import_liberation()
 
+      
       
 CHANGES IN R VERSION 0.5.1:
   

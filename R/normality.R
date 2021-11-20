@@ -242,6 +242,10 @@ normality_group_impl <- function(df, vars, sample) {
 #'   \item histogram by square root transfer data
 #' }
 #'
+#' The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
+#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' use it after loading the Google font with import_google_font(). 
+#'
 #' @param .data a data.frame or a \code{\link{tbl_df}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
@@ -261,7 +265,7 @@ normality_group_impl <- function(df, vars, sample) {
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @param base_family character. The name of the base font family to use 
-#' for the visualization. If not specified, the font defined in dlookr is applied. 
+#' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' 
 #' @seealso \code{\link{plot_normality.tbl_dbi}}, \code{\link{plot_outlier.data.frame}}.
 #' @export
@@ -496,7 +500,7 @@ plot_normality_raw <- function(x,
     }
     
     if (is.null(base_family)) {
-      base_family <- get_font_family() 
+      base_family <- "Roboto Condensed"
     }
   } 
   

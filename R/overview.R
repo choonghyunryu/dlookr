@@ -316,12 +316,16 @@ summary.overview <- function(object, html = FALSE, ...)  {
 #' Visualize a plot by attribute of `overview` class.
 #' Visualize the data type, number of observations, and number of missing values for each variable.
 #'
+#' @details The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
+#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' use it after loading the Google font with import_google_font().
+#' 
 #' @param x an object of class "overview", usually, a result of a call to overview().
 #' @param order_type character. method of order of bars(variables).
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @param base_family character. The name of the base font family to use 
-#' for the visualization. If not specified, the font defined in dlookr is applied. 
+#' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... further arguments to be passed from or to other methods.
 #' @seealso \code{\link{overview}}, \code{\link{summary.overview}}.
 #' @examples

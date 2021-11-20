@@ -284,11 +284,16 @@ print.bins <- function(x, ...) {
 #' Visualize two plots on a single screen.
 #' The plot at the top is a histogram representing the frequency of the level.
 #' The plot at the bottom is a bar chart representing the frequency of the level.
+#' 
+#' @details The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
+#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' use it after loading the Google font with import_google_font().
+#' 
 #' @param x an object of class "bins", usually, a result of a call to binning().
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @param base_family character. The name of the base font family to use 
-#' for the visualization. If not specified, the font defined in dlookr is applied. 
+#' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
 #' @seealso \code{\link{binning}}, \code{\link{print.bins}}, \code{\link{summary.bins}}.
 #' @examples
@@ -643,13 +648,17 @@ summary.optimal_bins <- function(object, ...) {
 #'
 #' See vignette("transformation") for an introduction to these concepts.
 #'
+#' @details The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
+#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' use it after loading the Google font with import_google_font().
+#' 
 #' @param x an object of class "optimal_bins", usually, a result of a call to binning_by().
 #' @param type character. options for visualization. Distribution ("dist"), Relateive Frequency ("freq"),
 #' Positive Rate ("posrate"), and Weight of Evidence ("WoE"). and default "all" draw all plot.
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @param base_family character. The name of the base font family to use 
-#' for the visualization. If not specified, the font defined in dlookr is applied. 
+#' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param rotate_angle integer. specifies the rotation angle of the x-axis label. 
 #' This is useful when the x-axis labels are long and overlap. 
 #' The default is 0 to not rotate the label.
@@ -1259,11 +1268,15 @@ summary.performance_bin <- function(object, ...) {
 #' @description
 #' It generates plots for understand frequency, WoE by bins using performance_bin.
 #'
+#' @details The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
+#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' use it after loading the Google font with import_google_font().
+#' 
 #' @param x an object of class "performance_bin", usually, a result of a call to performance_bin().
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @param base_family character. The name of the base font family to use 
-#' for the visualization. If not specified, the font defined in dlookr is applied.
+#' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... further arguments to be passed from or to other methods.
 #' @seealso \code{\link{performance_bin}}, \code{\link{summary.performance_bin}}, \code{\link{binning_by}}, 
 #' \code{\link{plot.optimal_bins}}.

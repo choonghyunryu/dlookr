@@ -838,7 +838,11 @@ print.compare_numeric <- function(x, ...) {
 #'
 #' @description
 #' Visualize mosaics plot by attribute of compare_category class.
-#'
+#' 
+#' @details The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
+#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' use it after loading the Google font with import_google_font().
+#' 
 #' @param x an object of class "compare_category", usually, a result of a call to compare_category().
 #' @param prompt logical. The default value is FALSE. If there are multiple visualizations to be output, if this argument value is TRUE, a prompt is output each time. 
 #' @param na.rm logical. Specifies whether to include NA when plotting mosaics plot. 
@@ -846,7 +850,7 @@ print.compare_numeric <- function(x, ...) {
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @param base_family character. The name of the base font family to use 
-#' for the visualization. If not specified, the font defined in dlookr is applied. 
+#' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
 #' However, it only support las parameter. las is numeric in {0,1}; the style of axis labels.
 #' \itemize{
@@ -1148,7 +1152,7 @@ plot.compare_numeric <- function(x, prompt = FALSE, typographic = TRUE,
               plot.margin = margin(30, 0, 30, 0))
       
       if (is.null(base_family)) {
-        base_family <- get_font_family()
+        base_family <- "Roboto Condensed" 
       }
       
       title <- grid::textGrob(title, gp = grid::gpar(fontfamily = base_family, fontsize = 18, font = 2),

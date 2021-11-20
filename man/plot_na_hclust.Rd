@@ -26,7 +26,7 @@ plot_na_hclust(
 The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
 
 \item{base_family}{character. The name of the base font family to use 
-for the visualization. If not specified, the font defined in dlookr is applied.}
+for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
 }
 \description{
 Visualize distribution of missing value by combination of variables.
@@ -36,6 +36,10 @@ Rows are variables containing missing values, and columns are observations.
 These data structures were grouped into similar groups by applying hclust. 
 So, it was made possible to visually examine how the missing values are distributed 
 for each combination of variables.
+
+The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
+and "Liberation Sans Narrow". If you want to use a different font, 
+use it after loading the Google font with import_google_font().
 }
 \examples{
 # Generate data for the example

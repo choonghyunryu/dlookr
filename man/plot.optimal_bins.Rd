@@ -23,7 +23,7 @@ Positive Rate ("posrate"), and Weight of Evidence ("WoE"). and default "all" dra
 The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
 
 \item{base_family}{character. The name of the base font family to use 
-for the visualization. If not specified, the font defined in dlookr is applied.}
+for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
 
 \item{rotate_angle}{integer. specifies the rotation angle of the x-axis label. 
 This is useful when the x-axis labels are long and overlap. 
@@ -35,6 +35,11 @@ The default is 0 to not rotate the label.}
 It generates plots for understand distribution, frequency, bad rate, and weight of evidence using optimal_bins.
 
 See vignette("transformation") for an introduction to these concepts.
+}
+\details{
+The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
+and "Liberation Sans Narrow". If you want to use a different font, 
+use it after loading the Google font with import_google_font().
 }
 \examples{
 # Generate data for the example

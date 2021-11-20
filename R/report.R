@@ -300,6 +300,10 @@ diagnose_web_report.data.frame <- function(.data, output_file = NULL, output_dir
 #'   }
 #' }
 #'
+#' The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
+#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' use it after loading the Google font with import_google_font(). 
+#'
 #' @param .data a data.frame or a \code{\link{tbl_df}}.
 #' @param output_format report output type. Choose either "pdf" and "html".
 #' "pdf" create pdf file by rmarkdown::render() and pagedown::chrome_print(). so, 
@@ -337,7 +341,7 @@ diagnose_web_report.data.frame <- function(.data, output_file = NULL, output_dir
 #' This is useful for data with a large number of observations.
 #' @param is_tbl_dbi logical. whether .data is a tbl_dbi object.
 #' @param base_family character. The name of the base font family to use 
-#' for the visualization. If not specified, the font defined in dlookr is applied. 
+#' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... arguments to be passed to methods.
 #' 
 #' @seealso \code{\link{diagnose_paged_report.tbl_dbi}}.

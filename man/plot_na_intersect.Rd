@@ -35,7 +35,7 @@ all variables containing missing values are visualized. Variables containing man
 The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
 
 \item{base_family}{character. The name of the base font family to use 
-for the visualization. If not specified, the font defined in dlookr is applied.}
+for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
 }
 \description{
 Visualize the combinations of missing value across cases.
@@ -47,6 +47,10 @@ The x-axis is the variable including the missing value, and the y-axis represent
 And on the marginal of the two axes, the frequency of the case is expressed as a bar graph. 
 Finally, the visualization at the top right expresses the number of variables including missing values in the data set, 
 and the number of observations including missing values and complete cases .
+
+The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
+and "Liberation Sans Narrow". If you want to use a different font, 
+use it after loading the Google font with import_google_font().
 }
 \examples{
 # Generate data for the example

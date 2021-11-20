@@ -14,6 +14,10 @@ plot_bar_category <- function(.data, ...) {
 #' As a visualization method, a bar graph can help you understand 
 #' the distribution of categorical data more easily than a frequency table.
 #'
+#' The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
+#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' use it after loading the Google font with import_google_font().
+#' 
 #' @param .data a data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.
 #' @param \dots one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
@@ -33,7 +37,8 @@ plot_bar_category <- function(.data, ...) {
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @param base_family character. The name of the base font family to use 
-#' for the visualization. If not specified, the font defined in dlookr is applied. 
+#' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
+#' 
 #' 
 #' @examples
 #' # Generate data for the example
@@ -225,7 +230,7 @@ plot_bar_category_impl <- function(df, vars, top, add_character, title, each,
     
     if (typographic) {
       if (is.null(base_family)) {
-        base_family <- get_font_family()        
+        base_family <- "Roboto Condensed"  
       }
       
       title <- grid::textGrob(title, gp = grid::gpar(fontfamily = base_family, 
@@ -414,7 +419,7 @@ plot_bar_category_group_impl <- function(df, vars, top, add_character, title, ea
     
     if (typographic) {
       if (is.null(base_family)) {
-        base_family <- get_font_family()        
+        base_family <- "Roboto Condensed"     
       }
       
       title <- grid::textGrob(title, gp = grid::gpar(fontfamily = base_family, 
@@ -448,6 +453,10 @@ plot_qq_numeric <- function(.data, ...) {
 #' on one screen. This function can also display a Q-Q plot for each level of a specific 
 #' categorical variable.
 #'
+#' The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
+#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' use it after loading the Google font with import_google_font().
+#'  
 #' @param .data data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.
 #' @param \dots one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
@@ -466,7 +475,7 @@ plot_qq_numeric <- function(.data, ...) {
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @param base_family character. The name of the base font family to use 
-#' for the visualization. If not specified, the font defined in dlookr is applied. 
+#' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @examples
 #' # Visualization of all numerical variables
 #' # plot_qq_numeric(heartfailure)
@@ -576,7 +585,7 @@ plot_qq_numeric_impl <- function(df, vars, col_point, col_line, title, each,
       
       if (typographic) {
         if (is.null(base_family)) {
-          base_family <- get_font_family()          
+          base_family <- "Roboto Condensed"           
         }
         
         title <- grid::textGrob(title, gp = grid::gpar(fontfamily = base_family, 
@@ -684,7 +693,7 @@ plot_qq_numeric_group_impl <- function(df, vars, col_point, col_line, title,
       
       if (typographic) {
         if (is.null(base_family)) {
-          base_family <- get_font_family()          
+          base_family <- "Roboto Condensed"           
         }
         
         title <- grid::textGrob(title, gp = grid::gpar(fontfamily = base_family, 
@@ -717,6 +726,10 @@ plot_box_numeric <- function(.data, ...) {
 #' plot_box_numeric() shows box plots of several numeric variables 
 #' on one screen. This function can also display a box plot for each level of a specific 
 #' categorical variable.
+#' 
+#' The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
+#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' use it after loading the Google font with import_google_font().
 #'
 #' @param .data data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.
 #' @param \dots one or more unquoted expressions separated by commas.
@@ -734,7 +747,7 @@ plot_box_numeric <- function(.data, ...) {
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @param base_family character. The name of the base font family to use 
-#' for the visualization. If not specified, the font defined in dlookr is applied. 
+#' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @examples
 #' # Visualization of all numerical variables
 #' # plot_box_numeric(heartfailure)
@@ -853,7 +866,7 @@ plot_box_numeric_impl <- function(df, vars, title, each, typographic, base_famil
       
       if (typographic) {
         if (is.null(base_family)) {
-          base_family <- get_font_family()          
+          base_family <- "Roboto Condensed"           
         }
         
         title <- grid::textGrob(title, gp = grid::gpar(fontfamily = base_family, 
@@ -962,7 +975,7 @@ plot_box_numeric_group_impl <- function(df, vars, title, each, typographic, base
       
       if (typographic) {
         if (is.null(base_family)) {
-          base_family <- get_font_family()          
+          base_family <- "Roboto Condensed"           
         }
         
         title <- grid::textGrob(title, gp = grid::gpar(fontfamily = base_family, 
@@ -998,6 +1011,10 @@ plot_hist_numeric <- function(.data, ...) {
 #' categorical variable.
 #' The bin-width is set to the Freedman-Diaconis rule (2 * IQR(x) / length(x)^(1/3))
 #'
+#' The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
+#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' use it after loading the Google font with import_google_font().
+#' 
 #' @param .data data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.
 #' @param \dots one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
@@ -1014,7 +1031,7 @@ plot_hist_numeric <- function(.data, ...) {
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @param base_family character. The name of the base font family to use 
-#' for the visualization. If not specified, the font defined in dlookr is applied. 
+#' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @examples
 #' # Visualization of all numerical variables
 #' # plot_hist_numeric(heartfailure)
@@ -1132,7 +1149,7 @@ plot_hist_numeric_impl <- function(df, vars, title, each, typographic, base_fami
       
       if (typographic) {
         if (is.null(base_family)) {
-          base_family <- get_font_family()          
+          base_family <- "Roboto Condensed"           
         }
         
         title <- grid::textGrob(title, gp = grid::gpar(fontfamily = base_family, 
@@ -1242,7 +1259,7 @@ plot_hist_numeric_group_impl <- function(df, vars, title, each, typographic, bas
       
       if (typographic) {
         if (is.null(base_family)) {
-          base_family <- get_font_family()          
+          base_family <- "Roboto Condensed"           
         }
         
         title <- grid::textGrob(title, gp = grid::gpar(fontfamily = base_family, 

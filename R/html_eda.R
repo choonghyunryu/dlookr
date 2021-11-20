@@ -593,7 +593,7 @@ html_compare_category <- function(.data, n_cells = 20, n_levels = 10) {
     })
     
       p <- p +
-        hrbrthemes::theme_ipsum(base_family = get_font_family()) +
+        hrbrthemes::theme_ipsum(base_family = "Roboto Condensed") +
         hrbrthemes::scale_fill_ipsum(na.value = "grey80") +
         theme(legend.position = "none",
               panel.grid.major.x = element_blank(),
@@ -1599,7 +1599,7 @@ html_paged_compare_categorical <- function(.data, n_rows = 25, add_row = 3,
     })
     
     p <- p +
-      hrbrthemes::theme_ipsum(base_family = get_font_family()) +
+      hrbrthemes::theme_ipsum(base_family = "Roboto Condensed") +
       hrbrthemes::scale_fill_ipsum(na.value = "grey80") +
       theme(legend.position = "none",
             panel.grid.major.x = element_blank(),

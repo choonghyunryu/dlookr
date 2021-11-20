@@ -483,6 +483,10 @@ print.univar_numeric <- function(x, ...) {
 #' @description
 #' Visualize mosaics plot by attribute of univar_category class.
 #'
+#' @details The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
+#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' use it after loading the Google font with import_google_font().
+#' 
 #' @param x an object of class "univar_category", usually, a result of a call to univar_category().
 #' @param prompt logical. The default value is FALSE. If there are multiple visualizations to be output, 
 #' if this argument value is TRUE, a prompt is output each time. 
@@ -491,7 +495,7 @@ print.univar_numeric <- function(x, ...) {
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @param base_family character. The name of the base font family to use 
-#' for the visualization. If not specified, the font defined in dlookr is applied. 
+#' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
 #' However, it does not support all parameters.
 #' @seealso \code{\link{univar_category}}, \code{\link{print.univar_category}}, \code{\link{summary.univar_category}}.
@@ -580,6 +584,10 @@ plot.univar_category <- function(x, na.rm = TRUE, prompt = FALSE,
 #' @description
 #' Visualize boxplots and histogram by attribute of univar_numeric class.
 #'
+#' @details The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
+#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' use it after loading the Google font with import_google_font().
+#' 
 #' @param x an object of class "univar_numeric", usually, a result of a call to univar_numeric().
 #' @param indiv logical. Select whether to display information of all variables in one plot when there are multiple selected numeric variables. 
 #' In case of FALSE, all variable information is displayed in one plot. 
@@ -597,7 +605,7 @@ plot.univar_category <- function(x, na.rm = TRUE, prompt = FALSE,
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package. 
 #' @param base_family character. The name of the base font family to use 
-#' for the visualization. If not specified, the font defined in dlookr is applied. 
+#' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
 #' However, it does not support.
 #' @seealso \code{\link{univar_numeric}}, \code{\link{print.univar_numeric}}, \code{\link{summary.univar_numeric}}.

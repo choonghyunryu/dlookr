@@ -8,6 +8,10 @@
 #' So, it was made possible to visually examine how the missing values are distributed 
 #' for each combination of variables.
 #' 
+#' The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
+#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' use it after loading the Google font with import_google_font().
+#' 
 #' @param x data frames, or objects to be coerced to one.
 #' @param main character. Main title.
 #' @param col.left character. The color of left legend that is frequency of NA. default is "#009E73".
@@ -15,7 +19,7 @@
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @param base_family character. The name of the base font family to use 
-#' for the visualization. If not specified, the font defined in dlookr is applied. 
+#' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @examples
 #' # Generate data for the example
 #' set.seed(123L)
@@ -127,6 +131,10 @@ plot_na_hclust <- function (x, main = NULL, col.left = "#009E73",
 #' @description
 #' Visualize pareto chart for variables with missing value.
 #'
+#' @details The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
+#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' use it after loading the Google font with import_google_font().
+#' 
 #' @param x data frames, or objects to be coerced to one.
 #' @param only_na logical. The default value is FALSE. 
 #' If TRUE, only variables containing missing values are selected for visualization. 
@@ -141,7 +149,7 @@ plot_na_hclust <- function (x, main = NULL, col.left = "#009E73",
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @param base_family character. The name of the base font family to use 
-#' for the visualization. If not specified, the font defined in dlookr is applied. 
+#' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @examples
 #' # Generate data for the example
 #' set.seed(123L)
@@ -295,6 +303,10 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
 #' Finally, the visualization at the top right expresses the number of variables including missing values in the data set, 
 #' and the number of observations including missing values and complete cases .
 #' 
+#' The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
+#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' use it after loading the Google font with import_google_font(). 
+#' 
 #' @param x data frames, or objects to be coerced to one.
 #' @param only_na logical. The default value is FALSE. 
 #' If TRUE, only variables containing missing values are selected for visualization. 
@@ -309,7 +321,7 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @param base_family character. The name of the base font family to use 
-#' for the visualization. If not specified, the font defined in dlookr is applied. 
+#' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @examples
 #' # Generate data for the example
 #' set.seed(123L)
@@ -515,7 +527,7 @@ plot_na_intersect <- function (x, only_na = TRUE, n_intersacts = NULL,
             plot.margin = margin(0, 10, 30, 0))
     
     if (is.null(base_family)) {
-      base_family <- get_font_family()
+      base_family <- "Roboto Condensed" 
     }
     
     main <- grid::textGrob(main, gp = grid::gpar(fontfamily = base_family, 

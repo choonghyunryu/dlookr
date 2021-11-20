@@ -23,7 +23,7 @@ Depends:
     R (>= 3.2.0)
 Imports: 
     dplyr (>= 0.7.6),
-    extrafont (>= 0.17),
+    showtext (>= 0.9-4),
     ggplot2 (>= 3.0.0),
     grid,
     gridExtra,

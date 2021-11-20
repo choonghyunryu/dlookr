@@ -1,44 +1,46 @@
-#' Import Liberation Sans Narrow fonts
+#' Import Google Fonts
 #'
 #' @description
-#' Import Liberation Sans Narrow font to be used when drawing charts.
-#'
-#' @details 
-#' The Liberation(tm) Fonts is a font family which aims at metric compatibility 
-#' with Arial, Times New Roman, and Courier New. It is sponsored by Red Hat.
-#' Import fonts is older versions of the Liberation(tm) fonts. This is released 
-#' as open source under the GNU General Public License version 2 with exceptions. 
-#' https://fedoraproject.org/wiki/Licensing/LiberationFontLicense
+#' Import google font to be used when drawing charts.
 #' 
-#' @importFrom extrafont font_import
+#' @param family character. font family name
+#'
+#' @details
+#' When attaching the dlookr package, use "Roboto Condensed" and 
+#' "Noto Sans Korean" among Google fonts. And also loads "Liberation Sans Narrow" 
+#' included in the package for offline environment.
+#' 
+#' If you want to use anything other than the 3 fonts that are loaded with 
+#' the dlookr package, load the desired Google fonts with import_google_font().
+#' 
+#' dlookr recommends the following google fonts, both sans and condensed:
+#' "IBM Plex Sans Condensed", "Encode Sans Condensed", "Barlow Condensed", 
+#' "Saira Condensed", "Titillium Web", "Oswald", "PT Sans Narrow"
+#' 
+#' Korean fonts:
+#' "Nanum Gothic", "Gothic A1"
+#'
+#' @importFrom sysfonts font_add_google 
 #' @export
-import_liberation <- function() {
-  font_path <- system.file("fonts", "LiberationSansNarrow", package = "dlookr")
-  suppressWarnings(suppressMessages(extrafont::font_import(font_path, 
-                                                           prompt = FALSE)))
+#' 
+import_google_font <- function(family) {
+  family <- c("IBM Plex Sans Condensed", "Encode Sans Condensed", "Barlow Condensed",
+              "Saira Condensed", "Titillium Web", "Oswald", "PT Sans Narrow",
+              "Nanum Gothic", "Gothic A1")
   
-  msg <- sprintf("Imported Liberation Sans Narrow fonts from %s", font_path)
-  message(msg)
+  sysfonts::font_add_google(name = family, family = family) 
 }
 
-#' @importFrom hrbrthemes theme_ipsum
-theme_typographic <- function (base_family = NULL) {
+
+#' @importFrom hrbrthemes theme_ipsum_rc
+theme_typographic <- function(base_family = NULL) {
   if (is.null(base_family)) {
-    base_family <- get_font_family() 
+    base_family <- "Roboto Condensed"
   }
   
-  hrbrthemes::theme_ipsum(base_family = base_family)
-}
-
-#' @importFrom extrafont fonttable
-get_font_family <- function () {
-  family <- c("Arial Narrow", "Liberation Sans Narrow")
+  if (!base_family %in% sysfonts::font_families()) {
+    base_family <- "Roboto Condensed"
+  }
   
-  font_tab <- extrafont::fonttable()
-  
-  base_family <- family[family %in% font_tab$FamilyName][1]
-  
-  if (is.na(base_family))
-    base_family <- "sans"
-  base_family
+  hrbrthemes::theme_ipsum_rc(base_family = base_family)
 }

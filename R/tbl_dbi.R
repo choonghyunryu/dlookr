@@ -626,6 +626,10 @@ diagnose_outlier.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_si
 #'
 #' See vignette("diagonosis") for an introduction to these concepts.
 #'
+#' The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
+#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' use it after loading the Google font with import_google_font(). 
+#' 
 #' @param .data a tbl_dbi.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
@@ -644,7 +648,7 @@ diagnose_outlier.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_si
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @param base_family character. The name of the base font family to use 
-#' for the visualization. If not specified, the font defined in dlookr is applied. 
+#' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' 
 #' @seealso \code{\link{plot_outlier.data.frame}}, \code{\link{diagnose_outlier.tbl_dbi}}.
 #' @export
@@ -878,6 +882,10 @@ normality.tbl_dbi <- function(.data, ..., sample = 5000,
 #' \item histogram by square root transfer data
 #' }
 #'
+#' The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
+#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' use it after loading the Google font with import_google_font(). 
+#' 
 #' @param .data a tbl_dbi.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
@@ -901,7 +909,7 @@ normality.tbl_dbi <- function(.data, ..., sample = 5000,
 #' @param col a color to be used to fill the bars. The default is "steelblue".
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' @param base_family character. The name of the base font family to use 
-#' for the visualization. If not specified, the font defined in dlookr is applied. 
+#' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' 
 #' @seealso \code{\link{plot_normality.data.frame}}, \code{\link{plot_outlier.tbl_dbi}}.
 #' @export
@@ -1134,6 +1142,10 @@ correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = In
 #' Since the plot is drawn for each variable, if you specify more than
 #' one variable in the ... argument, the specified number of plots are drawn.
 #'
+#' The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
+#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' use it after loading the Google font with import_google_font(). 
+#' 
 #' @param .data a tbl_dbi.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
@@ -1145,7 +1157,7 @@ correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = In
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @param base_family character. The name of the base font family to use 
-#' for the visualization. If not specified, the font defined in dlookr is applied. 
+#' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param in_database Specifies whether to perform in-database operations. 
 #' If TRUE, most operations are performed in the DBMS. if FALSE, 
 #' table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.

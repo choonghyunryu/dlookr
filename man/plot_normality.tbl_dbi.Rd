@@ -48,7 +48,7 @@ lower right corner. The default is "sqrt".}
 \item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization.}
 
 \item{base_family}{character. The name of the base font family to use 
-for the visualization. If not specified, the font defined in dlookr is applied.}
+for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
 }
 \description{
 The plot_normality() visualize distribution information
@@ -83,6 +83,10 @@ The plot derived from the numerical data visualization is as follows.
 \item histogram by log transfer data
 \item histogram by square root transfer data
 }
+
+The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
+and "Liberation Sans Narrow". If you want to use a different font, 
+use it after loading the Google font with import_google_font().
 }
 
 \examples{

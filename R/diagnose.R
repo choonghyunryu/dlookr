@@ -562,6 +562,10 @@ plot_outlier <- function(.data, ...) {
 #' Since the plot is drawn for each variable, if you specify more than
 #' one variable in the ... argument, the specified number of plots are drawn.
 #'
+#' The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
+#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' use it after loading the Google font with import_google_font().
+#' 
 #' @section Outlier diagnostic information:
 #' The plot derived from the numerical data diagnosis is as follows.
 #'
@@ -586,7 +590,7 @@ plot_outlier <- function(.data, ...) {
 #' @param col a color to be used to fill the bars. The default is "steelblue".
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' @param base_family character. The name of the base font family to use 
-#' for the visualization. If not specified, the font defined in dlookr is applied. 
+#' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @seealso \code{\link{plot_outlier.tbl_dbi}}, \code{\link{diagnose_outlier.data.frame}}.
 #' @export
@@ -761,7 +765,7 @@ plot_outlier_raw <- function(x, main = NULL, col = "steelblue",
   } 
   
   if (is.null(base_family)) {
-    base_family <- get_font_family()      
+    base_family <- "Roboto Condensed"     
   }
   
   top <- grid::textGrob(main, gp = grid::gpar(fontfamily = base_family, 
@@ -782,6 +786,10 @@ plot_outlier_raw <- function(x, main = NULL, col = "steelblue",
 #' Since the plot is drawn for each variable, if you specify more than
 #' one variable in the ... argument, the specified number of plots are drawn.
 #'
+#' The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
+#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' use it after loading the Google font with import_google_font().
+#' 
 #' @section Outlier diagnostic information:
 #' The plot derived from the numerical data diagnosis is as follows.
 #'
@@ -803,7 +811,7 @@ plot_outlier_raw <- function(x, main = NULL, col = "steelblue",
 #' They support unquoting and splicing.
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' @param base_family character. The name of the base font family to use 
-#' for the visualization. If not specified, the font defined in dlookr is applied. 
+#' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @seealso \code{\link{plot_outlier.data.frame}}.
 #' @export

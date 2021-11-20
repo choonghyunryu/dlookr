@@ -47,7 +47,7 @@ The default is FALSE, which draws multiple plots on one screen.}
 The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
 
 \item{base_family}{character. The name of the base font family to use 
-for the visualization. If not specified, the font defined in dlookr is applied.}
+for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
 }
 \description{
 The plot_hist_numeric() to visualizes the histogram of numeric data or 
@@ -59,6 +59,10 @@ plot_hist_numeric() shows box plots of several numeric variables
 on one screen. This function can also display a histogram for each level of a specific 
 categorical variable.
 The bin-width is set to the Freedman-Diaconis rule (2 * IQR(x) / length(x)^(1/3))
+
+The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
+and "Liberation Sans Narrow". If you want to use a different font, 
+use it after loading the Google font with import_google_font().
 }
 \examples{
 # Visualization of all numerical variables
