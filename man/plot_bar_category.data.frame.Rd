@@ -69,8 +69,8 @@ comparing the frequency of each level. The frequency table helps with this.
 As a visualization method, a bar graph can help you understand 
 the distribution of categorical data more easily than a frequency table.
 
-The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
-and "Liberation Sans Narrow". If you want to use a different font, 
+The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+"NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 use it after loading the Google font with import_google_font().
 }
 \examples{

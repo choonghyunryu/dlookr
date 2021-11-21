@@ -14,8 +14,8 @@ plot_bar_category <- function(.data, ...) {
 #' As a visualization method, a bar graph can help you understand 
 #' the distribution of categorical data more easily than a frequency table.
 #'
-#' The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
-#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+#' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font().
 #' 
 #' @param .data a data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.
@@ -453,8 +453,8 @@ plot_qq_numeric <- function(.data, ...) {
 #' on one screen. This function can also display a Q-Q plot for each level of a specific 
 #' categorical variable.
 #'
-#' The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
-#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+#' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font().
 #'  
 #' @param .data data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.
@@ -727,8 +727,8 @@ plot_box_numeric <- function(.data, ...) {
 #' on one screen. This function can also display a box plot for each level of a specific 
 #' categorical variable.
 #' 
-#' The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
-#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+#' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font().
 #'
 #' @param .data data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.
@@ -1011,8 +1011,8 @@ plot_hist_numeric <- function(.data, ...) {
 #' categorical variable.
 #' The bin-width is set to the Freedman-Diaconis rule (2 * IQR(x) / length(x)^(1/3))
 #'
-#' The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
-#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+#' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font().
 #' 
 #' @param .data data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.

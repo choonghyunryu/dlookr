@@ -59,8 +59,8 @@ plot_box_numeric() shows box plots of several numeric variables
 on one screen. This function can also display a box plot for each level of a specific 
 categorical variable.
 
-The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
-and "Liberation Sans Narrow". If you want to use a different font, 
+The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+"NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 use it after loading the Google font with import_google_font().
 }
 \examples{

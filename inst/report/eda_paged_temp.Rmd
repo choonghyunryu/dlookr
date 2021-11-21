@@ -41,6 +41,7 @@ reportData <- get("reportData", .dlookrEnv)
 targetVariable <- get("targetVariable", .dlookrEnv)
 sample_percent <- get("sample_percent", .dlookrEnv)
 author <- get("author", .dlookrEnv)
+base_family <- get("base_family", .dlookrEnv)
 ```
 
 
@@ -173,7 +174,7 @@ html_paged_describe(reportData, caption = cap, font_size = 13)
 
 ```{r descriptive-numerical-detail, results='asis', dpi=300, fig.height=5, fig.width=5, out.width="80%"}
 # cap <- "Descriptive Statistics of Numerical Variables"
-html_paged_describe_detail(reportData)
+html_paged_describe_detail(reportData, base_family = base_family)
 ```
 
 ### Categorical Variables
@@ -186,7 +187,7 @@ html_paged_categorical(reportData, caption = cap, font_size = 13)
 
 ```{r descriptive-categorical-detail, results='asis', dpi=300, fig.height=5, fig.width=5, out.width="80%"}
 # cap <- "Descriptive Statistics of Categorical Variables"
-html_paged_categorical_detail(reportData)
+html_paged_categorical_detail(reportData, base_family = base_family)
 ```
 
 ## Normality Test
@@ -198,7 +199,7 @@ html_paged_normality(reportData, caption = cap, font_size = 13)
 
 ```{r normality-detail, results='asis', dpi=300, fig.height=5, fig.width=7, out.width="90%"}
 suppressWarnings({
-  html_paged_normality_detail(reportData)
+  html_paged_normality_detail(reportData, base_family = base_family)
 })
 ```
 
@@ -208,14 +209,14 @@ suppressWarnings({
 ```{r compare-numerical, results='asis'}
 cap <- "Correlation coefficient"
 
-html_paged_compare_numerical(reportData, caption = cap, font_size = 13)
+html_paged_compare_numerical(reportData, caption = cap, font_size = 13, base_family = base_family)
 ```
 
 ## Compare Categorical Variables
 ```{r compare-categorical, results='asis', dpi=300, fig.height=5, fig.width=5, out.width="70%"}
 cap <- "Chisqure-test"
 
-html_paged_compare_categorical(reportData, caption = cap, font_size = 13)
+html_paged_compare_categorical(reportData, caption = cap, font_size = 13, base_family = base_family)
 ```
 
 # Multivariate Analysis
@@ -232,7 +233,7 @@ html_paged_correlation(reportData)
 if (length(idx.numeric) < 2) {
   html_cat("The number of numerical variables is less than 2.")
 } else {
-  dlookr::plot_correlate(reportData)  
+  dlookr::plot_correlate(reportData, base_family = base_family)  
 }
 
 break_page_asis()
@@ -244,19 +245,19 @@ $targeted_eda$
 ## Grouped Numerical Variables
 
 ```{r group-numerical, results='asis', dpi=400, fig.height=5, fig.width=7, out.width="85%"}
-html_paged_target_numerical(reportData, targetVariable)  
+html_paged_target_numerical(reportData, targetVariable, base_family = base_family)  
 ```
 
 ## Grouped Categorical Variables
 
 ```{r group-categorical, results='asis', dpi=400, fig.height=6, fig.width=7, out.width="85%"}
-html_paged_target_categorical(reportData, targetVariable)  
+html_paged_target_categorical(reportData, targetVariable, base_family = base_family)  
 ```
 
 ## Grouped Correlation
 
 ```{r group-correlation, results='asis', dpi=400, fig.height=6, fig.width=6, out.width="95%"}
-html_paged_target_correlation(reportData, targetVariable)  
+html_paged_target_correlation(reportData, targetVariable, base_family = base_family)  
 ```
 
 $targeted_eda$

@@ -18,6 +18,7 @@ transformation_web_report(
   create_date = Sys.time(),
   theme = c("orange", "blue"),
   sample_percent = 100,
+  base_family = NULL,
   ...
 )
 }
@@ -52,6 +53,9 @@ default is "orange".}
 It has a value between (0, 100]. 100 means all data, and 5 means 5\% of sample data.
 This is useful for data with a large number of observations.}
 
+\item{base_family}{character. The name of the base font family to use 
+for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
+
 \item{...}{arguments to be passed to methods.}
 }
 \description{
@@ -83,6 +87,10 @@ The transformation process will report the following information:
   \item Binning
   \item Optimal Binning
 }
+
+The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+"NanumSquare", "Noto Sans Korean". If you want to use a different font, 
+use it after loading the Google font with import_google_font().
 }
 
 \examples{

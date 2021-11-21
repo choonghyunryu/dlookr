@@ -242,8 +242,8 @@ normality_group_impl <- function(df, vars, sample) {
 #'   \item histogram by square root transfer data
 #' }
 #'
-#' The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
-#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+#' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font(). 
 #'
 #' @param .data a data.frame or a \code{\link{tbl_df}}.

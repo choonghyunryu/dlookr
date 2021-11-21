@@ -839,8 +839,8 @@ print.compare_numeric <- function(x, ...) {
 #' @description
 #' Visualize mosaics plot by attribute of compare_category class.
 #' 
-#' @details The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
-#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' @details The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+#' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font().
 #' 
 #' @param x an object of class "compare_category", usually, a result of a call to compare_category().
@@ -879,7 +879,7 @@ print.compare_numeric <- function(x, ...) {
 #' two_var
 #' 
 #' # plot all pair of variables
-#' plot(all_var)
+#' # plot(all_var)
 #' 
 #' # plot a pair of variables
 #' plot(two_var)
@@ -891,10 +891,10 @@ print.compare_numeric <- function(x, ...) {
 #' plot(two_var, na.rm = TRUE)
 #' 
 #' # plot a pair of variables
-#' plot(two_var, las = 1)
+#' # plot(two_var, las = 1)
 #' 
 #' # plot a pair of variables not focuses on typographic elements
-#' plot(two_var, typographic = FALSE)
+#' # plot(two_var, typographic = FALSE)
 #' 
 #' @method plot compare_category
 #' @export
@@ -1001,11 +1001,17 @@ plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE,
 #' @description
 #' Visualize scatter plot included box plots by attribute of compare_numeric class.
 #'
+#' @details The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+#' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
+#' use it after loading the Google font with import_google_font().
+#' 
 #' @param x an object of class "compare_numeric", usually, a result of a call to compare_numeric().
 #' @param prompt logical. The default value is FALSE. If there are multiple visualizations to be output, 
 #' if this argument value is TRUE, a prompt is output each time. 
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' @param base_family character. The name of the base font family to use 
+#' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
 #' However, it does not support.
 #' @seealso \code{\link{compare_numeric}}, \code{\link{print.compare_numeric}}, \code{\link{summary.compare_numeric}}.

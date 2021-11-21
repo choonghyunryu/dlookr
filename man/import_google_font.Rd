@@ -14,10 +14,10 @@ Import google font to be used when drawing charts.
 }
 \details{
 When attaching the dlookr package, use "Roboto Condensed" and 
-"Noto Sans Korean" among Google fonts. And also loads "Liberation Sans Narrow" 
-included in the package for offline environment.
+"Noto Sans Korean" among Google fonts. And also loads "Liberation Sans Narrow"
+and "NanumSquare" included in the package for offline environment.
 
-If you want to use anything other than the 3 fonts that are loaded with 
+If you want to use anything other than the 4 fonts that are loaded with 
 the dlookr package, load the desired Google fonts with import_google_font().
 
 dlookr recommends the following google fonts, both sans and condensed:

@@ -19,6 +19,15 @@ CHANGES IN R VERSION 0.5.2:
     
     * Fixed an issue that the correlation visualization was not plot in the EDA 
       report in "Grouped Correlation" sction in eda_web_report(). (#55)
+      
+    * Fixed the logic has been modified so that an error does not occur even 
+      when the independent variable x has only one unique value 
+      in compare_numeric().   
+    
+    * Fixed an error in the visualization where the number of levels of a 
+      categorical variable was 1 combined with this variable in the 
+      "Compare Categorical Variables" section of the report in eda_web_report(),
+      eda_paged_report().
 
   MAJOR CHANGES:
 
@@ -34,6 +43,12 @@ CHANGES IN R VERSION 0.5.2:
       modern compilers, which in turn is making it difficult to maintain 
       this package on CRAN. It is possible that in the future, 
       I will not have time to keep this package on CRAN."
+
+    * Added the ability to specify the font family in the report function. 
+      This feature is useful for visualization by users using non-ASCII characters.
+      - diagnose_paged_report(), diagnose_web_report()
+      - eda_paged_report(), eda_web_report()
+      - transformation_paged_report(), transformation_web_report()      
       
     * Added the ability to specify the font family in the visualization function. 
       This feature is useful for visualization by users using non-ASCII characters.

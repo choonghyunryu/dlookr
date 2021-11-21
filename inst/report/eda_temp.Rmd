@@ -140,6 +140,7 @@ reportData <- as.data.frame(get("reportData", .dlookrEnv))
 targetVariable <- get("targetVariable", .dlookrEnv)
 sample_percent <- get("sample_percent", .dlookrEnv)
 author <- get("author", .dlookrEnv)
+base_family <- get("base_family", .dlookrEnv)
 
 # Number of observations
 N <- NROW(reportData)
@@ -258,7 +259,7 @@ in_numerical <- find_class(reportData, type = "numerical") %>%
   as.logical()
   
 if (in_numerical) {
-  html_descriptive(reportData)
+  html_descriptive(reportData, base_family = base_family)
 } else {
   html_cat("No numerical variable.")   
 }
@@ -274,7 +275,7 @@ h2("Normality Test", id = "ID-h2-normality", class = "title-h2")
 if (length(idx.numeric) > 0) {
   suppressWarnings({
     reportData %>% 
-    html_normality(theme = "$theme$")
+    html_normality(theme = "$theme$", base_family = base_family)
   })
 } else {
   html_cat("No numerical variable.")
@@ -292,7 +293,7 @@ h2("Compare Numerical Variables", id = "ID-h2-compare-numerical", class = "title
 ```
 
 ```{r compare_numerical, results='asis'}
-html_compare_numerical(reportData)
+html_compare_numerical(reportData, base_family = base_family)
 
 break_line_asis(1)
 ```
@@ -302,7 +303,7 @@ h2("Compare Categorical Variables", id = "ID-h2-compare-categorical", class = "t
 ```
 
 ```{r compare-category, results='asis'}
-html_compare_category(reportData)
+html_compare_category(reportData, base_family = base_family)
 
 break_line_asis(1)
 ```
@@ -336,7 +337,7 @@ if (length(idx.numeric) < 2) {
   cap <- "Correlation coefficient matrix plot"
   html_cat(cap)
   
-  dlookr::plot_correlate(reportData)  
+  dlookr::plot_correlate(reportData, base_family = base_family)  
 }
 
 if (!is.null(targetVariable)) {
@@ -356,7 +357,7 @@ if (!is.null(targetVariable))
 
 ```{r group-numerical, results='asis'}
 if (!is.null(targetVariable)) {
-  content <- html_target_numerical(reportData, target = targetVariable)
+  content <- html_target_numerical(reportData, target = targetVariable, base_family = base_family)
 } else {
   content <- HTML("")
 }  
@@ -376,7 +377,7 @@ if (!is.null(targetVariable))
 
 ```{r group-categorical, results='asis'}
 if (!is.null(targetVariable)) {
-  content <- html_target_categorical(reportData, target = targetVariable)
+  content <- html_target_categorical(reportData, target = targetVariable, base_family = base_family)
 } else {
   content <- HTML("")
 }
@@ -400,7 +401,7 @@ if (!is.null(targetVariable)) {
   cap <- "Correlation by level of target variable"
   html_cat(cap)
   
-  content <- html_target_correlation(reportData, target = targetVariable)
+  content <- html_target_correlation(reportData, target = targetVariable, base_family = base_family)
 } else {
   content <- HTML("")
 }

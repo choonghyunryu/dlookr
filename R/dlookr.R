@@ -19,7 +19,7 @@
 #' `browseVignettes(package = "dlookr")`
 #'
 #' @import dplyr
-#' @import extrafont
+#' @import showtext
 #' @import ggplot2
 "_PACKAGE"
 

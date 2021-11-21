@@ -60,8 +60,8 @@ on one screen. This function can also display a histogram for each level of a sp
 categorical variable.
 The bin-width is set to the Freedman-Diaconis rule (2 * IQR(x) / length(x)^(1/3))
 
-The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
-and "Liberation Sans Narrow". If you want to use a different font, 
+The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+"NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 use it after loading the Google font with import_google_font().
 }
 \examples{

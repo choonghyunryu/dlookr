@@ -8,8 +8,8 @@
 #' So, it was made possible to visually examine how the missing values are distributed 
 #' for each combination of variables.
 #' 
-#' The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
-#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+#' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font().
 #' 
 #' @param x data frames, or objects to be coerced to one.
@@ -131,8 +131,8 @@ plot_na_hclust <- function (x, main = NULL, col.left = "#009E73",
 #' @description
 #' Visualize pareto chart for variables with missing value.
 #'
-#' @details The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
-#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' @details The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+#' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font().
 #' 
 #' @param x data frames, or objects to be coerced to one.
@@ -303,8 +303,8 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
 #' Finally, the visualization at the top right expresses the number of variables including missing values in the data set, 
 #' and the number of observations including missing values and complete cases .
 #' 
-#' The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
-#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+#' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font(). 
 #' 
 #' @param x data frames, or objects to be coerced to one.

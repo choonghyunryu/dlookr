@@ -79,7 +79,11 @@ summary_transform <- function(object, ...) {
 #' @importFrom htmltools plotTag
 #' @import dplyr
 #' @import reactable
-html_impute_missing <- function(.data, target = NULL) {
+html_impute_missing <- function(.data, target = NULL, base_family = NULL) {
+  if (is.null(base_family)) {
+    base_family <- "Roboto Condensed"
+  }
+  
   numerics <- c("mean", "median", "mode", "knn", "rpart", "mice")
   categories <- c("mode", "rpart", "mice")
   
@@ -157,7 +161,7 @@ html_impute_missing <- function(.data, target = NULL) {
           p_compare <- imputes %>% 
             lapply(function(x) {
               htmltools::plotTag({
-                plot(x)
+                plot(x, base_family = base_family)
               }, sprintf("A plot of imputation"), 
               width = 600, height = 400, device = grDevices::png)
             })
@@ -299,7 +303,11 @@ html_impute_missing <- function(.data, target = NULL) {
 #' @importFrom htmltools plotTag
 #' @import dplyr
 #' @import reactable
-html_impute_outlier <- function(.data) {
+html_impute_outlier <- function(.data, base_family = NULL) {
+  if (is.null(base_family)) {
+    base_family <- "Roboto Condensed"
+  }
+  
   method <- c("mean", "median", "mode", "capping")
   
   n <- nrow(.data)
@@ -354,7 +362,7 @@ html_impute_outlier <- function(.data) {
           p_compare <- imputes %>% 
             lapply(function(x) {
               htmltools::plotTag({
-                plot(x)
+                plot(x, base_family = base_family)
               }, sprintf("A plot of imputation"), 
               width = 600, height = 400, device = grDevices::png)
             })
@@ -440,7 +448,11 @@ html_impute_outlier <- function(.data) {
 #' @importFrom htmltools plotTag
 #' @import dplyr
 #' @import reactable
-html_resolve_skewness <- function(.data) {
+html_resolve_skewness <- function(.data, base_family = NULL) {
+  if (is.null(base_family)) {
+    base_family <- "Roboto Condensed"
+  }
+  
   skewlist <- find_skewness(.data, index = FALSE)
   
   if (length(skewlist) > 0) {
@@ -506,7 +518,7 @@ html_resolve_skewness <- function(.data) {
           p_compare <- resolve %>% 
             lapply(function(x) {
               htmltools::plotTag({
-                plot(x)
+                plot(x, base_family = base_family)
               }, sprintf("A plot of transform"), 
               width = 600, height = 400, device = grDevices::png)
             })
@@ -594,7 +606,11 @@ html_resolve_skewness <- function(.data) {
 #' @importFrom purrr map_int
 #' @import dplyr
 #' @import reactable
-html_binning <- function(.data) {
+html_binning <- function(.data, base_family = NULL) {
+  if (is.null(base_family)) {
+    base_family <- "Roboto Condensed"
+  }
+  
   method <- c("quantile", "equal", "pretty", "kmeans", "bclust")
   
   numlist <- find_class(.data, "numerical", index = FALSE)
@@ -668,7 +684,7 @@ html_binning <- function(.data) {
         ),
         details = function(index) {
           p_hist <- htmltools::plotTag({
-            plot(bins[[index]])
+            plot(bins[[index]], base_family = base_family)
             }, sprintf("A plot of bins"), 
             width = 600, height = 400, device = grDevices::png)
           
@@ -716,7 +732,11 @@ html_binning <- function(.data) {
 #' @importFrom purrr map_int
 #' @import dplyr
 #' @import reactable
-html_optimal_binning <- function(.data, target) {
+html_optimal_binning <- function(.data, target, base_family = NULL) {
+  if (is.null(base_family)) {
+    base_family <- "Roboto Condensed"
+  }
+  
   numlist <- find_class(.data, "numerical", index = FALSE)
   
   if (is.null(target)) {
@@ -792,7 +812,7 @@ html_optimal_binning <- function(.data, target) {
           details = function(index) {
             if (tab_numerical$n_bins[index] > 0) {
               p_dist <- htmltools::plotTag({
-                plot(bins[[index]])
+                plot(bins[[index]], base_family = base_family)
               }, sprintf("A plot of bins"), 
               width = 600, height = 400, device = grDevices::png)
               
@@ -841,7 +861,11 @@ html_optimal_binning <- function(.data, target) {
 #' @importFrom knitr kable
 #' @importFrom kableExtra kable_styling add_header_above
 html_paged_impute_missing <- function(.data, target = NULL, full_width = TRUE, 
-                                      font_size = 13) {
+                                      font_size = 13, base_family = NULL) {
+  if (is.null(base_family)) {
+    base_family <- "Roboto Condensed"
+  }
+  
   numerics <- c("mean", "median", "mode", "knn", "rpart", "mice")
   categories <- c("mode", "rpart", "mice")
   
@@ -909,7 +933,7 @@ html_paged_impute_missing <- function(.data, target = NULL, full_width = TRUE,
       
       p_compare <- imputes %>% 
         lapply(function(x) {
-            plot(x)
+            plot(x, base_family = base_family)
         })
       
       suppressMessages({
@@ -1018,7 +1042,12 @@ html_paged_impute_missing <- function(.data, target = NULL, full_width = TRUE,
 #' @import reactable
 #' @importFrom knitr kable
 #' @importFrom kableExtra kable_styling add_header_above
-html_paged_impute_outlier <- function(.data, full_width = TRUE, font_size = 13) {
+html_paged_impute_outlier <- function(.data, full_width = TRUE, font_size = 13, 
+                                      base_family = NULL) {
+  if (is.null(base_family)) {
+    base_family <- "Roboto Condensed"
+  }
+  
   method <- c("mean", "median", "mode", "capping")
   
   n <- nrow(.data)
@@ -1060,7 +1089,7 @@ html_paged_impute_outlier <- function(.data, full_width = TRUE, font_size = 13) 
       
       p_compare <- imputes %>% 
         lapply(function(x) {
-            plot(x)
+            plot(x, base_family = base_family)
         })
       
       suppressMessages({
@@ -1115,7 +1144,12 @@ html_paged_impute_outlier <- function(.data, full_width = TRUE, font_size = 13) 
 #' @import dplyr
 #' @importFrom knitr kable
 #' @importFrom kableExtra kable_styling 
-html_paged_resolve_skewness <- function(.data, full_width = TRUE, font_size = 13) {
+html_paged_resolve_skewness <- function(.data, full_width = TRUE, font_size = 13,
+                                        base_family = NULL) {
+  if (is.null(base_family)) {
+    base_family <- "Roboto Condensed"
+  }
+  
   skewlist <- find_skewness(.data, index = FALSE)
   
   if (length(skewlist) > 0) {
@@ -1188,7 +1222,7 @@ html_paged_resolve_skewness <- function(.data, full_width = TRUE, font_size = 13
         el <- div(h4(paste0(variable, " - ", method[j])))
         cat(as.character(el))
         
-        plot(resolve[[j]])
+        plot(resolve[[j]], base_family = base_family)
         
         break_line_asis(1)
         
@@ -1216,7 +1250,12 @@ html_paged_resolve_skewness <- function(.data, full_width = TRUE, font_size = 13
 #' @import dplyr
 #' @importFrom knitr kable
 #' @importFrom kableExtra kable_styling 
-html_paged_binning <- function(.data, full_width = TRUE, font_size = 13) {
+html_paged_binning <- function(.data, full_width = TRUE, font_size = 13, 
+                               base_family = NULL) {
+  if (is.null(base_family)) {
+    base_family <- "Roboto Condensed"
+  }
+  
   method <- c("quantile", "equal", "pretty", "kmeans", "bclust")
   
   numlist <- find_class(.data, "numerical", index = FALSE)
@@ -1272,7 +1311,7 @@ html_paged_binning <- function(.data, full_width = TRUE, font_size = 13) {
       el <- div(h4(paste0(variable, " - ", tab_numerical[i, 5])))
       cat(as.character(el))
       
-      plot(bins[[i]])
+      plot(bins[[i]], base_family = base_family)
       
       break_line_asis(1)
       
@@ -1304,7 +1343,11 @@ html_paged_binning <- function(.data, full_width = TRUE, font_size = 13) {
 #' @importFrom knitr kable
 #' @importFrom kableExtra kable_styling 
 html_paged_optimal_binning <- function(.data, target, full_width = TRUE, 
-                                       font_size = 13) {
+                                       font_size = 13, base_family = NULL) {
+  if (is.null(base_family)) {
+    base_family <- "Roboto Condensed"
+  }
+  
   numlist <- find_class(.data, "numerical", index = FALSE)
   
   if (is.null(target)) {
@@ -1362,7 +1405,7 @@ html_paged_optimal_binning <- function(.data, target, full_width = TRUE,
         el <- div(h3(variable))
         cat(as.character(el))
         
-        plot(bins[[i]])
+        plot(bins[[i]], base_family = base_family)
         
         break_line_asis(1)
         

@@ -157,6 +157,7 @@ a.disable-links {
 ```{r udf, echo=FALSE, warning=FALSE, message=FALSE}
 reportData <- as.data.frame(get("reportData", .dlookrEnv))
 targetVariable <- get("targetVariable", .dlookrEnv)
+base_family <- get("base_family", .dlookrEnv)
 
 if (length(targetVariable) == 0) targetVariable <- NULL
 
@@ -247,7 +248,7 @@ h2("Missing Values", id = "ID-h2-missing", class = "title-h2")
 ```
 
 ```{r nalist, results='asis'}
-html_impute_missing(reportData, targetVariable)
+html_impute_missing(reportData, targetVariable, base_family = base_family)
 break_line_asis(1)
 ```
 
@@ -256,7 +257,7 @@ h2("Outliers", id = "ID-h2-outlier", class = "title-h2")
 ```
 
 ```{r outlist, results='asis'}
-html_impute_outlier(reportData)
+html_impute_outlier(reportData, base_family = base_family)
 break_line_asis(1)
 ```
 
@@ -265,7 +266,7 @@ h1("Resolving Skewness", id = "ID-h1-skewness", class = "title-h1")
 ```
 
 ```{r skweness, results='asis'}
-html_resolve_skewness(reportData)
+html_resolve_skewness(reportData, base_family = base_family)
 break_line_asis(1)
 ```
 
@@ -274,7 +275,7 @@ h1("Binning", id = "ID-h1-binning", class = "title-h1")
 ```
 
 ```{r binning, results='asis'}
-html_binning(reportData)
+html_binning(reportData, base_family = base_family)
 break_line_asis(1)
 ```
 
@@ -286,7 +287,7 @@ if (!is.null(targetVariable)) {
 
 ```{r optimal-binning, results='asis', message=FALSE}
 if (!is.null(targetVariable)) {
-  html_optimal_binning(reportData, targetVariable)
+  html_optimal_binning(reportData, targetVariable, base_family = base_family)
 }
 ```
 

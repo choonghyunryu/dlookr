@@ -562,8 +562,8 @@ plot_outlier <- function(.data, ...) {
 #' Since the plot is drawn for each variable, if you specify more than
 #' one variable in the ... argument, the specified number of plots are drawn.
 #'
-#' The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
-#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+#' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font().
 #' 
 #' @section Outlier diagnostic information:
@@ -786,8 +786,8 @@ plot_outlier_raw <- function(x, main = NULL, col = "steelblue",
 #' Since the plot is drawn for each variable, if you specify more than
 #' one variable in the ... argument, the specified number of plots are drawn.
 #'
-#' The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
-#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+#' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font().
 #' 
 #' @section Outlier diagnostic information:

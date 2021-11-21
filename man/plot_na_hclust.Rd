@@ -37,8 +37,8 @@ These data structures were grouped into similar groups by applying hclust.
 So, it was made possible to visually examine how the missing values are distributed 
 for each combination of variables.
 
-The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
-and "Liberation Sans Narrow". If you want to use a different font, 
+The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+"NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 use it after loading the Google font with import_google_font().
 }
 \examples{

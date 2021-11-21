@@ -1,8 +1,8 @@
 Package: dlookr
 Type: Package
 Title: Tools for Data Diagnosis, Exploration, Transformation
-Version: 0.5.2.9000
-Date: 2021-10-21
+Version: 0.5.2.9001
+Date: 2021-11-21
 Authors@R: c(
   person("Choonghyun", "Ryu",, "choonghyun.ryu@gmail.com", role = c("aut", "cre"))
   )
@@ -24,6 +24,7 @@ Depends:
 Imports: 
     dplyr (>= 0.7.6),
     showtext (>= 0.9-4),
+    sysfonts (>= 0.7.1),
     ggplot2 (>= 3.0.0),
     grid,
     gridExtra,

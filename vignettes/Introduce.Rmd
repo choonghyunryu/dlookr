@@ -214,4 +214,4 @@ programming  | extracts variable information having a certain class from an obje
 programming  | gets class of variables in data.frame or tbl_df. | `get_class()` | 
 programming  | retrieves the column information of the DBMS table through the tbl_bdi object of dplyr. | `get_column_info()` | 
 programming  | finding Users Machine's OS. | `get_os()` | 
-programming  | import Liberation Sans Narrow fonts. | `import_liberation()` | 
+programming  | import Google Fonts. | `import_google_font()` | 

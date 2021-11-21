@@ -58,7 +58,7 @@ eda_report <- function(.data, ...) {
 #' }
 #'
 #' See vignette("EDA") for an introduction to these concepts.
-#'
+#' 
 #' @param .data a data.frame or a \code{\link{tbl_df}}.
 #' @param target target variable.
 #' @param output_format character. report output type. Choose either "pdf" and "html".

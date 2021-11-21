@@ -27,6 +27,7 @@ eda_paged_report(.data, ...)
   theme = c("orange", "blue"),
   sample_percent = 100,
   is_tbl_dbi = FALSE,
+  base_family = NULL,
   ...
 )
 }
@@ -78,6 +79,9 @@ It has a value between (0, 100]. 100 means all data, and 5 means 5\% of sample d
 This is useful for data with a large number of observations.}
 
 \item{is_tbl_dbi}{logical. whether .data is a tbl_dbi object.}
+
+\item{base_family}{character. The name of the base font family to use 
+for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
 }
 \description{
 The eda_paged_report() paged report the information for EDA.
@@ -131,6 +135,10 @@ The EDA process will report the following information:
     \item Grouped Correlation
   }
 }
+
+The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+"NanumSquare", "Noto Sans Korean". If you want to use a different font, 
+use it after loading the Google font with import_google_font().
 }
 
 \examples{

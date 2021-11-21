@@ -38,8 +38,8 @@ However, it only support las parameter. las is numeric in {0,1}; the style of ax
 Visualize mosaics plot by attribute of compare_category class.
 }
 \details{
-The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
-and "Liberation Sans Narrow". If you want to use a different font, 
+The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+"NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 use it after loading the Google font with import_google_font().
 }
 \examples{
@@ -62,7 +62,7 @@ two_var <- compare_category(heartfailure2, smoking, death_event)
 two_var
 
 # plot all pair of variables
-plot(all_var)
+# plot(all_var)
 
 # plot a pair of variables
 plot(two_var)
@@ -74,10 +74,10 @@ plot(two_var)
 plot(two_var, na.rm = TRUE)
 
 # plot a pair of variables
-plot(two_var, las = 1)
+# plot(two_var, las = 1)
 
 # plot a pair of variables not focuses on typographic elements
-plot(two_var, typographic = FALSE)
+# plot(two_var, typographic = FALSE)
 
 }
 \seealso{

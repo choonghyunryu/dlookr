@@ -483,8 +483,8 @@ print.univar_numeric <- function(x, ...) {
 #' @description
 #' Visualize mosaics plot by attribute of univar_category class.
 #'
-#' @details The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
-#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' @details The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+#' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font().
 #' 
 #' @param x an object of class "univar_category", usually, a result of a call to univar_category().
@@ -584,8 +584,8 @@ plot.univar_category <- function(x, na.rm = TRUE, prompt = FALSE,
 #' @description
 #' Visualize boxplots and histogram by attribute of univar_numeric class.
 #'
-#' @details The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
-#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' @details The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+#' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font().
 #' 
 #' @param x an object of class "univar_numeric", usually, a result of a call to univar_numeric().

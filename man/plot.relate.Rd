@@ -42,8 +42,8 @@ only applies when the model argument is TRUE, and is used for ... of the plot.lm
 Visualize four kinds of plot by attribute of relate class.
 }
 \details{
-The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
-and "Liberation Sans Narrow". If you want to use a different font, 
+The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+"NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 use it after loading the Google font with import_google_font().
 }
 \examples{

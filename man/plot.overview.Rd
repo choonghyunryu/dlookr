@@ -30,8 +30,8 @@ Visualize a plot by attribute of `overview` class.
 Visualize the data type, number of observations, and number of missing values for each variable.
 }
 \details{
-The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
-and "Liberation Sans Narrow". If you want to use a different font, 
+The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+"NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 use it after loading the Google font with import_google_font().
 }
 \examples{

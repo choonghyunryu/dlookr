@@ -199,8 +199,8 @@ summary.transform <- function(object, ...) {
 #' Visualize two kinds of plot by attribute of `transform` class.
 #' The transformation of a numerical variable is a density plot.
 #' 
-#' @details The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
-#' and "Liberation Sans Narrow". If you want to use a different font, 
+#' @details The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+#' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font().
 #' 
 #' @param x an object of class "transform", usually, a result of a call to transform().

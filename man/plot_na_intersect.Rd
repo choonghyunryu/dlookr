@@ -48,8 +48,8 @@ And on the marginal of the two axes, the frequency of the case is expressed as a
 Finally, the visualization at the top right expresses the number of variables including missing values in the data set, 
 and the number of observations including missing values and complete cases .
 
-The base_family is selected from "Roboto Condensed" , "Noto Sans Korean", 
-and "Liberation Sans Narrow". If you want to use a different font, 
+The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+"NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 use it after loading the Google font with import_google_font().
 }
 \examples{

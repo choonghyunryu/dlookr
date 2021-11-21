@@ -78,21 +78,26 @@ jsd <- function(p, q, base = c("log", "log2", "log10"), margin = FALSE) {
   }
 }
 
+# Modified so that an error does not occur even when the independent variable x has only one unique value.
+# statistic, p.value, df
 get_tab_lm <- function(x) {
   info_lm <- summary(x)
   
   df <- data.frame(r.squared = info_lm$r.squared, 
-             adj.r.squared = info_lm$adj.r.squared,
-             sigma = info_lm$sigma,
-             statistic = info_lm$fstatistic[1],
-             p.value = anova(x)$'Pr(>F)'[1],
-             df = round(info_lm$fstatistic[2]),
-             logLik = as.numeric(logLik(x)),
-             AIC = AIC(x),
-             BIC = BIC(x),
-             deviance = deviance(x),
-             df.residual = x$df.residual,
-             nobs = length(x$residuals))
+                   adj.r.squared = info_lm$adj.r.squared,
+                   sigma = info_lm$sigma,
+                   statistic = ifelse(is.null(info_lm$fstatistic), NA, 
+                                      info_lm$fstatistic[1]),
+                   p.value = ifelse(is.na(anova(x)$'Pr(>F)'[1]), NA, 
+                                    anova(x)$'Pr(>F)'[1]),
+                   df = ifelse(is.null(info_lm$fstatistic), NA, 
+                               round(info_lm$fstatistic[2])),
+                   logLik = as.numeric(logLik(x)),
+                   AIC = AIC(x),
+                   BIC = BIC(x),
+                   deviance = deviance(x),
+                   df.residual = x$df.residual,
+                   nobs = length(x$residuals))
   
   row.names(df) <- NULL
   
