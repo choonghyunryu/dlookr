@@ -54,8 +54,8 @@ See vignette("transformation") for an introduction to these concepts.
 # Replace the outliers of the sodium variable with median.
 imputate_outlier(heartfailure, sodium, method = "median")
 
-# Replace the outliers of the sodium variable with capping.
-imputate_outlier(heartfailure, sodium, method = "capping")
+# # Replace the outliers of the sodium variable with capping.
+# imputate_outlier(heartfailure, sodium, method = "capping")
 
 ## using dplyr -------------------------------------
 library(dplyr)

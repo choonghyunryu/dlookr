@@ -47,16 +47,16 @@ The get_column_info() retrieves the column information of the DBMS table through
 \examples{
 library(dplyr)
 # connect DBMS
-con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+# con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 
 # copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
-copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
+# copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
 
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  get_column_info
+# con_sqlite \%>\% 
+#   tbl("TB_HEARTFAILURE") \%>\% 
+#   get_column_info
   
 # Disconnect DBMS   
-DBI::dbDisconnect(con_sqlite)
+# DBI::dbDisconnect(con_sqlite)
 
 }

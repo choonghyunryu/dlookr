@@ -56,7 +56,7 @@ plot(two_var)
 # plot(all_var, prompt = TRUE)
 
 # plot a pair of variables not focuses on typographic elements
-plot(two_var, typographic = FALSE)
+# plot(two_var, typographic = FALSE)
 
 }
 \seealso{

@@ -40,14 +40,14 @@ plot(bin)
 bin <- binning(heartfailure2$platelets, nbins = 5, type = "equal")
 plot(bin)
 
-#bin <- binning(heartfailure2$platelets, nbins = 5, type = "pretty")
-#plot(bin)
+# bin <- binning(heartfailure2$platelets, nbins = 5, type = "pretty")
+# plot(bin)
 
-#bin <- binning(heartfailure2$platelets, nbins = 5, type = "kmeans")
-#plot(bin)
+# bin <- binning(heartfailure2$platelets, nbins = 5, type = "kmeans")
+# plot(bin)
 
-bin <- binning(heartfailure2$platelets, nbins = 5, type = "bclust")
-plot(bin)
+# bin <- binning(heartfailure2$platelets, nbins = 5, type = "bclust")
+# plot(bin)
 
 }
 \seealso{

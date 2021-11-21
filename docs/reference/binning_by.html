@@ -74,7 +74,7 @@ into bins for ulterior usage in scoring modeling." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
       </span>
     </div>
 
@@ -211,53 +211,50 @@ smbinning() function of smbinning package.</p>
 <span class='no'>bin</span> <span class='kw'>&lt;-</span> <span class='fu'>binning_by</span>(<span class='no'>heartfailure2</span>, <span class='st'>"death_event"</span>, <span class='st'>"creatinine"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The factor y has been changed to a numeric vector consisting of 0 and 1.</span>
 #&gt; <span class='warning'>'Yes' changed to 1 (positive) and 'No' changed to 0 (negative).</span></div><div class='input'>
 <span class='co'># optimal binning using name</span>
-<span class='no'>bin</span> <span class='kw'>&lt;-</span> <span class='fu'>binning_by</span>(<span class='no'>heartfailure2</span>, <span class='no'>death_event</span>, <span class='no'>creatinine</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The factor y has been changed to a numeric vector consisting of 0 and 1.</span>
-#&gt; <span class='warning'>'Yes' changed to 1 (positive) and 'No' changed to 0 (negative).</span></div><div class='input'><span class='no'>bin</span></div><div class='output co'>#&gt; binned type: optimal
-#&gt; number of bins: 3
-#&gt; x
-#&gt; [0.5,0.9] (0.9,1.8] (1.8,9.4]      &lt;NA&gt; 
-#&gt;        79       167        48         5 </div><div class='input'>
+<span class='co'># bin &lt;- binning_by(heartfailure2, death_event, creatinine)</span>
+<span class='co'># bin</span>
+
 <span class='co'># performance table</span>
 <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>bin</span>, <span class='st'>"performance"</span>)</div><div class='output co'>#&gt;         Bin CntRec CntPos CntNeg CntCumPos CntCumNeg RatePos RateNeg RateCumPos
-#&gt; 1 [0.5,0.9]     79      8     71         8        71 0.08333 0.34975    0.08333
-#&gt; 2 (0.9,1.8]    167     52    115        60       186 0.54167 0.56650    0.62500
-#&gt; 3 (1.8,9.4]     48     35     13        95       199 0.36458 0.06404    0.98958
-#&gt; 4      &lt;NA&gt;      5      1      4        96       203 0.01042 0.01970    1.00000
+#&gt; 1 [0.5,0.9]     81      9     72         9        72 0.09375 0.35468    0.09375
+#&gt; 2 (0.9,1.8]    166     50    116        59       188 0.52083 0.57143    0.61458
+#&gt; 3 (1.8,9.4]     47     35     12        94       200 0.36458 0.05911    0.97917
+#&gt; 4      &lt;NA&gt;      5      2      3        96       203 0.02083 0.01478    1.00000
 #&gt; 5     Total    299     96    203        NA        NA 1.00000 1.00000         NA
 #&gt;   RateCumNeg    Odds   LnOdds      WoE      IV     JSD     AUC
-#&gt; 1    0.34975 0.11268 -2.18324 -1.43438 0.38215 0.04405 0.01457
-#&gt; 2    0.91626 0.45217 -0.79369 -0.04483 0.00111 0.00014 0.20064
-#&gt; 3    0.98030 2.69231  0.99040  1.73926 0.52272 0.05818 0.05170
-#&gt; 4    1.00000 0.25000 -1.38629 -0.63744 0.00592 0.00073 0.01960
-#&gt; 5         NA 0.47291 -0.74886       NA 0.91190 0.10310 0.28651</div><div class='input'>
+#&gt; 1    0.35468 0.12500 -2.07944 -1.33058 0.34719 0.04046 0.01663
+#&gt; 2    0.92611 0.43103 -0.84157 -0.09271 0.00469 0.00059 0.20238
+#&gt; 3    0.98522 2.91667  1.07044  1.81930 0.55574 0.06124 0.04711
+#&gt; 4    1.00000 0.66667 -0.40547  0.34339 0.00208 0.00026 0.01462
+#&gt; 5         NA 0.47291 -0.74886       NA 0.90970 0.10254 0.28074</div><div class='input'>
 <span class='co'># summary optimal_bins class</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>bin</span>)</div><div class='output co'>#&gt; ── Binning Table ──────────────────────── Several Metrics ──
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>bin</span>)</div><div class='output co'>#&gt; ── Binning Table ──────────────────────── Several Metrics ── 
 #&gt;         Bin CntRec CntPos CntNeg RatePos RateNeg    Odds      WoE      IV
-#&gt; 1 [0.5,0.9]     79      8     71 0.08333 0.34975 0.11268 -1.43438 0.38215
-#&gt; 2 (0.9,1.8]    167     52    115 0.54167 0.56650 0.45217 -0.04483 0.00111
-#&gt; 3 (1.8,9.4]     48     35     13 0.36458 0.06404 2.69231  1.73926 0.52272
-#&gt; 4      &lt;NA&gt;      5      1      4 0.01042 0.01970 0.25000 -0.63744 0.00592
-#&gt; 5     Total    299     96    203 1.00000 1.00000 0.47291       NA 0.91190
+#&gt; 1 [0.5,0.9]     81      9     72 0.09375 0.35468 0.12500 -1.33058 0.34719
+#&gt; 2 (0.9,1.8]    166     50    116 0.52083 0.57143 0.43103 -0.09271 0.00469
+#&gt; 3 (1.8,9.4]     47     35     12 0.36458 0.05911 2.91667  1.81930 0.55574
+#&gt; 4      &lt;NA&gt;      5      2      3 0.02083 0.01478 0.66667  0.34339 0.00208
+#&gt; 5     Total    299     96    203 1.00000 1.00000 0.47291       NA 0.90970
 #&gt;       JSD     AUC
-#&gt; 1 0.04405 0.01457
-#&gt; 2 0.00014 0.20064
-#&gt; 3 0.05818 0.05170
-#&gt; 4 0.00073 0.01960
-#&gt; 5 0.10310 0.28651
+#&gt; 1 0.04046 0.01663
+#&gt; 2 0.00059 0.20238
+#&gt; 3 0.06124 0.04711
+#&gt; 4 0.00026 0.01462
+#&gt; 5 0.10254 0.28074
 #&gt; 
-#&gt; ── General Metrics ─────────────────────────────────────────
-#&gt; ● Gini index                       :  -0.42698
-#&gt; ● IV (Jeffrey)                     :  0.9119
-#&gt; ● JS (Jensen-Shannon) Divergence   :  0.1031
-#&gt; ● Kolmogorov-Smirnov Statistics    :  0.29126
-#&gt; ● HHI (Herfindahl-Hirschman Index) :  0.40781
-#&gt; ● HHI (normalized)                 :  0.21042
-#&gt; ● Cramer's V                       :  0.42884
+#&gt; ── General Metrics ───────────────────────────────────────── 
+#&gt; • Gini index                       :  -0.43853
+#&gt; • IV (Jeffrey)                     :  0.9097
+#&gt; • JS (Jensen-Shannon) Divergence   :  0.10254
+#&gt; • Kolmogorov-Smirnov Statistics    :  0.31153
+#&gt; • HHI (Herfindahl-Hirschman Index) :  0.40661
+#&gt; • HHI (normalized)                 :  0.20881
+#&gt; • Cramer's V                       :  0.43445 
 #&gt; 
-#&gt; ── Significance Tests ──────────────────── Chisquare Test ──
+#&gt; ── Significance Tests ──────────────────── Chisquare Test ── 
 #&gt;       Bin A     Bin B statistics      p_value
-#&gt; 1 [0.5,0.9] (0.9,1.8]   12.83849 3.395623e-04
-#&gt; 2 (0.9,1.8] (1.8,9.4]   27.01356 2.020332e-07
+#&gt; 1 [0.5,0.9] (0.9,1.8]   10.81971 1.004251e-03
+#&gt; 2 (0.9,1.8] (1.8,9.4]   30.03979 4.232702e-08
 #&gt; </div><div class='input'>
 # visualize all information for optimal_bins class
 # plot(bin)

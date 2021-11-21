@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
       </span>
     </div>
 
@@ -146,6 +146,7 @@
   <span class='kw'>theme</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"orange"</span>, <span class='st'>"blue"</span>),
   <span class='kw'>sample_percent</span> <span class='kw'>=</span> <span class='fl'>100</span>,
   <span class='kw'>is_tbl_dbi</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>base_family</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>...</span>
 )</pre>
 
@@ -240,6 +241,11 @@ This is useful for data with a large number of observations.</p></td>
       <th>is_tbl_dbi</th>
       <td><p>logical. whether .data is a tbl_dbi object.</p></td>
     </tr>
+    <tr>
+      <th>base_family</th>
+      <td><p>character. The name of the base font family to use 
+for the visualization. If not specified, the font defined in dlookr is applied. (See details)</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -285,6 +291,9 @@ If not installed, you must use output_format = "html".</p>
 </ul></li>
 </ul>
 
+<p>The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+"NanumSquare", "Noto Sans Korean". If you want to use a different font, 
+use it after loading the Google font with import_google_font().</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='eda_paged_report.tbl_dbi.html'>eda_paged_report.tbl_dbi</a></code>.</p></div>

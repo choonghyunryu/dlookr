@@ -56,9 +56,9 @@ diagnose_outlier(heartfailure)
 
 # Select the variable to diagnose
 diagnose_outlier(heartfailure, cpk_enzyme, sodium)
-diagnose_outlier(heartfailure, -cpk_enzyme, -sodium)
-diagnose_outlier(heartfailure, "cpk_enzyme", "sodium")
-diagnose_outlier(heartfailure, 5)
+# diagnose_outlier(heartfailure, -cpk_enzyme, -sodium)
+# diagnose_outlier(heartfailure, "cpk_enzyme", "sodium")
+# diagnose_outlier(heartfailure, 5)
 
 # Using pipes ---------------------------------
 library(dplyr)
@@ -69,15 +69,15 @@ heartfailure \%>\%
 # Positive values select variables
 heartfailure \%>\%
   diagnose_outlier(cpk_enzyme, sodium)
-# Negative values to drop variables
-heartfailure \%>\%
-  diagnose_outlier(-cpk_enzyme, -sodium)
+# # Negative values to drop variables
+# heartfailure \%>\%
+#   diagnose_outlier(-cpk_enzyme, -sodium)
+# # Positions values select variables
+# heartfailure \%>\%
+#   diagnose_outlier(5)
 # Positions values select variables
-heartfailure \%>\%
-  diagnose_outlier(5)
-# Positions values select variables
-heartfailure \%>\%
-  diagnose_outlier(-1, -5)
+# # heartfailure \%>\%
+#   diagnose_outlier(-1, -5)
 
 # Using pipes & dplyr -------------------------
 # outlier_ratio is more than 1\%

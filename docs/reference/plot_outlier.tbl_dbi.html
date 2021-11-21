@@ -74,7 +74,7 @@ of the DBMS table through tbl_dbi." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
       </span>
     </div>
 
@@ -134,7 +134,8 @@ of the DBMS table through tbl_dbi.</p>
   <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"steelblue"</span>,
   <span class='kw'>in_database</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>collect_size</span> <span class='kw'>=</span> <span class='fl'>Inf</span>,
-  <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>base_family</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -175,6 +176,11 @@ Applies only if in_database = FALSE.</p></td>
       <td><p>logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.</p></td>
     </tr>
+    <tr>
+      <th>base_family</th>
+      <td><p>character. The name of the base font family to use 
+for the visualization. If not specified, the font defined in dlookr is applied. (See details)</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -195,6 +201,9 @@ one variable in the ... argument, the specified number of plots are drawn.</p>
 </ul>
 
 <p>See vignette("diagonosis") for an introduction to these concepts.</p>
+<p>The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+"NanumSquare", "Noto Sans Korean". If you want to use a different font, 
+use it after loading the Google font with import_google_font().</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='plot_outlier.data.frame.html'>plot_outlier.data.frame</a></code>, <code><a href='diagnose_outlier.tbl_dbi.html'>diagnose_outlier.tbl_dbi</a></code>.</p></div>

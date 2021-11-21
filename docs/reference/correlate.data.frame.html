@@ -73,7 +73,7 @@ coefficient of the numerical data." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
       </span>
     </div>
 
@@ -162,7 +162,7 @@ to be computed. One of "pearson" (default), "kendall", or "spearman": can be abb
 
     <p>This function is useful when used with the group_by() function of the dplyr package.
 If you want to compute by level of the categorical data you are interested in,
-rather than the whole observation, you can use <code><a href='https://rdrr.io/pkg/dplyr/man/grouped_df.html'>grouped_df</a></code> as the group_by() function.
+rather than the whole observation, you can use <code><a href='https://dplyr.tidyverse.org/reference/grouped_df.html'>grouped_df</a></code> as the group_by() function.
 This function is computed stats::cor() function by use = "pairwise.complete.obs" option.</p>
     <h2 class="hasAnchor" id="correlation-coefficient-information"><a class="anchor" href="#correlation-coefficient-information"></a>Correlation coefficient information</h2>
 
@@ -256,13 +256,9 @@ This function is computed stats::cor() function by use = "pairwise.complete.obs"
 #&gt; <span style='color: #BCBCBC;'>5</span> creatinine sodium              -<span style='color: #BB0000;'>0.223</span> 
 #&gt; <span style='color: #BCBCBC;'>6</span> creatinine time                -<span style='color: #BB0000;'>0.110</span> </div><div class='input'>
 <span class='co'># Using dplyr::grouped_dt</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'>
-<span class='no'>gdata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/group_by.html'>group_by</a></span>(<span class='no'>heartfailure</span>, <span class='no'>smoking</span>, <span class='no'>death_event</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+
+<span class='no'>gdata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>heartfailure</span>, <span class='no'>smoking</span>, <span class='no'>death_event</span>)
 <span class='fu'>correlate</span>(<span class='no'>gdata</span>, <span class='st'>"creatinine"</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 24 x 5</span>
 #&gt;    smoking death_event var1       var2              coef_corr
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>                 <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
@@ -391,7 +387,7 @@ This function is computed stats::cor() function by use = "pairwise.complete.obs"
 <span class='co'># that eliminates redundant combination of variables</span>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
  <span class='fu'>correlate</span>() <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/filter.html'>filter</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='no'>var1</span>) <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='no'>var2</span>))</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 21 x 3</span>
+ <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='no'>var1</span>) <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='no'>var2</span>))</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 21 x 3</span>
 #&gt;    var1              var2       coef_corr
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> cpk_enzyme        age          -<span style='color: #BB0000;'>0.081</span><span style='color: #BB0000; text-decoration: underline;'>4</span>
@@ -405,28 +401,18 @@ This function is computed stats::cor() function by use = "pairwise.complete.obs"
 #&gt; <span style='color: #BCBCBC;'> 9</span> creatinine        cpk_enzyme   -<span style='color: #BB0000;'>0.016</span><span style='color: #BB0000; text-decoration: underline;'>4</span>
 #&gt; <span style='color: #BCBCBC;'>10</span> sodium            cpk_enzyme    0.059<span style='text-decoration: underline;'>6</span>
 #&gt; <span style='color: #949494;'># … with 11 more rows</span></div><div class='input'>
-<span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
- <span class='fu'>correlate</span>(<span class='no'>creatinine</span>, <span class='no'>sodium</span>) <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/filter.html'>filter</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='no'>var1</span>) <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='no'>var2</span>))</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 9 x 3</span>
-#&gt;   var1       var2              coef_corr
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>                 <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> creatinine age                  0.159 
-#&gt; <span style='color: #BCBCBC;'>2</span> sodium     age                 -<span style='color: #BB0000;'>0.045</span><span style='color: #BB0000; text-decoration: underline;'>9</span>
-#&gt; <span style='color: #BCBCBC;'>3</span> creatinine cpk_enzyme          -<span style='color: #BB0000;'>0.016</span><span style='color: #BB0000; text-decoration: underline;'>4</span>
-#&gt; <span style='color: #BCBCBC;'>4</span> sodium     cpk_enzyme           0.059<span style='text-decoration: underline;'>6</span>
-#&gt; <span style='color: #BCBCBC;'>5</span> creatinine ejection_fraction   -<span style='color: #BB0000;'>0.011</span><span style='color: #BB0000; text-decoration: underline;'>3</span>
-#&gt; <span style='color: #BCBCBC;'>6</span> sodium     ejection_fraction    0.176 
-#&gt; <span style='color: #BCBCBC;'>7</span> creatinine platelets           -<span style='color: #BB0000;'>0.041</span><span style='color: #BB0000; text-decoration: underline;'>2</span>
-#&gt; <span style='color: #BCBCBC;'>8</span> sodium     platelets            0.062<span style='text-decoration: underline;'>1</span>
-#&gt; <span style='color: #BCBCBC;'>9</span> sodium     creatinine          -<span style='color: #BB0000;'>0.189</span> </div><div class='input'>
+<span class='co'># heartfailure %&gt;%</span>
+<span class='co'>#  correlate(creatinine, sodium) %&gt;%</span>
+<span class='co'>#  filter(as.integer(var1) &gt; as.integer(var2))</span>
+
 <span class='co'># Using pipes &amp; dplyr -------------------------</span>
 <span class='co'># Compute the correlation coefficient of Sales variable by 'smoking'</span>
 <span class='co'># and 'death_event' variables. And extract only those with absolute</span>
 <span class='co'># value of correlation coefficient is greater than 0.2</span>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/group_by.html'>group_by</a></span>(<span class='no'>smoking</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
+ <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>smoking</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
  <span class='fu'>correlate</span>(<span class='no'>creatinine</span>) <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/filter.html'>filter</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='no'>coef_corr</span>) <span class='kw'>&gt;=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 7 x 5</span>
+ <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='no'>coef_corr</span>) <span class='kw'>&gt;=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 7 x 5</span>
 #&gt;   smoking death_event var1       var2              coef_corr
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>                 <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'>1</span> No      Yes         creatinine ejection_fraction     0.298
@@ -436,19 +422,17 @@ This function is computed stats::cor() function by use = "pairwise.complete.obs"
 #&gt; <span style='color: #BCBCBC;'>5</span> Yes     Yes         creatinine age                   0.255
 #&gt; <span style='color: #BCBCBC;'>6</span> Yes     Yes         creatinine sodium               -<span style='color: #BB0000;'>0.286</span>
 #&gt; <span style='color: #BCBCBC;'>7</span> Yes     Yes         creatinine time                 -<span style='color: #BB0000;'>0.201</span></div><div class='input'>
-<span class='co'># extract only those with 'smoking' variable level is "Yes",</span>
-<span class='co'># and compute the correlation coefficient of 'Sales' variable</span>
-<span class='co'># by 'hblood_pressure' and 'death_event' variables.</span>
-<span class='co'># And the correlation coefficient is negative and smaller than 0.5</span>
-<span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/filter.html'>filter</a></span>(<span class='no'>smoking</span> <span class='kw'>==</span> <span class='st'>"Yes"</span>) <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/group_by.html'>group_by</a></span>(<span class='no'>hblood_pressure</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
- <span class='fu'>correlate</span>(<span class='no'>creatinine</span>) <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/filter.html'>filter</a></span>(<span class='no'>coef_corr</span> <span class='kw'>&lt;</span> <span class='fl'>0</span>) <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/filter.html'>filter</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='no'>coef_corr</span>) <span class='kw'>&gt;</span> <span class='fl'>0.5</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 5</span>
-#&gt;   hblood_pressure death_event var1       var2   coef_corr
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> Yes             Yes         creatinine sodium    -<span style='color: #BB0000;'>0.561</span></div></pre>
+# extract only those with 'smoking' variable level is "Yes",
+# and compute the correlation coefficient of 'Sales' variable
+# by 'hblood_pressure' and 'death_event' variables.
+# And the correlation coefficient is negative and smaller than 0.5
+# heartfailure %&gt;%
+#  filter(smoking == "Yes") %&gt;%
+#  group_by(hblood_pressure, death_event) %&gt;%
+#  correlate(creatinine) %&gt;%
+#  filter(coef_corr &lt; 0) %&gt;%
+#  filter(abs(coef_corr) &gt; 0.5)
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

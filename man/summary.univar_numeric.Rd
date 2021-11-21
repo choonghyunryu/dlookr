@@ -64,7 +64,7 @@ stat <- summary(all_var)
 stat
 
 # Statistics of numerical variables normalized by Min-Max method
-summary(all_var, stand = "minmax")
+# summary(all_var, stand = "minmax")
 
 # Statistics of numerical variables standardized by Z-score method
 summary(all_var, stand = "zscore")

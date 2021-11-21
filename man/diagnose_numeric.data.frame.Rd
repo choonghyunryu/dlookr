@@ -76,14 +76,14 @@ heartfailure \%>\%
 heartfailure \%>\%
   diagnose_numeric(cpk_enzyme, sodium)
 # Negative values to drop variables
-heartfailure \%>\%
-  diagnose_numeric(-cpk_enzyme, -sodium)
+# heartfailure \%>\%
+#   diagnose_numeric(-cpk_enzyme, -sodium)
 # Positions values select variables
-heartfailure \%>\%
-  diagnose_numeric(5)
+# heartfailure \%>\%
+#   diagnose_numeric(5)
 # Positions values select variables
-heartfailure \%>\%
-  diagnose_numeric(-1, -5)
+# heartfailure \%>\%
+#   diagnose_numeric(-1, -5)
 
 # Using pipes & dplyr -------------------------
 # List of variables containing outliers

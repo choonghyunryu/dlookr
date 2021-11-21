@@ -59,9 +59,9 @@ diagnose(jobchange)
 
 # Select the variable to diagnose
 diagnose(jobchange, gender, experience, training_hours)
-diagnose(jobchange, -gender, -experience, -training_hours)
-diagnose(jobchange, "gender", "experience", "training_hours")
-diagnose(jobchange, 4, 9, 13)
+# diagnose(jobchange, -gender, -experience, -training_hours)
+# diagnose(jobchange, "gender", "experience", "training_hours")
+# diagnose(jobchange, 4, 9, 13)
 
 # Using pipes ---------------------------------
 library(dplyr)
@@ -73,14 +73,14 @@ jobchange \%>\%
 jobchange \%>\%
   diagnose(gender, experience, training_hours)
 # Negative values to drop variables
-jobchange \%>\%
-  diagnose(-gender, -experience, -training_hours)
+# jobchange \%>\%
+#   diagnose(-gender, -experience, -training_hours)
 # Positions values select variables
-jobchange \%>\%
-  diagnose(4, 9, 13)
+# # jobchange \%>\%
+#   diagnose(4, 9, 13)
 # Positions values select variables
-jobchange \%>\%
-  diagnose(-8, -9, -10)
+# jobchange \%>\%
+#   diagnose(-8, -9, -10)
   
 # Using pipes & dplyr -------------------------
 # Diagnosis of missing variables

@@ -74,8 +74,8 @@ heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] <- NA
 bin <- binning_by(heartfailure2, "death_event", "creatinine")
 
 # optimal binning using name
-bin <- binning_by(heartfailure2, death_event, creatinine)
-bin
+# bin <- binning_by(heartfailure2, death_event, creatinine)
+# bin
 
 # performance table
 attr(bin, "performance")

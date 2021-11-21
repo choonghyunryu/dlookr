@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Import Liberation Sans Narrow fonts — import_liberation • dlookr</title>
+<title>Import Google Fonts — import_google_font • dlookr</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Import Liberation Sans Narrow fonts — import_liberation" />
-<meta property="og:description" content="Import Liberation Sans Narrow font to be used when drawing charts." />
+<meta property="og:title" content="Import Google Fonts — import_google_font" />
+<meta property="og:description" content="Import google font to be used when drawing charts." />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
       </span>
     </div>
 
@@ -114,25 +114,38 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Import Liberation Sans Narrow fonts</h1>
+    <h1>Import Google Fonts</h1>
     <small class="dont-index">Source: <a href='https://github.com/choonghyunryu/dlookr/blob/master/R/graphics.R'><code>R/graphics.R</code></a></small>
-    <div class="hidden name"><code>import_liberation.Rd</code></div>
+    <div class="hidden name"><code>import_google_font.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Import Liberation Sans Narrow font to be used when drawing charts.</p>
+    <p>Import google font to be used when drawing charts.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>import_liberation</span>()</pre>
+    <pre class="usage"><span class='fu'>import_google_font</span>(<span class='no'>family</span>)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>family</th>
+      <td><p>character. font family name</p></td>
+    </tr>
+    </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The Liberation(tm) Fonts is a font family which aims at metric compatibility 
-with Arial, Times New Roman, and Courier New. It is sponsored by Red Hat.
-Import fonts is older versions of the Liberation(tm) fonts. This is released 
-as open source under the GNU General Public License version 2 with exceptions. 
-https://fedoraproject.org/wiki/Licensing/LiberationFontLicense</p>
+    <p>When attaching the dlookr package, use "Roboto Condensed" and 
+"Noto Sans Korean" among Google fonts. And also loads "Liberation Sans Narrow"
+and "NanumSquare" included in the package for offline environment.</p>
+<p>If you want to use anything other than the 4 fonts that are loaded with 
+the dlookr package, load the desired Google fonts with import_google_font().</p>
+<p>dlookr recommends the following google fonts, both sans and condensed:
+"IBM Plex Sans Condensed", "Encode Sans Condensed", "Barlow Condensed", 
+"Saira Condensed", "Titillium Web", "Oswald", "PT Sans Narrow"</p>
+<p>Korean fonts:
+"Nanum Gothic", "Gothic A1"</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

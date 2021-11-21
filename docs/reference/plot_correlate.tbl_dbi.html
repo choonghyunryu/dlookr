@@ -74,7 +74,7 @@ the DBMS table through tbl_dbi." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
       </span>
     </div>
 
@@ -133,7 +133,9 @@ the DBMS table through tbl_dbi.</p>
   <span class='no'>...</span>,
   <span class='kw'>in_database</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>collect_size</span> <span class='kw'>=</span> <span class='fl'>Inf</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pearson"</span>, <span class='st'>"kendall"</span>, <span class='st'>"spearman"</span>)
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pearson"</span>, <span class='st'>"kendall"</span>, <span class='st'>"spearman"</span>),
+  <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>base_family</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -170,6 +172,16 @@ Applies only if in_database = FALSE.</p></td>
 to be computed. One of "pearson" (default), "kendall", or "spearman": can be abbreviated.</p>
 <p>See vignette("EDA") for an introduction to these concepts.</p></td>
     </tr>
+    <tr>
+      <th>typographic</th>
+      <td><p>logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.</p></td>
+    </tr>
+    <tr>
+      <th>base_family</th>
+      <td><p>character. The name of the base font family to use 
+for the visualization. If not specified, the font defined in dlookr is applied. (See details)</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -177,6 +189,9 @@ to be computed. One of "pearson" (default), "kendall", or "spearman": can be abb
     <p>The scope of the visualization is the provide a correlation information.
 Since the plot is drawn for each variable, if you specify more than
 one variable in the ... argument, the specified number of plots are drawn.</p>
+<p>The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+"NanumSquare", "Noto Sans Korean". If you want to use a different font, 
+use it after loading the Google font with import_google_font().</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='plot_correlate.data.frame.html'>plot_correlate.data.frame</a></code>, <code><a href='plot_outlier.tbl_dbi.html'>plot_outlier.tbl_dbi</a></code>.</p></div>
@@ -200,24 +215,28 @@ one variable in the ... argument, the specified number of plots are drawn.</p>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='plot_correlate.data.frame.html'>plot_correlate</a></span>(<span class='no'>platelets</span>, <span class='no'>sodium</span>, <span class='kw'>collect_size</span> <span class='kw'>=</span> <span class='fl'>200</span>)</div><div class='img'><img src='plot_correlate.tbl_dbi-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Negative values to drop variables</span>
-<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='plot_correlate.data.frame.html'>plot_correlate</a></span>(-<span class='no'>platelets</span>, -<span class='no'>sodium</span>)</div><div class='img'><img src='plot_correlate.tbl_dbi-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># con_sqlite %&gt;% </span>
+<span class='co'>#   tbl("TB_HEARTFAILURE") %&gt;% </span>
+<span class='co'>#   plot_correlate(-platelets, -sodium)</span>
+
 <span class='co'># Positions values select variables</span>
-<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='plot_correlate.data.frame.html'>plot_correlate</a></span>(<span class='fl'>1</span>)</div><div class='img'><img src='plot_correlate.tbl_dbi-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># con_sqlite %&gt;% </span>
+<span class='co'>#   tbl("TB_HEARTFAILURE") %&gt;% </span>
+<span class='co'>#   plot_correlate(1)</span>
+
 <span class='co'># Positions values select variables</span>
-<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='plot_correlate.data.frame.html'>plot_correlate</a></span>(-<span class='fl'>1</span>, -<span class='fl'>2</span>, -<span class='fl'>3</span>, -<span class='fl'>5</span>, -<span class='fl'>6</span>)</div><div class='img'><img src='plot_correlate.tbl_dbi-5.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># con_sqlite %&gt;% </span>
+<span class='co'>#   tbl("TB_HEARTFAILURE") %&gt;% </span>
+<span class='co'>#   plot_correlate(-1, -2, -3, -5, -6)</span>
+
 <span class='co'># Using pipes &amp; dplyr -------------------------</span>
 <span class='co'># Visualize correlation plot of 'sodiumsodium' variable by 'smoking'</span>
 <span class='co'># and 'death_event' variables.</span>
-<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>smoking</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='plot_correlate.data.frame.html'>plot_correlate</a></span>(<span class='no'>sodium</span>)</div><div class='img'><img src='plot_correlate.tbl_dbi-6.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_correlate.tbl_dbi-7.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_correlate.tbl_dbi-8.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_correlate.tbl_dbi-9.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># con_sqlite %&gt;% </span>
+<span class='co'>#   tbl("TB_HEARTFAILURE") %&gt;% </span>
+<span class='co'>#   group_by(smoking, death_event) %&gt;%</span>
+<span class='co'>#   plot_correlate(sodium)</span>
+
 <span class='co'># Extract only those with 'smoking' variable level is "Yes",</span>
 <span class='co'># and visualize correlation plot of 'sodium' variable by 'sex'</span>
 <span class='co'># and 'death_event' variables.</span>
@@ -227,7 +246,7 @@ one variable in the ... argument, the specified number of plots are drawn.</p>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>sex</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='plot_correlate.data.frame.html'>plot_correlate</a></span>(<span class='no'>sodium</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Passed a group with no more than five observations.</span>
 #&gt; <span class='warning'>(sex == Female and death_event == No)</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Passed a group with no more than five observations.</span>
-#&gt; <span class='warning'>(sex == Female and death_event == Yes)</span></div><div class='img'><img src='plot_correlate.tbl_dbi-10.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_correlate.tbl_dbi-11.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; <span class='warning'>(sex == Female and death_event == Yes)</span></div><div class='img'><img src='plot_correlate.tbl_dbi-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_correlate.tbl_dbi-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Disconnect DBMS   </span>
 <span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://dbi.r-dbi.org/reference/dbDisconnect.html'>dbDisconnect</a></span>(<span class='no'>con_sqlite</span>)</div></pre>
   </div>

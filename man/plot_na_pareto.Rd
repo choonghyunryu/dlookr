@@ -68,22 +68,22 @@ plot_na_pareto(jobchange2)
 plot_na_pareto(jobchange2, col = "blue")
 
 # Visualize only variables containing missing values
-plot_na_pareto(jobchange2, only_na = TRUE)
+# plot_na_pareto(jobchange2, only_na = TRUE)
 
 # Display the relative frequency 
-plot_na_pareto(jobchange2, relative = TRUE)
+# plot_na_pareto(jobchange2, relative = TRUE)
 
 # Change the grade
 plot_na_pareto(jobchange2, grade = list(High = 0.1, Middle = 0.6, Low = 1))
 
 # Change the main title.
-plot_na_pareto(jobchange2, relative = TRUE, only_na = TRUE, 
-               main = "Pareto Chart for jobchange")
+# plot_na_pareto(jobchange2, relative = TRUE, only_na = TRUE, 
+#                main = "Pareto Chart for jobchange")
   
 # Return the aggregate information about missing values.
-plot_na_pareto(jobchange2, only_na = TRUE, plot = FALSE)
+# plot_na_pareto(jobchange2, only_na = TRUE, plot = FALSE)
 
 # Not support typographic elements
-plot_na_pareto(jobchange2, typographic = FALSE)
+# plot_na_pareto(jobchange2, typographic = FALSE)
 
 }

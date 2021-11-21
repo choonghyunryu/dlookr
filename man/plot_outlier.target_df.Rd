@@ -54,7 +54,7 @@ The plot derived from the numerical data diagnosis is as follows.
 categ <- target_by(heartfailure, death_event)
 
 plot_outlier(categ, sodium)
-plot_outlier(categ, sodium, typographic = FALSE)
+# plot_outlier(categ, sodium, typographic = FALSE)
 
 # death_eventing dplyr
 library(dplyr)

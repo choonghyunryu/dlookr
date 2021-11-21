@@ -74,7 +74,7 @@ The plot at the bottom is a bar chart representing the frequency of the level." 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
       </span>
     </div>
 
@@ -128,7 +128,7 @@ The plot at the bottom is a bar chart representing the frequency of the level.</
     </div>
 
     <pre class="usage"><span class='co'># S3 method for bins</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>base_family</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,11 +143,21 @@ The plot at the bottom is a bar chart representing the frequency of the level.</
 The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.</p></td>
     </tr>
     <tr>
+      <th>base_family</th>
+      <td><p>character. The name of the base font family to use 
+for the visualization. If not specified, the font defined in dlookr is applied. (See details)</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>arguments to be passed to methods, such as graphical parameters (see par).</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+"NanumSquare", "Noto Sans Korean". If you want to use a different font, 
+use it after loading the Google font with import_google_font().</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='binning.html'>binning</a></code>, <code><a href='summary.bins.html'>print.bins</a></code>, <code><a href='summary.bins.html'>summary.bins</a></code>.</p></div>
@@ -157,20 +167,21 @@ The default is TRUE. if TRUE provides a base theme that focuses on typographic e
 <span class='no'>heartfailure2</span> <span class='kw'>&lt;-</span> <span class='no'>heartfailure</span>
 <span class='no'>heartfailure2</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>heartfailure2</span>)), <span class='fl'>20</span>), <span class='st'>"platelets"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
 
-<span class='co'># Binning the carat variable. default type argument is "quantile"</span>
+<span class='co'># Binning the platelets variable. default type argument is "quantile"</span>
 <span class='no'>bin</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='binning.html'>binning</a></span>(<span class='no'>heartfailure2</span>$<span class='no'>platelets</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>5</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bin</span>)</div><div class='img'><img src='plot.bins-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Using another type arguments</span>
 <span class='no'>bin</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='binning.html'>binning</a></span>(<span class='no'>heartfailure2</span>$<span class='no'>platelets</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"equal"</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bin</span>)</div><div class='img'><img src='plot.bins-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'>#bin &lt;- binning(heartfailure2$platelets, nbins = 5, type = "pretty")</span>
-<span class='co'>#plot(bin)</span>
+# bin &lt;- binning(heartfailure2$platelets, nbins = 5, type = "pretty")
+# plot(bin)
 
-<span class='co'>#bin &lt;- binning(heartfailure2$platelets, nbins = 5, type = "kmeans")</span>
-<span class='co'>#plot(bin)</span>
+# bin &lt;- binning(heartfailure2$platelets, nbins = 5, type = "kmeans")
+# plot(bin)
 
-<span class='no'>bin</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='binning.html'>binning</a></span>(<span class='no'>heartfailure2</span>$<span class='no'>platelets</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"bclust"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bin</span>)</div><div class='img'><img src='plot.bins-3.png' alt='' width='700' height='433' /></div><div class='input'>
+# bin &lt;- binning(heartfailure2$platelets, nbins = 5, type = "bclust")
+# plot(bin)
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

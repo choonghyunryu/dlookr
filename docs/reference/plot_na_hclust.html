@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
       </span>
     </div>
 
@@ -128,7 +128,8 @@
   <span class='kw'>main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>col.left</span> <span class='kw'>=</span> <span class='st'>"#009E73"</span>,
   <span class='kw'>col.right</span> <span class='kw'>=</span> <span class='st'>"#56B4E9"</span>,
-  <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>base_family</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -155,6 +156,11 @@
       <td><p>logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.</p></td>
     </tr>
+    <tr>
+      <th>base_family</th>
+      <td><p>character. The name of the base font family to use 
+for the visualization. If not specified, the font defined in dlookr is applied. (See details)</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -163,6 +169,9 @@ The default is TRUE. if TRUE provides a base theme that focuses on typographic e
 These data structures were grouped into similar groups by applying hclust. 
 So, it was made possible to visually examine how the missing values are distributed 
 for each combination of variables.</p>
+<p>The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+"NanumSquare", "Noto Sans Korean". If you want to use a different font, 
+use it after loading the Google font with import_google_font().</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Generate data for the example</span>
@@ -171,10 +180,12 @@ for each combination of variables.</p>
 
 <span class='co'># Visualize hcluster chart for variables with missing value.</span>
 <span class='fu'>plot_na_hclust</span>(<span class='no'>jobchange2</span>)</div><div class='img'><img src='plot_na_hclust-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Change the main title.</span>
-<span class='fu'>plot_na_hclust</span>(<span class='no'>jobchange2</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"Distribution of missing value"</span>)</div><div class='img'><img src='plot_na_hclust-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Not support typographic elements</span>
-<span class='fu'>plot_na_hclust</span>(<span class='no'>jobchange2</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot_na_hclust-3.png' alt='' width='700' height='433' /></div><div class='input'>
+# Change the main title.
+# plot_na_hclust(jobchange2, main = "Distribution of missing value")
+
+# Not support typographic elements
+# plot_na_hclust(jobchange2, typographic = FALSE)
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

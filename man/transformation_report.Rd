@@ -92,18 +92,18 @@ See vignette("transformation") for an introduction to these concepts.
 transformation_report(heartfailure)
 
 # create pdf file. file name is Transformation_Report.pdf
-transformation_report(heartfailure, death_event)
+# transformation_report(heartfailure, death_event)
 
 # create pdf file. file name is Transformation_heartfailure.pdf
-transformation_report(heartfailure, "death_event", 
-                      output_file = "Transformation_heartfailure.pdf")
+# transformation_report(heartfailure, "death_event", 
+#                       output_file = "Transformation_heartfailure.pdf")
 
 # create html file. file name is Transformation_Report.html
-transformation_report(heartfailure, "death_event", output_format = "html")
+# transformation_report(heartfailure, "death_event", output_format = "html")
 
 # create html file. file name is Transformation_heartfailure.html
-transformation_report(heartfailure, death_event, output_format = "html", 
-                      output_file = "Transformation_heartfailure.html")
+# transformation_report(heartfailure, death_event, output_format = "html", 
+#                       output_file = "Transformation_heartfailure.html")
 }
 
 }

@@ -55,25 +55,25 @@ plot_normality <- function(.data, ...) {
 #' 
 #' # Select the variable to describe
 #' normality(heartfailure, platelets, sodium)
-#' normality(heartfailure, -platelets, -sodium)
-#' normality(heartfailure, 1)
-#' normality(heartfailure, platelets, sodium, sample = 200)
+#' # normality(heartfailure, -platelets, -sodium)
+#' # normality(heartfailure, 1)
+#' # normality(heartfailure, platelets, sodium, sample = 200)
 #' 
 #' # death_eventing dplyr::grouped_dt
 #' library(dplyr)
 #' 
 #' gdata <- group_by(heartfailure, smoking, death_event)
 #' normality(gdata, "platelets")
-#' normality(gdata, sample = 250)
+#' # normality(gdata, sample = 250)
 #' 
 #' # death_eventing pipes ---------------------------------
 #' # Normality test of all numerical variables
 #' heartfailure %>%
 #'   normality()
 #' 
-#' # Positive values select variables
-#' heartfailure %>%
-#'   normality(platelets, sodium)
+#' # # Positive values select variables
+#' # heartfailure %>%
+#' #   normality(platelets, sodium)
 #' 
 #' # Positions values select variables
 #' heartfailure %>%
@@ -277,8 +277,8 @@ normality_group_impl <- function(df, vars, sample) {
 #'
 #' # Select the variable to plot
 #' plot_normality(heartfailure2, platelets, sodium)
-#' plot_normality(heartfailure2, -platelets, -sodium, col = "gray")
-#' plot_normality(heartfailure2, 1)
+#' # plot_normality(heartfailure2, -platelets, -sodium, col = "gray")
+#' # plot_normality(heartfailure2, 1)
 #'
 #' # Change the method of transformation
 #' plot_normality(heartfailure2, platelets, right = "1/x")
@@ -288,8 +288,8 @@ normality_group_impl <- function(df, vars, sample) {
 #' } else {
 #'   cat("If you want to use this feature, you need to install the rpart package.\n")
 #' }
-#' # Not allow typographic elements
-#' plot_normality(heartfailure2, platelets, typographic = FALSE)
+#' # # Not allow typographic elements
+#' # plot_normality(heartfailure2, platelets, typographic = FALSE)
 #' 
 #' # Using dplyr::grouped_df
 #' library(dplyr)
@@ -304,8 +304,8 @@ normality_group_impl <- function(df, vars, sample) {
 #'  plot_normality()
 #'
 #' # Positive values select variables
-#' heartfailure2 %>%
-#' plot_normality(platelets, sodium)
+#' # heartfailure2 %>%
+#' # plot_normality(platelets, sodium)
 #'
 #' # Positions values select variables
 #' # heartfailure2 %>%
@@ -313,9 +313,9 @@ normality_group_impl <- function(df, vars, sample) {
 #'
 #' # Using pipes & dplyr -------------------------
 #' # Plot 'creatinine' variable by 'sex' and 'smoking'
-#' heartfailure2 %>%
-#'  group_by(sex, smoking) %>%
-#'  plot_normality(creatinine)
+#' # heartfailure2 %>%
+#' #  group_by(sex, smoking) %>%
+#' #  plot_normality(creatinine)
 #'
 #' # extract only those with 'sex' variable level is "Male",
 #' # and plot 'platelets' by 'smoking'
@@ -617,7 +617,7 @@ plot_normality_group_impl <- function(df, vars, left, right, col = "steelblue",
 #'   get_transform(iris$Sepal.Length, "Box-Cox")
 #' 
 #'   # Yeo-Johnson transform 
-#'   get_transform(iris$Sepal.Length, "Yeo-Johnson")
+#'   # get_transform(iris$Sepal.Length, "Yeo-Johnson")
 #' } else {
 #'   cat("If you want to use this feature, you need to install the forecast package.\n")
 #' }

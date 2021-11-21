@@ -28,8 +28,8 @@ To learn more about dlookr, start with the vignettes:
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/choonghyunryu/dlookr}
-  \item \url{https://choonghyunryu.github.io/dlookr}
+  \item \url{https://github.com/choonghyunryu/dlookr/}
+  \item \url{https://choonghyunryu.github.io/dlookr/}
   \item Report bugs at \url{https://github.com/choonghyunryu/dlookr/issues}
 }
 

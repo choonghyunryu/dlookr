@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
       </span>
     </div>
 
@@ -214,40 +214,9 @@ to help determine whether the imputed value is used in the analysis.</p>
 #&gt; [1] TRUE
 #&gt; attr(,"class")
 #&gt; [1] "imputation" "numeric"   </div><div class='input'>
-<span class='co'># Replace the outliers of the sodium variable with capping.</span>
-<span class='fu'>imputate_outlier</span>(<span class='no'>heartfailure</span>, <span class='no'>sodium</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"capping"</span>)</div><div class='output co'>#&gt;   [1] 130 136 129 137 130 132 137 131 138 133 131 140 137 137 138 136 140 127
-#&gt;  [19] 140 130 137 136 140 135 134 144 138 136 134 132 134 132 128 138 140 134
-#&gt;  [37] 134 145 137 142 134 136 139 134 142 135 130 138 133 140 138 139 146 134
-#&gt;  [55] 132 132 138 138 136 136 139 131 139 145 137 127 136 140 142 135 140 139
-#&gt;  [73] 132 137 134 139 140 140 131 140 136 137 132 133 141 140 137 140 139 144
-#&gt;  [91] 136 133 137 135 142 141 134 136 137 140 141 137 144 140 143 138 137 138
-#&gt; [109] 133 142 132 135 136 137 126 139 136 138 140 134 135 136 140 145 134 135
-#&gt; [127] 130 137 136 145 138 131 137 145 137 137 137 130 136 138 134 140 132 141
-#&gt; [145] 139 141 136 137 134 136 135 139 134 137 136 140 136 136 134 139 134 139
-#&gt; [163] 137 142 139 135 133 134 138 133 136 140 145 139 137 138 135 140 145 140
-#&gt; [181] 136 136 136 134 137 136 134 144 136 140 134 135 130 142 135 145 137 138
-#&gt; [199] 134 130 137 136 138 136 137 136 141 136 141 130 136 140 138 130 134 134
-#&gt; [217] 141 137 134 140 134 145 139 134 138 125 132 140 130 134 127 134 137 137
-#&gt; [235] 137 137 148 132 136 137 139 136 136 141 134 137 138 135 142 130 139 143
-#&gt; [253] 133 132 139 142 139 139 135 135 138 133 129 140 141 140 134 140 140 132
-#&gt; [271] 130 134 133 140 137 137 142 140 136 136 137 136 128 138 141 135 140 132
-#&gt; [289] 142 144 141 139 140 136 143 139 138 140 136
-#&gt; attr(,"method")
-#&gt; [1] "capping"
-#&gt; attr(,"var_type")
-#&gt; [1] "numerical"
-#&gt; attr(,"outlier_pos")
-#&gt; [1]   5  20 127 200
-#&gt; attr(,"outliers")
-#&gt; [1] 116 121 124 113
-#&gt; attr(,"type")
-#&gt; [1] "outliers"
-#&gt; attr(,"message")
-#&gt; [1] "complete imputation"
-#&gt; attr(,"success")
-#&gt; [1] TRUE
-#&gt; attr(,"class")
-#&gt; [1] "imputation" "numeric"   </div><div class='input'>
+<span class='co'># # Replace the outliers of the sodium variable with capping.</span>
+<span class='co'># imputate_outlier(heartfailure, sodium, method = "capping")</span>
+
 <span class='co'>## using dplyr -------------------------------------</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
@@ -257,11 +226,11 @@ to help determine whether the imputed value is used in the analysis.</p>
                                       <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"capping"</span>, <span class='kw'>no_attrs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>orig</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>sodium</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-            <span class='kw'>imputation</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>sodium_imp</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 x 3</span><span>
+            <span class='kw'>imputation</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>sodium_imp</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 x 3</span>
 #&gt;   death_event  orig imputation
-#&gt; </span><span style='color: #BCBCBC;'>*</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> No           137.       137.
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> Yes          135.       136.</div><div class='input'>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> No           137.       137.
+#&gt; <span style='color: #BCBCBC;'>2</span> Yes          135.       136.</div><div class='input'>
 <span class='co'># If the variable of interest is a numerical variables</span>
 <span class='no'>sodium</span> <span class='kw'>&lt;-</span> <span class='fu'>imputate_outlier</span>(<span class='no'>heartfailure</span>, <span class='no'>sodium</span>)
 <span class='no'>sodium</span></div><div class='output co'>#&gt;   [1] 130 136 129 137 130 132 137 131 138 133 131 140 137 137 138 136 140 127
@@ -326,7 +295,7 @@ to help determine whether the imputed value is used in the analysis.</p>
 #&gt; p99      145.0000000 145.0000000
 #&gt; p100     148.0000000 148.0000000</div><div class='input'>
 # plot(sodium)
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -63,10 +63,10 @@ summary(cat_num)
 plot(cat_num)
 
 # If the variable of interest is a categorical column
-cat_cat <- relate(categ, hblood_pressure)
-cat_cat
-summary(cat_cat)
-plot(cat_cat)
+# cat_cat <- relate(categ, hblood_pressure)
+# cat_cat
+# summary(cat_cat)
+# plot(cat_cat)
 
 ##---------------------------------------------------
 # If the target variable is a categorical column, 
@@ -74,11 +74,11 @@ plot(cat_cat)
 num <- target_by(con_sqlite \%>\% tbl("TB_HEARTFAILURE"), death_event, collect_size = 250)
 
 # If the variable of interest is a numerical column
-num_num <- relate(num, creatinine)
-num_num
-summary(num_num)
-plot(num_num)
-plot(num_num, hex_thres = 200)
+# num_num <- relate(num, creatinine)
+# num_num
+# summary(num_num)
+# plot(num_num)
+# plot(num_num, hex_thres = 200)
 
 # If the variable of interest is a categorical column
 num_cat <- relate(num, smoking)

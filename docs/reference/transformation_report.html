@@ -73,7 +73,7 @@ numerical variables for object inheriting from data.frame." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
       </span>
     </div>
 
@@ -219,18 +219,18 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 <span class='fu'>transformation_report</span>(<span class='no'>heartfailure</span>)
 
 <span class='co'># create pdf file. file name is Transformation_Report.pdf</span>
-<span class='fu'>transformation_report</span>(<span class='no'>heartfailure</span>, <span class='no'>death_event</span>)
+<span class='co'># transformation_report(heartfailure, death_event)</span>
 
 <span class='co'># create pdf file. file name is Transformation_heartfailure.pdf</span>
-<span class='fu'>transformation_report</span>(<span class='no'>heartfailure</span>, <span class='st'>"death_event"</span>,
-                      <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"Transformation_heartfailure.pdf"</span>)
+<span class='co'># transformation_report(heartfailure, "death_event", </span>
+<span class='co'>#                       output_file = "Transformation_heartfailure.pdf")</span>
 
 <span class='co'># create html file. file name is Transformation_Report.html</span>
-<span class='fu'>transformation_report</span>(<span class='no'>heartfailure</span>, <span class='st'>"death_event"</span>, <span class='kw'>output_format</span> <span class='kw'>=</span> <span class='st'>"html"</span>)
+<span class='co'># transformation_report(heartfailure, "death_event", output_format = "html")</span>
 
 <span class='co'># create html file. file name is Transformation_heartfailure.html</span>
-<span class='fu'>transformation_report</span>(<span class='no'>heartfailure</span>, <span class='no'>death_event</span>, <span class='kw'>output_format</span> <span class='kw'>=</span> <span class='st'>"html"</span>,
-                      <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"Transformation_heartfailure.html"</span>)
+<span class='co'># transformation_report(heartfailure, death_event, output_format = "html", </span>
+<span class='co'>#                       output_file = "Transformation_heartfailure.html")</span>
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

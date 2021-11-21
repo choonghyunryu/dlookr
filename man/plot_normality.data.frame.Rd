@@ -107,8 +107,8 @@ plot_normality(heartfailure2)
 
 # Select the variable to plot
 plot_normality(heartfailure2, platelets, sodium)
-plot_normality(heartfailure2, -platelets, -sodium, col = "gray")
-plot_normality(heartfailure2, 1)
+# plot_normality(heartfailure2, -platelets, -sodium, col = "gray")
+# plot_normality(heartfailure2, 1)
 
 # Change the method of transformation
 plot_normality(heartfailure2, platelets, right = "1/x")
@@ -118,8 +118,8 @@ if (requireNamespace("forecast", quietly = TRUE)) {
 } else {
   cat("If you want to use this feature, you need to install the rpart package.\n")
 }
-# Not allow typographic elements
-plot_normality(heartfailure2, platelets, typographic = FALSE)
+# # Not allow typographic elements
+# plot_normality(heartfailure2, platelets, typographic = FALSE)
 
 # Using dplyr::grouped_df
 library(dplyr)
@@ -134,8 +134,8 @@ heartfailure2 \%>\%
  plot_normality()
 
 # Positive values select variables
-heartfailure2 \%>\%
-plot_normality(platelets, sodium)
+# heartfailure2 \%>\%
+# plot_normality(platelets, sodium)
 
 # Positions values select variables
 # heartfailure2 \%>\%
@@ -143,9 +143,9 @@ plot_normality(platelets, sodium)
 
 # Using pipes & dplyr -------------------------
 # Plot 'creatinine' variable by 'sex' and 'smoking'
-heartfailure2 \%>\%
- group_by(sex, smoking) \%>\%
- plot_normality(creatinine)
+# heartfailure2 \%>\%
+#  group_by(sex, smoking) \%>\%
+#  plot_normality(creatinine)
 
 # extract only those with 'sex' variable level is "Male",
 # and plot 'platelets' by 'smoking'

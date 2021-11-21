@@ -66,8 +66,8 @@
 #' x <- sample(1:1000, size = 50) * 12345679
 #' bin <- binning(x)
 #' bin
-#' bin <- binning(x, approxy.lab = FALSE)
-#' bin
+#' # bin <- binning(x, approxy.lab = FALSE)
+#' # bin
 #'
 #' # extract binned results
 #' extract(bin)
@@ -78,13 +78,13 @@
 #' library(dplyr)
 #'
 #' # Compare binned frequency by death_event
-#' heartfailure2 %>%
-#'  mutate(platelets_bin = binning(heartfailure2$platelets) %>% 
-#'                      extract()) %>%
-#'  group_by(death_event, platelets_bin) %>%
-#'  summarise(freq = n()) %>%
-#'  arrange(desc(freq)) %>%
-#'  head(10)
+#' # heartfailure2 %>%
+#' #  mutate(platelets_bin = binning(heartfailure2$platelets) %>% 
+#' #                      extract()) %>%
+#' #  group_by(death_event, platelets_bin) %>%
+#' #  summarise(freq = n()) %>%
+#' #  arrange(desc(freq)) %>%
+#' #  head(10)
 #'  
 #'  # Compare binned frequency by death_event using Viz
 #'  heartfailure2 %>%
@@ -309,14 +309,14 @@ print.bins <- function(x, ...) {
 #' bin <- binning(heartfailure2$platelets, nbins = 5, type = "equal")
 #' plot(bin)
 #' 
-#' #bin <- binning(heartfailure2$platelets, nbins = 5, type = "pretty")
-#' #plot(bin)
+#' # bin <- binning(heartfailure2$platelets, nbins = 5, type = "pretty")
+#' # plot(bin)
 #' 
-#' #bin <- binning(heartfailure2$platelets, nbins = 5, type = "kmeans")
-#' #plot(bin)
+#' # bin <- binning(heartfailure2$platelets, nbins = 5, type = "kmeans")
+#' # plot(bin)
 #' 
-#' bin <- binning(heartfailure2$platelets, nbins = 5, type = "bclust")
-#' plot(bin)
+#' # bin <- binning(heartfailure2$platelets, nbins = 5, type = "bclust")
+#' # plot(bin)
 #' 
 #' @export
 #' @method plot bins
@@ -435,8 +435,8 @@ plot.bins <- function(x, typographic = TRUE, base_family = NULL, ...) {
 #' bin <- binning_by(heartfailure2, "death_event", "creatinine")
 #' 
 #' # optimal binning using name
-#' bin <- binning_by(heartfailure2, death_event, creatinine)
-#' bin
+#' # bin <- binning_by(heartfailure2, death_event, creatinine)
+#' # bin
 #' 
 #' # performance table
 #' attr(bin, "performance")
@@ -974,9 +974,9 @@ extract.bins <- function(x) {
 #' # plot(perf)
 #' 
 #' # Diagnose performance binned variable without NA
-#' perf <- performance_bin(heartfailure2$death_event_2, heartfailure2$creatinine_bin, na.rm = TRUE) 
-#' perf
-#' summary(perf)
+#' # perf <- performance_bin(heartfailure2$death_event_2, heartfailure2$creatinine_bin, na.rm = TRUE) 
+#' # perf
+#' # summary(perf)
 #' 
 #' # plot(perf)
 #' 
@@ -1205,9 +1205,9 @@ performance_bin <- function (y, x, na.rm = FALSE) {
 #' # plot(perf)
 #' 
 #' # Diagnose performance binned variable without NA
-#' perf <- performance_bin(heartfailure2$death_event_2, heartfailure2$creatinine_bin, na.rm = TRUE) 
-#' perf
-#' summary(perf)
+#' # perf <- performance_bin(heartfailure2$death_event_2, heartfailure2$creatinine_bin, na.rm = TRUE) 
+#' # perf
+#' # summary(perf)
 #' 
 #' # plot(perf)
 #' 
@@ -1302,12 +1302,12 @@ summary.performance_bin <- function(object, ...) {
 #' plot(perf)
 #' 
 #' # Diagnose performance binned variable without NA
-#' perf <- performance_bin(heartfailure2$death_event_2, heartfailure2$creatinine_bin, na.rm = TRUE) 
-#' perf
-#' summary(perf)
+#' # perf <- performance_bin(heartfailure2$death_event_2, heartfailure2$creatinine_bin, na.rm = TRUE) 
+#' # perf
+#' # summary(perf)
 #' 
 #' plot(perf)
-#' plot(perf, typographic = FALSE)
+#' # plot(perf, typographic = FALSE)
 #' 
 #' @import ggplot2
 #' @import hrbrthemes

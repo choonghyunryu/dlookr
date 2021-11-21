@@ -87,8 +87,8 @@ bin
 x <- sample(1:1000, size = 50) * 12345679
 bin <- binning(x)
 bin
-bin <- binning(x, approxy.lab = FALSE)
-bin
+# bin <- binning(x, approxy.lab = FALSE)
+# bin
 
 # extract binned results
 extract(bin)
@@ -99,13 +99,13 @@ extract(bin)
 library(dplyr)
 
 # Compare binned frequency by death_event
-heartfailure2 \%>\%
- mutate(platelets_bin = binning(heartfailure2$platelets) \%>\% 
-                     extract()) \%>\%
- group_by(death_event, platelets_bin) \%>\%
- summarise(freq = n()) \%>\%
- arrange(desc(freq)) \%>\%
- head(10)
+# heartfailure2 \%>\%
+#  mutate(platelets_bin = binning(heartfailure2$platelets) \%>\% 
+#                      extract()) \%>\%
+#  group_by(death_event, platelets_bin) \%>\%
+#  summarise(freq = n()) \%>\%
+#  arrange(desc(freq)) \%>\%
+#  head(10)
  
  # Compare binned frequency by death_event using Viz
  heartfailure2 \%>\%

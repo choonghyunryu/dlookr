@@ -888,7 +888,7 @@ print.compare_numeric <- function(x, ...) {
 #' # plot(all_var, prompt = TRUE)
 #'   
 #' # plot a pair of variables without NA
-#' plot(two_var, na.rm = TRUE)
+#' # plot(two_var, na.rm = TRUE)
 #' 
 #' # plot a pair of variables
 #' # plot(two_var, las = 1)
@@ -1042,7 +1042,7 @@ plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE,
 #' # plot(all_var, prompt = TRUE)
 #' 
 #' # plot a pair of variables not focuses on typographic elements
-#' plot(two_var, typographic = FALSE)
+#' # plot(two_var, typographic = FALSE)
 #' 
 #' @importFrom gridExtra grid.arrange
 #' @importFrom grid textGrob gpar

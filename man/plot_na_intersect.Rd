@@ -80,6 +80,6 @@ plot_na_intersect(jobchange2, n_vars = 5)
 plot_na_intersect(jobchange2, only_na = FALSE, n_intersacts = 7)
 
 # Not allow typographic elements
-plot_na_intersect(jobchange2, typographic = FALSE)
+# plot_na_intersect(jobchange2, typographic = FALSE)
 
 }

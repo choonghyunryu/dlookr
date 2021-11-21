@@ -73,7 +73,7 @@ do not appear as data among all combinations of levels of categorical variables.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
       </span>
     </div>
 
@@ -197,115 +197,38 @@ If the number of all possible combinations exceeds the limit, the calculation en
 <span class='fu'>diagnose_sparese</span>(<span class='no'>jobchange</span>, <span class='kw'>add_character</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>All possible combinations of categorical variables exceed 500. (Number of combinations: 1.61248e+13)</span></div><div class='output co'>#&gt; NULL</div><div class='input'>
 <span class='co'># Combination of two variables</span>
 <span class='no'>jobchange</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>diagnose_sparese</span>(<span class='no'>education_level</span>, <span class='no'>major_discipline</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 13 x 2</span><span>
+  <span class='fu'>diagnose_sparese</span>(<span class='no'>education_level</span>, <span class='no'>major_discipline</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 13 x 2</span>
 #&gt;    education_level major_discipline
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>           
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> Primary School  Arts            
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> High School     Arts            
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> Primary School  Business Degree 
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> High School     Business Degree 
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> Primary School  Humanities      
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> High School     Humanities      
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> Primary School  No Major        
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> High School     No Major        
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> Phd             No Major        
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> Primary School  Other           
-#&gt; </span><span style='color: #BCBCBC;'>11</span><span> High School     Other           
-#&gt; </span><span style='color: #BCBCBC;'>12</span><span> Primary School  STEM            
-#&gt; </span><span style='color: #BCBCBC;'>13</span><span> High School     STEM            </div><div class='input'>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>           
+#&gt; <span style='color: #BCBCBC;'> 1</span> Primary School  Arts            
+#&gt; <span style='color: #BCBCBC;'> 2</span> High School     Arts            
+#&gt; <span style='color: #BCBCBC;'> 3</span> Primary School  Business Degree 
+#&gt; <span style='color: #BCBCBC;'> 4</span> High School     Business Degree 
+#&gt; <span style='color: #BCBCBC;'> 5</span> Primary School  Humanities      
+#&gt; <span style='color: #BCBCBC;'> 6</span> High School     Humanities      
+#&gt; <span style='color: #BCBCBC;'> 7</span> Primary School  No Major        
+#&gt; <span style='color: #BCBCBC;'> 8</span> High School     No Major        
+#&gt; <span style='color: #BCBCBC;'> 9</span> Phd             No Major        
+#&gt; <span style='color: #BCBCBC;'>10</span> Primary School  Other           
+#&gt; <span style='color: #BCBCBC;'>11</span> High School     Other           
+#&gt; <span style='color: #BCBCBC;'>12</span> Primary School  STEM            
+#&gt; <span style='color: #BCBCBC;'>13</span> High School     STEM            </div><div class='input'>
 <span class='co'># Remove two categorical variables from combination</span>
-<span class='no'>jobchange</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>diagnose_sparese</span>(-<span class='no'>city</span>, -<span class='no'>education_level</span>)</div><div class='output co'>#&gt; <span class='message'>All possible combinations of categorical variables exceed 500. (Number of combinations: 1,368,576)</span></div><div class='output co'>#&gt; NULL</div><div class='input'>
-<span class='fu'>diagnose_sparese</span>(<span class='no'>heartfailure</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 14 x 6</span><span>
-#&gt;    anaemia diabetes hblood_pressure sex    smoking death_event
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>      
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> No      No       No              Female Yes     No         
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> Yes     No       No              Female Yes     No         
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> No      Yes      No              Female Yes     No         
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> Yes     Yes      No              Female Yes     No         
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> Yes     No       Yes             Female Yes     No         
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> No      Yes      Yes             Female Yes     No         
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> Yes     Yes      Yes             Female Yes     No         
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> Yes     Yes      Yes             Male   No      Yes        
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> No      No       No              Female Yes     Yes        
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> Yes     No       No              Female Yes     Yes        
-#&gt; </span><span style='color: #BCBCBC;'>11</span><span> No      Yes      No              Female Yes     Yes        
-#&gt; </span><span style='color: #BCBCBC;'>12</span><span> No      No       Yes             Female Yes     Yes        
-#&gt; </span><span style='color: #BCBCBC;'>13</span><span> Yes     Yes      Yes             Female Yes     Yes        
-#&gt; </span><span style='color: #BCBCBC;'>14</span><span> Yes     Yes      Yes             Male   Yes     Yes        </div><div class='input'>
+<span class='co'># jobchange %&gt;% </span>
+<span class='co'># #   diagnose_sparese(-city, -education_level)</span>
+
+<span class='co'># diagnose_sparese(heartfailure)</span>
+
 <span class='co'># Adjust the threshold of limt to calculate</span>
 <span class='fu'>diagnose_sparese</span>(<span class='no'>heartfailure</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div><div class='output co'>#&gt; <span class='message'>All possible combinations of categorical variables exceed 50. (Number of combinations: 64)</span></div><div class='output co'>#&gt; NULL</div><div class='input'>
 <span class='co'># List all combinations, including parese cases</span>
-<span class='fu'>diagnose_sparese</span>(<span class='no'>heartfailure</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</div><div class='output co'>#&gt; <span class='message'>Joining, by = c("anaemia", "diabetes", "hblood_pressure", "sex", "smoking", "death_event")</span></div><div class='output co'>#&gt;    anaemia diabetes hblood_pressure    sex smoking death_event n_case
-#&gt; 1       No       No              No Female      No          No     10
-#&gt; 2      Yes       No              No Female      No          No     11
-#&gt; 3       No      Yes              No Female      No          No     14
-#&gt; 4      Yes      Yes              No Female      No          No      9
-#&gt; 5       No       No             Yes Female      No          No      8
-#&gt; 6      Yes       No             Yes Female      No          No      6
-#&gt; 7       No      Yes             Yes Female      No          No      6
-#&gt; 8      Yes      Yes             Yes Female      No          No      6
-#&gt; 9       No       No              No   Male      No          No     12
-#&gt; 10     Yes       No              No   Male      No          No      7
-#&gt; 11      No      Yes              No   Male      No          No     13
-#&gt; 12     Yes      Yes              No   Male      No          No     11
-#&gt; 13      No       No             Yes   Male      No          No      8
-#&gt; 14     Yes       No             Yes   Male      No          No      8
-#&gt; 15      No      Yes             Yes   Male      No          No      5
-#&gt; 16     Yes      Yes             Yes   Male      No          No      3
-#&gt; 17      No       No              No Female     Yes          No      0
-#&gt; 18     Yes       No              No Female     Yes          No      0
-#&gt; 19      No      Yes              No Female     Yes          No      0
-#&gt; 20     Yes      Yes              No Female     Yes          No      0
-#&gt; 21      No       No             Yes Female     Yes          No      1
-#&gt; 22     Yes       No             Yes Female     Yes          No      0
-#&gt; 23      No      Yes             Yes Female     Yes          No      0
-#&gt; 24     Yes      Yes             Yes Female     Yes          No      0
-#&gt; 25      No       No              No   Male     Yes          No     26
-#&gt; 26     Yes       No              No   Male     Yes          No     12
-#&gt; 27      No      Yes              No   Male     Yes          No      8
-#&gt; 28     Yes      Yes              No   Male     Yes          No      4
-#&gt; 29      No       No             Yes   Male     Yes          No      5
-#&gt; 30     Yes       No             Yes   Male     Yes          No      4
-#&gt; 31      No      Yes             Yes   Male     Yes          No      4
-#&gt; 32     Yes      Yes             Yes   Male     Yes          No      2
-#&gt; 33      No       No              No Female      No         Yes      5
-#&gt; 34     Yes       No              No Female      No         Yes      2
-#&gt; 35      No      Yes              No Female      No         Yes      3
-#&gt; 36     Yes      Yes              No Female      No         Yes      6
-#&gt; 37      No       No             Yes Female      No         Yes      2
-#&gt; 38     Yes       No             Yes Female      No         Yes      4
-#&gt; 39      No      Yes             Yes Female      No         Yes      3
-#&gt; 40     Yes      Yes             Yes Female      No         Yes      6
-#&gt; 41      No       No              No   Male      No         Yes      8
-#&gt; 42     Yes       No              No   Male      No         Yes     10
-#&gt; 43      No      Yes              No   Male      No         Yes      4
-#&gt; 44     Yes      Yes              No   Male      No         Yes      3
-#&gt; 45      No       No             Yes   Male      No         Yes      4
-#&gt; 46     Yes       No             Yes   Male      No         Yes      3
-#&gt; 47      No      Yes             Yes   Male      No         Yes      3
-#&gt; 48     Yes      Yes             Yes   Male      No         Yes      0
-#&gt; 49      No       No              No Female     Yes         Yes      0
-#&gt; 50     Yes       No              No Female     Yes         Yes      0
-#&gt; 51      No      Yes              No Female     Yes         Yes      0
-#&gt; 52     Yes      Yes              No Female     Yes         Yes      1
-#&gt; 53      No       No             Yes Female     Yes         Yes      0
-#&gt; 54     Yes       No             Yes Female     Yes         Yes      1
-#&gt; 55      No      Yes             Yes Female     Yes         Yes      1
-#&gt; 56     Yes      Yes             Yes Female     Yes         Yes      0
-#&gt; 57      No       No              No   Male     Yes         Yes      6
-#&gt; 58     Yes       No              No   Male     Yes         Yes      3
-#&gt; 59      No      Yes              No   Male     Yes         Yes      4
-#&gt; 60     Yes      Yes              No   Male     Yes         Yes      2
-#&gt; 61      No       No             Yes   Male     Yes         Yes      3
-#&gt; 62     Yes       No             Yes   Male     Yes         Yes      5
-#&gt; 63      No      Yes             Yes   Male     Yes         Yes      4
-#&gt; 64     Yes      Yes             Yes   Male     Yes         Yes      0</div><div class='input'>
+<span class='co'># diagnose_sparese(heartfailure, type = "all") </span>
+
 <span class='co'># collaboration with dplyr</span>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>diagnose_sparese</span>(<span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"all"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span>(<span class='no'>n_case</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>percent</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='no'>n_case</span> / <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>n_case</span>) * <span class='fl'>100</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; <span class='message'>Joining, by = c("anaemia", "diabetes", "hblood_pressure", "sex", "smoking", "death_event")</span></div><div class='output co'>#&gt;    anaemia diabetes hblood_pressure    sex smoking death_event n_case percent
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>percent</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='no'>n_case</span> / <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>n_case</span>) * <span class='fl'>100</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt;    anaemia diabetes hblood_pressure    sex smoking death_event n_case percent
 #&gt; 1       No       No              No   Male     Yes          No     26     8.7
 #&gt; 2       No      Yes              No Female      No          No     14     4.7
 #&gt; 3       No      Yes              No   Male      No          No     13     4.3
@@ -370,7 +293,7 @@ If the number of all possible combinations exceeds the limit, the calculation en
 #&gt; 62      No       No             Yes Female     Yes         Yes      0     0.0
 #&gt; 63     Yes      Yes             Yes Female     Yes         Yes      0     0.0
 #&gt; 64     Yes      Yes             Yes   Male     Yes         Yes      0     0.0</div><div class='input'>
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

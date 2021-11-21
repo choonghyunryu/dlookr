@@ -80,14 +80,14 @@ imputate_na(heartfailure2, platelets, method = "median")
 
 # Replace the missing value of the platelets variable with rpart
 # The target variable is death_event.
-imputate_na(heartfailure2, platelets, death_event, method = "rpart")
+# imputate_na(heartfailure2, platelets, death_event, method = "rpart")
 
 # Replace the missing value of the smoking variable with mode
-imputate_na(heartfailure2, smoking, method = "mode")
+# imputate_na(heartfailure2, smoking, method = "mode")
 
 # Replace the missing value of the smoking variable with mice
 # The target variable is death_event.
-imputate_na(heartfailure2, smoking, death_event, method = "mice")
+# imputate_na(heartfailure2, smoking, death_event, method = "mice")
 
 ## using dplyr -------------------------------------
 library(dplyr)
@@ -108,9 +108,9 @@ summary(platelets)
 # plot(platelets)
 
 # If the variable of interest is a categorical variable
-smoking <- imputate_na(heartfailure2, smoking, death_event, method = "mice")
-smoking
-summary(smoking)
+# smoking <- imputate_na(heartfailure2, smoking, death_event, method = "mice")
+# smoking
+# summary(smoking)
 
 # plot(smoking)
 }

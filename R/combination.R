@@ -52,16 +52,16 @@ diagnose_sparese <- function(.data, ...) {
 #'   diagnose_sparese(education_level, major_discipline)
 #'
 #' # Remove two categorical variables from combination
-#' jobchange %>% 
-#'   diagnose_sparese(-city, -education_level)
+#' # jobchange %>% 
+#' # #   diagnose_sparese(-city, -education_level)
 #'
-#' diagnose_sparese(heartfailure)
+#' # diagnose_sparese(heartfailure)
 #' 
 #' # Adjust the threshold of limt to calculate
 #' diagnose_sparese(heartfailure, limit = 50)
 #' 
 #' # List all combinations, including parese cases
-#' diagnose_sparese(heartfailure, type = "all") 
+#' # diagnose_sparese(heartfailure, type = "all") 
 #' 
 #' # collaboration with dplyr
 #' heartfailure %>% 

@@ -51,9 +51,9 @@ diagnose <- function(.data, ...) {
 #' 
 #' # Select the variable to diagnose
 #' diagnose(jobchange, gender, experience, training_hours)
-#' diagnose(jobchange, -gender, -experience, -training_hours)
-#' diagnose(jobchange, "gender", "experience", "training_hours")
-#' diagnose(jobchange, 4, 9, 13)
+#' # diagnose(jobchange, -gender, -experience, -training_hours)
+#' # diagnose(jobchange, "gender", "experience", "training_hours")
+#' # diagnose(jobchange, 4, 9, 13)
 #' 
 #' # Using pipes ---------------------------------
 #' library(dplyr)
@@ -65,14 +65,14 @@ diagnose <- function(.data, ...) {
 #' jobchange %>%
 #'   diagnose(gender, experience, training_hours)
 #' # Negative values to drop variables
-#' jobchange %>%
-#'   diagnose(-gender, -experience, -training_hours)
+#' # jobchange %>%
+#' #   diagnose(-gender, -experience, -training_hours)
 #' # Positions values select variables
-#' jobchange %>%
-#'   diagnose(4, 9, 13)
+#' # # jobchange %>%
+#' #   diagnose(4, 9, 13)
 #' # Positions values select variables
-#' jobchange %>%
-#'   diagnose(-8, -9, -10)
+#' # jobchange %>%
+#' #   diagnose(-8, -9, -10)
 #'   
 #' # Using pipes & dplyr -------------------------
 #' # Diagnosis of missing variables
@@ -190,8 +190,8 @@ diagnose_category <- function(.data, ...) {
 #'  diagnose_category(company_type, job_chnge)
 #'  
 #' # Negative values to drop variables
-#' jobchange %>%
-#'   diagnose_category(-company_type, -job_chnge)
+#' # jobchange %>%
+#' #   diagnose_category(-company_type, -job_chnge)
 #'   
 #' # Positions values select variables
 #' # jobchange %>%
@@ -359,14 +359,14 @@ diagnose_numeric <- function(.data, ...) {
 #' heartfailure %>%
 #'   diagnose_numeric(cpk_enzyme, sodium)
 #' # Negative values to drop variables
-#' heartfailure %>%
-#'   diagnose_numeric(-cpk_enzyme, -sodium)
+#' # heartfailure %>%
+#' #   diagnose_numeric(-cpk_enzyme, -sodium)
 #' # Positions values select variables
-#' heartfailure %>%
-#'   diagnose_numeric(5)
+#' # heartfailure %>%
+#' #   diagnose_numeric(5)
 #' # Positions values select variables
-#' heartfailure %>%
-#'   diagnose_numeric(-1, -5)
+#' # heartfailure %>%
+#' #   diagnose_numeric(-1, -5)
 #'
 #' # Using pipes & dplyr -------------------------
 #' # List of variables containing outliers
@@ -471,9 +471,9 @@ diagnose_outlier <- function(.data, ...) {
 #' 
 #' # Select the variable to diagnose
 #' diagnose_outlier(heartfailure, cpk_enzyme, sodium)
-#' diagnose_outlier(heartfailure, -cpk_enzyme, -sodium)
-#' diagnose_outlier(heartfailure, "cpk_enzyme", "sodium")
-#' diagnose_outlier(heartfailure, 5)
+#' # diagnose_outlier(heartfailure, -cpk_enzyme, -sodium)
+#' # diagnose_outlier(heartfailure, "cpk_enzyme", "sodium")
+#' # diagnose_outlier(heartfailure, 5)
 #' 
 #' # Using pipes ---------------------------------
 #' library(dplyr)
@@ -484,15 +484,15 @@ diagnose_outlier <- function(.data, ...) {
 #' # Positive values select variables
 #' heartfailure %>%
 #'   diagnose_outlier(cpk_enzyme, sodium)
-#' # Negative values to drop variables
-#' heartfailure %>%
-#'   diagnose_outlier(-cpk_enzyme, -sodium)
+#' # # Negative values to drop variables
+#' # heartfailure %>%
+#' #   diagnose_outlier(-cpk_enzyme, -sodium)
+#' # # Positions values select variables
+#' # heartfailure %>%
+#' #   diagnose_outlier(5)
 #' # Positions values select variables
-#' heartfailure %>%
-#'   diagnose_outlier(5)
-#' # Positions values select variables
-#' heartfailure %>%
-#'   diagnose_outlier(-1, -5)
+#' # # heartfailure %>%
+#' #   diagnose_outlier(-1, -5)
 #' 
 #' # Using pipes & dplyr -------------------------
 #' # outlier_ratio is more than 1%
@@ -820,7 +820,7 @@ plot_outlier_raw <- function(x, main = NULL, col = "steelblue",
 #' categ <- target_by(heartfailure, death_event)
 #' 
 #' plot_outlier(categ, sodium)
-#' plot_outlier(categ, sodium, typographic = FALSE)
+#' # plot_outlier(categ, sodium, typographic = FALSE)
 #' 
 #' # death_eventing dplyr
 #' library(dplyr)
@@ -1057,14 +1057,14 @@ diagnose_report <- function(.data, output_format, output_file, output_dir, ...) 
 #' # create pdf file. file name is DataDiagnosis_Report.pdf
 #' diagnose_report(heartfailure)
 #' # create pdf file. file name is Diagn.pdf
-#' diagnose_report(heartfailure, output_file = "Diagn.pdf")
+#' # diagnose_report(heartfailure, output_file = "Diagn.pdf")
 #' # create pdf file. file name is ./Diagn.pdf and not browse
 #' # diagnose_report(heartfailure, output_dir = ".", output_file = "Diagn.pdf", 
 #' #   browse = FALSE)
 #' # create html file. file name is Diagnosis_Report.html
-#' diagnose_report(heartfailure, output_format = "html")
+#' # diagnose_report(heartfailure, output_format = "html")
 #' # create html file. file name is Diagn.html
-#' diagnose_report(heartfailure, output_format = "html", output_file = "Diagn.html")
+#' # diagnose_report(heartfailure, output_format = "html", output_file = "Diagn.html")
 #' }
 #'
 #' @importFrom knitr knit2pdf

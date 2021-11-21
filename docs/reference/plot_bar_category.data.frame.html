@@ -73,7 +73,7 @@ categorical data by level or relationship to specific numerical data by level." 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
       </span>
     </div>
 
@@ -135,7 +135,8 @@ categorical data by level or relationship to specific numerical data by level.</
   <span class='kw'>add_character</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Frequency by levels of category"</span>,
   <span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>base_family</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )
 
 <span class='co'># S3 method for grouped_df</span>
@@ -146,7 +147,8 @@ categorical data by level or relationship to specific numerical data by level.</
   <span class='kw'>add_character</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Frequency by levels of category"</span>,
   <span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>base_family</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -191,6 +193,11 @@ The default is FALSE, which draws multiple plots on one screen.</p></td>
       <td><p>logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.</p></td>
     </tr>
+    <tr>
+      <th>base_family</th>
+      <td><p>character. The name of the base font family to use 
+for the visualization. If not specified, the font defined in dlookr is applied. (See details)</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -199,6 +206,9 @@ The default is TRUE. if TRUE provides a base theme that focuses on typographic e
 comparing the frequency of each level. The frequency table helps with this. 
 As a visualization method, a bar graph can help you understand 
 the distribution of categorical data more easily than a frequency table.</p>
+<p>The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+"NanumSquare", "Noto Sans Korean". If you want to use a different font, 
+use it after loading the Google font with import_google_font().</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Generate data for the example</span>

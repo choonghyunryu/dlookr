@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
       </span>
     </div>
 
@@ -130,6 +130,7 @@
   <span class='kw'>hex_thres</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
   <span class='kw'>pal</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"#FFFFB2"</span>, <span class='st'>"#FED976"</span>, <span class='st'>"#FEB24C"</span>, <span class='st'>"#FD8D3C"</span>, <span class='st'>"#FC4E2A"</span>, <span class='st'>"#E31A1C"</span>, <span class='st'>"#B10026"</span>),
   <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>base_family</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>...</span>
 )</pre>
 
@@ -164,12 +165,22 @@ Applied only when the number of observations is greater than hex_thres.</p></td>
 The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.</p></td>
     </tr>
     <tr>
+      <th>base_family</th>
+      <td><p>character. The name of the base font family to use 
+for the visualization. If not specified, the font defined in dlookr is applied. (See details)</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>arguments to be passed to methods, such as graphical parameters (see par).
 only applies when the model argument is TRUE, and is used for ... of the plot.lm() function.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+"NanumSquare", "Noto Sans Korean". If you want to use a different font, 
+use it after loading the Google font with import_google_font().</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='relate.html'>relate</a></code>, <code><a href='print.relate.html'>print.relate</a></code>.</p></div>
@@ -180,16 +191,16 @@ only applies when the model argument is TRUE, and is used for ... of the plot.lm
 
 <span class='co'># If the variable of interest is a numerical variable</span>
 <span class='no'>cat_num</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='relate.html'>relate</a></span>(<span class='no'>categ</span>, <span class='no'>sodium</span>)
-<span class='no'>cat_num</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 3 x 27</span><span>
+<span class='no'>cat_num</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 3 x 27</span>
 #&gt;   variable death_event     n    na  mean    sd se_mean   IQR skewness kurtosis
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> sodium   No            203     0  137.  3.98   0.280  4.5    -</span><span style='color: #BB0000;'>1.22</span><span>      6.49
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> sodium   Yes            96     0  135.  5.00   0.510  5.25   -</span><span style='color: #BB0000;'>0.677</span><span>     2.08
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> sodium   total         299     0  137.  4.41   0.255  6      -</span><span style='color: #BB0000;'>1.05</span><span>      4.12
-#&gt; </span><span style='color: #949494;'># … with 17 more variables: p00 &lt;dbl&gt;, p01 &lt;dbl&gt;, p05 &lt;dbl&gt;, p10 &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   p20 &lt;dbl&gt;, p25 &lt;dbl&gt;, p30 &lt;dbl&gt;, p40 &lt;dbl&gt;, p50 &lt;dbl&gt;, p60 &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   p70 &lt;dbl&gt;, p75 &lt;dbl&gt;, p80 &lt;dbl&gt;, p90 &lt;dbl&gt;, p95 &lt;dbl&gt;, p99 &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   p100 &lt;dbl&gt;</span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>cat_num</span>)</div><div class='output co'>#&gt;    variable         death_event       n               na         mean      
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> sodium   No            203     0  137.  3.98   0.280  4.5    -<span style='color: #BB0000;'>1.22</span>      6.49
+#&gt; <span style='color: #BCBCBC;'>2</span> sodium   Yes            96     0  135.  5.00   0.510  5.25   -<span style='color: #BB0000;'>0.677</span>     2.08
+#&gt; <span style='color: #BCBCBC;'>3</span> sodium   total         299     0  137.  4.41   0.255  6      -<span style='color: #BB0000;'>1.05</span>      4.12
+#&gt; <span style='color: #949494;'># … with 17 more variables: p00 &lt;dbl&gt;, p01 &lt;dbl&gt;, p05 &lt;dbl&gt;, p10 &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   p20 &lt;dbl&gt;, p25 &lt;dbl&gt;, p30 &lt;dbl&gt;, p40 &lt;dbl&gt;, p50 &lt;dbl&gt;, p60 &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   p70 &lt;dbl&gt;, p75 &lt;dbl&gt;, p80 &lt;dbl&gt;, p90 &lt;dbl&gt;, p95 &lt;dbl&gt;, p99 &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   p100 &lt;dbl&gt;</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>cat_num</span>)</div><div class='output co'>#&gt;    variable         death_event       n               na         mean      
 #&gt;  Length:3           No   :1     Min.   : 96.0   Min.   :0   Min.   :135.4  
 #&gt;  Class :character   Yes  :1     1st Qu.:149.5   1st Qu.:0   1st Qu.:136.0  
 #&gt;  Mode  :character   total:1     Median :203.0   Median :0   Median :136.6  
@@ -312,7 +323,7 @@ only applies when the model argument is TRUE, and is used for ... of the plot.lm
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>num_cat</span>)</div><div class='img'><img src='plot.relate-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Not allow typographic</span>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>num_cat</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot.relate-5.png' alt='' width='700' height='433' /></div><div class='input'> 
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

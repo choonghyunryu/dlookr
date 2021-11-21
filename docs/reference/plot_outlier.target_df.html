@@ -73,7 +73,7 @@ for diagnosing the quality of the numerical data with target_df class." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
       </span>
     </div>
 
@@ -126,7 +126,7 @@ for diagnosing the quality of the numerical data with target_df class.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for target_df</span>
-<span class='fu'><a href='plot_outlier.data.frame.html'>plot_outlier</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'><a href='plot_outlier.data.frame.html'>plot_outlier</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>base_family</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -148,7 +148,12 @@ They support unquoting and splicing.</p></td>
     </tr>
     <tr>
       <th>typographic</th>
-      <td><p>logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+      <td><p>logical. Whether to apply focuses on typographic elements to ggplot2 visualization.</p></td>
+    </tr>
+    <tr>
+      <th>base_family</th>
+      <td><p>character. The name of the base font family to use 
+for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.</p></td>
     </tr>
     </table>
@@ -158,6 +163,9 @@ The default is TRUE. if TRUE provides a base theme that focuses on typographic e
     <p>The scope of the diagnosis is the provide a outlier information.
 Since the plot is drawn for each variable, if you specify more than
 one variable in the ... argument, the specified number of plots are drawn.</p>
+<p>The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+"NanumSquare", "Noto Sans Korean". If you want to use a different font, 
+use it after loading the Google font with import_google_font().</p>
     <h2 class="hasAnchor" id="outlier-diagnostic-information"><a class="anchor" href="#outlier-diagnostic-information"></a>Outlier diagnostic information</h2>
 
     
@@ -178,23 +186,24 @@ one variable in the ... argument, the specified number of plots are drawn.</p>
     <pre class="examples"><div class='input'><span class='co'># the target variable is a categorical variable</span>
 <span class='no'>categ</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='target_by.data.frame.html'>target_by</a></span>(<span class='no'>heartfailure</span>, <span class='no'>death_event</span>)
 
-<span class='fu'><a href='plot_outlier.data.frame.html'>plot_outlier</a></span>(<span class='no'>categ</span>, <span class='no'>sodium</span>)</div><div class='img'><img src='plot_outlier.target_df-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='plot_outlier.data.frame.html'>plot_outlier</a></span>(<span class='no'>categ</span>, <span class='no'>sodium</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot_outlier.target_df-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='plot_outlier.data.frame.html'>plot_outlier</a></span>(<span class='no'>categ</span>, <span class='no'>sodium</span>)</div><div class='img'><img src='plot_outlier.target_df-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># plot_outlier(categ, sodium, typographic = FALSE)</span>
+
 <span class='co'># death_eventing dplyr</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='target_by.data.frame.html'>target_by</a></span>(<span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='plot_outlier.data.frame.html'>plot_outlier</a></span>(<span class='no'>sodium</span>, <span class='no'>cpk_enzyme</span>)</div><div class='img'><img src='plot_outlier.target_df-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.target_df-4.png' alt='' width='700' height='433' /></div><div class='input'>
+  <span class='fu'><a href='plot_outlier.data.frame.html'>plot_outlier</a></span>(<span class='no'>sodium</span>, <span class='no'>cpk_enzyme</span>)</div><div class='img'><img src='plot_outlier.target_df-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.target_df-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># death_eventing DBMS tables ----------------------------------</span>
 <span class='co'># connect DBMS</span>
 <span class='no'>con_sqlite</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://dbi.r-dbi.org/reference/dbConnect.html'>dbConnect</a></span>(<span class='kw pkg'>RSQLite</span><span class='kw ns'>::</span><span class='fu'><a href='https://rsqlite.r-dbi.org/reference/SQLite.html'>SQLite</a></span>(), <span class='st'>":memory:"</span>)
 
 <span class='co'># copy heartfailure to the DBMS with a table named TB_HEARTFAILURE</span>
-<span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/copy_to.html'>copy_to</a></span>(<span class='no'>con_sqlite</span>, <span class='no'>heartfailure</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"TB_HEARTFAILURE"</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/copy_to.html'>copy_to</a></span>(<span class='no'>con_sqlite</span>, <span class='no'>heartfailure</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"TB_HEARTFAILURE"</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># If the target variable is a categorical variable</span>
-<span class='no'>categ</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='target_by.data.frame.html'>target_by</a></span>(<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) , <span class='no'>death_event</span>)
+<span class='no'>categ</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='target_by.data.frame.html'>target_by</a></span>(<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) , <span class='no'>death_event</span>)
 
-<span class='fu'><a href='plot_outlier.data.frame.html'>plot_outlier</a></span>(<span class='no'>categ</span>, <span class='no'>sodium</span>)</div><div class='img'><img src='plot_outlier.target_df-5.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='plot_outlier.data.frame.html'>plot_outlier</a></span>(<span class='no'>categ</span>, <span class='no'>sodium</span>)</div><div class='img'><img src='plot_outlier.target_df-4.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -76,26 +76,26 @@ con_sqlite \%>\%
   diagnose_outlier(platelets, sodium, collect_size = 200)
   
 # Negative values to drop variables
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  diagnose_outlier(-platelets, -sodium)
+# con_sqlite \%>\% 
+#   tbl("TB_HEARTFAILURE") \%>\% 
+#   diagnose_outlier(-platelets, -sodium)
   
 # Positions values select variables
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  diagnose_outlier(5)
+# con_sqlite \%>\% 
+#   tbl("TB_HEARTFAILURE") \%>\% 
+#   diagnose_outlier(5)
 # Positions values select variables
 
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  diagnose_outlier(-1, -5)
+# con_sqlite \%>\% 
+#   tbl("TB_HEARTFAILURE") \%>\% 
+#   diagnose_outlier(-1, -5)
 
 # Using pipes & dplyr -------------------------
 # outlier_ratio is more than 1\%
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  diagnose_outlier()  \%>\%
-  filter(outliers_ratio > 1)
+# con_sqlite \%>\% 
+#   tbl("TB_HEARTFAILURE") \%>\% 
+#   diagnose_outlier()  \%>\%
+#   filter(outliers_ratio > 1)
 
 # Disconnect DBMS   
 DBI::dbDisconnect(con_sqlite)

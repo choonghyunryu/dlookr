@@ -341,7 +341,7 @@ summary.overview <- function(object, html = FALSE, ...)  {
 #' plot(ov, order_type = "name")
 #' 
 #' # sort by data type of variables
-#' plot(ov, order_type = "type")
+#' # plot(ov, order_type = "type")
 #' }
 #' 
 #' @method plot overview

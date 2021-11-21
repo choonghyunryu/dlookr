@@ -45,7 +45,7 @@ if (requireNamespace("forecast", quietly = TRUE)) {
   get_transform(iris$Sepal.Length, "Box-Cox")
 
   # Yeo-Johnson transform 
-  get_transform(iris$Sepal.Length, "Yeo-Johnson")
+  # get_transform(iris$Sepal.Length, "Yeo-Johnson")
 } else {
   cat("If you want to use this feature, you need to install the forecast package.\n")
 }

@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
       </span>
     </div>
 
@@ -124,7 +124,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for compare_numeric</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>prompt</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>prompt</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>base_family</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -144,12 +144,22 @@ if this argument value is TRUE, a prompt is output each time.</p></td>
 The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.</p></td>
     </tr>
     <tr>
+      <th>base_family</th>
+      <td><p>character. The name of the base font family to use 
+for the visualization. If not specified, the font defined in dlookr is applied. (See details)</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>arguments to be passed to methods, such as graphical parameters (see par).
 However, it does not support.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+"NanumSquare", "Noto Sans Korean". If you want to use a different font, 
+use it after loading the Google font with import_google_font().</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='compare_numeric.data.frame.html'>compare_numeric</a></code>, <code><a href='summary.compare_numeric.html'>print.compare_numeric</a></code>, <code><a href='summary.compare_numeric.html'>summary.compare_numeric</a></code>.</p></div>
@@ -164,51 +174,52 @@ However, it does not support.</p></td>
 
 <span class='co'># Print compare_numeric class object</span>
 <span class='no'>all_var</span></div><div class='output co'>#&gt; $correlation
-#&gt; <span style='color: #949494;'># A tibble: 3 x 3</span><span>
+#&gt; <span style='color: #949494;'># A tibble: 3 x 3</span>
 #&gt;   var1       var2       coef_corr
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> platelets  creatinine   -</span><span style='color: #BB0000;'>0.041</span><span style='color: #BB0000;text-decoration: underline;'>2</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> platelets  sodium        0.062</span><span style='text-decoration: underline;'>1</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> creatinine sodium       -</span><span style='color: #BB0000;'>0.189</span><span> 
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> platelets  creatinine   -<span style='color: #BB0000;'>0.041</span><span style='color: #BB0000; text-decoration: underline;'>2</span>
+#&gt; <span style='color: #BCBCBC;'>2</span> platelets  sodium        0.062<span style='text-decoration: underline;'>1</span>
+#&gt; <span style='color: #BCBCBC;'>3</span> creatinine sodium       -<span style='color: #BB0000;'>0.189</span> 
 #&gt; 
 #&gt; $linear
-#&gt; </span><span style='color: #949494;'># A tibble: 3 x 14</span><span>
+#&gt; <span style='color: #949494;'># A tibble: 3 x 14</span>
 #&gt;   var1     var2    r.squared adj.r.squared  sigma statistic p.value    df logLik
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> platele… creati…   0.001</span><span style='text-decoration: underline;'>70</span><span>     -</span><span style='color: #BB0000;'>0.001</span><span style='color: #BB0000;text-decoration: underline;'>66</span><span>  9.79</span><span style='color: #949494;'>e</span><span>4     0.505 0.478       1 -</span><span style='color: #BB0000;text-decoration: underline;'>3</span><span style='color: #BB0000;'>859.</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> platele… sodium    0.003</span><span style='text-decoration: underline;'>86</span><span>      0.000</span><span style='text-decoration: underline;'>505</span><span> 9.78</span><span style='color: #949494;'>e</span><span>4     1.15  0.284       1 -</span><span style='color: #BB0000;text-decoration: underline;'>3</span><span style='color: #BB0000;'>859.</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> creatin… sodium    0.035</span><span style='text-decoration: underline;'>8</span><span>       0.032</span><span style='text-decoration: underline;'>5</span><span>   1.02</span><span style='color: #949494;'>e</span><span>0    11.0   0.001</span><span style='text-decoration: underline;'>02</span><span>     1  -</span><span style='color: #BB0000;'>428.</span><span>
-#&gt; </span><span style='color: #949494;'># … with 5 more variables: AIC &lt;dbl&gt;, BIC &lt;dbl&gt;, deviance &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   df.residual &lt;int&gt;, nobs &lt;int&gt;</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> platele… creati…   0.001<span style='text-decoration: underline;'>70</span>     -<span style='color: #BB0000;'>0.001</span><span style='color: #BB0000; text-decoration: underline;'>66</span>  9.79<span style='color: #949494;'>e</span>4     0.505 0.478       1 -<span style='color: #BB0000; text-decoration: underline;'>3</span><span style='color: #BB0000;'>859.</span>
+#&gt; <span style='color: #BCBCBC;'>2</span> platele… sodium    0.003<span style='text-decoration: underline;'>86</span>      0.000<span style='text-decoration: underline;'>505</span> 9.78<span style='color: #949494;'>e</span>4     1.15  0.284       1 -<span style='color: #BB0000; text-decoration: underline;'>3</span><span style='color: #BB0000;'>859.</span>
+#&gt; <span style='color: #BCBCBC;'>3</span> creatin… sodium    0.035<span style='text-decoration: underline;'>8</span>       0.032<span style='text-decoration: underline;'>5</span>   1.02<span style='color: #949494;'>e</span>0    11.0   0.001<span style='text-decoration: underline;'>02</span>     1  -<span style='color: #BB0000;'>428.</span>
+#&gt; <span style='color: #949494;'># … with 5 more variables: AIC &lt;dbl&gt;, BIC &lt;dbl&gt;, deviance &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   df.residual &lt;int&gt;, nobs &lt;int&gt;</span>
 #&gt; </div><div class='input'>
 <span class='co'># Compare the two numerical variables</span>
 <span class='no'>two_var</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='compare_numeric.data.frame.html'>compare_numeric</a></span>(<span class='no'>heartfailure2</span>, <span class='no'>sodium</span>, <span class='no'>creatinine</span>)
 
 <span class='co'># Print compare_numeric class objects</span>
 <span class='no'>two_var</span></div><div class='output co'>#&gt; $correlation
-#&gt; </span><span style='color: #949494;'># A tibble: 1 x 3</span><span>
+#&gt; <span style='color: #949494;'># A tibble: 1 x 3</span>
 #&gt;   var1   var2       coef_corr
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> sodium creatinine    -</span><span style='color: #BB0000;'>0.189</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> sodium creatinine    -<span style='color: #BB0000;'>0.189</span>
 #&gt; 
 #&gt; $linear
-#&gt; </span><span style='color: #949494;'># A tibble: 1 x 14</span><span>
+#&gt; <span style='color: #949494;'># A tibble: 1 x 14</span>
 #&gt;   var1  var2  r.squared adj.r.squared sigma statistic p.value    df logLik   AIC
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> sodi… crea…    0.035</span><span style='text-decoration: underline;'>8</span><span>        0.032</span><span style='text-decoration: underline;'>5</span><span>  4.34      11.0 0.001</span><span style='text-decoration: underline;'>02</span><span>     1  -</span><span style='color: #BB0000;'>862.</span><span> </span><span style='text-decoration: underline;'>1</span><span>730.
-#&gt; </span><span style='color: #949494;'># … with 4 more variables: BIC &lt;dbl&gt;, deviance &lt;dbl&gt;, df.residual &lt;int&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   nobs &lt;int&gt;</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> sodi… crea…    0.035<span style='text-decoration: underline;'>8</span>        0.032<span style='text-decoration: underline;'>5</span>  4.34      11.0 0.001<span style='text-decoration: underline;'>02</span>     1  -<span style='color: #BB0000;'>862.</span> <span style='text-decoration: underline;'>1</span>730.
+#&gt; <span style='color: #949494;'># … with 4 more variables: BIC &lt;dbl&gt;, deviance &lt;dbl&gt;, df.residual &lt;int&gt;,</span>
+#&gt; <span style='color: #949494;'>#   nobs &lt;int&gt;</span>
 #&gt; </div><div class='input'>
 <span class='co'># plot all pair of variables</span>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>)</div><div class='img'><img src='plot.compare_numeric-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_numeric-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_numeric-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># plot a pair of variables</span>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>two_var</span>)</div><div class='img'><img src='plot.compare_numeric-4.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># plot all pair of variables by prompt</span>
-<span class='co'># plot(all_var, prompt = TRUE)</span>
+# plot all pair of variables by prompt
+# plot(all_var, prompt = TRUE)
 
-<span class='co'># plot a pair of variables not focuses on typographic elements</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>two_var</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot.compare_numeric-5.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></span></pre>
+# plot a pair of variables not focuses on typographic elements
+# plot(two_var, typographic = FALSE)
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

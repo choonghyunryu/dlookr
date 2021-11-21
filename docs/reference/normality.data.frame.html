@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
       </span>
     </div>
 
@@ -160,7 +160,7 @@ They support unquoting and splicing.</p></td>
     <p>An object of the same class as .data.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function is useful when used with the <code><a href='https://rdrr.io/pkg/dplyr/man/group_by.html'>group_by</a></code>
+    <p>This function is useful when used with the <code><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></code>
 function of the dplyr package. If you want to test by level of the categorical
 data you are interested in, rather than the whole observation,
 you can use group_tf as the group_by function.
@@ -200,45 +200,22 @@ The number of observations supported by the stats::shapiro.test function is 3 to
 #&gt;   vars      statistic  p_value sample
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'>1</span> platelets     0.912 2.88<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-12</span>    299
-#&gt; <span style='color: #BCBCBC;'>2</span> sodium        0.939 9.21<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-10</span>    299</div><div class='input'><span class='fu'>normality</span>(<span class='no'>heartfailure</span>, -<span class='no'>platelets</span>, -<span class='no'>sodium</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5 x 4</span>
-#&gt;   vars              statistic  p_value sample
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                 <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> age                   0.975 5.11<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 5</span>    299
-#&gt; <span style='color: #BCBCBC;'>2</span> cpk_enzyme            0.514 7.05<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-28</span>    299
-#&gt; <span style='color: #BCBCBC;'>3</span> ejection_fraction     0.947 7.22<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 9</span>    299
-#&gt; <span style='color: #BCBCBC;'>4</span> creatinine            0.551 5.39<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-27</span>    299
-#&gt; <span style='color: #BCBCBC;'>5</span> time                  0.947 6.28<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 9</span>    299</div><div class='input'><span class='fu'>normality</span>(<span class='no'>heartfailure</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 4</span>
-#&gt;   vars  statistic   p_value sample
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> age       0.975 0.000<span style='text-decoration: underline;'>051</span>1    299</div><div class='input'><span class='fu'>normality</span>(<span class='no'>heartfailure</span>, <span class='no'>platelets</span>, <span class='no'>sodium</span>, <span class='kw'>sample</span> <span class='kw'>=</span> <span class='fl'>200</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 x 4</span>
-#&gt;   vars      statistic  p_value sample
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> platelets     0.876 9.26<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-12</span>    200
-#&gt; <span style='color: #BCBCBC;'>2</span> sodium        0.946 8.41<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 7</span>    200</div><div class='input'>
+#&gt; <span style='color: #BCBCBC;'>2</span> sodium        0.939 9.21<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-10</span>    299</div><div class='input'><span class='co'># normality(heartfailure, -platelets, -sodium)</span>
+<span class='co'># normality(heartfailure, 1)</span>
+<span class='co'># normality(heartfailure, platelets, sodium, sample = 200)</span>
+
 <span class='co'># death_eventing dplyr::grouped_dt</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
-<span class='no'>gdata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/group_by.html'>group_by</a></span>(<span class='no'>heartfailure</span>, <span class='no'>smoking</span>, <span class='no'>death_event</span>)
+<span class='no'>gdata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>heartfailure</span>, <span class='no'>smoking</span>, <span class='no'>death_event</span>)
 <span class='fu'>normality</span>(<span class='no'>gdata</span>, <span class='st'>"platelets"</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 4 x 6</span>
 #&gt;   variable  smoking death_event statistic      p_value sample
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'>1</span> platelets No      No              0.892 0.000<span style='text-decoration: underline;'>000</span>016<span style='text-decoration: underline;'>1</span>    137
 #&gt; <span style='color: #BCBCBC;'>2</span> platelets No      Yes             0.987 0.704            66
 #&gt; <span style='color: #BCBCBC;'>3</span> platelets Yes     No              0.834 0.000<span style='text-decoration: underline;'>000</span>404      66
-#&gt; <span style='color: #BCBCBC;'>4</span> platelets Yes     Yes             0.900 0.008<span style='text-decoration: underline;'>36</span>          30</div><div class='input'><span class='fu'>normality</span>(<span class='no'>gdata</span>, <span class='kw'>sample</span> <span class='kw'>=</span> <span class='fl'>250</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 28 x 6</span>
-#&gt;    variable          smoking death_event statistic  p_value sample
-#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'> 1</span> age               No      No              0.978 2.49<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 2</span>    137
-#&gt; <span style='color: #BCBCBC;'> 2</span> age               No      Yes             0.955 1.70<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 2</span>     66
-#&gt; <span style='color: #BCBCBC;'> 3</span> age               Yes     No              0.972 1.46<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 1</span>     66
-#&gt; <span style='color: #BCBCBC;'> 4</span> age               Yes     Yes             0.967 4.61<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 1</span>     30
-#&gt; <span style='color: #BCBCBC;'> 5</span> cpk_enzyme        No      No              0.715 5.49<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-15</span>    137
-#&gt; <span style='color: #BCBCBC;'> 6</span> cpk_enzyme        No      Yes             0.458 3.20<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-14</span>     66
-#&gt; <span style='color: #BCBCBC;'> 7</span> cpk_enzyme        Yes     No              0.563 1.03<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-12</span>     66
-#&gt; <span style='color: #BCBCBC;'> 8</span> cpk_enzyme        Yes     Yes             0.391 4.50<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-10</span>     30
-#&gt; <span style='color: #BCBCBC;'> 9</span> ejection_fraction No      No              0.918 4.26<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 7</span>    137
-#&gt; <span style='color: #BCBCBC;'>10</span> ejection_fraction No      Yes             0.941 3.44<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 3</span>     66
-#&gt; <span style='color: #949494;'># … with 18 more rows</span></div><div class='input'>
+#&gt; <span style='color: #BCBCBC;'>4</span> platelets Yes     Yes             0.900 0.008<span style='text-decoration: underline;'>36</span>          30</div><div class='input'><span class='co'># normality(gdata, sample = 250)</span>
+
 <span class='co'># death_eventing pipes ---------------------------------</span>
 <span class='co'># Normality test of all numerical variables</span>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
@@ -252,13 +229,10 @@ The number of observations supported by the stats::shapiro.test function is 3 to
 #&gt; <span style='color: #BCBCBC;'>5</span> creatinine            0.551 5.39<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-27</span>    299
 #&gt; <span style='color: #BCBCBC;'>6</span> sodium                0.939 9.21<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-10</span>    299
 #&gt; <span style='color: #BCBCBC;'>7</span> time                  0.947 6.28<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 9</span>    299</div><div class='input'>
-<span class='co'># Positive values select variables</span>
-<span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>normality</span>(<span class='no'>platelets</span>, <span class='no'>sodium</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 x 4</span>
-#&gt;   vars      statistic  p_value sample
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> platelets     0.912 2.88<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-12</span>    299
-#&gt; <span style='color: #BCBCBC;'>2</span> sodium        0.939 9.21<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-10</span>    299</div><div class='input'>
+<span class='co'># # Positive values select variables</span>
+<span class='co'># heartfailure %&gt;%</span>
+<span class='co'>#   normality(platelets, sodium)</span>
+
 <span class='co'># Positions values select variables</span>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>normality</span>(<span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 4</span>
@@ -269,9 +243,9 @@ The number of observations supported by the stats::shapiro.test function is 3 to
 <span class='co'># Test all numerical variables by 'smoking' and 'death_event',</span>
 <span class='co'># and extract only those with 'smoking' variable level is "No".</span>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/group_by.html'>group_by</a></span>(<span class='no'>smoking</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>smoking</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>normality</span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/filter.html'>filter</a></span>(<span class='no'>smoking</span> <span class='kw'>==</span> <span class='st'>"No"</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 14 x 6</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>smoking</span> <span class='kw'>==</span> <span class='st'>"No"</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 14 x 6</span>
 #&gt;    variable          smoking death_event statistic  p_value sample
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> age               No      No              0.978 2.49<span style='color: #949494;'>e</span><span style='color: #BB0000;'>- 2</span>    137
@@ -291,8 +265,8 @@ The number of observations supported by the stats::shapiro.test function is 3 to
 <span class='co'># extract only those with 'sex' variable level is "Male",</span>
 <span class='co'># and test 'platelets' by 'smoking' and 'death_event'</span>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/filter.html'>filter</a></span>(<span class='no'>sex</span> <span class='kw'>==</span> <span class='st'>"Male"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/group_by.html'>group_by</a></span>(<span class='no'>smoking</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>sex</span> <span class='kw'>==</span> <span class='st'>"Male"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>smoking</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>normality</span>(<span class='no'>platelets</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 4 x 6</span>
 #&gt;   variable  smoking death_event statistic     p_value sample
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
@@ -303,10 +277,10 @@ The number of observations supported by the stats::shapiro.test function is 3 to
 <span class='co'># Test log(platelets) variables by 'smoking' and 'death_event',</span>
 <span class='co'># and extract only p.value greater than 0.01.</span>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/mutate.html'>mutate</a></span>(<span class='kw'>platelets_income</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='no'>platelets</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/group_by.html'>group_by</a></span>(<span class='no'>smoking</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>platelets_income</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='no'>platelets</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>smoking</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>normality</span>(<span class='no'>platelets_income</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/filter.html'>filter</a></span>(<span class='no'>p_value</span> <span class='kw'>&gt;</span> <span class='fl'>0.01</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 6</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>p_value</span> <span class='kw'>&gt;</span> <span class='fl'>0.01</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 6</span>
 #&gt;   variable         smoking death_event statistic p_value sample
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'>1</span> platelets_income Yes     Yes             0.983   0.907     30</div><div class='input'># }

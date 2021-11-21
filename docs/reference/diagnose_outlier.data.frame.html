@@ -73,7 +73,7 @@ for diagnosing the quality of the numerical data." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
       </span>
     </div>
 
@@ -184,7 +184,7 @@ it is necessary to eliminate or replace the outliers.</p>
 #&gt; 1               age            0      0.0000000           NaN     60.82943
 #&gt; 2        cpk_enzyme           29      9.6989967  2.905414e+03    581.83946
 #&gt; 3 ejection_fraction            2      0.6688963  7.500000e+01     38.08361
-#&gt; 4         platelets           19      6.3545151  3.681105e+05 262861.41466
+#&gt; 4         platelets           21      7.0234114  3.783857e+05 263358.02926
 #&gt; 5        creatinine           29      9.6989967  3.793103e+00      1.39388
 #&gt; 6            sodium            4      1.3377926  1.185000e+02    136.62542
 #&gt; 7              time            0      0.0000000           NaN    130.26087
@@ -192,7 +192,7 @@ it is necessary to eliminate or replace the outliers.</p>
 #&gt; 1 6.082943e+01
 #&gt; 2 3.322704e+02
 #&gt; 3 3.783502e+01
-#&gt; 4 2.551701e+05
+#&gt; 4 2.546689e+05
 #&gt; 5 1.136185e+00
 #&gt; 6 1.368712e+02
 #&gt; 7 1.302609e+02</div><div class='input'>
@@ -202,26 +202,10 @@ it is necessary to eliminate or replace the outliers.</p>
 #&gt; sodium         sodium            4       1.337793       118.500  136.6254
 #&gt;            without_mean
 #&gt; cpk_enzyme     332.2704
-#&gt; sodium         136.8712</div><div class='input'><span class='fu'>diagnose_outlier</span>(<span class='no'>heartfailure</span>, -<span class='no'>cpk_enzyme</span>, -<span class='no'>sodium</span>)</div><div class='output co'>#&gt;                           variables outliers_cnt outliers_ratio outliers_mean
-#&gt; age                             age            0      0.0000000           NaN
-#&gt; ejection_fraction ejection_fraction            2      0.6688963  7.500000e+01
-#&gt; platelets                 platelets           19      6.3545151  3.681105e+05
-#&gt; creatinine               creatinine           29      9.6989967  3.793103e+00
-#&gt; time                           time            0      0.0000000           NaN
-#&gt;                      with_mean without_mean
-#&gt; age                   60.82943 6.082943e+01
-#&gt; ejection_fraction     38.08361 3.783502e+01
-#&gt; platelets         262861.41466 2.551701e+05
-#&gt; creatinine             1.39388 1.136185e+00
-#&gt; time                 130.26087 1.302609e+02</div><div class='input'><span class='fu'>diagnose_outlier</span>(<span class='no'>heartfailure</span>, <span class='st'>"cpk_enzyme"</span>, <span class='st'>"sodium"</span>)</div><div class='output co'>#&gt;             variables outliers_cnt outliers_ratio outliers_mean with_mean
-#&gt; cpk_enzyme cpk_enzyme           29       9.698997      2905.414  581.8395
-#&gt; sodium         sodium            4       1.337793       118.500  136.6254
-#&gt;            without_mean
-#&gt; cpk_enzyme     332.2704
-#&gt; sodium         136.8712</div><div class='input'><span class='fu'>diagnose_outlier</span>(<span class='no'>heartfailure</span>, <span class='fl'>5</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 6</span><span>
-#&gt;   variables     outliers_cnt outliers_ratio outliers_mean with_mean without_mean
-#&gt; </span><span style='color: #BCBCBC;'>*</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> ejection_fra…            2          0.669            75      38.1         37.8</div><div class='input'>
+#&gt; sodium         136.8712</div><div class='input'><span class='co'># diagnose_outlier(heartfailure, -cpk_enzyme, -sodium)</span>
+<span class='co'># diagnose_outlier(heartfailure, "cpk_enzyme", "sodium")</span>
+<span class='co'># diagnose_outlier(heartfailure, 5)</span>
+
 <span class='co'># Using pipes ---------------------------------</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
@@ -231,7 +215,7 @@ it is necessary to eliminate or replace the outliers.</p>
 #&gt; 1               age            0      0.0000000           NaN     60.82943
 #&gt; 2        cpk_enzyme           29      9.6989967  2.905414e+03    581.83946
 #&gt; 3 ejection_fraction            2      0.6688963  7.500000e+01     38.08361
-#&gt; 4         platelets           19      6.3545151  3.681105e+05 262861.41466
+#&gt; 4         platelets           21      7.0234114  3.783857e+05 263358.02926
 #&gt; 5        creatinine           29      9.6989967  3.793103e+00      1.39388
 #&gt; 6            sodium            4      1.3377926  1.185000e+02    136.62542
 #&gt; 7              time            0      0.0000000           NaN    130.26087
@@ -239,7 +223,7 @@ it is necessary to eliminate or replace the outliers.</p>
 #&gt; 1 6.082943e+01
 #&gt; 2 3.322704e+02
 #&gt; 3 3.783502e+01
-#&gt; 4 2.551701e+05
+#&gt; 4 2.546689e+05
 #&gt; 5 1.136185e+00
 #&gt; 6 1.368712e+02
 #&gt; 7 1.302609e+02</div><div class='input'><span class='co'># Positive values select variables</span>
@@ -249,53 +233,31 @@ it is necessary to eliminate or replace the outliers.</p>
 #&gt; sodium         sodium            4       1.337793       118.500  136.6254
 #&gt;            without_mean
 #&gt; cpk_enzyme     332.2704
-#&gt; sodium         136.8712</div><div class='input'><span class='co'># Negative values to drop variables</span>
-<span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>diagnose_outlier</span>(-<span class='no'>cpk_enzyme</span>, -<span class='no'>sodium</span>)</div><div class='output co'>#&gt;                           variables outliers_cnt outliers_ratio outliers_mean
-#&gt; age                             age            0      0.0000000           NaN
-#&gt; ejection_fraction ejection_fraction            2      0.6688963  7.500000e+01
-#&gt; platelets                 platelets           19      6.3545151  3.681105e+05
-#&gt; creatinine               creatinine           29      9.6989967  3.793103e+00
-#&gt; time                           time            0      0.0000000           NaN
-#&gt;                      with_mean without_mean
-#&gt; age                   60.82943 6.082943e+01
-#&gt; ejection_fraction     38.08361 3.783502e+01
-#&gt; platelets         262861.41466 2.551701e+05
-#&gt; creatinine             1.39388 1.136185e+00
-#&gt; time                 130.26087 1.302609e+02</div><div class='input'><span class='co'># Positions values select variables</span>
-<span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>diagnose_outlier</span>(<span class='fl'>5</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 6</span><span>
-#&gt;   variables     outliers_cnt outliers_ratio outliers_mean with_mean without_mean
-#&gt; </span><span style='color: #BCBCBC;'>*</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> ejection_fra…            2          0.669            75      38.1         37.8</div><div class='input'><span class='co'># Positions values select variables</span>
-<span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>diagnose_outlier</span>(-<span class='fl'>1</span>, -<span class='fl'>5</span>)</div><div class='output co'>#&gt;             variables outliers_cnt outliers_ratio outliers_mean    with_mean
-#&gt; cpk_enzyme cpk_enzyme           29       9.698997  2.905414e+03    581.83946
-#&gt; platelets   platelets           19       6.354515  3.681105e+05 262861.41466
-#&gt; creatinine creatinine           29       9.698997  3.793103e+00      1.39388
-#&gt; sodium         sodium            4       1.337793  1.185000e+02    136.62542
-#&gt; time             time            0       0.000000           NaN    130.26087
-#&gt;            without_mean
-#&gt; cpk_enzyme 3.322704e+02
-#&gt; platelets  2.551701e+05
-#&gt; creatinine 1.136185e+00
-#&gt; sodium     1.368712e+02
-#&gt; time       1.302609e+02</div><div class='input'>
+#&gt; sodium         136.8712</div><div class='input'><span class='co'># # Negative values to drop variables</span>
+<span class='co'># heartfailure %&gt;%</span>
+<span class='co'>#   diagnose_outlier(-cpk_enzyme, -sodium)</span>
+<span class='co'># # Positions values select variables</span>
+<span class='co'># heartfailure %&gt;%</span>
+<span class='co'>#   diagnose_outlier(5)</span>
+<span class='co'># Positions values select variables</span>
+<span class='co'># # heartfailure %&gt;%</span>
+<span class='co'>#   diagnose_outlier(-1, -5)</span>
+
 <span class='co'># Using pipes &amp; dplyr -------------------------</span>
 <span class='co'># outlier_ratio is more than 1%</span>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>diagnose_outlier</span>()  <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>outliers_ratio</span> <span class='kw'>&gt;</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt;    variables outliers_cnt outliers_ratio outliers_mean    with_mean
 #&gt; 1 cpk_enzyme           29       9.698997  2.905414e+03    581.83946
-#&gt; 2  platelets           19       6.354515  3.681105e+05 262861.41466
+#&gt; 2  platelets           21       7.023411  3.783857e+05 263358.02926
 #&gt; 3 creatinine           29       9.698997  3.793103e+00      1.39388
 #&gt; 4     sodium            4       1.337793  1.185000e+02    136.62542
 #&gt;   without_mean
 #&gt; 1 3.322704e+02
-#&gt; 2 2.551701e+05
+#&gt; 2 2.546689e+05
 #&gt; 3 1.136185e+00
 #&gt; 4 1.368712e+02</div><div class='input'>  
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

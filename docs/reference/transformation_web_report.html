@@ -73,7 +73,7 @@ transform numerical variables for object inheriting from data.frame." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
       </span>
     </div>
 
@@ -139,6 +139,7 @@ transform numerical variables for object inheriting from data.frame.</p>
   <span class='kw'>create_date</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span>(),
   <span class='kw'>theme</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"orange"</span>, <span class='st'>"blue"</span>),
   <span class='kw'>sample_percent</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+  <span class='kw'>base_family</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>...</span>
 )</pre>
 
@@ -202,6 +203,11 @@ It has a value between (0, 100]. 100 means all data, and 5 means 5% of sample da
 This is useful for data with a large number of observations.</p></td>
     </tr>
     <tr>
+      <th>base_family</th>
+      <td><p>character. The name of the base font family to use 
+for the visualization. If not specified, the font defined in dlookr is applied. (See details)</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>arguments to be passed to methods.</p></td>
     </tr>
@@ -232,6 +238,9 @@ than data with a small number of variables.</p>
 <li><p>Optimal Binning</p></li>
 </ul>
 
+<p>The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+"NanumSquare", "Noto Sans Korean". If you want to use a different font, 
+use it after loading the Google font with import_google_font().</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {

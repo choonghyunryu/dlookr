@@ -74,7 +74,7 @@ and the imputation of a categorical variable is a bar plot." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
       </span>
     </div>
 
@@ -128,7 +128,7 @@ and the imputation of a categorical variable is a bar plot.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for imputation</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>base_family</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -144,12 +144,22 @@ or imputate_outlier().</p></td>
 The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.</p></td>
     </tr>
     <tr>
+      <th>base_family</th>
+      <td><p>character. The name of the base font family to use 
+for the visualization. If not specified, the font defined in dlookr is applied. (See details)</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>arguments to be passed to methods, such as graphical parameters (see par).
 only applies when the model argument is TRUE, and is used for ... of the plot.lm() function.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+"NanumSquare", "Noto Sans Korean". If you want to use a different font, 
+use it after loading the Google font with import_google_font().</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='imputate_na.html'>imputate_na</a></code>, <code><a href='imputate_outlier.html'>imputate_outlier</a></code>, <code><a href='summary.imputation.html'>summary.imputation</a></code>.</p></div>
@@ -164,42 +174,42 @@ only applies when the model argument is TRUE, and is used for ... of the plot.lm
 <span class='co'># Impute missing values -----------------------------</span>
 <span class='co'># If the variable of interest is a numerical variables</span>
 <span class='no'>platelets</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='imputate_na.html'>imputate_na</a></span>(<span class='no'>heartfailure2</span>, <span class='no'>platelets</span>, <span class='no'>death_event</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"rpart"</span>)
-<span class='no'>platelets</span></div><div class='output co'>#&gt;   [1] 265000.0 263358.0 162000.0 210000.0 222222.2 204000.0 127000.0 454000.0
+<span class='no'>platelets</span></div><div class='output co'>#&gt;   [1] 265000.0 263358.0 162000.0 210000.0 327000.0 204000.0 127000.0 219143.0
 #&gt;   [9] 263358.0 388000.0 368000.0 253000.0 136000.0 276000.0 427000.0  47000.0
-#&gt;  [17] 262000.0 166000.0 237000.0  87000.0 276000.0 297000.0 289000.0 220194.4
+#&gt;  [17] 262000.0 166000.0 237000.0  87000.0 276000.0 297000.0 289000.0 368000.0
 #&gt;  [25] 263358.0 149000.0 196000.0 284000.0 153000.0 200000.0 263358.0 360000.0
-#&gt;  [33] 319000.0 258437.1 188000.0 228000.0 226000.0 321000.0 305000.0 329000.0
-#&gt;  [41] 263358.0 153000.0 248560.4 218000.0 194000.0 310000.0 248560.4 451000.0
-#&gt;  [49] 140000.0 395000.0 166000.0 418000.0 263358.0 351000.0 222222.2 461000.0
-#&gt;  [57] 223000.0 216000.0 319000.0 254000.0 390000.0 339833.3 258437.1 385000.0
-#&gt;  [65] 263358.0 119000.0 213000.0 274000.0 244000.0 258437.1 374000.0 122000.0
-#&gt;  [73] 243000.0 149000.0 266000.0 204000.0 258437.1 237000.0 283000.0 324000.0
+#&gt;  [33] 319000.0 302000.0 188000.0 228000.0 226000.0 321000.0 305000.0 182479.7
+#&gt;  [41] 263358.0 281234.6 185000.0 281234.6 194000.0 310000.0 271000.0 451000.0
+#&gt;  [49] 140000.0 395000.0 166000.0 418000.0 263358.0 351000.0 255000.0 461000.0
+#&gt;  [57] 223000.0 216000.0 319000.0 254000.0 390000.0 216000.0 254000.0 245794.8
+#&gt;  [65] 263358.0 200176.5 213000.0 286108.3 244000.0 497000.0 374000.0 122000.0
+#&gt;  [73] 243000.0 149000.0 225628.6 204000.0 317000.0 237000.0 283000.0 324000.0
 #&gt;  [81] 293000.0 263358.0 196000.0 172000.0 302000.0 406000.0 173000.0 304000.0
-#&gt;  [89] 235000.0 181000.0 249000.0 297000.0 263358.0 210000.0 327000.0 219000.0
+#&gt;  [89] 235000.0 181000.0 249000.0 297000.0 245794.8 210000.0 327000.0 219000.0
 #&gt;  [97] 254000.0 255000.0 318000.0 221000.0 298000.0 263358.0 149000.0 226000.0
-#&gt; [105] 286000.0 621000.0 263000.0 226000.0 304000.0 850000.0 306000.0 228000.0
-#&gt; [113] 252000.0 351000.0 328000.0 164000.0 271000.0 507000.0 203000.0 263358.0
+#&gt; [105] 286000.0 286108.3 263000.0 226000.0 304000.0 850000.0 306000.0 228000.0
+#&gt; [113] 252000.0 351000.0 328000.0 164000.0 271000.0 507000.0 281234.6 304935.8
 #&gt; [121] 210000.0 162000.0 228000.0 127000.0 217000.0 237000.0 271000.0 300000.0
-#&gt; [129] 267000.0 227000.0 249000.0 250000.0 263358.0 295000.0 231000.0 263358.0
-#&gt; [137] 172000.0 305000.0 221000.0 211000.0 263358.0 348000.0 329000.0 229000.0
+#&gt; [129] 267000.0 227000.0 249000.0 182479.7 263358.0 295000.0 231000.0 263358.0
+#&gt; [137] 172000.0 305000.0 221000.0 211000.0 225628.6 348000.0 329000.0 229000.0
 #&gt; [145] 338000.0 266000.0 218000.0 242000.0 225000.0 228000.0 235000.0 244000.0
 #&gt; [153] 184000.0 263358.0 235000.0 194000.0 277000.0 262000.0 235000.0 362000.0
-#&gt; [161] 242000.0 259004.1 248560.4  75000.0 334000.0 192000.0 220000.0  70000.0
-#&gt; [169] 270000.0 305000.0 263358.0 325000.0 258437.1 189000.0 281000.0 337000.0
+#&gt; [161] 242000.0 174000.0 448000.0  75000.0 334000.0 192000.0 220000.0  70000.0
+#&gt; [169] 270000.0 305000.0 263358.0 325000.0 176000.0 189000.0 281000.0 337000.0
 #&gt; [177] 105000.0 132000.0 267000.0 279000.0 303000.0 221000.0 265000.0 224000.0
 #&gt; [185] 219000.0 389000.0 153000.0 365000.0 201000.0 275000.0 350000.0 309000.0
-#&gt; [193] 260000.0 160000.0 126000.0 223000.0 366357.2 259000.0 279000.0 263358.0
-#&gt; [201] 319428.6 377000.0 220000.0 212000.0 277000.0 362000.0 226000.0 186000.0
+#&gt; [193] 260000.0 160000.0 126000.0 223000.0 263358.0 259000.0 279000.0 263358.0
+#&gt; [201]  73000.0 377000.0 220000.0 212000.0 277000.0 281234.6 226000.0 186000.0
 #&gt; [209] 283000.0 268000.0 389000.0 147000.0 481000.0 244000.0 290000.0 203000.0
-#&gt; [217] 201979.7 151000.0 271000.0 371000.0 263358.0 194000.0 365000.0 130000.0
+#&gt; [217] 358000.0 151000.0 271000.0 371000.0 263358.0 194000.0 329454.5 130000.0
 #&gt; [225] 504000.0 265000.0 189000.0 141000.0 237000.0 274000.0  62000.0 185000.0
-#&gt; [233] 255000.0 330000.0 305000.0 406000.0 248000.0 173000.0 257000.0 258437.1
-#&gt; [241] 533000.0 249000.0 255000.0 220000.0 264000.0 282000.0 314000.0 246000.0
-#&gt; [249] 301000.0 223000.0 404000.0 231000.0 274000.0 236000.0 201979.7 334000.0
-#&gt; [257] 294000.0 253000.0 233000.0 220194.4 220194.4 283000.0 198000.0 208000.0
-#&gt; [265] 147000.0 362000.0 263358.0 133000.0 302000.0 222000.0 263358.0 221000.0
+#&gt; [233] 255000.0 330000.0 305000.0 286108.3 248000.0 173000.0 257000.0 263358.0
+#&gt; [241] 329454.5 249000.0 255000.0 220000.0 264000.0 282000.0 314000.0 246000.0
+#&gt; [249] 301000.0 223000.0 404000.0 231000.0 274000.0 236000.0 263358.0 334000.0
+#&gt; [257] 294000.0 253000.0 233000.0 308000.0 203000.0 283000.0 198000.0 208000.0
+#&gt; [265] 147000.0 362000.0 263358.0 133000.0 350979.7 222000.0 263358.0 221000.0
 #&gt; [273] 215000.0 189000.0 150000.0 422000.0 327000.0  25100.0 232000.0 451000.0
-#&gt; [281] 241000.0  51000.0 215000.0 263358.0 279000.0 336000.0 279000.0 543000.0
+#&gt; [281] 241000.0  51000.0 215000.0 263358.0 279000.0 336000.0 279000.0 350979.7
 #&gt; [289] 263358.0 390000.0 222000.0 133000.0 382000.0 179000.0 155000.0 270000.0
 #&gt; [297] 742000.0 140000.0 395000.0
 #&gt; attr(,"var_type")
@@ -207,8 +217,8 @@ only applies when the model argument is TRUE, and is used for ... of the plot.lm
 #&gt; attr(,"method")
 #&gt; [1] "rpart"
 #&gt; attr(,"na_pos")
-#&gt;  [1]   5  24  34  43  47  55  62  63  70  77 162 163 173 197 201 217 240 255 260
-#&gt; [20] 261
+#&gt;  [1]   8  40  42  44  64  66  68  75  93 106 119 120 132 141 206 223 236 241 269
+#&gt; [20] 288
 #&gt; attr(,"type")
 #&gt; [1] "missing values"
 #&gt; attr(,"message")
@@ -223,140 +233,79 @@ only applies when the model argument is TRUE, and is used for ... of the plot.lm
 #&gt;              Original   Imputation
 #&gt; n        2.790000e+02 2.990000e+02
 #&gt; na       2.000000e+01 0.000000e+00
-#&gt; mean     2.624444e+05 2.619127e+05
-#&gt; sd       9.795095e+04 9.525274e+04
-#&gt; se_mean  5.864170e+03 5.508608e+03
-#&gt; IQR      8.950000e+04 8.500000e+04
-#&gt; skewness 1.541181e+00 1.583291e+00
-#&gt; kurtosis 6.650481e+00 7.100197e+00
+#&gt; mean     2.586773e+05 2.593551e+05
+#&gt; sd       9.347939e+04 9.125783e+04
+#&gt; se_mean  5.596464e+03 5.277576e+03
+#&gt; IQR      9.000000e+04 8.800000e+04
+#&gt; skewness 1.519445e+00 1.505988e+00
+#&gt; kurtosis 7.676465e+00 7.921410e+00
 #&gt; p00      2.510000e+04 2.510000e+04
 #&gt; p01      5.958000e+04 6.178000e+04
 #&gt; p05      1.318000e+05 1.329000e+05
-#&gt; p10      1.526000e+05 1.530000e+05
-#&gt; p20      1.960000e+05 2.015878e+05
-#&gt; p25      2.125000e+05 2.155000e+05
-#&gt; p30      2.210000e+05 2.210000e+05
-#&gt; p40      2.362000e+05 2.370000e+05
-#&gt; p50      2.600000e+05 2.584371e+05
-#&gt; p60      2.650000e+05 2.633580e+05
-#&gt; p70      2.830000e+05 2.816000e+05
-#&gt; p75      3.020000e+05 3.005000e+05
-#&gt; p80      3.190000e+05 3.184000e+05
-#&gt; p90      3.746000e+05 3.686000e+05
-#&gt; p95      4.184000e+05 4.072000e+05
-#&gt; p99      5.601600e+05 5.445600e+05
+#&gt; p10      1.526000e+05 1.546000e+05
+#&gt; p20      1.940000e+05 1.960000e+05
+#&gt; p25      2.105000e+05 2.125000e+05
+#&gt; p30      2.204000e+05 2.210000e+05
+#&gt; p40      2.350000e+05 2.362000e+05
+#&gt; p50      2.550000e+05 2.590000e+05
+#&gt; p60      2.633580e+05 2.650000e+05
+#&gt; p70      2.826000e+05 2.830000e+05
+#&gt; p75      3.005000e+05 3.005000e+05
+#&gt; p80      3.116000e+05 3.116000e+05
+#&gt; p90      3.656000e+05 3.620000e+05
+#&gt; p95      4.042000e+05 3.959000e+05
+#&gt; p99      5.046600e+05 5.040600e+05
 #&gt; p100     8.500000e+05 8.500000e+05</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>platelets</span>)</div><div class='img'><img src='plot.imputation-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># If the variable of interest is a categorical variables</span>
-<span class='no'>smoking</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='imputate_na.html'>imputate_na</a></span>(<span class='no'>heartfailure2</span>, <span class='no'>smoking</span>, <span class='no'>death_event</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mice"</span>)</div><div class='output co'>#&gt; 
-#&gt;  iter imp variable
-#&gt;   1   1  platelets  smoking
-#&gt;   1   2  platelets  smoking
-#&gt;   1   3  platelets  smoking
-#&gt;   1   4  platelets  smoking
-#&gt;   1   5  platelets  smoking
-#&gt;   2   1  platelets  smoking
-#&gt;   2   2  platelets  smoking
-#&gt;   2   3  platelets  smoking
-#&gt;   2   4  platelets  smoking
-#&gt;   2   5  platelets  smoking
-#&gt;   3   1  platelets  smoking
-#&gt;   3   2  platelets  smoking
-#&gt;   3   3  platelets  smoking
-#&gt;   3   4  platelets  smoking
-#&gt;   3   5  platelets  smoking
-#&gt;   4   1  platelets  smoking
-#&gt;   4   2  platelets  smoking
-#&gt;   4   3  platelets  smoking
-#&gt;   4   4  platelets  smoking
-#&gt;   4   5  platelets  smoking
-#&gt;   5   1  platelets  smoking
-#&gt;   5   2  platelets  smoking
-#&gt;   5   3  platelets  smoking
-#&gt;   5   4  platelets  smoking
-#&gt;   5   5  platelets  smoking</div><div class='input'><span class='no'>smoking</span></div><div class='output co'>#&gt;   [1] No  No  Yes No  No  Yes No  Yes No  Yes Yes Yes No  No  No  No  No  No 
-#&gt;  [19] No  No  No  No  Yes No  No  Yes No  Yes No  Yes No  Yes No  No  No  No 
-#&gt;  [37] No  No  No  No  Yes Yes No  No  No  Yes No  Yes No  No  No  No  No  No 
-#&gt;  [55] Yes No  Yes Yes Yes Yes No  No  Yes No  No  Yes No  Yes No  No  Yes Yes
-#&gt;  [73] Yes Yes Yes Yes Yes No  Yes No  No  Yes No  No  No  No  No  No  No  No 
-#&gt;  [91] Yes No  No  No  No  No  No  No  No  No  No  No  Yes Yes No  Yes No  No 
-#&gt; [109] Yes Yes Yes Yes No  No  No  No  No  No  No  No  Yes No  No  No  No  No 
-#&gt; [127] No  No  Yes No  Yes No  No  Yes Yes No  No  No  No  No  No  No  No  No 
-#&gt; [145] Yes Yes Yes No  No  No  No  No  Yes Yes No  No  No  Yes No  Yes No  Yes
-#&gt; [163] Yes No  No  No  Yes No  No  No  Yes Yes Yes No  Yes Yes Yes No  No  Yes
-#&gt; [181] No  Yes Yes No  Yes No  No  No  No  No  No  No  No  Yes No  No  No  No 
-#&gt; [199] No  Yes No  No  No  Yes Yes No  No  No  No  No  Yes Yes Yes No  No  No 
-#&gt; [217] No  No  No  No  No  Yes Yes No  No  No  Yes No  No  No  No  Yes No  Yes
-#&gt; [235] Yes No  No  No  No  Yes No  Yes Yes No  No  No  No  No  Yes No  No  No 
-#&gt; [253] No  No  No  Yes No  No  No  Yes No  No  No  No  No  Yes Yes No  No  No 
-#&gt; [271] Yes No  No  No  Yes No  No  No  No  No  No  Yes Yes Yes No  No  No  No 
-#&gt; [289] No  No  No  No  Yes Yes Yes No  No  Yes Yes
-#&gt; attr(,"var_type")
-#&gt; [1] categorical
-#&gt; attr(,"method")
-#&gt; [1] mice
-#&gt; attr(,"na_pos")
-#&gt; [1]  32  43  70 214 265
-#&gt; attr(,"seed")
-#&gt; [1] 10423
-#&gt; attr(,"type")
-#&gt; [1] missing values
-#&gt; attr(,"message")
-#&gt; [1] complete imputation
-#&gt; attr(,"success")
-#&gt; [1] TRUE
-#&gt; Levels: No Yes</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>smoking</span>)</div><div class='output co'>#&gt; * Impute missing values based on Multivariate Imputation by Chained Equations
-#&gt;  - method : mice
-#&gt;  - random seed : 10423
-#&gt; 
-#&gt; * Information of Imputation (before vs after)
-#&gt;      original imputation original_percent imputation_percent
-#&gt; No        199        203            66.56              67.89
-#&gt; Yes        95         96            31.77              32.11
-#&gt; &lt;NA&gt;        5          0             1.67               0.00</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>smoking</span>)</div><div class='img'><img src='plot.imputation-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># smoking &lt;- imputate_na(heartfailure2, smoking, death_event, method = "mice")</span>
+<span class='co'># smoking</span>
+<span class='co'># summary(smoking)</span>
+
+<span class='co'># plot(smoking)</span>
+
 <span class='co'># Impute outliers ----------------------------------</span>
 <span class='co'># If the variable of interest is a numerical variable</span>
 <span class='no'>platelets</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='imputate_outlier.html'>imputate_outlier</a></span>(<span class='no'>heartfailure2</span>, <span class='no'>platelets</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"capping"</span>)
-<span class='no'>platelets</span></div><div class='output co'>#&gt;   [1] 265000 263358 162000 210000     NA 204000 127000 418400 263358 388000
+<span class='no'>platelets</span></div><div class='output co'>#&gt;   [1] 265000 263358 162000 210000 327000 204000 127000     NA 263358 388000
 #&gt;  [11] 368000 253000 136000 276000 427000 131800 262000 166000 237000  87000
-#&gt;  [21] 276000 297000 289000     NA 263358 149000 196000 284000 153000 200000
-#&gt;  [31] 263358 360000 319000     NA 188000 228000 226000 321000 305000 329000
-#&gt;  [41] 263358 153000     NA 218000 194000 310000     NA 418400 140000 395000
-#&gt;  [51] 166000 418000 263358 351000     NA 418400 223000 216000 319000 254000
-#&gt;  [61] 390000     NA     NA 385000 263358 119000 213000 274000 244000     NA
-#&gt;  [71] 374000 122000 243000 149000 266000 204000     NA 237000 283000 324000
+#&gt;  [21] 276000 297000 289000 368000 263358 149000 196000 284000 153000 200000
+#&gt;  [31] 263358 360000 319000 302000 188000 228000 226000 321000 305000     NA
+#&gt;  [41] 263358     NA 185000     NA 194000 310000 271000 404200 140000 395000
+#&gt;  [51] 166000 418000 263358 351000 255000 404200 223000 216000 319000 254000
+#&gt;  [61] 390000 216000 254000     NA 263358     NA 213000     NA 244000 404200
+#&gt;  [71] 374000 122000 243000 149000     NA 204000 317000 237000 283000 324000
 #&gt;  [81] 293000 263358 196000 172000 302000 406000 173000 304000 235000 181000
-#&gt;  [91] 249000 297000 263358 210000 327000 219000 254000 255000 318000 221000
-#&gt; [101] 298000 263358 149000 226000 286000 418400 263000 226000 304000 418400
-#&gt; [111] 306000 228000 252000 351000 328000 164000 271000 418400 203000 263358
+#&gt;  [91] 249000 297000     NA 210000 327000 219000 254000 255000 318000 221000
+#&gt; [101] 298000 263358 149000 226000 286000     NA 263000 226000 304000 404200
+#&gt; [111] 306000 228000 252000 351000 328000 164000 271000 404200     NA     NA
 #&gt; [121] 210000 162000 228000 127000 217000 237000 271000 300000 267000 227000
-#&gt; [131] 249000 250000 263358 295000 231000 263358 172000 305000 221000 211000
-#&gt; [141] 263358 348000 329000 229000 338000 266000 218000 242000 225000 228000
+#&gt; [131] 249000     NA 263358 295000 231000 263358 172000 305000 221000 211000
+#&gt; [141]     NA 348000 329000 229000 338000 266000 218000 242000 225000 228000
 #&gt; [151] 235000 244000 184000 263358 235000 194000 277000 262000 235000 362000
-#&gt; [161] 242000     NA     NA 131800 334000 192000 220000 131800 270000 305000
-#&gt; [171] 263358 325000     NA 189000 281000 337000 105000 132000 267000 279000
+#&gt; [161] 242000 174000 404200 131800 334000 192000 220000 131800 270000 305000
+#&gt; [171] 263358 325000 176000 189000 281000 337000 105000 132000 267000 279000
 #&gt; [181] 303000 221000 265000 224000 219000 389000 153000 365000 201000 275000
-#&gt; [191] 350000 309000 260000 160000 126000 223000     NA 259000 279000 263358
-#&gt; [201]     NA 377000 220000 212000 277000 362000 226000 186000 283000 268000
-#&gt; [211] 389000 147000 418400 244000 290000 203000     NA 151000 271000 371000
-#&gt; [221] 263358 194000 365000 130000 418400 265000 189000 141000 237000 274000
-#&gt; [231] 131800 185000 255000 330000 305000 406000 248000 173000 257000     NA
-#&gt; [241] 418400 249000 255000 220000 264000 282000 314000 246000 301000 223000
-#&gt; [251] 404000 231000 274000 236000     NA 334000 294000 253000 233000     NA
-#&gt; [261]     NA 283000 198000 208000 147000 362000 263358 133000 302000 222000
-#&gt; [271] 263358 221000 215000 189000 150000 422000 327000 131800 232000 418400
-#&gt; [281] 241000 131800 215000 263358 279000 336000 279000 418400 263358 390000
-#&gt; [291] 222000 133000 382000 179000 155000 270000 418400 140000 395000
+#&gt; [191] 350000 309000 260000 160000 126000 223000 263358 259000 279000 263358
+#&gt; [201] 131800 377000 220000 212000 277000     NA 226000 186000 283000 268000
+#&gt; [211] 389000 147000 404200 244000 290000 203000 358000 151000 271000 371000
+#&gt; [221] 263358 194000     NA 130000 404200 265000 189000 141000 237000 274000
+#&gt; [231] 131800 185000 255000 330000 305000     NA 248000 173000 257000 263358
+#&gt; [241]     NA 249000 255000 220000 264000 282000 314000 246000 301000 223000
+#&gt; [251] 404000 231000 274000 236000 263358 334000 294000 253000 233000 308000
+#&gt; [261] 203000 283000 198000 208000 147000 362000 263358 133000     NA 222000
+#&gt; [271] 263358 221000 215000 189000 150000 422000 327000 131800 232000 404200
+#&gt; [281] 241000 131800 215000 263358 279000 336000 279000     NA 263358 390000
+#&gt; [291] 222000 133000 382000 179000 155000 270000 404200 140000 395000
 #&gt; attr(,"method")
 #&gt; [1] "capping"
 #&gt; attr(,"var_type")
 #&gt; [1] "numerical"
 #&gt; attr(,"outlier_pos")
-#&gt;  [1]   8  16  48  56 106 110 118 164 168 213 225 231 241 278 280 282 288 297
+#&gt;  [1]  16  48  56  70 110 118 163 164 168 201 213 225 231 278 280 282 297
 #&gt; attr(,"outliers")
-#&gt;  [1] 454000  47000 451000 461000 621000 850000 507000  75000  70000 481000
-#&gt; [11] 504000  62000 533000  25100 451000  51000 543000 742000
+#&gt;  [1]  47000 451000 461000 497000 850000 507000 448000  75000  70000  73000
+#&gt; [11] 481000 504000  62000  25100 451000  51000 742000
 #&gt; attr(,"type")
 #&gt; [1] "outliers"
 #&gt; attr(,"message")
@@ -370,30 +319,30 @@ only applies when the model argument is TRUE, and is used for ... of the plot.lm
 #&gt;              Original    Imputation
 #&gt; n        2.790000e+02  2.790000e+02
 #&gt; na       2.000000e+01  2.000000e+01
-#&gt; mean     2.624444e+05  2.584426e+05
-#&gt; sd       9.795095e+04  7.653521e+04
-#&gt; se_mean  5.864170e+03  4.582043e+03
-#&gt; IQR      8.950000e+04  8.950000e+04
-#&gt; skewness 1.541181e+00  3.032728e-01
-#&gt; kurtosis 6.650481e+00 -3.106891e-01
+#&gt; mean     2.586773e+05  2.557006e+05
+#&gt; sd       9.347939e+04  7.355749e+04
+#&gt; se_mean  5.596464e+03  4.403772e+03
+#&gt; IQR      9.000000e+04  9.000000e+04
+#&gt; skewness 1.519445e+00  2.464795e-01
+#&gt; kurtosis 7.676465e+00 -3.381412e-01
 #&gt; p00      2.510000e+04  8.700000e+04
-#&gt; p01      5.958000e+04  1.213400e+05
+#&gt; p01      5.958000e+04  1.251200e+05
 #&gt; p05      1.318000e+05  1.319800e+05
 #&gt; p10      1.526000e+05  1.526000e+05
-#&gt; p20      1.960000e+05  1.960000e+05
-#&gt; p25      2.125000e+05  2.125000e+05
-#&gt; p30      2.210000e+05  2.210000e+05
-#&gt; p40      2.362000e+05  2.362000e+05
-#&gt; p50      2.600000e+05  2.600000e+05
-#&gt; p60      2.650000e+05  2.650000e+05
-#&gt; p70      2.830000e+05  2.830000e+05
-#&gt; p75      3.020000e+05  3.020000e+05
-#&gt; p80      3.190000e+05  3.190000e+05
-#&gt; p90      3.746000e+05  3.746000e+05
-#&gt; p95      4.184000e+05  4.180400e+05
-#&gt; p99      5.601600e+05  4.184000e+05
+#&gt; p20      1.940000e+05  1.940000e+05
+#&gt; p25      2.105000e+05  2.105000e+05
+#&gt; p30      2.204000e+05  2.204000e+05
+#&gt; p40      2.350000e+05  2.350000e+05
+#&gt; p50      2.550000e+05  2.550000e+05
+#&gt; p60      2.633580e+05  2.633580e+05
+#&gt; p70      2.826000e+05  2.826000e+05
+#&gt; p75      3.005000e+05  3.005000e+05
+#&gt; p80      3.116000e+05  3.116000e+05
+#&gt; p90      3.656000e+05  3.656000e+05
+#&gt; p95      4.042000e+05  4.040200e+05
+#&gt; p99      5.046600e+05  4.086400e+05
 #&gt; p100     8.500000e+05  4.270000e+05</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>platelets</span>)</div><div class='img'><img src='plot.imputation-3.png' alt='' width='700' height='433' /></div><div class='input'># }
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>platelets</span>)</div><div class='img'><img src='plot.imputation-2.png' alt='' width='700' height='433' /></div><div class='input'># }
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

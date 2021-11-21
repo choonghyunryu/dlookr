@@ -73,7 +73,7 @@ diagnosing the quality of the variables of data.frame or tbl_df." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
       </span>
     </div>
 
@@ -234,12 +234,8 @@ variable is likely to be an identifier.</p>
 <span class='co'># diagnose_category(jobchange, 7)</span>
 
 <span class='co'># Using pipes ---------------------------------</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+
 <span class='co'># Diagnosis of all categorical variables</span>
 <span class='no'>jobchange</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>diagnose_category</span>()</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 78 x 6</span>
@@ -260,7 +256,7 @@ variable is likely to be an identifier.</p>
 <span class='no'>jobchange</span> <span class='kw'>%&gt;%</span>
  <span class='fu'>diagnose_category</span>(<span class='no'>company_type</span>, <span class='no'>job_chnge</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 9 x 6</span>
 #&gt;   variables    levels                  N  freq  ratio  rank
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
 #&gt; <span style='color: #BCBCBC;'>1</span> company_type Pvt Ltd             <span style='text-decoration: underline;'>19</span>158  <span style='text-decoration: underline;'>9</span>817 51.2       1
 #&gt; <span style='color: #BCBCBC;'>2</span> company_type <span style='color: #BB0000;'>NA</span>                  <span style='text-decoration: underline;'>19</span>158  <span style='text-decoration: underline;'>6</span>140 32.0       2
 #&gt; <span style='color: #BCBCBC;'>3</span> company_type Funded Startup      <span style='text-decoration: underline;'>19</span>158  <span style='text-decoration: underline;'>1</span>001  5.22      3
@@ -271,21 +267,9 @@ variable is likely to be an identifier.</p>
 #&gt; <span style='color: #BCBCBC;'>8</span> job_chnge    No                  <span style='text-decoration: underline;'>19</span>158 <span style='text-decoration: underline;'>14</span>381 75.1       1
 #&gt; <span style='color: #BCBCBC;'>9</span> job_chnge    Yes                 <span style='text-decoration: underline;'>19</span>158  <span style='text-decoration: underline;'>4</span>777 24.9       2</div><div class='input'>
 <span class='co'># Negative values to drop variables</span>
-<span class='no'>jobchange</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>diagnose_category</span>(-<span class='no'>company_type</span>, -<span class='no'>job_chnge</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 69 x 6</span>
-#&gt;    variables   levels     N  freq   ratio  rank
-#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
-#&gt; <span style='color: #BCBCBC;'> 1</span> enrollee_id 1      <span style='text-decoration: underline;'>19</span>158     1 0.005<span style='text-decoration: underline;'>22</span>     1
-#&gt; <span style='color: #BCBCBC;'> 2</span> enrollee_id 10     <span style='text-decoration: underline;'>19</span>158     1 0.005<span style='text-decoration: underline;'>22</span>     1
-#&gt; <span style='color: #BCBCBC;'> 3</span> enrollee_id 10000  <span style='text-decoration: underline;'>19</span>158     1 0.005<span style='text-decoration: underline;'>22</span>     1
-#&gt; <span style='color: #BCBCBC;'> 4</span> enrollee_id 10001  <span style='text-decoration: underline;'>19</span>158     1 0.005<span style='text-decoration: underline;'>22</span>     1
-#&gt; <span style='color: #BCBCBC;'> 5</span> enrollee_id 10002  <span style='text-decoration: underline;'>19</span>158     1 0.005<span style='text-decoration: underline;'>22</span>     1
-#&gt; <span style='color: #BCBCBC;'> 6</span> enrollee_id 10003  <span style='text-decoration: underline;'>19</span>158     1 0.005<span style='text-decoration: underline;'>22</span>     1
-#&gt; <span style='color: #BCBCBC;'> 7</span> enrollee_id 10004  <span style='text-decoration: underline;'>19</span>158     1 0.005<span style='text-decoration: underline;'>22</span>     1
-#&gt; <span style='color: #BCBCBC;'> 8</span> enrollee_id 10005  <span style='text-decoration: underline;'>19</span>158     1 0.005<span style='text-decoration: underline;'>22</span>     1
-#&gt; <span style='color: #BCBCBC;'> 9</span> enrollee_id 10006  <span style='text-decoration: underline;'>19</span>158     1 0.005<span style='text-decoration: underline;'>22</span>     1
-#&gt; <span style='color: #BCBCBC;'>10</span> enrollee_id 10008  <span style='text-decoration: underline;'>19</span>158     1 0.005<span style='text-decoration: underline;'>22</span>     1
-#&gt; <span style='color: #949494;'># … with 59 more rows</span></div><div class='input'>
+<span class='co'># jobchange %&gt;%</span>
+<span class='co'>#   diagnose_category(-company_type, -job_chnge)</span>
+
 <span class='co'># Positions values select variables</span>
 <span class='co'># jobchange %&gt;%</span>
 <span class='co'>#   diagnose_category(7)</span>
@@ -314,7 +298,7 @@ variable is likely to be an identifier.</p>
 <span class='co'># Extraction of level that is more than 60% of categorical data</span>
 <span class='no'>jobchange</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>diagnose_category</span>()  <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/filter.html'>filter</a></span>(<span class='no'>ratio</span> <span class='kw'>&gt;=</span> <span class='fl'>60</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 6 x 6</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>ratio</span> <span class='kw'>&gt;=</span> <span class='fl'>60</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 6 x 6</span>
 #&gt;   variables           levels                      N  freq ratio  rank
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
 #&gt; <span style='color: #BCBCBC;'>1</span> gender              Male                    <span style='text-decoration: underline;'>19</span>158 <span style='text-decoration: underline;'>13</span>221  69.0     1

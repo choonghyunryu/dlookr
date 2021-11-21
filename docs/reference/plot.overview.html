@@ -73,7 +73,7 @@ Visualize the data type, number of observations, and number of missing values fo
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
       </span>
     </div>
 
@@ -126,7 +126,13 @@ Visualize the data type, number of observations, and number of missing values fo
     </div>
 
     <pre class="usage"><span class='co'># S3 method for overview</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>order_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"none"</span>, <span class='st'>"name"</span>, <span class='st'>"type"</span>), <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(
+  <span class='no'>x</span>,
+  <span class='kw'>order_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"none"</span>, <span class='st'>"name"</span>, <span class='st'>"type"</span>),
+  <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>base_family</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -140,11 +146,26 @@ Visualize the data type, number of observations, and number of missing values fo
       <td><p>character. method of order of bars(variables).</p></td>
     </tr>
     <tr>
+      <th>typographic</th>
+      <td><p>logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.</p></td>
+    </tr>
+    <tr>
+      <th>base_family</th>
+      <td><p>character. The name of the base font family to use 
+for the visualization. If not specified, the font defined in dlookr is applied. (See details)</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>further arguments to be passed from or to other methods.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+"NanumSquare", "Noto Sans Korean". If you want to use a different font, 
+use it after loading the Google font with import_google_font().</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='overview.html'>overview</a></code>, <code><a href='summary.overview.html'>summary.overview</a></code>.</p></div>
@@ -152,40 +173,48 @@ Visualize the data type, number of observations, and number of missing values fo
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='no'>ov</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='overview.html'>overview</a></span>(<span class='no'>jobchange</span>)
-<span class='no'>ov</span></div><div class='output co'>#&gt;     division        metrics   value
-#&gt; 1       size   observations   19158
-#&gt; 2       size      variables      14
-#&gt; 3       size         values  268212
-#&gt; 4       size    memory_size 2318464
-#&gt; 5    missing   complete_obs    8955
-#&gt; 6    missing    missing_obs   10203
-#&gt; 7    missing   missing_vars       8
-#&gt; 8    missing missing_values   20733
-#&gt; 9  data_type       numerics       1
-#&gt; 10 data_type       integers       1
-#&gt; 11 data_type        factors       7
-#&gt; 12 data_type     characters       1
-#&gt; 13 data_type         others       4</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>ov</span>)</div><div class='output co'>#&gt; ── Data Scale ──────────────────────────────────────────────
-#&gt; ● Number of observations           :     19,158
-#&gt; ● Number of variables              :         14
-#&gt; ● Number of values                 :    268,212
-#&gt; ● Size of located memory(bytes)    :  2,318,464
+<span class='no'>ov</span></div><div class='output co'>#&gt;      division               metrics   value
+#&gt; 1        size          observations   19158
+#&gt; 2        size             variables      14
+#&gt; 3        size                values  268212
+#&gt; 4        size           memory size 2318464
+#&gt; 5  duplicated duplicate observation       0
+#&gt; 6     missing  complete observation    8955
+#&gt; 7     missing   missing observation   10203
+#&gt; 8     missing     missing variables       8
+#&gt; 9     missing        missing values   20733
+#&gt; 10  data type              numerics       1
+#&gt; 11  data type              integers       1
+#&gt; 12  data type       factors/ordered      11
+#&gt; 13  data type            characters       1
+#&gt; 14  data type                 Dates       0
+#&gt; 15  data type              POSIXcts       0
+#&gt; 16  data type                others       0</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>ov</span>)</div><div class='output co'>#&gt; ── Data Scale ────────────────────────────────────────────── 
+#&gt; • Number of observations            :     19,158
+#&gt; • Number of variables               :         14
+#&gt; • Number of values                  :    268,212
+#&gt; • Size of located memory(bytes)     :  2,318,464 
 #&gt; 
-#&gt; ── Missing Data ────────────────────────────────────────────
-#&gt; ● Number of completed observations :      8,955
-#&gt; ● Number of observations with N/A  :     10,203
-#&gt; ● Number of variables with N/A     :          8
-#&gt; ● Number of N/A                    :     20,733
+#&gt; ── Duplicated Data ───────────────────────────────────────── 
+#&gt; • Number of duplicated observations :          0 (0%) 
 #&gt; 
-#&gt; ── Data Type ───────────────────────────────────────────────
-#&gt; ● Number of numeric variables      :          1
-#&gt; ● Number of integer variables      :          1
-#&gt; ● Number of factors variables      :          7
-#&gt; ● Number of character variables    :          1
-#&gt; ● Number of other variables        :          4
+#&gt; ── Missing Data ──────────────────────────────────────────── 
+#&gt; • Number of completed observations  :      8,955
+#&gt; • Number of observations with NA    :     10,203 (53.26%)
+#&gt; • Number of variables with NA       :          8
+#&gt; • Number of NA                      :     20,733 
 #&gt; 
-#&gt; ── Individual variables ────────────────────────────────────
+#&gt; ── Data Type ─────────────────────────────────────────────── 
+#&gt; • Number of numeric variables       :          1
+#&gt; • Number of integer variables       :          1
+#&gt; • Number of factors variables       :         11
+#&gt; • Number of character variables     :          1
+#&gt; • Number of Date variables          :          0
+#&gt; • Number of POSIXct variables       :          0
+#&gt; • Number of other variables         :          0 
+#&gt; 
+#&gt; ── Individual variables ──────────────────────────────────── 
 #&gt;              Variables Data Type
 #&gt; 1          enrollee_id character
 #&gt; 2                 city    factor
@@ -204,8 +233,9 @@ Visualize the data type, number of observations, and number of missing values fo
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>ov</span>)</div><div class='img'><img src='plot.overview-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># sort by name of variables</span>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>ov</span>, <span class='kw'>order_type</span> <span class='kw'>=</span> <span class='st'>"name"</span>)</div><div class='img'><img src='plot.overview-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># sort by data type of variables</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>ov</span>, <span class='kw'>order_type</span> <span class='kw'>=</span> <span class='st'>"type"</span>)</div><div class='img'><img src='plot.overview-3.png' alt='' width='700' height='433' /></div><div class='input'># }
+# sort by data type of variables
+# plot(ov, order_type = "type")
+# }
 
 </div></pre>
   </div>

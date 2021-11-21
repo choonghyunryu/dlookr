@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
       </span>
     </div>
 
@@ -168,29 +168,17 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='co'># connect DBMS</span>
-<span class='no'>con_sqlite</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://dbi.r-dbi.org/reference/dbConnect.html'>dbConnect</a></span>(<span class='kw pkg'>RSQLite</span><span class='kw ns'>::</span><span class='fu'><a href='https://rsqlite.r-dbi.org/reference/SQLite.html'>SQLite</a></span>(), <span class='st'>":memory:"</span>)
+<span class='co'># con_sqlite &lt;- DBI::dbConnect(RSQLite::SQLite(), ":memory:")</span>
 
 <span class='co'># copy heartfailure to the DBMS with a table named TB_HEARTFAILURE</span>
-<span class='fu'><a href='https://dplyr.tidyverse.org/reference/copy_to.html'>copy_to</a></span>(<span class='no'>con_sqlite</span>, <span class='no'>heartfailure</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"TB_HEARTFAILURE"</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='co'># copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)</span>
 
-<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
-  <span class='no'>get_column_info</span></div><div class='output co'>#&gt;                 name      type
-#&gt; 1                age   integer
-#&gt; 2            anaemia character
-#&gt; 3         cpk_enzyme    double
-#&gt; 4           diabetes character
-#&gt; 5  ejection_fraction    double
-#&gt; 6    hblood_pressure character
-#&gt; 7          platelets    double
-#&gt; 8         creatinine    double
-#&gt; 9             sodium    double
-#&gt; 10               sex character
-#&gt; 11           smoking character
-#&gt; 12              time   integer
-#&gt; 13       death_event character</div><div class='input'>
+<span class='co'># con_sqlite %&gt;% </span>
+<span class='co'>#   tbl("TB_HEARTFAILURE") %&gt;% </span>
+<span class='co'>#   get_column_info</span>
+
 <span class='co'># Disconnect DBMS   </span>
-<span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://dbi.r-dbi.org/reference/dbDisconnect.html'>dbDisconnect</a></span>(<span class='no'>con_sqlite</span>)</div></pre>
+<span class='co'># DBI::dbDisconnect(con_sqlite)</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

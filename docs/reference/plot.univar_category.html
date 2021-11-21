@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
       </span>
     </div>
 
@@ -124,7 +124,14 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for univar_category</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>prompt</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(
+  <span class='no'>x</span>,
+  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>prompt</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>base_family</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -149,12 +156,22 @@ if this argument value is TRUE, a prompt is output each time.</p></td>
 The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.</p></td>
     </tr>
     <tr>
+      <th>base_family</th>
+      <td><p>character. The name of the base font family to use 
+for the visualization. If not specified, the font defined in dlookr is applied. (See details)</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>arguments to be passed to methods, such as graphical parameters (see par).
 However, it does not support all parameters.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+"NanumSquare", "Noto Sans Korean". If you want to use a different font, 
+use it after loading the Google font with import_google_font().</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='univar_category.data.frame.html'>univar_category</a></code>, <code><a href='summary.univar_category.html'>print.univar_category</a></code>, <code><a href='summary.univar_category.html'>summary.univar_category</a></code>.</p></div>
@@ -187,10 +204,9 @@ However, it does not support all parameters.</p></td>
 #&gt; 2   Male 194 0.6488294
 #&gt; 
 #&gt; $smoking
-#&gt;   smoking   n       rate
-#&gt; 1      No 201 0.67224080
-#&gt; 2     Yes  93 0.31103679
-#&gt; 3    &lt;NA&gt;   5 0.01672241
+#&gt;   smoking   n      rate
+#&gt; 1      No 203 0.6789298
+#&gt; 2     Yes  96 0.3210702
 #&gt; 
 #&gt; $death_event
 #&gt;   death_event   n      rate
@@ -201,10 +217,9 @@ However, it does not support all parameters.</p></td>
 
 <span class='co'># Print univar_category class object</span>
 <span class='no'>smoking</span></div><div class='output co'>#&gt; $smoking
-#&gt;   smoking   n       rate
-#&gt; 1      No 201 0.67224080
-#&gt; 2     Yes  93 0.31103679
-#&gt; 3    &lt;NA&gt;   5 0.01672241
+#&gt;   smoking   n      rate
+#&gt; 1      No 203 0.6789298
+#&gt; 2     Yes  96 0.3210702
 #&gt; </div><div class='input'>
 <span class='co'># plot all variables</span>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>)</div><div class='img'><img src='plot.univar_category-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_category-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_category-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_category-4.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_category-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_category-6.png' alt='' width='700' height='433' /></div><div class='input'>

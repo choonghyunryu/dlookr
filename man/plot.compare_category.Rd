@@ -71,7 +71,7 @@ plot(two_var)
 # plot(all_var, prompt = TRUE)
   
 # plot a pair of variables without NA
-plot(two_var, na.rm = TRUE)
+# plot(two_var, na.rm = TRUE)
 
 # plot a pair of variables
 # plot(two_var, las = 1)

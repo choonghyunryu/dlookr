@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
       </span>
     </div>
 
@@ -172,32 +172,32 @@ summary.bins() returns data.frame including frequency and relative frequency for
 <span class='no'>heartfailure2</span> <span class='kw'>&lt;-</span> <span class='no'>heartfailure</span>
 <span class='no'>heartfailure2</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>heartfailure2</span>)), <span class='fl'>20</span>), <span class='st'>"platelets"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
 
-<span class='co'># Binning the carat variable. default type argument is "quantile"</span>
+<span class='co'># Binning the platelets variable. default type argument is "quantile"</span>
 <span class='no'>bin</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='binning.html'>binning</a></span>(<span class='no'>heartfailure2</span>$<span class='no'>platelets</span>)
 
 <span class='co'># Print bins class object</span>
 <span class='no'>bin</span></div><div class='output co'>#&gt; binned type: quantile
 #&gt; number of bins: 10
 #&gt; x
-#&gt; [2.51e+04,1.53e+05] (1.53e+05,1.96e+05] (1.96e+05,2.21e+05] (2.21e+05,2.37e+05] 
-#&gt;                  29                  28                  29                  29 
-#&gt; (2.37e+05,2.62e+05] (2.62e+05,2.64e+05] (2.64e+05,2.83e+05] (2.83e+05,3.19e+05] 
-#&gt;                  26                  27                  29                  28 
-#&gt; (3.19e+05,3.81e+05]  (3.81e+05,8.5e+05]                &lt;NA&gt; 
-#&gt;                  26                  28                  20 </div><div class='input'>
+#&gt;    [25100,153000]   (153000,196000]   (196000,221000] (221000,236066.7] 
+#&gt;                30                27                30                25 
+#&gt; (236066.7,259000] (259000,263957.2] (263957.2,283000]   (283000,320600] 
+#&gt;                28                27                29                27 
+#&gt;   (320600,376200]   (376200,850000]              &lt;NA&gt; 
+#&gt;                28                28                20 </div><div class='input'>
 <span class='co'># Summarize bins class object</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>bin</span>)</div><div class='output co'>#&gt;                 levels freq       rate
-#&gt; 1  [2.51e+04,1.53e+05]   29 0.09698997
-#&gt; 2  (1.53e+05,1.96e+05]   28 0.09364548
-#&gt; 3  (1.96e+05,2.21e+05]   29 0.09698997
-#&gt; 4  (2.21e+05,2.37e+05]   29 0.09698997
-#&gt; 5  (2.37e+05,2.62e+05]   26 0.08695652
-#&gt; 6  (2.62e+05,2.64e+05]   27 0.09030100
-#&gt; 7  (2.64e+05,2.83e+05]   29 0.09698997
-#&gt; 8  (2.83e+05,3.19e+05]   28 0.09364548
-#&gt; 9  (3.19e+05,3.81e+05]   26 0.08695652
-#&gt; 10  (3.81e+05,8.5e+05]   28 0.09364548
-#&gt; 11                &lt;NA&gt;   20 0.06688963</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>bin</span>)</div><div class='output co'>#&gt;               levels freq       rate
+#&gt; 1     [25100,153000]   30 0.10033445
+#&gt; 2    (153000,196000]   27 0.09030100
+#&gt; 3    (196000,221000]   30 0.10033445
+#&gt; 4  (221000,236066.7]   25 0.08361204
+#&gt; 5  (236066.7,259000]   28 0.09364548
+#&gt; 6  (259000,263957.2]   27 0.09030100
+#&gt; 7  (263957.2,283000]   29 0.09698997
+#&gt; 8    (283000,320600]   27 0.09030100
+#&gt; 9    (320600,376200]   28 0.09364548
+#&gt; 10   (376200,850000]   28 0.09364548
+#&gt; 11              &lt;NA&gt;   20 0.06688963</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

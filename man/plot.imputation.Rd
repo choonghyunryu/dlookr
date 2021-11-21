@@ -45,11 +45,11 @@ summary(platelets)
 plot(platelets)
 
 # If the variable of interest is a categorical variables
-smoking <- imputate_na(heartfailure2, smoking, death_event, method = "mice")
-smoking
-summary(smoking)
+# smoking <- imputate_na(heartfailure2, smoking, death_event, method = "mice")
+# smoking
+# summary(smoking)
 
-plot(smoking)
+# plot(smoking)
 
 # Impute outliers ----------------------------------
 # If the variable of interest is a numerical variable

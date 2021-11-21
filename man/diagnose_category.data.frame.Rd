@@ -97,8 +97,8 @@ jobchange \%>\%
  diagnose_category(company_type, job_chnge)
  
 # Negative values to drop variables
-jobchange \%>\%
-  diagnose_category(-company_type, -job_chnge)
+# jobchange \%>\%
+#   diagnose_category(-company_type, -job_chnge)
   
 # Positions values select variables
 # jobchange \%>\%

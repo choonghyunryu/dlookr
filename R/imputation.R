@@ -65,14 +65,14 @@
 #' 
 #' # Replace the missing value of the platelets variable with rpart
 #' # The target variable is death_event.
-#' imputate_na(heartfailure2, platelets, death_event, method = "rpart")
+#' # imputate_na(heartfailure2, platelets, death_event, method = "rpart")
 #' 
 #' # Replace the missing value of the smoking variable with mode
-#' imputate_na(heartfailure2, smoking, method = "mode")
+#' # imputate_na(heartfailure2, smoking, method = "mode")
 #' 
 #' # Replace the missing value of the smoking variable with mice
 #' # The target variable is death_event.
-#' imputate_na(heartfailure2, smoking, death_event, method = "mice")
+#' # imputate_na(heartfailure2, smoking, death_event, method = "mice")
 #' 
 #' ## using dplyr -------------------------------------
 #' library(dplyr)
@@ -93,9 +93,9 @@
 #' # plot(platelets)
 #' 
 #' # If the variable of interest is a categorical variable
-#' smoking <- imputate_na(heartfailure2, smoking, death_event, method = "mice")
-#' smoking
-#' summary(smoking)
+#' # smoking <- imputate_na(heartfailure2, smoking, death_event, method = "mice")
+#' # smoking
+#' # summary(smoking)
 #' 
 #' # plot(smoking)
 #' }
@@ -354,8 +354,8 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL,
 #' # Replace the outliers of the sodium variable with median.
 #' imputate_outlier(heartfailure, sodium, method = "median")
 #' 
-#' # Replace the outliers of the sodium variable with capping.
-#' imputate_outlier(heartfailure, sodium, method = "capping")
+#' # # Replace the outliers of the sodium variable with capping.
+#' # imputate_outlier(heartfailure, sodium, method = "capping")
 #' 
 #' ## using dplyr -------------------------------------
 #' library(dplyr)
@@ -500,9 +500,9 @@ imputate_outlier_impl <- function(df, xvar, method, no_attrs = FALSE) {
 #' plot(platelets)
 #'
 #' # If the variable of interest is a categorical variables
-#' smoking <- imputate_na(heartfailure2, smoking, death_event, method = "mice")
-#' smoking
-#' summary(smoking)
+#' # smoking <- imputate_na(heartfailure2, smoking, death_event, method = "mice")
+#' # smoking
+#' # # summary(smoking)
 #' 
 #' # plot(smoking)
 #'
@@ -634,11 +634,11 @@ summary.imputation <- function(object, ...) {
 #' plot(platelets)
 #'
 #' # If the variable of interest is a categorical variables
-#' smoking <- imputate_na(heartfailure2, smoking, death_event, method = "mice")
-#' smoking
-#' summary(smoking)
+#' # smoking <- imputate_na(heartfailure2, smoking, death_event, method = "mice")
+#' # smoking
+#' # summary(smoking)
 #' 
-#' plot(smoking)
+#' # plot(smoking)
 #'
 #' # Impute outliers ----------------------------------
 #' # If the variable of interest is a numerical variable

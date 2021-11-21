@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
       </span>
     </div>
 
@@ -76,7 +76,7 @@
       <h1 data-toc-skip>Exploratory Data Analysis</h1>
                         <h4 class="author">Choonghyun Ryu</h4>
             
-            <h4 class="date">2021-08-01</h4>
+            <h4 class="date">2021-11-21</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/choonghyunryu/dlookr/blob/master/vignettes/EDA.Rmd"><code>vignettes/EDA.Rmd</code></a></small>
       <div class="hidden name"><code>EDA.Rmd</code></div>
@@ -336,7 +336,7 @@ describe(carseats, -(Sales:Income))
 3 Price        -0.125  116.   100    117    131   
 4 Age          -0.0772  53.3   39.8   54.5   66   
 # … with 4 more rows</pre></body></html></div>
-<p>The <code><a href="../reference/describe.data.frame.html">describe()</a></code> function supports the <code><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by()</a></code> function syntax of the <code>dplyr</code> package.</p>
+<p>The <code><a href="../reference/describe.data.frame.html">describe()</a></code> function supports the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> function syntax of the <code>dplyr</code> package.</p>
 <div class="sourceCode" id="cb6"><html><body><pre class="r">carseats %&gt;%
   group_by(US) %&gt;% 
   describe(Sales, Income) 
@@ -434,7 +434,7 @@ carseats %&gt;%
 4 Age             0.957 1.86e- 9    400
 # … with 1 more row</pre></body></html></div>
 <p>In particular, the <code>Advertising</code> variable is considered to be the most out of the normal distribution.</p>
-<p>The <code><a href="../reference/normality.data.frame.html">normality()</a></code> function supports the <code><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by()</a></code> function syntax in the <code>dplyr</code> package.</p>
+<p>The <code><a href="../reference/normality.data.frame.html">normality()</a></code> function supports the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> function syntax in the <code>dplyr</code> package.</p>
 <div class="sourceCode" id="cb11"><html><body><pre class="r">carseats %&gt;%
   group_by(ShelveLoc, US) %&gt;%
   normality(Income) %&gt;% 
@@ -476,7 +476,7 @@ carseats %&gt;%
 <div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="co"># Select columns by name</span>
 <span class="fu"><a href="../reference/plot_normality.data.frame.html">plot_normality</a></span>(<span class="no">carseats</span>, <span class="no">Sales</span>, <span class="no">CompPrice</span>)</pre></body></html></div>
 <p><img src="EDA_files/figure-html/plot_normality-1.png" width="600px" style="display: block; margin: auto;"><img src="EDA_files/figure-html/plot_normality-2.png" width="600px" style="display: block; margin: auto;"></p>
-<p>The <code><a href="../reference/plot_normality.data.frame.html">plot_normality()</a></code> function also supports the <code><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by()</a></code> function syntax in the <code>dplyr</code> package.</p>
+<p>The <code><a href="../reference/plot_normality.data.frame.html">plot_normality()</a></code> function also supports the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> function syntax in the <code>dplyr</code> package.</p>
 <div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">ShelveLoc</span> <span class="kw">==</span> <span class="st">"Good"</span>) <span class="kw">%&gt;%</span>
   <span class="fu">group_by</span>(<span class="no">US</span>) <span class="kw">%&gt;%</span>
@@ -533,7 +533,7 @@ correlate(carseats, -(Sales:Income))
 3 Price       Sales   -0.445 
 4 Age         Sales   -0.232 
 # … with 31 more rows</pre></body></html></div>
-<p><code><a href="../reference/correlate.data.frame.html">correlate()</a></code> produces <code>two pairs of variables</code>. So the following example uses <code><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter()</a></code> to get the correlation coefficient for <code>a pair of variable</code> combinations:</p>
+<p><code><a href="../reference/correlate.data.frame.html">correlate()</a></code> produces <code>two pairs of variables</code>. So the following example uses <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> to get the correlation coefficient for <code>a pair of variable</code> combinations:</p>
 <div class="sourceCode" id="cb17"><html><body><pre class="r">carseats %&gt;%
   correlate(Sales:Income) %&gt;%
   filter(as.integer(var1) &gt; as.integer(var2))
@@ -543,7 +543,7 @@ correlate(carseats, -(Sales:Income))
 1 CompPrice Sales        0.0641
 2 Income    Sales        0.151 
 3 Income    CompPrice   -0.0761</pre></body></html></div>
-<p>The <code><a href="../reference/correlate.data.frame.html">correlate()</a></code> also supports the <code><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by()</a></code> function syntax in the <code>dplyr</code> package.</p>
+<p>The <code><a href="../reference/correlate.data.frame.html">correlate()</a></code> also supports the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> function syntax in the <code>dplyr</code> package.</p>
 <div class="sourceCode" id="cb18"><html><body><pre class="r">carseats %&gt;%
   filter(ShelveLoc == "Good") %&gt;%
   group_by(Urban, US) %&gt;%
@@ -568,7 +568,7 @@ correlate(carseats, -(Sales:Income))
 <p><code><a href="../reference/plot_correlate.data.frame.html">plot_correlate()</a></code> can also specify multiple variables, like the <code><a href="../reference/correlate.data.frame.html">correlate()</a></code> function. The following is a visualization of the correlation matrix including several selected variables.</p>
 <div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="co"># Select columns by name</span>
 <span class="fu"><a href="../reference/plot_correlate.data.frame.html">plot_correlate</a></span>(<span class="no">carseats</span>, <span class="no">Sales</span>, <span class="no">Price</span>)</pre></body></html></div>
-<p>The <code><a href="../reference/plot_correlate.data.frame.html">plot_correlate()</a></code> function also supports the <code><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by()</a></code> function syntax in the <code>dplyr</code> package.</p>
+<p>The <code><a href="../reference/plot_correlate.data.frame.html">plot_correlate()</a></code> function also supports the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> function syntax in the <code>dplyr</code> package.</p>
 <div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">ShelveLoc</span> <span class="kw">==</span> <span class="st">"Good"</span>) <span class="kw">%&gt;%</span>
   <span class="fu">group_by</span>(<span class="no">Urban</span>) <span class="kw">%&gt;%</span>
@@ -581,7 +581,7 @@ correlate(carseats, -(Sales:Income))
 <div id="definition-of-target-variable" class="section level3">
 <h3 class="hasAnchor">
 <a href="#definition-of-target-variable" class="anchor"></a>Definition of target variable</h3>
-<p>To perform EDA based on <code>target variable</code>, you need to create a <code>target_by</code> class object. <code><a href="../reference/target_by.data.frame.html">target_by()</a></code> creates a <code>target_by</code> class with an object inheriting data.frame or data.frame. <code><a href="../reference/target_by.data.frame.html">target_by()</a></code> is similar to <code><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by()</a></code> in <code>dplyr</code> which creates <code>grouped_df</code>. The difference is that you specify only one variable.</p>
+<p>To perform EDA based on <code>target variable</code>, you need to create a <code>target_by</code> class object. <code><a href="../reference/target_by.data.frame.html">target_by()</a></code> creates a <code>target_by</code> class with an object inheriting data.frame or data.frame. <code><a href="../reference/target_by.data.frame.html">target_by()</a></code> is similar to <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> in <code>dplyr</code> which creates <code>grouped_df</code>. The difference is that you specify only one variable.</p>
 <p>The following is an example of specifying <code>US</code> as target variable in <code>carseats</code> data.frame.:</p>
 <div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="no">categ</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/target_by.data.frame.html">target_by</a></span>(<span class="no">carseats</span>, <span class="no">US</span>)</pre></body></html></div>
 </div>
@@ -1112,12 +1112,12 @@ The dynamic contents of the report
 <span class="no">con_sqlite</span> <span class="kw">&lt;-</span> <span class="kw pkg">DBI</span><span class="kw ns">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html">dbConnect</a></span>(<span class="kw pkg">RSQLite</span><span class="kw ns">::</span><span class="fu"><a href="https://rsqlite.r-dbi.org/reference/SQLite.html">SQLite</a></span>(), <span class="st">":memory:"</span>)
 
 <span class="co"># copy carseats to the DBMS with a table named TB_CARSEATS</span>
-<span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/copy_to.html">copy_to</a></span>(<span class="no">con_sqlite</span>, <span class="no">carseats</span>, <span class="kw">name</span> <span class="kw">=</span> <span class="st">"TB_CARSEATS"</span>, <span class="kw">overwrite</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/copy_to.html">copy_to</a></span>(<span class="no">con_sqlite</span>, <span class="no">carseats</span>, <span class="kw">name</span> <span class="kw">=</span> <span class="st">"TB_CARSEATS"</span>, <span class="kw">overwrite</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 </div>
 <div id="calculating-descriptive-statistics-of-numerical-column-of-table-in-the-dbms" class="section level3">
 <h3 class="hasAnchor">
 <a href="#calculating-descriptive-statistics-of-numerical-column-of-table-in-the-dbms" class="anchor"></a>Calculating descriptive statistics of numerical column of table in the DBMS</h3>
-<p>Use <code><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">dplyr::tbl()</a></code> to create a tbl_dbi object, then use it as a data frame object. That is, the data argument of all EDA function is specified as tbl_dbi object instead of data frame object.</p>
+<p>Use <code><a href="https://dplyr.tidyverse.org/reference/tbl.html">dplyr::tbl()</a></code> to create a tbl_dbi object, then use it as a data frame object. That is, the data argument of all EDA function is specified as tbl_dbi object instead of data frame object.</p>
 <div class="sourceCode" id="cb36"><html><body><pre class="r"># Positive values select variables
 con_sqlite %&gt;% 
   tbl("TB_CARSEATS") %&gt;% 
@@ -1244,9 +1244,9 @@ con_sqlite %&gt;%
 <span class="co"># and plot 'Income' by 'US'</span>
 <span class="co"># the result is same as a data.frame, but not display here. reference above in document.</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="no">ShelveLoc</span> <span class="kw">==</span> <span class="st">"Good"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by</a></span>(<span class="no">US</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">ShelveLoc</span> <span class="kw">==</span> <span class="st">"Good"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">US</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/plot_normality.data.frame.html">plot_normality</a></span>(<span class="no">Income</span>)</pre></body></html></div>
 </div>
 <div id="compute-the-correlation-coefficient-between-two-columns-of-table-in-dbms" class="section level3">
@@ -1325,9 +1325,9 @@ con_sqlite %&gt;%
 <span class="co"># and 'US' variables.</span>
 <span class="co"># the result is same as a data.frame, but not display here. reference above in document.</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="no">ShelveLoc</span> <span class="kw">==</span> <span class="st">"Good"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by</a></span>(<span class="no">Urban</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">ShelveLoc</span> <span class="kw">==</span> <span class="st">"Good"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">Urban</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/plot_correlate.data.frame.html">plot_correlate</a></span>(<span class="no">Sales</span>)</pre></body></html></div>
 </div>
 <div id="eda-based-on-target-variable-1" class="section level3">
@@ -1337,7 +1337,7 @@ con_sqlite %&gt;%
 <div class="sourceCode" id="cb41"><html><body><pre class="r"># If the target variable is a categorical variable
 categ &lt;- target_by(con_sqlite %&gt;% tbl("TB_CARSEATS") , US)
 
-# If the variable of interest is a numarical variable
+# If the variable of interest is a numerical variable
 cat_num &lt;- relate(categ, Sales)
 cat_num
 # A tibble: 3 x 27
@@ -1409,12 +1409,12 @@ summary(cat_num)
 <p>Using the <code>collect_size</code> argument, you can perform EDA with the corresponding number of sample data. If the number of data is very large, use <code>collect_size</code>.</p>
 <div class="sourceCode" id="cb43"><html><body><pre class="r"><span class="co"># create web report file. </span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/eda_web_report.data.frame.html">eda_web_report</a></span>()
 
 <span class="co"># create pdf file. file name is EDA.pdf, and collect size is 350</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/eda_paged_report.data.frame.html">eda_paged_report</a></span>(<span class="kw">collect_size</span> <span class="kw">=</span> <span class="fl">350</span>, <span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"EDA.pdf"</span>)</pre></body></html></div>
 </div>
 </div>

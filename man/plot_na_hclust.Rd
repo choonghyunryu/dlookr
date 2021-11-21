@@ -50,9 +50,9 @@ jobchange2 <- jobchange[sample(nrow(jobchange), size = 1000), ]
 plot_na_hclust(jobchange2)
 
 # Change the main title.
-plot_na_hclust(jobchange2, main = "Distribution of missing value")
+# plot_na_hclust(jobchange2, main = "Distribution of missing value")
 
 # Not support typographic elements
-plot_na_hclust(jobchange2, typographic = FALSE)
+# plot_na_hclust(jobchange2, typographic = FALSE)
 
 }
