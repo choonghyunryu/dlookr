@@ -548,6 +548,12 @@ diagnose_paged_report.data.frame <- function(.data, output_format = c("pdf", "ht
   }
   
   if (output_format == "pdf") {
+    # for non-ASCII in MS-Windows 
+    if (grepl("^mingw", R.version$os)) { 
+      writeLines(iconv(readLines(paste(path, rmd, sep = "/")), from = "CP949", to = "UTF8"), 
+                 file(paste(path, rmd, sep = "/"), encoding="UTF-8"))
+    }
+    
     html_out <- rmarkdown::render(paste(path, rmd, sep = "/"))
     pagedown::chrome_print(html_out, output = output_file)
     
@@ -1060,6 +1066,12 @@ eda_paged_report.data.frame <- function(.data, target = NULL, output_format = c(
   }
   
   if (output_format == "pdf") {
+    # for non-ASCII in MS-Windows 
+    if (grepl("^mingw", R.version$os)) { 
+      writeLines(iconv(readLines(paste(path, rmd, sep = "/")), from = "CP949", to = "UTF8"), 
+                 file(paste(path, rmd, sep = "/"), encoding="UTF-8"))
+    }
+    
     html_out <- rmarkdown::render(paste(path, rmd, sep = "/"))
     pagedown::chrome_print(html_out, output = output_file)
     
@@ -1508,6 +1520,12 @@ transformation_paged_report <- function(.data, target = NULL,
   }  
   
   if (output_format == "pdf") {
+    # for non-ASCII in MS-Windows 
+    if (grepl("^mingw", R.version$os)) { 
+      writeLines(iconv(readLines(paste(path, rmd, sep = "/")), from = "CP949", to = "UTF8"), 
+                 file(paste(path, rmd, sep = "/"), encoding="UTF-8"))
+    }
+    
     html_out <- rmarkdown::render(paste(path, rmd, sep = "/"))
     pagedown::chrome_print(html_out, output = output_file, timeout = 120)
     

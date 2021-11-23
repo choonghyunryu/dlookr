@@ -1,6 +1,14 @@
 CHANGES IN R VERSION 0.5.3:
   BUG FIXES:
+  
+  * Fixed an error that occurred when generating a paged report as a pdf file 
+    when non-ASCII (multi-byte) characters were included in MS-Windows.
+      - diagnose_paged_report()
+      - eda_paged_report()
+      - transformation_paged_report()
+      
   MAJOR CHANGES:
+  
   MINOR CHANGES:
   
   
@@ -86,7 +94,7 @@ CHANGES IN R VERSION 0.5.2:
     * Reduce the font size of subtitle in paged reports. 
       - diagnose_paged_report()
       - eda_paged_report()
-      -transformation_paged_report()
+      - transformation_paged_report()
       
   DEFUNCT:
   
