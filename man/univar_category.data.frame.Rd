@@ -47,6 +47,7 @@ Attributes of compare_category class is as follows.
 }
 
 \examples{
+\donttest{
 library(dplyr)
 
 # Calculates the all categorical variables
@@ -76,13 +77,14 @@ stat <- summary(all_var)
 stat
 
 # plot all variables
-# plot(all_var)
+plot(all_var)
 
 # plot smoking
-# plot(smoking)
+plot(smoking)
 
 # plot all variables by prompt
-# plot(all_var, prompt = TRUE)
+plot(all_var, prompt = TRUE)
+}
 
 }
 \seealso{

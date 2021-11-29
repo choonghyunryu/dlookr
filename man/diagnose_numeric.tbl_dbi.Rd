@@ -62,6 +62,7 @@ See vignette("diagonosis") for an introduction to these concepts.
 }
 
 \examples{
+\donttest{
 library(dplyr)
 
 # connect DBMS
@@ -82,30 +83,31 @@ con_sqlite \%>\%
   diagnose_numeric(age, sodium, collect_size = 200)
   
 # Negative values to drop variables
-# con_sqlite \%>\% 
-#   tbl("TB_HEARTFAILURE") \%>\% 
-#   diagnose_numeric(-age, -sodium)
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  diagnose_numeric(-age, -sodium)
   
 # Positions values select variables
-# con_sqlite \%>\% 
-#   tbl("TB_HEARTFAILURE") \%>\% 
-#   diagnose_numeric(5)
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  diagnose_numeric(5)
   
-# Positions values select variables
-# con_sqlite \%>\% 
-#   tbl("TB_HEARTFAILURE") \%>\% 
-#   diagnose_numeric(-1, -5)
+# Negative values to drop variables
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  diagnose_numeric(-1, -5)
 
 # Using pipes & dplyr -------------------------
 # List of variables containing outliers
-# con_sqlite \%>\% 
-#   tbl("TB_HEARTFAILURE") \%>\% 
-#   diagnose_numeric()  \%>\%
-#   filter(outlier > 0)
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  diagnose_numeric()  \%>\%
+  filter(outlier > 0)
 
 # Disconnect DBMS   
 DBI::dbDisconnect(con_sqlite)
-  
+}
+
 }
 \seealso{
 \code{\link{diagnose_numeric.data.frame}}, \code{\link{diagnose.tbl_dbi}}, \code{\link{diagnose_category.tbl_dbi}}, \code{\link{diagnose_outlier.tbl_dbi}}.

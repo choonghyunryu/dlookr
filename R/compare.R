@@ -52,6 +52,7 @@ compare_numeric <- function(.data, ...) {
 #' @seealso \code{\link{summary.compare_category}}, \code{\link{print.compare_category}}, \code{\link{plot.compare_category}}.
 #' @export
 #' @examples
+#' \donttest{
 #' # Generate data for the example
 #' heartfailure2 <- heartfailure
 #' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
@@ -127,16 +128,17 @@ compare_numeric <- function(.data, ...) {
 #'   "[["("smoking vs death_event")
 #' 
 #' # plot all pair of variables
-#' # plot(all_var)
+#' plot(all_var)
 #' 
 #' # plot a pair of variables
-#' # plot(two_var)
+#' plot(two_var)
 #' 
 #' # plot all pair of variables by prompt
-#' # plot(all_var, prompt = TRUE)
+#' plot(all_var, prompt = TRUE)
 #' 
 #' # plot a pair of variables
-#' # plot(two_var, las = 1)
+#' plot(two_var, las = 1)
+#' }
 #' 
 #' @method compare_category data.frame
 #' @importFrom tidyselect vars_select
@@ -253,6 +255,7 @@ compare_category_impl <- function(df, vars) {
 #' @seealso \code{\link{correlate}}, \code{\link{summary.compare_numeric}}, \code{\link{print.compare_numeric}}, \code{\link{plot.compare_numeric}}.
 #' @export
 #' @examples
+#' \donttest{
 #' # Generate data for the example
 #' heartfailure2 <- heartfailure[, c("platelets", "creatinine", "sodium")]
 #'
@@ -302,16 +305,17 @@ compare_category_impl <- function(df, vars) {
 #' summary(all_var, verbose = FALSE)
 #'   
 #' # plot all pair of variables
-#' # plot(all_var)
+#' plot(all_var)
 #' 
 #' # plot a pair of variables
-#' # plot(two_var)
+#' plot(two_var)
 #' 
 #' # plot all pair of variables by prompt
-#' # plot(all_var, prompt = TRUE)
+#' plot(all_var, prompt = TRUE)
 #' 
 #' # plot a pair of variables not focuses on typographic elements
-#' # plot(two_var, typographic = FALSE)
+#' plot(two_var, typographic = FALSE)
+#' }
 #' 
 #' @method compare_numeric data.frame
 #' @importFrom tidyselect vars_select
@@ -411,6 +415,7 @@ compare_numeric_impl <- function(df, vars) {
 #'
 #' @seealso \code{\link{plot.compare_category}}.
 #' @examples
+#' \donttest{
 #' # Generate data for the example
 #' heartfailure2 <- heartfailure
 #' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
@@ -475,7 +480,8 @@ compare_numeric_impl <- function(df, vars) {
 #' # Extract component from list by name
 #' summary(all_var, "table", na.rm = TRUE, verbose = FALSE) %>% 
 #'   "[["("smoking vs death_event")
-#'   
+#' }
+#'    
 #' @importFrom tidyr spread
 #' @method summary compare_category
 #' @export
@@ -697,6 +703,7 @@ summary.compare_category <- function(object, method = c("all", "table", "relativ
 #' 
 #' @seealso \code{\link{plot.compare_numeric}}.
 #' @examples
+#' \donttest{
 #' # Generate data for the example
 #' heartfailure2 <- heartfailure[, c("platelets", "creatinine", "sodium")]
 #'
@@ -744,7 +751,8 @@ summary.compare_category <- function(object, method = c("all", "table", "relativ
 #' 
 #' # verbose is FALSE 
 #' summary(all_var, verbose = FALSE)
-#'   
+#' }
+#' 
 #' @importFrom tidyr spread
 #' @method summary compare_numeric
 #' @export
@@ -860,6 +868,7 @@ print.compare_numeric <- function(x, ...) {
 #'    
 #' @seealso \code{\link{compare_category}}, \code{\link{print.compare_category}}, \code{\link{summary.compare_category}}.
 #' @examples
+#' \donttest{
 #' # Generate data for the example
 #' heartfailure2 <- heartfailure
 #' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
@@ -885,16 +894,17 @@ print.compare_numeric <- function(x, ...) {
 #' plot(two_var)
 #'
 #' # plot all pair of variables by prompt
-#' # plot(all_var, prompt = TRUE)
+#' plot(all_var, prompt = TRUE)
 #'   
 #' # plot a pair of variables without NA
-#' # plot(two_var, na.rm = TRUE)
+#' plot(two_var, na.rm = TRUE)
 #' 
 #' # plot a pair of variables
-#' # plot(two_var, las = 1)
+#' plot(two_var, las = 1)
 #' 
 #' # plot a pair of variables not focuses on typographic elements
-#' # plot(two_var, typographic = FALSE)
+#' plot(two_var, typographic = FALSE)
+#' }
 #' 
 #' @method plot compare_category
 #' @export
@@ -1016,6 +1026,7 @@ plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE,
 #' However, it does not support.
 #' @seealso \code{\link{compare_numeric}}, \code{\link{print.compare_numeric}}, \code{\link{summary.compare_numeric}}.
 #' @examples
+#' \donttest{
 #' # Generate data for the example
 #' heartfailure2 <- heartfailure[, c("platelets", "creatinine", "sodium")]
 #'
@@ -1039,10 +1050,11 @@ plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE,
 #' plot(two_var)
 #' 
 #' # plot all pair of variables by prompt
-#' # plot(all_var, prompt = TRUE)
+#' plot(all_var, prompt = TRUE)
 #' 
 #' # plot a pair of variables not focuses on typographic elements
-#' # plot(two_var, typographic = FALSE)
+#' plot(two_var, typographic = FALSE)
+#' }
 #' 
 #' @importFrom gridExtra grid.arrange
 #' @importFrom grid textGrob gpar

@@ -54,14 +54,15 @@ See vignette("diagonosis") for an introduction to these concepts.
 }
 
 \examples{
+\donttest{
 # Diagnosis of all variables
 diagnose(jobchange)
 
 # Select the variable to diagnose
 diagnose(jobchange, gender, experience, training_hours)
-# diagnose(jobchange, -gender, -experience, -training_hours)
-# diagnose(jobchange, "gender", "experience", "training_hours")
-# diagnose(jobchange, 4, 9, 13)
+diagnose(jobchange, -gender, -experience, -training_hours)
+diagnose(jobchange, "gender", "experience", "training_hours")
+diagnose(jobchange, 4, 9, 13)
 
 # Using pipes ---------------------------------
 library(dplyr)
@@ -73,20 +74,22 @@ jobchange \%>\%
 jobchange \%>\%
   diagnose(gender, experience, training_hours)
 # Negative values to drop variables
-# jobchange \%>\%
-#   diagnose(-gender, -experience, -training_hours)
+jobchange \%>\%
+  diagnose(-gender, -experience, -training_hours)
 # Positions values select variables
-# # jobchange \%>\%
-#   diagnose(4, 9, 13)
-# Positions values select variables
-# jobchange \%>\%
-#   diagnose(-8, -9, -10)
+jobchange \%>\%
+  diagnose(4, 9, 13)
+# Negative values to drop variables
+jobchange \%>\%
+  diagnose(-8, -9, -10)
   
 # Using pipes & dplyr -------------------------
 # Diagnosis of missing variables
 jobchange \%>\%
   diagnose() \%>\%
   filter(missing_count > 0)
+}
+   
 }
 \seealso{
 \code{\link{diagnose.tbl_dbi}}, \code{\link{diagnose_category.data.frame}}, \code{\link{diagnose_numeric.data.frame}}.

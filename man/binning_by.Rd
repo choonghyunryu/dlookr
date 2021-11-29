@@ -64,6 +64,7 @@ See vignette("transformation") for an introduction to these concepts.
 }
 
 \examples{
+\donttest{
 library(dplyr)
 
 # Generate data for the example
@@ -74,8 +75,8 @@ heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] <- NA
 bin <- binning_by(heartfailure2, "death_event", "creatinine")
 
 # optimal binning using name
-# bin <- binning_by(heartfailure2, death_event, creatinine)
-# bin
+bin <- binning_by(heartfailure2, death_event, creatinine)
+bin
 
 # performance table
 attr(bin, "performance")
@@ -84,17 +85,18 @@ attr(bin, "performance")
 summary(bin)
 
 # visualize all information for optimal_bins class
-# plot(bin)
+plot(bin)
 
 # visualize WoE information for optimal_bins class
-# plot(bin, type = "WoE")
+plot(bin, type = "WoE")
 
 # visualize all information without typographic
-# plot(bin, typographic = FALSE)
+plot(bin, typographic = FALSE)
 
 # extract binned results
-# extract(bin) \%>\% 
-#   head(20)
+extract(bin) \%>\% 
+  head(20)
+}
 
 }
 \seealso{

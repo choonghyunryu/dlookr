@@ -48,6 +48,7 @@ univar_numeric <- function(.data, ...) {
 #' @seealso \code{\link{summary.univar_category}}, \code{\link{print.univar_category}}, \code{\link{plot.univar_category}}.
 #' @export
 #' @examples
+#' \donttest{
 #' library(dplyr)
 #' 
 #' # Calculates the all categorical variables
@@ -77,13 +78,14 @@ univar_numeric <- function(.data, ...) {
 #' stat
 #' 
 #' # plot all variables
-#' # plot(all_var)
+#' plot(all_var)
 #' 
 #' # plot smoking
-#' # plot(smoking)
+#' plot(smoking)
 #' 
 #' # plot all variables by prompt
-#' # plot(all_var, prompt = TRUE)
+#' plot(all_var, prompt = TRUE)
+#' }
 #' 
 #' @method univar_category data.frame
 #' @importFrom tidyselect vars_select
@@ -177,6 +179,7 @@ univar_category_impl <- function(df, vars) {
 #' @seealso \code{\link{summary.univar_numeric}}, \code{\link{print.univar_numeric}}, \code{\link{plot.univar_numeric}}.
 #' @export
 #' @examples
+#' \donttest{
 #' # Calculates the all categorical variables
 #' all_var <- univar_numeric(heartfailure)
 #' 
@@ -199,31 +202,32 @@ univar_category_impl <- function(df, vars) {
 #' summary(all_var, stand = "zscore")
 #' 
 #' # one plot with all variables
-#' # plot(all_var)
+#' plot(all_var)
 #' 
 #' # one plot with all normalized variables by Min-Max method
-#' # plot(all_var, stand = "minmax")
+#' plot(all_var, stand = "minmax")
 #' 
 #' # one plot with all variables
-#' # plot(all_var, stand = "none")
+#' plot(all_var, stand = "none")
 #' 
 #' # one plot with all robust standardized variables 
-#' # plot(all_var, viz = "boxplot")
+#' plot(all_var, viz = "boxplot")
 #' 
 #' # one plot with all standardized variables by Z-score method 
-#' # plot(all_var, viz = "boxplot", stand = "zscore")
+#' plot(all_var, viz = "boxplot", stand = "zscore")
 #' 
 #' # individual boxplot by variables
-#' # plot(all_var, indiv = TRUE, "boxplot")
+#' plot(all_var, indiv = TRUE, "boxplot")
 #' 
 #' # individual histogram by variables
-#' # plot(all_var, indiv = TRUE, "hist")
+#' plot(all_var, indiv = TRUE, "hist")
 #' 
 #' # individual histogram by robust standardized variable 
-#' # plot(all_var, indiv = TRUE, "hist", stand = "robust")
+#' plot(all_var, indiv = TRUE, "hist", stand = "robust")
 #' 
 #' # plot all variables by prompt
-#' # plot(all_var, indiv = TRUE, "hist", prompt = TRUE)
+#' plot(all_var, indiv = TRUE, "hist", prompt = TRUE)
+#' }
 #' 
 #' @method univar_numeric data.frame
 #' @importFrom tidyselect vars_select
@@ -287,6 +291,7 @@ univar_numeric_impl <- function(df, vars) {
 #' 
 #' @seealso \code{\link{plot.univar_category}}.
 #' @examples
+#' \donttest{
 #' library(dplyr)
 #' 
 #' # Calculates the all categorical variables
@@ -314,6 +319,7 @@ univar_numeric_impl <- function(df, vars) {
 #' 
 #' # Summary by returned object
 #' stat
+#' }
 #' 
 #' @importFrom stats chisq.test
 #' @importFrom purrr map_dfr
@@ -382,6 +388,7 @@ summary.univar_category <- function(object, na.rm = TRUE, ...) {
 #' 
 #' @seealso \code{\link{plot.univar_numeric}}.
 #' @examples
+#' \donttest{
 #' # Calculates the all categorical variables
 #' all_var <- univar_numeric(heartfailure)
 #' 
@@ -398,10 +405,11 @@ summary.univar_category <- function(object, na.rm = TRUE, ...) {
 #' stat
 #' 
 #' # Statistics of numerical variables normalized by Min-Max method
-#' # summary(all_var, stand = "minmax")
+#' summary(all_var, stand = "minmax")
 #' 
 #' # Statistics of numerical variables standardized by Z-score method
 #' summary(all_var, stand = "zscore")
+#' }
 #' 
 #' @importFrom purrr map_dfc
 #' @method summary univar_numeric
@@ -500,6 +508,7 @@ print.univar_numeric <- function(x, ...) {
 #' However, it does not support all parameters.
 #' @seealso \code{\link{univar_category}}, \code{\link{print.univar_category}}, \code{\link{summary.univar_category}}.
 #' @examples
+#' \donttest{
 #' library(dplyr)
 #' 
 #' # Calculates the all categorical variables
@@ -518,6 +527,7 @@ print.univar_numeric <- function(x, ...) {
 #' 
 #' # plot smoking
 #' plot(smoking)
+#' }
 #' 
 #' @method plot univar_category
 #' @import ggplot2
@@ -610,6 +620,7 @@ plot.univar_category <- function(x, na.rm = TRUE, prompt = FALSE,
 #' However, it does not support.
 #' @seealso \code{\link{univar_numeric}}, \code{\link{print.univar_numeric}}, \code{\link{summary.univar_numeric}}.
 #' @examples
+#' \donttest{
 #' # Calculates the all categorical variables
 #' all_var <- univar_numeric(heartfailure)
 #' 
@@ -629,28 +640,29 @@ plot.univar_category <- function(x, na.rm = TRUE, prompt = FALSE,
 #' plot(all_var)
 #' 
 #' # one plot with all normalized variables by Min-Max method
-#' # plot(all_var, stand = "minmax")
+#' plot(all_var, stand = "minmax")
 #' 
 #' # one plot with all variables
-#' # plot(all_var, stand = "none")
+#' plot(all_var, stand = "none")
 #' 
 #' # one plot with all robust standardized variables 
 #' plot(all_var, viz = "boxplot")
 #' 
 #' # one plot with all standardized variables by Z-score method 
-#' # plot(all_var, viz = "boxplot", stand = "zscore")
+#' plot(all_var, viz = "boxplot", stand = "zscore")
 #' 
 #' # individual boxplot by variables
-#' # plot(all_var, indiv = TRUE, "boxplot")
+#' plot(all_var, indiv = TRUE, "boxplot")
 #' 
 #' # individual histogram by variables
 #' plot(all_var, indiv = TRUE, "hist")
 #' 
 #' # individual histogram by robust standardized variable 
-#' # plot(all_var, indiv = TRUE, "hist", stand = "robust")
+#' plot(all_var, indiv = TRUE, "hist", stand = "robust")
 #' 
 #' # plot all variables by prompt
-#' # plot(all_var, indiv = TRUE, "hist", prompt = TRUE)
+#' plot(all_var, indiv = TRUE, "hist", prompt = TRUE)
+#' }
 #' 
 #' @importFrom tidyr gather
 #' @import ggplot2

@@ -58,6 +58,7 @@ See vignette("diagonosis") for an introduction to these concepts.
 }
 
 \examples{
+\donttest{
 library(dplyr)
 
 # connect DBMS
@@ -73,24 +74,24 @@ con_sqlite \%>\%
   diagnose()
   
 # Positive values select columns
-# con_sqlite \%>\% 
-#   tbl("TB_JOBCHANGE") \%>\% 
-#   diagnose(gender, education_level, company_size)
+con_sqlite \%>\% 
+  tbl("TB_JOBCHANGE") \%>\% 
+  diagnose(gender, education_level, company_size)
   
 # Negative values to drop columns
-# con_sqlite \%>\% 
-#   tbl("TB_JOBCHANGE") \%>\% 
-#   diagnose(-gender, -education_level, -company_size)
+con_sqlite \%>\% 
+  tbl("TB_JOBCHANGE") \%>\% 
+  diagnose(-gender, -education_level, -company_size)
   
 # Positions values select columns, and In-memory mode
-# con_sqlite \%>\% 
-#   tbl("TB_JOBCHANGE") \%>\% 
-#   diagnose(1, 3, 8, in_database = FALSE)
+con_sqlite \%>\% 
+  tbl("TB_JOBCHANGE") \%>\% 
+  diagnose(1, 3, 8, in_database = FALSE)
   
 # Positions values select columns, and In-memory mode and collect size is 200
-# con_sqlite \%>\% 
-#   tbl("TB_JOBCHANGE") \%>\% 
-#   diagnose(-8, -9, -10, in_database = FALSE, collect_size = 200)
+con_sqlite \%>\% 
+  tbl("TB_JOBCHANGE") \%>\% 
+  diagnose(-8, -9, -10, in_database = FALSE, collect_size = 200)
 
 # Using pipes & dplyr -------------------------
 # Diagnosis of missing variables
@@ -101,7 +102,8 @@ con_sqlite \%>\%
   
 # Disconnect DBMS   
 DBI::dbDisconnect(con_sqlite)
-  
+}
+   
 }
 \seealso{
 \code{\link{diagnose.data.frame}}, \code{\link{diagnose_category.tbl_dbi}}, \code{\link{diagnose_numeric.tbl_dbi}}.

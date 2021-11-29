@@ -21,6 +21,7 @@
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @examples
+#' \donttest{
 #' # Generate data for the example
 #' set.seed(123L)
 #' jobchange2 <- jobchange[sample(nrow(jobchange), size = 1000), ]
@@ -29,10 +30,11 @@
 #' plot_na_hclust(jobchange2)
 #' 
 #' # Change the main title.
-#' # plot_na_hclust(jobchange2, main = "Distribution of missing value")
+#' plot_na_hclust(jobchange2, main = "Distribution of missing value")
 #' 
-#' # Not support typographic elements
-#' # plot_na_hclust(jobchange2, typographic = FALSE)
+#' # Non typographic elements
+#' plot_na_hclust(jobchange2, typographic = FALSE)
+#' }
 #' 
 #' @importFrom stats hclust dist order.dendrogram as.dendrogram reorder
 #' @import ggplot2
@@ -151,6 +153,7 @@ plot_na_hclust <- function (x, main = NULL, col.left = "#009E73",
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @examples
+#' \donttest{
 #' # Generate data for the example
 #' set.seed(123L)
 #' jobchange2 <- jobchange[sample(nrow(jobchange), size = 1000), ]
@@ -169,23 +172,24 @@ plot_na_hclust <- function (x, main = NULL, col.left = "#009E73",
 #' plot_na_pareto(jobchange2, col = "blue")
 #' 
 #' # Visualize only variables containing missing values
-#' # plot_na_pareto(jobchange2, only_na = TRUE)
+#' plot_na_pareto(jobchange2, only_na = TRUE)
 #' 
 #' # Display the relative frequency 
-#' # plot_na_pareto(jobchange2, relative = TRUE)
+#' plot_na_pareto(jobchange2, relative = TRUE)
 #' 
 #' # Change the grade
 #' plot_na_pareto(jobchange2, grade = list(High = 0.1, Middle = 0.6, Low = 1))
 #' 
 #' # Change the main title.
-#' # plot_na_pareto(jobchange2, relative = TRUE, only_na = TRUE, 
-#' #                main = "Pareto Chart for jobchange")
+#' plot_na_pareto(jobchange2, relative = TRUE, only_na = TRUE, 
+#'                  main = "Pareto Chart for jobchange")
 #'   
 #' # Return the aggregate information about missing values.
-#' # plot_na_pareto(jobchange2, only_na = TRUE, plot = FALSE)
+#' plot_na_pareto(jobchange2, only_na = TRUE, plot = FALSE)
 #' 
-#' # Not support typographic elements
-#' # plot_na_pareto(jobchange2, typographic = FALSE)
+#' # Non typographic elements
+#' plot_na_pareto(jobchange2, typographic = FALSE)
+#' }
 #' 
 #' @importFrom purrr map_int
 #' @importFrom tibble enframe
@@ -323,6 +327,7 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @examples
+#' \donttest{
 #' # Generate data for the example
 #' set.seed(123L)
 #' jobchange2 <- jobchange[sample(nrow(jobchange), size = 1000), ]
@@ -349,8 +354,9 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
 #' # Using n_intersects argument
 #' plot_na_intersect(jobchange2, only_na = FALSE, n_intersacts = 7)
 #' 
-#' # Not allow typographic elements
-#' # plot_na_intersect(jobchange2, typographic = FALSE)
+#' # Non typographic elements
+#' plot_na_intersect(jobchange2, typographic = FALSE)
+#' }
 #' 
 #' @importFrom purrr map_int
 #' @importFrom tibble enframe

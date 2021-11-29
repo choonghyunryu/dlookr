@@ -94,19 +94,21 @@ use it after loading the Google font with import_google_font().
 }
 
 \examples{
-\dontrun{
+\donttest{
+if (FALSE) {
 # create html file. file name is Transformation_Report.html
-# transformation_web_report(heartfailure)
+transformation_web_report(heartfailure)
 
 # file name is Transformation.html. and change logo image
-# logo <- file.path(system.file(package = "dlookr"), "report", "R_logo_html.svg")
-# transformation_web_report(heartfailure, logo_img = logo, title_color = "black",
-#   output_file = "Transformation.html")
+logo <- file.path(system.file(package = "dlookr"), "report", "R_logo_html.svg")
+transformation_web_report(heartfailure, logo_img = logo, title_color = "black",
+  output_file = "Transformation.html")
 
 # file name is ./Transformation.html, "blue" theme and not browse
-# transformation_web_report(heartfailure, output_dir = ".", target = "death_event", 
-#   author = "Choonghyun Ryu", output_file = "Transformation.html", 
-#   theme = "blue", browse = FALSE)
+transformation_web_report(heartfailure, output_dir = ".", target = "death_event", 
+  author = "Choonghyun Ryu", output_file = "Transformation.html", 
+  theme = "blue", browse = FALSE)
+}
 }
 
 }

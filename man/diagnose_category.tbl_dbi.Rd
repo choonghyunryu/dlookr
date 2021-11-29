@@ -75,6 +75,7 @@ See vignette("diagonosis") for an introduction to these concepts.
 }
 
 \examples{
+\donttest{
 library(dplyr)
 
 # connect DBMS
@@ -95,31 +96,31 @@ con_sqlite \%>\%
   diagnose_category(company_type, job_chnge)
   
 # Negative values to drop variables, and In-memory mode
-# con_sqlite \%>\% 
-#   tbl("TB_JOBCHANGE") \%>\% 
-#   diagnose_category(-company_type, -job_chnge, in_database = FALSE)
+con_sqlite \%>\% 
+  tbl("TB_JOBCHANGE") \%>\% 
+  diagnose_category(-company_type, -job_chnge, in_database = FALSE)
   
 # Positions values select variables, and In-memory mode and collect size is 200
-# con_sqlite \%>\% 
-#   tbl("TB_JOBCHANGE") \%>\% 
-#   diagnose_category(7, in_database = FALSE, collect_size = 200) 
+con_sqlite \%>\% 
+  tbl("TB_JOBCHANGE") \%>\% 
+  diagnose_category(7, in_database = FALSE, collect_size = 200) 
   
-# Positions values select variables
-# con_sqlite \%>\% 
-#   tbl("TB_JOBCHANGE") \%>\% 
-#   diagnose_category(-7)
+# Negative values to drop variables
+con_sqlite \%>\% 
+  tbl("TB_JOBCHANGE") \%>\% 
+  diagnose_category(-7)
   
 # Top rank levels with top argument
-# con_sqlite \%>\% 
-#   tbl("TB_JOBCHANGE") \%>\% 
-#   diagnose_category(top = 2)
+con_sqlite \%>\% 
+  tbl("TB_JOBCHANGE") \%>\% 
+  diagnose_category(top = 2)
 
 # Using pipes & dplyr -------------------------
 # Extraction of level that is more than 60\% of categorical data
-# con_sqlite \%>\% 
-#   tbl("TB_JOBCHANGE") \%>\% 
-#   diagnose_category()  \%>\%
-#   filter(ratio >= 60)
+con_sqlite \%>\% 
+  tbl("TB_JOBCHANGE") \%>\% 
+  diagnose_category()  \%>\%
+  filter(ratio >= 60)
   
 # Using type argument -------------------------
  dfm <- data.frame(alpabet = c(rep(letters[1:5], times = 5), "c")) 
@@ -134,23 +135,24 @@ con_sqlite \%>\%
   diagnose_category()
    
 # extract rows that less than equal rank 2
-# con_sqlite \%>\% 
-#   tbl("TB_EXAMPLE") \%>\% 
-#   diagnose_category(top = 2, type = "rank")
+con_sqlite \%>\% 
+  tbl("TB_EXAMPLE") \%>\% 
+  diagnose_category(top = 2, type = "rank")
    
 # extract rows that less than equal rank 2
 # default of type argument is "rank"
-# con_sqlite \%>\% 
-#   tbl("TB_EXAMPLE") \%>\% 
-#   diagnose_category(top = 2)
+con_sqlite \%>\% 
+  tbl("TB_EXAMPLE") \%>\% 
+  diagnose_category(top = 2)
  
 # extract only 2 rows
-# con_sqlite \%>\% 
-#   tbl("TB_EXAMPLE") \%>\% 
-#   diagnose_category(top = 2, type = "n")
+con_sqlite \%>\% 
+  tbl("TB_EXAMPLE") \%>\% 
+  diagnose_category(top = 2, type = "n")
 
 # Disconnect DBMS   
 DBI::dbDisconnect(con_sqlite)
+}
 
 }
 \seealso{

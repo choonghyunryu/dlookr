@@ -54,6 +54,7 @@ describe <- function(.data, ...) {
 #' @seealso \code{\link{describe.tbl_dbi}}, \code{\link{diagnose_numeric.data.frame}}.
 #' @export
 #' @examples
+#' \donttest{
 #' # Generate data for the example
 #' heartfailure2 <- heartfailure
 #' heartfailure2[sample(seq(NROW(heartfailure2)), 20), "sodium"] <- NA
@@ -75,12 +76,12 @@ describe <- function(.data, ...) {
 #'
 #' # Using pipes ---------------------------------
 #' # Positive values select variables
-#' # heartfailure2 %>%
-#' #  describe(platelets, sodium, creatinine)
+#' heartfailure2 %>%
+#'   describe(platelets, sodium, creatinine)
 #'
-#' # # Negative values to drop variables
-#' # heartfailure2 %>%
-#' #  describe(-platelets, -sodium, -creatinine)
+#' # Negative values to drop variables
+#' heartfailure2 %>%
+#'   describe(-platelets, -sodium, -creatinine)
 #'
 #' # Using pipes & dplyr -------------------------
 #' # Find the statistic of all numerical variables by 'hblood_pressure' and 'death_event',
@@ -92,10 +93,12 @@ describe <- function(.data, ...) {
 #'
 #' # extract only those with 'smoking' variable level is "Yes",
 #' # and find 'creatinine' statistics by 'hblood_pressure' and 'death_event'
-#' # heartfailure2 %>%
-#' #  filter(smoking == "Yes") %>%
-#' #  group_by(hblood_pressure, death_event) %>%
-#' #  describe(creatinine)
+#' heartfailure2 %>%
+#'   filter(smoking == "Yes") %>%
+#'   group_by(hblood_pressure, death_event) %>%
+#'   describe(creatinine)
+#' }
+#' 
 #' @method describe data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos

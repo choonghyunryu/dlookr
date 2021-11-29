@@ -161,7 +161,8 @@ use it after loading the Google font with import_google_font().
 }
 
 \examples{
-\dontrun{
+\donttest{
+if (FALSE) {
 # create dataset
 heartfailure2 <- dlookr::heartfailure
 heartfailure2[sample(seq(NROW(heartfailure2)), 20), "sodium"] <- NA
@@ -170,20 +171,21 @@ heartfailure2[sample(seq(NROW(heartfailure2)), 2), "time"] <- 0
 heartfailure2[sample(seq(NROW(heartfailure2)), 1), "creatinine"] <- -0.3
  
 # create pdf file. file name is Diagnosis_Paged_Report.pdf
-# diagnose_paged_report(heartfailure2)
+diagnose_paged_report(heartfailure2)
 
 # create pdf file. file name is Diagn.pdf. and change cover image
-# cover <- file.path(system.file(package = "dlookr"), "report", "cover2.jpg")
-# diagnose_paged_report(heartfailure2, cover_img = cover, title_color = "gray",
-#  output_file = "Diagn.pdf")
+cover <- file.path(system.file(package = "dlookr"), "report", "cover2.jpg")
+diagnose_paged_report(heartfailure2, cover_img = cover, title_color = "gray",
+  output_file = "Diagn.pdf")
 
 # create pdf file. file name is ./Diagn.pdf and not browse
-# cover <- file.path(system.file(package = "dlookr"), "report", "cover3.jpg")
-# diagnose_paged_report(heartfailure2, output_dir = ".", cover_img = cover, 
-#   flag_content_missing = FALSE, output_file = "Diagn.pdf", browse = FALSE)
+cover <- file.path(system.file(package = "dlookr"), "report", "cover3.jpg")
+diagnose_paged_report(heartfailure2, output_dir = ".", cover_img = cover, 
+  flag_content_missing = FALSE, output_file = "Diagn.pdf", browse = FALSE)
 
 # create pdf file. file name is Diagnosis_Paged_Report.html
-# diagnose_paged_report(heartfailure2, output_format = "html")
+diagnose_paged_report(heartfailure2, output_format = "html")
+}
 }
 
 }

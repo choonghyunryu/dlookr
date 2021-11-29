@@ -38,6 +38,7 @@
 #' }
 #' @seealso \code{\link{summary.transform}}, \code{\link{plot.transform}}.
 #' @examples
+#' \donttest{
 #' # Standardization ------------------------------
 #' creatinine_minmax <- transform(heartfailure$creatinine, method = "minmax")
 #' creatinine_minmax
@@ -45,13 +46,13 @@
 #' plot(creatinine_minmax)
 #'
 #' # Resolving Skewness  --------------------------
-#' # creatinine_log <- transform(heartfailure$creatinine, method = "log")
-#' # creatinine_log
-#' # summary(creatinine_log)
+#' creatinine_log <- transform(heartfailure$creatinine, method = "log")
+#' creatinine_log
+#' summary(creatinine_log)
 #' 
-#' # plot(creatinine_log)
+#' plot(creatinine_log)
 #'
-#' # plot(creatinine_log, typographic = FALSE)
+#' plot(creatinine_log, typographic = FALSE)
 #' 
 #' # Using dplyr ----------------------------------
 #' library(dplyr)
@@ -59,7 +60,8 @@
 #' heartfailure %>%
 #'   mutate(creatinine_log = transform(creatinine, method = "log+1")) %>%
 #'   lm(sodium ~ creatinine_log, data = .)
-#'   
+#' }
+#'    
 #' @export
 #' @import tibble
 #' @importFrom stats sd
@@ -145,21 +147,23 @@ transform <- function(x, method = c("zscore", "minmax", "log", "log+1", "sqrt",
 #'
 #' @seealso \code{\link{transform}}, \code{\link{plot.transform}}.
 #' @examples
+#' \donttest{
 #' # Standardization ------------------------------
 #' creatinine_minmax <- transform(heartfailure$creatinine, method = "minmax")
 #' creatinine_minmax
 #' summary(creatinine_minmax)
 #' 
-#' # plot(creatinine_minmax)
+#' plot(creatinine_minmax)
 #'
 #' # Resolving Skewness  --------------------------
-#' # creatinine_log <- transform(heartfailure$creatinine, method = "log")
-#' # creatinine_log
-#' # summary(creatinine_log)
+#' creatinine_log <- transform(heartfailure$creatinine, method = "log")
+#' creatinine_log
+#' summary(creatinine_log)
 #' 
-#' # plot(creatinine_log)
+#' plot(creatinine_log)
 #' 
-#' # plot(creatinine_log, typographic = FALSE)
+#' plot(creatinine_log, typographic = FALSE)
+#' }
 #' 
 #' @method summary transform
 #' @importFrom tidyr gather
@@ -211,6 +215,7 @@ summary.transform <- function(object, ...) {
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
 #' @seealso \code{\link{transform}}, \code{\link{summary.transform}}.
 #' @examples
+#' \donttest{
 #' # Standardization ------------------------------
 #' creatinine_minmax <- transform(heartfailure$creatinine, method = "minmax")
 #' creatinine_minmax
@@ -219,13 +224,14 @@ summary.transform <- function(object, ...) {
 #' plot(creatinine_minmax)
 #'
 #' # Resolving Skewness  --------------------------
-#' # creatinine_log <- transform(heartfailure$creatinine, method = "log")
-#' # creatinine_log
-#' # summary(creatinine_log)
+#' creatinine_log <- transform(heartfailure$creatinine, method = "log")
+#' creatinine_log
+#' summary(creatinine_log)
 #' 
-#' # plot(creatinine_log)
+#' plot(creatinine_log)
 #' 
-#' # plot(creatinine_log, typographic = FALSE)
+#' plot(creatinine_log, typographic = FALSE)
+#' }
 #' 
 #' @method plot transform
 #' @import ggplot2
@@ -335,26 +341,28 @@ plot.transform <- function(x, typographic = TRUE, base_family = NULL, ...) {
 #' @param browse logical. choose whether to output the report results to the browser.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' if (FALSE) {
 #' # reporting the Binning information -------------------------
 #' # create pdf file. file name is Transformation_Report.pdf & No target variable
 #' transformation_report(heartfailure)
 #' 
 #' # create pdf file. file name is Transformation_Report.pdf
-#' # transformation_report(heartfailure, death_event)
+#' transformation_report(heartfailure, death_event)
 #' 
 #' # create pdf file. file name is Transformation_heartfailure.pdf
-#' # transformation_report(heartfailure, "death_event", 
-#' #                       output_file = "Transformation_heartfailure.pdf")
+#' transformation_report(heartfailure, "death_event", 
+#'                       output_file = "Transformation_heartfailure.pdf")
 #' 
 #' # create html file. file name is Transformation_Report.html
-#' # transformation_report(heartfailure, "death_event", output_format = "html")
+#' transformation_report(heartfailure, "death_event", output_format = "html")
 #' 
 #' # create html file. file name is Transformation_heartfailure.html
-#' # transformation_report(heartfailure, death_event, output_format = "html", 
-#' #                       output_file = "Transformation_heartfailure.html")
+#' transformation_report(heartfailure, death_event, output_format = "html", 
+#'                       output_file = "Transformation_heartfailure.html")
 #' }
-#'
+#' }
+#' 
 #' @importFrom knitr knit2pdf
 #' @importFrom rmarkdown render
 #' @importFrom grDevices cairo_pdf

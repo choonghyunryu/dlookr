@@ -53,6 +53,7 @@ The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 use it after loading the Google font with import_google_font().
 }
 \examples{
+\donttest{
 # Generate data for the example
 set.seed(123L)
 jobchange2 <- jobchange[sample(nrow(jobchange), size = 1000), ]
@@ -79,7 +80,8 @@ plot_na_intersect(jobchange2, n_vars = 5)
 # Using n_intersects argument
 plot_na_intersect(jobchange2, only_na = FALSE, n_intersacts = 7)
 
-# Not allow typographic elements
-# plot_na_intersect(jobchange2, typographic = FALSE)
+# Non typographic elements
+plot_na_intersect(jobchange2, typographic = FALSE)
+}
 
 }

@@ -58,6 +58,7 @@ The information derived from the numerical data compute is as follows.
 }
 
 \examples{
+\donttest{
 library(dplyr)
 
 # connect DBMS
@@ -83,14 +84,14 @@ con_sqlite \%>\%
   correlate(-platelets, -sodium, collect_size = 200)
  
 # Positions values select variables
-# con_sqlite \%>\% 
-#   tbl("TB_HEARTFAILURE") \%>\% 
-#   correlate(1)
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  correlate(1)
  
-# Positions values select variables
-# con_sqlite \%>\% 
-#   tbl("TB_HEARTFAILURE") \%>\% 
-#   correlate(-1, -2, -3, -5, -6)
+# Negative values to drop variables
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  correlate(-1, -2, -3, -5, -6)
  
 # ---------------------------------------------
 # Correlation coefficient
@@ -100,20 +101,20 @@ con_sqlite \%>\%
   correlate() \%>\%
   filter(as.integer(var1) > as.integer(var2))
 
-# con_sqlite \%>\% 
-#   tbl("TB_HEARTFAILURE") \%>\% 
-#   correlate(platelets, sodium) \%>\%
-#   filter(as.integer(var1) > as.integer(var2))
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  correlate(platelets, sodium) \%>\%
+  filter(as.integer(var1) > as.integer(var2))
 
 # Using pipes & dplyr -------------------------
 # Compute the correlation coefficient of creatinine variable by 'hblood_pressure'
 # and 'death_event' variables. And extract only those with absolute
 # value of correlation coefficient is greater than 0.2
-# con_sqlite \%>\% 
-#   tbl("TB_HEARTFAILURE") \%>\% 
-#   group_by(hblood_pressure, death_event) \%>\%
-#   correlate(creatinine) \%>\%
-#   filter(abs(coef_corr) >= 0.2)
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  group_by(hblood_pressure, death_event) \%>\%
+  correlate(creatinine) \%>\%
+  filter(abs(coef_corr) >= 0.2)
 
 # extract only those with 'hblood_pressure' variable level is "Yes",
 # and compute the correlation coefficient of 'creatinine' variable
@@ -129,7 +130,8 @@ con_sqlite \%>\%
  
 # Disconnect DBMS   
 DBI::dbDisconnect(con_sqlite)
- 
+}
+  
 }
 \seealso{
 \code{\link{correlate.data.frame}}, \code{\link{cor}}.

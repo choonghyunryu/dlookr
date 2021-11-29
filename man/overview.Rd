@@ -72,7 +72,7 @@ ov
 
 summary(ov)
 
-# plot(ov)
+plot(ov)
 }
 
 }

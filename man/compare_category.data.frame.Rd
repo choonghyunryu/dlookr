@@ -51,6 +51,7 @@ Attributes of compare_category class is as follows.
 }
 
 \examples{
+\donttest{
 # Generate data for the example
 heartfailure2 <- heartfailure
 heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
@@ -126,16 +127,17 @@ summary(all_var, "table", na.rm = TRUE, verbose = FALSE) \%>\%
   "[["("smoking vs death_event")
 
 # plot all pair of variables
-# plot(all_var)
+plot(all_var)
 
 # plot a pair of variables
-# plot(two_var)
+plot(two_var)
 
 # plot all pair of variables by prompt
-# plot(all_var, prompt = TRUE)
+plot(all_var, prompt = TRUE)
 
 # plot a pair of variables
-# plot(two_var, las = 1)
+plot(two_var, las = 1)
+}
 
 }
 \seealso{

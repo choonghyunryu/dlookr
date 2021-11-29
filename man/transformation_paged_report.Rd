@@ -116,22 +116,24 @@ use it after loading the Google font with import_google_font().
 }
 
 \examples{
-\dontrun{
+\donttest{
+if (FALSE) {
 # create pdf file. file name is Transformation_Paged_Report.pdf
-# transformation_paged_report(heartfailure, sample_percent = 80)
+transformation_paged_report(heartfailure, sample_percent = 80)
 
 # create pdf file. file name is Transformation_heartfailure. and change cover image
-# cover <- file.path(system.file(package = "dlookr"), "report", "cover2.jpg")
-# transformation_paged_report(heartfailure, cover_img = cover, title_color = "gray",
-#   output_file = "Transformation_heartfailure")
+cover <- file.path(system.file(package = "dlookr"), "report", "cover2.jpg")
+transformation_paged_report(heartfailure, cover_img = cover, title_color = "gray",
+  output_file = "Transformation_heartfailure")
 
 # create pdf file. file name is ./Transformation.pdf and not browse
-# cover <- file.path(system.file(package = "dlookr"), "report", "cover1.jpg")
-# transformation_paged_report(heartfailure, output_dir = ".", cover_img = cover, 
-#   flag_content_missing = FALSE, output_file = "Transformation.pdf", browse = FALSE)
+cover <- file.path(system.file(package = "dlookr"), "report", "cover1.jpg")
+transformation_paged_report(heartfailure, output_dir = ".", cover_img = cover, 
+  flag_content_missing = FALSE, output_file = "Transformation.pdf", browse = FALSE)
 
 # create pdf file. file name is Transformation_Paged_Report.html
-# transformation_paged_report(heartfailure, target = "death_event", output_format = "html")
+transformation_paged_report(heartfailure, target = "death_event", output_format = "html")
+}
 }
 
 }

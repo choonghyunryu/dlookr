@@ -27,6 +27,7 @@ The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 use it after loading the Google font with import_google_font().
 }
 \examples{
+\donttest{
 # Standardization ------------------------------
 creatinine_minmax <- transform(heartfailure$creatinine, method = "minmax")
 creatinine_minmax
@@ -35,13 +36,14 @@ summary(creatinine_minmax)
 plot(creatinine_minmax)
 
 # Resolving Skewness  --------------------------
-# creatinine_log <- transform(heartfailure$creatinine, method = "log")
-# creatinine_log
-# summary(creatinine_log)
+creatinine_log <- transform(heartfailure$creatinine, method = "log")
+creatinine_log
+summary(creatinine_log)
 
-# plot(creatinine_log)
+plot(creatinine_log)
 
-# plot(creatinine_log, typographic = FALSE)
+plot(creatinine_log, typographic = FALSE)
+}
 
 }
 \seealso{

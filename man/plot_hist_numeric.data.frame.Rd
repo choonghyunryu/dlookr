@@ -65,33 +65,35 @@ The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 use it after loading the Google font with import_google_font().
 }
 \examples{
+\donttest{
 # Visualization of all numerical variables
-# plot_hist_numeric(heartfailure)
+plot_hist_numeric(heartfailure)
 
 # Select the variable to diagnose
-# plot_hist_numeric(heartfailure, "age", "time")
+plot_hist_numeric(heartfailure, "age", "time")
 plot_hist_numeric(heartfailure, -age, -time)
 
 # Visualize the each plots
-# plot_hist_numeric(heartfailure, "age", "time", each = TRUE)
+plot_hist_numeric(heartfailure, "age", "time", each = TRUE)
 
 # Not allow the typographic elements
-# plot_hist_numeric(heartfailure, typographic = FALSE)
+plot_hist_numeric(heartfailure, typographic = FALSE)
 
 # Using pipes ---------------------------------
 library(dplyr)
 
 # Plot of all numerical variables
-# heartfailure \%>\%
-#   plot_hist_numeric()
+heartfailure \%>\%
+  plot_hist_numeric()
   
 # Using groupd_df  ------------------------------
 heartfailure \%>\% 
   group_by(smoking) \%>\% 
   plot_hist_numeric()
   
-# heartfailure \%>\% 
-#   group_by(smoking) \%>\% 
-#   plot_hist_numeric(each = TRUE)  
-  
+heartfailure \%>\% 
+  group_by(smoking) \%>\% 
+  plot_hist_numeric(each = TRUE)  
+}
+   
 }

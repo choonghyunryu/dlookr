@@ -40,6 +40,7 @@ The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 use it after loading the Google font with import_google_font().
 }
 \examples{
+\donttest{
 library(dplyr)
 
 # Calculates the all categorical variables
@@ -58,6 +59,7 @@ plot(all_var)
 
 # plot smoking
 plot(smoking)
+}
 
 }
 \seealso{

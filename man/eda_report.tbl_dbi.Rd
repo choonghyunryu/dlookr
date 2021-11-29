@@ -97,6 +97,7 @@ See vignette("EDA") for an introduction to these concepts.
 }
 
 \examples{
+\donttest{
 if (FALSE) {
 library(dplyr)
 
@@ -106,77 +107,78 @@ heartfailure2[sample(seq(NROW(heartfailure2)), 20), "platelets"] <- NA
 heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
 
 # connect DBMS
-# con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 
 # copy heartfailure2 to the DBMS with a table named TB_HEARTFAILURE
-# copy_to(con_sqlite, heartfailure2, name = "TB_HEARTFAILURE", overwrite = TRUE)
+copy_to(con_sqlite, heartfailure2, name = "TB_HEARTFAILURE", overwrite = TRUE)
 
 ## target variable is categorical variable
 # reporting the EDA information
 # create pdf file. file name is EDA_Report.pdf
-# con_sqlite \%>\% 
-#   tbl("TB_HEARTFAILURE") \%>\% 
-#   eda_report(death_event)
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  eda_report(death_event)
 
 # create pdf file. file name is EDA_TB_HEARTFAILURE.pdf
-# con_sqlite \%>\% 
-#   tbl("TB_HEARTFAILURE") \%>\% 
-#   eda_report("death_event", output_file = "EDA_TB_HEARTFAILURE.pdf")
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  eda_report("death_event", output_file = "EDA_TB_HEARTFAILURE.pdf")
 
 # create html file. file name is EDA_Report.html
-# con_sqlite \%>\% 
-#   tbl("TB_HEARTFAILURE") \%>\% 
-#   eda_report("death_event", output_format = "html")
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  eda_report("death_event", output_format = "html")
 
 # create html file. file name is EDA_TB_HEARTFAILURE.html
-# con_sqlite \%>\% 
-#   tbl("TB_HEARTFAILURE") \%>\% 
-#   eda_report(death_event, output_format = "html", output_file = "EDA_TB_HEARTFAILURE.html")
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  eda_report(death_event, output_format = "html", output_file = "EDA_TB_HEARTFAILURE.html")
 
 ## target variable is numerical variable
 # reporting the EDA information, and collect size is 250
-# con_sqlite \%>\% 
-#   tbl("TB_HEARTFAILURE") \%>\% 
-#   eda_report(sodium, collect_size = 250)
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  eda_report(sodium, collect_size = 250)
 
 # create pdf file. file name is EDA2.pdf
-# con_sqlite \%>\% 
-#   tbl("TB_HEARTFAILURE") \%>\% 
-#   eda_report("sodium", output_file = "EDA2.pdf")
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  eda_report("sodium", output_file = "EDA2.pdf")
 
 # create html file. file name is EDA_Report.html
-# con_sqlite \%>\% 
-#   tbl("TB_HEARTFAILURE") \%>\% 
-#   eda_report("sodium", output_format = "html")
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  eda_report("sodium", output_format = "html")
 
 # create html file. file name is EDA2.html
-# con_sqlite \%>\% 
-#   tbl("TB_HEARTFAILURE") \%>\% 
-#   eda_report(sodium, output_format = "html", output_file = "EDA2.html")
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  eda_report(sodium, output_format = "html", output_file = "EDA2.html")
 
 ## target variable is null
 # reporting the EDA information
-# con_sqlite \%>\% 
-#   tbl("TB_HEARTFAILURE") \%>\% 
-#   eda_report()
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  eda_report()
 
 # create pdf file. file name is EDA2.pdf
-# con_sqlite \%>\% 
-#   tbl("TB_HEARTFAILURE") \%>\% 
-#   eda_report(output_file = "EDA2.pdf")
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  eda_report(output_file = "EDA2.pdf")
 
 # create html file. file name is EDA_Report.html
-# con_sqlite \%>\% 
-#   tbl("TB_HEARTFAILURE") \%>\% 
-#   eda_report(output_format = "html")
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  eda_report(output_format = "html")
 
 # create html file. file name is EDA2.html
-# con_sqlite \%>\% 
-#   tbl("TB_HEARTFAILURE") \%>\% 
-#   eda_report(output_format = "html", output_file = "EDA2.html")
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  eda_report(output_format = "html", output_file = "EDA2.html")
   
 # Disconnect DBMS   
-# DBI::dbDisconnect(con_sqlite)
+DBI::dbDisconnect(con_sqlite)
+}
 }
 
 }

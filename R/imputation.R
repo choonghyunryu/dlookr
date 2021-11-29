@@ -351,11 +351,12 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL,
 #' }
 #' @seealso \code{\link{imputate_na}}.
 #' @examples
+#' \donttest{
 #' # Replace the outliers of the sodium variable with median.
 #' imputate_outlier(heartfailure, sodium, method = "median")
 #' 
-#' # # Replace the outliers of the sodium variable with capping.
-#' # imputate_outlier(heartfailure, sodium, method = "capping")
+#' # Replace the outliers of the sodium variable with capping.
+#' imputate_outlier(heartfailure, sodium, method = "capping")
 #' 
 #' ## using dplyr -------------------------------------
 #' library(dplyr)
@@ -373,7 +374,9 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL,
 #' sodium
 #' summary(sodium)
 #' 
-#' # plot(sodium)
+#' plot(sodium)
+#' }
+#' 
 #' @export
 imputate_outlier <- function(.data, xvar, method, no_attrs) {
   UseMethod("imputate_outlier")
@@ -500,11 +503,11 @@ imputate_outlier_impl <- function(df, xvar, method, no_attrs = FALSE) {
 #' plot(platelets)
 #'
 #' # If the variable of interest is a categorical variables
-#' # smoking <- imputate_na(heartfailure2, smoking, death_event, method = "mice")
-#' # smoking
-#' # # summary(smoking)
+#' smoking <- imputate_na(heartfailure2, smoking, death_event, method = "mice")
+#' smoking
+#' summary(smoking)
 #' 
-#' # plot(smoking)
+#' plot(smoking)
 #'
 #' # Impute outliers ----------------------------------
 #' # If the variable of interest is a numerical variable
@@ -512,7 +515,7 @@ imputate_outlier_impl <- function(df, xvar, method, no_attrs = FALSE) {
 #' platelets
 #' summary(platelets)
 #' 
-#' # plot(platelets)
+#' plot(platelets)
 #' }
 #' @method summary imputation
 #' @importFrom tidyr gather
@@ -634,11 +637,11 @@ summary.imputation <- function(object, ...) {
 #' plot(platelets)
 #'
 #' # If the variable of interest is a categorical variables
-#' # smoking <- imputate_na(heartfailure2, smoking, death_event, method = "mice")
-#' # smoking
-#' # summary(smoking)
+#' smoking <- imputate_na(heartfailure2, smoking, death_event, method = "mice")
+#' smoking
+#' summary(smoking)
 #' 
-#' # plot(smoking)
+#' plot(smoking)
 #'
 #' # Impute outliers ----------------------------------
 #' # If the variable of interest is a numerical variable

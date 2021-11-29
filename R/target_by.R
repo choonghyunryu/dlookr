@@ -34,6 +34,7 @@ target_by <- function(.data, target, ...) {
 #' }
 #' @seealso \code{\link{relate}}.
 #' @examples
+#' \donttest{
 #' # If the target variable is a categorical variable
 #' categ <- target_by(heartfailure, death_event)
 #' 
@@ -42,14 +43,14 @@ target_by <- function(.data, target, ...) {
 #' cat_num
 #' summary(cat_num)
 #' 
-#' # plot(cat_num)
+#' plot(cat_num)
 #' 
 #' # If the variable of interest is a categorical variable
 #' cat_cat <- relate(categ, hblood_pressure)
 #' cat_cat
 #' summary(cat_cat)
 #'  
-#' # plot(cat_cat)
+#' plot(cat_cat)
 #' 
 #' ##---------------------------------------------------
 #' # If the target variable is a numerical variable
@@ -60,17 +61,18 @@ target_by <- function(.data, target, ...) {
 #' num_num
 #' summary(num_num)
 #' 
-#' # plot(num_num)
+#' plot(num_num)
 #' 
 #' # If the variable of interest is a categorical variable
 #' num_cat <- relate(num, smoking)
 #' num_cat
 #' summary(num_cat)
 #' 
-#' # plot(num_cat)
+#' plot(num_cat)
 #' 
-#' # Not allow typographic
-#' # plot(num_cat, typographic = FALSE)
+#' # Non typographic
+#' plot(num_cat, typographic = FALSE)
+#' }
 #' 
 #' @method target_by data.frame
 #' @importFrom tidyselect vars_select
@@ -176,6 +178,7 @@ target_by_impl <- function(.data, target) {
 #' @seealso \code{\link{print.relate}}, \code{\link{plot.relate}}.
 #'
 #' @examples
+#' \donttest{
 #' # If the target variable is a categorical variable
 #' categ <- target_by(heartfailure, death_event)
 #' 
@@ -184,14 +187,14 @@ target_by_impl <- function(.data, target) {
 #' cat_num
 #' summary(cat_num)
 #' 
-#' # plot(cat_num)
+#' plot(cat_num)
 #' 
 #' # If the variable of interest is a categorical variable
 #' cat_cat <- relate(categ, hblood_pressure)
 #' cat_cat
 #' summary(cat_cat)
 #'  
-#' # plot(cat_cat)
+#' plot(cat_cat)
 #' 
 #' ##---------------------------------------------------
 #' # If the target variable is a numerical variable
@@ -202,17 +205,18 @@ target_by_impl <- function(.data, target) {
 #' num_num
 #' summary(num_num)
 #' 
-#' # plot(num_num)
+#' plot(num_num)
 #' 
 #' # If the variable of interest is a categorical variable
 #' num_cat <- relate(num, smoking)
 #' num_cat
 #' summary(num_cat)
 #' 
-#' # plot(num_cat)
+#' plot(num_cat)
 #' 
 #' # Not allow typographic
-#' # plot(num_cat, typographic = FALSE)
+#' plot(num_cat, typographic = FALSE)
+#' }
 #' 
 #' @export
 relate <- function(.data, predictor) {
@@ -405,6 +409,7 @@ relate_impl <- function(.data, predictor) {
 #' }
 #'
 #' @examples
+#' \donttest{
 #' # If the target variable is a categorical variable
 #' categ <- target_by(heartfailure, death_event)
 #' 
@@ -413,14 +418,14 @@ relate_impl <- function(.data, predictor) {
 #' cat_num
 #' summary(cat_num)
 #' 
-#' # plot(cat_num)
+#' plot(cat_num)
 #' 
 #' # If the variable of interest is a categorical variable
 #' cat_cat <- relate(categ, hblood_pressure)
 #' cat_cat
 #' summary(cat_cat)
 #'  
-#' # plot(cat_cat)
+#' plot(cat_cat)
 #' 
 #' ##---------------------------------------------------
 #' # If the target variable is a numerical variable
@@ -431,17 +436,18 @@ relate_impl <- function(.data, predictor) {
 #' num_num
 #' summary(num_num)
 #' 
-#' # plot(num_num)
+#' plot(num_num)
 #' 
 #' # If the variable of interest is a categorical variable
 #' num_cat <- relate(num, smoking)
 #' num_cat
 #' summary(num_cat)
 #' 
-#' # plot(num_cat)
+#' plot(num_cat)
 #' 
 #' # Not allow typographic
-#' # plot(num_cat, typographic = FALSE)
+#' plot(num_cat, typographic = FALSE)
+#' }
 #' 
 #' @method print relate
 #' @importFrom stats anova
@@ -490,6 +496,7 @@ print.relate <- function(x, ...) {
 #' only applies when the model argument is TRUE, and is used for ... of the plot.lm() function.
 #' @seealso \code{\link{relate}}, \code{\link{print.relate}}.
 #' @examples
+#' \donttest{
 #' # If the target variable is a categorical variable
 #' categ <- target_by(heartfailure, death_event)
 #' 
@@ -527,7 +534,8 @@ print.relate <- function(x, ...) {
 #' 
 #' # Not allow typographic
 #' plot(num_cat, typographic = FALSE)
-#'  
+#' }
+#'   
 #' @method plot relate
 #' @import ggplot2
 #' @import hrbrthemes

@@ -101,7 +101,8 @@ eda_paged_report <- function(.data, ...) {
 #' @param ... arguments to be passed to methods.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' if (FALSE) {
 #' # create dataset
 #' heartfailure2 <- dlookr::heartfailure
 #' heartfailure2[sample(seq(NROW(heartfailure2)), 20), "sodium"] <- NA
@@ -110,18 +111,18 @@ eda_paged_report <- function(.data, ...) {
 #' heartfailure2[sample(seq(NROW(heartfailure2)), 1), "creatinine"] <- -0.3
 #'  
 #' # create pdf file. file name is Diagnosis_Report.html
-#' # diagnose_web_report(heartfailure2)
+#' diagnose_web_report(heartfailure2)
 #' 
 #' # file name is Diagn.html. and change logo image
-#' # logo <- file.path(system.file(package = "dlookr"), "report", "R_logo_html.svg")
-#' # diagnose_web_report(heartfailure2, logo_img = logo, title_color = "black",
-#' #   output_file = "Diagn.html")
+#' logo <- file.path(system.file(package = "dlookr"), "report", "R_logo_html.svg")
+#' diagnose_web_report(heartfailure2, logo_img = logo, title_color = "black",
+#'   output_file = "Diagn.html")
 #'
 #' # file name is ./Diagn_heartfailure.html, "blue" theme and not browse
-#' # diagnose_web_report(heartfailure2, output_dir = ".", author = "Choonghyun Ryu",
-#' #   output_file = "Diagn_heartfailure.html", theme = "blue", browse = FALSE)
+#' diagnose_web_report(heartfailure2, output_dir = ".", author = "Choonghyun Ryu",
+#'   output_file = "Diagn_heartfailure.html", theme = "blue", browse = FALSE)
 #' }
-#' 
+#' }
 #' @importFrom rmarkdown render
 #' @importFrom knitr image_uri
 #' @method diagnose_web_report data.frame
@@ -352,7 +353,8 @@ diagnose_web_report.data.frame <- function(.data, output_file = NULL, output_dir
 #' 
 #' @seealso \code{\link{diagnose_paged_report.tbl_dbi}}.
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' if (FALSE) {
 #' # create dataset
 #' heartfailure2 <- dlookr::heartfailure
 #' heartfailure2[sample(seq(NROW(heartfailure2)), 20), "sodium"] <- NA
@@ -361,20 +363,21 @@ diagnose_web_report.data.frame <- function(.data, output_file = NULL, output_dir
 #' heartfailure2[sample(seq(NROW(heartfailure2)), 1), "creatinine"] <- -0.3
 #'  
 #' # create pdf file. file name is Diagnosis_Paged_Report.pdf
-#' # diagnose_paged_report(heartfailure2)
+#' diagnose_paged_report(heartfailure2)
 #' 
 #' # create pdf file. file name is Diagn.pdf. and change cover image
-#' # cover <- file.path(system.file(package = "dlookr"), "report", "cover2.jpg")
-#' # diagnose_paged_report(heartfailure2, cover_img = cover, title_color = "gray",
-#' #  output_file = "Diagn.pdf")
+#' cover <- file.path(system.file(package = "dlookr"), "report", "cover2.jpg")
+#' diagnose_paged_report(heartfailure2, cover_img = cover, title_color = "gray",
+#'   output_file = "Diagn.pdf")
 #'
 #' # create pdf file. file name is ./Diagn.pdf and not browse
-#' # cover <- file.path(system.file(package = "dlookr"), "report", "cover3.jpg")
-#' # diagnose_paged_report(heartfailure2, output_dir = ".", cover_img = cover, 
-#' #   flag_content_missing = FALSE, output_file = "Diagn.pdf", browse = FALSE)
+#' cover <- file.path(system.file(package = "dlookr"), "report", "cover3.jpg")
+#' diagnose_paged_report(heartfailure2, output_dir = ".", cover_img = cover, 
+#'   flag_content_missing = FALSE, output_file = "Diagn.pdf", browse = FALSE)
 #' 
 #' # create pdf file. file name is Diagnosis_Paged_Report.html
-#' # diagnose_paged_report(heartfailure2, output_format = "html")
+#' diagnose_paged_report(heartfailure2, output_format = "html")
+#' }
 #' }
 #' 
 #' @importFrom rmarkdown render
@@ -643,24 +646,26 @@ diagnose_paged_report.data.frame <- function(.data, output_format = c("pdf", "ht
 #'
 #' @seealso \code{\link{eda_web_report.tbl_dbi}}.
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' if (FALSE) {
 #' # create the dataset
 #' heartfailure2 <- dlookr::heartfailure
 #' heartfailure2[sample(seq(NROW(heartfailure2)), 20), "sodium"] <- NA
 #' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
 #' 
 #' # create html file. file name is EDA_Report.html
-#' # eda_web_report(heartfailure2)
+#' eda_web_report(heartfailure2)
 #' 
 #' # file name is EDA.html. and change logo image
-#' # logo <- file.path(system.file(package = "dlookr"), "report", "R_logo_html.svg")
-#' # eda_web_report(heartfailure2, logo_img = logo, title_color = "black",
-#' #   output_file = "EDA.html")
+#' logo <- file.path(system.file(package = "dlookr"), "report", "R_logo_html.svg")
+#' eda_web_report(heartfailure2, logo_img = logo, title_color = "black",
+#'   output_file = "EDA.html")
 #'
 #' # file name is ./EDA_heartfailure.html, "blue" theme and not browse
-#' # eda_web_report(heartfailure2, target = "death_event", output_dir = ".", 
-#' #   author = "Choonghyun Ryu", output_file = "EDA_heartfailure.html", 
-#' #   theme = "blue", browse = FALSE)
+#' eda_web_report(heartfailure2, target = "death_event", output_dir = ".", 
+#'   author = "Choonghyun Ryu", output_file = "EDA_heartfailure.html", 
+#'   theme = "blue", browse = FALSE)
+#' }
 #' }
 #' 
 #' @importFrom rmarkdown render
@@ -895,27 +900,29 @@ eda_web_report.data.frame <- function(.data, target = NULL, output_file = NULL,
 #' 
 #' @seealso \code{\link{eda_paged_report.tbl_dbi}}.
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' if (FALSE) {
 #' # create the dataset
 #' heartfailure2 <- dlookr::heartfailure
 #' heartfailure2[sample(seq(NROW(heartfailure2)), 20), "sodium"] <- NA
 #' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
 #' 
 #' # create pdf file. file name is EDA_Paged_Report.pdf
-#' # eda_paged_report(heartfailure2, sample_percent = 80)
+#' eda_paged_report(heartfailure2, sample_percent = 80)
 #' 
 #' # create pdf file. file name is EDA.pdf. and change cover image
-#' # cover <- file.path(system.file(package = "dlookr"), "report", "cover1.jpg")
-#' # eda_paged_report(heartfailure2, cover_img = cover, title_color = "gray",
-#' #   output_file = "EDA.pdf")
+#' cover <- file.path(system.file(package = "dlookr"), "report", "cover1.jpg")
+#' eda_paged_report(heartfailure2, cover_img = cover, title_color = "gray",
+#'   output_file = "EDA.pdf")
 #'
 #' # create pdf file. file name is ./EDA.pdf and not browse
-#' # cover <- file.path(system.file(package = "dlookr"), "report", "cover3.jpg")
-#' # eda_paged_report(heartfailure2, output_dir = ".", cover_img = cover, 
-#' #   flag_content_missing = FALSE, output_file = "EDA.pdf", browse = FALSE)
+#' cover <- file.path(system.file(package = "dlookr"), "report", "cover3.jpg")
+#' eda_paged_report(heartfailure2, output_dir = ".", cover_img = cover, 
+#'   flag_content_missing = FALSE, output_file = "EDA.pdf", browse = FALSE)
 #' 
 #' # create pdf file. file name is EDA_Paged_Report.html
-#' # eda_paged_report(heartfailure2, target = "death_event", output_format = "html")
+#' eda_paged_report(heartfailure2, target = "death_event", output_format = "html")
+#' }
 #' }
 #' 
 #' @importFrom rmarkdown render
@@ -1144,19 +1151,21 @@ eda_paged_report.data.frame <- function(.data, target = NULL, output_format = c(
 #' @param ... arguments to be passed to methods.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' if (FALSE) {
 #' # create html file. file name is Transformation_Report.html
-#' # transformation_web_report(heartfailure)
+#' transformation_web_report(heartfailure)
 #' 
 #' # file name is Transformation.html. and change logo image
-#' # logo <- file.path(system.file(package = "dlookr"), "report", "R_logo_html.svg")
-#' # transformation_web_report(heartfailure, logo_img = logo, title_color = "black",
-#' #   output_file = "Transformation.html")
+#' logo <- file.path(system.file(package = "dlookr"), "report", "R_logo_html.svg")
+#' transformation_web_report(heartfailure, logo_img = logo, title_color = "black",
+#'   output_file = "Transformation.html")
 #'
 #' # file name is ./Transformation.html, "blue" theme and not browse
-#' # transformation_web_report(heartfailure, output_dir = ".", target = "death_event", 
-#' #   author = "Choonghyun Ryu", output_file = "Transformation.html", 
-#' #   theme = "blue", browse = FALSE)
+#' transformation_web_report(heartfailure, output_dir = ".", target = "death_event", 
+#'   author = "Choonghyun Ryu", output_file = "Transformation.html", 
+#'   theme = "blue", browse = FALSE)
+#' }
 #' }
 #' 
 #' @importFrom rmarkdown render
@@ -1359,22 +1368,24 @@ transformation_web_report <- function(.data, target = NULL, output_file = NULL,
 #' @param ... arguments to be passed to methods.
 #' 
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' if (FALSE) {
 #' # create pdf file. file name is Transformation_Paged_Report.pdf
-#' # transformation_paged_report(heartfailure, sample_percent = 80)
+#' transformation_paged_report(heartfailure, sample_percent = 80)
 #' 
 #' # create pdf file. file name is Transformation_heartfailure. and change cover image
-#' # cover <- file.path(system.file(package = "dlookr"), "report", "cover2.jpg")
-#' # transformation_paged_report(heartfailure, cover_img = cover, title_color = "gray",
-#' #   output_file = "Transformation_heartfailure")
+#' cover <- file.path(system.file(package = "dlookr"), "report", "cover2.jpg")
+#' transformation_paged_report(heartfailure, cover_img = cover, title_color = "gray",
+#'   output_file = "Transformation_heartfailure")
 #'
 #' # create pdf file. file name is ./Transformation.pdf and not browse
-#' # cover <- file.path(system.file(package = "dlookr"), "report", "cover1.jpg")
-#' # transformation_paged_report(heartfailure, output_dir = ".", cover_img = cover, 
-#' #   flag_content_missing = FALSE, output_file = "Transformation.pdf", browse = FALSE)
+#' cover <- file.path(system.file(package = "dlookr"), "report", "cover1.jpg")
+#' transformation_paged_report(heartfailure, output_dir = ".", cover_img = cover, 
+#'   flag_content_missing = FALSE, output_file = "Transformation.pdf", browse = FALSE)
 #' 
 #' # create pdf file. file name is Transformation_Paged_Report.html
-#' # transformation_paged_report(heartfailure, target = "death_event", output_format = "html")
+#' transformation_paged_report(heartfailure, target = "death_event", output_format = "html")
+#' }
 #' }
 #' 
 #' @importFrom rmarkdown render

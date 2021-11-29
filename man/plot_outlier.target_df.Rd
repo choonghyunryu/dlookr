@@ -50,6 +50,7 @@ The plot derived from the numerical data diagnosis is as follows.
 }
 
 \examples{
+\donttest{
 # the target variable is a categorical variable
 categ <- target_by(heartfailure, death_event)
 
@@ -73,6 +74,7 @@ copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
 categ <- target_by(con_sqlite \%>\% tbl("TB_HEARTFAILURE") , death_event)
 
 plot_outlier(categ, sodium)
+}
 
 }
 \seealso{

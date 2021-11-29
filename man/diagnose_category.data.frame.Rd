@@ -76,6 +76,7 @@ See vignette("diagonosis") for an introduction to these concepts.
 }
 
 \examples{
+\donttest{
 # Diagnosis of categorical variables
 diagnose_category(jobchange)
 
@@ -97,16 +98,16 @@ jobchange \%>\%
  diagnose_category(company_type, job_chnge)
  
 # Negative values to drop variables
-# jobchange \%>\%
-#   diagnose_category(-company_type, -job_chnge)
+jobchange \%>\%
+  diagnose_category(-company_type, -job_chnge)
   
 # Positions values select variables
-# jobchange \%>\%
-#   diagnose_category(7)
+jobchange \%>\%
+  diagnose_category(7)
   
-# Positions values select variables
-# jobchange \%>\%
-#   diagnose_category(-7)
+# Negative values to drop variables
+jobchange \%>\%
+  diagnose_category(-7)
   
 # Top rank levels with top argument
 jobchange \%>\%
@@ -134,7 +135,8 @@ jobchange \%>\%
 # extract only 3 rows
 jobchange \%>\% 
   diagnose_category(enrollee_id, top = 3, type = "n")
- 
+}
+  
 }
 \seealso{
 \code{\link{diagnose_category.tbl_dbi}}, \code{\link{diagnose.data.frame}}, \code{\link{diagnose_numeric.data.frame}}, \code{\link{diagnose_outlier.data.frame}}.

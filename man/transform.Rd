@@ -52,6 +52,7 @@ and method of transformation.
 See vignette("transformation") for an introduction to these concepts.
 }
 \examples{
+\donttest{
 # Standardization ------------------------------
 creatinine_minmax <- transform(heartfailure$creatinine, method = "minmax")
 creatinine_minmax
@@ -59,13 +60,13 @@ summary(creatinine_minmax)
 plot(creatinine_minmax)
 
 # Resolving Skewness  --------------------------
-# creatinine_log <- transform(heartfailure$creatinine, method = "log")
-# creatinine_log
-# summary(creatinine_log)
+creatinine_log <- transform(heartfailure$creatinine, method = "log")
+creatinine_log
+summary(creatinine_log)
 
-# plot(creatinine_log)
+plot(creatinine_log)
 
-# plot(creatinine_log, typographic = FALSE)
+plot(creatinine_log, typographic = FALSE)
 
 # Using dplyr ----------------------------------
 library(dplyr)
@@ -73,7 +74,8 @@ library(dplyr)
 heartfailure \%>\%
   mutate(creatinine_log = transform(creatinine, method = "log+1")) \%>\%
   lm(sodium ~ creatinine_log, data = .)
-  
+}
+   
 }
 \seealso{
 \code{\link{summary.transform}}, \code{\link{plot.transform}}.

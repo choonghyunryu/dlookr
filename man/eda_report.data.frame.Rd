@@ -93,6 +93,7 @@ See vignette("EDA") for an introduction to these concepts.
 }
 
 \examples{
+\donttest{
 if (FALSE) {
 library(dplyr)
 
@@ -102,44 +103,44 @@ library(dplyr)
 eda_report(heartfailure, death_event)
 
 # create pdf file. file name is EDA_heartfailure.pdf
-# eda_report(heartfailure, "death_event", output_file = "EDA_heartfailure.pdf")
+eda_report(heartfailure, "death_event", output_file = "EDA_heartfailure.pdf")
 
 # create pdf file. file name is EDA_heartfailure.pdf and not browse
-# eda_report(heartfailure, "death_event", output_dir = ".", 
-#     output_file = "EDA_heartfailure.pdf", browse = FALSE)
+eda_report(heartfailure, "death_event", output_dir = ".", 
+  output_file = "EDA_heartfailure.pdf", browse = FALSE)
 
 # create html file. file name is EDA_Report.html
-# eda_report(heartfailure, "death_event", output_format = "html")
+eda_report(heartfailure, "death_event", output_format = "html")
 
 # create html file. file name is EDA_heartfailure.html
-# eda_report(heartfailure, death_event, output_format = "html", 
-#    output_file = "EDA_heartfailure.html")
+eda_report(heartfailure, death_event, output_format = "html", 
+  output_file = "EDA_heartfailure.html")
 
 ## target variable is numerical variable ------------------------------------
 # reporting the EDA information
 eda_report(heartfailure, sodium)
 
 # create pdf file. file name is EDA2.pdf
-# eda_report(heartfailure, "sodium", output_file = "EDA2.pdf")
+eda_report(heartfailure, "sodium", output_file = "EDA2.pdf")
 
 # create html file. file name is EDA_Report.html
-# eda_report(heartfailure, "sodium", output_format = "html")
+eda_report(heartfailure, "sodium", output_format = "html")
 
 # create html file. file name is EDA2.html
-# eda_report(heartfailure, sodium, output_format = "html", output_file = "EDA2.html")
+eda_report(heartfailure, sodium, output_format = "html", output_file = "EDA2.html")
 
 ## target variable is null
 # reporting the EDA information
-# eda_report(heartfailure)
+eda_report(heartfailure)
 
 # create pdf file. file name is EDA2.pdf
-# eda_report(heartfailure, output_file = "EDA2.pdf")
+eda_report(heartfailure, output_file = "EDA2.pdf")
 
 # create html file. file name is EDA_Report.html
-# eda_report(heartfailure, output_format = "html")
+eda_report(heartfailure, output_format = "html")
 
 # create html file. file name is EDA2.html
-# eda_report(heartfailure, output_format = "html", output_file = "EDA2.html")
+eda_report(heartfailure, output_format = "html", output_file = "EDA2.html")
 }
-
+}
 }

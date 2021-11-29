@@ -42,6 +42,7 @@ plot_bar_category <- function(.data, ...) {
 #' 
 #' @examples
 #' # Generate data for the example
+#' \donttest{
 #' heartfailure2 <- heartfailure
 #' heartfailure2[sample(seq(NROW(heartfailure2)), 20), "platelets"] <- NA
 #' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
@@ -54,39 +55,40 @@ plot_bar_category <- function(.data, ...) {
 #' plot_bar_category(heartfailure2)
 #' 
 #' # Select the variable to diagnose
-#' # plot_bar_category(heartfailure2, "test", "smoking")
-#' # plot_bar_category(heartfailure2, -test, -smoking)
+#' plot_bar_category(heartfailure2, "test", "smoking")
+#' plot_bar_category(heartfailure2, -test, -smoking)
 #' 
 #' # Visualize the each plots
-#' # plot_bar_category(heartfailure2, each = TRUE)
+#' plot_bar_category(heartfailure2, each = TRUE)
 #' 
 #' # Not allow typographic argument
-#' # plot_bar_category(heartfailure2, typographic = FALSE)
+#' plot_bar_category(heartfailure2, typographic = FALSE)
 #' 
 #' # Using pipes ---------------------------------
 #' library(dplyr)
 #' 
 #' # Plot of all categorical variables
-#' # heartfailure2 %>%
-#' #   plot_bar_category()
+#' heartfailure2 %>%
+#'   plot_bar_category()
 #' 
 #' # Visualize just 7 levels of top frequency
-#' # heartfailure2 %>%
-#' #   plot_bar_category(top = 7)
+#' heartfailure2 %>%
+#'   plot_bar_category(top = 7)
 #'   
 #' # Visualize only factor, not character
-#' # heartfailure2 %>%
-#' #   plot_bar_category(add_character = FALSE) 
+#' heartfailure2 %>%
+#'   plot_bar_category(add_character = FALSE) 
 #' 
 #' # Using groupd_df  ------------------------------
-#' # heartfailure2 %>% 
-#' #   group_by(death_event) %>% 
-#' #   plot_bar_category(top = 5)
+#' heartfailure2 %>% 
+#'   group_by(death_event) %>% 
+#'   plot_bar_category(top = 5)
 #'   
-#' # heartfailure2 %>% 
-#' #   group_by(death_event) %>% 
-#' #   plot_bar_category(each = TRUE, top = 5)  
-#'   
+#' heartfailure2 %>% 
+#'   group_by(death_event) %>% 
+#'   plot_bar_category(each = TRUE, top = 5)  
+#' }
+#'    
 #' @method plot_bar_category data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
@@ -477,31 +479,33 @@ plot_qq_numeric <- function(.data, ...) {
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @examples
+#' \donttest{
 #' # Visualization of all numerical variables
-#' # plot_qq_numeric(heartfailure)
+#' plot_qq_numeric(heartfailure)
 #' 
 #' # Select the variable to diagnose
-#' # plot_qq_numeric(heartfailure, "age", "time")
+#' plot_qq_numeric(heartfailure, "age", "time")
 #' plot_qq_numeric(heartfailure, -age, -time)
 #' 
 #' # Not allow the typographic elements
-#' # plot_qq_numeric(heartfailure, "age", typographic = FALSE)
+#' plot_qq_numeric(heartfailure, "age", typographic = FALSE)
 #' 
 #' # Using pipes ---------------------------------
 #' library(dplyr)
 #' 
 #' # Plot of all numerical variables
-#' # heartfailure %>%
-#' #   plot_qq_numeric()
+#' heartfailure %>%
+#'   plot_qq_numeric()
 #' 
 #' # Using groupd_df  ------------------------------
 #' heartfailure %>% 
 #'   group_by(smoking) %>% 
 #'   plot_qq_numeric()
 #' 
-#' #heartfailure %>% 
-#' #   group_by(smoking) %>% 
-#' #   plot_qq_numeric(each = TRUE)  
+#' heartfailure %>% 
+#'   group_by(smoking) %>% 
+#'   plot_qq_numeric(each = TRUE)  
+#' }
 #' 
 #' @method plot_qq_numeric data.frame
 #' @import ggplot2
@@ -749,35 +753,37 @@ plot_box_numeric <- function(.data, ...) {
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @examples
+#' \donttest{
 #' # Visualization of all numerical variables
-#' # plot_box_numeric(heartfailure)
+#' plot_box_numeric(heartfailure)
 #'
 #' # Select the variable to diagnose
-#' # plot_box_numeric(heartfailure, "age", "time")
+#' plot_box_numeric(heartfailure, "age", "time")
 #' plot_box_numeric(heartfailure, -age, -time)
 #'
 #' # Visualize the each plots
-#' # plot_box_numeric(heartfailure, "age", "time", each = TRUE)
+#' plot_box_numeric(heartfailure, "age", "time", each = TRUE)
 #' 
 #' # Not allow the typographic elements
-#' # plot_box_numeric(heartfailure, typographic = FALSE)
+#' plot_box_numeric(heartfailure, typographic = FALSE)
 #' 
 #' # Using pipes ---------------------------------
 #' library(dplyr)
 #'
 #' # Plot of all numerical variables
-#' # heartfailure %>%
-#' #   plot_box_numeric()
+#' heartfailure %>%
+#'   plot_box_numeric()
 #'   
 #' # Using groupd_df  ------------------------------
 #' heartfailure %>% 
 #'   group_by(smoking) %>% 
 #'   plot_box_numeric()
 #'   
-#' # heartfailure %>% 
-#' #   group_by(smoking) %>% 
-#' #   plot_box_numeric(each = TRUE)  
-#'   
+#' heartfailure %>% 
+#'   group_by(smoking) %>% 
+#'   plot_box_numeric(each = TRUE)  
+#' }
+#'    
 #' @method plot_box_numeric data.frame
 #' @import ggplot2
 #' @import hrbrthemes
@@ -1033,35 +1039,37 @@ plot_hist_numeric <- function(.data, ...) {
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @examples
+#' \donttest{
 #' # Visualization of all numerical variables
-#' # plot_hist_numeric(heartfailure)
+#' plot_hist_numeric(heartfailure)
 #'
 #' # Select the variable to diagnose
-#' # plot_hist_numeric(heartfailure, "age", "time")
+#' plot_hist_numeric(heartfailure, "age", "time")
 #' plot_hist_numeric(heartfailure, -age, -time)
 #'
 #' # Visualize the each plots
-#' # plot_hist_numeric(heartfailure, "age", "time", each = TRUE)
+#' plot_hist_numeric(heartfailure, "age", "time", each = TRUE)
 #' 
 #' # Not allow the typographic elements
-#' # plot_hist_numeric(heartfailure, typographic = FALSE)
+#' plot_hist_numeric(heartfailure, typographic = FALSE)
 #' 
 #' # Using pipes ---------------------------------
 #' library(dplyr)
 #'
 #' # Plot of all numerical variables
-#' # heartfailure %>%
-#' #   plot_hist_numeric()
+#' heartfailure %>%
+#'   plot_hist_numeric()
 #'   
 #' # Using groupd_df  ------------------------------
 #' heartfailure %>% 
 #'   group_by(smoking) %>% 
 #'   plot_hist_numeric()
 #'   
-#' # heartfailure %>% 
-#' #   group_by(smoking) %>% 
-#' #   plot_hist_numeric(each = TRUE)  
-#'   
+#' heartfailure %>% 
+#'   group_by(smoking) %>% 
+#'   plot_hist_numeric(each = TRUE)  
+#' }
+#'    
 #' @method plot_hist_numeric data.frame
 #' @import ggplot2
 #' @import hrbrthemes

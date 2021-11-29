@@ -51,11 +51,12 @@ to help determine whether the imputed value is used in the analysis.
 See vignette("transformation") for an introduction to these concepts.
 }
 \examples{
+\donttest{
 # Replace the outliers of the sodium variable with median.
 imputate_outlier(heartfailure, sodium, method = "median")
 
-# # Replace the outliers of the sodium variable with capping.
-# imputate_outlier(heartfailure, sodium, method = "capping")
+# Replace the outliers of the sodium variable with capping.
+imputate_outlier(heartfailure, sodium, method = "capping")
 
 ## using dplyr -------------------------------------
 library(dplyr)
@@ -73,7 +74,9 @@ sodium <- imputate_outlier(heartfailure, sodium)
 sodium
 summary(sodium)
 
-# plot(sodium)
+plot(sodium)
+}
+
 }
 \seealso{
 \code{\link{imputate_na}}.

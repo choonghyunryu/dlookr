@@ -48,6 +48,7 @@ print.univar_numeric() displays only the information of variables included in un
 The "variables" attribute is not displayed.
 }
 \examples{
+\donttest{
 # Calculates the all categorical variables
 all_var <- univar_numeric(heartfailure)
 
@@ -64,10 +65,11 @@ stat <- summary(all_var)
 stat
 
 # Statistics of numerical variables normalized by Min-Max method
-# summary(all_var, stand = "minmax")
+summary(all_var, stand = "minmax")
 
 # Statistics of numerical variables standardized by Z-score method
 summary(all_var, stand = "zscore")
+}
 
 }
 \seealso{

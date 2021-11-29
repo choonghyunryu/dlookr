@@ -55,6 +55,7 @@ function of the dplyr package.
 See vignette("transformation") for an introduction to these concepts.
 }
 \examples{
+\donttest{
 # Generate data for the example
 heartfailure2 <- heartfailure
 heartfailure2[sample(seq(NROW(heartfailure2)), 20), "platelets"] <- NA
@@ -74,21 +75,22 @@ plot(bin)
 bin <- binning(heartfailure2$platelets, nbins = 4,
               labels = c("LQ1", "UQ1", "LQ3", "UQ3"))
 bin
+
 # Using another type argument
 bin <- binning(heartfailure2$platelets, nbins = 5, type = "equal")
 bin
-# bin <- binning(heartfailure2$platelets, nbins = 5, type = "pretty")
-# bin
-# bin <- binning(heartfailure2$platelets, nbins = 5, type = "kmeans")
-# bin
-# bin <- binning(heartfailure2$platelets, nbins = 5, type = "bclust")
-# bin
+bin <- binning(heartfailure2$platelets, nbins = 5, type = "pretty")
+bin
+bin <- binning(heartfailure2$platelets, nbins = 5, type = "kmeans")
+bin
+bin <- binning(heartfailure2$platelets, nbins = 5, type = "bclust")
+bin
 
 x <- sample(1:1000, size = 50) * 12345679
 bin <- binning(x)
 bin
-# bin <- binning(x, approxy.lab = FALSE)
-# bin
+bin <- binning(x, approxy.lab = FALSE)
+bin
 
 # extract binned results
 extract(bin)
@@ -99,21 +101,22 @@ extract(bin)
 library(dplyr)
 
 # Compare binned frequency by death_event
-# heartfailure2 \%>\%
-#  mutate(platelets_bin = binning(heartfailure2$platelets) \%>\% 
-#                      extract()) \%>\%
-#  group_by(death_event, platelets_bin) \%>\%
-#  summarise(freq = n()) \%>\%
-#  arrange(desc(freq)) \%>\%
-#  head(10)
+heartfailure2 \%>\%
+  mutate(platelets_bin = binning(heartfailure2$platelets) \%>\% 
+           extract()) \%>\%
+  group_by(death_event, platelets_bin) \%>\%
+  summarise(freq = n()) \%>\%
+  arrange(desc(freq)) \%>\%
+  head(10)
  
  # Compare binned frequency by death_event using Viz
  heartfailure2 \%>\%
    mutate(platelets_bin = binning(heartfailure2$platelets) \%>\% 
-           extract()) \%>\%
+            extract()) \%>\%
    target_by(death_event) \%>\% 
    relate(platelets_bin) \%>\% 
    plot()
+}
  
 }
 \seealso{

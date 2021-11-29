@@ -115,24 +115,26 @@ use it after loading the Google font with import_google_font().
 }
 
 \examples{
-\dontrun{
+\donttest{
+if (FALSE) {
 # create the dataset
 heartfailure2 <- dlookr::heartfailure
 heartfailure2[sample(seq(NROW(heartfailure2)), 20), "sodium"] <- NA
 heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
 
 # create html file. file name is EDA_Report.html
-# eda_web_report(heartfailure2)
+eda_web_report(heartfailure2)
 
 # file name is EDA.html. and change logo image
-# logo <- file.path(system.file(package = "dlookr"), "report", "R_logo_html.svg")
-# eda_web_report(heartfailure2, logo_img = logo, title_color = "black",
-#   output_file = "EDA.html")
+logo <- file.path(system.file(package = "dlookr"), "report", "R_logo_html.svg")
+eda_web_report(heartfailure2, logo_img = logo, title_color = "black",
+  output_file = "EDA.html")
 
 # file name is ./EDA_heartfailure.html, "blue" theme and not browse
-# eda_web_report(heartfailure2, target = "death_event", output_dir = ".", 
-#   author = "Choonghyun Ryu", output_file = "EDA_heartfailure.html", 
-#   theme = "blue", browse = FALSE)
+eda_web_report(heartfailure2, target = "death_event", output_dir = ".", 
+  author = "Choonghyun Ryu", output_file = "EDA_heartfailure.html", 
+  theme = "blue", browse = FALSE)
+}
 }
 
 }

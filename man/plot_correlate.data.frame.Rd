@@ -60,6 +60,7 @@ The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 use it after loading the Google font with import_google_font().
 }
 \examples{
+\donttest{
 # Visualize correlation plot of all numerical variables
 plot_correlate(heartfailure)
 
@@ -104,11 +105,12 @@ plot_correlate(creatinine)
 # Extract only those with 'smoking' variable level is "Yes",
 # and visualize correlation plot of 'creatinine' variable by 'hblood_pressure'
 # and 'death_event' variables.
-#heartfailure \%>\%
-#  filter(smoking == "Yes") \%>\%
-#  group_by(hblood_pressure, death_event) \%>\%
-#  plot_correlate(creatinine)
- 
+heartfailure \%>\%
+  filter(smoking == "Yes") \%>\%
+  group_by(hblood_pressure, death_event) \%>\%
+  plot_correlate(creatinine)
+}
+  
 }
 \seealso{
 \code{\link{plot_correlate.tbl_dbi}}, \code{\link{plot_outlier.data.frame}}.

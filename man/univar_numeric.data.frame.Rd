@@ -55,6 +55,7 @@ Attributes of compare_category class is as follows.
 }
 
 \examples{
+\donttest{
 # Calculates the all categorical variables
 all_var <- univar_numeric(heartfailure)
 
@@ -77,31 +78,32 @@ summary(all_var, stand = "minmax")
 summary(all_var, stand = "zscore")
 
 # one plot with all variables
-# plot(all_var)
+plot(all_var)
 
 # one plot with all normalized variables by Min-Max method
-# plot(all_var, stand = "minmax")
+plot(all_var, stand = "minmax")
 
 # one plot with all variables
-# plot(all_var, stand = "none")
+plot(all_var, stand = "none")
 
 # one plot with all robust standardized variables 
-# plot(all_var, viz = "boxplot")
+plot(all_var, viz = "boxplot")
 
 # one plot with all standardized variables by Z-score method 
-# plot(all_var, viz = "boxplot", stand = "zscore")
+plot(all_var, viz = "boxplot", stand = "zscore")
 
 # individual boxplot by variables
-# plot(all_var, indiv = TRUE, "boxplot")
+plot(all_var, indiv = TRUE, "boxplot")
 
 # individual histogram by variables
-# plot(all_var, indiv = TRUE, "hist")
+plot(all_var, indiv = TRUE, "hist")
 
 # individual histogram by robust standardized variable 
-# plot(all_var, indiv = TRUE, "hist", stand = "robust")
+plot(all_var, indiv = TRUE, "hist", stand = "robust")
 
 # plot all variables by prompt
-# plot(all_var, indiv = TRUE, "hist", prompt = TRUE)
+plot(all_var, indiv = TRUE, "hist", prompt = TRUE)
+}
 
 }
 \seealso{

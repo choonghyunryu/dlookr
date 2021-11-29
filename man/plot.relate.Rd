@@ -47,6 +47,7 @@ The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 use it after loading the Google font with import_google_font().
 }
 \examples{
+\donttest{
 # If the target variable is a categorical variable
 categ <- target_by(heartfailure, death_event)
 
@@ -84,7 +85,8 @@ plot(num_cat)
 
 # Not allow typographic
 plot(num_cat, typographic = FALSE)
- 
+}
+  
 }
 \seealso{
 \code{\link{relate}}, \code{\link{print.relate}}.

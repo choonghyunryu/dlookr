@@ -34,6 +34,7 @@
 #'  \code{\link{plot.bins}}.
 #' @export
 #' @examples
+#' \donttest{
 #' # Generate data for the example
 #' heartfailure2 <- heartfailure
 #' heartfailure2[sample(seq(NROW(heartfailure2)), 20), "platelets"] <- NA
@@ -53,21 +54,22 @@
 #' bin <- binning(heartfailure2$platelets, nbins = 4,
 #'               labels = c("LQ1", "UQ1", "LQ3", "UQ3"))
 #' bin
+#' 
 #' # Using another type argument
 #' bin <- binning(heartfailure2$platelets, nbins = 5, type = "equal")
 #' bin
-#' # bin <- binning(heartfailure2$platelets, nbins = 5, type = "pretty")
-#' # bin
-#' # bin <- binning(heartfailure2$platelets, nbins = 5, type = "kmeans")
-#' # bin
-#' # bin <- binning(heartfailure2$platelets, nbins = 5, type = "bclust")
-#' # bin
+#' bin <- binning(heartfailure2$platelets, nbins = 5, type = "pretty")
+#' bin
+#' bin <- binning(heartfailure2$platelets, nbins = 5, type = "kmeans")
+#' bin
+#' bin <- binning(heartfailure2$platelets, nbins = 5, type = "bclust")
+#' bin
 #' 
 #' x <- sample(1:1000, size = 50) * 12345679
 #' bin <- binning(x)
 #' bin
-#' # bin <- binning(x, approxy.lab = FALSE)
-#' # bin
+#' bin <- binning(x, approxy.lab = FALSE)
+#' bin
 #'
 #' # extract binned results
 #' extract(bin)
@@ -78,21 +80,22 @@
 #' library(dplyr)
 #'
 #' # Compare binned frequency by death_event
-#' # heartfailure2 %>%
-#' #  mutate(platelets_bin = binning(heartfailure2$platelets) %>% 
-#' #                      extract()) %>%
-#' #  group_by(death_event, platelets_bin) %>%
-#' #  summarise(freq = n()) %>%
-#' #  arrange(desc(freq)) %>%
-#' #  head(10)
+#' heartfailure2 %>%
+#'   mutate(platelets_bin = binning(heartfailure2$platelets) %>% 
+#'            extract()) %>%
+#'   group_by(death_event, platelets_bin) %>%
+#'   summarise(freq = n()) %>%
+#'   arrange(desc(freq)) %>%
+#'   head(10)
 #'  
 #'  # Compare binned frequency by death_event using Viz
 #'  heartfailure2 %>%
 #'    mutate(platelets_bin = binning(heartfailure2$platelets) %>% 
-#'            extract()) %>%
+#'             extract()) %>%
 #'    target_by(death_event) %>% 
 #'    relate(platelets_bin) %>% 
 #'    plot()
+#' }
 #'  
 #' @importFrom grDevices nclass.Sturges
 #' @importFrom stats na.omit quantile
@@ -298,6 +301,7 @@ print.bins <- function(x, ...) {
 #' @seealso \code{\link{binning}}, \code{\link{print.bins}}, \code{\link{summary.bins}}.
 #' @examples
 #' # Generate data for the example
+#' \donttest{
 #' heartfailure2 <- heartfailure
 #' heartfailure2[sample(seq(NROW(heartfailure2)), 20), "platelets"] <- NA
 #'
@@ -309,14 +313,15 @@ print.bins <- function(x, ...) {
 #' bin <- binning(heartfailure2$platelets, nbins = 5, type = "equal")
 #' plot(bin)
 #' 
-#' # bin <- binning(heartfailure2$platelets, nbins = 5, type = "pretty")
-#' # plot(bin)
+#' bin <- binning(heartfailure2$platelets, nbins = 5, type = "pretty")
+#' plot(bin)
 #' 
-#' # bin <- binning(heartfailure2$platelets, nbins = 5, type = "kmeans")
-#' # plot(bin)
+#' bin <- binning(heartfailure2$platelets, nbins = 5, type = "kmeans")
+#' plot(bin)
 #' 
-#' # bin <- binning(heartfailure2$platelets, nbins = 5, type = "bclust")
-#' # plot(bin)
+#' bin <- binning(heartfailure2$platelets, nbins = 5, type = "bclust")
+#' plot(bin)
+#' }
 #' 
 #' @export
 #' @method plot bins
@@ -425,6 +430,7 @@ plot.bins <- function(x, typographic = TRUE, base_family = NULL, ...) {
 #' }
 #' @seealso \code{\link{binning}}, \code{\link{plot.optimal_bins}}.
 #' @examples
+#' \donttest{
 #' library(dplyr)
 #' 
 #' # Generate data for the example
@@ -435,8 +441,8 @@ plot.bins <- function(x, typographic = TRUE, base_family = NULL, ...) {
 #' bin <- binning_by(heartfailure2, "death_event", "creatinine")
 #' 
 #' # optimal binning using name
-#' # bin <- binning_by(heartfailure2, death_event, creatinine)
-#' # bin
+#' bin <- binning_by(heartfailure2, death_event, creatinine)
+#' bin
 #' 
 #' # performance table
 #' attr(bin, "performance")
@@ -445,17 +451,18 @@ plot.bins <- function(x, typographic = TRUE, base_family = NULL, ...) {
 #' summary(bin)
 #' 
 #' # visualize all information for optimal_bins class
-#' # plot(bin)
+#' plot(bin)
 #' 
 #' # visualize WoE information for optimal_bins class
-#' # plot(bin, type = "WoE")
+#' plot(bin, type = "WoE")
 #' 
 #' # visualize all information without typographic
-#' # plot(bin, typographic = FALSE)
+#' plot(bin, typographic = FALSE)
 #' 
 #' # extract binned results
-#' # extract(bin) %>% 
-#' #   head(20)
+#' extract(bin) %>% 
+#'   head(20)
+#' }
 #' 
 #' @export
 #' @importFrom tibble is_tibble
@@ -604,6 +611,7 @@ binning_by <- function(.data, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
 #' @return NULL.
 #' @seealso \code{\link{binning_by}}, \code{\link{plot.optimal_bins}}
 #' @examples
+#' \donttest{
 #' library(dplyr)
 #' 
 #' # Generate data for the example
@@ -621,17 +629,18 @@ binning_by <- function(.data, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
 #' attr(bin, "performance")
 #'
 #' # visualize all information for optimal_bins class
-#' # plot(bin)
+#' plot(bin)
 #' 
 #' # visualize WoE information for optimal_bins class
-#' # plot(bin, type = "WoE")
+#' plot(bin, type = "WoE")
 #' 
 #' # visualize all information without typographic
-#' # plot(bin, typographic = FALSE)
+#' plot(bin, typographic = FALSE)
 #' 
 #' # extract binned results
 #' extract(bin) %>% 
 #'   head(20)
+#' }
 #' 
 #' @method summary optimal_bins
 #' @export
@@ -665,6 +674,7 @@ summary.optimal_bins <- function(object, ...) {
 #' @param ... further arguments to be passed from or to other methods.
 #' @seealso \code{\link{binning_by}}, \code{\link{summary.optimal_bins}}
 #' @examples
+#' \donttest{
 #' # Generate data for the example
 #' heartfailure2 <- heartfailure
 #' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] <- NA
@@ -687,6 +697,7 @@ summary.optimal_bins <- function(object, ...) {
 #' 
 #' # visualize all information with typographic
 #' plot(bin)
+#' }
 #' 
 #' @import ggplot2
 #' @import hrbrthemes
@@ -953,6 +964,7 @@ extract.bins <- function(x) {
 #' }
 #' @seealso \code{\link{summary.performance_bin}}, \code{\link{plot.performance_bin}}, \code{\link{binning_by}}.
 #' @examples
+#' \donttest{
 #' # Generate data for the example
 #' heartfailure2 <- heartfailure
 #' 
@@ -971,14 +983,15 @@ extract.bins <- function(x) {
 #' perf
 #' summary(perf)
 #' 
-#' # plot(perf)
+#' plot(perf)
 #' 
 #' # Diagnose performance binned variable without NA
-#' # perf <- performance_bin(heartfailure2$death_event_2, heartfailure2$creatinine_bin, na.rm = TRUE) 
-#' # perf
-#' # summary(perf)
+#' perf <- performance_bin(heartfailure2$death_event_2, heartfailure2$creatinine_bin, na.rm = TRUE) 
+#' perf
+#' summary(perf)
 #' 
-#' # plot(perf)
+#' plot(perf)
+#' }
 #' 
 #' @export
 #' @import dplyr
@@ -1184,6 +1197,7 @@ performance_bin <- function (y, x, na.rm = FALSE) {
 #' @seealso \code{\link{performance_bin}}, \code{\link{plot.performance_bin}}, \code{\link{binning_by}}, 
 #' \code{\link{summary.optimal_bins}}.
 #' @examples
+#' \donttest{
 #' # Generate data for the example
 #' heartfailure2 <- heartfailure
 #' 
@@ -1205,11 +1219,12 @@ performance_bin <- function (y, x, na.rm = FALSE) {
 #' # plot(perf)
 #' 
 #' # Diagnose performance binned variable without NA
-#' # perf <- performance_bin(heartfailure2$death_event_2, heartfailure2$creatinine_bin, na.rm = TRUE) 
-#' # perf
-#' # summary(perf)
+#' perf <- performance_bin(heartfailure2$death_event_2, heartfailure2$creatinine_bin, na.rm = TRUE) 
+#' perf
+#' summary(perf)
 #' 
-#' # plot(perf)
+#' plot(perf)
+#' }
 #' 
 #' @method summary performance_bin
 #' @export
@@ -1281,6 +1296,7 @@ summary.performance_bin <- function(object, ...) {
 #' @seealso \code{\link{performance_bin}}, \code{\link{summary.performance_bin}}, \code{\link{binning_by}}, 
 #' \code{\link{plot.optimal_bins}}.
 #' @examples
+#' \donttest{
 #' # Generate data for the example
 #' heartfailure2 <- heartfailure
 #' 
@@ -1302,12 +1318,13 @@ summary.performance_bin <- function(object, ...) {
 #' plot(perf)
 #' 
 #' # Diagnose performance binned variable without NA
-#' # perf <- performance_bin(heartfailure2$death_event_2, heartfailure2$creatinine_bin, na.rm = TRUE) 
-#' # perf
-#' # summary(perf)
+#' perf <- performance_bin(heartfailure2$death_event_2, heartfailure2$creatinine_bin, na.rm = TRUE) 
+#' perf
+#' summary(perf)
 #' 
 #' plot(perf)
-#' # plot(perf, typographic = FALSE)
+#' plot(perf, typographic = FALSE)
+#' }
 #' 
 #' @import ggplot2
 #' @import hrbrthemes

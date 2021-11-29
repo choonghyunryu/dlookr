@@ -111,27 +111,27 @@ con_sqlite \%>\%
   plot_normality(platelets, sodium, collect_size = 200)
 
 # Positions values select variables
-# con_sqlite \%>\% 
-#   tbl("TB_HEARTFAILURE") \%>\% 
-#   plot_normality(1)
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  plot_normality(1)
 
 # Not allow the typographic elements
-# con_sqlite \%>\% 
-#   tbl("TB_HEARTFAILURE") \%>\% 
-#   plot_normality(1, typographic = FALSE)
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  plot_normality(1, typographic = FALSE)
   
 # Using pipes & dplyr -------------------------
 # Plot 'sodium' variable by 'smoking' and 'death_event'
-# con_sqlite \%>\% 
-#   tbl("TB_HEARTFAILURE") \%>\% 
-#   group_by(smoking, death_event) \%>\%
-#   plot_normality(sodium)
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  group_by(smoking, death_event) \%>\%
+  plot_normality(sodium)
 
 # Plot using left and right arguments
-# con_sqlite \%>\% 
-#   tbl("TB_HEARTFAILURE") \%>\% 
-#   group_by(smoking, death_event) \%>\%
-#   plot_normality(sodium, left = "Box-Cox", right = "log")
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  group_by(smoking, death_event) \%>\%
+  plot_normality(sodium, left = "Box-Cox", right = "log")
 
 # extract only those with 'smoking' variable level is "Yes",
 # and plot 'sodium' by 'death_event'

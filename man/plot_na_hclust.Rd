@@ -42,6 +42,7 @@ The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 use it after loading the Google font with import_google_font().
 }
 \examples{
+\donttest{
 # Generate data for the example
 set.seed(123L)
 jobchange2 <- jobchange[sample(nrow(jobchange), size = 1000), ]
@@ -50,9 +51,10 @@ jobchange2 <- jobchange[sample(nrow(jobchange), size = 1000), ]
 plot_na_hclust(jobchange2)
 
 # Change the main title.
-# plot_na_hclust(jobchange2, main = "Distribution of missing value")
+plot_na_hclust(jobchange2, main = "Distribution of missing value")
 
-# Not support typographic elements
-# plot_na_hclust(jobchange2, typographic = FALSE)
+# Non typographic elements
+plot_na_hclust(jobchange2, typographic = FALSE)
+}
 
 }

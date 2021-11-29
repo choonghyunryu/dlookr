@@ -77,26 +77,26 @@ con_sqlite \%>\%
   normality(platelets, sodium, collect_size  = 200)
 
 # Positions values select variables
-# con_sqlite \%>\% 
-#   tbl("TB_HEARTFAILURE") \%>\% 
-#   normality(1)
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  normality(1)
 
 # Using pipes & dplyr -------------------------
 # Test all numerical variables by 'smoking' and 'death_event',
 # and extract only those with 'smoking' variable level is "Yes".
-# con_sqlite \%>\% 
-#   tbl("TB_HEARTFAILURE") \%>\% 
-#   group_by(smoking, death_event) \%>\%
-#   normality() \%>\%
-#   filter(smoking == "Yes")
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  group_by(smoking, death_event) \%>\%
+  normality() \%>\%
+  filter(smoking == "Yes")
 
 # extract only those with 'sex' variable level is "Male",
 # and test 'sodium' by 'smoking' and 'death_event'
-# con_sqlite \%>\% 
-#   tbl("TB_HEARTFAILURE") \%>\% 
-#   filter(sex == "Male") \%>\%
-#   group_by(smoking, death_event) \%>\%
-#   normality(sodium)
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  filter(sex == "Male") \%>\%
+  group_by(smoking, death_event) \%>\%
+  normality(sodium)
 
 # Test log(sodium) variables by 'smoking' and 'death_event',
 # and extract only p.value greater than 0.01.

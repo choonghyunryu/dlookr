@@ -76,6 +76,7 @@ When using summary.compare_numeric(), it is advantageous to set the verbose argu
 It is also advantageous to specify FALSE if you want to manipulate the results.
 }
 \examples{
+\donttest{
 # Generate data for the example
 heartfailure2 <- heartfailure[, c("platelets", "creatinine", "sodium")]
 
@@ -123,7 +124,8 @@ summary(all_var, thres_rs = 0.05)
 
 # verbose is FALSE 
 summary(all_var, verbose = FALSE)
-  
+}
+
 }
 \seealso{
 \code{\link{plot.compare_numeric}}.

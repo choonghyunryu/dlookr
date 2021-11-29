@@ -65,6 +65,7 @@ This function is useful when used with the mutate/transmute
 function of the dplyr package.
 }
 \examples{
+\donttest{
 # Generate data for the example
 heartfailure2 <- heartfailure
 
@@ -83,14 +84,15 @@ perf <- performance_bin(heartfailure2$death_event_2, heartfailure2$creatinine_bi
 perf
 summary(perf)
 
-# plot(perf)
+plot(perf)
 
 # Diagnose performance binned variable without NA
-# perf <- performance_bin(heartfailure2$death_event_2, heartfailure2$creatinine_bin, na.rm = TRUE) 
-# perf
-# summary(perf)
+perf <- performance_bin(heartfailure2$death_event_2, heartfailure2$creatinine_bin, na.rm = TRUE) 
+perf
+summary(perf)
 
-# plot(perf)
+plot(perf)
+}
 
 }
 \seealso{

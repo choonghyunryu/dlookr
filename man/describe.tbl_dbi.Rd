@@ -75,6 +75,7 @@ The information derived from the numerical data describe is as follows.
 }
 
 \examples{
+\donttest{
 library(dplyr)
 
 # connect DBMS
@@ -102,11 +103,11 @@ con_sqlite \%>\%
 # Using pipes & dplyr -------------------------
 # Find the statistic of all numerical variables by 'smoking' and 'death_event',
 # and extract only those with 'smoking' variable level is "Yes".
-# con_sqlite \%>\% 
-#   tbl("TB_HEARTFAILURE") \%>\% 
-#   group_by(smoking, death_event) \%>\%
-#   describe() \%>\%
-#   filter(smoking == "Yes")
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  group_by(smoking, death_event) \%>\%
+  describe() \%>\%
+  filter(smoking == "Yes")
 
 # extract only those with 'sex' variable level is "Male",
 # and find 'sodium' statistics by 'smoking' and 'death_event'
@@ -118,6 +119,7 @@ con_sqlite \%>\%
 
 # Disconnect DBMS   
 DBI::dbDisconnect(con_sqlite)
+}
 
 }
 \seealso{

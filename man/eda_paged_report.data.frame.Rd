@@ -142,27 +142,29 @@ use it after loading the Google font with import_google_font().
 }
 
 \examples{
-\dontrun{
+\donttest{
+if (FALSE) {
 # create the dataset
 heartfailure2 <- dlookr::heartfailure
 heartfailure2[sample(seq(NROW(heartfailure2)), 20), "sodium"] <- NA
 heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
 
 # create pdf file. file name is EDA_Paged_Report.pdf
-# eda_paged_report(heartfailure2, sample_percent = 80)
+eda_paged_report(heartfailure2, sample_percent = 80)
 
 # create pdf file. file name is EDA.pdf. and change cover image
-# cover <- file.path(system.file(package = "dlookr"), "report", "cover1.jpg")
-# eda_paged_report(heartfailure2, cover_img = cover, title_color = "gray",
-#   output_file = "EDA.pdf")
+cover <- file.path(system.file(package = "dlookr"), "report", "cover1.jpg")
+eda_paged_report(heartfailure2, cover_img = cover, title_color = "gray",
+  output_file = "EDA.pdf")
 
 # create pdf file. file name is ./EDA.pdf and not browse
-# cover <- file.path(system.file(package = "dlookr"), "report", "cover3.jpg")
-# eda_paged_report(heartfailure2, output_dir = ".", cover_img = cover, 
-#   flag_content_missing = FALSE, output_file = "EDA.pdf", browse = FALSE)
+cover <- file.path(system.file(package = "dlookr"), "report", "cover3.jpg")
+eda_paged_report(heartfailure2, output_dir = ".", cover_img = cover, 
+  flag_content_missing = FALSE, output_file = "EDA.pdf", browse = FALSE)
 
 # create pdf file. file name is EDA_Paged_Report.html
-# eda_paged_report(heartfailure2, target = "death_event", output_format = "html")
+eda_paged_report(heartfailure2, target = "death_event", output_format = "html")
+}
 }
 
 }

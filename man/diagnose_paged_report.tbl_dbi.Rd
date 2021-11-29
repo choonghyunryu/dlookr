@@ -159,6 +159,7 @@ Reported from the data diagnosis is as follows.
 }
 
 \examples{
+\donttest{
 if (FALSE) {
 library(dplyr)
 
@@ -186,6 +187,7 @@ con_sqlite \%>\%
   
 # Disconnect DBMS   
 DBI::dbDisconnect(con_sqlite)
+}
 }
 
 }

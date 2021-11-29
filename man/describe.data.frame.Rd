@@ -67,6 +67,7 @@ The information derived from the numerical data describe is as follows.
 }
 
 \examples{
+\donttest{
 # Generate data for the example
 heartfailure2 <- heartfailure
 heartfailure2[sample(seq(NROW(heartfailure2)), 20), "sodium"] <- NA
@@ -88,12 +89,12 @@ describe(gdata, "creatinine")
 
 # Using pipes ---------------------------------
 # Positive values select variables
-# heartfailure2 \%>\%
-#  describe(platelets, sodium, creatinine)
+heartfailure2 \%>\%
+  describe(platelets, sodium, creatinine)
 
-# # Negative values to drop variables
-# heartfailure2 \%>\%
-#  describe(-platelets, -sodium, -creatinine)
+# Negative values to drop variables
+heartfailure2 \%>\%
+  describe(-platelets, -sodium, -creatinine)
 
 # Using pipes & dplyr -------------------------
 # Find the statistic of all numerical variables by 'hblood_pressure' and 'death_event',
@@ -105,10 +106,12 @@ heartfailure2 \%>\%
 
 # extract only those with 'smoking' variable level is "Yes",
 # and find 'creatinine' statistics by 'hblood_pressure' and 'death_event'
-# heartfailure2 \%>\%
-#  filter(smoking == "Yes") \%>\%
-#  group_by(hblood_pressure, death_event) \%>\%
-#  describe(creatinine)
+heartfailure2 \%>\%
+  filter(smoking == "Yes") \%>\%
+  group_by(hblood_pressure, death_event) \%>\%
+  describe(creatinine)
+}
+
 }
 \seealso{
 \code{\link{describe.tbl_dbi}}, \code{\link{diagnose_numeric.data.frame}}.

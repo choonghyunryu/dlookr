@@ -57,6 +57,7 @@ See vignette("diagonosis") for an introduction to these concepts.
 }
 
 \examples{
+\donttest{
 # Diagnosis of numerical variables
 diagnose_numeric(heartfailure)
 
@@ -76,21 +77,22 @@ heartfailure \%>\%
 heartfailure \%>\%
   diagnose_numeric(cpk_enzyme, sodium)
 # Negative values to drop variables
-# heartfailure \%>\%
-#   diagnose_numeric(-cpk_enzyme, -sodium)
+heartfailure \%>\%
+  diagnose_numeric(-cpk_enzyme, -sodium)
 # Positions values select variables
-# heartfailure \%>\%
-#   diagnose_numeric(5)
-# Positions values select variables
-# heartfailure \%>\%
-#   diagnose_numeric(-1, -5)
+heartfailure \%>\%
+  diagnose_numeric(5)
+# Negative values to drop variables
+heartfailure \%>\%
+  diagnose_numeric(-1, -5)
 
 # Using pipes & dplyr -------------------------
 # List of variables containing outliers
 heartfailure \%>\%
   diagnose_numeric()  \%>\%
   filter(outlier > 0)
-  
+}
+
 }
 \seealso{
 \code{\link{diagnose_numeric.tbl_dbi}}, \code{\link{diagnose.data.frame}}, \code{\link{diagnose_category.data.frame}}, \code{\link{diagnose_outlier.data.frame}}.

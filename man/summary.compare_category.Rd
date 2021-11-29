@@ -51,6 +51,7 @@ When using summary.compare_category(), it is advantageous to set the verbose arg
 It is also advantageous to specify FALSE if you want to manipulate the results.
 }
 \examples{
+\donttest{
 # Generate data for the example
 heartfailure2 <- heartfailure
 heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
@@ -115,7 +116,8 @@ summary(all_var, "table", na.rm = TRUE, verbose = FALSE) \%>\%
 # Extract component from list by name
 summary(all_var, "table", na.rm = TRUE, verbose = FALSE) \%>\% 
   "[["("smoking vs death_event")
-  
+}
+   
 }
 \seealso{
 \code{\link{plot.compare_category}}.

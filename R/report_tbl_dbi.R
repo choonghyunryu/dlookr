@@ -75,6 +75,7 @@
 #' 
 #' @seealso \code{\link{diagnose_web_report.data.frame}}.
 #' @examples
+#' \donttest{
 #' if (FALSE) {
 #' library(dplyr)
 #' 
@@ -102,6 +103,7 @@
 #'   
 #' # Disconnect DBMS   
 #' DBI::dbDisconnect(con_sqlite)
+#' }
 #' }
 #' 
 #' @method diagnose_web_report tbl_dbi
@@ -236,6 +238,7 @@ diagnose_web_report.tbl_dbi <- function(.data, output_file = NULL, output_dir = 
 #' 
 #' @seealso \code{\link{diagnose_paged_report.data.frame}}.
 #' @examples
+#' \donttest{
 #' if (FALSE) {
 #' library(dplyr)
 #' 
@@ -263,6 +266,7 @@ diagnose_web_report.tbl_dbi <- function(.data, output_file = NULL, output_dir = 
 #'   
 #' # Disconnect DBMS   
 #' DBI::dbDisconnect(con_sqlite)
+#' }
 #' }
 #' 
 #' @method diagnose_paged_report tbl_dbi
@@ -377,6 +381,7 @@ diagnose_paged_report.tbl_dbi <- function(.data, output_format = c("pdf", "html"
 #' 
 #' @seealso \code{\link{eda_web_report.data.frame}}.
 #' @examples
+#' \donttest{
 #' if (FALSE) {
 #' library(dplyr)
 #' 
@@ -404,6 +409,7 @@ diagnose_paged_report.tbl_dbi <- function(.data, output_format = c("pdf", "html"
 #'   
 #' # Disconnect DBMS   
 #' DBI::dbDisconnect(con_sqlite)
+#' }
 #' }
 #' 
 #' @method eda_web_report tbl_dbi
@@ -524,6 +530,7 @@ eda_web_report.tbl_dbi <- function(.data, target = NULL, output_file = NULL,
 #' 
 #' @seealso \code{\link{eda_paged_report.data.frame}}.
 #' @examples
+#' \donttest{
 #' if (FALSE) {
 #' library(dplyr)
 #' 
@@ -551,6 +558,7 @@ eda_web_report.tbl_dbi <- function(.data, target = NULL, output_file = NULL,
 #'   
 #' # Disconnect DBMS   
 #' DBI::dbDisconnect(con_sqlite)
+#' }
 #' }
 #' 
 #' @method eda_paged_report tbl_dbi

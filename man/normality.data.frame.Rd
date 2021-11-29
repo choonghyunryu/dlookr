@@ -60,16 +60,16 @@ normality(heartfailure)
 
 # Select the variable to describe
 normality(heartfailure, platelets, sodium)
-# normality(heartfailure, -platelets, -sodium)
-# normality(heartfailure, 1)
-# normality(heartfailure, platelets, sodium, sample = 200)
+normality(heartfailure, -platelets, -sodium)
+normality(heartfailure, 1)
+normality(heartfailure, platelets, sodium, sample = 200)
 
 # death_eventing dplyr::grouped_dt
 library(dplyr)
 
 gdata <- group_by(heartfailure, smoking, death_event)
 normality(gdata, "platelets")
-# normality(gdata, sample = 250)
+normality(gdata, sample = 250)
 
 # death_eventing pipes ---------------------------------
 # Normality test of all numerical variables
@@ -77,8 +77,8 @@ heartfailure \%>\%
   normality()
 
 # # Positive values select variables
-# heartfailure \%>\%
-#   normality(platelets, sodium)
+heartfailure \%>\%
+  normality(platelets, sodium)
 
 # Positions values select variables
 heartfailure \%>\%

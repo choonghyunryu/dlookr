@@ -47,6 +47,7 @@ plot_correlate <- function(.data, ...) {
 #' @seealso \code{\link{cor}}, \code{\link{correlate.tbl_dbi}}.
 #' @export
 #' @examples
+#' \donttest{
 #' # Correlation coefficients of all numerical variables
 #' correlate(heartfailure)
 #'
@@ -92,9 +93,9 @@ plot_correlate <- function(.data, ...) {
 #'  correlate() %>%
 #'  filter(as.integer(var1) > as.integer(var2))
 #'
-#' # heartfailure %>%
-#' #  correlate(creatinine, sodium) %>%
-#' #  filter(as.integer(var1) > as.integer(var2))
+#' heartfailure %>%
+#'   correlate(creatinine, sodium) %>%
+#'   filter(as.integer(var1) > as.integer(var2))
 #'
 #' # Using pipes & dplyr -------------------------
 #' # Compute the correlation coefficient of Sales variable by 'smoking'
@@ -109,12 +110,14 @@ plot_correlate <- function(.data, ...) {
 #' # and compute the correlation coefficient of 'Sales' variable
 #' # by 'hblood_pressure' and 'death_event' variables.
 #' # And the correlation coefficient is negative and smaller than 0.5
-#' # heartfailure %>%
-#' #  filter(smoking == "Yes") %>%
-#' #  group_by(hblood_pressure, death_event) %>%
-#' #  correlate(creatinine) %>%
-#' #  filter(coef_corr < 0) %>%
-#' #  filter(abs(coef_corr) > 0.5)
+#' heartfailure %>%
+#'   filter(smoking == "Yes") %>%
+#'   group_by(hblood_pressure, death_event) %>%
+#'   correlate(creatinine) %>%
+#'   filter(coef_corr < 0) %>%
+#'   filter(abs(coef_corr) > 0.5)
+#' }
+#' 
 #' @method correlate data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
@@ -254,6 +257,7 @@ correlate_group_impl <- function(df, vars, method) {
 #' @seealso \code{\link{plot_correlate.tbl_dbi}}, \code{\link{plot_outlier.data.frame}}.
 #' @export
 #' @examples
+#' \donttest{
 #' # Visualize correlation plot of all numerical variables
 #' plot_correlate(heartfailure)
 #'
@@ -298,11 +302,12 @@ correlate_group_impl <- function(df, vars, method) {
 #' # Extract only those with 'smoking' variable level is "Yes",
 #' # and visualize correlation plot of 'creatinine' variable by 'hblood_pressure'
 #' # and 'death_event' variables.
-#' #heartfailure %>%
-#' #  filter(smoking == "Yes") %>%
-#' #  group_by(hblood_pressure, death_event) %>%
-#' #  plot_correlate(creatinine)
-#'  
+#' heartfailure %>%
+#'   filter(smoking == "Yes") %>%
+#'   group_by(hblood_pressure, death_event) %>%
+#'   plot_correlate(creatinine)
+#' }
+#'   
 #' @method plot_correlate data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos

@@ -50,6 +50,7 @@ The information derived from the numerical data compute is as follows.
 }
 
 \examples{
+\donttest{
 # Correlation coefficients of all numerical variables
 correlate(heartfailure)
 
@@ -95,9 +96,9 @@ heartfailure \%>\%
  correlate() \%>\%
  filter(as.integer(var1) > as.integer(var2))
 
-# heartfailure \%>\%
-#  correlate(creatinine, sodium) \%>\%
-#  filter(as.integer(var1) > as.integer(var2))
+heartfailure \%>\%
+  correlate(creatinine, sodium) \%>\%
+  filter(as.integer(var1) > as.integer(var2))
 
 # Using pipes & dplyr -------------------------
 # Compute the correlation coefficient of Sales variable by 'smoking'
@@ -112,12 +113,14 @@ heartfailure \%>\%
 # and compute the correlation coefficient of 'Sales' variable
 # by 'hblood_pressure' and 'death_event' variables.
 # And the correlation coefficient is negative and smaller than 0.5
-# heartfailure \%>\%
-#  filter(smoking == "Yes") \%>\%
-#  group_by(hblood_pressure, death_event) \%>\%
-#  correlate(creatinine) \%>\%
-#  filter(coef_corr < 0) \%>\%
-#  filter(abs(coef_corr) > 0.5)
+heartfailure \%>\%
+  filter(smoking == "Yes") \%>\%
+  group_by(hblood_pressure, death_event) \%>\%
+  correlate(creatinine) \%>\%
+  filter(coef_corr < 0) \%>\%
+  filter(abs(coef_corr) > 0.5)
+}
+
 }
 \seealso{
 \code{\link{cor}}, \code{\link{correlate.tbl_dbi}}.

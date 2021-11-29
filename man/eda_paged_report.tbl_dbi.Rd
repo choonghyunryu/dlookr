@@ -140,6 +140,7 @@ The EDA process will report the following information:
 }
 
 \examples{
+\donttest{
 if (FALSE) {
 library(dplyr)
 
@@ -167,6 +168,7 @@ con_sqlite \%>\%
   
 # Disconnect DBMS   
 DBI::dbDisconnect(con_sqlite)
+}
 }
 
 }

@@ -43,6 +43,7 @@ The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 use it after loading the Google font with import_google_font().
 }
 \examples{
+\donttest{
 # Generate data for the example
 heartfailure2 <- heartfailure
 heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
@@ -68,16 +69,17 @@ two_var
 plot(two_var)
 
 # plot all pair of variables by prompt
-# plot(all_var, prompt = TRUE)
+plot(all_var, prompt = TRUE)
   
 # plot a pair of variables without NA
-# plot(two_var, na.rm = TRUE)
+plot(two_var, na.rm = TRUE)
 
 # plot a pair of variables
-# plot(two_var, las = 1)
+plot(two_var, las = 1)
 
 # plot a pair of variables not focuses on typographic elements
-# plot(two_var, typographic = FALSE)
+plot(two_var, typographic = FALSE)
+}
 
 }
 \seealso{

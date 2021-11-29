@@ -46,14 +46,15 @@ diagnose <- function(.data, ...) {
 #' @seealso \code{\link{diagnose.tbl_dbi}}, \code{\link{diagnose_category.data.frame}}, \code{\link{diagnose_numeric.data.frame}}.
 #' @export
 #' @examples
+#' \donttest{
 #' # Diagnosis of all variables
 #' diagnose(jobchange)
 #' 
 #' # Select the variable to diagnose
 #' diagnose(jobchange, gender, experience, training_hours)
-#' # diagnose(jobchange, -gender, -experience, -training_hours)
-#' # diagnose(jobchange, "gender", "experience", "training_hours")
-#' # diagnose(jobchange, 4, 9, 13)
+#' diagnose(jobchange, -gender, -experience, -training_hours)
+#' diagnose(jobchange, "gender", "experience", "training_hours")
+#' diagnose(jobchange, 4, 9, 13)
 #' 
 #' # Using pipes ---------------------------------
 #' library(dplyr)
@@ -65,20 +66,22 @@ diagnose <- function(.data, ...) {
 #' jobchange %>%
 #'   diagnose(gender, experience, training_hours)
 #' # Negative values to drop variables
-#' # jobchange %>%
-#' #   diagnose(-gender, -experience, -training_hours)
+#' jobchange %>%
+#'   diagnose(-gender, -experience, -training_hours)
 #' # Positions values select variables
-#' # # jobchange %>%
-#' #   diagnose(4, 9, 13)
-#' # Positions values select variables
-#' # jobchange %>%
-#' #   diagnose(-8, -9, -10)
+#' jobchange %>%
+#'   diagnose(4, 9, 13)
+#' # Negative values to drop variables
+#' jobchange %>%
+#'   diagnose(-8, -9, -10)
 #'   
 #' # Using pipes & dplyr -------------------------
 #' # Diagnosis of missing variables
 #' jobchange %>%
 #'   diagnose() %>%
 #'   filter(missing_count > 0)
+#' }
+#'    
 #' @method diagnose data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
@@ -169,6 +172,7 @@ diagnose_category <- function(.data, ...) {
 #' @seealso \code{\link{diagnose_category.tbl_dbi}}, \code{\link{diagnose.data.frame}}, \code{\link{diagnose_numeric.data.frame}}, \code{\link{diagnose_outlier.data.frame}}.
 #' @export
 #' @examples
+#' \donttest{
 #' # Diagnosis of categorical variables
 #' diagnose_category(jobchange)
 #' 
@@ -190,16 +194,16 @@ diagnose_category <- function(.data, ...) {
 #'  diagnose_category(company_type, job_chnge)
 #'  
 #' # Negative values to drop variables
-#' # jobchange %>%
-#' #   diagnose_category(-company_type, -job_chnge)
+#' jobchange %>%
+#'   diagnose_category(-company_type, -job_chnge)
 #'   
 #' # Positions values select variables
-#' # jobchange %>%
-#' #   diagnose_category(7)
+#' jobchange %>%
+#'   diagnose_category(7)
 #'   
-#' # Positions values select variables
-#' # jobchange %>%
-#' #   diagnose_category(-7)
+#' # Negative values to drop variables
+#' jobchange %>%
+#'   diagnose_category(-7)
 #'   
 #' # Top rank levels with top argument
 #' jobchange %>%
@@ -227,7 +231,8 @@ diagnose_category <- function(.data, ...) {
 #' # extract only 3 rows
 #' jobchange %>% 
 #'   diagnose_category(enrollee_id, top = 3, type = "n")
-#'  
+#' }
+#'   
 #' @method diagnose_category data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
@@ -340,6 +345,7 @@ diagnose_numeric <- function(.data, ...) {
 #' @seealso \code{\link{diagnose_numeric.tbl_dbi}}, \code{\link{diagnose.data.frame}}, \code{\link{diagnose_category.data.frame}}, \code{\link{diagnose_outlier.data.frame}}.
 #' @export
 #' @examples
+#' \donttest{
 #' # Diagnosis of numerical variables
 #' diagnose_numeric(heartfailure)
 #' 
@@ -359,21 +365,22 @@ diagnose_numeric <- function(.data, ...) {
 #' heartfailure %>%
 #'   diagnose_numeric(cpk_enzyme, sodium)
 #' # Negative values to drop variables
-#' # heartfailure %>%
-#' #   diagnose_numeric(-cpk_enzyme, -sodium)
+#' heartfailure %>%
+#'   diagnose_numeric(-cpk_enzyme, -sodium)
 #' # Positions values select variables
-#' # heartfailure %>%
-#' #   diagnose_numeric(5)
-#' # Positions values select variables
-#' # heartfailure %>%
-#' #   diagnose_numeric(-1, -5)
+#' heartfailure %>%
+#'   diagnose_numeric(5)
+#' # Negative values to drop variables
+#' heartfailure %>%
+#'   diagnose_numeric(-1, -5)
 #'
 #' # Using pipes & dplyr -------------------------
 #' # List of variables containing outliers
 #' heartfailure %>%
 #'   diagnose_numeric()  %>%
 #'   filter(outlier > 0)
-#'   
+#' }
+#' 
 #' @method diagnose_numeric data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
@@ -466,14 +473,15 @@ diagnose_outlier <- function(.data, ...) {
 #' @seealso \code{\link{diagnose_outlier.tbl_dbi}}, \code{\link{diagnose.data.frame}}, \code{\link{diagnose_category.data.frame}}, \code{\link{diagnose_numeric.data.frame}}.
 #' @export
 #' @examples
+#' \donttest{
 #' # Diagnosis of numerical variables
 #' diagnose_outlier(heartfailure)
 #' 
 #' # Select the variable to diagnose
 #' diagnose_outlier(heartfailure, cpk_enzyme, sodium)
-#' # diagnose_outlier(heartfailure, -cpk_enzyme, -sodium)
-#' # diagnose_outlier(heartfailure, "cpk_enzyme", "sodium")
-#' # diagnose_outlier(heartfailure, 5)
+#' diagnose_outlier(heartfailure, -cpk_enzyme, -sodium)
+#' diagnose_outlier(heartfailure, "cpk_enzyme", "sodium")
+#' diagnose_outlier(heartfailure, 5)
 #' 
 #' # Using pipes ---------------------------------
 #' library(dplyr)
@@ -484,22 +492,23 @@ diagnose_outlier <- function(.data, ...) {
 #' # Positive values select variables
 #' heartfailure %>%
 #'   diagnose_outlier(cpk_enzyme, sodium)
-#' # # Negative values to drop variables
-#' # heartfailure %>%
-#' #   diagnose_outlier(-cpk_enzyme, -sodium)
-#' # # Positions values select variables
-#' # heartfailure %>%
-#' #   diagnose_outlier(5)
+#' # Negative values to drop variables
+#' heartfailure %>%
+#'   diagnose_outlier(-cpk_enzyme, -sodium)
 #' # Positions values select variables
-#' # # heartfailure %>%
-#' #   diagnose_outlier(-1, -5)
+#' heartfailure %>%
+#'   diagnose_outlier(5)
+#' # Negative values to drop variables
+#' heartfailure %>%
+#'   diagnose_outlier(-1, -5)
 #' 
 #' # Using pipes & dplyr -------------------------
 #' # outlier_ratio is more than 1%
 #' heartfailure %>%
 #'   diagnose_outlier()  %>%
 #'   filter(outliers_ratio > 1)
-#'   
+#' }
+#' 
 #' @method diagnose_outlier data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
@@ -595,53 +604,55 @@ plot_outlier <- function(.data, ...) {
 #' @seealso \code{\link{plot_outlier.tbl_dbi}}, \code{\link{diagnose_outlier.data.frame}}.
 #' @export
 #' @examples
+#' \donttest{
 #' # Visualization of all numerical variables
-#' # plot_outlier(heartfailure)
+#' plot_outlier(heartfailure)
 #' 
 #' # Select the variable to diagnose
 #' plot_outlier(heartfailure, cpk_enzyme, sodium)
-#' # plot_outlier(heartfailure, -cpk_enzyme, -sodium)
-#' # plot_outlier(heartfailure, "cpk_enzyme", "sodium")
-#' # plot_outlier(heartfailure, 7)
+#' plot_outlier(heartfailure, -cpk_enzyme, -sodium)
+#' plot_outlier(heartfailure, "cpk_enzyme", "sodium")
+#' plot_outlier(heartfailure, 7)
 #' 
 #' # Using the col argument
-#' # plot_outlier(heartfailure, cpk_enzyme, col = "gray")
+#' plot_outlier(heartfailure, cpk_enzyme, col = "gray")
 #' 
 #' # Not allow typographic argument
-#' # plot_outlier(heartfailure, cpk_enzyme, typographic = FALSE)
+#' plot_outlier(heartfailure, cpk_enzyme, typographic = FALSE)
 #' 
 #' # Using pipes ---------------------------------
 #' library(dplyr)
 #' 
 #' # Visualization of all numerical variables
-#' # heartfailure %>%
-#' #   plot_outlier()
+#' heartfailure %>%
+#'   plot_outlier()
 #' 
 #' # Positive values select variables
 #' heartfailure %>%
 #'   plot_outlier(cpk_enzyme, sodium)
 #'   
 #' # Negative values to drop variables
-#' # heartfailure %>%
-#' #   plot_outlier(-cpk_enzyme, -sodium)
+#' heartfailure %>%
+#'   plot_outlier(-cpk_enzyme, -sodium)
 #' 
 #' # Positions values select variables
-#' # heartfailure %>%
-#' #   plot_outlier(7)
+#' heartfailure %>%
+#'   plot_outlier(7)
 #' 
-#' # Positions values select variables
-#' # heartfailure %>%
-#' #   plot_outlier(-1, -5)
+#' # Negative values to drop variables
+#' heartfailure %>%
+#'   plot_outlier(-1, -5)
 #' 
 #' # Using pipes & dplyr -------------------------
 #' # Visualization of numerical variables with a ratio of
 #' # outliers greater than 5%
-#' # heartfailure %>%
-#' #   plot_outlier(heartfailure %>%
-#' #      diagnose_outlier() %>%
-#' #      filter(outliers_ratio > 5) %>%
-#' #      select(variables) %>%
-#' #      pull())
+#' heartfailure %>%
+#'   plot_outlier(heartfailure %>%
+#'     diagnose_outlier() %>%
+#'     filter(outliers_ratio > 5) %>%
+#'     select(variables) %>%
+#'     pull())
+#' }
 #' 
 #' @method plot_outlier data.frame
 #' @importFrom tidyselect vars_select
@@ -816,6 +827,7 @@ plot_outlier_raw <- function(x, main = NULL, col = "steelblue",
 #' @seealso \code{\link{plot_outlier.data.frame}}.
 #' @export
 #' @examples
+#' \donttest{
 #' # the target variable is a categorical variable
 #' categ <- target_by(heartfailure, death_event)
 #' 
@@ -839,6 +851,7 @@ plot_outlier_raw <- function(x, main = NULL, col = "steelblue",
 #' categ <- target_by(con_sqlite %>% tbl("TB_HEARTFAILURE") , death_event)
 #' 
 #' plot_outlier(categ, sodium)
+#' }
 #' 
 #' @method plot_outlier target_df
 #' @importFrom tidyselect vars_select
@@ -1052,21 +1065,27 @@ diagnose_report <- function(.data, output_format, output_file, output_dir, ...) 
 #' @param ... arguments to be passed to methods.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' if (FALSE) {
 #' # reporting the diagnosis information -------------------------
 #' # create pdf file. file name is DataDiagnosis_Report.pdf
 #' diagnose_report(heartfailure)
+#' 
 #' # create pdf file. file name is Diagn.pdf
-#' # diagnose_report(heartfailure, output_file = "Diagn.pdf")
+#' diagnose_report(heartfailure, output_file = "Diagn.pdf")
+#' 
 #' # create pdf file. file name is ./Diagn.pdf and not browse
-#' # diagnose_report(heartfailure, output_dir = ".", output_file = "Diagn.pdf", 
-#' #   browse = FALSE)
+#' diagnose_report(heartfailure, output_dir = ".", output_file = "Diagn.pdf", 
+#'   browse = FALSE)
+#' 
 #' # create html file. file name is Diagnosis_Report.html
-#' # diagnose_report(heartfailure, output_format = "html")
+#' diagnose_report(heartfailure, output_format = "html")
+#' 
 #' # create html file. file name is Diagn.html
-#' # diagnose_report(heartfailure, output_format = "html", output_file = "Diagn.html")
+#' diagnose_report(heartfailure, output_format = "html", output_file = "Diagn.html")
 #' }
-#'
+#' }
+#' 
 #' @importFrom knitr knit2pdf
 #' @importFrom rmarkdown render
 #' @importFrom kableExtra kable_styling

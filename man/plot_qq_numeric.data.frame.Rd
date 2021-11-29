@@ -72,30 +72,32 @@ The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 use it after loading the Google font with import_google_font().
 }
 \examples{
+\donttest{
 # Visualization of all numerical variables
-# plot_qq_numeric(heartfailure)
+plot_qq_numeric(heartfailure)
 
 # Select the variable to diagnose
-# plot_qq_numeric(heartfailure, "age", "time")
+plot_qq_numeric(heartfailure, "age", "time")
 plot_qq_numeric(heartfailure, -age, -time)
 
 # Not allow the typographic elements
-# plot_qq_numeric(heartfailure, "age", typographic = FALSE)
+plot_qq_numeric(heartfailure, "age", typographic = FALSE)
 
 # Using pipes ---------------------------------
 library(dplyr)
 
 # Plot of all numerical variables
-# heartfailure \%>\%
-#   plot_qq_numeric()
+heartfailure \%>\%
+  plot_qq_numeric()
 
 # Using groupd_df  ------------------------------
 heartfailure \%>\% 
   group_by(smoking) \%>\% 
   plot_qq_numeric()
 
-#heartfailure \%>\% 
-#   group_by(smoking) \%>\% 
-#   plot_qq_numeric(each = TRUE)  
+heartfailure \%>\% 
+  group_by(smoking) \%>\% 
+  plot_qq_numeric(each = TRUE)  
+}
 
 }

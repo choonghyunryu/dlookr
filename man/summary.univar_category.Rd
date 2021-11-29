@@ -38,6 +38,7 @@ print.univar_category() displays only the information of variables included in u
 The "variables" attribute is not displayed.
 }
 \examples{
+\donttest{
 library(dplyr)
 
 # Calculates the all categorical variables
@@ -65,6 +66,7 @@ stat <- summary(all_var)
 
 # Summary by returned object
 stat
+}
 
 }
 \seealso{

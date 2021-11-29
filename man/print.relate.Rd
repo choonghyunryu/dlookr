@@ -32,6 +32,7 @@ cat_cat
 summary(cat_cat)
 }
 
+\donttest{
 # If the target variable is a categorical variable
 categ <- target_by(heartfailure, death_event)
 
@@ -40,14 +41,14 @@ cat_num <- relate(categ, sodium)
 cat_num
 summary(cat_num)
 
-# plot(cat_num)
+plot(cat_num)
 
 # If the variable of interest is a categorical variable
 cat_cat <- relate(categ, hblood_pressure)
 cat_cat
 summary(cat_cat)
  
-# plot(cat_cat)
+plot(cat_cat)
 
 ##---------------------------------------------------
 # If the target variable is a numerical variable
@@ -58,17 +59,18 @@ num_num <- relate(num, sodium)
 num_num
 summary(num_num)
 
-# plot(num_num)
+plot(num_num)
 
 # If the variable of interest is a categorical variable
 num_cat <- relate(num, smoking)
 num_cat
 summary(num_cat)
 
-# plot(num_cat)
+plot(num_cat)
 
 # Not allow typographic
-# plot(num_cat, typographic = FALSE)
+plot(num_cat, typographic = FALSE)
+}
 
 }
 \seealso{

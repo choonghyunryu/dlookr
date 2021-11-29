@@ -119,7 +119,8 @@ use it after loading the Google font with import_google_font().
 }
 
 \examples{
-\dontrun{
+\donttest{
+if (FALSE) {
 # create dataset
 heartfailure2 <- dlookr::heartfailure
 heartfailure2[sample(seq(NROW(heartfailure2)), 20), "sodium"] <- NA
@@ -128,18 +129,18 @@ heartfailure2[sample(seq(NROW(heartfailure2)), 2), "time"] <- 0
 heartfailure2[sample(seq(NROW(heartfailure2)), 1), "creatinine"] <- -0.3
  
 # create pdf file. file name is Diagnosis_Report.html
-# diagnose_web_report(heartfailure2)
+diagnose_web_report(heartfailure2)
 
 # file name is Diagn.html. and change logo image
-# logo <- file.path(system.file(package = "dlookr"), "report", "R_logo_html.svg")
-# diagnose_web_report(heartfailure2, logo_img = logo, title_color = "black",
-#   output_file = "Diagn.html")
+logo <- file.path(system.file(package = "dlookr"), "report", "R_logo_html.svg")
+diagnose_web_report(heartfailure2, logo_img = logo, title_color = "black",
+  output_file = "Diagn.html")
 
 # file name is ./Diagn_heartfailure.html, "blue" theme and not browse
-# diagnose_web_report(heartfailure2, output_dir = ".", author = "Choonghyun Ryu",
-#   output_file = "Diagn_heartfailure.html", theme = "blue", browse = FALSE)
+diagnose_web_report(heartfailure2, output_dir = ".", author = "Choonghyun Ryu",
+  output_file = "Diagn_heartfailure.html", theme = "blue", browse = FALSE)
 }
-
+}
 }
 \seealso{
 \code{\link{diagnose_web_report.tbl_dbi}}.

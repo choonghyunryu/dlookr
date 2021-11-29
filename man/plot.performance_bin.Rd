@@ -26,6 +26,7 @@ The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 use it after loading the Google font with import_google_font().
 }
 \examples{
+\donttest{
 # Generate data for the example
 heartfailure2 <- heartfailure
 
@@ -47,12 +48,13 @@ summary(perf)
 plot(perf)
 
 # Diagnose performance binned variable without NA
-# perf <- performance_bin(heartfailure2$death_event_2, heartfailure2$creatinine_bin, na.rm = TRUE) 
-# perf
-# summary(perf)
+perf <- performance_bin(heartfailure2$death_event_2, heartfailure2$creatinine_bin, na.rm = TRUE) 
+perf
+summary(perf)
 
 plot(perf)
-# plot(perf, typographic = FALSE)
+plot(perf, typographic = FALSE)
+}
 
 }
 \seealso{
