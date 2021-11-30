@@ -1,11 +1,20 @@
 CHANGES IN R VERSION 0.5.4:
   BUG FIXES:
-  
-  MAJOR CHANGES:
-  
-  MINOR CHANGES:
-  
+    * Fixed an error that occurred when attaching a package in an offline 
+      environment.
+      - In the case of an offline environment, the import of Google fonts 
+        is canceled and only offline fonts are imported.
     
+    * Fixed an error that occurred when the number of breaks and 
+      the number of labels in plot.compare_category() are different.
+      
+  MAJOR CHANGES:
+
+  MINOR CHANGES:
+    * The default font for visualization is "Roboto Condensed" in the online 
+      environment and "Liberation Sans Narrow" in the offline environment.
+    
+  
   
 CHANGES IN R VERSION 0.5.3:
   BUG FIXES:

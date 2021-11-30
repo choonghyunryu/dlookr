@@ -36,11 +36,19 @@ import_google_font <- function(family) {
 #' @importFrom hrbrthemes theme_ipsum_rc
 theme_typographic <- function(base_family = NULL) {
   if (is.null(base_family)) {
-    base_family <- "Roboto Condensed"
+    if (options()[["dlookr_offline"]]) {
+      base_family <- "Liberation Sans Narrow"
+    } else {
+      base_family <- "Roboto Condensed"
+    }
   }
   
   if (!base_family %in% sysfonts::font_families()) {
-    base_family <- "Roboto Condensed"
+    if (options()[["dlookr_offline"]]) {
+      base_family <- "Liberation Sans Narrow"
+    } else {
+      base_family <- "Roboto Condensed"
+    }
   }
   
   hrbrthemes::theme_ipsum_rc(base_family = base_family)

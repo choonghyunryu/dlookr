@@ -958,6 +958,8 @@ plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE,
       y_pos[j] <- y_pos[j] / sum(y)
     }
     
+    y_pos <- complete.cases(y_pos) %>% y_pos[.]
+    
     suppressWarnings({
       p <- data %>% 
         group_by(a) %>% 
