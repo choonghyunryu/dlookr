@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4.9000</span>
       </span>
     </div>
 
@@ -249,9 +249,9 @@
 <p>By using with dplyr, variables including missing values can be sorted by the weight of missing values.:</p>
 <div class="sourceCode" id="cb8"><pre class="r"><span class="no">flights</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/diagnose.data.frame.html">diagnose</a></span>() <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/select.html">select</a></span>(-<span class="no">unique_count</span>, -<span class="no">unique_rate</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="no">missing_count</span> <span class="kw">&gt;</span> <span class="fl">0</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/arrange.html">arrange</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/desc.html">desc</a></span>(<span class="no">missing_count</span>))
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(-<span class="no">unique_count</span>, -<span class="no">unique_rate</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">missing_count</span> <span class="kw">&gt;</span> <span class="fl">0</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span>(<span class="no">missing_count</span>))
 <span class="co">#&gt; # A tibble: 6 x 4</span>
 <span class="co">#&gt;   variables types     missing_count missing_percent</span>
 <span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;             &lt;int&gt;           &lt;dbl&gt;</span>
@@ -310,9 +310,9 @@
 <span class="co">#&gt; 12 distance          17   502 1040.      872  1389  4983     0      0     715</span>
 <span class="co">#&gt; 13 hour               1     9   13.2      13    17    23     0      0       0</span>
 <span class="co">#&gt; 14 minute             0     8   26.2      29    44    59 60696      0       0</span></pre></div>
-<p>If a numeric variable can not logically have a negative or zero value, it can be used with <code><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter()</a></code> to easily find a variable that does not logically match:</p>
+<p>If a numeric variable can not logically have a negative or zero value, it can be used with <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> to easily find a variable that does not logically match:</p>
 <div class="sourceCode" id="cb10"><pre class="r"><span class="fu"><a href="reference/diagnose_numeric.data.frame.html">diagnose_numeric</a></span>(<span class="no">flights</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="no">minus</span> <span class="kw">&gt;</span> <span class="fl">0</span> <span class="kw">|</span> <span class="no">zero</span> <span class="kw">&gt;</span> <span class="fl">0</span>)
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">minus</span> <span class="kw">&gt;</span> <span class="fl">0</span> <span class="kw">|</span> <span class="no">zero</span> <span class="kw">&gt;</span> <span class="fl">0</span>)
 <span class="co">#&gt; # A tibble: 3 x 10</span>
 <span class="co">#&gt;   variables   min    Q1  mean median    Q3   max  zero  minus outlier</span>
 <span class="co">#&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;  &lt;int&gt;   &lt;int&gt;</span>
@@ -357,9 +357,9 @@
 <span class="co">#&gt;  9 carrier   WN     336776 12275  3.64     9</span>
 <span class="co">#&gt; 10 carrier   VX     336776  5162  1.53    10</span>
 <span class="co">#&gt; # … with 33 more rows</span></pre></div>
-<p>In collaboration with <code><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter()</a></code> in the <code>dplyr</code> package, we can see that the <code>tailnum</code> variable is ranked in top 1 with 2,512 missing values in the case where the missing value is included in the top 10:</p>
+<p>In collaboration with <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> in the <code>dplyr</code> package, we can see that the <code>tailnum</code> variable is ranked in top 1 with 2,512 missing values in the case where the missing value is included in the top 10:</p>
 <div class="sourceCode" id="cb12"><pre class="r"><span class="fu"><a href="reference/diagnose_category.data.frame.html">diagnose_category</a></span>(<span class="no">flights</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="no">levels</span>))
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="no">levels</span>))
 <span class="co">#&gt; # A tibble: 1 x 6</span>
 <span class="co">#&gt;   variables levels      N  freq ratio  rank</span>
 <span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt;</span>
@@ -367,7 +367,7 @@
 <p>The following example returns a list where the level’s relative percentage is 0.01% or less. Note that the value of the <code>top</code> argument is set to a large value such as 500. If the default value of 10 was used, values below 0.01% would not be included in the list:</p>
 <div class="sourceCode" id="cb13"><pre class="r"><span class="no">flights</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/diagnose_category.data.frame.html">diagnose_category</a></span>(<span class="kw">top</span> <span class="kw">=</span> <span class="fl">500</span>)  <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="no">ratio</span> <span class="kw">&lt;=</span> <span class="fl">0.01</span>)
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">ratio</span> <span class="kw">&lt;=</span> <span class="fl">0.01</span>)
 <span class="co">#&gt; # A tibble: 10 x 6</span>
 <span class="co">#&gt;    variables levels      N  freq    ratio  rank</span>
 <span class="co">#&gt;    &lt;chr&gt;     &lt;chr&gt;   &lt;int&gt; &lt;int&gt;    &lt;dbl&gt; &lt;int&gt;</span>
@@ -420,9 +420,9 @@
 <span class="co">#&gt; 12 distance              715       0.212           4955.    1040.       1032.   </span>
 <span class="co">#&gt; 13 hour                    0       0                NaN       13.2        13.2  </span>
 <span class="co">#&gt; 14 minute                  0       0                NaN       26.2        26.2</span></pre></div>
-<p>Numeric variables that contained outliers are easily found with <code><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter()</a></code>.:</p>
+<p>Numeric variables that contained outliers are easily found with <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>.:</p>
 <div class="sourceCode" id="cb15"><pre class="r"><span class="fu"><a href="reference/diagnose_outlier.data.frame.html">diagnose_outlier</a></span>(<span class="no">flights</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="no">outliers_cnt</span> <span class="kw">&gt;</span> <span class="fl">0</span>)
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">outliers_cnt</span> <span class="kw">&gt;</span> <span class="fl">0</span>)
 <span class="co">#&gt; # A tibble: 5 x 6</span>
 <span class="co">#&gt;   variables outliers_cnt outliers_ratio outliers_mean with_mean without_mean</span>
 <span class="co">#&gt;   &lt;chr&gt;            &lt;int&gt;          &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;</span>
@@ -433,10 +433,10 @@
 <span class="co">#&gt; 5 distance           715       0.212           4955.    1040.       1032.</span></pre></div>
 <p>The following example finds a numeric variable with an outlier ratio of 5% or more, and then returns the result of dividing mean of outliers by total mean in descending order:</p>
 <div class="sourceCode" id="cb16"><pre class="r"><span class="fu"><a href="reference/diagnose_outlier.data.frame.html">diagnose_outlier</a></span>(<span class="no">flights</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="no">outliers_ratio</span> <span class="kw">&gt;</span> <span class="fl">5</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/mutate.html">mutate</a></span>(<span class="kw">rate</span> <span class="kw">=</span> <span class="no">outliers_mean</span> / <span class="no">with_mean</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/arrange.html">arrange</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/desc.html">desc</a></span>(<span class="no">rate</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/select.html">select</a></span>(-<span class="no">outliers_cnt</span>)
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">outliers_ratio</span> <span class="kw">&gt;</span> <span class="fl">5</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">rate</span> <span class="kw">=</span> <span class="no">outliers_mean</span> / <span class="no">with_mean</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span>(<span class="no">rate</span>)) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(-<span class="no">outliers_cnt</span>)
 <span class="co">#&gt; # A tibble: 2 x 6</span>
 <span class="co">#&gt;   variables outliers_ratio outliers_mean with_mean without_mean  rate</span>
 <span class="co">#&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt;</span>
@@ -459,8 +459,8 @@
 <p>The following example uses <code><a href="reference/diagnose_outlier.data.frame.html">diagnose_outlier()</a></code>, <code><a href="reference/plot_outlier.data.frame.html">plot_outlier()</a></code>, and <code>dplyr</code> packages to visualize all numerical variables with an outlier ratio of 0.5% or higher.</p>
 <div class="sourceCode" id="cb17"><pre class="r"><span class="no">flights</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/plot_outlier.data.frame.html">plot_outlier</a></span>(<span class="fu"><a href="reference/diagnose_outlier.data.frame.html">diagnose_outlier</a></span>(<span class="no">flights</span>) <span class="kw">%&gt;%</span>
-                 <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="no">outliers_ratio</span> <span class="kw">&gt;=</span> <span class="fl">0.5</span>) <span class="kw">%&gt;%</span>
-                 <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/select.html">select</a></span>(<span class="no">variables</span>) <span class="kw">%&gt;%</span>
+                 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">outliers_ratio</span> <span class="kw">&gt;=</span> <span class="fl">0.5</span>) <span class="kw">%&gt;%</span>
+                 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">variables</span>) <span class="kw">%&gt;%</span>
                  <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>())</pre></div>
 <p><img src="figures/README-plot_outlier_pipe-1.png"><!-- --><img src="figures/README-plot_outlier_pipe-2.png"><!-- --><img src="figures/README-plot_outlier_pipe-3.png"><!-- --></p>
 <p>Analysts should look at the results of the visualization to decide whether to remove or replace outliers. In some cases, you should consider removing variables with outliers from the data analysis model.</p>
@@ -621,9 +621,9 @@
 <p>The <code><a href="reference/describe.data.frame.html">describe()</a></code> function can be sorted by <code>left or right skewed size</code>(skewness) using <code>dplyr</code>.:</p>
 <div class="sourceCode" id="cb21"><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/describe.data.frame.html">describe</a></span>() <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/select.html">select</a></span>(<span class="no">variable</span>, <span class="no">skewness</span>, <span class="no">mean</span>, <span class="no">p25</span>, <span class="no">p50</span>, <span class="no">p75</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(!<span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="no">skewness</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/arrange.html">arrange</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/desc.html">desc</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span>(<span class="no">skewness</span>)))
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">variable</span>, <span class="no">skewness</span>, <span class="no">mean</span>, <span class="no">p25</span>, <span class="no">p50</span>, <span class="no">p75</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(!<span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="no">skewness</span>)) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span>(<span class="no">skewness</span>)))
 <span class="co">#&gt; # A tibble: 8 x 6</span>
 <span class="co">#&gt;   variable    skewness   mean    p25    p50    p75</span>
 <span class="co">#&gt;   &lt;chr&gt;          &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span>
@@ -635,9 +635,9 @@
 <span class="co">#&gt; 6 Income        0.0449  68.9   42.8   69     91   </span>
 <span class="co">#&gt; 7 Education     0.0440  13.9   12     14     16   </span>
 <span class="co">#&gt; 8 CompPrice    -0.0428 125.   115    125    135</span></pre></div>
-<p>The <code><a href="reference/describe.data.frame.html">describe()</a></code> function supports the <code><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by()</a></code> function syntax of the <code>dplyr</code> package.</p>
+<p>The <code><a href="reference/describe.data.frame.html">describe()</a></code> function supports the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> function syntax of the <code>dplyr</code> package.</p>
 <div class="sourceCode" id="cb22"><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by</a></span>(<span class="no">US</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">US</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/describe.data.frame.html">describe</a></span>(<span class="no">Sales</span>, <span class="no">Income</span>)
 <span class="co">#&gt; # A tibble: 4 x 27</span>
 <span class="co">#&gt;   variable US        n    na  mean    sd se_mean   IQR skewness kurtosis   p00</span>
@@ -650,7 +650,7 @@
 <span class="co">#&gt; #   p25 &lt;dbl&gt;, p30 &lt;dbl&gt;, p40 &lt;dbl&gt;, p50 &lt;dbl&gt;, p60 &lt;dbl&gt;, p70 &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   p75 &lt;dbl&gt;, p80 &lt;dbl&gt;, p90 &lt;dbl&gt;, p95 &lt;dbl&gt;, p99 &lt;dbl&gt;, p100 &lt;dbl&gt;</span></pre></div>
 <div class="sourceCode" id="cb23"><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by</a></span>(<span class="no">US</span>, <span class="no">Urban</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">US</span>, <span class="no">Urban</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/describe.data.frame.html">describe</a></span>(<span class="no">Sales</span>, <span class="no">Income</span>)
 <span class="co">#&gt; # A tibble: 12 x 28</span>
 <span class="co">#&gt;    variable US    Urban     n    na  mean    sd se_mean    IQR skewness kurtosis</span>
@@ -702,8 +702,8 @@
 <p>You can use <code>dplyr</code> to sort variables that do not follow a normal distribution in order of <code>p_value</code>:</p>
 <div class="sourceCode" id="cb25"><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/normality.data.frame.html">normality</a></span>() <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="no">p_value</span> <span class="kw">&lt;=</span> <span class="fl">0.01</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/arrange.html">arrange</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span>(<span class="no">p_value</span>))
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">p_value</span> <span class="kw">&lt;=</span> <span class="fl">0.01</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span>(<span class="no">p_value</span>))
 <span class="co">#&gt; # A tibble: 5 x 4</span>
 <span class="co">#&gt;   vars        statistic  p_value sample</span>
 <span class="co">#&gt;   &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;</span>
@@ -713,11 +713,11 @@
 <span class="co">#&gt; 4 Age             0.957 1.86e- 9    400</span>
 <span class="co">#&gt; 5 Income          0.961 1.52e- 8    400</span></pre></div>
 <p>In particular, the <code>Advertising</code> variable is considered to be the most out of the normal distribution.</p>
-<p>The <code><a href="reference/normality.data.frame.html">normality()</a></code> function supports the <code><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by()</a></code> function syntax in the <code>dplyr</code> package.</p>
+<p>The <code><a href="reference/normality.data.frame.html">normality()</a></code> function supports the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> function syntax in the <code>dplyr</code> package.</p>
 <div class="sourceCode" id="cb26"><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by</a></span>(<span class="no">ShelveLoc</span>, <span class="no">US</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">ShelveLoc</span>, <span class="no">US</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/normality.data.frame.html">normality</a></span>(<span class="no">Income</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/arrange.html">arrange</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/desc.html">desc</a></span>(<span class="no">p_value</span>))
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span>(<span class="no">p_value</span>))
 <span class="co">#&gt; # A tibble: 6 x 6</span>
 <span class="co">#&gt;   variable ShelveLoc US    statistic  p_value sample</span>
 <span class="co">#&gt;   &lt;chr&gt;    &lt;fct&gt;     &lt;fct&gt;     &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;</span>
@@ -730,10 +730,10 @@
 <p>The <code>Income</code> variable does not follow the normal distribution. However, the case where <code>US</code> is <code>No</code> and <code>ShelveLoc</code> is <code>Good</code> and <code>Bad</code> at the significance level of 0.01, it follows the normal distribution.</p>
 <p>The following example performs <code>normality test of log(Income)</code> for each combination of <code>ShelveLoc</code> and <code>US</code> categorical variables to search for variables that follow the normal distribution.</p>
 <div class="sourceCode" id="cb27"><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/mutate.html">mutate</a></span>(<span class="kw">log_income</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span>(<span class="no">Income</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by</a></span>(<span class="no">ShelveLoc</span>, <span class="no">US</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">log_income</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span>(<span class="no">Income</span>)) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">ShelveLoc</span>, <span class="no">US</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/normality.data.frame.html">normality</a></span>(<span class="no">log_income</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="no">p_value</span> <span class="kw">&gt;</span> <span class="fl">0.01</span>)
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">p_value</span> <span class="kw">&gt;</span> <span class="fl">0.01</span>)
 <span class="co">#&gt; # A tibble: 1 x 6</span>
 <span class="co">#&gt;   variable   ShelveLoc US    statistic p_value sample</span>
 <span class="co">#&gt;   &lt;chr&gt;      &lt;fct&gt;     &lt;fct&gt;     &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;</span>
@@ -757,10 +757,10 @@
 <div class="sourceCode" id="cb28"><pre class="r"><span class="co"># Select columns by name</span>
 <span class="fu"><a href="reference/plot_normality.data.frame.html">plot_normality</a></span>(<span class="no">carseats</span>, <span class="no">Sales</span>, <span class="no">CompPrice</span>)</pre></div>
 <p><img src="figures/README-plot_normality-1.png"><!-- --><img src="figures/README-plot_normality-2.png"><!-- --></p>
-<p>The <code><a href="reference/plot_normality.data.frame.html">plot_normality()</a></code> function also supports the <code><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by()</a></code> function syntax in the <code>dplyr</code> package.</p>
+<p>The <code><a href="reference/plot_normality.data.frame.html">plot_normality()</a></code> function also supports the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> function syntax in the <code>dplyr</code> package.</p>
 <div class="sourceCode" id="cb29"><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="no">ShelveLoc</span> <span class="kw">==</span> <span class="st">"Good"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by</a></span>(<span class="no">US</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">ShelveLoc</span> <span class="kw">==</span> <span class="st">"Good"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">US</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/plot_normality.data.frame.html">plot_normality</a></span>(<span class="no">Income</span>)</pre></div>
 <p><img src="figures/README-plot_normality2-1.png"><!-- --><img src="figures/README-plot_normality2-2.png"><!-- --></p>
 </div>
@@ -804,22 +804,22 @@
 <span class="co">#&gt;  9 Income    Advertising    0.0435</span>
 <span class="co">#&gt; 10 Sales     Population     0.0505</span>
 <span class="co">#&gt; # … with 11 more rows</span></pre></div>
-<p><code><a href="reference/correlate.data.frame.html">correlate()</a></code> produces <code>two pairs of variables</code>. So the following example uses <code><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter()</a></code> to get the correlation coefficient for <code>a pair of variable</code> combinations:</p>
+<p><code><a href="reference/correlate.data.frame.html">correlate()</a></code> produces <code>two pairs of variables</code>. So the following example uses <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> to get the correlation coefficient for <code>a pair of variable</code> combinations:</p>
 <div class="sourceCode" id="cb32"><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/correlate.data.frame.html">correlate</a></span>(<span class="no">Sales</span>:<span class="no">Income</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span>(<span class="no">var1</span>) <span class="kw">&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span>(<span class="no">var2</span>))
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span>(<span class="no">var1</span>) <span class="kw">&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span>(<span class="no">var2</span>))
 <span class="co">#&gt; # A tibble: 3 x 3</span>
 <span class="co">#&gt;   var1      var2      coef_corr</span>
 <span class="co">#&gt;   &lt;fct&gt;     &lt;fct&gt;         &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 CompPrice Sales        0.0641</span>
 <span class="co">#&gt; 2 Income    Sales        0.151 </span>
 <span class="co">#&gt; 3 Income    CompPrice   -0.0761</span></pre></div>
-<p>The <code><a href="reference/correlate.data.frame.html">correlate()</a></code> also supports the <code><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by()</a></code> function syntax in the <code>dplyr</code> package.</p>
+<p>The <code><a href="reference/correlate.data.frame.html">correlate()</a></code> also supports the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> function syntax in the <code>dplyr</code> package.</p>
 <div class="sourceCode" id="cb33"><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="no">ShelveLoc</span> <span class="kw">==</span> <span class="st">"Good"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by</a></span>(<span class="no">Urban</span>, <span class="no">US</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">ShelveLoc</span> <span class="kw">==</span> <span class="st">"Good"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">Urban</span>, <span class="no">US</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/correlate.data.frame.html">correlate</a></span>(<span class="no">Sales</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span>(<span class="no">coef_corr</span>) <span class="kw">&gt;</span> <span class="fl">0.5</span>)
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span>(<span class="no">coef_corr</span>) <span class="kw">&gt;</span> <span class="fl">0.5</span>)
 <span class="co">#&gt; # A tibble: 10 x 5</span>
 <span class="co">#&gt;    Urban US    var1  var2       coef_corr</span>
 <span class="co">#&gt;    &lt;fct&gt; &lt;fct&gt; &lt;fct&gt; &lt;fct&gt;          &lt;dbl&gt;</span>
@@ -845,10 +845,10 @@
 <div class="sourceCode" id="cb35"><pre class="r"><span class="co"># Select columns by name</span>
 <span class="fu"><a href="reference/plot_correlate.data.frame.html">plot_correlate</a></span>(<span class="no">carseats</span>, <span class="no">Sales</span>, <span class="no">Price</span>)</pre></div>
 <p><img src="figures/README-plot_correlate2-1.png"><!-- --></p>
-<p>The <code><a href="reference/plot_correlate.data.frame.html">plot_correlate()</a></code> function also supports the <code><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by()</a></code> function syntax in the <code>dplyr</code> package.</p>
+<p>The <code><a href="reference/plot_correlate.data.frame.html">plot_correlate()</a></code> function also supports the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> function syntax in the <code>dplyr</code> package.</p>
 <div class="sourceCode" id="cb36"><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="no">ShelveLoc</span> <span class="kw">==</span> <span class="st">"Good"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by</a></span>(<span class="no">Urban</span>, <span class="no">US</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">ShelveLoc</span> <span class="kw">==</span> <span class="st">"Good"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">Urban</span>, <span class="no">US</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/plot_correlate.data.frame.html">plot_correlate</a></span>(<span class="no">Sales</span>)</pre></div>
 <p><img src="figures/README-plot_correlate3-1.png"><!-- --><img src="figures/README-plot_correlate3-2.png"><!-- --><img src="figures/README-plot_correlate3-3.png"><!-- --><img src="figures/README-plot_correlate3-4.png"><!-- --></p>
 </div>
@@ -859,7 +859,7 @@
 <div id="definition-of-target-variable" class="section level5">
 <h5 class="hasAnchor">
 <a href="#definition-of-target-variable" class="anchor"></a>Definition of target variable</h5>
-<p>To perform EDA based on <code>target variable</code>, you need to create a <code>target_by</code> class object. <code><a href="reference/target_by.data.frame.html">target_by()</a></code> creates a <code>target_by</code> class with an object inheriting data.frame or data.frame. <code><a href="reference/target_by.data.frame.html">target_by()</a></code> is similar to <code><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by()</a></code> in <code>dplyr</code> which creates <code>grouped_df</code>. The difference is that you specify only one variable.</p>
+<p>To perform EDA based on <code>target variable</code>, you need to create a <code>target_by</code> class object. <code><a href="reference/target_by.data.frame.html">target_by()</a></code> creates a <code>target_by</code> class with an object inheriting data.frame or data.frame. <code><a href="reference/target_by.data.frame.html">target_by()</a></code> is similar to <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> in <code>dplyr</code> which creates <code>grouped_df</code>. The difference is that you specify only one variable.</p>
 <p>The following is an example of specifying <code>US</code> as target variable in <code>carseats</code> data.frame.:</p>
 <div class="sourceCode" id="cb37"><pre class="r"><span class="no">categ</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/target_by.data.frame.html">target_by</a></span>(<span class="no">carseats</span>, <span class="no">US</span>)</pre></div>
 </div>
@@ -1330,9 +1330,9 @@
 <p>The following example imputes the missing value of the <code>Income</code> variable, and then calculates the arithmetic mean for each level of <code>US</code>. In this case, <code>dplyr</code> is used, and it is easily interpreted logically using pipes.</p>
 <div class="sourceCode" id="cb49"><pre class="r"><span class="co"># The mean before and after the imputation of the Income variable</span>
 <span class="no">carseats</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/mutate.html">mutate</a></span>(<span class="kw">Income_imp</span> <span class="kw">=</span> <span class="fu"><a href="reference/imputate_na.html">imputate_na</a></span>(<span class="no">carseats</span>, <span class="no">Income</span>, <span class="no">US</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"knn"</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by</a></span>(<span class="no">US</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/summarise.html">summarise</a></span>(<span class="kw">orig</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">Income</span>, <span class="kw">na.rm</span> <span class="kw">=</span> <span class="fl">TRUE</span>),
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">Income_imp</span> <span class="kw">=</span> <span class="fu"><a href="reference/imputate_na.html">imputate_na</a></span>(<span class="no">carseats</span>, <span class="no">Income</span>, <span class="no">US</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"knn"</span>)) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">US</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="kw">orig</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">Income</span>, <span class="kw">na.rm</span> <span class="kw">=</span> <span class="fl">TRUE</span>),
     <span class="kw">imputation</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">Income_imp</span>))
 <span class="co">#&gt; # A tibble: 2 x 3</span>
 <span class="co">#&gt;   US     orig imputation</span>
@@ -1463,9 +1463,9 @@
 <p>The following example imputes the outliers of the <code>Price</code> variable, and then calculates the arithmetic mean for each level of <code>US</code>. In this case, <code>dplyr</code> is used, and it is easily interpreted logically using pipes.</p>
 <div class="sourceCode" id="cb51"><pre class="r"><span class="co"># The mean before and after the imputation of the Price variable</span>
 <span class="no">carseats</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/mutate.html">mutate</a></span>(<span class="kw">Price_imp</span> <span class="kw">=</span> <span class="fu"><a href="reference/imputate_outlier.html">imputate_outlier</a></span>(<span class="no">carseats</span>, <span class="no">Price</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"capping"</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by</a></span>(<span class="no">US</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/summarise.html">summarise</a></span>(<span class="kw">orig</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">Price</span>, <span class="kw">na.rm</span> <span class="kw">=</span> <span class="fl">TRUE</span>),
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">Price_imp</span> <span class="kw">=</span> <span class="fu"><a href="reference/imputate_outlier.html">imputate_outlier</a></span>(<span class="no">carseats</span>, <span class="no">Price</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"capping"</span>)) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">US</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="kw">orig</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">Price</span>, <span class="kw">na.rm</span> <span class="kw">=</span> <span class="fl">TRUE</span>),
     <span class="kw">imputation</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">Price_imp</span>, <span class="kw">na.rm</span> <span class="kw">=</span> <span class="fl">TRUE</span>))
 <span class="co">#&gt; # A tibble: 2 x 3</span>
 <span class="co">#&gt;   US     orig imputation</span>
@@ -1505,9 +1505,9 @@
 </h6>
 <p>Use the methods “zscore” and “minmax” to perform standardization.</p>
 <div class="sourceCode" id="cb52"><pre class="r"><span class="no">carseats</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/mutate.html">mutate</a></span>(<span class="kw">Income_minmax</span> <span class="kw">=</span> <span class="fu"><a href="reference/transform.html">transform</a></span>(<span class="no">carseats</span>$<span class="no">Income</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"minmax"</span>),
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">Income_minmax</span> <span class="kw">=</span> <span class="fu"><a href="reference/transform.html">transform</a></span>(<span class="no">carseats</span>$<span class="no">Income</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"minmax"</span>),
     <span class="kw">Sales_minmax</span> <span class="kw">=</span> <span class="fu"><a href="reference/transform.html">transform</a></span>(<span class="no">carseats</span>$<span class="no">Sales</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"minmax"</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/select.html">select</a></span>(<span class="no">Income_minmax</span>, <span class="no">Sales_minmax</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">Income_minmax</span>, <span class="no">Sales_minmax</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span>()</pre></div>
 <p><img src="figures/README-standardization-1.png"><!-- --></p>
 </div>
@@ -1736,11 +1736,11 @@
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
 
 <span class="no">carseats</span> <span class="kw">%&gt;%</span>
- <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/mutate.html">mutate</a></span>(<span class="kw">Income_bin</span> <span class="kw">=</span> <span class="fu"><a href="reference/binning.html">binning</a></span>(<span class="no">carseats</span>$<span class="no">Income</span>) <span class="kw">%&gt;%</span>
+ <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">Income_bin</span> <span class="kw">=</span> <span class="fu"><a href="reference/binning.html">binning</a></span>(<span class="no">carseats</span>$<span class="no">Income</span>) <span class="kw">%&gt;%</span>
                      <span class="fu"><a href="reference/extract.bins.html">extract</a></span>()) <span class="kw">%&gt;%</span>
- <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by</a></span>(<span class="no">ShelveLoc</span>, <span class="no">Income_bin</span>) <span class="kw">%&gt;%</span>
- <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/summarise.html">summarise</a></span>(<span class="kw">freq</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/context.html">n</a></span>()) <span class="kw">%&gt;%</span>
- <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/arrange.html">arrange</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/desc.html">desc</a></span>(<span class="no">freq</span>)) <span class="kw">%&gt;%</span>
+ <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">ShelveLoc</span>, <span class="no">Income_bin</span>) <span class="kw">%&gt;%</span>
+ <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="kw">freq</span> <span class="kw">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span>()) <span class="kw">%&gt;%</span>
+ <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span>(<span class="no">freq</span>)) <span class="kw">%&gt;%</span>
  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fl">10</span>)
 <span class="co">#&gt; `summarise()` has grouped output by 'ShelveLoc'. You can override using the `.groups` argument.</span>
 <span class="co">#&gt; # A tibble: 10 x 3</span>
@@ -2837,7 +2837,7 @@ The dynamic contents of the report
 <span class="no">con_sqlite</span> <span class="kw">&lt;-</span> <span class="kw pkg">DBI</span><span class="kw ns">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html">dbConnect</a></span>(<span class="kw pkg">RSQLite</span><span class="kw ns">::</span><span class="fu"><a href="https://rsqlite.r-dbi.org/reference/SQLite.html">SQLite</a></span>(), <span class="st">":memory:"</span>)
 
 <span class="co"># copy carseats to the DBMS with a table named TB_CARSEATS</span>
-<span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/copy_to.html">copy_to</a></span>(<span class="no">con_sqlite</span>, <span class="no">carseats</span>, <span class="kw">name</span> <span class="kw">=</span> <span class="st">"TB_CARSEATS"</span>, <span class="kw">overwrite</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></div>
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/copy_to.html">copy_to</a></span>(<span class="no">con_sqlite</span>, <span class="no">carseats</span>, <span class="kw">name</span> <span class="kw">=</span> <span class="st">"TB_CARSEATS"</span>, <span class="kw">overwrite</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></div>
 </div>
 <div id="diagonose-table-of-the-dbms" class="section level3">
 <h3 class="hasAnchor">
@@ -2845,10 +2845,10 @@ The dynamic contents of the report
 <div id="diagnose-data-quality-of-variables-in-the-dbms" class="section level4">
 <h4 class="hasAnchor">
 <a href="#diagnose-data-quality-of-variables-in-the-dbms" class="anchor"></a>Diagnose data quality of variables in the DBMS</h4>
-<p>Use <code><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">dplyr::tbl()</a></code> to create a tbl_dbi object, then use it as a data frame object. That is, the data argument of all diagnose function is specified as tbl_dbi object instead of data frame object.</p>
+<p>Use <code><a href="https://dplyr.tidyverse.org/reference/tbl.html">dplyr::tbl()</a></code> to create a tbl_dbi object, then use it as a data frame object. That is, the data argument of all diagnose function is specified as tbl_dbi object instead of data frame object.</p>
 <div class="sourceCode" id="cb67"><pre class="r"><span class="co"># Diagnosis of all columns</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/diagnose.data.frame.html">diagnose</a></span>()
 <span class="co">#&gt; # A tibble: 11 x 6</span>
 <span class="co">#&gt;    variables   types     missing_count missing_percent unique_count unique_rate</span>
@@ -2867,7 +2867,7 @@ The dynamic contents of the report
 
 <span class="co"># Positions values select columns, and In-memory mode</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/diagnose.data.frame.html">diagnose</a></span>(<span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">8</span>, <span class="kw">in_database</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
 <span class="co">#&gt; # A tibble: 3 x 6</span>
 <span class="co">#&gt;   variables types   missing_count missing_percent unique_count unique_rate</span>
@@ -2881,7 +2881,7 @@ The dynamic contents of the report
 <a href="#diagnose-data-quality-of-categorical-variables-in-the-dbms" class="anchor"></a>Diagnose data quality of categorical variables in the DBMS</h4>
 <div class="sourceCode" id="cb68"><pre class="r"><span class="co"># Positions values select variables, and In-memory mode and collect size is 200</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/diagnose_category.data.frame.html">diagnose_category</a></span>(<span class="fl">7</span>, <span class="kw">in_database</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">collect_size</span> <span class="kw">=</span> <span class="fl">200</span>)
 <span class="co">#&gt; # A tibble: 3 x 6</span>
 <span class="co">#&gt;   variables levels     N  freq ratio  rank</span>
@@ -2895,7 +2895,7 @@ The dynamic contents of the report
 <a href="#diagnose-data-quality-of-numerical-variables-in-the-dbms" class="anchor"></a>Diagnose data quality of numerical variables in the DBMS</h4>
 <div class="sourceCode" id="cb69"><pre class="r"><span class="co"># Diagnosis of all numerical variables</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/diagnose_numeric.data.frame.html">diagnose_numeric</a></span>()
 <span class="co">#&gt; # A tibble: 8 x 10</span>
 <span class="co">#&gt;   variables     min     Q1   mean median     Q3   max  zero minus outlier</span>
@@ -2913,9 +2913,9 @@ The dynamic contents of the report
 <h4 class="hasAnchor">
 <a href="#diagnose-outlier-of-numerical-variables-in-the-dbms" class="anchor"></a>Diagnose outlier of numerical variables in the DBMS</h4>
 <div class="sourceCode" id="cb70"><pre class="r"><span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/diagnose_outlier.data.frame.html">diagnose_outlier</a></span>()  <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="no">outliers_ratio</span> <span class="kw">&gt;</span> <span class="fl">1</span>)
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">outliers_ratio</span> <span class="kw">&gt;</span> <span class="fl">1</span>)
 <span class="co">#&gt; # A tibble: 1 x 6</span>
 <span class="co">#&gt;   variables outliers_cnt outliers_ratio outliers_mean with_mean without_mean</span>
 <span class="co">#&gt;   &lt;chr&gt;            &lt;int&gt;          &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;</span>
@@ -2927,13 +2927,13 @@ The dynamic contents of the report
 <div class="sourceCode" id="cb71"><pre class="r"><span class="co"># Visualization of numerical variables with a ratio of</span>
 <span class="co"># outliers greater than 1%</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/plot_outlier.data.frame.html">plot_outlier</a></span>(<span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-                 <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+                 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
                  <span class="fu"><a href="reference/diagnose_outlier.data.frame.html">diagnose_outlier</a></span>() <span class="kw">%&gt;%</span>
-                 <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="no">outliers_ratio</span> <span class="kw">&gt;</span> <span class="fl">1</span>) <span class="kw">%&gt;%</span>
-                 <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/select.html">select</a></span>(<span class="no">variables</span>) <span class="kw">%&gt;%</span>
-                 <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/pull.html">pull</a></span>())</pre></div>
+                 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">outliers_ratio</span> <span class="kw">&gt;</span> <span class="fl">1</span>) <span class="kw">%&gt;%</span>
+                 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">variables</span>) <span class="kw">%&gt;%</span>
+                 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span>())</pre></div>
 <p><img src="figures/README-plot_outlier_dbi-1.png"><!-- --></p>
 </div>
 <div id="reporting-the-information-of-data-diagnosis-for-table-of-thr-dbms" class="section level4">
@@ -2943,12 +2943,12 @@ The dynamic contents of the report
 <p>Using the <code>collect_size</code> argument, you can perform data diagnosis with the corresponding number of sample data. If the number of data is very large, use <code>collect_size</code>.</p>
 <div class="sourceCode" id="cb72"><pre class="r"><span class="co"># create html file. </span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/diagnose_web_report.data.frame.html">diagnose_web_report</a></span>()
 
 <span class="co"># create pdf file. file name is Diagn.pdf</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/diagnose_paged_report.data.frame.html">diagnose_paged_report</a></span>(<span class="kw">output_format</span> <span class="kw">=</span> <span class="st">"pdf"</span>, <span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"Diagn.pdf"</span>)</pre></div>
 </div>
 </div>
@@ -2958,13 +2958,13 @@ The dynamic contents of the report
 <div id="calculating-descriptive-statistics-of-numerical-column-of-table-in-the-dbms" class="section level4">
 <h4 class="hasAnchor">
 <a href="#calculating-descriptive-statistics-of-numerical-column-of-table-in-the-dbms" class="anchor"></a>Calculating descriptive statistics of numerical column of table in the DBMS</h4>
-<p>Use <code><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">dplyr::tbl()</a></code> to create a tbl_dbi object, then use it as a data frame object. That is, the data argument of all EDA function is specified as tbl_dbi object instead of data frame object.</p>
+<p>Use <code><a href="https://dplyr.tidyverse.org/reference/tbl.html">dplyr::tbl()</a></code> to create a tbl_dbi object, then use it as a data frame object. That is, the data argument of all EDA function is specified as tbl_dbi object instead of data frame object.</p>
 <div class="sourceCode" id="cb73"><pre class="r"><span class="co"># extract only those with 'Urban' variable level is "Yes",</span>
 <span class="co"># and find 'Sales' statistics by 'ShelveLoc' and 'US'</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="no">Urban</span> <span class="kw">==</span> <span class="st">"Yes"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by</a></span>(<span class="no">ShelveLoc</span>, <span class="no">US</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">Urban</span> <span class="kw">==</span> <span class="st">"Yes"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">ShelveLoc</span>, <span class="no">US</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/describe.data.frame.html">describe</a></span>(<span class="no">Sales</span>)
 <span class="co">#&gt; # A tibble: 6 x 28</span>
 <span class="co">#&gt;   variable ShelveLoc US        n    na  mean    sd se_mean   IQR skewness</span>
@@ -2990,11 +2990,11 @@ The dynamic contents of the report
 <span class="kw pkg">RSQLite</span><span class="kw ns">::</span><span class="fu"><a href="https://rsqlite.r-dbi.org/reference/initExtension.html">initExtension</a></span>(<span class="no">con_sqlite</span>)
 
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
- <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/mutate.html">mutate</a></span>(<span class="kw">log_income</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span>(<span class="no">Income</span>)) <span class="kw">%&gt;%</span>
- <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by</a></span>(<span class="no">ShelveLoc</span>, <span class="no">US</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+ <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">log_income</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span>(<span class="no">Income</span>)) <span class="kw">%&gt;%</span>
+ <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">ShelveLoc</span>, <span class="no">US</span>) <span class="kw">%&gt;%</span>
  <span class="fu"><a href="reference/normality.data.frame.html">normality</a></span>(<span class="no">log_income</span>) <span class="kw">%&gt;%</span>
- <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="no">p_value</span> <span class="kw">&gt;</span> <span class="fl">0.01</span>)
+ <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">p_value</span> <span class="kw">&gt;</span> <span class="fl">0.01</span>)
 <span class="co">#&gt; # A tibble: 1 x 6</span>
 <span class="co">#&gt;   variable   ShelveLoc US    statistic p_value sample</span>
 <span class="co">#&gt;   &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;</span>
@@ -3006,9 +3006,9 @@ The dynamic contents of the report
 <div class="sourceCode" id="cb75"><pre class="r"><span class="co"># extract only those with 'ShelveLoc' variable level is "Good",</span>
 <span class="co"># and plot 'Income' by 'US'</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="no">ShelveLoc</span> <span class="kw">==</span> <span class="st">"Good"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by</a></span>(<span class="no">US</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">ShelveLoc</span> <span class="kw">==</span> <span class="st">"Good"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">US</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/plot_normality.data.frame.html">plot_normality</a></span>(<span class="no">Income</span>)</pre></div>
 <p><img src="figures/README-plot_normality_dbi-1.png"><!-- --><img src="figures/README-plot_normality_dbi-2.png"><!-- --></p>
 </div>
@@ -3020,12 +3020,12 @@ The dynamic contents of the report
 <span class="co"># by 'Urban' and 'US' variables.</span>
 <span class="co"># And the correlation coefficient is negative and smaller than 0.5</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="no">ShelveLoc</span> <span class="kw">==</span> <span class="st">"Good"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by</a></span>(<span class="no">Urban</span>, <span class="no">US</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">ShelveLoc</span> <span class="kw">==</span> <span class="st">"Good"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">Urban</span>, <span class="no">US</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/correlate.data.frame.html">correlate</a></span>(<span class="no">Sales</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="no">coef_corr</span> <span class="kw">&lt;</span> <span class="fl">0</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span>(<span class="no">coef_corr</span>) <span class="kw">&gt;</span> <span class="fl">0.5</span>)
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">coef_corr</span> <span class="kw">&lt;</span> <span class="fl">0</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span>(<span class="no">coef_corr</span>) <span class="kw">&gt;</span> <span class="fl">0.5</span>)
 <span class="co">#&gt; # A tibble: 6 x 5</span>
 <span class="co">#&gt;   Urban US    var1  var2       coef_corr</span>
 <span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt; &lt;fct&gt; &lt;fct&gt;          &lt;dbl&gt;</span>
@@ -3043,9 +3043,9 @@ The dynamic contents of the report
 <span class="co"># and visualize correlation plot of 'Sales' variable by 'Urban'</span>
 <span class="co"># and 'US' variables.</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="no">ShelveLoc</span> <span class="kw">==</span> <span class="st">"Good"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by</a></span>(<span class="no">Urban</span>, <span class="no">US</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">ShelveLoc</span> <span class="kw">==</span> <span class="st">"Good"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">Urban</span>, <span class="no">US</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/plot_correlate.data.frame.html">plot_correlate</a></span>(<span class="no">Sales</span>)</pre></div>
 <p><img src="figures/README-plot_correlation_dbi-1.png"><!-- --><img src="figures/README-plot_correlation_dbi-2.png"><!-- --><img src="figures/README-plot_correlation_dbi-3.png"><!-- --><img src="figures/README-plot_correlation_dbi-4.png"><!-- --></p>
 </div>
@@ -3054,7 +3054,7 @@ The dynamic contents of the report
 <a href="#eda-based-on-target-variable-1" class="anchor"></a>EDA based on target variable</h4>
 <p>The following is an EDA where the target column is character and the predictor column is a numeric type.</p>
 <div class="sourceCode" id="cb78"><pre class="r"><span class="co"># If the target variable is a categorical variable</span>
-<span class="no">categ</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/target_by.data.frame.html">target_by</a></span>(<span class="no">con_sqlite</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) , <span class="no">US</span>)
+<span class="no">categ</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/target_by.data.frame.html">target_by</a></span>(<span class="no">con_sqlite</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) , <span class="no">US</span>)
 
 <span class="co"># If the variable of interest is a numarical variable</span>
 <span class="no">cat_num</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/relate.html">relate</a></span>(<span class="no">categ</span>, <span class="no">Sales</span>)
@@ -3128,18 +3128,18 @@ The dynamic contents of the report
 <p>Using the <code>collect_size</code> argument, you can perform EDA with the corresponding number of sample data. If the number of data is very large, use <code>collect_size</code>.</p>
 <div class="sourceCode" id="cb80"><pre class="r"><span class="co"># create html file. file name is EDA_TB_CARSEATS.html</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/eda_web_report.data.frame.html">eda_web_report</a></span>(<span class="no">US</span>, <span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"EDA_TB_CARSEATS.html"</span>)
 
 <span class="co">## target variable is numerical variable</span>
 <span class="co"># reporting the EDA information, and collect size is 350</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/eda_web_report.data.frame.html">eda_web_report</a></span>(<span class="no">Sales</span>, <span class="kw">collect_size</span> <span class="kw">=</span> <span class="fl">350</span>)
 
 <span class="co"># create pdf file. file name is EDA2.pdf</span>
 <span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/eda_paged_report.data.frame.html">eda_paged_report</a></span>(<span class="st">"Sales"</span>, <span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"EDA2.pdf"</span>)</pre></div>
 </div>
 </div>
@@ -3165,6 +3165,12 @@ The dynamic contents of the report
 <li>
 <a href="https://www.r-project.org/Licenses/GPL-2">GPL-2</a> | file <a href="LICENSE-text.html">LICENSE</a>
 </li>
+</ul>
+</div>
+<div class="citation">
+<h2>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html">Citing dlookr</a></li>
 </ul>
 </div>
 <div class="developers">
