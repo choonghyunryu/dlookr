@@ -73,7 +73,7 @@ for diagnosing the quality of the data." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4.9000</span>
       </span>
     </div>
 
@@ -327,7 +327,8 @@ use it after loading the Google font with import_google_font().</p>
     <div class='dont-index'><p><code><a href='diagnose_paged_report.tbl_dbi.html'>diagnose_paged_report.tbl_dbi</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># create dataset</span>
 <span class='no'>heartfailure2</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>dlookr</span><span class='kw ns'>::</span><span class='no'><a href='heartfailure.html'>heartfailure</a></span>
 <span class='no'>heartfailure2</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>heartfailure2</span>)), <span class='fl'>20</span>), <span class='st'>"sodium"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
@@ -336,21 +337,22 @@ use it after loading the Google font with import_google_font().</p>
 <span class='no'>heartfailure2</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>heartfailure2</span>)), <span class='fl'>1</span>), <span class='st'>"creatinine"</span>] <span class='kw'>&lt;-</span> -<span class='fl'>0.3</span>
 
 <span class='co'># create pdf file. file name is Diagnosis_Paged_Report.pdf</span>
-<span class='co'># diagnose_paged_report(heartfailure2)</span>
+<span class='fu'>diagnose_paged_report</span>(<span class='no'>heartfailure2</span>)
 
 <span class='co'># create pdf file. file name is Diagn.pdf. and change cover image</span>
-<span class='co'># cover &lt;- file.path(system.file(package = "dlookr"), "report", "cover2.jpg")</span>
-<span class='co'># diagnose_paged_report(heartfailure2, cover_img = cover, title_color = "gray",</span>
-<span class='co'>#  output_file = "Diagn.pdf")</span>
+<span class='no'>cover</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"dlookr"</span>), <span class='st'>"report"</span>, <span class='st'>"cover2.jpg"</span>)
+<span class='fu'>diagnose_paged_report</span>(<span class='no'>heartfailure2</span>, <span class='kw'>cover_img</span> <span class='kw'>=</span> <span class='no'>cover</span>, <span class='kw'>title_color</span> <span class='kw'>=</span> <span class='st'>"gray"</span>,
+  <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"Diagn.pdf"</span>)
 
 <span class='co'># create pdf file. file name is ./Diagn.pdf and not browse</span>
-<span class='co'># cover &lt;- file.path(system.file(package = "dlookr"), "report", "cover3.jpg")</span>
-<span class='co'># diagnose_paged_report(heartfailure2, output_dir = ".", cover_img = cover, </span>
-<span class='co'>#   flag_content_missing = FALSE, output_file = "Diagn.pdf", browse = FALSE)</span>
+<span class='no'>cover</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"dlookr"</span>), <span class='st'>"report"</span>, <span class='st'>"cover3.jpg"</span>)
+<span class='fu'>diagnose_paged_report</span>(<span class='no'>heartfailure2</span>, <span class='kw'>output_dir</span> <span class='kw'>=</span> <span class='st'>"."</span>, <span class='kw'>cover_img</span> <span class='kw'>=</span> <span class='no'>cover</span>,
+  <span class='kw'>flag_content_missing</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"Diagn.pdf"</span>, <span class='kw'>browse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># create pdf file. file name is Diagnosis_Paged_Report.html</span>
-<span class='co'># diagnose_paged_report(heartfailure2, output_format = "html")</span>
-}</div></pre>
+<span class='fu'>diagnose_paged_report</span>(<span class='no'>heartfailure2</span>, <span class='kw'>output_format</span> <span class='kw'>=</span> <span class='st'>"html"</span>)
+}
+<span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

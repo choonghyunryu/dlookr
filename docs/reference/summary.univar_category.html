@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4.9000</span>
       </span>
     </div>
 
@@ -171,7 +171,8 @@ The "variables" attribute is not displayed.</p>
     <div class='dont-index'><p><code><a href='plot.univar_category.html'>plot.univar_category</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
 <span class='co'># Calculates the all categorical variables</span>
 <span class='no'>all_var</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='univar_category.data.frame.html'>univar_category</a></span>(<span class='no'>heartfailure</span>)
@@ -198,10 +199,9 @@ The "variables" attribute is not displayed.</p>
 #&gt; 2   Male 194 0.6488294
 #&gt; 
 #&gt; $smoking
-#&gt;   smoking   n       rate
-#&gt; 1      No 201 0.67224080
-#&gt; 2     Yes  93 0.31103679
-#&gt; 3    &lt;NA&gt;   5 0.01672241
+#&gt;   smoking   n      rate
+#&gt; 1      No 203 0.6789298
+#&gt; 2     Yes  96 0.3210702
 #&gt; 
 #&gt; $death_event
 #&gt;   death_event   n      rate
@@ -211,26 +211,24 @@ The "variables" attribute is not displayed.</p>
 <span class='co'># Calculates the only smoking variable</span>
 <span class='no'>all_var</span> <span class='kw'>%&gt;%</span>
   <span class='st'>"["</span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>all_var</span>) <span class='kw'>%in%</span> <span class='st'>"smoking"</span>)</div><div class='output co'>#&gt; $smoking
-#&gt;   smoking   n       rate
-#&gt; 1      No 201 0.67224080
-#&gt; 2     Yes  93 0.31103679
-#&gt; 3    &lt;NA&gt;   5 0.01672241
+#&gt;   smoking   n      rate
+#&gt; 1      No 203 0.6789298
+#&gt; 2     Yes  96 0.3210702
 #&gt; </div><div class='input'>
 <span class='no'>smoking</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='univar_category.data.frame.html'>univar_category</a></span>(<span class='no'>heartfailure</span>, <span class='no'>smoking</span>)
 
 <span class='co'># Print univar_category class object</span>
 <span class='no'>smoking</span></div><div class='output co'>#&gt; $smoking
-#&gt;   smoking   n       rate
-#&gt; 1      No 201 0.67224080
-#&gt; 2     Yes  93 0.31103679
-#&gt; 3    &lt;NA&gt;   5 0.01672241
+#&gt;   smoking   n      rate
+#&gt; 1      No 203 0.6789298
+#&gt; 2     Yes  96 0.3210702
 #&gt; </div><div class='input'>
 <span class='co'># Filtering the case of smoking included NA </span>
 <span class='no'>smoking</span> <span class='kw'>%&gt;%</span>
   <span class='st'>"[["</span>(<span class='fl'>1</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(!<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>smoking</span>))</div><div class='output co'>#&gt;   smoking   n      rate
-#&gt; 1      No 201 0.6722408
-#&gt; 2     Yes  93 0.3110368</div><div class='input'>
+#&gt; 1      No 203 0.6789298
+#&gt; 2     Yes  96 0.3210702</div><div class='input'>
 <span class='co'># Summary the all case : Return a invisible copy of an object.</span>
 <span class='no'>stat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>all_var</span>)
 
@@ -240,8 +238,9 @@ The "variables" attribute is not displayed.</p>
 #&gt; 2        diabetes  8.030100 4.600629e-03  1
 #&gt; 3 hblood_pressure 26.491639 2.646812e-07  1
 #&gt; 4             sex 26.491639 2.646812e-07  1
-#&gt; 5         smoking 39.673469 3.001757e-10  1
-#&gt; 6     death_event 38.290970 6.094401e-10  1</div><div class='input'>
+#&gt; 5         smoking 38.290970 6.094401e-10  1
+#&gt; 6     death_event 38.290970 6.094401e-10  1</div><div class='input'># }
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

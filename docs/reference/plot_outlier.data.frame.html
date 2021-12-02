@@ -73,7 +73,7 @@ for diagnosing the quality of the numerical data." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4.9000</span>
       </span>
     </div>
 
@@ -196,51 +196,42 @@ use it after loading the Google font with import_google_font().</p>
     <div class='dont-index'><p><code><a href='plot_outlier.tbl_dbi.html'>plot_outlier.tbl_dbi</a></code>, <code><a href='diagnose_outlier.data.frame.html'>diagnose_outlier.data.frame</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Visualization of all numerical variables</span>
-<span class='co'># plot_outlier(heartfailure)</span>
-
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='co'># Visualization of all numerical variables</span>
+<span class='fu'>plot_outlier</span>(<span class='no'>heartfailure</span>)</div><div class='img'><img src='plot_outlier.data.frame-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-4.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-6.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-7.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Select the variable to diagnose</span>
-<span class='fu'>plot_outlier</span>(<span class='no'>heartfailure</span>, <span class='no'>cpk_enzyme</span>, <span class='no'>sodium</span>)</div><div class='img'><img src='plot_outlier.data.frame-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># plot_outlier(heartfailure, -cpk_enzyme, -sodium)</span>
-<span class='co'># plot_outlier(heartfailure, "cpk_enzyme", "sodium")</span>
-<span class='co'># plot_outlier(heartfailure, 7)</span>
-
+<span class='fu'>plot_outlier</span>(<span class='no'>heartfailure</span>, <span class='no'>cpk_enzyme</span>, <span class='no'>sodium</span>)</div><div class='img'><img src='plot_outlier.data.frame-8.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-9.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot_outlier</span>(<span class='no'>heartfailure</span>, -<span class='no'>cpk_enzyme</span>, -<span class='no'>sodium</span>)</div><div class='img'><img src='plot_outlier.data.frame-10.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-11.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-12.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-13.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-14.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot_outlier</span>(<span class='no'>heartfailure</span>, <span class='st'>"cpk_enzyme"</span>, <span class='st'>"sodium"</span>)</div><div class='img'><img src='plot_outlier.data.frame-15.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-16.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot_outlier</span>(<span class='no'>heartfailure</span>, <span class='fl'>7</span>)</div><div class='img'><img src='plot_outlier.data.frame-17.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Using the col argument</span>
-<span class='co'># plot_outlier(heartfailure, cpk_enzyme, col = "gray")</span>
-
+<span class='fu'>plot_outlier</span>(<span class='no'>heartfailure</span>, <span class='no'>cpk_enzyme</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"gray"</span>)</div><div class='img'><img src='plot_outlier.data.frame-18.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Not allow typographic argument</span>
-<span class='co'># plot_outlier(heartfailure, cpk_enzyme, typographic = FALSE)</span>
-
+<span class='fu'>plot_outlier</span>(<span class='no'>heartfailure</span>, <span class='no'>cpk_enzyme</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot_outlier.data.frame-19.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Using pipes ---------------------------------</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
 <span class='co'># Visualization of all numerical variables</span>
-<span class='co'># heartfailure %&gt;%</span>
-<span class='co'>#   plot_outlier()</span>
-
+<span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>plot_outlier</span>()</div><div class='img'><img src='plot_outlier.data.frame-20.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-21.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-22.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-23.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-24.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-25.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-26.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Positive values select variables</span>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>plot_outlier</span>(<span class='no'>cpk_enzyme</span>, <span class='no'>sodium</span>)</div><div class='img'><img src='plot_outlier.data.frame-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-4.png' alt='' width='700' height='433' /></div><div class='input'>  
-# Negative values to drop variables
-# heartfailure %&gt;%
-#   plot_outlier(-cpk_enzyme, -sodium)
-
-# Positions values select variables
-# heartfailure %&gt;%
-#   plot_outlier(7)
-
-# Positions values select variables
-# heartfailure %&gt;%
-#   plot_outlier(-1, -5)
-
-# Using pipes &amp; dplyr -------------------------
-# Visualization of numerical variables with a ratio of
-# outliers greater than 5%
-# heartfailure %&gt;%
-#   plot_outlier(heartfailure %&gt;%
-#      diagnose_outlier() %&gt;%
-#      filter(outliers_ratio &gt; 5) %&gt;%
-#      select(variables) %&gt;%
-#      pull())
+  <span class='fu'>plot_outlier</span>(<span class='no'>cpk_enzyme</span>, <span class='no'>sodium</span>)</div><div class='img'><img src='plot_outlier.data.frame-27.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-28.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Negative values to drop variables</span>
+<span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>plot_outlier</span>(-<span class='no'>cpk_enzyme</span>, -<span class='no'>sodium</span>)</div><div class='img'><img src='plot_outlier.data.frame-29.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-30.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-31.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-32.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-33.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Positions values select variables</span>
+<span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>plot_outlier</span>(<span class='fl'>7</span>)</div><div class='img'><img src='plot_outlier.data.frame-34.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Negative values to drop variables</span>
+<span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>plot_outlier</span>(-<span class='fl'>1</span>, -<span class='fl'>5</span>)</div><div class='img'><img src='plot_outlier.data.frame-35.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-36.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-37.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-38.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-39.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Using pipes &amp; dplyr -------------------------</span>
+<span class='co'># Visualization of numerical variables with a ratio of</span>
+<span class='co'># outliers greater than 5%</span>
+<span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>plot_outlier</span>(<span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='diagnose_outlier.data.frame.html'>diagnose_outlier</a></span>() <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>outliers_ratio</span> <span class='kw'>&gt;</span> <span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>variables</span>) <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span>())</div><div class='img'><img src='plot_outlier.data.frame-40.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-41.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_outlier.data.frame-42.png' alt='' width='700' height='433' /></div><div class='input'># }
 
 </div></pre>
   </div>

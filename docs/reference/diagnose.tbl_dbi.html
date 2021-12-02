@@ -73,7 +73,7 @@ the column of the DBMS table through tbl_dbi." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4.9000</span>
       </span>
     </div>
 
@@ -190,7 +190,8 @@ or to select a variable to be corrected or removed through data diagnosis.</p><u
     <div class='dont-index'><p><code><a href='diagnose.data.frame.html'>diagnose.data.frame</a></code>, <code><a href='diagnose_category.tbl_dbi.html'>diagnose_category.tbl_dbi</a></code>, <code><a href='diagnose_numeric.tbl_dbi.html'>diagnose_numeric.tbl_dbi</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
 <span class='co'># connect DBMS</span>
 <span class='no'>con_sqlite</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://dbi.r-dbi.org/reference/dbConnect.html'>dbConnect</a></span>(<span class='kw pkg'>RSQLite</span><span class='kw ns'>::</span><span class='fu'><a href='https://rsqlite.r-dbi.org/reference/SQLite.html'>SQLite</a></span>(), <span class='st'>":memory:"</span>)
@@ -220,25 +221,57 @@ or to select a variable to be corrected or removed through data diagnosis.</p><u
 #&gt; <span style='color: #BCBCBC;'>13</span> training_hours integer             0           0              241    0.012<span style='text-decoration: underline;'>6</span>  
 #&gt; <span style='color: #BCBCBC;'>14</span> job_chnge      charac…             0           0                2    0.000<span style='text-decoration: underline;'>104</span></div><div class='input'>
 <span class='co'># Positive values select columns</span>
-<span class='co'># con_sqlite %&gt;% </span>
-<span class='co'>#   tbl("TB_JOBCHANGE") %&gt;% </span>
-<span class='co'>#   diagnose(gender, education_level, company_size)</span>
-
+<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_JOBCHANGE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='diagnose.data.frame.html'>diagnose</a></span>(<span class='no'>gender</span>, <span class='no'>education_level</span>, <span class='no'>company_size</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 3 x 6</span>
+#&gt;   variables      types    missing_count missing_percent unique_count unique_rate
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> gender         charact…          <span style='text-decoration: underline;'>4</span>508           23.5             4    0.000<span style='text-decoration: underline;'>209</span>
+#&gt; <span style='color: #BCBCBC;'>2</span> education_lev… charact…           460            2.40            6    0.000<span style='text-decoration: underline;'>313</span>
+#&gt; <span style='color: #BCBCBC;'>3</span> company_size   charact…          <span style='text-decoration: underline;'>5</span>938           31.0             9    0.000<span style='text-decoration: underline;'>470</span></div><div class='input'>
 <span class='co'># Negative values to drop columns</span>
-<span class='co'># con_sqlite %&gt;% </span>
-<span class='co'>#   tbl("TB_JOBCHANGE") %&gt;% </span>
-<span class='co'>#   diagnose(-gender, -education_level, -company_size)</span>
-
+<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_JOBCHANGE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='diagnose.data.frame.html'>diagnose</a></span>(-<span class='no'>gender</span>, -<span class='no'>education_level</span>, -<span class='no'>company_size</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 11 x 6</span>
+#&gt;    variables      types   missing_count missing_percent unique_count unique_rate
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> enrollee_id    charac…             0           0            <span style='text-decoration: underline;'>19</span>158    1       
+#&gt; <span style='color: #BCBCBC;'> 2</span> city           charac…             0           0              123    0.006<span style='text-decoration: underline;'>42</span> 
+#&gt; <span style='color: #BCBCBC;'> 3</span> city_dev_index double              0           0               93    0.004<span style='text-decoration: underline;'>85</span> 
+#&gt; <span style='color: #BCBCBC;'> 4</span> relevent_expe… charac…             0           0                2    0.000<span style='text-decoration: underline;'>104</span>
+#&gt; <span style='color: #BCBCBC;'> 5</span> enrolled_univ… charac…           386           2.01             4    0.000<span style='text-decoration: underline;'>209</span>
+#&gt; <span style='color: #BCBCBC;'> 6</span> major_discipl… charac…          <span style='text-decoration: underline;'>2</span>813          14.7              7    0.000<span style='text-decoration: underline;'>365</span>
+#&gt; <span style='color: #BCBCBC;'> 7</span> experience     charac…            65           0.339           23    0.001<span style='text-decoration: underline;'>20</span> 
+#&gt; <span style='color: #BCBCBC;'> 8</span> company_type   charac…          <span style='text-decoration: underline;'>6</span>140          32.0              7    0.000<span style='text-decoration: underline;'>365</span>
+#&gt; <span style='color: #BCBCBC;'> 9</span> last_new_job   charac…           423           2.21             7    0.000<span style='text-decoration: underline;'>365</span>
+#&gt; <span style='color: #BCBCBC;'>10</span> training_hours integer             0           0              241    0.012<span style='text-decoration: underline;'>6</span>  
+#&gt; <span style='color: #BCBCBC;'>11</span> job_chnge      charac…             0           0                2    0.000<span style='text-decoration: underline;'>104</span></div><div class='input'>
 <span class='co'># Positions values select columns, and In-memory mode</span>
-<span class='co'># con_sqlite %&gt;% </span>
-<span class='co'>#   tbl("TB_JOBCHANGE") %&gt;% </span>
-<span class='co'>#   diagnose(1, 3, 8, in_database = FALSE)</span>
-
+<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_JOBCHANGE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='diagnose.data.frame.html'>diagnose</a></span>(<span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>8</span>, <span class='kw'>in_database</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 3 x 6</span>
+#&gt;   variables       types   missing_count missing_percent unique_count unique_rate
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> enrollee_id     charac…             0             0          <span style='text-decoration: underline;'>19</span>158    1       
+#&gt; <span style='color: #BCBCBC;'>2</span> city_dev_index  numeric             0             0             93    0.004<span style='text-decoration: underline;'>85</span> 
+#&gt; <span style='color: #BCBCBC;'>3</span> major_discipli… charac…          <span style='text-decoration: underline;'>2</span>813            14.7            7    0.000<span style='text-decoration: underline;'>365</span></div><div class='input'>
 <span class='co'># Positions values select columns, and In-memory mode and collect size is 200</span>
-<span class='co'># con_sqlite %&gt;% </span>
-<span class='co'>#   tbl("TB_JOBCHANGE") %&gt;% </span>
-<span class='co'>#   diagnose(-8, -9, -10, in_database = FALSE, collect_size = 200)</span>
-
+<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_JOBCHANGE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='diagnose.data.frame.html'>diagnose</a></span>(-<span class='fl'>8</span>, -<span class='fl'>9</span>, -<span class='fl'>10</span>, <span class='kw'>in_database</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>collect_size</span> <span class='kw'>=</span> <span class='fl'>200</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 11 x 6</span>
+#&gt;    variables      types   missing_count missing_percent unique_count unique_rate
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> enrollee_id    charac…             0             0            200       1    
+#&gt; <span style='color: #BCBCBC;'> 2</span> city           charac…             0             0             49       0.245
+#&gt; <span style='color: #BCBCBC;'> 3</span> city_dev_index numeric             0             0             40       0.2  
+#&gt; <span style='color: #BCBCBC;'> 4</span> gender         charac…            48            24              4       0.02 
+#&gt; <span style='color: #BCBCBC;'> 5</span> relevent_expe… charac…             0             0              2       0.01 
+#&gt; <span style='color: #BCBCBC;'> 6</span> enrolled_univ… charac…             5             2.5            4       0.02 
+#&gt; <span style='color: #BCBCBC;'> 7</span> education_lev… charac…             6             3              5       0.025
+#&gt; <span style='color: #BCBCBC;'> 8</span> company_type   charac…            62            31              7       0.035
+#&gt; <span style='color: #BCBCBC;'> 9</span> last_new_job   charac…             5             2.5            7       0.035
+#&gt; <span style='color: #BCBCBC;'>10</span> training_hours integer             0             0            101       0.505
+#&gt; <span style='color: #BCBCBC;'>11</span> job_chnge      charac…             0             0              2       0.01 </div><div class='input'>
 <span class='co'># Using pipes &amp; dplyr -------------------------</span>
 <span class='co'># Diagnosis of missing variables</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
@@ -256,7 +289,8 @@ or to select a variable to be corrected or removed through data diagnosis.</p><u
 #&gt; <span style='color: #BCBCBC;'>7</span> company_type    charac…          <span style='text-decoration: underline;'>6</span>140          32.0              7    0.000<span style='text-decoration: underline;'>365</span>
 #&gt; <span style='color: #BCBCBC;'>8</span> last_new_job    charac…           423           2.21             7    0.000<span style='text-decoration: underline;'>365</span></div><div class='input'>
 <span class='co'># Disconnect DBMS   </span>
-<span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://dbi.r-dbi.org/reference/dbDisconnect.html'>dbDisconnect</a></span>(<span class='no'>con_sqlite</span>)</div></pre>
+<span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://dbi.r-dbi.org/reference/dbDisconnect.html'>dbDisconnect</a></span>(<span class='no'>con_sqlite</span>)
+<span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -73,7 +73,7 @@ for find relationship between two numerical variables." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4.9000</span>
       </span>
     </div>
 
@@ -193,7 +193,8 @@ use it after loading the Google font with import_google_font().</p>
     <div class='dont-index'><p><code><a href='plot_correlate.tbl_dbi.html'>plot_correlate.tbl_dbi</a></code>, <code><a href='plot_outlier.data.frame.html'>plot_outlier.data.frame</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Visualize correlation plot of all numerical variables</span>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='co'># Visualize correlation plot of all numerical variables</span>
 <span class='fu'>plot_correlate</span>(<span class='no'>heartfailure</span>)</div><div class='img'><img src='plot_correlate.data.frame-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Select the variable to compute</span>
 <span class='fu'>plot_correlate</span>(<span class='no'>heartfailure</span>, <span class='no'>creatinine</span>, <span class='no'>sodium</span>)</div><div class='img'><img src='plot_correlate.data.frame-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot_correlate</span>(<span class='no'>heartfailure</span>, -<span class='no'>creatinine</span>, -<span class='no'>sodium</span>)</div><div class='img'><img src='plot_correlate.data.frame-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot_correlate</span>(<span class='no'>heartfailure</span>, <span class='st'>"creatinine"</span>, <span class='st'>"sodium"</span>)</div><div class='img'><img src='plot_correlate.data.frame-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot_correlate</span>(<span class='no'>heartfailure</span>, <span class='fl'>1</span>)</div><div class='img'><img src='plot_correlate.data.frame-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot_correlate</span>(<span class='no'>heartfailure</span>, <span class='no'>creatinine</span>, <span class='no'>sodium</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>)</div><div class='img'><img src='plot_correlate.data.frame-6.png' alt='' width='700' height='433' /></div><div class='input'>
@@ -223,14 +224,14 @@ use it after loading the Google font with import_google_font().</p>
 <span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
 <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>smoking</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
 <span class='fu'>plot_correlate</span>(<span class='no'>creatinine</span>)</div><div class='img'><img src='plot_correlate.data.frame-14.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_correlate.data.frame-15.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_correlate.data.frame-16.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_correlate.data.frame-17.png' alt='' width='700' height='433' /></div><div class='input'>
-# Extract only those with 'smoking' variable level is "Yes",
-# and visualize correlation plot of 'creatinine' variable by 'hblood_pressure'
-# and 'death_event' variables.
-#heartfailure %&gt;%
-#  filter(smoking == "Yes") %&gt;%
-#  group_by(hblood_pressure, death_event) %&gt;%
-#  plot_correlate(creatinine)
- 
+<span class='co'># Extract only those with 'smoking' variable level is "Yes",</span>
+<span class='co'># and visualize correlation plot of 'creatinine' variable by 'hblood_pressure'</span>
+<span class='co'># and 'death_event' variables.</span>
+<span class='no'>heartfailure</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>smoking</span> <span class='kw'>==</span> <span class='st'>"Yes"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hblood_pressure</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>plot_correlate</span>(<span class='no'>creatinine</span>)</div><div class='img'><img src='plot_correlate.data.frame-18.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_correlate.data.frame-19.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_correlate.data.frame-20.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_correlate.data.frame-21.png' alt='' width='700' height='433' /></div><div class='input'># }
+  
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4.9000</span>
       </span>
     </div>
 
@@ -187,7 +187,8 @@ and the number of observations including missing values and complete cases .</p>
 use it after loading the Google font with import_google_font().</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Generate data for the example</span>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='co'># Generate data for the example</span>
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>123L</span>)
 <span class='no'>jobchange2</span> <span class='kw'>&lt;-</span> <span class='no'>jobchange</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>jobchange</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>1000</span>), ]
 
@@ -223,8 +224,8 @@ use it after loading the Google font with import_google_font().</p>
 <span class='fu'>plot_na_intersect</span>(<span class='no'>jobchange2</span>, <span class='kw'>n_vars</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='img'><img src='plot_na_intersect-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Using n_intersects argument</span>
 <span class='fu'>plot_na_intersect</span>(<span class='no'>jobchange2</span>, <span class='kw'>only_na</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>n_intersacts</span> <span class='kw'>=</span> <span class='fl'>7</span>)</div><div class='img'><img src='plot_na_intersect-5.png' alt='' width='700' height='433' /></div><div class='input'>
-# Not allow typographic elements
-# plot_na_intersect(jobchange2, typographic = FALSE)
+<span class='co'># Non typographic elements</span>
+<span class='fu'>plot_na_intersect</span>(<span class='no'>jobchange2</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot_na_intersect-6.png' alt='' width='700' height='433' /></div><div class='input'># }
 
 </div></pre>
   </div>

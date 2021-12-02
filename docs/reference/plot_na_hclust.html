@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4.9000</span>
       </span>
     </div>
 
@@ -174,17 +174,17 @@ for each combination of variables.</p>
 use it after loading the Google font with import_google_font().</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Generate data for the example</span>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='co'># Generate data for the example</span>
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>123L</span>)
 <span class='no'>jobchange2</span> <span class='kw'>&lt;-</span> <span class='no'>jobchange</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>jobchange</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>1000</span>), ]
 
 <span class='co'># Visualize hcluster chart for variables with missing value.</span>
 <span class='fu'>plot_na_hclust</span>(<span class='no'>jobchange2</span>)</div><div class='img'><img src='plot_na_hclust-1.png' alt='' width='700' height='433' /></div><div class='input'>
-# Change the main title.
-# plot_na_hclust(jobchange2, main = "Distribution of missing value")
-
-# Not support typographic elements
-# plot_na_hclust(jobchange2, typographic = FALSE)
+<span class='co'># Change the main title.</span>
+<span class='fu'>plot_na_hclust</span>(<span class='no'>jobchange2</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"Distribution of missing value"</span>)</div><div class='img'><img src='plot_na_hclust-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Non typographic elements</span>
+<span class='fu'>plot_na_hclust</span>(<span class='no'>jobchange2</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot_na_hclust-3.png' alt='' width='700' height='433' /></div><div class='input'># }
 
 </div></pre>
   </div>

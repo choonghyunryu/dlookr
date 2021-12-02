@@ -73,7 +73,7 @@ data analysis for the DBMS table through tbl_dbi" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4.9000</span>
       </span>
     </div>
 
@@ -267,7 +267,8 @@ This feature is useful for EDA of data with many variables, rather than data wit
     <div class='dont-index'><p><code><a href='eda_web_report.data.frame.html'>eda_web_report.data.frame</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
 <span class='co'># Generate data for the example</span>
@@ -279,22 +280,23 @@ This feature is useful for EDA of data with many variables, rather than data wit
 <span class='no'>con_sqlite</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://dbi.r-dbi.org/reference/dbConnect.html'>dbConnect</a></span>(<span class='kw pkg'>RSQLite</span><span class='kw ns'>::</span><span class='fu'><a href='https://rsqlite.r-dbi.org/reference/SQLite.html'>SQLite</a></span>(), <span class='st'>":memory:"</span>)
 
 <span class='co'># copy heartfailure2 to the DBMS with a table named TB_HEARTFAILURE</span>
-<span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/copy_to.html'>copy_to</a></span>(<span class='no'>con_sqlite</span>, <span class='no'>heartfailure2</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"TB_HEARTFAILURE"</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/copy_to.html'>copy_to</a></span>(<span class='no'>con_sqlite</span>, <span class='no'>heartfailure2</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"TB_HEARTFAILURE"</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># reporting the diagnosis information -------------------------</span>
 <span class='co'># create pdf file. file name is EDA_Report.html</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='eda_web_report.data.frame.html'>eda_web_report</a></span>(<span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"death_event"</span>)
 
 <span class='co'># create pdf file. file name is EDA.html, and collect size is 250</span>
 <span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='eda_web_report.data.frame.html'>eda_web_report</a></span>(<span class='kw'>collect_size</span> <span class='kw'>=</span> <span class='fl'>250</span>, <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"EDA.html"</span>)
 
 <span class='co'># Disconnect DBMS   </span>
 <span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://dbi.r-dbi.org/reference/dbDisconnect.html'>dbDisconnect</a></span>(<span class='no'>con_sqlite</span>)
-}</div></pre>
+}
+<span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

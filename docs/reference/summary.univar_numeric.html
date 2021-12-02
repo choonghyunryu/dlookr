@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4.9000</span>
       </span>
     </div>
 
@@ -181,7 +181,8 @@ The "variables" attribute is not displayed.</p>
     <div class='dont-index'><p><code><a href='plot.univar_numeric.html'>plot.univar_numeric</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Calculates the all categorical variables</span>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='co'># Calculates the all categorical variables</span>
 <span class='no'>all_var</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='univar_numeric.data.frame.html'>univar_numeric</a></span>(<span class='no'>heartfailure</span>)
 
 <span class='co'># Print univar_numeric class object</span>
@@ -220,8 +221,16 @@ The "variables" attribute is not displayed.</p>
 #&gt; <span style='color: #BCBCBC;'>6</span> sodium            -<span style='color: #BB0000;'>0.062</span><span style='color: #BB0000; text-decoration: underline;'>4</span>  0.735  0.042<span style='text-decoration: underline;'>5</span>     1   -<span style='color: #BB0000;'>1.05</span>    4.12        0
 #&gt; <span style='color: #BCBCBC;'>7</span> time               0.117   0.597  0.034<span style='text-decoration: underline;'>5</span>     1    0.128  -<span style='color: #BB0000;'>1.21</span>        0</div><div class='input'>
 <span class='co'># Statistics of numerical variables normalized by Min-Max method</span>
-<span class='co'># summary(all_var, stand = "minmax")</span>
-
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>all_var</span>, <span class='kw'>stand</span> <span class='kw'>=</span> <span class='st'>"minmax"</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 7 x 8</span>
+#&gt;   variable            mean    sd se_mean    IQR skewness kurtosis median
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> age               0.379  0.216 0.012<span style='text-decoration: underline;'>5</span>  0.345     0.424  -<span style='color: #BB0000;'>0.184</span>  0.364 
+#&gt; <span style='color: #BCBCBC;'>2</span> cpk_enzyme        0.071<span style='text-decoration: underline;'>3</span> 0.124 0.007<span style='text-decoration: underline;'>16</span> 0.059<span style='text-decoration: underline;'>4</span>    4.46   25.1    0.029<span style='text-decoration: underline;'>0</span>
+#&gt; <span style='color: #BCBCBC;'>3</span> ejection_fraction 0.365  0.179 0.010<span style='text-decoration: underline;'>4</span>  0.227     0.555   0.041<span style='text-decoration: underline;'>4</span> 0.364 
+#&gt; <span style='color: #BCBCBC;'>4</span> platelets         0.289  0.119 0.006<span style='text-decoration: underline;'>86</span> 0.110     1.46    6.21   0.287 
+#&gt; <span style='color: #BCBCBC;'>5</span> creatinine        0.100  0.116 0.006<span style='text-decoration: underline;'>72</span> 0.056<span style='text-decoration: underline;'>2</span>    4.46   25.8    0.067<span style='text-decoration: underline;'>4</span>
+#&gt; <span style='color: #BCBCBC;'>6</span> sodium            0.675  0.126 0.007<span style='text-decoration: underline;'>29</span> 0.171    -<span style='color: #BB0000;'>1.05</span>    4.12   0.686 
+#&gt; <span style='color: #BCBCBC;'>7</span> time              0.449  0.276 0.016<span style='text-decoration: underline;'>0</span>  0.463     0.128  -<span style='color: #BB0000;'>1.21</span>   0.395 </div><div class='input'>
 <span class='co'># Statistics of numerical variables standardized by Z-score method</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>all_var</span>, <span class='kw'>stand</span> <span class='kw'>=</span> <span class='st'>"zscore"</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 7 x 8</span>
 #&gt;   variable               mean    sd se_mean   IQR skewness kurtosis   median
@@ -232,7 +241,8 @@ The "variables" attribute is not displayed.</p>
 #&gt; <span style='color: #BCBCBC;'>4</span> platelets          8.98<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-17</span>     1  0.057<span style='text-decoration: underline;'>8</span> 0.930    1.46    6.21   -<span style='color: #BB0000;'>0.013</span><span style='color: #BB0000; text-decoration: underline;'>9</span> 
 #&gt; <span style='color: #BCBCBC;'>5</span> creatinine        -<span style='color: #BB0000;'>7.88</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-17</span>     1  0.057<span style='text-decoration: underline;'>8</span> 0.483    4.46   25.8    -<span style='color: #BB0000;'>0.284</span>  
 #&gt; <span style='color: #BCBCBC;'>6</span> sodium            -<span style='color: #BB0000;'>8.82</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-16</span>     1  0.057<span style='text-decoration: underline;'>8</span> 1.36    -<span style='color: #BB0000;'>1.05</span>    4.12    0.084<span style='text-decoration: underline;'>9</span> 
-#&gt; <span style='color: #BCBCBC;'>7</span> time              -<span style='color: #BB0000;'>1.80</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-16</span>     1  0.057<span style='text-decoration: underline;'>8</span> 1.67     0.128  -<span style='color: #BB0000;'>1.21</span>   -<span style='color: #BB0000;'>0.197</span>  </div><div class='input'>
+#&gt; <span style='color: #BCBCBC;'>7</span> time              -<span style='color: #BB0000;'>1.80</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-16</span>     1  0.057<span style='text-decoration: underline;'>8</span> 1.67     0.128  -<span style='color: #BB0000;'>1.21</span>   -<span style='color: #BB0000;'>0.197</span>  </div><div class='input'># }
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

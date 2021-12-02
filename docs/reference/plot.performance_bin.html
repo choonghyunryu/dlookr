@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4.9000</span>
       </span>
     </div>
 
@@ -160,7 +160,8 @@ use it after loading the Google font with import_google_font().</p>
 <code><a href='plot.optimal_bins.html'>plot.optimal_bins</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Generate data for the example</span>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='co'># Generate data for the example</span>
 <span class='no'>heartfailure2</span> <span class='kw'>&lt;-</span> <span class='no'>heartfailure</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>123</span>)
@@ -216,11 +217,43 @@ use it after loading the Google font with import_google_font().</p>
 #&gt; </div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>perf</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 2 rows containing missing values (geom_point).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 2 row(s) containing missing values (geom_path).</span></div><div class='img'><img src='plot.performance_bin-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Diagnose performance binned variable without NA</span>
-<span class='co'># perf &lt;- performance_bin(heartfailure2$death_event_2, heartfailure2$creatinine_bin, na.rm = TRUE) </span>
-<span class='co'># perf</span>
-<span class='co'># summary(perf)</span>
-
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>perf</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 2 rows containing missing values (geom_point).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 2 row(s) containing missing values (geom_path).</span></div><div class='img'><img src='plot.performance_bin-2.png' alt='' width='700' height='433' /></div><div class='input'># plot(perf, typographic = FALSE)
+<span class='no'>perf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='performance_bin.html'>performance_bin</a></span>(<span class='no'>heartfailure2</span>$<span class='no'>death_event_2</span>, <span class='no'>heartfailure2</span>$<span class='no'>creatinine_bin</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>perf</span></div><div class='output co'>#&gt;      Bin CntRec CntPos CntNeg CntCumPos CntCumNeg RatePos RateNeg RateCumPos
+#&gt; 1  (0,1]    128     24    104        24       104 0.25000 0.52525    0.25000
+#&gt; 2  (1,2]    132     51     81        75       185 0.53125 0.40909    0.78125
+#&gt; 3 (2,10]     34     21     13        96       198 0.21875 0.06566    1.00000
+#&gt; 4  Total    294     96    198        NA        NA 1.00000 1.00000         NA
+#&gt;   RateCumNeg    Odds   LnOdds      WoE      IV     JSD     AUC
+#&gt; 1    0.52525 0.23077 -1.46634 -0.74242 0.20435 0.02497 0.06566
+#&gt; 2    0.93434 0.62963 -0.46262  0.26130 0.03192 0.00398 0.21094
+#&gt; 3    1.00000 1.61538  0.47957  1.20349 0.18425 0.02173 0.05848
+#&gt; 4         NA 0.48485 -0.72392       NA 0.42052 0.05069 0.33507</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>perf</span>)</div><div class='output co'>#&gt; ── Binning Table ──────────────────────── Several Metrics ── 
+#&gt;      Bin CntRec CntPos CntNeg RatePos RateNeg    Odds      WoE      IV     JSD
+#&gt; 1  (0,1]    128     24    104 0.25000 0.52525 0.23077 -0.74242 0.20435 0.02497
+#&gt; 2  (1,2]    132     51     81 0.53125 0.40909 0.62963  0.26130 0.03192 0.00398
+#&gt; 3 (2,10]     34     21     13 0.21875 0.06566 1.61538  1.20349 0.18425 0.02173
+#&gt; 4  Total    294     96    198 1.00000 1.00000 0.48485       NA 0.42052 0.05069
+#&gt;       AUC
+#&gt; 1 0.06566
+#&gt; 2 0.21094
+#&gt; 3 0.05848
+#&gt; 4 0.33507
+#&gt; 
+#&gt; ── General Metrics ───────────────────────────────────────── 
+#&gt; • Gini index                       :  -0.32986
+#&gt; • IV (Jeffrey)                     :  0.42052
+#&gt; • JS (Jensen-Shannon) Divergence   :  0.05069
+#&gt; • Kolmogorov-Smirnov Statistics    :  0.27525
+#&gt; • HHI (Herfindahl-Hirschman Index) :  0.40451
+#&gt; • HHI (normalized)                 :  0.10676
+#&gt; • Cramer's V                       :  0.30024 
+#&gt; 
+#&gt; ── Significance Tests ──────────────────── Chisquare Test ── 
+#&gt;   Bin A  Bin B statistics      p_value
+#&gt; 1 (0,1]  (1,2]  12.520885 0.0004024283
+#&gt; 2 (1,2] (2,10]   5.888296 0.0152418462
+#&gt; </div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>perf</span>)</div><div class='img'><img src='plot.performance_bin-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>perf</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot.performance_bin-3.png' alt='' width='700' height='433' /></div><div class='input'># }
 
 </div></pre>
   </div>

@@ -73,7 +73,7 @@ the quality of the variables of data.frame or tbl_df." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4.9000</span>
       </span>
     </div>
 
@@ -181,7 +181,8 @@ or to select a variable to be corrected or removed through data diagnosis.</p><u
     <div class='dont-index'><p><code><a href='diagnose.tbl_dbi.html'>diagnose.tbl_dbi</a></code>, <code><a href='diagnose_category.data.frame.html'>diagnose_category.data.frame</a></code>, <code><a href='diagnose_numeric.data.frame.html'>diagnose_numeric.data.frame</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Diagnosis of all variables</span>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='co'># Diagnosis of all variables</span>
 <span class='fu'>diagnose</span>(<span class='no'>jobchange</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 14 x 6</span>
 #&gt;    variables      types   missing_count missing_percent unique_count unique_rate
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
@@ -205,10 +206,30 @@ or to select a variable to be corrected or removed through data diagnosis.</p><u
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'>1</span> gender         factor           <span style='text-decoration: underline;'>4</span>508          23.5              4    0.000<span style='text-decoration: underline;'>209</span>
 #&gt; <span style='color: #BCBCBC;'>2</span> experience     ordered            65           0.339           23    0.001<span style='text-decoration: underline;'>20</span> 
-#&gt; <span style='color: #BCBCBC;'>3</span> training_hours integer             0           0              241    0.012<span style='text-decoration: underline;'>6</span>  </div><div class='input'><span class='co'># diagnose(jobchange, -gender, -experience, -training_hours)</span>
-<span class='co'># diagnose(jobchange, "gender", "experience", "training_hours")</span>
-<span class='co'># diagnose(jobchange, 4, 9, 13)</span>
-
+#&gt; <span style='color: #BCBCBC;'>3</span> training_hours integer             0           0              241    0.012<span style='text-decoration: underline;'>6</span>  </div><div class='input'><span class='fu'>diagnose</span>(<span class='no'>jobchange</span>, -<span class='no'>gender</span>, -<span class='no'>experience</span>, -<span class='no'>training_hours</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 11 x 6</span>
+#&gt;    variables      types   missing_count missing_percent unique_count unique_rate
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> enrollee_id    charac…             0            0           <span style='text-decoration: underline;'>19</span>158    1       
+#&gt; <span style='color: #BCBCBC;'> 2</span> city           factor              0            0             123    0.006<span style='text-decoration: underline;'>42</span> 
+#&gt; <span style='color: #BCBCBC;'> 3</span> city_dev_index numeric             0            0              93    0.004<span style='text-decoration: underline;'>85</span> 
+#&gt; <span style='color: #BCBCBC;'> 4</span> relevent_expe… factor              0            0               2    0.000<span style='text-decoration: underline;'>104</span>
+#&gt; <span style='color: #BCBCBC;'> 5</span> enrolled_univ… factor            386            2.01            4    0.000<span style='text-decoration: underline;'>209</span>
+#&gt; <span style='color: #BCBCBC;'> 6</span> education_lev… ordered           460            2.40            6    0.000<span style='text-decoration: underline;'>313</span>
+#&gt; <span style='color: #BCBCBC;'> 7</span> major_discipl… factor           <span style='text-decoration: underline;'>2</span>813           14.7             7    0.000<span style='text-decoration: underline;'>365</span>
+#&gt; <span style='color: #BCBCBC;'> 8</span> company_size   ordered          <span style='text-decoration: underline;'>5</span>938           31.0             9    0.000<span style='text-decoration: underline;'>470</span>
+#&gt; <span style='color: #BCBCBC;'> 9</span> company_type   factor           <span style='text-decoration: underline;'>6</span>140           32.0             7    0.000<span style='text-decoration: underline;'>365</span>
+#&gt; <span style='color: #BCBCBC;'>10</span> last_new_job   ordered           423            2.21            7    0.000<span style='text-decoration: underline;'>365</span>
+#&gt; <span style='color: #BCBCBC;'>11</span> job_chnge      factor              0            0               2    0.000<span style='text-decoration: underline;'>104</span></div><div class='input'><span class='fu'>diagnose</span>(<span class='no'>jobchange</span>, <span class='st'>"gender"</span>, <span class='st'>"experience"</span>, <span class='st'>"training_hours"</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 3 x 6</span>
+#&gt;   variables      types   missing_count missing_percent unique_count unique_rate
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> gender         factor           <span style='text-decoration: underline;'>4</span>508          23.5              4    0.000<span style='text-decoration: underline;'>209</span>
+#&gt; <span style='color: #BCBCBC;'>2</span> experience     ordered            65           0.339           23    0.001<span style='text-decoration: underline;'>20</span> 
+#&gt; <span style='color: #BCBCBC;'>3</span> training_hours integer             0           0              241    0.012<span style='text-decoration: underline;'>6</span>  </div><div class='input'><span class='fu'>diagnose</span>(<span class='no'>jobchange</span>, <span class='fl'>4</span>, <span class='fl'>9</span>, <span class='fl'>13</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 3 x 6</span>
+#&gt;   variables      types   missing_count missing_percent unique_count unique_rate
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> gender         factor           <span style='text-decoration: underline;'>4</span>508          23.5              4    0.000<span style='text-decoration: underline;'>209</span>
+#&gt; <span style='color: #BCBCBC;'>2</span> experience     ordered            65           0.339           23    0.001<span style='text-decoration: underline;'>20</span> 
+#&gt; <span style='color: #BCBCBC;'>3</span> training_hours integer             0           0              241    0.012<span style='text-decoration: underline;'>6</span>  </div><div class='input'>
 <span class='co'># Using pipes ---------------------------------</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
@@ -238,15 +259,43 @@ or to select a variable to be corrected or removed through data diagnosis.</p><u
 #&gt; <span style='color: #BCBCBC;'>1</span> gender         factor           <span style='text-decoration: underline;'>4</span>508          23.5              4    0.000<span style='text-decoration: underline;'>209</span>
 #&gt; <span style='color: #BCBCBC;'>2</span> experience     ordered            65           0.339           23    0.001<span style='text-decoration: underline;'>20</span> 
 #&gt; <span style='color: #BCBCBC;'>3</span> training_hours integer             0           0              241    0.012<span style='text-decoration: underline;'>6</span>  </div><div class='input'><span class='co'># Negative values to drop variables</span>
-<span class='co'># jobchange %&gt;%</span>
-<span class='co'>#   diagnose(-gender, -experience, -training_hours)</span>
-<span class='co'># Positions values select variables</span>
-<span class='co'># # jobchange %&gt;%</span>
-<span class='co'>#   diagnose(4, 9, 13)</span>
-<span class='co'># Positions values select variables</span>
-<span class='co'># jobchange %&gt;%</span>
-<span class='co'>#   diagnose(-8, -9, -10)</span>
-
+<span class='no'>jobchange</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>diagnose</span>(-<span class='no'>gender</span>, -<span class='no'>experience</span>, -<span class='no'>training_hours</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 11 x 6</span>
+#&gt;    variables      types   missing_count missing_percent unique_count unique_rate
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> enrollee_id    charac…             0            0           <span style='text-decoration: underline;'>19</span>158    1       
+#&gt; <span style='color: #BCBCBC;'> 2</span> city           factor              0            0             123    0.006<span style='text-decoration: underline;'>42</span> 
+#&gt; <span style='color: #BCBCBC;'> 3</span> city_dev_index numeric             0            0              93    0.004<span style='text-decoration: underline;'>85</span> 
+#&gt; <span style='color: #BCBCBC;'> 4</span> relevent_expe… factor              0            0               2    0.000<span style='text-decoration: underline;'>104</span>
+#&gt; <span style='color: #BCBCBC;'> 5</span> enrolled_univ… factor            386            2.01            4    0.000<span style='text-decoration: underline;'>209</span>
+#&gt; <span style='color: #BCBCBC;'> 6</span> education_lev… ordered           460            2.40            6    0.000<span style='text-decoration: underline;'>313</span>
+#&gt; <span style='color: #BCBCBC;'> 7</span> major_discipl… factor           <span style='text-decoration: underline;'>2</span>813           14.7             7    0.000<span style='text-decoration: underline;'>365</span>
+#&gt; <span style='color: #BCBCBC;'> 8</span> company_size   ordered          <span style='text-decoration: underline;'>5</span>938           31.0             9    0.000<span style='text-decoration: underline;'>470</span>
+#&gt; <span style='color: #BCBCBC;'> 9</span> company_type   factor           <span style='text-decoration: underline;'>6</span>140           32.0             7    0.000<span style='text-decoration: underline;'>365</span>
+#&gt; <span style='color: #BCBCBC;'>10</span> last_new_job   ordered           423            2.21            7    0.000<span style='text-decoration: underline;'>365</span>
+#&gt; <span style='color: #BCBCBC;'>11</span> job_chnge      factor              0            0               2    0.000<span style='text-decoration: underline;'>104</span></div><div class='input'><span class='co'># Positions values select variables</span>
+<span class='no'>jobchange</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>diagnose</span>(<span class='fl'>4</span>, <span class='fl'>9</span>, <span class='fl'>13</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 3 x 6</span>
+#&gt;   variables      types   missing_count missing_percent unique_count unique_rate
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> gender         factor           <span style='text-decoration: underline;'>4</span>508          23.5              4    0.000<span style='text-decoration: underline;'>209</span>
+#&gt; <span style='color: #BCBCBC;'>2</span> experience     ordered            65           0.339           23    0.001<span style='text-decoration: underline;'>20</span> 
+#&gt; <span style='color: #BCBCBC;'>3</span> training_hours integer             0           0              241    0.012<span style='text-decoration: underline;'>6</span>  </div><div class='input'><span class='co'># Negative values to drop variables</span>
+<span class='no'>jobchange</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>diagnose</span>(-<span class='fl'>8</span>, -<span class='fl'>9</span>, -<span class='fl'>10</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 11 x 6</span>
+#&gt;    variables      types   missing_count missing_percent unique_count unique_rate
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> enrollee_id    charac…             0            0           <span style='text-decoration: underline;'>19</span>158    1       
+#&gt; <span style='color: #BCBCBC;'> 2</span> city           factor              0            0             123    0.006<span style='text-decoration: underline;'>42</span> 
+#&gt; <span style='color: #BCBCBC;'> 3</span> city_dev_index numeric             0            0              93    0.004<span style='text-decoration: underline;'>85</span> 
+#&gt; <span style='color: #BCBCBC;'> 4</span> gender         factor           <span style='text-decoration: underline;'>4</span>508           23.5             4    0.000<span style='text-decoration: underline;'>209</span>
+#&gt; <span style='color: #BCBCBC;'> 5</span> relevent_expe… factor              0            0               2    0.000<span style='text-decoration: underline;'>104</span>
+#&gt; <span style='color: #BCBCBC;'> 6</span> enrolled_univ… factor            386            2.01            4    0.000<span style='text-decoration: underline;'>209</span>
+#&gt; <span style='color: #BCBCBC;'> 7</span> education_lev… ordered           460            2.40            6    0.000<span style='text-decoration: underline;'>313</span>
+#&gt; <span style='color: #BCBCBC;'> 8</span> company_type   factor           <span style='text-decoration: underline;'>6</span>140           32.0             7    0.000<span style='text-decoration: underline;'>365</span>
+#&gt; <span style='color: #BCBCBC;'> 9</span> last_new_job   ordered           423            2.21            7    0.000<span style='text-decoration: underline;'>365</span>
+#&gt; <span style='color: #BCBCBC;'>10</span> training_hours integer             0            0             241    0.012<span style='text-decoration: underline;'>6</span>  
+#&gt; <span style='color: #BCBCBC;'>11</span> job_chnge      factor              0            0               2    0.000<span style='text-decoration: underline;'>104</span></div><div class='input'>
 <span class='co'># Using pipes &amp; dplyr -------------------------</span>
 <span class='co'># Diagnosis of missing variables</span>
 <span class='no'>jobchange</span> <span class='kw'>%&gt;%</span>
@@ -261,7 +310,9 @@ or to select a variable to be corrected or removed through data diagnosis.</p><u
 #&gt; <span style='color: #BCBCBC;'>5</span> experience       order…            65           0.339           23    0.001<span style='text-decoration: underline;'>20</span> 
 #&gt; <span style='color: #BCBCBC;'>6</span> company_size     order…          <span style='text-decoration: underline;'>5</span>938          31.0              9    0.000<span style='text-decoration: underline;'>470</span>
 #&gt; <span style='color: #BCBCBC;'>7</span> company_type     factor          <span style='text-decoration: underline;'>6</span>140          32.0              7    0.000<span style='text-decoration: underline;'>365</span>
-#&gt; <span style='color: #BCBCBC;'>8</span> last_new_job     order…           423           2.21             7    0.000<span style='text-decoration: underline;'>365</span></div></pre>
+#&gt; <span style='color: #BCBCBC;'>8</span> last_new_job     order…           423           2.21             7    0.000<span style='text-decoration: underline;'>365</span></div><div class='input'># }
+   
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

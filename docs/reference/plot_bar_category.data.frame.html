@@ -73,7 +73,7 @@ categorical data by level or relationship to specific numerical data by level." 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4.9000</span>
       </span>
     </div>
 
@@ -212,6 +212,7 @@ use it after loading the Google font with import_google_font().</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Generate data for the example</span>
+<span class='co'># \donttest{</span>
 <span class='no'>heartfailure2</span> <span class='kw'>&lt;-</span> <span class='no'>heartfailure</span>
 <span class='no'>heartfailure2</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>heartfailure2</span>)), <span class='fl'>20</span>), <span class='st'>"platelets"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
 <span class='no'>heartfailure2</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>heartfailure2</span>)), <span class='fl'>5</span>), <span class='st'>"smoking"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
@@ -223,38 +224,32 @@ use it after loading the Google font with import_google_font().</p>
 <span class='co'># Visualization of all numerical variables</span>
 <span class='fu'>plot_bar_category</span>(<span class='no'>heartfailure2</span>)</div><div class='img'><img src='plot_bar_category.data.frame-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Select the variable to diagnose</span>
-<span class='co'># plot_bar_category(heartfailure2, "test", "smoking")</span>
-<span class='co'># plot_bar_category(heartfailure2, -test, -smoking)</span>
-
+<span class='fu'>plot_bar_category</span>(<span class='no'>heartfailure2</span>, <span class='st'>"test"</span>, <span class='st'>"smoking"</span>)</div><div class='img'><img src='plot_bar_category.data.frame-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot_bar_category</span>(<span class='no'>heartfailure2</span>, -<span class='no'>test</span>, -<span class='no'>smoking</span>)</div><div class='img'><img src='plot_bar_category.data.frame-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Visualize the each plots</span>
-<span class='co'># plot_bar_category(heartfailure2, each = TRUE)</span>
-
+<span class='fu'>plot_bar_category</span>(<span class='no'>heartfailure2</span>, <span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot_bar_category.data.frame-4.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_bar_category.data.frame-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_bar_category.data.frame-6.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_bar_category.data.frame-7.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_bar_category.data.frame-8.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_bar_category.data.frame-9.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_bar_category.data.frame-10.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Not allow typographic argument</span>
-<span class='co'># plot_bar_category(heartfailure2, typographic = FALSE)</span>
-
+<span class='fu'>plot_bar_category</span>(<span class='no'>heartfailure2</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot_bar_category.data.frame-11.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Using pipes ---------------------------------</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
 <span class='co'># Plot of all categorical variables</span>
-<span class='co'># heartfailure2 %&gt;%</span>
-<span class='co'>#   plot_bar_category()</span>
-
+<span class='no'>heartfailure2</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>plot_bar_category</span>()</div><div class='img'><img src='plot_bar_category.data.frame-12.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Visualize just 7 levels of top frequency</span>
-<span class='co'># heartfailure2 %&gt;%</span>
-<span class='co'>#   plot_bar_category(top = 7)</span>
-
+<span class='no'>heartfailure2</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>plot_bar_category</span>(<span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>7</span>)</div><div class='img'><img src='plot_bar_category.data.frame-13.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Visualize only factor, not character</span>
-<span class='co'># heartfailure2 %&gt;%</span>
-<span class='co'>#   plot_bar_category(add_character = FALSE) </span>
-
+<span class='no'>heartfailure2</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>plot_bar_category</span>(<span class='kw'>add_character</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot_bar_category.data.frame-14.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Using groupd_df  ------------------------------</span>
-<span class='co'># heartfailure2 %&gt;% </span>
-<span class='co'>#   group_by(death_event) %&gt;% </span>
-<span class='co'>#   plot_bar_category(top = 5)</span>
-
-<span class='co'># heartfailure2 %&gt;% </span>
-<span class='co'>#   group_by(death_event) %&gt;% </span>
-<span class='co'>#   plot_bar_category(each = TRUE, top = 5)  </span></div></pre>
+<span class='no'>heartfailure2</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>plot_bar_category</span>(<span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='img'><img src='plot_bar_category.data.frame-15.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>heartfailure2</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>plot_bar_category</span>(<span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='img'><img src='plot_bar_category.data.frame-16.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_bar_category.data.frame-17.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_bar_category.data.frame-18.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_bar_category.data.frame-19.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_bar_category.data.frame-20.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot_bar_category.data.frame-21.png' alt='' width='700' height='433' /></div><div class='input'># }
+   
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

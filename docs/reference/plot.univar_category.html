@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4.9000</span>
       </span>
     </div>
 
@@ -177,7 +177,8 @@ use it after loading the Google font with import_google_font().</p>
     <div class='dont-index'><p><code><a href='univar_category.data.frame.html'>univar_category</a></code>, <code><a href='summary.univar_category.html'>print.univar_category</a></code>, <code><a href='summary.univar_category.html'>summary.univar_category</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
 <span class='co'># Calculates the all categorical variables</span>
 <span class='no'>all_var</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='univar_category.data.frame.html'>univar_category</a></span>(<span class='no'>heartfailure</span>)
@@ -224,7 +225,8 @@ use it after loading the Google font with import_google_font().</p>
 <span class='co'># plot all variables</span>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>)</div><div class='img'><img src='plot.univar_category-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_category-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_category-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_category-4.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_category-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.univar_category-6.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># plot smoking</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>smoking</span>)</div><div class='img'><img src='plot.univar_category-7.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>smoking</span>)</div><div class='img'><img src='plot.univar_category-7.png' alt='' width='700' height='433' /></div><div class='input'># }
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

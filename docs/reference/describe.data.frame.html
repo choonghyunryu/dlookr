@@ -73,7 +73,7 @@ variable for exploratory data analysis." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4.9000</span>
       </span>
     </div>
 
@@ -198,7 +198,8 @@ grouped_df as the group_by() function.</p>
     <div class='dont-index'><p><code><a href='describe.tbl_dbi.html'>describe.tbl_dbi</a></code>, <code><a href='diagnose_numeric.data.frame.html'>diagnose_numeric.data.frame</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Generate data for the example</span>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='co'># Generate data for the example</span>
 <span class='no'>heartfailure2</span> <span class='kw'>&lt;-</span> <span class='no'>heartfailure</span>
 <span class='no'>heartfailure2</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>heartfailure2</span>)), <span class='fl'>20</span>), <span class='st'>"sodium"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
 <span class='no'>heartfailure2</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>heartfailure2</span>)), <span class='fl'>5</span>), <span class='st'>"smoking"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
@@ -212,7 +213,7 @@ grouped_df as the group_by() function.</p>
 #&gt; <span style='color: #BCBCBC;'>3</span> ejection_…   299     0 3.81<span style='color: #949494;'>e</span>1 1.18<span style='color: #949494;'>e</span>1 6.84<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-1</span>    15      0.555   0.041<span style='text-decoration: underline;'>4</span>    14  
 #&gt; <span style='color: #BCBCBC;'>4</span> platelets    299     0 2.63<span style='color: #949494;'>e</span>5 9.78<span style='color: #949494;'>e</span>4 5.66<span style='color: #949494;'>e</span>+3 <span style='text-decoration: underline;'>91</span>000      1.46    6.21   <span style='text-decoration: underline;'>25</span>100  
 #&gt; <span style='color: #BCBCBC;'>5</span> creatinine   299     0 1.39<span style='color: #949494;'>e</span>0 1.03<span style='color: #949494;'>e</span>0 5.98<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-2</span>     0.5    4.46   25.8        0.5
-#&gt; <span style='color: #BCBCBC;'>6</span> sodium       279    20 1.37<span style='color: #949494;'>e</span>2 4.47<span style='color: #949494;'>e</span>0 2.68<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-1</span>     6     -<span style='color: #BB0000;'>1.07</span>    4.19     113  
+#&gt; <span style='color: #BCBCBC;'>6</span> sodium       279    20 1.37<span style='color: #949494;'>e</span>2 4.30<span style='color: #949494;'>e</span>0 2.57<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-1</span>     6     -<span style='color: #BB0000;'>0.853</span>   3.47     113  
 #&gt; <span style='color: #BCBCBC;'>7</span> time         299     0 1.30<span style='color: #949494;'>e</span>2 7.76<span style='color: #949494;'>e</span>1 4.49<span style='color: #949494;'>e</span>+0   130      0.128  -<span style='color: #BB0000;'>1.21</span>       4  
 #&gt; <span style='color: #949494;'># … with 16 more variables: p01 &lt;dbl&gt;, p05 &lt;dbl&gt;, p10 &lt;dbl&gt;, p20 &lt;dbl&gt;,</span>
 #&gt; <span style='color: #949494;'>#   p25 &lt;dbl&gt;, p30 &lt;dbl&gt;, p40 &lt;dbl&gt;, p50 &lt;dbl&gt;, p60 &lt;dbl&gt;, p70 &lt;dbl&gt;,</span>
@@ -221,7 +222,7 @@ grouped_df as the group_by() function.</p>
 <span class='fu'>describe</span>(<span class='no'>heartfailure2</span>, <span class='no'>sodium</span>, <span class='no'>platelets</span>, <span class='kw'>statistics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"mean"</span>, <span class='st'>"sd"</span>, <span class='st'>"quantiles"</span>))</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 x 22</span>
 #&gt;   variable      n    na    mean      sd   p00    p01    p05    p10    p20    p25
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> sodium      279    20    137.  4.47<span style='color: #949494;'>e</span>0   113   123.    130    132    134    134
+#&gt; <span style='color: #BCBCBC;'>1</span> sodium      279    20    137.  4.30<span style='color: #949494;'>e</span>0   113   125.    130    132    134    134
 #&gt; <span style='color: #BCBCBC;'>2</span> platelets   299     0 <span style='text-decoration: underline;'>263</span>358.  9.78<span style='color: #949494;'>e</span>4 <span style='text-decoration: underline;'>25</span>100 <span style='text-decoration: underline;'>61</span>780  <span style='text-decoration: underline;'>131</span>800 <span style='text-decoration: underline;'>153</span>000 <span style='text-decoration: underline;'>196</span>000 <span style='text-decoration: underline;'>212</span>500
 #&gt; <span style='color: #949494;'># … with 11 more variables: p30 &lt;dbl&gt;, p40 &lt;dbl&gt;, p50 &lt;dbl&gt;, p60 &lt;dbl&gt;,</span>
 #&gt; <span style='color: #949494;'>#   p70 &lt;dbl&gt;, p75 &lt;dbl&gt;, p80 &lt;dbl&gt;, p90 &lt;dbl&gt;, p95 &lt;dbl&gt;, p99 &lt;dbl&gt;,</span>
@@ -256,13 +257,28 @@ grouped_df as the group_by() function.</p>
 #&gt; <span style='color: #949494;'>#   p90 &lt;dbl&gt;, p95 &lt;dbl&gt;, p99 &lt;dbl&gt;, p100 &lt;dbl&gt;</span></div><div class='input'>
 <span class='co'># Using pipes ---------------------------------</span>
 <span class='co'># Positive values select variables</span>
-<span class='co'># heartfailure2 %&gt;%</span>
-<span class='co'>#  describe(platelets, sodium, creatinine)</span>
-
-<span class='co'># # Negative values to drop variables</span>
-<span class='co'># heartfailure2 %&gt;%</span>
-<span class='co'>#  describe(-platelets, -sodium, -creatinine)</span>
-
+<span class='no'>heartfailure2</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>describe</span>(<span class='no'>platelets</span>, <span class='no'>sodium</span>, <span class='no'>creatinine</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 3 x 26</span>
+#&gt;   variable      n    na    mean      sd se_mean    IQR skewness kurtosis     p00
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> platelets   299     0  2.63<span style='color: #949494;'>e</span>5  9.78<span style='color: #949494;'>e</span>4 5.66<span style='color: #949494;'>e</span>+3 9.1<span style='color: #949494;'>e</span>+4    1.46      6.21 <span style='text-decoration: underline;'>25</span>100  
+#&gt; <span style='color: #BCBCBC;'>2</span> sodium      279    20  1.37<span style='color: #949494;'>e</span>2  4.30<span style='color: #949494;'>e</span>0 2.57<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-1</span> 6  <span style='color: #949494;'>e</span>+0   -<span style='color: #BB0000;'>0.853</span>     3.47   113  
+#&gt; <span style='color: #BCBCBC;'>3</span> creatini…   299     0  1.39<span style='color: #949494;'>e</span>0  1.03<span style='color: #949494;'>e</span>0 5.98<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-2</span> 5  <span style='color: #949494;'>e</span><span style='color: #BB0000;'>-1</span>    4.46     25.8      0.5
+#&gt; <span style='color: #949494;'># … with 16 more variables: p01 &lt;dbl&gt;, p05 &lt;dbl&gt;, p10 &lt;dbl&gt;, p20 &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   p25 &lt;dbl&gt;, p30 &lt;dbl&gt;, p40 &lt;dbl&gt;, p50 &lt;dbl&gt;, p60 &lt;dbl&gt;, p70 &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   p75 &lt;dbl&gt;, p80 &lt;dbl&gt;, p90 &lt;dbl&gt;, p95 &lt;dbl&gt;, p99 &lt;dbl&gt;, p100 &lt;dbl&gt;</span></div><div class='input'>
+<span class='co'># Negative values to drop variables</span>
+<span class='no'>heartfailure2</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>describe</span>(-<span class='no'>platelets</span>, -<span class='no'>sodium</span>, -<span class='no'>creatinine</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 4 x 26</span>
+#&gt;   variable       n    na  mean    sd se_mean   IQR skewness kurtosis   p00   p01
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> age          299     0  60.8  11.9   0.688   19     0.424  -<span style='color: #BB0000;'>0.184</span>     40  40  
+#&gt; <span style='color: #BCBCBC;'>2</span> cpk_enzyme   299     0 582.  970.   56.1    466.    4.46   25.1       23  47  
+#&gt; <span style='color: #BCBCBC;'>3</span> ejection_…   299     0  38.1  11.8   0.684   15     0.555   0.041<span style='text-decoration: underline;'>4</span>    14  17.0
+#&gt; <span style='color: #BCBCBC;'>4</span> time         299     0 130.   77.6   4.49   130     0.128  -<span style='color: #BB0000;'>1.21</span>       4   7  
+#&gt; <span style='color: #949494;'># … with 15 more variables: p05 &lt;dbl&gt;, p10 &lt;dbl&gt;, p20 &lt;dbl&gt;, p25 &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   p30 &lt;dbl&gt;, p40 &lt;dbl&gt;, p50 &lt;dbl&gt;, p60 &lt;dbl&gt;, p70 &lt;dbl&gt;, p75 &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   p80 &lt;dbl&gt;, p90 &lt;dbl&gt;, p95 &lt;dbl&gt;, p99 &lt;dbl&gt;, p100 &lt;dbl&gt;</span></div><div class='input'>
 <span class='co'># Using pipes &amp; dplyr -------------------------</span>
 <span class='co'># Find the statistic of all numerical variables by 'hblood_pressure' and 'death_event',</span>
 <span class='co'># and extract only those with 'hblood_pressure' variable level is "Yes".</span>
@@ -282,20 +298,31 @@ grouped_df as the group_by() function.</p>
 #&gt; <span style='color: #BCBCBC;'> 8</span> ejection_fr… Yes             Yes            39     0  3.31<span style='color: #949494;'>e</span>1 1.14<span style='color: #949494;'>e</span>+1  1.82<span style='color: #949494;'>e</span>+0
 #&gt; <span style='color: #BCBCBC;'> 9</span> platelets    Yes             No             66     0  2.68<span style='color: #949494;'>e</span>5 7.77<span style='color: #949494;'>e</span>+4  9.56<span style='color: #949494;'>e</span>+3
 #&gt; <span style='color: #BCBCBC;'>10</span> platelets    Yes             Yes            39     0  2.74<span style='color: #949494;'>e</span>5 9.61<span style='color: #949494;'>e</span>+4  1.54<span style='color: #949494;'>e</span>+4
-#&gt; <span style='color: #BCBCBC;'>11</span> sodium       Yes             No             62     4  1.38<span style='color: #949494;'>e</span>2 4.03<span style='color: #949494;'>e</span>+0  5.11<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-1</span>
-#&gt; <span style='color: #BCBCBC;'>12</span> sodium       Yes             Yes            35     4  1.35<span style='color: #949494;'>e</span>2 4.07<span style='color: #949494;'>e</span>+0  6.88<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-1</span>
+#&gt; <span style='color: #BCBCBC;'>11</span> sodium       Yes             No             62     4  1.38<span style='color: #949494;'>e</span>2 3.98<span style='color: #949494;'>e</span>+0  5.05<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-1</span>
+#&gt; <span style='color: #BCBCBC;'>12</span> sodium       Yes             Yes            38     1  1.35<span style='color: #949494;'>e</span>2 4.05<span style='color: #949494;'>e</span>+0  6.57<span style='color: #949494;'>e</span><span style='color: #BB0000;'>-1</span>
 #&gt; <span style='color: #BCBCBC;'>13</span> time         Yes             No             66     0  1.41<span style='color: #949494;'>e</span>2 6.17<span style='color: #949494;'>e</span>+1  7.59<span style='color: #949494;'>e</span>+0
 #&gt; <span style='color: #BCBCBC;'>14</span> time         Yes             Yes            39     0  5.71<span style='color: #949494;'>e</span>1 5.31<span style='color: #949494;'>e</span>+1  8.50<span style='color: #949494;'>e</span>+0
 #&gt; <span style='color: #949494;'># … with 20 more variables: IQR &lt;dbl&gt;, skewness &lt;dbl&gt;, kurtosis &lt;dbl&gt;,</span>
 #&gt; <span style='color: #949494;'>#   p00 &lt;dbl&gt;, p01 &lt;dbl&gt;, p05 &lt;dbl&gt;, p10 &lt;dbl&gt;, p20 &lt;dbl&gt;, p25 &lt;dbl&gt;,</span>
 #&gt; <span style='color: #949494;'>#   p30 &lt;dbl&gt;, p40 &lt;dbl&gt;, p50 &lt;dbl&gt;, p60 &lt;dbl&gt;, p70 &lt;dbl&gt;, p75 &lt;dbl&gt;,</span>
 #&gt; <span style='color: #949494;'>#   p80 &lt;dbl&gt;, p90 &lt;dbl&gt;, p95 &lt;dbl&gt;, p99 &lt;dbl&gt;, p100 &lt;dbl&gt;</span></div><div class='input'>
-# extract only those with 'smoking' variable level is "Yes",
-# and find 'creatinine' statistics by 'hblood_pressure' and 'death_event'
-# heartfailure2 %&gt;%
-#  filter(smoking == "Yes") %&gt;%
-#  group_by(hblood_pressure, death_event) %&gt;%
-#  describe(creatinine)
+<span class='co'># extract only those with 'smoking' variable level is "Yes",</span>
+<span class='co'># and find 'creatinine' statistics by 'hblood_pressure' and 'death_event'</span>
+<span class='no'>heartfailure2</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>smoking</span> <span class='kw'>==</span> <span class='st'>"Yes"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hblood_pressure</span>, <span class='no'>death_event</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>describe</span>(<span class='no'>creatinine</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 4 x 28</span>
+#&gt;   variable   hblood_pressure death_event     n    na  mean    sd se_mean   IQR
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> creatinine No              No             49     0  1.18 0.561  0.080<span style='text-decoration: underline;'>2</span> 0.3  
+#&gt; <span style='color: #BCBCBC;'>2</span> creatinine No              Yes            16     0  1.43 0.568  0.142  0.772
+#&gt; <span style='color: #BCBCBC;'>3</span> creatinine Yes             No             16     0  1.16 0.683  0.171  0.35 
+#&gt; <span style='color: #BCBCBC;'>4</span> creatinine Yes             Yes            14     0  2.09 2.26   0.604  0.673
+#&gt; <span style='color: #949494;'># … with 19 more variables: skewness &lt;dbl&gt;, kurtosis &lt;dbl&gt;, p00 &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   p01 &lt;dbl&gt;, p05 &lt;dbl&gt;, p10 &lt;dbl&gt;, p20 &lt;dbl&gt;, p25 &lt;dbl&gt;, p30 &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   p40 &lt;dbl&gt;, p50 &lt;dbl&gt;, p60 &lt;dbl&gt;, p70 &lt;dbl&gt;, p75 &lt;dbl&gt;, p80 &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   p90 &lt;dbl&gt;, p95 &lt;dbl&gt;, p99 &lt;dbl&gt;, p100 &lt;dbl&gt;</span></div><div class='input'># }
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4.9000</span>
       </span>
     </div>
 
@@ -165,7 +165,8 @@ use it after loading the Google font with import_google_font().</p>
     <div class='dont-index'><p><code><a href='compare_numeric.data.frame.html'>compare_numeric</a></code>, <code><a href='summary.compare_numeric.html'>print.compare_numeric</a></code>, <code><a href='summary.compare_numeric.html'>summary.compare_numeric</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Generate data for the example</span>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='co'># Generate data for the example</span>
 <span class='no'>heartfailure2</span> <span class='kw'>&lt;-</span> <span class='no'>heartfailure</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"platelets"</span>, <span class='st'>"creatinine"</span>, <span class='st'>"sodium"</span>)]
 
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
@@ -213,11 +214,10 @@ use it after loading the Google font with import_google_font().</p>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>)</div><div class='img'><img src='plot.compare_numeric-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_numeric-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_numeric-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># plot a pair of variables</span>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>two_var</span>)</div><div class='img'><img src='plot.compare_numeric-4.png' alt='' width='700' height='433' /></div><div class='input'>
-# plot all pair of variables by prompt
-# plot(all_var, prompt = TRUE)
-
-# plot a pair of variables not focuses on typographic elements
-# plot(two_var, typographic = FALSE)
+<span class='co'># plot all pair of variables by prompt</span>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>, <span class='kw'>prompt</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.compare_numeric-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_numeric-6.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_numeric-7.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># plot a pair of variables not focuses on typographic elements</span>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>two_var</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot.compare_numeric-8.png' alt='' width='700' height='433' /></div><div class='input'># }
 
 </div></pre>
   </div>

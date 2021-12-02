@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4.9000</span>
       </span>
     </div>
 
@@ -179,7 +179,8 @@ use it after loading the Google font with import_google_font().</p>
     <div class='dont-index'><p><code><a href='compare_category.data.frame.html'>compare_category</a></code>, <code><a href='summary.compare_category.html'>print.compare_category</a></code>, <code><a href='summary.compare_category.html'>summary.compare_category</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Generate data for the example</span>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='co'># Generate data for the example</span>
 <span class='no'>heartfailure2</span> <span class='kw'>&lt;-</span> <span class='no'>heartfailure</span>
 <span class='no'>heartfailure2</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>heartfailure2</span>)), <span class='fl'>5</span>), <span class='st'>"smoking"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
 
@@ -217,15 +218,14 @@ use it after loading the Google font with import_google_font().</p>
 #&gt; <span style='color: #BCBCBC;'>4</span> Yes     Male      77 0.258     0.597     0.397
 #&gt; 
 #&gt; $`anaemia vs smoking`
-#&gt; <span style='color: #949494;'># A tibble: 6 x 6</span>
-#&gt;   anaemia smoking     n    rate var1_rate var2_rate
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> No      No        106 0.355     0.624       0.527
-#&gt; <span style='color: #BCBCBC;'>2</span> No      Yes        60 0.201     0.353       0.645
-#&gt; <span style='color: #BCBCBC;'>3</span> No      <span style='color: #BB0000;'>NA</span>          4 0.013<span style='text-decoration: underline;'>4</span>    0.023<span style='text-decoration: underline;'>5</span>      0.8  
-#&gt; <span style='color: #BCBCBC;'>4</span> Yes     No         95 0.318     0.736       0.473
-#&gt; <span style='color: #BCBCBC;'>5</span> Yes     Yes        33 0.110     0.256       0.355
-#&gt; <span style='color: #BCBCBC;'>6</span> Yes     <span style='color: #BB0000;'>NA</span>          1 0.003<span style='text-decoration: underline;'>34</span>   0.007<span style='text-decoration: underline;'>75</span>     0.2  
+#&gt; <span style='color: #949494;'># A tibble: 5 x 6</span>
+#&gt;   anaemia smoking     n   rate var1_rate var2_rate
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> No      No        108 0.361     0.635      0.543
+#&gt; <span style='color: #BCBCBC;'>2</span> No      Yes        62 0.207     0.365      0.653
+#&gt; <span style='color: #BCBCBC;'>3</span> Yes     No         91 0.304     0.705      0.457
+#&gt; <span style='color: #BCBCBC;'>4</span> Yes     Yes        33 0.110     0.256      0.347
+#&gt; <span style='color: #BCBCBC;'>5</span> Yes     <span style='color: #BB0000;'>NA</span>          5 0.016<span style='text-decoration: underline;'>7</span>    0.038<span style='text-decoration: underline;'>8</span>     1    
 #&gt; 
 #&gt; $`anaemia vs death_event`
 #&gt; <span style='color: #949494;'># A tibble: 4 x 6</span>
@@ -258,12 +258,12 @@ use it after loading the Google font with import_google_font().</p>
 #&gt; <span style='color: #949494;'># A tibble: 6 x 6</span>
 #&gt;   diabetes smoking     n    rate var1_rate var2_rate
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> No       No        107 0.358      0.615      0.532
-#&gt; <span style='color: #BCBCBC;'>2</span> No       Yes        63 0.211      0.362      0.677
-#&gt; <span style='color: #BCBCBC;'>3</span> No       <span style='color: #BB0000;'>NA</span>          4 0.013<span style='text-decoration: underline;'>4</span>     0.023<span style='text-decoration: underline;'>0</span>     0.8  
-#&gt; <span style='color: #BCBCBC;'>4</span> Yes      No         94 0.314      0.752      0.468
-#&gt; <span style='color: #BCBCBC;'>5</span> Yes      Yes        30 0.100      0.24       0.323
-#&gt; <span style='color: #BCBCBC;'>6</span> Yes      <span style='color: #BB0000;'>NA</span>          1 0.003<span style='text-decoration: underline;'>34</span>    0.008      0.2  
+#&gt; <span style='color: #BCBCBC;'>1</span> No       No        106 0.355      0.609      0.533
+#&gt; <span style='color: #BCBCBC;'>2</span> No       Yes        65 0.217      0.374      0.684
+#&gt; <span style='color: #BCBCBC;'>3</span> No       <span style='color: #BB0000;'>NA</span>          3 0.010<span style='text-decoration: underline;'>0</span>     0.017<span style='text-decoration: underline;'>2</span>     0.6  
+#&gt; <span style='color: #BCBCBC;'>4</span> Yes      No         93 0.311      0.744      0.467
+#&gt; <span style='color: #BCBCBC;'>5</span> Yes      Yes        30 0.100      0.24       0.316
+#&gt; <span style='color: #BCBCBC;'>6</span> Yes      <span style='color: #BB0000;'>NA</span>          2 0.006<span style='text-decoration: underline;'>69</span>    0.016      0.4  
 #&gt; 
 #&gt; $`diabetes vs death_event`
 #&gt; <span style='color: #949494;'># A tibble: 4 x 6</span>
@@ -287,12 +287,12 @@ use it after loading the Google font with import_google_font().</p>
 #&gt; <span style='color: #949494;'># A tibble: 6 x 6</span>
 #&gt;   hblood_pressure smoking     n    rate var1_rate var2_rate
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> No              No        127 0.425      0.655      0.632
-#&gt; <span style='color: #BCBCBC;'>2</span> No              Yes        64 0.214      0.330      0.688
-#&gt; <span style='color: #BCBCBC;'>3</span> No              <span style='color: #BB0000;'>NA</span>          3 0.010<span style='text-decoration: underline;'>0</span>     0.015<span style='text-decoration: underline;'>5</span>     0.6  
-#&gt; <span style='color: #BCBCBC;'>4</span> Yes             No         74 0.247      0.705      0.368
-#&gt; <span style='color: #BCBCBC;'>5</span> Yes             Yes        29 0.097<span style='text-decoration: underline;'>0</span>     0.276      0.312
-#&gt; <span style='color: #BCBCBC;'>6</span> Yes             <span style='color: #BB0000;'>NA</span>          2 0.006<span style='text-decoration: underline;'>69</span>    0.019<span style='text-decoration: underline;'>0</span>     0.4  
+#&gt; <span style='color: #BCBCBC;'>1</span> No              No        126 0.421      0.649      0.633
+#&gt; <span style='color: #BCBCBC;'>2</span> No              Yes        66 0.221      0.340      0.695
+#&gt; <span style='color: #BCBCBC;'>3</span> No              <span style='color: #BB0000;'>NA</span>          2 0.006<span style='text-decoration: underline;'>69</span>    0.010<span style='text-decoration: underline;'>3</span>     0.4  
+#&gt; <span style='color: #BCBCBC;'>4</span> Yes             No         73 0.244      0.695      0.367
+#&gt; <span style='color: #BCBCBC;'>5</span> Yes             Yes        29 0.097<span style='text-decoration: underline;'>0</span>     0.276      0.305
+#&gt; <span style='color: #BCBCBC;'>6</span> Yes             <span style='color: #BB0000;'>NA</span>          3 0.010<span style='text-decoration: underline;'>0</span>     0.028<span style='text-decoration: underline;'>6</span>     0.6  
 #&gt; 
 #&gt; $`hblood_pressure vs death_event`
 #&gt; <span style='color: #949494;'># A tibble: 4 x 6</span>
@@ -304,14 +304,15 @@ use it after loading the Google font with import_google_font().</p>
 #&gt; <span style='color: #BCBCBC;'>4</span> Yes             Yes            39 0.130     0.371     0.406
 #&gt; 
 #&gt; $`sex vs smoking`
-#&gt; <span style='color: #949494;'># A tibble: 5 x 6</span>
-#&gt;   sex    smoking     n   rate var1_rate var2_rate
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> Female No        101 0.338     0.962     0.502 
-#&gt; <span style='color: #BCBCBC;'>2</span> Female Yes         4 0.013<span style='text-decoration: underline;'>4</span>    0.038<span style='text-decoration: underline;'>1</span>    0.043<span style='text-decoration: underline;'>0</span>
-#&gt; <span style='color: #BCBCBC;'>3</span> Male   No        100 0.334     0.515     0.498 
-#&gt; <span style='color: #BCBCBC;'>4</span> Male   Yes        89 0.298     0.459     0.957 
-#&gt; <span style='color: #BCBCBC;'>5</span> Male   <span style='color: #BB0000;'>NA</span>          5 0.016<span style='text-decoration: underline;'>7</span>    0.025<span style='text-decoration: underline;'>8</span>    1     
+#&gt; <span style='color: #949494;'># A tibble: 6 x 6</span>
+#&gt;   sex    smoking     n    rate var1_rate var2_rate
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> Female No         99 0.331      0.943     0.497 
+#&gt; <span style='color: #BCBCBC;'>2</span> Female Yes         4 0.013<span style='text-decoration: underline;'>4</span>     0.038<span style='text-decoration: underline;'>1</span>    0.042<span style='text-decoration: underline;'>1</span>
+#&gt; <span style='color: #BCBCBC;'>3</span> Female <span style='color: #BB0000;'>NA</span>          2 0.006<span style='text-decoration: underline;'>69</span>    0.019<span style='text-decoration: underline;'>0</span>    0.4   
+#&gt; <span style='color: #BCBCBC;'>4</span> Male   No        100 0.334      0.515     0.503 
+#&gt; <span style='color: #BCBCBC;'>5</span> Male   Yes        91 0.304      0.469     0.958 
+#&gt; <span style='color: #BCBCBC;'>6</span> Male   <span style='color: #BB0000;'>NA</span>          3 0.010<span style='text-decoration: underline;'>0</span>     0.015<span style='text-decoration: underline;'>5</span>    0.6   
 #&gt; 
 #&gt; $`sex vs death_event`
 #&gt; <span style='color: #949494;'># A tibble: 4 x 6</span>
@@ -323,45 +324,44 @@ use it after loading the Google font with import_google_font().</p>
 #&gt; <span style='color: #BCBCBC;'>4</span> Male   Yes            62 0.207     0.320     0.646
 #&gt; 
 #&gt; $`smoking vs death_event`
-#&gt; <span style='color: #949494;'># A tibble: 5 x 6</span>
-#&gt;   smoking death_event     n   rate var1_rate var2_rate
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> No      No            135 0.452      0.672    0.665 
-#&gt; <span style='color: #BCBCBC;'>2</span> No      Yes            66 0.221      0.328    0.688 
-#&gt; <span style='color: #BCBCBC;'>3</span> Yes     No             63 0.211      0.677    0.310 
-#&gt; <span style='color: #BCBCBC;'>4</span> Yes     Yes            30 0.100      0.323    0.312 
-#&gt; <span style='color: #BCBCBC;'>5</span> <span style='color: #BB0000;'>NA</span>      No              5 0.016<span style='text-decoration: underline;'>7</span>     1        0.024<span style='text-decoration: underline;'>6</span>
+#&gt; <span style='color: #949494;'># A tibble: 6 x 6</span>
+#&gt;   smoking death_event     n    rate var1_rate var2_rate
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> No      No            134 0.448       0.673    0.660 
+#&gt; <span style='color: #BCBCBC;'>2</span> No      Yes            65 0.217       0.327    0.677 
+#&gt; <span style='color: #BCBCBC;'>3</span> Yes     No             65 0.217       0.684    0.320 
+#&gt; <span style='color: #BCBCBC;'>4</span> Yes     Yes            30 0.100       0.316    0.312 
+#&gt; <span style='color: #BCBCBC;'>5</span> <span style='color: #BB0000;'>NA</span>      No              4 0.013<span style='text-decoration: underline;'>4</span>      0.8      0.019<span style='text-decoration: underline;'>7</span>
+#&gt; <span style='color: #BCBCBC;'>6</span> <span style='color: #BB0000;'>NA</span>      Yes             1 0.003<span style='text-decoration: underline;'>34</span>     0.2      0.010<span style='text-decoration: underline;'>4</span>
 #&gt; </div><div class='input'>
 <span class='co'># Compare the two categorical variables</span>
 <span class='no'>two_var</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='compare_category.data.frame.html'>compare_category</a></span>(<span class='no'>heartfailure2</span>, <span class='no'>smoking</span>, <span class='no'>death_event</span>)
 
 <span class='co'># Print compare_category class objects</span>
 <span class='no'>two_var</span></div><div class='output co'>#&gt; $`smoking vs death_event`
-#&gt; <span style='color: #949494;'># A tibble: 5 x 6</span>
-#&gt;   smoking death_event     n   rate var1_rate var2_rate
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> No      No            135 0.452      0.672    0.665 
-#&gt; <span style='color: #BCBCBC;'>2</span> No      Yes            66 0.221      0.328    0.688 
-#&gt; <span style='color: #BCBCBC;'>3</span> Yes     No             63 0.211      0.677    0.310 
-#&gt; <span style='color: #BCBCBC;'>4</span> Yes     Yes            30 0.100      0.323    0.312 
-#&gt; <span style='color: #BCBCBC;'>5</span> <span style='color: #BB0000;'>NA</span>      No              5 0.016<span style='text-decoration: underline;'>7</span>     1        0.024<span style='text-decoration: underline;'>6</span>
+#&gt; <span style='color: #949494;'># A tibble: 6 x 6</span>
+#&gt;   smoking death_event     n    rate var1_rate var2_rate
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> No      No            134 0.448       0.673    0.660 
+#&gt; <span style='color: #BCBCBC;'>2</span> No      Yes            65 0.217       0.327    0.677 
+#&gt; <span style='color: #BCBCBC;'>3</span> Yes     No             65 0.217       0.684    0.320 
+#&gt; <span style='color: #BCBCBC;'>4</span> Yes     Yes            30 0.100       0.316    0.312 
+#&gt; <span style='color: #BCBCBC;'>5</span> <span style='color: #BB0000;'>NA</span>      No              4 0.013<span style='text-decoration: underline;'>4</span>      0.8      0.019<span style='text-decoration: underline;'>7</span>
+#&gt; <span style='color: #BCBCBC;'>6</span> <span style='color: #BB0000;'>NA</span>      Yes             1 0.003<span style='text-decoration: underline;'>34</span>     0.2      0.010<span style='text-decoration: underline;'>4</span>
 #&gt; </div><div class='input'>
 <span class='co'># plot all pair of variables</span>
 <span class='co'># plot(all_var)</span>
 
 <span class='co'># plot a pair of variables</span>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>two_var</span>)</div><div class='img'><img src='plot.compare_category-1.png' alt='' width='700' height='433' /></div><div class='input'>
-# plot all pair of variables by prompt
-# plot(all_var, prompt = TRUE)
-  
-# plot a pair of variables without NA
-# plot(two_var, na.rm = TRUE)
-
-# plot a pair of variables
-# plot(two_var, las = 1)
-
-# plot a pair of variables not focuses on typographic elements
-# plot(two_var, typographic = FALSE)
+<span class='co'># plot all pair of variables by prompt</span>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>all_var</span>, <span class='kw'>prompt</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.compare_category-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-4.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-6.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-7.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-8.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-9.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-10.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-11.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-12.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-13.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-14.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-15.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.compare_category-16.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># plot a pair of variables without NA</span>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>two_var</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.compare_category-17.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># plot a pair of variables</span>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>two_var</span>, <span class='kw'>las</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='plot.compare_category-18.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># plot a pair of variables not focuses on typographic elements</span>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>two_var</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot.compare_category-19.png' alt='' width='700' height='433' /></div><div class='input'># }
 
 </div></pre>
   </div>

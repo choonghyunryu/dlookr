@@ -73,7 +73,7 @@ data analysis for object inheriting from data.frame." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4.9000</span>
       </span>
     </div>
 
@@ -222,7 +222,8 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 <p>See vignette("EDA") for an introduction to these concepts.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
 <span class='co'>## target variable is categorical variable ----------------------------------</span>
@@ -231,45 +232,46 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 <span class='fu'>eda_report</span>(<span class='no'>heartfailure</span>, <span class='no'>death_event</span>)
 
 <span class='co'># create pdf file. file name is EDA_heartfailure.pdf</span>
-<span class='co'># eda_report(heartfailure, "death_event", output_file = "EDA_heartfailure.pdf")</span>
+<span class='fu'>eda_report</span>(<span class='no'>heartfailure</span>, <span class='st'>"death_event"</span>, <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"EDA_heartfailure.pdf"</span>)
 
 <span class='co'># create pdf file. file name is EDA_heartfailure.pdf and not browse</span>
-<span class='co'># eda_report(heartfailure, "death_event", output_dir = ".", </span>
-<span class='co'>#     output_file = "EDA_heartfailure.pdf", browse = FALSE)</span>
+<span class='fu'>eda_report</span>(<span class='no'>heartfailure</span>, <span class='st'>"death_event"</span>, <span class='kw'>output_dir</span> <span class='kw'>=</span> <span class='st'>"."</span>,
+  <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"EDA_heartfailure.pdf"</span>, <span class='kw'>browse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># create html file. file name is EDA_Report.html</span>
-<span class='co'># eda_report(heartfailure, "death_event", output_format = "html")</span>
+<span class='fu'>eda_report</span>(<span class='no'>heartfailure</span>, <span class='st'>"death_event"</span>, <span class='kw'>output_format</span> <span class='kw'>=</span> <span class='st'>"html"</span>)
 
 <span class='co'># create html file. file name is EDA_heartfailure.html</span>
-<span class='co'># eda_report(heartfailure, death_event, output_format = "html", </span>
-<span class='co'>#    output_file = "EDA_heartfailure.html")</span>
+<span class='fu'>eda_report</span>(<span class='no'>heartfailure</span>, <span class='no'>death_event</span>, <span class='kw'>output_format</span> <span class='kw'>=</span> <span class='st'>"html"</span>,
+  <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"EDA_heartfailure.html"</span>)
 
 <span class='co'>## target variable is numerical variable ------------------------------------</span>
 <span class='co'># reporting the EDA information</span>
 <span class='fu'>eda_report</span>(<span class='no'>heartfailure</span>, <span class='no'>sodium</span>)
 
 <span class='co'># create pdf file. file name is EDA2.pdf</span>
-<span class='co'># eda_report(heartfailure, "sodium", output_file = "EDA2.pdf")</span>
+<span class='fu'>eda_report</span>(<span class='no'>heartfailure</span>, <span class='st'>"sodium"</span>, <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"EDA2.pdf"</span>)
 
 <span class='co'># create html file. file name is EDA_Report.html</span>
-<span class='co'># eda_report(heartfailure, "sodium", output_format = "html")</span>
+<span class='fu'>eda_report</span>(<span class='no'>heartfailure</span>, <span class='st'>"sodium"</span>, <span class='kw'>output_format</span> <span class='kw'>=</span> <span class='st'>"html"</span>)
 
 <span class='co'># create html file. file name is EDA2.html</span>
-<span class='co'># eda_report(heartfailure, sodium, output_format = "html", output_file = "EDA2.html")</span>
+<span class='fu'>eda_report</span>(<span class='no'>heartfailure</span>, <span class='no'>sodium</span>, <span class='kw'>output_format</span> <span class='kw'>=</span> <span class='st'>"html"</span>, <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"EDA2.html"</span>)
 
 <span class='co'>## target variable is null</span>
 <span class='co'># reporting the EDA information</span>
-<span class='co'># eda_report(heartfailure)</span>
+<span class='fu'>eda_report</span>(<span class='no'>heartfailure</span>)
 
 <span class='co'># create pdf file. file name is EDA2.pdf</span>
-<span class='co'># eda_report(heartfailure, output_file = "EDA2.pdf")</span>
+<span class='fu'>eda_report</span>(<span class='no'>heartfailure</span>, <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"EDA2.pdf"</span>)
 
 <span class='co'># create html file. file name is EDA_Report.html</span>
-<span class='co'># eda_report(heartfailure, output_format = "html")</span>
+<span class='fu'>eda_report</span>(<span class='no'>heartfailure</span>, <span class='kw'>output_format</span> <span class='kw'>=</span> <span class='st'>"html"</span>)
 
 <span class='co'># create html file. file name is EDA2.html</span>
-<span class='co'># eda_report(heartfailure, output_format = "html", output_file = "EDA2.html")</span>
-}</div></pre>
+<span class='fu'>eda_report</span>(<span class='no'>heartfailure</span>, <span class='kw'>output_format</span> <span class='kw'>=</span> <span class='st'>"html"</span>, <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"EDA2.html"</span>)
+}
+<span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

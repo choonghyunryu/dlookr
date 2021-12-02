@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4.9000</span>
       </span>
     </div>
 
@@ -273,23 +273,25 @@ If not installed, you must use output_format = "html".</p>
 use it after loading the Google font with import_google_font().</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># create pdf file. file name is Transformation_Paged_Report.pdf</span>
-<span class='co'># transformation_paged_report(heartfailure, sample_percent = 80)</span>
+<span class='fu'>transformation_paged_report</span>(<span class='no'>heartfailure</span>, <span class='kw'>sample_percent</span> <span class='kw'>=</span> <span class='fl'>80</span>)
 
 <span class='co'># create pdf file. file name is Transformation_heartfailure. and change cover image</span>
-<span class='co'># cover &lt;- file.path(system.file(package = "dlookr"), "report", "cover2.jpg")</span>
-<span class='co'># transformation_paged_report(heartfailure, cover_img = cover, title_color = "gray",</span>
-<span class='co'>#   output_file = "Transformation_heartfailure")</span>
+<span class='no'>cover</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"dlookr"</span>), <span class='st'>"report"</span>, <span class='st'>"cover2.jpg"</span>)
+<span class='fu'>transformation_paged_report</span>(<span class='no'>heartfailure</span>, <span class='kw'>cover_img</span> <span class='kw'>=</span> <span class='no'>cover</span>, <span class='kw'>title_color</span> <span class='kw'>=</span> <span class='st'>"gray"</span>,
+  <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"Transformation_heartfailure"</span>)
 
 <span class='co'># create pdf file. file name is ./Transformation.pdf and not browse</span>
-<span class='co'># cover &lt;- file.path(system.file(package = "dlookr"), "report", "cover1.jpg")</span>
-<span class='co'># transformation_paged_report(heartfailure, output_dir = ".", cover_img = cover, </span>
-<span class='co'>#   flag_content_missing = FALSE, output_file = "Transformation.pdf", browse = FALSE)</span>
+<span class='no'>cover</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"dlookr"</span>), <span class='st'>"report"</span>, <span class='st'>"cover1.jpg"</span>)
+<span class='fu'>transformation_paged_report</span>(<span class='no'>heartfailure</span>, <span class='kw'>output_dir</span> <span class='kw'>=</span> <span class='st'>"."</span>, <span class='kw'>cover_img</span> <span class='kw'>=</span> <span class='no'>cover</span>,
+  <span class='kw'>flag_content_missing</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"Transformation.pdf"</span>, <span class='kw'>browse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># create pdf file. file name is Transformation_Paged_Report.html</span>
-<span class='co'># transformation_paged_report(heartfailure, target = "death_event", output_format = "html")</span>
-}</div></pre>
+<span class='fu'>transformation_paged_report</span>(<span class='no'>heartfailure</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"death_event"</span>, <span class='kw'>output_format</span> <span class='kw'>=</span> <span class='st'>"html"</span>)
+}
+<span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

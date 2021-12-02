@@ -73,7 +73,7 @@ the variable of interest (predictor) is briefly analyzed." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4.9000</span>
       </span>
     </div>
 
@@ -203,7 +203,8 @@ of the target variable and the data type of the variable of interest.</p>
     <div class='dont-index'><p><code><a href='print.relate.html'>print.relate</a></code>, <code><a href='plot.relate.html'>plot.relate</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># If the target variable is a categorical variable</span>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='co'># If the target variable is a categorical variable</span>
 <span class='no'>categ</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='target_by.data.frame.html'>target_by</a></span>(<span class='no'>heartfailure</span>, <span class='no'>death_event</span>)
 
 <span class='co'># If the variable of interest is a numerical variable</span>
@@ -266,8 +267,7 @@ of the target variable and the data type of the variable of interest.</p>
 #&gt;  Mean   :145.0   Mean   :147.3  
 #&gt;  3rd Qu.:145.0   3rd Qu.:148.0  
 #&gt;  Max.   :145.1   Max.   :148.0  </div><div class='input'>
-<span class='co'># plot(cat_num)</span>
-
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>cat_num</span>)</div><div class='img'><img src='relate-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># If the variable of interest is a categorical variable</span>
 <span class='no'>cat_cat</span> <span class='kw'>&lt;-</span> <span class='fu'>relate</span>(<span class='no'>categ</span>, <span class='no'>hblood_pressure</span>)
 <span class='no'>cat_cat</span></div><div class='output co'>#&gt;            hblood_pressure
@@ -278,8 +278,7 @@ of the target variable and the data type of the variable of interest.</p>
 #&gt; Number of factors: 2 
 #&gt; Test for independence of all factors:
 #&gt; 	Chisq = 1.8827, df = 1, p-value = 0.17</div><div class='input'>
-<span class='co'># plot(cat_cat)</span>
-
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>cat_cat</span>)</div><div class='img'><img src='relate-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>##---------------------------------------------------</span>
 <span class='co'># If the target variable is a numerical variable</span>
 <span class='no'>num</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='target_by.data.frame.html'>target_by</a></span>(<span class='no'>heartfailure</span>, <span class='no'>creatinine</span>)
@@ -312,8 +311,7 @@ of the target variable and the data type of the variable of interest.</p>
 #&gt; Multiple R-squared:  0.03576,	Adjusted R-squared:  0.03251 
 #&gt; F-statistic: 11.01 on 1 and 297 DF,  p-value: 0.001017
 #&gt; </div><div class='input'>
-<span class='co'># plot(num_num)</span>
-
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>num_num</span>)</div><div class='img'><img src='relate-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># If the variable of interest is a categorical variable</span>
 <span class='no'>num_cat</span> <span class='kw'>&lt;-</span> <span class='fu'>relate</span>(<span class='no'>num</span>, <span class='no'>smoking</span>)
 <span class='no'>num_cat</span></div><div class='output co'>#&gt; Analysis of Variance Table
@@ -340,10 +338,9 @@ of the target variable and the data type of the variable of interest.</p>
 #&gt; Multiple R-squared:  0.0007515,	Adjusted R-squared:  -0.002613 
 #&gt; F-statistic: 0.2234 on 1 and 297 DF,  p-value: 0.6368
 #&gt; </div><div class='input'>
-# plot(num_cat)
-
-# Not allow typographic
-# plot(num_cat, typographic = FALSE)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>num_cat</span>)</div><div class='img'><img src='relate-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Not allow typographic</span>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>num_cat</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='relate-5.png' alt='' width='700' height='433' /></div><div class='input'># }
 
 </div></pre>
   </div>

@@ -73,7 +73,7 @@ data analysis for object inheriting from the DBMS table through tbl_dbi" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4.9000</span>
       </span>
     </div>
 
@@ -232,7 +232,8 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
     <div class='dont-index'><p><code><a href='eda_report.data.frame.html'>eda_report.data.frame</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
 <span class='co'># Generate data for the example</span>
@@ -241,78 +242,79 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 <span class='no'>heartfailure2</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span>(<span class='no'>heartfailure2</span>)), <span class='fl'>5</span>), <span class='st'>"smoking"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
 
 <span class='co'># connect DBMS</span>
-<span class='co'># con_sqlite &lt;- DBI::dbConnect(RSQLite::SQLite(), ":memory:")</span>
+<span class='no'>con_sqlite</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://dbi.r-dbi.org/reference/dbConnect.html'>dbConnect</a></span>(<span class='kw pkg'>RSQLite</span><span class='kw ns'>::</span><span class='fu'><a href='https://rsqlite.r-dbi.org/reference/SQLite.html'>SQLite</a></span>(), <span class='st'>":memory:"</span>)
 
 <span class='co'># copy heartfailure2 to the DBMS with a table named TB_HEARTFAILURE</span>
-<span class='co'># copy_to(con_sqlite, heartfailure2, name = "TB_HEARTFAILURE", overwrite = TRUE)</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/copy_to.html'>copy_to</a></span>(<span class='no'>con_sqlite</span>, <span class='no'>heartfailure2</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"TB_HEARTFAILURE"</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'>## target variable is categorical variable</span>
 <span class='co'># reporting the EDA information</span>
 <span class='co'># create pdf file. file name is EDA_Report.pdf</span>
-<span class='co'># con_sqlite %&gt;% </span>
-<span class='co'>#   tbl("TB_HEARTFAILURE") %&gt;% </span>
-<span class='co'>#   eda_report(death_event)</span>
+<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='eda_report.data.frame.html'>eda_report</a></span>(<span class='no'>death_event</span>)
 
 <span class='co'># create pdf file. file name is EDA_TB_HEARTFAILURE.pdf</span>
-<span class='co'># con_sqlite %&gt;% </span>
-<span class='co'>#   tbl("TB_HEARTFAILURE") %&gt;% </span>
-<span class='co'>#   eda_report("death_event", output_file = "EDA_TB_HEARTFAILURE.pdf")</span>
+<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='eda_report.data.frame.html'>eda_report</a></span>(<span class='st'>"death_event"</span>, <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"EDA_TB_HEARTFAILURE.pdf"</span>)
 
 <span class='co'># create html file. file name is EDA_Report.html</span>
-<span class='co'># con_sqlite %&gt;% </span>
-<span class='co'>#   tbl("TB_HEARTFAILURE") %&gt;% </span>
-<span class='co'>#   eda_report("death_event", output_format = "html")</span>
+<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='eda_report.data.frame.html'>eda_report</a></span>(<span class='st'>"death_event"</span>, <span class='kw'>output_format</span> <span class='kw'>=</span> <span class='st'>"html"</span>)
 
 <span class='co'># create html file. file name is EDA_TB_HEARTFAILURE.html</span>
-<span class='co'># con_sqlite %&gt;% </span>
-<span class='co'>#   tbl("TB_HEARTFAILURE") %&gt;% </span>
-<span class='co'>#   eda_report(death_event, output_format = "html", output_file = "EDA_TB_HEARTFAILURE.html")</span>
+<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='eda_report.data.frame.html'>eda_report</a></span>(<span class='no'>death_event</span>, <span class='kw'>output_format</span> <span class='kw'>=</span> <span class='st'>"html"</span>, <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"EDA_TB_HEARTFAILURE.html"</span>)
 
 <span class='co'>## target variable is numerical variable</span>
 <span class='co'># reporting the EDA information, and collect size is 250</span>
-<span class='co'># con_sqlite %&gt;% </span>
-<span class='co'>#   tbl("TB_HEARTFAILURE") %&gt;% </span>
-<span class='co'>#   eda_report(sodium, collect_size = 250)</span>
+<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='eda_report.data.frame.html'>eda_report</a></span>(<span class='no'>sodium</span>, <span class='kw'>collect_size</span> <span class='kw'>=</span> <span class='fl'>250</span>)
 
 <span class='co'># create pdf file. file name is EDA2.pdf</span>
-<span class='co'># con_sqlite %&gt;% </span>
-<span class='co'>#   tbl("TB_HEARTFAILURE") %&gt;% </span>
-<span class='co'>#   eda_report("sodium", output_file = "EDA2.pdf")</span>
+<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='eda_report.data.frame.html'>eda_report</a></span>(<span class='st'>"sodium"</span>, <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"EDA2.pdf"</span>)
 
 <span class='co'># create html file. file name is EDA_Report.html</span>
-<span class='co'># con_sqlite %&gt;% </span>
-<span class='co'>#   tbl("TB_HEARTFAILURE") %&gt;% </span>
-<span class='co'>#   eda_report("sodium", output_format = "html")</span>
+<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='eda_report.data.frame.html'>eda_report</a></span>(<span class='st'>"sodium"</span>, <span class='kw'>output_format</span> <span class='kw'>=</span> <span class='st'>"html"</span>)
 
 <span class='co'># create html file. file name is EDA2.html</span>
-<span class='co'># con_sqlite %&gt;% </span>
-<span class='co'>#   tbl("TB_HEARTFAILURE") %&gt;% </span>
-<span class='co'>#   eda_report(sodium, output_format = "html", output_file = "EDA2.html")</span>
+<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='eda_report.data.frame.html'>eda_report</a></span>(<span class='no'>sodium</span>, <span class='kw'>output_format</span> <span class='kw'>=</span> <span class='st'>"html"</span>, <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"EDA2.html"</span>)
 
 <span class='co'>## target variable is null</span>
 <span class='co'># reporting the EDA information</span>
-<span class='co'># con_sqlite %&gt;% </span>
-<span class='co'>#   tbl("TB_HEARTFAILURE") %&gt;% </span>
-<span class='co'>#   eda_report()</span>
+<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='eda_report.data.frame.html'>eda_report</a></span>()
 
 <span class='co'># create pdf file. file name is EDA2.pdf</span>
-<span class='co'># con_sqlite %&gt;% </span>
-<span class='co'>#   tbl("TB_HEARTFAILURE") %&gt;% </span>
-<span class='co'>#   eda_report(output_file = "EDA2.pdf")</span>
+<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='eda_report.data.frame.html'>eda_report</a></span>(<span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"EDA2.pdf"</span>)
 
 <span class='co'># create html file. file name is EDA_Report.html</span>
-<span class='co'># con_sqlite %&gt;% </span>
-<span class='co'>#   tbl("TB_HEARTFAILURE") %&gt;% </span>
-<span class='co'>#   eda_report(output_format = "html")</span>
+<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='eda_report.data.frame.html'>eda_report</a></span>(<span class='kw'>output_format</span> <span class='kw'>=</span> <span class='st'>"html"</span>)
 
 <span class='co'># create html file. file name is EDA2.html</span>
-<span class='co'># con_sqlite %&gt;% </span>
-<span class='co'>#   tbl("TB_HEARTFAILURE") %&gt;% </span>
-<span class='co'>#   eda_report(output_format = "html", output_file = "EDA2.html")</span>
+<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='eda_report.data.frame.html'>eda_report</a></span>(<span class='kw'>output_format</span> <span class='kw'>=</span> <span class='st'>"html"</span>, <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"EDA2.html"</span>)
 
 <span class='co'># Disconnect DBMS   </span>
-<span class='co'># DBI::dbDisconnect(con_sqlite)</span>
-}</div></pre>
+<span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://dbi.r-dbi.org/reference/dbDisconnect.html'>dbDisconnect</a></span>(<span class='no'>con_sqlite</span>)
+}
+<span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -73,7 +73,7 @@ transform numerical variables for object inheriting from data.frame." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4.9000</span>
       </span>
     </div>
 
@@ -243,20 +243,22 @@ than data with a small number of variables.</p>
 use it after loading the Google font with import_google_font().</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># create html file. file name is Transformation_Report.html</span>
-<span class='co'># transformation_web_report(heartfailure)</span>
+<span class='fu'>transformation_web_report</span>(<span class='no'>heartfailure</span>)
 
 <span class='co'># file name is Transformation.html. and change logo image</span>
-<span class='co'># logo &lt;- file.path(system.file(package = "dlookr"), "report", "R_logo_html.svg")</span>
-<span class='co'># transformation_web_report(heartfailure, logo_img = logo, title_color = "black",</span>
-<span class='co'>#   output_file = "Transformation.html")</span>
+<span class='no'>logo</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"dlookr"</span>), <span class='st'>"report"</span>, <span class='st'>"R_logo_html.svg"</span>)
+<span class='fu'>transformation_web_report</span>(<span class='no'>heartfailure</span>, <span class='kw'>logo_img</span> <span class='kw'>=</span> <span class='no'>logo</span>, <span class='kw'>title_color</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
+  <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"Transformation.html"</span>)
 
 <span class='co'># file name is ./Transformation.html, "blue" theme and not browse</span>
-<span class='co'># transformation_web_report(heartfailure, output_dir = ".", target = "death_event", </span>
-<span class='co'>#   author = "Choonghyun Ryu", output_file = "Transformation.html", </span>
-<span class='co'>#   theme = "blue", browse = FALSE)</span>
-}</div></pre>
+<span class='fu'>transformation_web_report</span>(<span class='no'>heartfailure</span>, <span class='kw'>output_dir</span> <span class='kw'>=</span> <span class='st'>"."</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"death_event"</span>,
+  <span class='kw'>author</span> <span class='kw'>=</span> <span class='st'>"Choonghyun Ryu"</span>, <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"Transformation.html"</span>,
+  <span class='kw'>theme</span> <span class='kw'>=</span> <span class='st'>"blue"</span>, <span class='kw'>browse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+}
+<span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

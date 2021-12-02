@@ -73,7 +73,7 @@ relationship between the target column and the other column of the DBMS table th
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4.9000</span>
       </span>
     </div>
 
@@ -179,7 +179,8 @@ Attributes of target_df class is as follows.</p><ul>
     <div class='dont-index'><p><code><a href='target_by.data.frame.html'>target_by.data.frame</a></code>, <code><a href='relate.html'>relate</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
 <span class='co'># connect DBMS</span>
 <span class='no'>con_sqlite</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://dbi.r-dbi.org/reference/dbConnect.html'>dbConnect</a></span>(<span class='kw pkg'>RSQLite</span><span class='kw ns'>::</span><span class='fu'><a href='https://rsqlite.r-dbi.org/reference/SQLite.html'>SQLite</a></span>(), <span class='st'>":memory:"</span>)
@@ -251,23 +252,80 @@ Attributes of target_df class is as follows.</p><ul>
 #&gt;  3rd Qu.:145.0   3rd Qu.:148.0  
 #&gt;  Max.   :145.1   Max.   :148.0  </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>cat_num</span>)</div><div class='img'><img src='target_by.tbl_dbi-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># If the variable of interest is a categorical column</span>
-<span class='co'># cat_cat &lt;- relate(categ, hblood_pressure)</span>
-<span class='co'># cat_cat</span>
-<span class='co'># summary(cat_cat)</span>
-<span class='co'># plot(cat_cat)</span>
-
+<span class='no'>cat_cat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='relate.html'>relate</a></span>(<span class='no'>categ</span>, <span class='no'>hblood_pressure</span>)
+<span class='no'>cat_cat</span></div><div class='output co'>#&gt;            hblood_pressure
+#&gt; death_event  No Yes
+#&gt;         No  137  66
+#&gt;         Yes  57  39</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>cat_cat</span>)</div><div class='output co'>#&gt; Call: xtabs(formula = formula_str, data = data, addNA = TRUE)
+#&gt; Number of cases in table: 299 
+#&gt; Number of factors: 2 
+#&gt; Test for independence of all factors:
+#&gt; 	Chisq = 1.8827, df = 1, p-value = 0.17</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>cat_cat</span>)</div><div class='img'><img src='target_by.tbl_dbi-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>##---------------------------------------------------</span>
 <span class='co'># If the target variable is a categorical column, </span>
 <span class='co'># and In-memory mode and collect size is 200</span>
 <span class='no'>num</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='target_by.data.frame.html'>target_by</a></span>(<span class='no'>con_sqlite</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tbl.html'>tbl</a></span>(<span class='st'>"TB_HEARTFAILURE"</span>), <span class='no'>death_event</span>, <span class='kw'>collect_size</span> <span class='kw'>=</span> <span class='fl'>250</span>)
 
 <span class='co'># If the variable of interest is a numerical column</span>
-<span class='co'># num_num &lt;- relate(num, creatinine)</span>
-<span class='co'># num_num</span>
-<span class='co'># summary(num_num)</span>
-<span class='co'># plot(num_num)</span>
-<span class='co'># plot(num_num, hex_thres = 200)</span>
-
+<span class='no'>num_num</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='relate.html'>relate</a></span>(<span class='no'>num</span>, <span class='no'>creatinine</span>)
+<span class='no'>num_num</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 3 x 27</span>
+#&gt;   variable   death_event     n    na  mean    sd se_mean   IQR skewness kurtosis
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> creatinine No            156     0  1.20 0.686  0.054<span style='text-decoration: underline;'>9</span> 0.3       4.26     23.3
+#&gt; <span style='color: #BCBCBC;'>2</span> creatinine Yes            94     0  1.84 1.48   0.153  0.875     3.37     13.1
+#&gt; <span style='color: #BCBCBC;'>3</span> creatinine total         250     0  1.44 1.10   0.069<span style='text-decoration: underline;'>7</span> 0.6       4.27     23.1
+#&gt; <span style='color: #949494;'># … with 17 more variables: p00 &lt;dbl&gt;, p01 &lt;dbl&gt;, p05 &lt;dbl&gt;, p10 &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   p20 &lt;dbl&gt;, p25 &lt;dbl&gt;, p30 &lt;dbl&gt;, p40 &lt;dbl&gt;, p50 &lt;dbl&gt;, p60 &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   p70 &lt;dbl&gt;, p75 &lt;dbl&gt;, p80 &lt;dbl&gt;, p90 &lt;dbl&gt;, p95 &lt;dbl&gt;, p99 &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   p100 &lt;dbl&gt;</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>num_num</span>)</div><div class='output co'>#&gt;    variable         death_event       n               na         mean      
+#&gt;  Length:3           No   :1     Min.   : 94.0   Min.   :0   Min.   :1.196  
+#&gt;  Class :character   Yes  :1     1st Qu.:125.0   1st Qu.:0   1st Qu.:1.317  
+#&gt;  Mode  :character   total:1     Median :156.0   Median :0   Median :1.438  
+#&gt;                                 Mean   :166.7   Mean   :0   Mean   :1.491  
+#&gt;                                 3rd Qu.:203.0   3rd Qu.:0   3rd Qu.:1.639  
+#&gt;                                 Max.   :250.0   Max.   :0   Max.   :1.841  
+#&gt;        sd            se_mean             IQR            skewness    
+#&gt;  Min.   :0.6858   Min.   :0.05491   Min.   :0.3000   Min.   :3.365  
+#&gt;  1st Qu.:0.8935   1st Qu.:0.06228   1st Qu.:0.4500   1st Qu.:3.814  
+#&gt;  Median :1.1013   Median :0.06965   Median :0.6000   Median :4.263  
+#&gt;  Mean   :1.0902   Mean   :0.09253   Mean   :0.5917   Mean   :3.966  
+#&gt;  3rd Qu.:1.2924   3rd Qu.:0.11133   3rd Qu.:0.7375   3rd Qu.:4.266  
+#&gt;  Max.   :1.4836   Max.   :0.15302   Max.   :0.8750   Max.   :4.270  
+#&gt;     kurtosis          p00           p01              p05        
+#&gt;  Min.   :13.14   Min.   :0.6   Min.   :0.6000   Min.   :0.7000  
+#&gt;  1st Qu.:18.14   1st Qu.:0.6   1st Qu.:0.6000   1st Qu.:0.7000  
+#&gt;  Median :23.15   Median :0.6   Median :0.6000   Median :0.7000  
+#&gt;  Mean   :19.86   Mean   :0.6   Mean   :0.6183   Mean   :0.7667  
+#&gt;  3rd Qu.:23.23   3rd Qu.:0.6   3rd Qu.:0.6275   3rd Qu.:0.8000  
+#&gt;  Max.   :23.31   Max.   :0.6   Max.   :0.6550   Max.   :0.9000  
+#&gt;       p10              p20            p25              p30      
+#&gt;  Min.   :0.7250   Min.   :0.80   Min.   :0.9000   Min.   :0.90  
+#&gt;  1st Qu.:0.7625   1st Qu.:0.85   1st Qu.:0.9000   1st Qu.:0.95  
+#&gt;  Median :0.8000   Median :0.90   Median :0.9000   Median :1.00  
+#&gt;  Mean   :0.8417   Mean   :0.90   Mean   :0.9417   Mean   :1.00  
+#&gt;  3rd Qu.:0.9000   3rd Qu.:0.95   3rd Qu.:0.9625   3rd Qu.:1.05  
+#&gt;  Max.   :1.0000   Max.   :1.00   Max.   :1.0250   Max.   :1.10  
+#&gt;       p40             p50             p60             p70       
+#&gt;  Min.   :1.000   Min.   :1.000   Min.   :1.100   Min.   :1.190  
+#&gt;  1st Qu.:1.000   1st Qu.:1.050   1st Qu.:1.150   1st Qu.:1.245  
+#&gt;  Median :1.000   Median :1.100   Median :1.200   Median :1.300  
+#&gt;  Mean   :1.067   Mean   :1.133   Mean   :1.333   Mean   :1.440  
+#&gt;  3rd Qu.:1.100   3rd Qu.:1.200   3rd Qu.:1.450   3rd Qu.:1.565  
+#&gt;  Max.   :1.200   Max.   :1.300   Max.   :1.700   Max.   :1.830  
+#&gt;       p75             p80           p90             p95             p99       
+#&gt;  Min.   :1.200   Min.   :1.3   Min.   :1.650   Min.   :2.300   Min.   :4.175  
+#&gt;  1st Qu.:1.350   1st Qu.:1.5   1st Qu.:1.975   1st Qu.:2.705   1st Qu.:5.316  
+#&gt;  Median :1.500   Median :1.7   Median :2.300   Median :3.110   Median :6.457  
+#&gt;  Mean   :1.533   Mean   :1.7   Mean   :2.307   Mean   :3.183   Mean   :6.553  
+#&gt;  3rd Qu.:1.700   3rd Qu.:1.9   3rd Qu.:2.635   3rd Qu.:3.625   3rd Qu.:7.742  
+#&gt;  Max.   :1.900   Max.   :2.1   Max.   :2.970   Max.   :4.140   Max.   :9.028  
+#&gt;       p100     
+#&gt;  Min.   :6.10  
+#&gt;  1st Qu.:7.75  
+#&gt;  Median :9.40  
+#&gt;  Mean   :8.30  
+#&gt;  3rd Qu.:9.40  
+#&gt;  Max.   :9.40  </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>num_num</span>)</div><div class='img'><img src='target_by.tbl_dbi-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>num_num</span>, <span class='kw'>hex_thres</span> <span class='kw'>=</span> <span class='fl'>200</span>)</div><div class='img'><img src='target_by.tbl_dbi-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># If the variable of interest is a categorical column</span>
 <span class='no'>num_cat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='relate.html'>relate</a></span>(<span class='no'>num</span>, <span class='no'>smoking</span>)
 <span class='no'>num_cat</span></div><div class='output co'>#&gt;            smoking
@@ -277,9 +335,10 @@ Attributes of target_df class is as follows.</p><ul>
 #&gt; Number of cases in table: 250 
 #&gt; Number of factors: 2 
 #&gt; Test for independence of all factors:
-#&gt; 	Chisq = 0.25959, df = 1, p-value = 0.6104</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>num_cat</span>)</div><div class='img'><img src='target_by.tbl_dbi-2.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 	Chisq = 0.25959, df = 1, p-value = 0.6104</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>num_cat</span>)</div><div class='img'><img src='target_by.tbl_dbi-5.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Disconnect DBMS   </span>
-<span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://dbi.r-dbi.org/reference/dbDisconnect.html'>dbDisconnect</a></span>(<span class='no'>con_sqlite</span>)</div></pre>
+<span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://dbi.r-dbi.org/reference/dbDisconnect.html'>dbDisconnect</a></span>(<span class='no'>con_sqlite</span>)
+<span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -74,7 +74,7 @@ into bins for ulterior usage in scoring modeling." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4.9000</span>
       </span>
     </div>
 
@@ -201,7 +201,8 @@ smbinning() function of smbinning package.</p>
     <div class='dont-index'><p><code><a href='binning.html'>binning</a></code>, <code><a href='plot.optimal_bins.html'>plot.optimal_bins</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
 <span class='co'># Generate data for the example</span>
 <span class='no'>heartfailure2</span> <span class='kw'>&lt;-</span> <span class='no'>heartfailure</span>
@@ -211,63 +212,66 @@ smbinning() function of smbinning package.</p>
 <span class='no'>bin</span> <span class='kw'>&lt;-</span> <span class='fu'>binning_by</span>(<span class='no'>heartfailure2</span>, <span class='st'>"death_event"</span>, <span class='st'>"creatinine"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The factor y has been changed to a numeric vector consisting of 0 and 1.</span>
 #&gt; <span class='warning'>'Yes' changed to 1 (positive) and 'No' changed to 0 (negative).</span></div><div class='input'>
 <span class='co'># optimal binning using name</span>
-<span class='co'># bin &lt;- binning_by(heartfailure2, death_event, creatinine)</span>
-<span class='co'># bin</span>
-
+<span class='no'>bin</span> <span class='kw'>&lt;-</span> <span class='fu'>binning_by</span>(<span class='no'>heartfailure2</span>, <span class='no'>death_event</span>, <span class='no'>creatinine</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The factor y has been changed to a numeric vector consisting of 0 and 1.</span>
+#&gt; <span class='warning'>'Yes' changed to 1 (positive) and 'No' changed to 0 (negative).</span></div><div class='input'><span class='no'>bin</span></div><div class='output co'>#&gt; binned type: optimal
+#&gt; number of bins: 3
+#&gt; x
+#&gt; [0.5,0.9] (0.9,1.8] (1.8,9.4]      &lt;NA&gt; 
+#&gt;        80       167        47         5 </div><div class='input'>
 <span class='co'># performance table</span>
 <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>bin</span>, <span class='st'>"performance"</span>)</div><div class='output co'>#&gt;         Bin CntRec CntPos CntNeg CntCumPos CntCumNeg RatePos RateNeg RateCumPos
-#&gt; 1 [0.5,0.9]     81      9     72         9        72 0.09375 0.35468    0.09375
-#&gt; 2 (0.9,1.8]    166     50    116        59       188 0.52083 0.57143    0.61458
-#&gt; 3 (1.8,9.4]     47     35     12        94       200 0.36458 0.05911    0.97917
-#&gt; 4      &lt;NA&gt;      5      2      3        96       203 0.02083 0.01478    1.00000
+#&gt; 1 [0.5,0.9]     80      9     71         9        71 0.09375 0.34975    0.09375
+#&gt; 2 (0.9,1.8]    167     52    115        61       186 0.54167 0.56650    0.63542
+#&gt; 3 (1.8,9.4]     47     34     13        95       199 0.35417 0.06404    0.98958
+#&gt; 4      &lt;NA&gt;      5      1      4        96       203 0.01042 0.01970    1.00000
 #&gt; 5     Total    299     96    203        NA        NA 1.00000 1.00000         NA
 #&gt;   RateCumNeg    Odds   LnOdds      WoE      IV     JSD     AUC
-#&gt; 1    0.35468 0.12500 -2.07944 -1.33058 0.34719 0.04046 0.01663
-#&gt; 2    0.92611 0.43103 -0.84157 -0.09271 0.00469 0.00059 0.20238
-#&gt; 3    0.98522 2.91667  1.07044  1.81930 0.55574 0.06124 0.04711
-#&gt; 4    1.00000 0.66667 -0.40547  0.34339 0.00208 0.00026 0.01462
-#&gt; 5         NA 0.47291 -0.74886       NA 0.90970 0.10254 0.28074</div><div class='input'>
+#&gt; 1    0.34975 0.12676 -2.06546 -1.31660 0.33705 0.03933 0.01639
+#&gt; 2    0.91626 0.45217 -0.79369 -0.04483 0.00111 0.00014 0.20654
+#&gt; 3    0.98030 2.61538  0.96141  1.71027 0.49620 0.05542 0.05203
+#&gt; 4    1.00000 0.25000 -1.38629 -0.63744 0.00592 0.00073 0.01960
+#&gt; 5         NA 0.47291 -0.74886       NA 0.84028 0.09562 0.29457</div><div class='input'>
 <span class='co'># summary optimal_bins class</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>bin</span>)</div><div class='output co'>#&gt; ── Binning Table ──────────────────────── Several Metrics ── 
 #&gt;         Bin CntRec CntPos CntNeg RatePos RateNeg    Odds      WoE      IV
-#&gt; 1 [0.5,0.9]     81      9     72 0.09375 0.35468 0.12500 -1.33058 0.34719
-#&gt; 2 (0.9,1.8]    166     50    116 0.52083 0.57143 0.43103 -0.09271 0.00469
-#&gt; 3 (1.8,9.4]     47     35     12 0.36458 0.05911 2.91667  1.81930 0.55574
-#&gt; 4      &lt;NA&gt;      5      2      3 0.02083 0.01478 0.66667  0.34339 0.00208
-#&gt; 5     Total    299     96    203 1.00000 1.00000 0.47291       NA 0.90970
+#&gt; 1 [0.5,0.9]     80      9     71 0.09375 0.34975 0.12676 -1.31660 0.33705
+#&gt; 2 (0.9,1.8]    167     52    115 0.54167 0.56650 0.45217 -0.04483 0.00111
+#&gt; 3 (1.8,9.4]     47     34     13 0.35417 0.06404 2.61538  1.71027 0.49620
+#&gt; 4      &lt;NA&gt;      5      1      4 0.01042 0.01970 0.25000 -0.63744 0.00592
+#&gt; 5     Total    299     96    203 1.00000 1.00000 0.47291       NA 0.84028
 #&gt;       JSD     AUC
-#&gt; 1 0.04046 0.01663
-#&gt; 2 0.00059 0.20238
-#&gt; 3 0.06124 0.04711
-#&gt; 4 0.00026 0.01462
-#&gt; 5 0.10254 0.28074
+#&gt; 1 0.03933 0.01639
+#&gt; 2 0.00014 0.20654
+#&gt; 3 0.05542 0.05203
+#&gt; 4 0.00073 0.01960
+#&gt; 5 0.09562 0.29457
 #&gt; 
 #&gt; ── General Metrics ───────────────────────────────────────── 
-#&gt; • Gini index                       :  -0.43853
-#&gt; • IV (Jeffrey)                     :  0.9097
-#&gt; • JS (Jensen-Shannon) Divergence   :  0.10254
-#&gt; • Kolmogorov-Smirnov Statistics    :  0.31153
-#&gt; • HHI (Herfindahl-Hirschman Index) :  0.40661
-#&gt; • HHI (normalized)                 :  0.20881
-#&gt; • Cramer's V                       :  0.43445 
+#&gt; • Gini index                       :  -0.41087
+#&gt; • IV (Jeffrey)                     :  0.84028
+#&gt; • JS (Jensen-Shannon) Divergence   :  0.09562
+#&gt; • Kolmogorov-Smirnov Statistics    :  0.28084
+#&gt; • HHI (Herfindahl-Hirschman Index) :  0.40853
+#&gt; • HHI (normalized)                 :  0.21137
+#&gt; • Cramer's V                       :  0.41553 
 #&gt; 
 #&gt; ── Significance Tests ──────────────────── Chisquare Test ── 
 #&gt;       Bin A     Bin B statistics      p_value
-#&gt; 1 [0.5,0.9] (0.9,1.8]   10.81971 1.004251e-03
-#&gt; 2 (0.9,1.8] (1.8,9.4]   30.03979 4.232702e-08
+#&gt; 1 [0.5,0.9] (0.9,1.8]   11.50352 6.946445e-04
+#&gt; 2 (0.9,1.8] (1.8,9.4]   25.90425 3.587780e-07
 #&gt; </div><div class='input'>
-# visualize all information for optimal_bins class
-# plot(bin)
-
-# visualize WoE information for optimal_bins class
-# plot(bin, type = "WoE")
-
-# visualize all information without typographic
-# plot(bin, typographic = FALSE)
-
-# extract binned results
-# extract(bin) %&gt;% 
-#   head(20)
+<span class='co'># visualize all information for optimal_bins class</span>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bin</span>)</div><div class='img'><img src='binning_by-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># visualize WoE information for optimal_bins class</span>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bin</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"WoE"</span>)</div><div class='img'><img src='binning_by-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># visualize all information without typographic</span>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>bin</span>, <span class='kw'>typographic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='binning_by-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># extract binned results</span>
+<span class='fu'><a href='extract.bins.html'>extract</a></span>(<span class='no'>bin</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fl'>20</span>)</div><div class='output co'>#&gt;  [1] (1.8,9.4] (0.9,1.8] (0.9,1.8] (1.8,9.4] (1.8,9.4] (1.8,9.4] (0.9,1.8]
+#&gt;  [8] (0.9,1.8] (0.9,1.8] (1.8,9.4] (1.8,9.4] [0.5,0.9] (0.9,1.8] (0.9,1.8]
+#&gt; [15] (0.9,1.8] (0.9,1.8] [0.5,0.9] [0.5,0.9] (0.9,1.8] (1.8,9.4]
+#&gt; Levels: [0.5,0.9] &lt; (0.9,1.8] &lt; (1.8,9.4]</div><div class='input'># }
 
 </div></pre>
   </div>
