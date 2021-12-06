@@ -56,7 +56,8 @@ Suggests:
     rpart,
     prettydoc,    
     RSQLite,
-    ranger
+    ranger,
+    stringi
 Author: Choonghyun Ryu [aut, cre]
 Maintainer: Choonghyun Ryu <choonghyun.ryu@gmail.com>    
 BugReports: https://github.com/choonghyunryu/dlookr/issues

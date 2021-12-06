@@ -8,7 +8,12 @@ CHANGES IN R VERSION 0.5.4:
     * Fixed an error that occurred when the number of breaks and 
       the number of labels in plot.compare_category() are different.
       
-  MAJOR CHANGES:
+    * Fixed an error that occurred when check in the CRAN in 
+      r-devel-windows-x86_64-old
+      - "Error in loadNamespace(i, c(lib.loc, .libPaths()), 
+        versionCheck = vI[[i]]) : 
+        there is no package called 'stringi'"
+      - so append stringi package to "Suggests" section in DESCRIPTION file.
 
   MINOR CHANGES:
     * The default font for visualization is "Roboto Condensed" in the online 
