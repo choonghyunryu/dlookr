@@ -15,7 +15,7 @@
     error = function(e){ 
       options(dlookr_offline = TRUE)
       
-      message("Because it is an offline environment, only offline ports are imported.")
+      packageStartupMessage("Because it is an offline environment, only offline fonts are imported.")
     },    
     finally = {
       # Offline font
