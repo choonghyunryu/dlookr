@@ -1,3 +1,12 @@
+CHANGES IN R VERSION 0.5.5:
+  BUG FIXES:
+  
+  MAJOR CHANGES:
+  
+  MINOR CHANGES:
+  
+  
+  
 CHANGES IN R VERSION 0.5.4:
   BUG FIXES:
     * Fixed an error that occurred when attaching a package in an offline 
