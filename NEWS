@@ -4,9 +4,14 @@ CHANGES IN R VERSION 0.5.5:
   MAJOR CHANGES:
   
   MINOR CHANGES:
+    * Added 'show.missing.combinations' argument to describe(). 
+      When used with group_by(), this argument expresses all combinations of 
+      group combinations. If the argument value is TRUE, cases that do not 
+      exist as actual data are also included in the output. 
+      (thanks to @SchmidtPaul, #59)  
   
-  
-  
+
+
 CHANGES IN R VERSION 0.5.4:
   BUG FIXES:
     * Fixed an error that occurred when attaching a package in an offline 
@@ -33,17 +38,17 @@ CHANGES IN R VERSION 0.5.4:
 CHANGES IN R VERSION 0.5.3:
   BUG FIXES:
   
-  * Fixed an error that occurred when generating a paged report as a pdf file 
-    when non-ASCII (multi-byte) characters were included in MS-Windows.
-      - diagnose_paged_report()
-      - eda_paged_report()
-      - transformation_paged_report()
+    * Fixed an error that occurred when generating a paged report as a pdf file 
+      when non-ASCII (multi-byte) characters were included in MS-Windows.
+        - diagnose_paged_report()
+        - eda_paged_report()
+        - transformation_paged_report()
       
   MAJOR CHANGES:
   
-  * The size of the vignettes is large and the size of the attached file is large, 
-    so it is difficult to keep the package stable on CRAN. So I opted to move 
-    the content of vignettes to an external web page and share that URL on vignettes.
+    * The size of the vignettes is large and the size of the attached file is large, 
+      so it is difficult to keep the package stable on CRAN. So I opted to move 
+      the content of vignettes to an external web page and share that URL on vignettes.
   
   
   
