@@ -40,6 +40,10 @@ describe <- function(.data, ...) {
 #' @param .data a data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.
 #' @param statistics character. the name of the descriptive statistic to calculate. The defaults is c("mean", "sd", "se_mean", "IQR", "skewness", "kurtosis", "quantiles")
 #' @param quantiles numeric. list of quantiles to calculate. The values of elements must be between 0 and 1. and to calculate quantiles, you must include "quantiles" in the statistics argument value. The default is c(0, .01, .05, 0.1, 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.9, 0.95, 0.99, 1).
+#' @param all.combinations logical. When used with group_by(), 
+#' this argument expresses all combinations of  group combinations. 
+#' If the argument value is TRUE, cases that do not exist as actual 
+#' data are also included in the output.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
 #' Positive values select variables; negative values to drop variables.
@@ -87,10 +91,16 @@ describe <- function(.data, ...) {
 #' # Find the statistic of all numerical variables by 'hblood_pressure' and 'death_event',
 #' # and extract only those with 'hblood_pressure' variable level is "Yes".
 #' heartfailure2 %>%
-#'  group_by(hblood_pressure, death_event) %>%
-#'    describe() %>%
-#'    filter(hblood_pressure == "Yes")
-#'
+#'   group_by(hblood_pressure, death_event) %>%
+#'   describe() %>%
+#'   filter(hblood_pressure == "Yes")
+#'   
+#' # Using all.combinations = TRUE
+#' heartfailure2 %>%
+#'   group_by(hblood_pressure, death_event) %>%
+#'   describe(all.combinations = TRUE) %>%
+#'   filter(hblood_pressure == "Yes")
+#'   
 #' # extract only those with 'smoking' variable level is "Yes",
 #' # and find 'creatinine' statistics by 'hblood_pressure' and 'death_event'
 #' heartfailure2 %>%
@@ -135,17 +145,20 @@ describe_impl <- function(df, vars, statistics, quantiles) {
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
 #' @export
-describe.grouped_df <- function(.data, ..., statistics = NULL, quantiles = NULL) {
+describe.grouped_df <- function(.data, ..., statistics = NULL, quantiles = NULL,
+                                all.combinations = FALSE) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
-  describe_group_impl(.data, vars, statistics, quantiles)
+  describe_group_impl(.data, vars, statistics, quantiles, all.combinations)
 }
 
 #' @import tibble
 #' @import dplyr
-#' @importFrom purrr map_df
+#' @importFrom purrr map_df map
 #' @importFrom tibble is_tibble as_tibble
 #' @importFrom tidyselect matches
-describe_group_impl <- function(df, vars, statistics, quantiles, margin) {
+#' @importFrom rlang set_names
+describe_group_impl <- function(df, vars, statistics, quantiles, 
+                                all.combinations) {
   if (length(vars) == 0) vars <- names(df)
   
   if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
@@ -167,6 +180,9 @@ describe_group_impl <- function(df, vars, statistics, quantiles, margin) {
     if (utils::packageVersion("dplyr") >= "0.8.0") {
       gdf <- attr(df, "groups")
       n_group <- ncol(gdf) - 1
+      gvars <- gdf %>% 
+        names() %>% 
+        setdiff(".rows") 
       
       statistic <- purrr::map_df(seq(nrow(gdf)), function(x) 
         gdf[x, ] %>% select(-tidyselect::matches("\\.rows")) %>% 
@@ -176,6 +192,8 @@ describe_group_impl <- function(df, vars, statistics, quantiles, margin) {
       gdf_index <- attr(df, "indices")
       glables <- attr(df, "labels")
       n_group <- ncol(glables)
+      gvars <- glables %>% 
+        names() 
       
       statistic <- purrr::map_df(seq(nrow(glables)), function(x) 
         glables[x, ] %>% 
@@ -184,9 +202,29 @@ describe_group_impl <- function(df, vars, statistics, quantiles, margin) {
     } 
   )
   
+  if (all.combinations) {
+    expand_vars <- gvars %>% 
+      purrr::map({
+        function(x) {
+          unique(df[[x]])
+        }
+      }) %>%
+      append(list(vars)) %>% 
+      expand.grid() %>% 
+      rlang::set_names(c(gvars, "variable")) 
+    
+    statistic <- expand_vars %>% 
+      left_join(
+        statistic,
+        by = c(gvars, "variable")
+      ) %>% 
+      arrange_at(gvars)
+  }
+  
   statistic %>% 
     select(n_group + 1, seq(n_group), (n_group + 1):ncol(statistic))%>% 
     tibble::as_tibble() %>% 
+    mutate(n = ifelse(is.na(n), 0, n)) %>% 
     arrange(variable)
 }
 
