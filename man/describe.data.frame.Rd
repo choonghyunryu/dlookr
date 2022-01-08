@@ -117,9 +117,9 @@ heartfailure2 \%>\%
   
 # Using all.combinations = TRUE
 heartfailure2 \%>\%
+  filter(!hblood_pressure \%in\% "Yes" | !death_event \%in\% "Yes") \%>\% 
   group_by(hblood_pressure, death_event) \%>\%
-  describe(all.combinations = TRUE) \%>\%
-  filter(hblood_pressure == "Yes")
+  describe(all.combinations = TRUE) 
   
 # extract only those with 'smoking' variable level is "Yes",
 # and find 'creatinine' statistics by 'hblood_pressure' and 'death_event'

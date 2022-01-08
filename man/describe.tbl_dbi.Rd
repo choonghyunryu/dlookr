@@ -9,6 +9,7 @@
   ...,
   statistics = NULL,
   quantiles = NULL,
+  all.combinations = FALSE,
   in_database = FALSE,
   collect_size = Inf
 )
@@ -27,6 +28,11 @@ They support unquoting and splicing.}
 \item{statistics}{character. the name of the descriptive statistic to calculate. The defaults is c("mean", "sd", "se_mean", "IQR", "skewness", "kurtosis", "quantiles")}
 
 \item{quantiles}{numeric. list of quantiles to calculate. The values of elements must be between 0 and 1. and to calculate quantiles, you must include "quantiles" in the statistics argument value. The default is c(0, .01, .05, 0.1, 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.9, 0.95, 0.99, 1).}
+
+\item{all.combinations}{logical. When used with group_by(), 
+this argument expresses all combinations of  group combinations. 
+If the argument value is TRUE, cases that do not exist as actual 
+data are also included in the output.}
 
 \item{in_database}{Specifies whether to perform in-database operations. 
 If TRUE, most operations are performed in the DBMS. if FALSE, 
@@ -109,6 +115,14 @@ con_sqlite \%>\%
   describe() \%>\%
   filter(smoking == "Yes")
 
+# Using all.combinations = TRUE
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  filter(!smoking \%in\% "Yes" | !death_event \%in\% "Yes") \%>\% 
+  group_by(smoking, death_event) \%>\%
+  describe(all.combinations = TRUE) \%>\%
+  filter(smoking == "Yes")
+  
 # extract only those with 'sex' variable level is "Male",
 # and find 'sodium' statistics by 'smoking' and 'death_event'
 con_sqlite \%>\% 

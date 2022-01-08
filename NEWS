@@ -4,7 +4,7 @@ CHANGES IN R VERSION 0.5.5:
   MAJOR CHANGES:
   
   MINOR CHANGES:
-    * Added 'all.combinations' argument to describe(). 
+    * Added 'all.combinations' argument to describe() and describe.tbl_dbi(). 
       When used with group_by(), this argument expresses all combinations of 
       group combinations. If the argument value is TRUE, cases that do not 
       exist as actual data are also included in the output. 
