@@ -53,6 +53,12 @@ of the dplyr package.
 If you want to calculate the statistic by level of the categorical data
 you are interested in, rather than the whole statistic, you can use
 grouped_df as the group_by() function.
+
+From version 0.5.5, the 'variable' column in the "descriptive statistic 
+information" tibble object has been changed to 'described_variables'. 
+This is because there are cases where 'variable' is included in the variable 
+name of the data. There is probably no case where 'described_variables' is 
+included in the variable name of the data.
 }
 \section{Descriptive statistic information}{
 

@@ -659,7 +659,7 @@ num_summarise <- function (.data,
   
   names(df_stats) <- statistics
   
-  bind_cols(data.frame(variable = names(.data)), 
+  bind_cols(data.frame(described_variables = names(.data)), 
             df_stats %>% as.data.frame(), 
             df_quantiles) %>% 
     mutate_at(vars(matches("^n")), as.integer) %>% 

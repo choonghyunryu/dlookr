@@ -15,6 +15,12 @@ describe <- function(.data, ...) {
 #' If you want to calculate the statistic by level of the categorical data
 #' you are interested in, rather than the whole statistic, you can use
 #' grouped_df as the group_by() function.
+#' 
+#' From version 0.5.5, the 'variable' column in the "descriptive statistic 
+#' information" tibble object has been changed to 'described_variables'. 
+#' This is because there are cases where 'variable' is included in the variable 
+#' name of the data. There is probably no case where 'described_variables' is 
+#' included in the variable name of the data.
 #'
 #' @section Descriptive statistic information:
 #' The information derived from the numerical data describe is as follows.
@@ -185,7 +191,8 @@ describe_group_impl <- function(df, vars, statistics, quantiles,
         setdiff(".rows") 
       
       statistic <- purrr::map_df(seq(nrow(gdf)), function(x) 
-        gdf[x, ] %>% select(-tidyselect::matches("\\.rows")) %>% 
+        gdf[x, ] %>% 
+          select(-tidyselect::matches("\\.rows")) %>% 
           cbind(num_summarise(.data[gdf$.rows[[x]], ], statistics, quantiles))
       )
     } else {
@@ -209,14 +216,14 @@ describe_group_impl <- function(df, vars, statistics, quantiles,
           unique(df[[x]])
         }
       }) %>%
-      append(list(unique(statistic$variable))) %>% 
+      append(list(unique(statistic$described_variables))) %>% 
       expand.grid() %>% 
-      rlang::set_names(c(gvars, "variable")) 
+      rlang::set_names(c(gvars, "described_variables")) 
     
     statistic <- expand_vars %>% 
       left_join(
         statistic,
-        by = c(gvars, "variable")
+        by = c(gvars, "described_variables")
       ) %>% 
       arrange_at(gvars)
   }
@@ -225,6 +232,6 @@ describe_group_impl <- function(df, vars, statistics, quantiles,
     select(n_group + 1, seq(n_group), (n_group + 1):ncol(statistic))%>% 
     tibble::as_tibble() %>% 
     mutate(n = ifelse(is.na(n), 0, n)) %>% 
-    arrange(variable)
+    arrange(described_variables)
 }
 

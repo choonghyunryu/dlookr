@@ -9,6 +9,9 @@ CHANGES IN R VERSION 0.5.5:
       group combinations. If the argument value is TRUE, cases that do not 
       exist as actual data are also included in the output. 
       (thanks to @SchmidtPaul, #59)  
+      
+    * Fixed an error in describe() when `variable` is included in the name of 
+      a variable applied to group_by(). (thanks to @SchmidtPaul, #59) 
   
 
 
