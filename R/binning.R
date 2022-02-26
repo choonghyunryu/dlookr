@@ -1376,3 +1376,240 @@ plot.performance_bin <- function(x, typographic = TRUE, base_family = NULL, ...)
         )})
   }
 }
+
+
+#' Binning by recursive information gain ratio maximization
+#'
+#' @description The binning_rgr() finding intervals for numerical variable
+#' using recursive information gain ratio maximization. 
+#'
+#' @details This function can be usefully used when developing a model that predicts y.
+#'
+#' @param .data a data frame.
+#' @param y character. name of binary response variable. 
+#' The variable must character of factor.
+#' @param x character. name of continuous characteristic variable. 
+#' At least 5 different values. and Inf is not allowed.
+#' @param min_perc_bins numeric. minimum percetange of rows for each split or 
+#' segment (controls the sample size), 0.1 (or 10 percent) as default.
+#' @param max_n_bins integer. maximum number of bins or segments 
+#' to split the input variable, 5 bins as default. 
+#' @param ordered logical. whether to build an ordered factor or not.
+#' @return an object of "infogain_bins" class.
+#' Attributes of "infogain_bins" class is as follows.
+#' \itemize{
+#' \item class : "infogain_bins".
+#' \item type : binning type, "infogain".
+#' \item breaks : numeric. the number of intervals into which x is to be cut.
+#' \item levels : character. levels of binned value.
+#' \item raw : numeric. raw data, x argument value.
+#' \item target : integer. binary response variable.
+#' \item x_var : character. name of x variable.
+#' \item y_var : character. name of y variable.
+#' }
+#' @seealso \code{\link{binning}}, \code{\link{binning_by}}, \code{\link{plot.infogain_bins}}.
+#' @examples
+#' \donttest{
+#' library(dplyr)
+#' 
+#' # binning by recursive information gain ratio maximization using character
+#' bin <- binning_rgr(heartfailure, "death_event", "creatinine")
+#' 
+#' # binning by recursive information gain ratio maximization using name
+#' bin <- binning_rgr(heartfailure, death_event, creatinine)
+#' bin
+#' 
+#' # summary optimal_bins class
+#' summary(bin)
+#' 
+#' # visualize all information for optimal_bins class
+#' plot(bin)
+#' 
+#' # visualize WoE information for optimal_bins class
+#' plot(bin, type = "cross")
+#' 
+#' # visualize all information without typographic
+#' plot(bin, type = "cross", typographic = FALSE)
+#' 
+#' # extract binned results
+#' extract(bin) %>% 
+#'   head(20)
+#' }
+#' 
+#' @export
+#' @importFrom tibble is_tibble
+#' @importFrom tidyselect vars_select
+#' @importFrom rlang enquo
+#' @import dplyr
+binning_rgr <- function(.data, y, x, min_perc_bins = 0.1, max_n_bins = 5, ordered = TRUE) {
+  y <- tidyselect::vars_select(names(.data), !! enquo(y))
+  x <- tidyselect::vars_select(names(.data), !! enquo(x))
+  
+  if (tibble::is_tibble(.data)) {
+    .data <- as.data.frame(.data)
+  }
+  
+  uniq_y <- length(unique(.data[, y]))
+  type_y <- class(.data[, y])[1]
+  type_x <- class(.data[, x])[1]
+  
+  if (!is.data.frame(.data)) 
+    stop("Data is not a data.frame.")
+  
+  if (!type_x %in% c("integer", "numeric")) 
+    stop("x is not numeric value.")
+  
+  if (uniq_y != 2) {
+    stop("The number of levels of the y variable is not 2.")
+  }
+  
+  if (!type_y %in% c("character", "factor", "ordered")) {
+    stop("y is not character or (ordered)factor.")
+  }
+  
+  if (any(is.na(.data[, x]))) 
+    stop("x with a NA. This fuction not support missing.")
+  
+  if (any(is.na(.data[, y]))) 
+    stop("y with a NA. This fuction not support missing.")
+  
+  if (length(unique(.data[, x])) < 5) 
+    stop("x must be number of unique values greater then 4.")
+  
+  if (requireNamespace("funModeling", quietly = TRUE)) {
+    bins <- funModeling::discretize_rgr(
+      .data[, x],
+      .data[, y],
+      min_perc_bins = min_perc_bins,
+      max_n_bins = max_n_bins
+    )
+  } else {
+    stop("Package 'funModeling' needed for this function to work. Please install it.", 
+         call. = FALSE)
+  }
+  
+  bin_levels <- levels(bins)
+  
+  # calculate breakpoints
+  breaks <- gsub(pattern = "[]\\[)]", "", bin_levels) 
+  
+  breaks_max <- gsub(pattern = "^[[:print:]]*,", "", breaks) %>% 
+    as.numeric() %>% 
+    max()
+  
+  breaks <- gsub(pattern = ",[[:print:]]*$", "", breaks) %>% 
+    as.numeric() %>% 
+    c(breaks_max)
+  
+  if (ordered == TRUE)
+    bins <- ordered(bins)
+  
+  results <- bins
+  attr(results, "type") <- "infogain"
+  attr(results, "breaks") <- breaks
+  attr(results, "levels") <- bin_levels
+  attr(results, "raw") <- .data[, x]
+  attr(results, "x_var") <- x  
+  attr(results, "y_var") <- y
+  class(results) <- append("bins", class(results))
+  attr(results, "target") <- .data[, y]
+  
+  class(results) <- append("infogain_bins", class(results))
+  
+  results
+}
+
+
+#' Visualize Distribution for an "infogain_bins" Object
+#'
+#' @description
+#' It generates plots for understand distribution and  distribution by target variable using infogain_bins.
+#'
+#' @details The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
+#' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
+#' use it after loading the Google font with import_google_font().
+#' 
+#' @param x an object of class "infogain_bins", usually, a result of a call to binning_rgr().
+#' @param type character. options for visualization. Distribution("bar"), Relative Frequency by target ("cross").
+#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' @param base_family character. The name of the base font family to use 
+#' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
+#' @param ... further arguments to be passed from or to other methods.
+#' @seealso \code{\link{binning_rgr}}, \code{\link{summary.bins}}
+#' @examples
+#' \donttest{
+#' # binning by recursive information gain ratio maximization using character
+#' bin <- binning_rgr(heartfailure, "death_event", "creatinine")
+#' 
+#' # binning by recursive information gain ratio maximization using name
+#' bin <- binning_rgr(heartfailure, death_event, creatinine)
+#' bin
+#' 
+#' # summary optimal_bins class
+#' summary(bin)
+#' 
+#' # visualize all information for optimal_bins class
+#' plot(bin)
+#' 
+#' # visualize WoE information for optimal_bins class
+#' plot(bin, type = "cross")
+#' 
+#' # visualize all information without typographic
+#' plot(bin, type = "cross", typographic = FALSE)
+#' }
+#' 
+#' @import ggplot2
+#' @import hrbrthemes
+#' @importFrom gridExtra grid.arrange
+#' @export
+#' @method plot infogain_bins
+plot.infogain_bins <- function(x, type = c("bar", "cross"), 
+                                 typographic = TRUE, base_family = NULL, ...) {
+  type <- match.arg(type)
+  
+  if (type %in% c("bar")) {
+    plot.bins(x, typographic = typographic, base_family = base_family)
+  } else if (type %in% c("cross")) {
+    x_var = attr(x, "x_var")
+    y_var = attr(x, "y_var")
+    
+    dfm <- data.frame(x = x, y = attr(x, "target"))
+    
+    dfm_summary <- dfm %>% 
+      group_by(x) %>%
+      count(y) %>% 
+      mutate(ratio = round(n / sum(n) * 100, 2))
+    
+    p_stack <- dfm %>% 
+      ggplot(aes(x = x, fill = y)) +
+      geom_bar(position = "fill", show.legend = FALSE) +
+      geom_text(data = dfm_summary,
+                aes(y = n, label = ratio), color = "black",
+                position = position_fill(vjust = 0.5)) +
+      labs(title = sprintf("Relative frequency by bins"),
+           x = x_var, y = "Relative Frequency (%)")
+    
+    p_dodge <- dfm_summary %>% 
+      ggplot(aes(x = x, y = n, fill = y)) +
+      geom_bar(stat="identity", position = position_dodge()) +
+      geom_text(aes(label = n), vjust = 1.6, color = "black",
+                position = position_dodge(0.9), size = 3.5)+
+      labs(title = sprintf("Frequency by bins"),
+           x = x_var, y = "Frequency (Count)") +
+      guides(fill = guide_legend(title = y_var))
+    
+    if (typographic) {
+      p_stack <- p_stack +
+        theme_typographic(base_family) 
+      
+      p_dodge <- p_dodge +
+        theme_typographic(base_family)             
+    }
+    
+    p_dodge
+    
+    suppressWarnings(gridExtra::grid.arrange(p_stack, p_dodge, nrow = 1, ncol = 2)) 
+  }  
+}  
+

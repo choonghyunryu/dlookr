@@ -2,7 +2,10 @@ CHANGES IN R VERSION 0.5.5:
   BUG FIXES:
   
   MAJOR CHANGES:
-  
+    * Added a new binning function called binning_rgr(), plot.infogain_bins().
+      This function bins using recursive information gain ratio maximization.
+      (thanks to Luca Zavarella, #15)
+      
   MINOR CHANGES:
     * Added 'all.combinations' argument to describe() and describe.tbl_dbi(). 
       When used with group_by(), this argument expresses all combinations of 

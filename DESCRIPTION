@@ -50,6 +50,7 @@ Suggests:
     classInt,
     dbplyr,
     forecast (>= 8.3),
+    funModeling,
     ISLR,
     nycflights13,
     randomForest,
