@@ -261,7 +261,7 @@ The skewness of `Advertising` is 0.637. This means that the distribution of data
 `summary()` summarizes transformation information, and `plot()` visualizes transformation information.
 
 ```{r resolving2, fig.align='center', fig.width = 7, fig.height = 5}
-Advertising_log = transform(carseats$Advertising, method = "log")
+Advertising_log <- transform(carseats$Advertising, method = "log")
 
 # result of transformation
 head(Advertising_log)

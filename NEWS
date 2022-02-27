@@ -1,10 +1,15 @@
 CHANGES IN R VERSION 0.5.5:
   BUG FIXES:
-  
+  * Fixed an error in describe() when `variable` is included in the name of 
+    a variable applied to group_by(). (thanks to @SchmidtPaul, #59) 
+      
   MAJOR CHANGES:
     * Added a new binning function called binning_rgr(), plot.infogain_bins().
       This function bins using recursive information gain ratio maximization.
       (thanks to Luca Zavarella, #15)
+      
+    * By fixing bug #59, the variable 'variable' in the describe() result 
+      was changed to 'described_variables'. 
       
   MINOR CHANGES:
     * Added 'all.combinations' argument to describe() and describe.tbl_dbi(). 

@@ -152,7 +152,7 @@ The `describe()` function can be sorted by `left or right skewed size`(skewness)
 ```{r describe_pipe}
 carseats %>%
   describe() %>%
-  select(variable, skewness, mean, p25, p50, p75) %>% 
+  select(described_variables, skewness, mean, p25, p50, p75) %>% 
   filter(!is.na(skewness)) %>% 
   arrange(desc(abs(skewness)))
 ```

@@ -9,6 +9,15 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r environment, echo = FALSE, message = FALSE, warning=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "", out.width = "600px", dpi = 70)
+options(tibble.print_min = 4L, tibble.print_max = 4L)
+
+library(dlookr)
+library(dplyr)
+library(ggplot2)
+```
+
 ## Preface
 After you have acquired the data, you should do the following:
 
@@ -36,9 +45,594 @@ Data diagnosis supports the following data structures.
 * **table of DBMS** : table of the DBMS through tbl_dbi.
   + **Use dplyr as the back-end interface for any DBI-compatible database.**
   
-## How to perform data diagnosis
+## Data: nycflights13
 
-For information on how to perform data diagnosis, refer to the following website.
+To illustrate basic use of the dlookr package, use the `flights` data from the `nycflights13` package. The `flights` data frame is data about departure and arrival on all flights departing from NYC in 2013.
 
-- [`Data quality diagnosis`](https://choonghyunryu.github.io/dlookr_vignette/diagonosis.html)
+```{r import_data, warning=FALSE}
+library(nycflights13)
+dim(flights)
+flights
+```
 
+## Data diagnosis
+
+dlookr aims to diagnose the data and to select variables that can not be used for data analysis or to find the variables that need to be calibrated.:
+
+* `diagnose()` provides basic diagnostic information for variables.
+* `diagnose_category()` provides detailed diagnostic information for categorical variables.
+* `diagnose_numeric()` provides detailed diagnostic information for numerical variables.
+* `diagnose_outlier()` and `plot_outlier()` provide information and visualization of outliers.
+
+### General diagnosis of all variables with `diagnose()`
+
+`diagnose()` allows to diagnosis a variables in a data frame. Like function of dplyr, the first argument is the tibble (or data frame). The second and subsequent arguments refer to variables within that data frame.
+
+The variables of the `tbl_df` object returned by `diagnose ()` are as follows.
+
+* `variables` : variable names
+* `types` : the data type of the variables
+* `missing_count` : number of missing values
+* `missing_percent` : percentage of missing values
+* `unique_count` : number of unique values
+* `unique_rate` : rate of unique value. unique_count / number of observation
+
+For example, we can diagnose all variables in `flights`:
+
+```{r diagnose}
+diagnose(flights)
+```
+
+* `Missing Value(NA)` : Variables with many missing values, ie those with a `missing_percent` close to 100, should be excluded from the analysis.
+* `Unique value` : Variables with a unique value (`unique_count` = 1) are considered to be excluded from data analysis. And if the data type is not numeric (integer, numeric) and the number of unique values is equal to the number of observations (unique_rate = 1), then the variable is likely to be an identifier. Therefore, this variable is also not suitable for the analysis model.
+
+`year` can be considered not to be used in the analysis model since `unique_count` is 1. However, you do not have to remove it if you configure `date` as a combination of `year`, `month`, and `day`.
+
+For example, we can diagnose only a few selected variables:
+
+```{r diagnoses}
+# Select columns by name
+diagnose(flights, year, month, day)
+# Select all columns between year and day (include)
+diagnose(flights, year:day)
+# Select all columns except those from year to day (exclude)
+diagnose(flights, -(year:day))
+```
+
+By using with dplyr, variables including missing values can be sorted by the weight of missing values.:
+
+```{r diagnose_pipe}
+flights %>%
+  diagnose() %>%
+  select(-unique_count, -unique_rate) %>% 
+  filter(missing_count > 0) %>% 
+  arrange(desc(missing_count))
+```
+
+### Diagnosis of numeric variables with `diagnose_numeric()`
+
+`diagnose_numeric()` diagnoses numeric(continuous and discrete) variables in a data frame. Usage is the same as `diagnose()` but returns more diagnostic information. However, if you specify a non-numeric variable in the second and subsequent argument list, the variable is automatically ignored.
+
+The variables of the `tbl_df` object returned by `diagnose_numeric()` are as follows.
+
+* `min` : minimum value
+* `Q1` : 1/4 quartile, 25th percentile
+* `mean` : arithmetic mean
+* `median` : median, 50th percentile
+* `Q3` : 3/4 quartile, 75th percentile
+* `max` : maximum value
+* `zero` : number of observations with a value of 0
+* `minus` : number of observations with negative numbers
+* `outlier` : number of outliers
+
+The summary() function summarizes the distribution of individual variables in the data frame and outputs it to the console. The summary values of numeric variables are `min`, `Q1`, `mean`, `median`, `Q3` and `max`, which help to understand the distribution of data.
+
+However, the result displayed on the console has the disadvantage that the analyst has to look at it with the eyes. However, when the summary information is returned in a data frame structure such as tbl_df, the scope of utilization is expanded. `diagnose_numeric()` supports this.
+
+`zero`, `minus`, and `outlier` are useful measures to diagnose data integrity. For example, numerical data in some cases cannot have zero or negative numbers. A numeric variable called `employee salary` cannot have negative numbers or zeros. Therefore, this variable should be checked for the inclusion of zero or negative numbers in the data diagnosis process.
+
+`diagnose_numeric()` can diagnose all numeric variables of `flights` as follows.:
+
+```{r diagnose_pipe_numeric}
+diagnose_numeric(flights)
+```
+
+If a numeric variable can not logically have a negative or zero value, it can be used with `filter()` to easily find a variable that does not logically match:
+
+```{r diagnose_pipe_numeric_pipe}
+diagnose_numeric(flights) %>% 
+  filter(minus > 0 | zero > 0) 
+```
+
+### Diagnosis of categorical variables with `diagnose_category()`
+
+`diagnose_category()` diagnoses the categorical(factor, ordered, character) variables of a data frame. The usage is similar to `diagnose()` but returns more diagnostic information. If you specify a non-categorical variable in the second and subsequent argument list, the variable is automatically ignored.
+
+The `top` argument specifies the number of levels to return for each variable. The default is 10, which returns the top 10 level. Of course, if the number of levels is less than 10, all levels are returned.
+
+The variables of the `tbl_df` object returned by `diagnose_category()` are as follows.
+
+* `variables` : variable names
+* `levels`: level names
+* `N` : number of observation
+* `freq` : number of observation at the levels
+* `ratio` : percentage of observation at the levels
+* `rank` : rank of occupancy ratio of levels
+
+``diagnose_category()` can diagnose all categorical variables of `flights` as follows.:
+
+```{r diagnose_category}
+diagnose_category(flights)
+```
+
+In collaboration with `filter()` in the `dplyr` package, we can see that the `tailnum` variable is ranked in top 1 with 2,512 missing values in the case where the missing value is included in the top 10:
+
+```{r diagnose_category_pipe}
+diagnose_category(flights) %>% 
+  filter(is.na(levels))
+```
+
+The following example returns a list where the level's relative percentage is 0.01% or less. Note that the value of the `top` argument is set to a large value such as 500. If the default value of 10 was used, values below 0.01% would not be included in the list:
+
+```{r diagnose_category_pipe2}
+flights %>%
+  diagnose_category(top = 500)  %>%
+  filter(ratio <= 0.01)
+```
+
+In the analytics model, you can also consider removing levels where the relative frequency is very small in the observations or, if possible, combining them together.
+
+### Diagnosing outliers with `diagnose_outlier()`
+`diagnose_outlier()` diagnoses the outliers of the numeric (continuous and discrete) variables of the data frame. The usage is the same as `diagnose()`.
+
+The variables of the `tbl_df` object returned by `diagnose_outlier()` are as follows.
+
+* `outliers_cnt` : number of outliers
+* `outliers_ratio` : percent of outliers
+* `outliers_mean` : arithmetic average of outliers
+* `with_mean` : arithmetic average of with outliers
+* `without_mean` : arithmetic average of without outliers
+
+`diagnose_outlier()` can diagnose outliers of all numerical variables on `flights` as follows:
+
+```{r diagnose_outlier}
+diagnose_outlier(flights)
+```
+
+Numeric variables that contained outliers are easily found with `filter()`.:
+
+```{r diagnose_outlier_pipe}
+diagnose_outlier(flights) %>% 
+  filter(outliers_cnt > 0) 
+```
+
+The following example finds a numeric variable with an outlier ratio of 5% or more, and then returns the result of dividing mean of outliers by overall mean in descending order:
+
+```{r diagnose_outlier_pipe2}
+diagnose_outlier(flights) %>% 
+  filter(outliers_ratio > 5) %>% 
+  mutate(rate = outliers_mean / with_mean) %>% 
+  arrange(desc(rate)) %>% 
+  select(-outliers_cnt)
+```
+
+In cases where the mean of the outliers is large relative to the overall average, it may be desirable to impute or remove the outliers.
+
+### Visualization of outliers using `plot_outlier()`
+`plot_outlier()` visualizes outliers of numerical variables(continuous and discrete) of data.frame. Usage is the same `diagnose()`.
+
+The plot derived from the numerical data diagnosis is as follows.
+
+* With outliers box plot
+* Without outliers box plot
+* With outliers histogram
+* Without outliers histogram
+
+`plot_outlier()` can visualize an outliers in the `arr_delay` variable of `flights` as follows:
+
+```{r plot_outlier, fig.align='center', fig.width = 7, fig.height = 5}
+flights %>%
+  plot_outlier(arr_delay) 
+```
+
+The following example uses `diagnose_outlier()`, `plot_outlier()`, and `dplyr` packages to visualize all numerical variables with an outlier ratio of 5% or higher.
+
+```{r plot_outlier_pipe, fig.align='center', fig.width = 7, fig.height = 5, eval=FALSE}
+flights %>%
+  plot_outlier(diagnose_outlier(flights) %>% 
+                 filter(outliers_ratio >= 5) %>% 
+                 select(variables) %>% 
+                 unlist())
+```
+
+Analysts should look at the results of the visualization to decide whether to remove or replace outliers. In some cases, you should consider removing variables with outliers from the data analysis model.
+
+Looking at the results of the visualization, `arr_delay` shows that the observed values without outliers are similar to the normal distribution. In the case of a linear model, we might consider removing or imputing outliers.
+
+### Visualization for missing values
+It is important to look at the missing values of individual variables, but it is also important to look at the relationship between the variables including the missing values.
+
+dlookr provides a visualization tool that looks at the relationship of variables including missing values.
+
+#### visualize pareto chart using `plot_na_pareto()`
+
+`plot_na_pareto()` draws a pareto chart by collecting variables including missing values.
+
+```{r plot_na_pareto1, fig.align='center', fig.width = 7, fig.height = 5}
+mice::boys %>% 
+  plot_na_pareto(col = "blue")
+```
+
+The default value of the `only_na` argument is FALSE, which includes variables that do not contain missing values, but if this value is set to TRUE, only variables containing missing values are visualized. The variable `age` was excluded from this plot.
+
+```{r plot_na_pareto2, fig.align='center', fig.width = 7, fig.height = 5, eval=FALSE}
+mice::boys %>% 
+  plot_na_pareto(only_na = TRUE, main = "Pareto Chart for mice::boys")
+```
+
+The rating of the variable is expressed as a proportion of missing values. It is calculated as the ratio of missing values.
+ If it is [0, 0.05), it is `Good`, if it is [0.05, 0.4) it is `OK`, if it is [0.4, 0.8) it is `Bad`, and if it is [0.8, 1.0] it is `Remove`. 
+You can override this grade using the `grade` argument as follows:
+
+```{r plot_na_pareto3, fig.align='center', fig.width = 7, fig.height = 5, eval=FALSE}
+mice::boys %>% 
+  plot_na_pareto(grade = list(High = 0.1, Middle = 0.6, Low = 1), relative = TRUE)
+```
+
+If the `plot` argument is set to FALSE, information about missing values is returned instead of plotting.
+
+```{r plot_na_pareto4, fig.align='center', fig.width = 7, fig.height = 5, eval=FALSE}
+plot_na_pareto(mice::boys, only_na = TRUE, plot = FALSE)
+```
+
+#### visualize combination chart using `plot_na_hclust()`
+
+It is important to look at the relationship between variables, including missing values. `plot_na_hclust()` visualizes the relationship of variables that contain missing values. This function rearranges the positions of variables using hierarchical clustering. Then, the expression of the missing value is visualized by grouping similar variables.
+
+```{r plot_na_hclust, fig.align='center', fig.width = 7, fig.height = 5}
+mice::boys %>% 
+  plot_na_hclust(main = "Distribution of missing value")
+```
+
+
+#### visualize combination chart using `plot_na_intersect()`
+
+`plot_na_intersect()` visualize the combinations of missing value across cases.
+
+The visualization consists of four parts. The bottom left, which is the most basic, visualizes the case of cross(intersection)-combination. The x-axis is the variable including the missing value, and the y-axis represents the case of a combination of variables. And on the marginal of the two axes, the frequency of the case is expressed as a bar graph. 
+Finally, the visualization at the top right expresses the number of variables including missing values in the data set, and the number of observations including missing values and complete cases .
+
+This example visualize the combination variables that is include missing value.
+
+```{r plot_na_hclust1, fig.align='center', fig.width = 7, fig.height = 5}
+mice::boys %>% 
+  plot_na_intersect()
+```
+
+
+If the `n_vars` argument is used, only the top `n` variables containing many missing values are visualized.
+
+```{r plot_na_hclust3, fig.align='center', fig.width = 7, fig.height = 5, eval=FALSE}
+mice::boys %>%
+  plot_na_intersect(n_vars = 5)
+```
+
+If you use the `n_intersacts` argument, only the top n numbers of variable combinations(intersection) including missing values are visualized. and If you want to visualize the combination variables that is include missing value and complete case. You just add only_na = FALSE.
+
+```{r plot_na_hclust4, fig.align='center', fig.width = 7, fig.height = 5, eval=FALSE}
+mice::boys %>%
+  plot_na_intersect(only_na = FALSE, n_intersacts = 7)
+```
+
+## Automated report
+
+dlookr provides two automated data diagnostic reports:
+
+* Web page-based dynamic reports can perform in-depth analysis through visualization and statistical tables.
+* Static reports generated as pdf files or html files can be archived as output of data analysis.
+
+### Create a diagnostic report using `diagnose_web_report()`
+`diagnose_web_report()` create dynamic report for object inherited from data.frame(`tbl_df`, `tbl`, etc) or data.frame.
+
+#### Contents of dynamic web report
+The contents of the report are as follows.:
+
+* Overview
+    + Data Structures
+        + Data Structures
+        + Data Types
+        + Job Informations
+    + Warnings
+    + Variables
+* Missing Values
+    + List of Missing Values
+    + Visualization
+* Unique Values
+    + Categorical Variables
+    + Numerical Variables
+* Outliers
+* Samples
+    + Duplicated
+    + Heads
+    + Tails
+
+#### Some arguments for dynamic web report
+diagnose_web_report() generates various reports with the following arguments.
+
+* output_file
+    + name of generated file.
+* output_dir
+    + name of directory to generate report file.
+ 
+* title
+    + title of report. 
+
+* subtitle
+    + subtitle of report. 
+
+* author
+    + author of report. 
+
+* title_color
+    + color of title.
+
+* thres_uniq_cat
+    + threshold to use for "Unique Values - Categorical Variables".
+
+* thres_uniq_num
+    + threshold to use for "Unique Values - Numerical Variables".
+
+* logo_img
+    + name of logo image file on top left.
+
+* create_date
+    + The date on which the report is generated.
+
+* theme
+    + name of theme for report. support "orange" and "blue". 
+
+* sample_percent
+    + Sample percent of data for performing Diagnosis.
+
+
+The following script creates a quality diagnosis report for the `tbl_df` class object, `flights`.
+
+```{r diagnose_web_report, eval=FALSE}
+flights %>%
+  diagnose_web_report(subtitle = "flights", output_dir = "./", 
+                      output_file = "Diagn.html", theme = "blue")
+```
+
+#### Screenshot of dynamic report
+
+* The part of the report is shown in the following figure.:
+
+```{r diag_web_title, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The part of the report"}
+knitr::include_graphics('img/diag_web_title.jpg')
+```
+
+* The dynamic contents of the report is shown in the following figure.:
+
+```{r diag_web_content, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The dynamic contents of the report"}
+knitr::include_graphics('img/diag_web_content.jpg')
+```
+
+
+### Create a diagnostic report using `diagnose_paged_report()`
+`diagnose_paged_report()` create static report for object inherited from data.frame(`tbl_df`, `tbl`, etc) or data.frame.
+
+#### Contents of static paged report
+The contents of the report are as follows.:
+
+* Overview
+    + Data Structures
+    + Job Informations
+    + Warnings
+    + Variables
+* Missing Values
+    + List of Missing Values
+    + Visualization
+* Unique Values
+    + Categorical Variables
+    + Numerical Variables  
+* Categorical Variable Diagnosis   
+    + Top Ranks
+* Numerical Variable Diagnosis
+    + Distribution
+        + Zero Values
+        + Minus Values
+    + Outliers
+        + List of Outliers
+        + Individual Outliers
+
+#### Some arguments for static paged report
+diagnose_paged_report() generates various reports with the following arguments.
+
+* output_format
+    + report output type. Choose either "pdf" and "html".
+* output_file
+    + name of generated file.
+* output_dir
+    + name of directory to generate report file.
+* title
+    + title of report. 
+* subtitle
+    + subtitle of report. 
+* abstract_title
+    + abstract of report
+* author
+    + author of report. 
+* title_color
+    + color of title.
+* subtitle_color
+    + color of subtitle.
+* thres_uniq_cat
+    + threshold to use for "Unique Values - Categorical Variables".
+* thres_uniq_num
+    + threshold to use for "Unique Values - Numerical Variables".
+* flag_content_zero	
+    + whether to output "Zero Values" information. 
+* flag_content_minus	
+    + whether to output "Minus Values" information. 
+* flag_content_missing	
+    + whether to output "Missing Value" information.  
+* logo_img
+    + name of logo image file on top left.
+* cover_img
+    + name of cover image file on center.
+* create_date
+    + The date on which the report is generated.
+* theme
+    + name of theme for report. support "orange" and "blue". 
+* sample_percent
+    + Sample percent of data for performing Diagnosis.
+
+The following script creates a quality diagnosis report for the `tbl_df` class object, `flights`.
+
+```{r diagnose_paged_report, eval=FALSE}
+flights %>%
+  diagnose_paged_report(subtitle = "flights", output_dir = "./",
+                        output_file = "Diagn.pdf", theme = "blue")
+```
+
+#### Screenshot of static report
+
+* The cover of the report is shown in the following figure.:
+
+```{r diag_paged_cover, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The part of the report"}
+knitr::include_graphics('img/diag_paged_cover.jpg')
+```
+
+* The contents of the report is shown in the following figure.:
+
+```{r diag_paged_cntent, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The dynamic contents of the report"}
+knitr::include_graphics('img/diag_paged_content.jpg')
+```
+
+
+
+## Diagnosing tables in DBMS
+The DBMS table diagnostic function supports In-database mode that performs SQL operations on the DBMS side. If the size of the data is large, using In-database mode is faster.
+
+It is difficult to obtain anomaly or to implement the sampling-based algorithm in SQL of DBMS. So some functions do not yet support In-database mode. In this case, it is performed in In-memory mode in which table data is brought to R side and calculated.
+In this case, if the data size is large, the execution speed may be slow. It supports the collect_size argument, which allows you to import the specified number of samples of data into R.
+
+* In-database support functions
+    + `diagonse()`
+    + `diagnose_category()`
+* In-database not support functions
+    + `diagnose_numeric()`
+    + `diagnose_outlier()`    
+    + `plot_outlier()`  
+    + `diagnose_web_report()`
+    + `diagnose_paged_report()`
+    
+### Preparing table data
+Copy the `carseats` data frame to the SQLite DBMS and create it as a table named `TB_CARSEATS`.
+Mysql/MariaDB, PostgreSQL, Oracle DBMS, other DBMS are also available for your environment. 
+
+```{r dbi_table, warning=FALSE, message=FALSE}
+if (!require(DBI)) install.packages('DBI')
+if (!require(RSQLite)) install.packages('RSQLite')
+if (!require(dplyr)) install.packages('dplyr')
+if (!require(dbplyr)) install.packages('dbplyr')
+
+library(dplyr)
+
+carseats <- ISLR::Carseats
+carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
+carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+
+# connect DBMS
+con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+
+# copy carseats to the DBMS with a table named TB_CARSEATS
+copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
+```
+
+### Diagnose data quality of variables in the DBMS
+Use `dplyr::tbl()` to create a tbl_dbi object, then use it as a data frame object. That is, the data argument of all diagnose function is specified as tbl_dbi object instead of data frame object.
+
+```{r dbi_diag}
+# Diagnosis of all columns
+con_sqlite %>% 
+  tbl("TB_CARSEATS") %>% 
+  diagnose()
+
+# Positions values select columns, and In-memory mode
+con_sqlite %>% 
+  tbl("TB_CARSEATS") %>% 
+  diagnose(1, 3, 8, in_database = FALSE)
+  
+# Positions values select columns, and In-memory mode and collect size is 200
+con_sqlite %>% 
+  tbl("TB_CARSEATS") %>% 
+  diagnose(-8, -9, -10, in_database = FALSE, collect_size = 200)
+```
+
+### Diagnose data quality of categorical variables in the DBMS
+```{r dbi_category}
+# Positions values select variables, and In-memory mode and collect size is 200
+con_sqlite %>% 
+  tbl("TB_CARSEATS") %>% 
+  diagnose_category(7, in_database = FALSE, collect_size = 200) 
+  
+# Positions values select variables
+con_sqlite %>% 
+  tbl("TB_CARSEATS") %>% 
+  diagnose_category(-7)
+```
+
+### Diagnose data quality of numerical variables in the DBMS
+```{r dbi_numeric}
+# Diagnosis of all numerical variables
+con_sqlite %>% 
+  tbl("TB_CARSEATS") %>% 
+  diagnose_numeric()
+  
+# Positive values select variables, and In-memory mode and collect size is 200
+con_sqlite %>% 
+  tbl("TB_CARSEATS") %>% 
+  diagnose_numeric(Sales, Income, collect_size = 200)
+```
+
+### Diagnose outlier of numerical variables in the DBMS
+```{r dbi_outlier}
+con_sqlite %>% 
+  tbl("TB_CARSEATS") %>% 
+  diagnose_outlier()  %>%
+  filter(outliers_ratio > 1)
+```
+
+### Plot outlier information of numerical data diagnosis in the DBMS
+```{r plot_outlier_dbi, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE}
+# Visualization of numerical variables with a ratio of
+# outliers greater than 1%
+# the result is same as a data.frame, but not display here. reference above in document.
+con_sqlite %>% 
+  tbl("TB_CARSEATS") %>% 
+  plot_outlier(con_sqlite %>% 
+                 tbl("TB_CARSEATS") %>% 
+                 diagnose_outlier() %>%
+                 filter(outliers_ratio > 1) %>%
+                 select(variables) %>%
+                 pull())
+```
+
+### Reporting the information of data diagnosis for table of thr DBMS
+The following shows several examples of creating an data diagnosis report for a DBMS table.
+
+Using the `collect_size` argument, you can perform data diagnosis with the corresponding number of sample data.
+If the number of data is very large, use `collect_size`.
+
+```{r dbi_diag_report, eval=FALSE}
+# create web report file. 
+con_sqlite %>% 
+  tbl("TB_CARSEATS") %>% 
+  diagnose_web_report()
+  
+# create pdf file. file name is Diagn.pdf, and collect size is 350
+con_sqlite %>% 
+  tbl("TB_CARSEATS") %>% 
+  diagnose_paged_report(collect_size = 350, output_file = "Diagn.pdf")
+```

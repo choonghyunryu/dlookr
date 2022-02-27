@@ -179,7 +179,7 @@ summary.transform <- function(object, ...) {
   smmry <- dframe %>%
     group_by(key) %>%
     describe("value") %>%
-    select(-variable, -key) %>%
+    select(-described_variables, -key) %>%
     t
   colnames(smmry) <- c("Original", "Transformation")
 

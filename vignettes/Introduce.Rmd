@@ -165,6 +165,8 @@ visualize | visualize two plots on a single screen. The plot at the top is a his
 optimal binning | categorizes a numeric characteristic into bins for ulterior usage in scoring modeling | `binning_by()` | 
 summaries | summary metrics to evaluate the performance of binomial classification model | `summary.optimal_bins()` | 
 visualize | generates plots for understand distribution, bad rate, and weight of evidence after running binning_by() | `plot.optimal_bins()` | 
+infogain binning | categorizes a numeric characteristic into bins for multi-class variable using recursive information gain ratio maximization | `binning_rgr()` | 
+visualize | generates plots for understand distribution and  distribution by target variable after running binning_rgr() | `plot.infogain_bins()` | 
 evaluate | calculates metrics to evaluate the performance of binned variable for binomial classification model | `performance_bin()` | 
 summaries | summary metrics to evaluate the performance of binomial classification model after performance_bin() | `summary.performance_bin()` | 
 visualize | It generates plots for understand frequency, WoE by bins using performance_bin after running binning_by() | `plot.performance_bin()` | 
