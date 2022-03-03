@@ -40,7 +40,7 @@ summary_imputation <- function(object, ...) {
     smmry <- dframe %>%
       group_by(key) %>%
       describe("value") %>%
-      select(which(!names(.) %in% c("variable", "key"))) %>% 
+      select(which(!names(.) %in% c("described_variables", "key"))) %>% 
       t
     
     smmry <- smmry[, 2:1]
@@ -69,7 +69,7 @@ summary_transform <- function(object, ...) {
   smmry <- dframe %>%
     group_by(key) %>%
     describe("value") %>%
-    select(-variable, -key) %>%
+    select(-described_variables, -key) %>%
     t
   colnames(smmry) <- c("Original", "Transformation")
   invisible(smmry)
@@ -460,7 +460,7 @@ html_resolve_skewness <- function(.data, base_family = NULL) {
       select_at(skewlist) %>% 
       describe(statistics = c("quantiles", "skewness"),
                quantiles = c(0, 0.25, 0.5, 0.75, 1)) %>% 
-      select(variable, p00:p100, skewness)
+      select(described_variables, p00:p100, skewness)
     
     cap <- "Information about resolve skewness"
     html_cat(cap)
@@ -473,7 +473,7 @@ html_resolve_skewness <- function(.data, base_family = NULL) {
           maxWidth = 100
         ),
         columns = list(
-          variable = colDef(
+          described_variables = colDef(
             name = "Variables",
             minWidth = 100,
             maxWidth = 150
@@ -501,7 +501,7 @@ html_resolve_skewness <- function(.data, base_family = NULL) {
           )           
         ),
         details = function(index) {
-          variable <- tab_skewness$variable[index]
+          variable <- tab_skewness$described_variables[index]
           skewness <- tab_skewness$skewness[index] 
           
           if (skewness <= 0) {
@@ -1157,7 +1157,7 @@ html_paged_resolve_skewness <- function(.data, full_width = TRUE, font_size = 13
       select_at(skewlist) %>% 
       dlookr::describe(statistics = c("quantiles", "skewness"),
                        quantiles = c(0, 0.25, 0.5, 0.75, 1)) %>% 
-      select(variable, p00:p100, skewness)
+      select(described_variables, p00:p100, skewness)
     
     nm_cols <- c("variables", "min", "Q1", "median", "Q3", "max", "skewness")
     
@@ -1175,7 +1175,7 @@ html_paged_resolve_skewness <- function(.data, full_width = TRUE, font_size = 13
     break_page_asis()
     
     for (i in seq(NROW(tab_skewness))) {
-      variable <- tab_skewness$variable[i]
+      variable <- tab_skewness$described_variables[i]
       
       el <- div(h3(variable))
       cat(as.character(el))

@@ -34,11 +34,6 @@ if (!requireNamespace("rpart", quietly = TRUE)) {
   stop("Package 'rpart' needed for this function to work. Please install it.", 
        call. = FALSE)
 }
-
-if (!requireNamespace("DMwR", quietly = TRUE)) {
-  stop("Package 'DMwR' needed for this function to work. Please install it.", 
-       call. = FALSE)
-}
 ```
 
 ```{r init, echo=FALSE, warning=FALSE, message=FALSE}

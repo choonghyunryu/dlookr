@@ -566,15 +566,9 @@ summary.compare_category <- function(object, method = c("all", "table", "relativ
     if (marginal) {
       dims <- dim(contingency[[j]])
       
-      relative[[j]] <- contingency[[j]][-dims[1], ]
-      relative[[j]] <- relative[[j]][, -dims[2]]
-      
-      relative[[j]] <- prop.table(relative[[j]])
-      
-      relative[[j]] <- cbind(relative[[j]], margin.table(relative[[j]], 1))
-      relative[[j]] <- rbind(relative[[j]], margin.table(relative[[j]], 2))
-      
-      attr(relative[[j]], "dimnames") <- dname
+      # fixed error of summary.compare_category() github #61.
+      total <- contingency[[j]][dims[1], dims[2]]
+      relative[[j]] <- contingency[[j]] / total
     } else {
       relative[[j]] <- prop.table(contingency[[j]])
     }

@@ -32,11 +32,6 @@ if (!requireNamespace("rpart", quietly = TRUE)) {
        call. = FALSE)
 }
 
-if (!requireNamespace("DMwR", quietly = TRUE)) {
-  stop("Package 'DMwR' needed for this function to work. Please install it.", 
-       call. = FALSE)
-}
-
 library(dlookr)
 library(dplyr)
 ```
