@@ -8,11 +8,20 @@ CHANGES IN R VERSION 0.5.5:
       was included among the variables. (#61)
       
     * Fix an error in 'normality-list' section of eda_web_report(). (#62)      
+
+    * Fix an issue where table and table detail do not match in 
+      html_compare_category() under certain conditions . (#63)   
       
+    * Fixed an error in html_compare_category() when the number of levels of 
+      one of the two categorical variables is 1. (#63)         
+    
   MAJOR CHANGES:
     * Added a new binning function called binning_rgr(), plot.infogain_bins().
       This function bins using recursive information gain ratio maximization.
       (thanks to Luca Zavarella, #15)
+      
+    * Implemented the PPS(Predictive Power Score) with pps(), summary.pps(), 
+      plot.pps(). (thanks to Luca Zavarella, #20)      
       
     * By fixing bug #59, the variable 'variable' in the describe() result 
       was changed to 'described_variables'. 

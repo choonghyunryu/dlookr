@@ -608,7 +608,11 @@ html_compare_category <- function(.data, n_cells = 20, n_levels = 10,
                  position = position_fill(reverse = FALSE)) +
         facet_grid(~ a, space = "free", scales = "free", switch = "x") +
         scale_x_discrete(name = xvar) +
-        scale_y_continuous(name = yvar, breaks = y_pos, labels = y_lab) +
+        # Resolved an error when the number of levels of one of the two 
+        # categorical variables is 1
+        # github issue of html_compare_category() #63        
+        scale_y_continuous(name = yvar, breaks = y_pos[!is.na(y_pos)], 
+                           labels = y_lab) +
         labs(title = sprintf("Mosaics plot by '%s' vs '%s'", xvar, yvar)) +
         theme(legend.position = "none",
               axis.text.x = element_blank(),
@@ -684,7 +688,15 @@ html_compare_category <- function(.data, n_cells = 20, n_levels = 10,
             )         
           ),
           details = function(index) {
-            ctable <- tabs$table[[index]]
+            # Resolved an issue where table and table detail did not match
+            # github issue of html_compare_category() #63
+            variable <- tab_compare[index, ] %>% 
+              select(variable_1, variable_2) %>% 
+              mutate(variable = paste(variable_1, variable_2, sep = " vs ")) %>% 
+              select(variable) %>% 
+              pull()
+            
+            ctable <- tabs$table[[variable]]
             
             contingency <- function(tab, relate = FALSE) {
               dname <-  tab %>% dimnames()

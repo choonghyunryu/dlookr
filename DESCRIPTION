@@ -53,6 +53,7 @@ Suggests:
     funModeling,
     ISLR,
     nycflights13,
+    ppsr,
     randomForest,
     rpart,
     prettydoc,    
@@ -63,4 +64,4 @@ Author: Choonghyun Ryu [aut, cre]
 Maintainer: Choonghyun Ryu <choonghyun.ryu@gmail.com>    
 BugReports: https://github.com/choonghyunryu/dlookr/issues
 VignetteBuilder: knitr    
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
