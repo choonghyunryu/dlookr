@@ -232,6 +232,9 @@ correlate_group_impl <- function(df, vars, method) {
 #' @details The scope of the visualization is the provide a correlation information.
 #' Since the plot is drawn for each variable, if you specify more than
 #' one variable in the ... argument, the specified number of plots are drawn.
+#' 
+#' The direction of the diagonal is top-left to bottom-right. and color of the 
+#' cells is 'red' to -1, 'blue' to 1.
 #'
 #' The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 #' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
@@ -326,13 +329,30 @@ plot_correlate.data.frame <- function(.data, ...,
 #' 
 plot_correlate_impl <- function(df, vars, method, typographic, base_family) {
   if (length(vars) == 0) vars <- names(df)
-  
-  p <- df %>% 
+
+  dat <- df %>% 
     correlate(method = method) %>% 
-    filter(var2 %in% vars) %>% 
+    filter(var2 %in% vars)
+    
+  len_var1 <- length(unique(dat$var1))
+  len_var2 <- length(unique(dat$var2))
+  
+  if (len_var1 == len_var2) {
+    dat <- dat %>% 
+      mutate(var1 = factor(var1, levels = unique(.$var2))) %>% 
+      mutate(var2 = factor(var2, levels = unique(.$var2))) %>%     
+      mutate(var2 = factor(var2, levels = rev(levels(.$var2)))) 
+  } else {
+    dat <- dat %>% 
+      mutate(var1 = factor(var1, levels = sort(unique(.$var1)))) %>% 
+      mutate(var2 = factor(var2, levels = sort(unique(.$var2)))) %>%     
+      mutate(var2 = factor(var2, levels = rev(levels(.$var2)))) 
+  }
+    
+  p <- dat %>%   
     ggplot(aes(var1, var2, fill = coef_corr, label = round(coef_corr, 2))) +
     geom_tile(col = "black") + 
-    scale_fill_gradient2(low = "blue", mid = "white", high = "red", 
+    scale_fill_gradient2(low = "red", mid = "white", high = "blue", 
                          limits = c(-1, 1)) +
     geom_text() +
     scale_x_discrete(expand = c(0, 0)) +
@@ -417,10 +437,25 @@ plot_correlate_group_impl <- function(df, vars, method, typographic, base_family
         filter(var2 %in% vars)
         
       if (NROW(df_corr) > 0) {
+        len_var1 <- length(unique(df_corr$var1))
+        len_var2 <- length(unique(df_corr$var2))
+        
+        if (len_var1 == len_var2) {
+          df_corr <- df_corr %>% 
+            mutate(var1 = factor(var1, levels = unique(.$var2))) %>% 
+            mutate(var2 = factor(var2, levels = unique(.$var2))) %>%     
+            mutate(var2 = factor(var2, levels = rev(levels(.$var2)))) 
+        } else {
+          df_corr <- df_corr %>% 
+            mutate(var1 = factor(var1, levels = sort(unique(.$var1)))) %>% 
+            mutate(var2 = factor(var2, levels = sort(unique(.$var2)))) %>%     
+            mutate(var2 = factor(var2, levels = rev(levels(.$var2)))) 
+        }
+        
         p <- df_corr %>%   
           ggplot(aes(var1, var2, fill = coef_corr, label = round(coef_corr, 2))) +
           geom_tile(col = "black") + 
-          scale_fill_gradient2(low = "blue", mid = "white", high = "red", 
+          scale_fill_gradient2(low = "red", mid = "white", high = "blue", 
                                limits = c(-1, 1)) +
           geom_text() +
           scale_x_discrete(expand = c(0, 0)) +

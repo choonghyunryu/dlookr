@@ -20,8 +20,8 @@ CHANGES IN R VERSION 0.5.5:
       This function bins using recursive information gain ratio maximization.
       (thanks to Luca Zavarella, #15)
       
-    * Implemented the PPS(Predictive Power Score) with pps(), summary.pps(), 
-      plot.pps(). (thanks to Luca Zavarella, #20)      
+    * Implemented the PPS(Predictive Power Score) with pps.data.frame(), 
+      pps.target_df(), summary.pps(), plot.pps(). (thanks to Luca Zavarella, #20)      
       
     * By fixing bug #59, the variable 'variable' in the describe() result 
       was changed to 'described_variables'. 
@@ -33,6 +33,13 @@ CHANGES IN R VERSION 0.5.5:
       exist as actual data are also included in the output. 
       (thanks to @SchmidtPaul, #59)  
       
+    * For a function that visualizes correlation coefficients, change the 
+      direction of the diagonal(top-left to bottom-right) and invert the color 
+      of the cells(-1: red, 1: blue) in plot.     
+        - plot_correlate.data.frame()
+        - plot_correlate.grouped_df()
+        - plot_correlate.tbl_dbi()
+
 
 
 CHANGES IN R VERSION 0.5.4:

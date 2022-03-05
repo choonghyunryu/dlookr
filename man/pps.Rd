@@ -2,15 +2,18 @@
 % Please edit documentation in R/pps.R
 \name{pps}
 \alias{pps}
+\alias{pps.data.frame}
 \alias{pps.target_df}
 \title{Compute Predictive Power Score}
 \usage{
 pps(.data, ...)
 
+\method{pps}{data.frame}(.data, ..., cv_folds = 5, do_parallel = FALSE, n_cores = -1)
+
 \method{pps}{target_df}(.data, ..., cv_folds = 5, do_parallel = FALSE, n_cores = -1)
 }
 \arguments{
-\item{.data}{a target_df.}
+\item{.data}{a target_df or data.frame.}
 
 \item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
@@ -24,12 +27,13 @@ They support unquoting and splicing.}
 
 \item{do_parallel}{logical. whether to perform score calls in parallel.}
 
-\item{n_cores}{integer. number of cores to use, defaults to maximum minus 1.}
+\item{n_cores}{integer. number of cores to use, defaults to maximum cores - 1.}
 }
 \value{
 An object of the class as pps.
 Attributes of pps class is as follows.
 \itemize{
+\item type : type of pps
 \item target : name of target variable
 \item predictor : name of predictor
 }
@@ -66,46 +70,62 @@ The information of PPS is as follows.
 \donttest{
 library(dplyr)
 
+# pps type is generic ======================================
+pps_generic <- pps(iris)
+pps_generic
+
+# summary pps class 
+mat <- summary(pps_generic)
+mat
+
+# visualize pps class 
+plot(pps_generic)
+
+
+# pps type is target_by =====================================
+##-----------------------------------------------------------
 # If the target variable is a categorical variable
-categ <- target_by(heartfailure, death_event)
+categ <- target_by(iris, Species)
 
 # compute all variables
 pps_cat <- pps(categ)
 pps_cat
 
-# compute age and sodium variable
-pps_cat <- pps(categ, age, sodium)
+# compute Petal.Length and Petal.Width variable
+pps_cat <- pps(categ, Petal.Length, Petal.Width)
 pps_cat
 
 # Using dplyr
-pps_cat <- heartfailure \%>\% 
-  target_by(death_event) \%>\% 
+pps_cat <- iris \%>\% 
+  target_by(Species) \%>\% 
   pps()
 
 pps_cat
 
 # Using parallel process
-pps_cat <- heartfailure \%>\% 
-  target_by(death_event) \%>\% 
+pps_cat <- iris \%>\% 
+  target_by(Species) \%>\% 
   pps(do_parallel = TRUE)
 
 pps_cat
 
 # summary pps class 
-summary(pps_cat)
+tab <- summary(pps_cat)
+tab
 
-# plot pps class
+# visualize pps class
 plot(pps_cat)
 
-##---------------------------------------------------
+##-----------------------------------------------------------
 # If the target variable is a numerical variable
-num <- target_by(heartfailure, creatinine)
+num <- target_by(iris, Petal.Length)
 
 pps_num <- pps(num)
 pps_num
 
 # summary pps class 
-summary(pps_num)
+tab <- summary(pps_num)
+tab
 
 # plot pps class
 plot(pps_num)

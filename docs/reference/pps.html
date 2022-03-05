@@ -66,6 +66,9 @@ for exploratory data analysis.</p>
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">pps</span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span><span class="op">)</span>
 
+<span class="co"># S3 method for data.frame</span>
+<span class="fu">pps</span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span>, cv_folds <span class="op">=</span> <span class="fl">5</span>, do_parallel <span class="op">=</span> <span class="cn">FALSE</span>, n_cores <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span>
+
 <span class="co"># S3 method for target_df</span>
 <span class="fu">pps</span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span>, cv_folds <span class="op">=</span> <span class="fl">5</span>, do_parallel <span class="op">=</span> <span class="cn">FALSE</span>, n_cores <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
     </div>
@@ -73,7 +76,7 @@ for exploratory data analysis.</p>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>.data</dt>
-<dd><p>a target_df.</p></dd>
+<dd><p>a target_df or data.frame.</p></dd>
 <dt>...</dt>
 <dd><p>one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
@@ -87,12 +90,13 @@ They support unquoting and splicing.</p></dd>
 <dt>do_parallel</dt>
 <dd><p>logical. whether to perform score calls in parallel.</p></dd>
 <dt>n_cores</dt>
-<dd><p>integer. number of cores to use, defaults to maximum minus 1.</p></dd>
+<dd><p>integer. number of cores to use, defaults to maximum cores - 1.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>An object of the class as pps.
-Attributes of pps class is as follows.</p><ul><li><p>target : name of target variable</p></li>
+Attributes of pps class is as follows.</p><ul><li><p>type : type of pps</p></li>
+<li><p>target : name of target variable</p></li>
 <li><p>predictor : name of predictor</p></li>
 </ul></div>
     <div id="details">
@@ -134,247 +138,250 @@ The score ranges from 0 (no predictive power) to 1 (perfect predictive power).</
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
 <span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span class="r-in"></span>
+<span class="r-in"><span class="co"># pps type is generic ======================================</span></span>
+<span class="r-in"><span class="va">pps_generic</span> <span class="op">&lt;-</span> <span class="fu">pps</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">pps_generic</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               x            y                       result_type        pps</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  Sepal.Length Sepal.Length predictor and target are the same 1.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   Sepal.Width Sepal.Length            predictive power score 0.04632352</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  Petal.Length Sepal.Length            predictive power score 0.54913985</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   Petal.Width Sepal.Length            predictive power score 0.41276679</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       Species Sepal.Length            predictive power score 0.40754872</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  Sepal.Length  Sepal.Width            predictive power score 0.06790301</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   Sepal.Width  Sepal.Width predictor and target are the same 1.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  Petal.Length  Sepal.Width            predictive power score 0.23769911</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   Petal.Width  Sepal.Width            predictive power score 0.21746588</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10      Species  Sepal.Width            predictive power score 0.20128762</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 Sepal.Length Petal.Length            predictive power score 0.61608360</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12  Sepal.Width Petal.Length            predictive power score 0.24263851</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13 Petal.Length Petal.Length predictor and target are the same 1.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14  Petal.Width Petal.Length            predictive power score 0.79175121</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15      Species Petal.Length            predictive power score 0.79049070</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 Sepal.Length  Petal.Width            predictive power score 0.48735314</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17  Sepal.Width  Petal.Width            predictive power score 0.20124105</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18 Petal.Length  Petal.Width            predictive power score 0.74378445</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19  Petal.Width  Petal.Width predictor and target are the same 1.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20      Species  Petal.Width            predictive power score 0.75611126</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21 Sepal.Length      Species            predictive power score 0.55918638</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22  Sepal.Width      Species            predictive power score 0.31344008</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23 Petal.Length      Species            predictive power score 0.91675800</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24  Petal.Width      Species            predictive power score 0.93985320</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25      Species      Species predictor and target are the same 1.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         metric baseline_score model_score cv_folds seed algorithm</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1         &lt;NA&gt;             NA          NA       NA   NA      &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2          MAE      0.6893222   0.6620058        5    1      tree</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3          MAE      0.6893222   0.3100867        5    1      tree</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4          MAE      0.6893222   0.4040123        5    1      tree</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5          MAE      0.6893222   0.4076661        5    1      tree</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6          MAE      0.3372222   0.3184796        5    1      tree</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7         &lt;NA&gt;             NA          NA       NA   NA      &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8          MAE      0.3372222   0.2564258        5    1      tree</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9          MAE      0.3372222   0.2631636        5    1      tree</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10         MAE      0.3372222   0.2677963        5    1      tree</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11         MAE      1.5719667   0.5971445        5    1      tree</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12         MAE      1.5719667   1.1945031        5    1      tree</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13        &lt;NA&gt;             NA          NA       NA   NA      &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14         MAE      1.5719667   0.3265152        5    1      tree</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15         MAE      1.5719667   0.3280552        5    1      tree</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16         MAE      0.6623556   0.3377682        5    1      tree</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17         MAE      0.6623556   0.5315834        5    1      tree</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18         MAE      0.6623556   0.1684906        5    1      tree</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19        &lt;NA&gt;             NA          NA       NA   NA      &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20         MAE      0.6623556   0.1608119        5    1      tree</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21 F1_weighted      0.3176487   0.7028029        5    1      tree</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22 F1_weighted      0.3176487   0.5377587        5    1      tree</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23 F1_weighted      0.3176487   0.9404972        5    1      tree</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24 F1_weighted      0.3176487   0.9599148        5    1      tree</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25        &lt;NA&gt;             NA          NA       NA   NA      &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        model_type</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1            &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      regression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      regression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      regression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      regression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      regression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7            &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      regression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9      regression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     regression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11     regression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12     regression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13           &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14     regression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15     regression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16     regression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17     regression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18     regression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19           &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20     regression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21 classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22 classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23 classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24 classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25           &lt;NA&gt;</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># summary pps class </span></span>
+<span class="r-in"><span class="va">mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pps_generic</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * PPS type : generic </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * Matrix of Predictive Power Score</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - Columns : target</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - Rows    : predictors</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              Sepal.Length Sepal.Width Petal.Length Petal.Width   Species</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sepal.Length   1.00000000  0.04632352    0.5491398   0.4127668 0.4075487</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sepal.Width    0.06790301  1.00000000    0.2376991   0.2174659 0.2012876</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Length   0.61608360  0.24263851    1.0000000   0.7917512 0.7904907</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Width    0.48735314  0.20124105    0.7437845   1.0000000 0.7561113</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Species        0.55918638  0.31344008    0.9167580   0.9398532 1.0000000</span>
+<span class="r-in"><span class="va">mat</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              Sepal.Length Sepal.Width Petal.Length Petal.Width   Species</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sepal.Length   1.00000000  0.04632352    0.5491398   0.4127668 0.4075487</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sepal.Width    0.06790301  1.00000000    0.2376991   0.2174659 0.2012876</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Length   0.61608360  0.24263851    1.0000000   0.7917512 0.7904907</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Width    0.48735314  0.20124105    0.7437845   1.0000000 0.7561113</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Species        0.55918638  0.31344008    0.9167580   0.9398532 1.0000000</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># visualize pps class </span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pps_generic</span><span class="op">)</span></span>
+<span class="r-plt img"><img src="pps-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># pps type is target_by =====================================</span></span>
+<span class="r-in"><span class="co">##-----------------------------------------------------------</span></span>
 <span class="r-in"><span class="co"># If the target variable is a categorical variable</span></span>
-<span class="r-in"><span class="va">categ</span> <span class="op">&lt;-</span> <span class="fu"><a href="target_by.data.frame.html">target_by</a></span><span class="op">(</span><span class="va">heartfailure</span>, <span class="va">death_event</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">categ</span> <span class="op">&lt;-</span> <span class="fu"><a href="target_by.data.frame.html">target_by</a></span><span class="op">(</span><span class="va">iris</span>, <span class="va">Species</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># compute all variables</span></span>
 <span class="r-in"><span class="va">pps_cat</span> <span class="op">&lt;-</span> <span class="fu">pps</span><span class="op">(</span><span class="va">categ</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">pps_cat</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                    x           y                       result_type         pps</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                age death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2            anaemia death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3         cpk_enzyme death_event            predictive power score 0.007722988</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4           diabetes death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  ejection_fraction death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    hblood_pressure death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7          platelets death_event            predictive power score 0.001804910</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8         creatinine death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9             sodium death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10               sex death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11           smoking death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12              time death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13       death_event death_event predictor and target are the same 1.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         metric baseline_score model_score cv_folds seed algorithm</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  F1_weighted      0.4464149   0.2126817        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  F1_weighted      0.4464149   0.1582233        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  F1_weighted      0.4464149   0.2931573        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  F1_weighted      0.4464149   0.1582233        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  F1_weighted      0.4464149   0.1775409        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  F1_weighted      0.4464149   0.1582233        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  F1_weighted      0.4464149   0.3122878        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  F1_weighted      0.4464149   0.1842656        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  F1_weighted      0.4464149   0.2446663        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 F1_weighted      0.4464149   0.1582233        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 F1_weighted      0.4464149   0.1582233        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 F1_weighted      0.4464149   0.1453623        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13        &lt;NA&gt;             NA          NA       NA   NA      &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        model_type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13           &lt;NA&gt;</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># compute age and sodium variable</span></span>
-<span class="r-in"><span class="va">pps_cat</span> <span class="op">&lt;-</span> <span class="fu">pps</span><span class="op">(</span><span class="va">categ</span>, <span class="va">age</span>, <span class="va">sodium</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pps_cat</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             x           y                       result_type pps      metric</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1         age death_event            predictive power score   0 F1_weighted</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      sodium death_event            predictive power score   0 F1_weighted</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 death_event death_event predictor and target are the same   1        &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              x       y                       result_type       pps      metric</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Sepal.Length Species            predictive power score 0.5591864 F1_weighted</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  Sepal.Width Species            predictive power score 0.3134401 F1_weighted</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Petal.Length Species            predictive power score 0.9167580 F1_weighted</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  Petal.Width Species            predictive power score 0.9398532 F1_weighted</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      Species Species predictor and target are the same 1.0000000        &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   baseline_score model_score cv_folds seed algorithm     model_type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      0.4464149   0.2126817        5    1      tree classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      0.4464149   0.2446663        5    1      tree classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      0.3176487   0.7028029        5    1      tree classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      0.3176487   0.5377587        5    1      tree classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      0.3176487   0.9404972        5    1      tree classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      0.3176487   0.9599148        5    1      tree classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5             NA          NA       NA   NA      &lt;NA&gt;           &lt;NA&gt;</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># compute Petal.Length and Petal.Width variable</span></span>
+<span class="r-in"><span class="va">pps_cat</span> <span class="op">&lt;-</span> <span class="fu">pps</span><span class="op">(</span><span class="va">categ</span>, <span class="va">Petal.Length</span>, <span class="va">Petal.Width</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">pps_cat</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              x       y                       result_type       pps      metric</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Petal.Length Species            predictive power score 0.9167580 F1_weighted</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  Petal.Width Species            predictive power score 0.9398532 F1_weighted</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      Species Species predictor and target are the same 1.0000000        &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   baseline_score model_score cv_folds seed algorithm     model_type</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      0.3176487   0.9404972        5    1      tree classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      0.3176487   0.9599148        5    1      tree classification</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3             NA          NA       NA   NA      &lt;NA&gt;           &lt;NA&gt;</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Using dplyr</span></span>
-<span class="r-in"><span class="va">pps_cat</span> <span class="op">&lt;-</span> <span class="va">heartfailure</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="target_by.data.frame.html">target_by</a></span><span class="op">(</span><span class="va">death_event</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span class="r-in"><span class="va">pps_cat</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span class="r-in">  <span class="fu"><a href="target_by.data.frame.html">target_by</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span class="r-in">  <span class="fu">pps</span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">pps_cat</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                    x           y                       result_type         pps</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                age death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2            anaemia death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3         cpk_enzyme death_event            predictive power score 0.007722988</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4           diabetes death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  ejection_fraction death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    hblood_pressure death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7          platelets death_event            predictive power score 0.001804910</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8         creatinine death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9             sodium death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10               sex death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11           smoking death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12              time death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13       death_event death_event predictor and target are the same 1.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         metric baseline_score model_score cv_folds seed algorithm</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  F1_weighted      0.4464149   0.2126817        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  F1_weighted      0.4464149   0.1582233        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  F1_weighted      0.4464149   0.2931573        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  F1_weighted      0.4464149   0.1582233        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  F1_weighted      0.4464149   0.1775409        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  F1_weighted      0.4464149   0.1582233        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  F1_weighted      0.4464149   0.3122878        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  F1_weighted      0.4464149   0.1842656        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  F1_weighted      0.4464149   0.2446663        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 F1_weighted      0.4464149   0.1582233        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 F1_weighted      0.4464149   0.1582233        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 F1_weighted      0.4464149   0.1453623        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13        &lt;NA&gt;             NA          NA       NA   NA      &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        model_type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13           &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              x       y                       result_type       pps      metric</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Sepal.Length Species            predictive power score 0.5591864 F1_weighted</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  Sepal.Width Species            predictive power score 0.3134401 F1_weighted</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Petal.Length Species            predictive power score 0.9167580 F1_weighted</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  Petal.Width Species            predictive power score 0.9398532 F1_weighted</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      Species Species predictor and target are the same 1.0000000        &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   baseline_score model_score cv_folds seed algorithm     model_type</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      0.3176487   0.7028029        5    1      tree classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      0.3176487   0.5377587        5    1      tree classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      0.3176487   0.9404972        5    1      tree classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      0.3176487   0.9599148        5    1      tree classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5             NA          NA       NA   NA      &lt;NA&gt;           &lt;NA&gt;</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Using parallel process</span></span>
-<span class="r-in"><span class="va">pps_cat</span> <span class="op">&lt;-</span> <span class="va">heartfailure</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="target_by.data.frame.html">target_by</a></span><span class="op">(</span><span class="va">death_event</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span class="r-in"><span class="va">pps_cat</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span class="r-in">  <span class="fu"><a href="target_by.data.frame.html">target_by</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span class="r-in">  <span class="fu">pps</span><span class="op">(</span>do_parallel <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">pps_cat</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                    x           y                       result_type         pps</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                age death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2            anaemia death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3         cpk_enzyme death_event            predictive power score 0.007722988</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4           diabetes death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  ejection_fraction death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    hblood_pressure death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7          platelets death_event            predictive power score 0.001804910</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8         creatinine death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9             sodium death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10               sex death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11           smoking death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12              time death_event            predictive power score 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13       death_event death_event predictor and target are the same 1.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         metric baseline_score model_score cv_folds seed algorithm</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  F1_weighted      0.4464149   0.2126817        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  F1_weighted      0.4464149   0.1582233        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  F1_weighted      0.4464149   0.2931573        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  F1_weighted      0.4464149   0.1582233        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  F1_weighted      0.4464149   0.1775409        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  F1_weighted      0.4464149   0.1582233        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  F1_weighted      0.4464149   0.3122878        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  F1_weighted      0.4464149   0.1842656        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  F1_weighted      0.4464149   0.2446663        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 F1_weighted      0.4464149   0.1582233        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 F1_weighted      0.4464149   0.1582233        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 F1_weighted      0.4464149   0.1453623        5    1      tree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13        &lt;NA&gt;             NA          NA       NA   NA      &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        model_type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 classification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13           &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              x       y                       result_type       pps      metric</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Sepal.Length Species            predictive power score 0.5591864 F1_weighted</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  Sepal.Width Species            predictive power score 0.3134401 F1_weighted</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Petal.Length Species            predictive power score 0.9167580 F1_weighted</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  Petal.Width Species            predictive power score 0.9398532 F1_weighted</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      Species Species predictor and target are the same 1.0000000        &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   baseline_score model_score cv_folds seed algorithm     model_type</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      0.3176487   0.7028029        5    1      tree classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      0.3176487   0.5377587        5    1      tree classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      0.3176487   0.9404972        5    1      tree classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      0.3176487   0.9599148        5    1      tree classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5             NA          NA       NA   NA      &lt;NA&gt;           &lt;NA&gt;</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># summary pps class </span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pps_cat</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * Target variable : death_event </span>
+<span class="r-in"><span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pps_cat</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * PPS type : target_by </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * Target variable : Species </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Model type : classification </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Information of Predictive Power Score</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           predictors      target         pps</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1        death_event death_event 1.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2         cpk_enzyme death_event 0.007722988</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3          platelets death_event 0.001804910</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4                age death_event 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5            anaemia death_event 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6           diabetes death_event 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  ejection_fraction death_event 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8    hblood_pressure death_event 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9         creatinine death_event 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10            sodium death_event 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11               sex death_event 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12           smoking death_event 0.000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13              time death_event 0.000000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     predictors  target       pps</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      Species Species 1.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  Petal.Width Species 0.9398532</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Petal.Length Species 0.9167580</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Sepal.Length Species 0.5591864</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  Sepal.Width Species 0.3134401</span>
+<span class="r-in"><span class="va">tab</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     predictors  target       pps</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      Species Species 1.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  Petal.Width Species 0.9398532</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Petal.Length Species 0.9167580</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Sepal.Length Species 0.5591864</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  Sepal.Width Species 0.3134401</span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co"># plot pps class</span></span>
+<span class="r-in"><span class="co"># visualize pps class</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pps_cat</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="pps-1.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="pps-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co">##---------------------------------------------------</span></span>
+<span class="r-in"><span class="co">##-----------------------------------------------------------</span></span>
 <span class="r-in"><span class="co"># If the target variable is a numerical variable</span></span>
-<span class="r-in"><span class="va">num</span> <span class="op">&lt;-</span> <span class="fu"><a href="target_by.data.frame.html">target_by</a></span><span class="op">(</span><span class="va">heartfailure</span>, <span class="va">creatinine</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">num</span> <span class="op">&lt;-</span> <span class="fu"><a href="target_by.data.frame.html">target_by</a></span><span class="op">(</span><span class="va">iris</span>, <span class="va">Petal.Length</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">pps_num</span> <span class="op">&lt;-</span> <span class="fu">pps</span><span class="op">(</span><span class="va">num</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">pps_num</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                    x          y                       result_type          pps</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                age creatinine            predictive power score 2.385947e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2            anaemia creatinine            predictive power score 2.220446e-17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3         cpk_enzyme creatinine            predictive power score 0.000000e+00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4           diabetes creatinine            predictive power score 2.220446e-17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  ejection_fraction creatinine            predictive power score 3.867160e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    hblood_pressure creatinine            predictive power score 2.220446e-17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7          platelets creatinine            predictive power score 0.000000e+00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8         creatinine creatinine predictor and target are the same 1.000000e+00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9             sodium creatinine            predictive power score 4.668837e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10               sex creatinine            predictive power score 2.220446e-17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11           smoking creatinine            predictive power score 2.220446e-17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12              time creatinine            predictive power score 2.449899e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13       death_event creatinine            predictive power score 1.124218e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    metric baseline_score model_score cv_folds seed algorithm model_type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     MAE      0.5769394   0.5823726        5    1      tree regression</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     MAE      0.5769394   0.5809674        5    1      tree regression</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     MAE      0.5769394   0.6188263        5    1      tree regression</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     MAE      0.5769394   0.5769394        5    1      tree regression</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     MAE      0.5769394   0.5779185        5    1      tree regression</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6     MAE      0.5769394   0.5769394        5    1      tree regression</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7     MAE      0.5769394   0.6080260        5    1      tree regression</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8    &lt;NA&gt;             NA          NA       NA   NA      &lt;NA&gt;       &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9     MAE      0.5769394   0.5568668        5    1      tree regression</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10    MAE      0.5769394   0.5769394        5    1      tree regression</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11    MAE      0.5769394   0.5789835        5    1      tree regression</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12    MAE      0.5769394   0.5848750        5    1      tree regression</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13    MAE      0.5769394   0.5174630        5    1      tree regression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              x            y                       result_type       pps metric</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Sepal.Length Petal.Length            predictive power score 0.6160836    MAE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  Sepal.Width Petal.Length            predictive power score 0.2426385    MAE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Petal.Length Petal.Length predictor and target are the same 1.0000000   &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  Petal.Width Petal.Length            predictive power score 0.7917512    MAE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      Species Petal.Length            predictive power score 0.7904907    MAE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   baseline_score model_score cv_folds seed algorithm model_type</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1.571967   0.5971445        5    1      tree regression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       1.571967   1.1945031        5    1      tree regression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3             NA          NA       NA   NA      &lt;NA&gt;       &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       1.571967   0.3265152        5    1      tree regression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       1.571967   0.3280552        5    1      tree regression</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># summary pps class </span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pps_num</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * Target variable : creatinine </span>
+<span class="r-in"><span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pps_num</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * PPS type : target_by </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * Target variable : Petal.Length </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Model type : regression </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Information of Predictive Power Score</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           predictors     target          pps</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1         creatinine creatinine 1.000000e+00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2        death_event creatinine 1.124218e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3             sodium creatinine 4.668837e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4               time creatinine 2.449899e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                age creatinine 2.385947e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  ejection_fraction creatinine 3.867160e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7            anaemia creatinine 2.220446e-17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8           diabetes creatinine 2.220446e-17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9    hblood_pressure creatinine 2.220446e-17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10               sex creatinine 2.220446e-17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11           smoking creatinine 2.220446e-17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12        cpk_enzyme creatinine 0.000000e+00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13         platelets creatinine 0.000000e+00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     predictors       target       pps</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Petal.Length Petal.Length 1.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  Petal.Width Petal.Length 0.7917512</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      Species Petal.Length 0.7904907</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Sepal.Length Petal.Length 0.6160836</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  Sepal.Width Petal.Length 0.2426385</span>
+<span class="r-in"><span class="va">tab</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     predictors       target       pps</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Petal.Length Petal.Length 1.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  Petal.Width Petal.Length 0.7917512</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      Species Petal.Length 0.7904907</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Sepal.Length Petal.Length 0.6160836</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  Sepal.Width Petal.Length 0.2426385</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># plot pps class</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pps_num</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="pps-2.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="pps-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span class="co"># }</span></span>
 <span class="r-in"></span>
 </code></pre></div>

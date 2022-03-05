@@ -55,6 +55,9 @@ The scope of the visualization is the provide a correlation information.
 Since the plot is drawn for each variable, if you specify more than
 one variable in the ... argument, the specified number of plots are drawn.
 
+The direction of the diagonal is top-left to bottom-right. and color of the 
+cells is 'red' to -1, 'blue' to 1.
+
 The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 use it after loading the Google font with import_google_font().

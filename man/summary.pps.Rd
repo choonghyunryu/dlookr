@@ -21,10 +21,20 @@ summary.pps compares the PPS by variables.
 \donttest{
 library(dplyr)
 
+# pps type is generic ======================================
+pps_generic <- pps(iris)
+pps_generic
+
+# summary pps class 
+mat <- summary(pps_generic)
+mat
+
+# pps type is target_by =====================================
+##-----------------------------------------------------------
 # If the target variable is a categorical variable
 # Using dplyr
-pps_cat <- heartfailure \%>\% 
-  target_by(death_event) \%>\% 
+pps_cat <- iris \%>\% 
+  target_by(Species) \%>\% 
   pps()
 
 pps_cat
@@ -33,15 +43,16 @@ pps_cat
 tab <- summary(pps_cat)
 tab
 
-##---------------------------------------------------
+##-----------------------------------------------------------
 # If the target variable is a numerical variable
-num <- target_by(heartfailure, creatinine)
+num <- target_by(iris, Petal.Length)
 
 pps_num <- pps(num)
 pps_num
 
 # summary pps class 
-summary(pps_num)
+tab <- summary(pps_num)
+tab
 }
 
 }

@@ -19,7 +19,7 @@ for the visualization. If not specified, the font defined in dlookr is applied. 
 }
 \description{
 Visualize by attribute of `pps` class.
-The plot of a PPS(Predictive Power Score) is a bar plot by PPS.
+The plot of a PPS(Predictive Power Score) is a bar plot or tile plot by PPS.
 }
 \details{
 The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
@@ -30,10 +30,19 @@ use it after loading the Google font with import_google_font().
 \donttest{
 library(dplyr)
 
+# pps type is generic ======================================
+pps_generic <- pps(iris)
+pps_generic
+
+# visualize pps class 
+plot(pps_generic)
+
+# pps type is target_by =====================================
+##-----------------------------------------------------------
 # If the target variable is a categorical variable
 # Using dplyr
-pps_cat <- heartfailure \%>\% 
-  target_by(death_event) \%>\% 
+pps_cat <- iris \%>\% 
+  target_by(Species) \%>\% 
   pps()
 
 # plot pps class
@@ -42,8 +51,8 @@ plot(pps_cat)
 ##---------------------------------------------------
 # If the target variable is a numerical variable
 # Using dplyr
-pps_num <- heartfailure \%>\% 
-  target_by(creatinine) \%>\% 
+pps_num <- iris \%>\% 
+  target_by(Petal.Length) \%>\% 
   pps()
 
 # plot pps class
