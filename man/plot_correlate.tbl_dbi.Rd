@@ -119,5 +119,5 @@ DBI::dbDisconnect(con_sqlite)
 
 }
 \seealso{
-\code{\link{plot_correlate.data.frame}}, \code{\link{plot_outlier.tbl_dbi}}.
+\code{\link{plot.correlate}}, \code{\link{plot_outlier.tbl_dbi}}.
 }

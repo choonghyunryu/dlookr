@@ -32,3 +32,4 @@ README.Rmd
 .gitignore
 _pkgdown.yml
 *.csv
+*.bak

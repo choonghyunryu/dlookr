@@ -2,14 +2,14 @@
 % Please edit documentation in R/tbl_dbi.R
 \name{correlate.tbl_dbi}
 \alias{correlate.tbl_dbi}
-\title{Compute the correlation coefficient between two numerical data}
+\title{Compute the correlation coefficient between two variable in DBMS}
 \usage{
 \method{correlate}{tbl_dbi}(
   .data,
   ...,
   in_database = FALSE,
   collect_size = Inf,
-  method = c("pearson", "kendall", "spearman")
+  method = c("pearson", "kendall", "spearman", "cramer", "thiel")
 )
 }
 \arguments{
@@ -32,28 +32,40 @@ Applies only if in_database = FALSE.}
 
 \item{method}{a character string indicating which correlation coefficient (or covariance) is 
 to be computed. One of "pearson" (default), "kendall", or "spearman": can be abbreviated.
-
+For numerical variables, one of "pearson" (default), "kendall", or 
+"spearman": can be used as an abbreviation.
+For categorical variables, "cramer" and "thiel" can be used. "cramer" 
+computes Cramer's V statistic, "thiel" computes Thiel's U statistic.
 See vignette("EDA") for an introduction to these concepts.}
 }
 \description{
-The correlate() compute Pearson's the correlation
-coefficient of the numerical(INTEGER, NUMBER, etc.) column of 
-the DBMS table through tbl_dbi.
+The correlate() compute the correlation coefficient for numerical or categorical data.
 }
 \details{
 This function is useful when used with the group_by() function of the dplyr package.
 If you want to compute by level of the categorical data you are interested in,
 rather than the whole observation, you can use \code{\link{grouped_df}} as the group_by() function.
-This function is computed stats::cor() function by use = "pairwise.complete.obs" option.
+This function is computed stats::cor() function by use = "pairwise.complete.obs" option for numerical variable.
+And support categorical variable with Thiel’s U correlation coefficient and Cramer’s V correlation coefficient.
 }
 \section{Correlation coefficient information}{
 
-The information derived from the numerical data compute is as follows.
+It returns data.frame with the following variables.:
 
 \itemize{
 \item var1 : names of numerical variable
 \item var2 : name of the corresponding numeric variable
-\item coef_corr : Pearson's correlation coefficient
+\item coef_corr : Correlation coefficient
+}
+
+When method = "cramer", data.frame with the following variables is returned.
+\itemize{
+\item var1 : names of numerical variable
+\item var2 : name of the corresponding numeric variable
+\item chisq : the value the chi-squared test statistic
+\item df : the degrees of freedom of the approximate chi-squared distribution of the test statistic
+\item pval : the p-value for the test
+\item coef_corr : Thiel’s U correlation coefficient (Uncertainty Coefficient).
 }
 }
 
@@ -69,9 +81,13 @@ copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
 
 # Using pipes ---------------------------------
 # Correlation coefficients of all numerical variables
-con_sqlite \%>\% 
+tab_corr <- con_sqlite \%>\% 
   tbl("TB_HEARTFAILURE") \%>\% 
   correlate()
+ 
+ tab_corr
+ summary(tab_corr)
+ plot(tab_corr)
  
 # Positive values select variables
 con_sqlite \%>\% 
@@ -83,27 +99,12 @@ con_sqlite \%>\%
   tbl("TB_HEARTFAILURE") \%>\% 
   correlate(-platelets, -sodium, collect_size = 200)
  
-# Positions values select variables
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  correlate(1)
- 
-# Negative values to drop variables
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  correlate(-1, -2, -3, -5, -6)
- 
 # ---------------------------------------------
 # Correlation coefficient
 # that eliminates redundant combination of variables
 con_sqlite \%>\% 
   tbl("TB_HEARTFAILURE") \%>\% 
   correlate() \%>\%
-  filter(as.integer(var1) > as.integer(var2))
-
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  correlate(platelets, sodium) \%>\%
   filter(as.integer(var1) > as.integer(var2))
 
 # Using pipes & dplyr -------------------------

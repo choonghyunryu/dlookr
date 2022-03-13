@@ -26,6 +26,9 @@ CHANGES IN R VERSION 0.5.5:
     * By fixing bug #59, the variable 'variable' in the describe() result 
       was changed to 'described_variables'. 
       
+    * Added a new method that is summary.correlate() for summarizing correlation 
+      coefficient and plot.correlate() for visualize correlation coefficient. (#64)
+      
   MINOR CHANGES:
     * Added 'all.combinations' argument to describe() and describe.tbl_dbi(). 
       When used with group_by(), this argument expresses all combinations of 

@@ -57,7 +57,7 @@
 #' \donttest{
 #' library(dplyr)
 #' 
-#' # pps type is generic ======================================
+#' # pps type is generic =======================================
 #' pps_generic <- pps(iris)
 #' pps_generic
 #' 

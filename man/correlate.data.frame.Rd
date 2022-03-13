@@ -4,13 +4,21 @@
 \alias{correlate}
 \alias{correlate.data.frame}
 \alias{correlate.grouped_df}
-\title{Compute the correlation coefficient between two numerical data}
+\title{Compute the correlation coefficient between two variable}
 \usage{
 correlate(.data, ...)
 
-\method{correlate}{data.frame}(.data, ..., method = c("pearson", "kendall", "spearman"))
+\method{correlate}{data.frame}(
+  .data,
+  ...,
+  method = c("pearson", "kendall", "spearman", "cramer", "thiel")
+)
 
-\method{correlate}{grouped_df}(.data, ..., method = c("pearson", "kendall", "spearman"))
+\method{correlate}{grouped_df}(
+  .data,
+  ...,
+  method = c("pearson", "kendall", "spearman", "cramer", "thiel")
+)
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}
@@ -26,88 +34,97 @@ They support unquoting and splicing.
 See vignette("EDA") for an introduction to these concepts.}
 
 \item{method}{a character string indicating which correlation coefficient (or covariance) is 
-to be computed. One of "pearson" (default), "kendall", or "spearman": can be abbreviated.}
+to be computed. 
+For numerical variables, one of "pearson" (default), "kendall", or 
+"spearman": can be used as an abbreviation.
+For categorical variables, "cramer" and "thiel" can be used. "cramer" 
+computes Cramer's V statistic, "thiel" computes Thiel's U statistic.}
 }
 \description{
-The correlate() compute Pearson's the correlation
-coefficient of the numerical data.
+The correlate() compute the correlation coefficient for numerical or categorical data.
 }
 \details{
 This function is useful when used with the group_by() function of the dplyr package.
 If you want to compute by level of the categorical data you are interested in,
 rather than the whole observation, you can use \code{\link{grouped_df}} as the group_by() function.
-This function is computed stats::cor() function by use = "pairwise.complete.obs" option.
+This function is computed stats::cor() function by use = "pairwise.complete.obs" option for numerical variable.
+And support categorical variable with Thiel’s U correlation coefficient and Cramer’s V correlation coefficient.
 }
 \section{Correlation coefficient information}{
 
-The information derived from the numerical data compute is as follows.
+It returns data.frame with the following variables.:
 
 \itemize{
 \item var1 : names of numerical variable
 \item var2 : name of the corresponding numeric variable
-\item coef_corr : Pearson's correlation coefficient
+\item coef_corr : Correlation coefficient
+}
+
+When method = "cramer", data.frame with the following variables is returned.
+\itemize{
+\item var1 : names of numerical variable
+\item var2 : name of the corresponding numeric variable
+\item chisq : the value the chi-squared test statistic
+\item df : the degrees of freedom of the approximate chi-squared distribution of the test statistic
+\item pval : the p-value for the test
+\item coef_corr : Thiel’s U correlation coefficient (Uncertainty Coefficient).
 }
 }
 
 \examples{
 \donttest{
 # Correlation coefficients of all numerical variables
-correlate(heartfailure)
+tab_corr <- correlate(heartfailure)
+tab_corr
+
+mat_corr <- summary(tab_corr)
+mat_corr
+
+plot(tab_corr)
 
 # Select the variable to compute
-correlate(heartfailure, creatinine, sodium)
-correlate(heartfailure, -creatinine, -sodium)
 correlate(heartfailure, "creatinine", "sodium")
-correlate(heartfailure, 1)
+
 # Non-parametric correlation coefficient by kendall method
 correlate(heartfailure, creatinine, method = "kendall")
- 
+
+# Thiel’s U correlation coefficient (Uncertainty Coefficient)
+tab_corr <- correlate(heartfailure, anaemia, hblood_pressure, method = "thiel")
+tab_corr
+
+summary(tab_corr)   
+plot(tab_corr)
+   
 # Using dplyr::grouped_dt
 library(dplyr)
 
 gdata <- group_by(heartfailure, smoking, death_event)
-correlate(gdata, "creatinine")
 correlate(gdata)
 
 # Using pipes ---------------------------------
 # Correlation coefficients of all numerical variables
 heartfailure \%>\%
- correlate()
-# Positive values select variables
-heartfailure \%>\%
- correlate(creatinine, sodium)
-# Negative values to drop variables
-heartfailure \%>\%
- correlate(-creatinine, -sodium)
-# Positions values select variables
-heartfailure \%>\%
- correlate(1)
-# Positions values select variables
-heartfailure \%>\%
- correlate(-1, -3, -5, -7)
+  correlate()
+  
 # Non-parametric correlation coefficient by spearman method
 heartfailure \%>\%
- correlate(creatinine, sodium, method = "spearman")
+  correlate(creatinine, sodium, method = "spearman")
  
 # ---------------------------------------------
 # Correlation coefficient
 # that eliminates redundant combination of variables
 heartfailure \%>\%
- correlate() \%>\%
- filter(as.integer(var1) > as.integer(var2))
-
-heartfailure \%>\%
-  correlate(creatinine, sodium) \%>\%
+  correlate() \%>\%
   filter(as.integer(var1) > as.integer(var2))
 
 # Using pipes & dplyr -------------------------
-# Compute the correlation coefficient of Sales variable by 'smoking'
+# Compute the correlation coefficient of 'creatinine' variable by 'smoking'
 # and 'death_event' variables. And extract only those with absolute
 # value of correlation coefficient is greater than 0.2
 heartfailure \%>\%
- group_by(smoking, death_event) \%>\%
- correlate(creatinine) \%>\%
- filter(abs(coef_corr) >= 0.2)
+  group_by(smoking, death_event) \%>\%
+  correlate(creatinine) \%>\%
+  filter(abs(coef_corr) >= 0.2)
 
 # extract only those with 'smoking' variable level is "Yes",
 # and compute the correlation coefficient of 'Sales' variable
@@ -123,5 +140,5 @@ heartfailure \%>\%
 
 }
 \seealso{
-\code{\link{cor}}, \code{\link{correlate.tbl_dbi}}.
+\code{\link{cor}}, \code{\link{correlate.tbl_dbi}}, \code{\link{summary.correlate}}, \code{\link{plot.correlate}}.
 }

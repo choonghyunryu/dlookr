@@ -116,3 +116,47 @@ get_tab_chisq <- function(x) {
   df
 }
 
+# function to get chi square p value and Cramer's V statistic
+cramer <- function(dfm, x, y) {
+  chisq_test <- dfm %>% 
+    select(x, y) %>% 
+    table() %>% 
+    chisq.test()
+  
+  chisq <- chisq_test$statistic
+  pval  <- chisq_test$p.value
+  df <- chisq_test$parameter
+  
+  N <- sum(chisq_test$observed)
+  k <- min(dim(chisq_test$observed))
+  cramers_v <- sqrt(chisq / (N * (k - 1)))
+  
+  tab <- data.frame(var1 = x, var2 = y, chisq = chisq, df = df, pval = pval, 
+             coef_corr = cramers_v) 
+  row.names(tab) <- NULL
+  
+  tab
+}
+
+
+# function to get Theil's U statistic 
+theil <- function (dfm, x, y) {
+  tab <- dfm %>% 
+    select(x, y) %>% 
+    table()
+  
+  p.zero.correction <- 1 / sum(tab)^2
+  tab[tab == 0] <- p.zero.correction
+  
+  n <- sum(tab)
+  hx <- -sum((apply(tab, 1, sum) * log(apply(tab, 1, sum) / n)) / n)
+  hy <- -sum((apply(tab, 2, sum) * log(apply(tab, 2, sum) / n)) / n)
+  hxy <- -sum(apply(tab, c(1, 2), sum) * 
+                log(apply(tab, c(1, 2), sum) / n) / n)
+  
+  theils_u <- 2 * (hx + hy - hxy)/(hx + hy)
+  
+  data.frame(var1 = x, var2 = y, coef_corr = theils_u) 
+}
+
+

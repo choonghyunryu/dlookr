@@ -1009,24 +1009,33 @@ plot_normality.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
 }
 
 
-#' Compute the correlation coefficient between two numerical data
+#' Compute the correlation coefficient between two variable in DBMS
 #'
-#' @description The correlate() compute Pearson's the correlation
-#' coefficient of the numerical(INTEGER, NUMBER, etc.) column of 
-#' the DBMS table through tbl_dbi.
+#' @description The correlate() compute the correlation coefficient for numerical or categorical data.
 #'
 #' @details This function is useful when used with the group_by() function of the dplyr package.
 #' If you want to compute by level of the categorical data you are interested in,
 #' rather than the whole observation, you can use \code{\link{grouped_df}} as the group_by() function.
-#' This function is computed stats::cor() function by use = "pairwise.complete.obs" option.
+#' This function is computed stats::cor() function by use = "pairwise.complete.obs" option for numerical variable.
+#' And support categorical variable with Thiel’s U correlation coefficient and Cramer’s V correlation coefficient.
 #'
 #' @section Correlation coefficient information:
-#' The information derived from the numerical data compute is as follows.
+#' It returns data.frame with the following variables.:
 #'
 #' \itemize{
 #' \item var1 : names of numerical variable
 #' \item var2 : name of the corresponding numeric variable
-#' \item coef_corr : Pearson's correlation coefficient
+#' \item coef_corr : Correlation coefficient
+#' }
+#' 
+#' When method = "cramer", data.frame with the following variables is returned.
+#' \itemize{
+#' \item var1 : names of numerical variable
+#' \item var2 : name of the corresponding numeric variable
+#' \item chisq : the value the chi-squared test statistic
+#' \item df : the degrees of freedom of the approximate chi-squared distribution of the test statistic
+#' \item pval : the p-value for the test
+#' \item coef_corr : Thiel’s U correlation coefficient (Uncertainty Coefficient).
 #' }
 #'
 #' @param .data a tbl_dbi.
@@ -1044,7 +1053,10 @@ plot_normality.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
 #' Applies only if in_database = FALSE.
 #' @param method a character string indicating which correlation coefficient (or covariance) is 
 #' to be computed. One of "pearson" (default), "kendall", or "spearman": can be abbreviated.
-#' 
+#' For numerical variables, one of "pearson" (default), "kendall", or 
+#' "spearman": can be used as an abbreviation.
+#' For categorical variables, "cramer" and "thiel" can be used. "cramer" 
+#' computes Cramer's V statistic, "thiel" computes Thiel's U statistic.
 #' See vignette("EDA") for an introduction to these concepts.
 #'
 #' @seealso \code{\link{correlate.data.frame}}, \code{\link{cor}}.
@@ -1061,9 +1073,13 @@ plot_normality.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
 #'
 #' # Using pipes ---------------------------------
 #' # Correlation coefficients of all numerical variables
-#' con_sqlite %>% 
+#' tab_corr <- con_sqlite %>% 
 #'   tbl("TB_HEARTFAILURE") %>% 
 #'   correlate()
+#'  
+#'  tab_corr
+#'  summary(tab_corr)
+#'  plot(tab_corr)
 #'  
 #' # Positive values select variables
 #' con_sqlite %>% 
@@ -1075,27 +1091,12 @@ plot_normality.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
 #'   tbl("TB_HEARTFAILURE") %>% 
 #'   correlate(-platelets, -sodium, collect_size = 200)
 #'  
-#' # Positions values select variables
-#' con_sqlite %>% 
-#'   tbl("TB_HEARTFAILURE") %>% 
-#'   correlate(1)
-#'  
-#' # Negative values to drop variables
-#' con_sqlite %>% 
-#'   tbl("TB_HEARTFAILURE") %>% 
-#'   correlate(-1, -2, -3, -5, -6)
-#'  
 #' # ---------------------------------------------
 #' # Correlation coefficient
 #' # that eliminates redundant combination of variables
 #' con_sqlite %>% 
 #'   tbl("TB_HEARTFAILURE") %>% 
 #'   correlate() %>%
-#'   filter(as.integer(var1) > as.integer(var2))
-#'
-#' con_sqlite %>% 
-#'   tbl("TB_HEARTFAILURE") %>% 
-#'   correlate(platelets, sodium) %>%
 #'   filter(as.integer(var1) > as.integer(var2))
 #'
 #' # Using pipes & dplyr -------------------------
@@ -1125,7 +1126,8 @@ plot_normality.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
 #' }
 #'   
 correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = Inf,
-                              method = c("pearson", "kendall", "spearman")) {
+                              method = c("pearson", "kendall", "spearman", 
+                                         "cramer", "thiel")) {
   vars <- tidyselect::vars_select(colnames(.data), !!! rlang::quos(...))
   
   method <- match.arg(method)
@@ -1134,14 +1136,30 @@ correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = In
     stop("It does not yet support in-database mode. Use in_database = FALSE.")
   } else {
     if (class(.data$ops)[1] != "op_group_by") {
-      .data %>% 
-        dplyr::collect(n = collect_size) %>%
-        correlate_impl(vars, method)
+      if (method %in% c("pearson", "kendall", "spearman")) {
+        result <- .data %>% 
+          dplyr::collect(n = collect_size) %>%
+          correlate_impl_num(vars, method)
+      } else if (method %in% c("cramer", "thiel")) {
+        result <- .data %>% 
+          dplyr::collect(n = collect_size) %>%
+          correlate_impl_cat(vars, method)
+      }  
+      
+
     } else {
-      .data %>% 
-        dplyr::collect(n = collect_size) %>%
-        correlate_group_impl(vars, method)
+      if (method %in% c("pearson", "kendall", "spearman")) {
+        result <- .data %>% 
+          dplyr::collect(n = collect_size) %>%
+          correlate_group_impl_num(vars, method)
+      } else if (method %in% c("cramer", "thiel")) {
+        result <- .data %>% 
+          dplyr::collect(n = collect_size) %>%
+          correlate_group_impl_cat(vars, method)
+      }
     }
+    
+    return(result)
   }
 }
 
@@ -1185,7 +1203,7 @@ correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = In
 #' 
 #' See vignette("EDA") for an introduction to these concepts.
 #'
-#' @seealso \code{\link{plot_correlate.data.frame}}, \code{\link{plot_outlier.tbl_dbi}}.
+#' @seealso \code{\link{plot.correlate}}, \code{\link{plot_outlier.tbl_dbi}}.
 #' @export
 #' @examples
 #' \donttest{
