@@ -1017,7 +1017,7 @@ plot_normality.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
 #' If you want to compute by level of the categorical data you are interested in,
 #' rather than the whole observation, you can use \code{\link{grouped_df}} as the group_by() function.
 #' This function is computed stats::cor() function by use = "pairwise.complete.obs" option for numerical variable.
-#' And support categorical variable with Thiel’s U correlation coefficient and Cramer’s V correlation coefficient.
+#' And support categorical variable with theil's U correlation coefficient and Cramer's V correlation coefficient.
 #'
 #' @section Correlation coefficient information:
 #' It returns data.frame with the following variables.:
@@ -1035,7 +1035,7 @@ plot_normality.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
 #' \item chisq : the value the chi-squared test statistic
 #' \item df : the degrees of freedom of the approximate chi-squared distribution of the test statistic
 #' \item pval : the p-value for the test
-#' \item coef_corr : Thiel’s U correlation coefficient (Uncertainty Coefficient).
+#' \item coef_corr : theil's U correlation coefficient (Uncertainty Coefficient).
 #' }
 #'
 #' @param .data a tbl_dbi.
@@ -1055,8 +1055,8 @@ plot_normality.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
 #' to be computed. One of "pearson" (default), "kendall", or "spearman": can be abbreviated.
 #' For numerical variables, one of "pearson" (default), "kendall", or 
 #' "spearman": can be used as an abbreviation.
-#' For categorical variables, "cramer" and "thiel" can be used. "cramer" 
-#' computes Cramer's V statistic, "thiel" computes Thiel's U statistic.
+#' For categorical variables, "cramer" and "theil" can be used. "cramer" 
+#' computes Cramer's V statistic, "theil" computes Theil's U statistic.
 #' See vignette("EDA") for an introduction to these concepts.
 #'
 #' @seealso \code{\link{correlate.data.frame}}, \code{\link{cor}}.
@@ -1127,7 +1127,7 @@ plot_normality.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
 #'   
 correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = Inf,
                               method = c("pearson", "kendall", "spearman", 
-                                         "cramer", "thiel")) {
+                                         "cramer", "theil")) {
   vars <- tidyselect::vars_select(colnames(.data), !!! rlang::quos(...))
   
   method <- match.arg(method)
@@ -1140,7 +1140,7 @@ correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = In
         result <- .data %>% 
           dplyr::collect(n = collect_size) %>%
           correlate_impl_num(vars, method)
-      } else if (method %in% c("cramer", "thiel")) {
+      } else if (method %in% c("cramer", "theil")) {
         result <- .data %>% 
           dplyr::collect(n = collect_size) %>%
           correlate_impl_cat(vars, method)
@@ -1152,7 +1152,7 @@ correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = In
         result <- .data %>% 
           dplyr::collect(n = collect_size) %>%
           correlate_group_impl_num(vars, method)
-      } else if (method %in% c("cramer", "thiel")) {
+      } else if (method %in% c("cramer", "theil")) {
         result <- .data %>% 
           dplyr::collect(n = collect_size) %>%
           correlate_group_impl_cat(vars, method)

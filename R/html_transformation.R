@@ -633,7 +633,7 @@ html_binning <- function(.data, base_family = NULL) {
         binn <- try(binning(pull(.data, tab_numerical$variables[x]), 
                             type = tab_numerical$method[x]),
                     silent = TRUE)
-        if (class(binn) == "try-error") {
+        if (inherits(binn, "try-error")) {
           return(NULL) 
         } else {
           return(binn)
@@ -1275,7 +1275,8 @@ html_paged_binning <- function(.data, full_width = TRUE, font_size = 13,
         binn <- try(binning(pull(.data, tab_numerical$variables[x]), 
                             type = tab_numerical$method[x]),
                     silent = TRUE)
-        if (class(binn) == "try-error") {
+        
+        if (inherits(binn, "try-error")) {          
           return(NULL) 
         } else {
           return(binn)

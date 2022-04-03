@@ -9,7 +9,7 @@
   ...,
   in_database = FALSE,
   collect_size = Inf,
-  method = c("pearson", "kendall", "spearman", "cramer", "thiel")
+  method = c("pearson", "kendall", "spearman", "cramer", "theil")
 )
 }
 \arguments{
@@ -34,8 +34,8 @@ Applies only if in_database = FALSE.}
 to be computed. One of "pearson" (default), "kendall", or "spearman": can be abbreviated.
 For numerical variables, one of "pearson" (default), "kendall", or 
 "spearman": can be used as an abbreviation.
-For categorical variables, "cramer" and "thiel" can be used. "cramer" 
-computes Cramer's V statistic, "thiel" computes Thiel's U statistic.
+For categorical variables, "cramer" and "theil" can be used. "cramer" 
+computes Cramer's V statistic, "theil" computes Theil's U statistic.
 See vignette("EDA") for an introduction to these concepts.}
 }
 \description{
@@ -46,7 +46,7 @@ This function is useful when used with the group_by() function of the dplyr pack
 If you want to compute by level of the categorical data you are interested in,
 rather than the whole observation, you can use \code{\link{grouped_df}} as the group_by() function.
 This function is computed stats::cor() function by use = "pairwise.complete.obs" option for numerical variable.
-And support categorical variable with Thiel’s U correlation coefficient and Cramer’s V correlation coefficient.
+And support categorical variable with theil's U correlation coefficient and Cramer's V correlation coefficient.
 }
 \section{Correlation coefficient information}{
 
@@ -65,7 +65,7 @@ When method = "cramer", data.frame with the following variables is returned.
 \item chisq : the value the chi-squared test statistic
 \item df : the degrees of freedom of the approximate chi-squared distribution of the test statistic
 \item pval : the p-value for the test
-\item coef_corr : Thiel’s U correlation coefficient (Uncertainty Coefficient).
+\item coef_corr : theil's U correlation coefficient (Uncertainty Coefficient).
 }
 }
 

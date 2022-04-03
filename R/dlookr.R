@@ -42,5 +42,6 @@ if (getRversion() >= "2.15.1") {
     "p20", "p25", "p30", "p40", "p50", "p60", "p70", "p75", "p80", "p90", 
     "rate_missing", "rate_outlier", "rgb", "runif", "se_mean", "statistic", 
     "status", "top_freq", "types", "unique_count", "unique_rate", "variable_1", 
-    "variable_2", "variables", "zero_count", "reportData"))
+    "variable_2", "variables", "zero_count", "reportData", "predictors", "x",
+    "described_variables"))
 }

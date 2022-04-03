@@ -11,13 +11,13 @@ correlate(.data, ...)
 \method{correlate}{data.frame}(
   .data,
   ...,
-  method = c("pearson", "kendall", "spearman", "cramer", "thiel")
+  method = c("pearson", "kendall", "spearman", "cramer", "theil")
 )
 
 \method{correlate}{grouped_df}(
   .data,
   ...,
-  method = c("pearson", "kendall", "spearman", "cramer", "thiel")
+  method = c("pearson", "kendall", "spearman", "cramer", "theil")
 )
 }
 \arguments{
@@ -37,8 +37,8 @@ See vignette("EDA") for an introduction to these concepts.}
 to be computed. 
 For numerical variables, one of "pearson" (default), "kendall", or 
 "spearman": can be used as an abbreviation.
-For categorical variables, "cramer" and "thiel" can be used. "cramer" 
-computes Cramer's V statistic, "thiel" computes Thiel's U statistic.}
+For categorical variables, "cramer" and "theil" can be used. "cramer" 
+computes Cramer's V statistic, "theil" computes Theil's U statistic.}
 }
 \description{
 The correlate() compute the correlation coefficient for numerical or categorical data.
@@ -48,7 +48,7 @@ This function is useful when used with the group_by() function of the dplyr pack
 If you want to compute by level of the categorical data you are interested in,
 rather than the whole observation, you can use \code{\link{grouped_df}} as the group_by() function.
 This function is computed stats::cor() function by use = "pairwise.complete.obs" option for numerical variable.
-And support categorical variable with Thiel’s U correlation coefficient and Cramer’s V correlation coefficient.
+And support categorical variable with theil's U correlation coefficient and Cramer's V correlation coefficient.
 }
 \section{Correlation coefficient information}{
 
@@ -67,7 +67,7 @@ When method = "cramer", data.frame with the following variables is returned.
 \item chisq : the value the chi-squared test statistic
 \item df : the degrees of freedom of the approximate chi-squared distribution of the test statistic
 \item pval : the p-value for the test
-\item coef_corr : Thiel’s U correlation coefficient (Uncertainty Coefficient).
+\item coef_corr : theil's U correlation coefficient (Uncertainty Coefficient).
 }
 }
 
@@ -88,8 +88,8 @@ correlate(heartfailure, "creatinine", "sodium")
 # Non-parametric correlation coefficient by kendall method
 correlate(heartfailure, creatinine, method = "kendall")
 
-# Thiel’s U correlation coefficient (Uncertainty Coefficient)
-tab_corr <- correlate(heartfailure, anaemia, hblood_pressure, method = "thiel")
+# theil's U correlation coefficient (Uncertainty Coefficient)
+tab_corr <- correlate(heartfailure, anaemia, hblood_pressure, method = "theil")
 tab_corr
 
 summary(tab_corr)   
