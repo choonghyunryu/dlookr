@@ -1,3 +1,9 @@
+CHANGES IN R VERSION 0.5.6:
+  BUG FIXES:
+    * Fixed a CRAN Additional issue that is "deprecated wrning" in donttest. 
+      
+      
+      
 CHANGES IN R VERSION 0.5.5:
   BUG FIXES:
     * Fixed an error in describe() when `variable` is included in the name of 
