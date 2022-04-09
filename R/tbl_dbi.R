@@ -1009,62 +1009,16 @@ plot_normality.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
 }
 
 
-#' Compute the correlation coefficient between two variable in DBMS
-#'
-#' @description The correlate() compute the correlation coefficient for numerical or categorical data.
-#'
-#' @details This function is useful when used with the group_by() function of the dplyr package.
-#' If you want to compute by level of the categorical data you are interested in,
-#' rather than the whole observation, you can use \code{\link{grouped_df}} as the group_by() function.
-#' This function is computed stats::cor() function by use = "pairwise.complete.obs" option for numerical variable.
-#' And support categorical variable with theil's U correlation coefficient and Cramer's V correlation coefficient.
-#'
-#' @section Correlation coefficient information:
-#' It returns data.frame with the following variables.:
-#'
-#' \itemize{
-#' \item var1 : names of numerical variable
-#' \item var2 : name of the corresponding numeric variable
-#' \item coef_corr : Correlation coefficient
-#' }
-#' 
-#' When method = "cramer", data.frame with the following variables is returned.
-#' \itemize{
-#' \item var1 : names of numerical variable
-#' \item var2 : name of the corresponding numeric variable
-#' \item chisq : the value the chi-squared test statistic
-#' \item df : the degrees of freedom of the approximate chi-squared distribution of the test statistic
-#' \item pval : the p-value for the test
-#' \item coef_corr : theil's U correlation coefficient (Uncertainty Coefficient).
-#' }
-#'
-#' @param .data a tbl_dbi.
-#' @param ... one or more unquoted expressions separated by commas.
-#' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
-#' If the first expression is negative, correlate() will automatically start with all variables.
-#' These arguments are automatically quoted and evaluated in a context where column names
-#' represent column positions.
-#' They support unquoting and splicing.
+#' @rdname correlate.data.frame
 #' @param in_database Specifies whether to perform in-database operations. 
 #' If TRUE, most operations are performed in the DBMS. if FALSE, 
 #' table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.
 #' @param collect_size a integer. The number of data samples from the DBMS to R. 
 #' Applies only if in_database = FALSE.
-#' @param method a character string indicating which correlation coefficient (or covariance) is 
-#' to be computed. One of "pearson" (default), "kendall", or "spearman": can be abbreviated.
-#' For numerical variables, one of "pearson" (default), "kendall", or 
-#' "spearman": can be used as an abbreviation.
-#' For categorical variables, "cramer" and "theil" can be used. "cramer" 
-#' computes Cramer's V statistic, "theil" computes Theil's U statistic.
-#' See vignette("EDA") for an introduction to these concepts.
 #'
-#' @seealso \code{\link{correlate.data.frame}}, \code{\link{cor}}.
 #' @export
 #' @examples
 #' \donttest{
-#' library(dplyr)
-#' 
 #' # connect DBMS
 #' con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 #' 
@@ -1073,61 +1027,26 @@ plot_normality.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
 #'
 #' # Using pipes ---------------------------------
 #' # Correlation coefficients of all numerical variables
-#' tab_corr <- con_sqlite %>% 
+#' con_sqlite %>% 
 #'   tbl("TB_HEARTFAILURE") %>% 
 #'   correlate()
-#'  
-#'  tab_corr
-#'  summary(tab_corr)
-#'  plot(tab_corr)
-#'  
-#' # Positive values select variables
-#' con_sqlite %>% 
-#'   tbl("TB_HEARTFAILURE") %>% 
-#'   correlate(platelets, sodium)
-#'  
-#' # Negative values to drop variables, and In-memory mode and collect size is 200
-#' con_sqlite %>% 
-#'   tbl("TB_HEARTFAILURE") %>% 
-#'   correlate(-platelets, -sodium, collect_size = 200)
-#'  
-#' # ---------------------------------------------
-#' # Correlation coefficient
-#' # that eliminates redundant combination of variables
-#' con_sqlite %>% 
-#'   tbl("TB_HEARTFAILURE") %>% 
-#'   correlate() %>%
-#'   filter(as.integer(var1) > as.integer(var2))
 #'
 #' # Using pipes & dplyr -------------------------
 #' # Compute the correlation coefficient of creatinine variable by 'hblood_pressure'
-#' # and 'death_event' variables. And extract only those with absolute
-#' # value of correlation coefficient is greater than 0.2
+#' # and 'death_event' variables.
 #' con_sqlite %>% 
 #'   tbl("TB_HEARTFAILURE") %>% 
 #'   group_by(hblood_pressure, death_event) %>%
-#'   correlate(creatinine) %>%
-#'   filter(abs(coef_corr) >= 0.2)
+#'   correlate(creatinine) 
 #'
-#' # extract only those with 'hblood_pressure' variable level is "Yes",
-#' # and compute the correlation coefficient of 'creatinine' variable
-#' # by 'sex' and 'death_event' variables.
-#' # And the correlation coefficient is negative and smaller than -0.3
-#' con_sqlite %>% 
-#'   tbl("TB_HEARTFAILURE") %>% 
-#'   filter(hblood_pressure == "Yes") %>%
-#'   group_by(sex, death_event) %>%
-#'   correlate(creatinine) %>%
-#'   filter(coef_corr < 0) %>%
-#'   filter(abs(coef_corr) > 0.3)
-#'  
 #' # Disconnect DBMS   
 #' DBI::dbDisconnect(con_sqlite)
 #' }
 #'   
-correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = Inf,
+correlate.tbl_dbi <- function(.data, ..., 
                               method = c("pearson", "kendall", "spearman", 
-                                         "cramer", "theil")) {
+                                         "cramer", "theil"),
+                              in_database = FALSE, collect_size = Inf) {
   vars <- tidyselect::vars_select(colnames(.data), !!! rlang::quos(...))
   
   method <- match.arg(method)
@@ -1162,7 +1081,6 @@ correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = In
     return(result)
   }
 }
-
 
 #' Visualize correlation plot of numerical data
 #'
@@ -1205,63 +1123,7 @@ correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = In
 #'
 #' @seealso \code{\link{plot.correlate}}, \code{\link{plot_outlier.tbl_dbi}}.
 #' @export
-#' @examples
-#' \donttest{
-#' library(dplyr)
-#' 
-#' # connect DBMS
-#' con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-#' 
-#' # copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
-#' copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
-#'
-#' # Using pipes ---------------------------------
-#' # Visualize correlation plot of all numerical variables
-#' con_sqlite %>% 
-#'   tbl("TB_HEARTFAILURE") %>% 
-#'   plot_correlate()
-#'   
-#' # Positive values select variables, and In-memory mode and collect size is 200
-#' con_sqlite %>% 
-#'   tbl("TB_HEARTFAILURE") %>% 
-#'   plot_correlate(platelets, sodium, collect_size = 200)
-#'   
-#' # Negative values to drop variables
-#' con_sqlite %>% 
-#'   tbl("TB_HEARTFAILURE") %>% 
-#'   plot_correlate(-platelets, -sodium)
-#'   
-#' # Positions values select variables
-#' con_sqlite %>% 
-#'   tbl("TB_HEARTFAILURE") %>% 
-#'   plot_correlate(1)
-#'   
-#' # Negative values to drop variables
-#' con_sqlite %>% 
-#'   tbl("TB_HEARTFAILURE") %>% 
-#'   plot_correlate(-1, -2, -3, -5, -6)
-#'
-#' # Using pipes & dplyr -------------------------
-#' # Visualize correlation plot of 'sodiumsodium' variable by 'smoking'
-#' # and 'death_event' variables.
-#' con_sqlite %>% 
-#'   tbl("TB_HEARTFAILURE") %>% 
-#'   group_by(smoking, death_event) %>%
-#'   plot_correlate(sodium)
-#'
-#' # Extract only those with 'smoking' variable level is "Yes",
-#' # and visualize correlation plot of 'sodium' variable by 'sex'
-#' # and 'death_event' variables.
-#' con_sqlite %>% 
-#'   tbl("TB_HEARTFAILURE") %>% 
-#'   filter(smoking == "Yes") %>%
-#'   group_by(sex, death_event) %>%
-#'   plot_correlate(sodium)
-#'
-#' # Disconnect DBMS   
-#' DBI::dbDisconnect(con_sqlite)
-#' }
-#' 
+#' @keywords internal
 plot_correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size = Inf,
                                    method = c("pearson", "kendall", "spearman"),
                                    typographic = TRUE, base_family = NULL) {

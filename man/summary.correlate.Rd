@@ -63,6 +63,25 @@ corr_tab
 # summary correlate class 
 mat <- summary(corr_tab)
 mat
+
+# connect DBMS
+con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+
+# copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
+
+# Using pipes ---------------------------------
+# Correlation coefficients of all numerical variables
+corr_tab <- con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  correlate()
+
+# summary correlate class 
+mat <- summary(corr_tab)
+mat
+
+# Disconnect DBMS   
+DBI::dbDisconnect(con_sqlite)
 }
 
 }

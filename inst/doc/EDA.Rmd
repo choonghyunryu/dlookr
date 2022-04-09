@@ -100,7 +100,7 @@ The following is a list of the EDA functions included in the dlookr package.:
 
 * `describe()` provides descriptive statistics for numerical data.
 * `normality()` and `plot_normality()` perform normalization and visualization of numerical data.
-* `correlate()` and `plot_correlate()` calculate the correlation coefficient between two numerical data and provide visualization.
+* `correlate()` and `plot.correlate()` calculate the correlation coefficient between two numerical data and provide visualization.
 * `target_by()` defines the target variable and `relate()` describes the relationship with the variables of interest corresponding to the target variable.
 * `plot.relate()` visualizes the relationship to the variable of interest corresponding to the destination variable.
 * `eda_report()` performs an exploratory data analysis and reports the results.
@@ -297,36 +297,40 @@ carseats %>%
 The `correlate()` also supports the `group_by()` function syntax in the `dplyr` package.
 
 ```{r correlate4}
-carseats %>%
+tab_corr <- carseats %>%
   filter(ShelveLoc == "Good") %>%
   group_by(Urban, US) %>%
   correlate(Sales) %>%
   filter(abs(coef_corr) > 0.5)
+
+tab_corr
 ```
 
 
-### Visualization of the correlation matrix using `plot_correlate()`
-`plot_correlate()` visualizes the correlation matrix.
+### Visualization of the correlation matrix using `plot.correlate()`
+`plot.correlate()` visualizes the correlation matrix with correlate class.
 
 ```{r plot_correlate, fig.align='center', fig.width = 7, fig.height = 5}
-plot_correlate(carseats)
+plot(tab_corr)
 ```
 
-`plot_correlate()` can also specify multiple variables, like the `correlate()` function.
+`plot.correlate()` can also specify multiple variables, like the `correlate()` function.
 The following is a visualization of the correlation matrix including several selected variables.
 
 ```{r plot_correlate2, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE}
 # Select columns by name
-plot_correlate(carseats, Sales, Price)
+correlate(carseats, Sales, Price) %>% 
+  plot()
 ```
 
-The `plot_correlate()` function also supports the `group_by()` function syntax in the `dplyr` package.
+The `plot.correlate()` function also supports the `group_by()` function syntax in the `dplyr` package.
 
 ```{r plot_correlate3, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE, eval=FALSE}
 carseats %>%
   filter(ShelveLoc == "Good") %>%
   group_by(Urban) %>%
-  plot_correlate(Sales)
+  correlate() %>%
+  plot()
 ```
 
 
@@ -607,7 +611,7 @@ In this case, if the data size is large, the execution speed may be slow. It sup
     + `normality()`
     + `plot_normality()`    
     + `correlate()`  
-    + `plot_correlate()`
+    + `plot.correlate()`
     + `describe()`
     + `eda_web_report()`
     + `eda_paged_report()`
@@ -757,7 +761,8 @@ con_sqlite %>%
   tbl("TB_CARSEATS") %>% 
   filter(ShelveLoc == "Good") %>%
   group_by(Urban) %>%
-  plot_correlate(Sales)
+  correlate() %>% 
+  plot(Sales)
 ```
 
 ### EDA based on target variable

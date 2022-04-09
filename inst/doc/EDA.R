@@ -112,24 +112,28 @@ carseats %>%
   filter(as.integer(var1) > as.integer(var2))
 
 ## ----correlate4---------------------------------------------------------------
-carseats %>%
+tab_corr <- carseats %>%
   filter(ShelveLoc == "Good") %>%
   group_by(Urban, US) %>%
   correlate(Sales) %>%
   filter(abs(coef_corr) > 0.5)
 
+tab_corr
+
 ## ----plot_correlate, fig.align='center', fig.width = 7, fig.height = 5--------
-plot_correlate(carseats)
+plot(tab_corr)
 
 ## ----plot_correlate2, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE----
 #  # Select columns by name
-#  plot_correlate(carseats, Sales, Price)
+#  correlate(carseats, Sales, Price) %>%
+#    plot()
 
 ## ----plot_correlate3, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE, eval=FALSE----
 #  carseats %>%
 #    filter(ShelveLoc == "Good") %>%
 #    group_by(Urban) %>%
-#    plot_correlate(Sales)
+#    correlate() %>%
+#    plot()
 
 ## ----target_by----------------------------------------------------------------
 categ <- target_by(carseats, US)
@@ -324,7 +328,8 @@ con_sqlite %>%
 #    tbl("TB_CARSEATS") %>%
 #    filter(ShelveLoc == "Good") %>%
 #    group_by(Urban) %>%
-#    plot_correlate(Sales)
+#    correlate() %>%
+#    plot(Sales)
 
 ## ----dbi_ctarget_by-----------------------------------------------------------
 # If the target variable is a categorical variable

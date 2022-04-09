@@ -5,7 +5,7 @@ correlate <- function(.data, ...) {
 }
 
 
-#' @rdname plot_correlate.data.frame
+#' @rdname dlookr-deprecated
 #' @export
 plot_correlate <- function(.data, ...) {
   .Deprecated("plot.correlate")
@@ -44,9 +44,9 @@ plot_correlate <- function(.data, ...) {
 #' }
 #' 
 #'
-#' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param .data a data.frame or a \code{\link{grouped_df}} or a tbl_dbi.
 #' @param method a character string indicating which correlation coefficient (or covariance) is 
-#' to be computed. 
+#' to be computed. One of "pearson" (default), "kendall", or "spearman": can be abbreviated.
 #' For numerical variables, one of "pearson" (default), "kendall", or 
 #' "spearman": can be used as an abbreviation.
 #' For categorical variables, "cramer" and "theil" can be used. "cramer" 
@@ -61,7 +61,7 @@ plot_correlate <- function(.data, ...) {
 #'
 #' See vignette("EDA") for an introduction to these concepts.
 #'
-#' @seealso \code{\link{cor}}, \code{\link{correlate.tbl_dbi}}, \code{\link{summary.correlate}}, \code{\link{plot.correlate}}.
+#' @seealso \code{\link{cor}}, \code{\link{summary.correlate}}, \code{\link{plot.correlate}}.
 #' @export
 #' @examples
 #' \donttest{
@@ -451,6 +451,25 @@ correlate_group_impl_cat <- function(df, vars, method) {
 #' # summary correlate class 
 #' mat <- summary(corr_tab)
 #' mat
+#' 
+#' # connect DBMS
+#' con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+#' 
+#' # copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+#' copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
+#'
+#' # Using pipes ---------------------------------
+#' # Correlation coefficients of all numerical variables
+#' corr_tab <- con_sqlite %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   correlate()
+#'
+#' # summary correlate class 
+#' mat <- summary(corr_tab)
+#' mat
+#'
+#' # Disconnect DBMS   
+#' DBI::dbDisconnect(con_sqlite)
 #' }
 #' 
 #' @method summary correlate
@@ -563,7 +582,8 @@ summary.correlate <- function(object, ...) {
 
 #' Visualize correlation plot of numerical data
 #'
-#' @description The plot_correlate() visualize correlation plot
+#' @description 
+#' The plot_correlate() visualize correlation plot
 #' for find relationship between two numerical variables.
 #'
 #' @details The scope of the visualization is the provide a correlation information.
@@ -596,62 +616,11 @@ summary.correlate <- function(object, ...) {
 #'
 #' @seealso \code{\link{plot_correlate.tbl_dbi}}, \code{\link{plot_outlier.data.frame}}.
 #' @export
-#' @examples
-#' \donttest{
-#' # Visualize correlation plot of all numerical variables
-#' plot_correlate(heartfailure)
-#'
-#' # Select the variable to compute
-#' plot_correlate(heartfailure, creatinine, sodium)
-#' plot_correlate(heartfailure, -creatinine, -sodium)
-#' plot_correlate(heartfailure, "creatinine", "sodium")
-#' plot_correlate(heartfailure, 1)
-#' plot_correlate(heartfailure, creatinine, sodium, method = "spearman")
-#' 
-#' # Using dplyr::grouped_dt
-#' library(dplyr)
-#'
-#' gdata <- group_by(heartfailure, smoking, death_event)
-#' plot_correlate(gdata, "creatinine")
-#' # plot_correlate(gdata)
-#'
-#' # Using pipes ---------------------------------
-#' # Visualize correlation plot of all numerical variables
-#' # heartfailure %>%
-#' #   plot_correlate()
-#' # Positive values select variables
-#' heartfailure %>%
-#'   plot_correlate(creatinine, sodium)
-#' # Negative values to drop variables
-#' # heartfailure %>%
-#' #   plot_correlate(-creatinine, -sodium)
-#' # Positions values select variables
-#' heartfailure %>%
-#'   plot_correlate(1)
-#' # Positions values select variables
-#' heartfailure %>%
-#'   plot_correlate(-1, -3, -5, -7)
-#'
-#' # Using pipes & dplyr -------------------------
-#' # Visualize correlation plot of 'creatinine' variable by 'smoking'
-#' # and 'death_event' variables.
-#' heartfailure %>%
-#' group_by(smoking, death_event) %>%
-#' plot_correlate(creatinine)
-#'
-#' # Extract only those with 'smoking' variable level is "Yes",
-#' # and visualize correlation plot of 'creatinine' variable by 'hblood_pressure'
-#' # and 'death_event' variables.
-#' heartfailure %>%
-#'   filter(smoking == "Yes") %>%
-#'   group_by(hblood_pressure, death_event) %>%
-#'   plot_correlate(creatinine)
-#' }
-#'   
 #' @method plot_correlate data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
 #' @export
+#' @keywords internal
 plot_correlate.data.frame <- function(.data, ..., 
                                       method = c("pearson", "kendall", "spearman"),
                                       typographic = TRUE, base_family = NULL) {
@@ -714,7 +683,6 @@ plot_correlate_impl <- function(df, vars, method, typographic, base_family) {
 }
 
 
-#' @rdname plot_correlate.data.frame
 #' @method plot_correlate grouped_df
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos warn
@@ -856,7 +824,7 @@ plot_correlate_group_impl <- function(df, vars, method, typographic, base_family
 #' \donttest{
 #' library(dplyr)
 #' 
-#' # correlate type is generic =================================
+#' # correlate type is generic ==================================
 #' tab_corr <- correlate(iris)
 #' tab_corr
 #' 
@@ -870,7 +838,7 @@ plot_correlate_group_impl <- function(df, vars, method, typographic, base_family
 #' # visualize correlate class 
 #' plot(tab_corr)
 #' 
-#' # correlate type is group ===================================
+#' # correlate type is group ====================================
 #' tab_corr <- iris %>% 
 #'   group_by(Species) %>% 
 #'   correlate()
@@ -878,6 +846,22 @@ plot_correlate_group_impl <- function(df, vars, method, typographic, base_family
 #' # plot correlate class
 #' plot(tab_corr)
 #' 
+#' # S3 method for correlate class by 'tbl_dbi' ================
+#' # connect DBMS
+#' con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+#' 
+#' # copy iris to the DBMS with a table named TB_IRIS
+#' copy_to(con_sqlite, iris, name = "TB_IRIS", overwrite = TRUE)
+#' 
+#' # correlation coefficients of all numerical variables
+#' tab_corr <- con_sqlite %>% 
+#'   tbl("TB_IRIS") %>% 
+#'   correlate()
+#'   
+#' plot(tab_corr)   
+#'   
+#' # Disconnect DBMS   
+#' DBI::dbDisconnect(con_sqlite)
 #' }
 #' 
 #' @method plot correlate

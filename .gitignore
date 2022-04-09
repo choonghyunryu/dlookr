@@ -33,3 +33,5 @@ README.Rmd
 _pkgdown.yml
 *.csv
 *.bak
+/doc/
+/Meta/

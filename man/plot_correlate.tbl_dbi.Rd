@@ -60,64 +60,7 @@ The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 use it after loading the Google font with import_google_font().
 }
-\examples{
-\donttest{
-library(dplyr)
-
-# connect DBMS
-con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-
-# copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
-copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
-
-# Using pipes ---------------------------------
-# Visualize correlation plot of all numerical variables
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  plot_correlate()
-  
-# Positive values select variables, and In-memory mode and collect size is 200
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  plot_correlate(platelets, sodium, collect_size = 200)
-  
-# Negative values to drop variables
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  plot_correlate(-platelets, -sodium)
-  
-# Positions values select variables
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  plot_correlate(1)
-  
-# Negative values to drop variables
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  plot_correlate(-1, -2, -3, -5, -6)
-
-# Using pipes & dplyr -------------------------
-# Visualize correlation plot of 'sodiumsodium' variable by 'smoking'
-# and 'death_event' variables.
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  group_by(smoking, death_event) \%>\%
-  plot_correlate(sodium)
-
-# Extract only those with 'smoking' variable level is "Yes",
-# and visualize correlation plot of 'sodium' variable by 'sex'
-# and 'death_event' variables.
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  filter(smoking == "Yes") \%>\%
-  group_by(sex, death_event) \%>\%
-  plot_correlate(sodium)
-
-# Disconnect DBMS   
-DBI::dbDisconnect(con_sqlite)
-}
-
-}
 \seealso{
 \code{\link{plot.correlate}}, \code{\link{plot_outlier.tbl_dbi}}.
 }
+\keyword{internal}

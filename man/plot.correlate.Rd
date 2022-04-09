@@ -30,7 +30,7 @@ use it after loading the Google font with import_google_font().
 \donttest{
 library(dplyr)
 
-# correlate type is generic =================================
+# correlate type is generic ==================================
 tab_corr <- correlate(iris)
 tab_corr
 
@@ -44,7 +44,7 @@ tab_corr
 # visualize correlate class 
 plot(tab_corr)
 
-# correlate type is group ===================================
+# correlate type is group ====================================
 tab_corr <- iris \%>\% 
   group_by(Species) \%>\% 
   correlate()
@@ -52,6 +52,22 @@ tab_corr <- iris \%>\%
 # plot correlate class
 plot(tab_corr)
 
+# S3 method for correlate class by 'tbl_dbi' ================
+# connect DBMS
+con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+
+# copy iris to the DBMS with a table named TB_IRIS
+copy_to(con_sqlite, iris, name = "TB_IRIS", overwrite = TRUE)
+
+# correlation coefficients of all numerical variables
+tab_corr <- con_sqlite \%>\% 
+  tbl("TB_IRIS") \%>\% 
+  correlate()
+  
+plot(tab_corr)   
+  
+# Disconnect DBMS   
+DBI::dbDisconnect(con_sqlite)
 }
 
 }
