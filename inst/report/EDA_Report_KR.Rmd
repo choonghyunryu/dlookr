@@ -260,7 +260,8 @@ if (length(idx.numeric) > 2) {
 ```{r plot_correlations, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=4, fig.width=6}
 if (length(idx.numeric) > 2) {
   edaData %>%
-    plot_correlate()
+    correlate() %>% 
+    plot()
 } else {
   cat("수치형 변수의 개수가 2보다 적습니다.\n\n")
 }  
@@ -543,7 +544,8 @@ if (!is.null(targetVariable)) {
     
         edaData %>%
           filter(targetVariable %in% nm) %>% 
-          plot_correlate()
+          correlate() %>% 
+          plot()
       }
     } else {
       cat("수치형 변수의 개수가 2보다 적습니다.\n\n")

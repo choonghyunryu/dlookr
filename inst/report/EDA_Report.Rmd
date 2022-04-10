@@ -273,7 +273,8 @@ if (length(idx.numeric) > 2) {
 ```{r plot_correlations, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=8, fig.width=8}
 if (length(idx.numeric) > 2) {
   edaData %>%
-    plot_correlate()
+    correlate() %>% 
+    plot()
 } else {
   cat("Number of numerical variables is less than 2.\n\n")
 }  
@@ -557,7 +558,8 @@ if (!is.null(targetVariable)) {
     
         edaData %>%
           filter(targetVariable %in% nm) %>% 
-          plot_correlate()
+          correlate() %>% 
+          plot()
       }
     } else {
       cat("Number of numerical variables is less than 2.\n\n")

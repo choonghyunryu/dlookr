@@ -121,19 +121,21 @@ tab_corr <- carseats %>%
 tab_corr
 
 ## ----plot_correlate, fig.align='center', fig.width = 7, fig.height = 5--------
-plot(tab_corr)
+carseats %>% 
+  correlate() %>% 
+  plot()
 
-## ----plot_correlate2, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE----
-#  # Select columns by name
-#  correlate(carseats, Sales, Price) %>%
-#    plot()
+## ----plot_correlate2, fig.align='center', fig.width = 6, fig.height = 4, eval=TRUE----
+# Select columns by name
+correlate(carseats, Sales, Price) %>% 
+  plot()
 
-## ----plot_correlate3, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE, eval=FALSE----
-#  carseats %>%
-#    filter(ShelveLoc == "Good") %>%
-#    group_by(Urban) %>%
-#    correlate() %>%
-#    plot()
+## ----plot_correlate3, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE, eval=TRUE----
+carseats %>%
+  filter(ShelveLoc == "Good") %>%
+  group_by(Urban) %>%
+  correlate() %>%
+  plot() 
 
 ## ----target_by----------------------------------------------------------------
 categ <- target_by(carseats, US)

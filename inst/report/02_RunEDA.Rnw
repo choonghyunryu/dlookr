@@ -291,7 +291,8 @@ if (length(idx.numeric) > 2) {
 if (length(idx.numeric) > 2) {
   cairo_pdf(filename = sprintf("./figure/correlation.pdf", i), width = 6, height = 6)
   edaData %>%
-    plot_correlate()
+    correlate() %>% 
+    plot()
   dev.off()
 
   cap <- "The correlation coefficient of numerical variables"
@@ -660,7 +661,8 @@ if (!is.null(targetVariable)) {
         cairo_pdf(filename = fname, width = 6, height = 6)
         edaData %>%
           filter(targetVariable %in% nm) %>%
-          plot_correlate()
+          correlate() %>% 
+          plot()
         dev.off()
 
         cap <- sprintf("Correlation Matrix Plot (%s == %s)", change_under(targetVariable), nm)

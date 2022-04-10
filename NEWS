@@ -2,6 +2,12 @@ CHANGES IN R VERSION 0.5.6:
   BUG FIXES:
     * Fixed a CRAN Additional issue that is "deprecated wrning" in donttest. 
       
+  MAJOR CHANGES:
+    * plot_correlate() was deprecated. Instead, use plot.correlate().
+        - plot_correlate.data.frame()
+        - plot_correlate.grouped_df()
+        - plot_correlate.tbl_dbi()
+      
       
       
 CHANGES IN R VERSION 0.5.5:

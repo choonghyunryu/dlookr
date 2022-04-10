@@ -311,13 +311,15 @@ tab_corr
 `plot.correlate()` visualizes the correlation matrix with correlate class.
 
 ```{r plot_correlate, fig.align='center', fig.width = 7, fig.height = 5}
-plot(tab_corr)
+carseats %>% 
+  correlate() %>% 
+  plot()
 ```
 
 `plot.correlate()` can also specify multiple variables, like the `correlate()` function.
 The following is a visualization of the correlation matrix including several selected variables.
 
-```{r plot_correlate2, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE}
+```{r plot_correlate2, fig.align='center', fig.width = 6, fig.height = 4, eval=TRUE}
 # Select columns by name
 correlate(carseats, Sales, Price) %>% 
   plot()
@@ -325,12 +327,12 @@ correlate(carseats, Sales, Price) %>%
 
 The `plot.correlate()` function also supports the `group_by()` function syntax in the `dplyr` package.
 
-```{r plot_correlate3, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE, eval=FALSE}
+```{r plot_correlate3, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE, eval=TRUE}
 carseats %>%
   filter(ShelveLoc == "Good") %>%
   group_by(Urban) %>%
   correlate() %>%
-  plot()
+  plot() 
 ```
 
 

@@ -79,7 +79,7 @@ library(nycflights13)
 dim(flights)
 #> [1] 336776     19
 flights
-#> # A tibble: 336,776 x 19
+#> # A tibble: 336,776 × 19
 #>     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
 #>    <int> <int> <int>    <int>          <int>     <dbl>    <int>          <int>
 #>  1  2013     1     1      517            515         2      830            819
@@ -122,28 +122,28 @@ library(dlookr)
 library(dplyr)
 
 diagnose(flights)
-#> # A tibble: 19 x 6
-#>    variables     types    missing_count missing_percent unique_count unique_rate
-#>    <chr>         <chr>            <int>           <dbl>        <int>       <dbl>
-#>  1 year          integer              0           0                1  0.00000297
-#>  2 month         integer              0           0               12  0.0000356 
-#>  3 day           integer              0           0               31  0.0000920 
-#>  4 dep_time      integer           8255           2.45          1319  0.00392   
-#>  5 sched_dep_ti… integer              0           0             1021  0.00303   
-#>  6 dep_delay     numeric           8255           2.45           528  0.00157   
-#>  7 arr_time      integer           8713           2.59          1412  0.00419   
-#>  8 sched_arr_ti… integer              0           0             1163  0.00345   
-#>  9 arr_delay     numeric           9430           2.80           578  0.00172   
-#> 10 carrier       charact…             0           0               16  0.0000475 
-#> 11 flight        integer              0           0             3844  0.0114    
-#> 12 tailnum       charact…          2512           0.746         4044  0.0120    
-#> 13 origin        charact…             0           0                3  0.00000891
-#> 14 dest          charact…             0           0              105  0.000312  
-#> 15 air_time      numeric           9430           2.80           510  0.00151   
-#> 16 distance      numeric              0           0              214  0.000635  
-#> 17 hour          numeric              0           0               20  0.0000594 
-#> 18 minute        numeric              0           0               60  0.000178  
-#> 19 time_hour     POSIXct              0           0             6936  0.0206
+#> # A tibble: 19 × 6
+#>    variables      types   missing_count missing_percent unique_count unique_rate
+#>    <chr>          <chr>           <int>           <dbl>        <int>       <dbl>
+#>  1 year           integer             0           0                1  0.00000297
+#>  2 month          integer             0           0               12  0.0000356 
+#>  3 day            integer             0           0               31  0.0000920 
+#>  4 dep_time       integer          8255           2.45          1319  0.00392   
+#>  5 sched_dep_time integer             0           0             1021  0.00303   
+#>  6 dep_delay      numeric          8255           2.45           528  0.00157   
+#>  7 arr_time       integer          8713           2.59          1412  0.00419   
+#>  8 sched_arr_time integer             0           0             1163  0.00345   
+#>  9 arr_delay      numeric          9430           2.80           578  0.00172   
+#> 10 carrier        charac…             0           0               16  0.0000475 
+#> 11 flight         integer             0           0             3844  0.0114    
+#> 12 tailnum        charac…          2512           0.746         4044  0.0120    
+#> 13 origin         charac…             0           0                3  0.00000891
+#> 14 dest           charac…             0           0              105  0.000312  
+#> 15 air_time       numeric          9430           2.80           510  0.00151   
+#> 16 distance       numeric             0           0              214  0.000635  
+#> 17 hour           numeric             0           0               20  0.0000594 
+#> 18 minute         numeric             0           0               60  0.000178  
+#> 19 time_hour      POSIXct             0           0             6936  0.0206
 ```
 
 -   `Missing Value(NA)` : Variables with many missing values, i.e. those
@@ -165,7 +165,7 @@ For example, we can diagnose only a few selected variables:
 ``` r
 # Select columns by name
 diagnose(flights, year, month, day)
-#> # A tibble: 3 x 6
+#> # A tibble: 3 × 6
 #>   variables types   missing_count missing_percent unique_count unique_rate
 #>   <chr>     <chr>           <int>           <dbl>        <int>       <dbl>
 #> 1 year      integer             0               0            1  0.00000297
@@ -173,7 +173,7 @@ diagnose(flights, year, month, day)
 #> 3 day       integer             0               0           31  0.0000920
 # Select all columns between year and day (include)
 diagnose(flights, year:day)
-#> # A tibble: 3 x 6
+#> # A tibble: 3 × 6
 #>   variables types   missing_count missing_percent unique_count unique_rate
 #>   <chr>     <chr>           <int>           <dbl>        <int>       <dbl>
 #> 1 year      integer             0               0            1  0.00000297
@@ -181,25 +181,25 @@ diagnose(flights, year:day)
 #> 3 day       integer             0               0           31  0.0000920
 # Select all columns except those from year to day (exclude)
 diagnose(flights, -(year:day))
-#> # A tibble: 16 x 6
-#>    variables     types    missing_count missing_percent unique_count unique_rate
-#>    <chr>         <chr>            <int>           <dbl>        <int>       <dbl>
-#>  1 dep_time      integer           8255           2.45          1319  0.00392   
-#>  2 sched_dep_ti… integer              0           0             1021  0.00303   
-#>  3 dep_delay     numeric           8255           2.45           528  0.00157   
-#>  4 arr_time      integer           8713           2.59          1412  0.00419   
-#>  5 sched_arr_ti… integer              0           0             1163  0.00345   
-#>  6 arr_delay     numeric           9430           2.80           578  0.00172   
-#>  7 carrier       charact…             0           0               16  0.0000475 
-#>  8 flight        integer              0           0             3844  0.0114    
-#>  9 tailnum       charact…          2512           0.746         4044  0.0120    
-#> 10 origin        charact…             0           0                3  0.00000891
-#> 11 dest          charact…             0           0              105  0.000312  
-#> 12 air_time      numeric           9430           2.80           510  0.00151   
-#> 13 distance      numeric              0           0              214  0.000635  
-#> 14 hour          numeric              0           0               20  0.0000594 
-#> 15 minute        numeric              0           0               60  0.000178  
-#> 16 time_hour     POSIXct              0           0             6936  0.0206
+#> # A tibble: 16 × 6
+#>    variables      types   missing_count missing_percent unique_count unique_rate
+#>    <chr>          <chr>           <int>           <dbl>        <int>       <dbl>
+#>  1 dep_time       integer          8255           2.45          1319  0.00392   
+#>  2 sched_dep_time integer             0           0             1021  0.00303   
+#>  3 dep_delay      numeric          8255           2.45           528  0.00157   
+#>  4 arr_time       integer          8713           2.59          1412  0.00419   
+#>  5 sched_arr_time integer             0           0             1163  0.00345   
+#>  6 arr_delay      numeric          9430           2.80           578  0.00172   
+#>  7 carrier        charac…             0           0               16  0.0000475 
+#>  8 flight         integer             0           0             3844  0.0114    
+#>  9 tailnum        charac…          2512           0.746         4044  0.0120    
+#> 10 origin         charac…             0           0                3  0.00000891
+#> 11 dest           charac…             0           0              105  0.000312  
+#> 12 air_time       numeric          9430           2.80           510  0.00151   
+#> 13 distance       numeric             0           0              214  0.000635  
+#> 14 hour           numeric             0           0               20  0.0000594 
+#> 15 minute         numeric             0           0               60  0.000178  
+#> 16 time_hour      POSIXct             0           0             6936  0.0206
 ```
 
 By using with dplyr, variables including missing values can be sorted by
@@ -211,7 +211,7 @@ flights %>%
   select(-unique_count, -unique_rate) %>% 
   filter(missing_count > 0) %>% 
   arrange(desc(missing_count))
-#> # A tibble: 6 x 4
+#> # A tibble: 6 × 4
 #>   variables types     missing_count missing_percent
 #>   <chr>     <chr>             <int>           <dbl>
 #> 1 arr_delay numeric            9430           2.80 
@@ -265,7 +265,7 @@ follows.:
 
 ``` r
 diagnose_numeric(flights)
-#> # A tibble: 14 x 10
+#> # A tibble: 14 × 10
 #>    variables        min    Q1    mean median    Q3   max  zero  minus outlier
 #>    <chr>          <dbl> <dbl>   <dbl>  <dbl> <dbl> <dbl> <int>  <int>   <int>
 #>  1 year            2013  2013 2013      2013  2013  2013     0      0       0
@@ -291,7 +291,7 @@ logically match:
 ``` r
 diagnose_numeric(flights) %>% 
   filter(minus > 0 | zero > 0) 
-#> # A tibble: 3 x 10
+#> # A tibble: 3 × 10
 #>   variables   min    Q1  mean median    Q3   max  zero  minus outlier
 #>   <chr>     <dbl> <dbl> <dbl>  <dbl> <dbl> <dbl> <int>  <int>   <int>
 #> 1 dep_delay   -43    -5 12.6      -2    11  1301 16514 183575   43216
@@ -326,7 +326,7 @@ are as follows.
 
 ``` r
 diagnose_category(flights)
-#> # A tibble: 43 x 6
+#> # A tibble: 43 × 6
 #>    variables levels      N  freq ratio  rank
 #>    <chr>     <chr>   <int> <int> <dbl> <int>
 #>  1 carrier   UA     336776 58665 17.4      1
@@ -349,7 +349,7 @@ the case where the missing value is included in the top 10:
 ``` r
 diagnose_category(flights) %>% 
   filter(is.na(levels))
-#> # A tibble: 1 x 6
+#> # A tibble: 1 × 6
 #>   variables levels      N  freq ratio  rank
 #>   <chr>     <chr>   <int> <int> <dbl> <int>
 #> 1 tailnum   <NA>   336776  2512 0.746     1
@@ -364,7 +364,7 @@ used, values below 0.01% would not be included in the list:
 flights %>%
   diagnose_category(top = 500)  %>%
   filter(ratio <= 0.01)
-#> # A tibble: 10 x 6
+#> # A tibble: 10 × 6
 #>    variables levels      N  freq    ratio  rank
 #>    <chr>     <chr>   <int> <int>    <dbl> <int>
 #>  1 carrier   OO     336776    32 0.00950     16
@@ -403,7 +403,7 @@ are as follows.
 
 ``` r
 diagnose_outlier(flights)
-#> # A tibble: 14 x 6
+#> # A tibble: 14 × 6
 #>    variables    outliers_cnt outliers_ratio outliers_mean with_mean without_mean
 #>    <chr>               <int>          <dbl>         <dbl>     <dbl>        <dbl>
 #>  1 year                    0       0                NaN     2013        2013    
@@ -428,7 +428,7 @@ Numeric variables that contained outliers are easily found with
 ``` r
 diagnose_outlier(flights) %>% 
   filter(outliers_cnt > 0) 
-#> # A tibble: 5 x 6
+#> # A tibble: 5 × 6
 #>   variables outliers_cnt outliers_ratio outliers_mean with_mean without_mean
 #>   <chr>            <int>          <dbl>         <dbl>     <dbl>        <dbl>
 #> 1 dep_delay        43216      12.8               93.1     12.6         0.444
@@ -448,7 +448,7 @@ diagnose_outlier(flights) %>%
   mutate(rate = outliers_mean / with_mean) %>% 
   arrange(desc(rate)) %>% 
   select(-outliers_cnt)
-#> # A tibble: 2 x 6
+#> # A tibble: 2 × 6
 #>   variables outliers_ratio outliers_mean with_mean without_mean  rate
 #>   <chr>              <dbl>         <dbl>     <dbl>        <dbl> <dbl>
 #> 1 arr_delay           8.28         121.       6.90       -3.69  17.5 
@@ -600,20 +600,21 @@ in `carseats`:
 
 ``` r
 describe(carseats)
-#> # A tibble: 8 x 26
-#>   variable        n    na   mean     sd se_mean    IQR skewness kurtosis   p00
-#>   <chr>       <int> <int>  <dbl>  <dbl>   <dbl>  <dbl>    <dbl>    <dbl> <dbl>
-#> 1 Sales         400     0   7.50   2.82   0.141   3.93   0.186   -0.0809     0
-#> 2 CompPrice     400     0 125.    15.3    0.767  20     -0.0428   0.0417    77
-#> 3 Income        380    20  68.9   28.1    1.44   48.2    0.0449  -1.09      21
-#> 4 Advertising   400     0   6.64   6.65   0.333  12      0.640   -0.545      0
-#> 5 Population    400     0 265.   147.     7.37  260.    -0.0512  -1.20      10
-#> 6 Price         400     0 116.    23.7    1.18   31     -0.125    0.452     24
-#> 7 Age           400     0  53.3   16.2    0.810  26.2   -0.0772  -1.13      25
-#> 8 Education     400     0  13.9    2.62   0.131   4      0.0440  -1.30      10
-#> # … with 16 more variables: p01 <dbl>, p05 <dbl>, p10 <dbl>, p20 <dbl>,
-#> #   p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>, p60 <dbl>, p70 <dbl>,
-#> #   p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>, p99 <dbl>, p100 <dbl>
+#> # A tibble: 8 × 26
+#>   described_variables     n    na   mean     sd se_mean    IQR skewness kurtosis
+#>   <chr>               <int> <int>  <dbl>  <dbl>   <dbl>  <dbl>    <dbl>    <dbl>
+#> 1 Sales                 400     0   7.50   2.82   0.141   3.93   0.186   -0.0809
+#> 2 CompPrice             400     0 125.    15.3    0.767  20     -0.0428   0.0417
+#> 3 Income                380    20  68.9   28.1    1.44   48.2    0.0449  -1.09  
+#> 4 Advertising           400     0   6.64   6.65   0.333  12      0.640   -0.545 
+#> 5 Population            400     0 265.   147.     7.37  260.    -0.0512  -1.20  
+#> 6 Price                 400     0 116.    23.7    1.18   31     -0.125    0.452 
+#> 7 Age                   400     0  53.3   16.2    0.810  26.2   -0.0772  -1.13  
+#> 8 Education             400     0  13.9    2.62   0.131   4      0.0440  -1.30  
+#> # … with 17 more variables: p00 <dbl>, p01 <dbl>, p05 <dbl>, p10 <dbl>,
+#> #   p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>, p60 <dbl>,
+#> #   p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>, p99 <dbl>,
+#> #   p100 <dbl>
 ```
 
 -   `skewness` : The left-skewed distribution data that is the variables
@@ -631,20 +632,20 @@ The `describe()` function can be sorted by
 ``` r
 carseats %>%
   describe() %>%
-  select(variable, skewness, mean, p25, p50, p75) %>% 
+  select(described_variables, skewness, mean, p25, p50, p75) %>% 
   filter(!is.na(skewness)) %>% 
   arrange(desc(abs(skewness)))
-#> # A tibble: 8 x 6
-#>   variable    skewness   mean    p25    p50    p75
-#>   <chr>          <dbl>  <dbl>  <dbl>  <dbl>  <dbl>
-#> 1 Advertising   0.640    6.64   0      5     12   
-#> 2 Sales         0.186    7.50   5.39   7.49   9.32
-#> 3 Price        -0.125  116.   100    117    131   
-#> 4 Age          -0.0772  53.3   39.8   54.5   66   
-#> 5 Population   -0.0512 265.   139    272    398.  
-#> 6 Income        0.0449  68.9   42.8   69     91   
-#> 7 Education     0.0440  13.9   12     14     16   
-#> 8 CompPrice    -0.0428 125.   115    125    135
+#> # A tibble: 8 × 6
+#>   described_variables skewness   mean    p25    p50    p75
+#>   <chr>                  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>
+#> 1 Advertising           0.640    6.64   0      5     12   
+#> 2 Sales                 0.186    7.50   5.39   7.49   9.32
+#> 3 Price                -0.125  116.   100    117    131   
+#> 4 Age                  -0.0772  53.3   39.8   54.5   66   
+#> 5 Population           -0.0512 265.   139    272    398.  
+#> 6 Income                0.0449  68.9   42.8   69     91   
+#> 7 Education             0.0440  13.9   12     14     16   
+#> 8 CompPrice            -0.0428 125.   115    125    135
 ```
 
 The `describe()` function supports the `group_by()` function syntax of
@@ -654,41 +655,42 @@ the `dplyr` package.
 carseats %>%
   group_by(US) %>% 
   describe(Sales, Income) 
-#> # A tibble: 4 x 27
-#>   variable US        n    na  mean    sd se_mean   IQR skewness kurtosis   p00
-#>   <chr>    <fct> <int> <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>    <dbl> <dbl>
-#> 1 Income   No      130    12 65.8  28.2    2.48  50      0.100    -1.14  22   
-#> 2 Income   Yes     250     8 70.4  27.9    1.77  48      0.0199   -1.06  21   
-#> 3 Sales    No      142     0  6.82  2.60   0.218  3.44   0.323     0.808  0   
-#> 4 Sales    Yes     258     0  7.87  2.88   0.179  4.23   0.0760   -0.326  0.37
-#> # … with 16 more variables: p01 <dbl>, p05 <dbl>, p10 <dbl>, p20 <dbl>,
-#> #   p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>, p60 <dbl>, p70 <dbl>,
-#> #   p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>, p99 <dbl>, p100 <dbl>
+#> # A tibble: 4 × 27
+#>   described_varia… US        n    na  mean    sd se_mean   IQR skewness kurtosis
+#>   <chr>            <fct> <int> <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>    <dbl>
+#> 1 Income           No      130    12 65.8  28.2    2.48  50      0.100    -1.14 
+#> 2 Income           Yes     250     8 70.4  27.9    1.77  48      0.0199   -1.06 
+#> 3 Sales            No      142     0  6.82  2.60   0.218  3.44   0.323     0.808
+#> 4 Sales            Yes     258     0  7.87  2.88   0.179  4.23   0.0760   -0.326
+#> # … with 17 more variables: p00 <dbl>, p01 <dbl>, p05 <dbl>, p10 <dbl>,
+#> #   p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>, p60 <dbl>,
+#> #   p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>, p99 <dbl>,
+#> #   p100 <dbl>
 ```
 
 ``` r
 carseats %>%
   group_by(US, Urban) %>% 
   describe(Sales, Income) 
-#> # A tibble: 12 x 28
-#>    variable US    Urban     n    na  mean    sd se_mean    IQR skewness kurtosis
-#>    <chr>    <fct> <fct> <int> <int> <dbl> <dbl>   <dbl>  <dbl>    <dbl>    <dbl>
-#>  1 Income   No    No       42     4 60.2  29.1    4.49  45.2    0.408     -1.00 
-#>  2 Income   No    Yes      84     8 69.5  27.4    2.99  47     -0.0497    -1.11 
-#>  3 Income   No    <NA>      4     0 48.2  24.7   12.3   40.8   -0.0496    -5.70 
-#>  4 Income   Yes   No       65     4 70.5  29.9    3.70  48      0.0736    -1.08 
-#>  5 Income   Yes   Yes     179     4 70.3  27.2    2.03  46.5    0.00490   -1.05 
-#>  6 Income   Yes   <NA>      6     0 75.3  34.3   14.0   47.2   -0.412     -1.55 
-#>  7 Sales    No    No       46     0  6.46  2.72   0.402  3.15   0.0889     1.53 
-#>  8 Sales    No    Yes      92     0  7.00  2.58   0.269  3.49   0.492      0.306
-#>  9 Sales    No    <NA>      4     0  6.99  1.28   0.639  0.827  1.69       3.16 
-#> 10 Sales    Yes   No       69     0  8.23  2.65   0.319  4.1   -0.0212    -0.777
-#> 11 Sales    Yes   Yes     183     0  7.74  2.97   0.219  4.11   0.123     -0.207
-#> 12 Sales    Yes   <NA>      6     0  7.61  2.61   1.06   3.25   0.489     -1.38 
-#> # … with 17 more variables: p00 <dbl>, p01 <dbl>, p05 <dbl>, p10 <dbl>,
-#> #   p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>, p60 <dbl>,
-#> #   p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>, p99 <dbl>,
-#> #   p100 <dbl>
+#> # A tibble: 12 × 28
+#>    described_variab… US    Urban     n    na  mean    sd se_mean    IQR skewness
+#>    <chr>             <fct> <fct> <int> <int> <dbl> <dbl>   <dbl>  <dbl>    <dbl>
+#>  1 Income            No    No       42     4 60.2  29.1    4.49  45.2    0.408  
+#>  2 Income            No    Yes      84     8 69.5  27.4    2.99  47     -0.0497 
+#>  3 Income            No    <NA>      4     0 48.2  24.7   12.3   40.8   -0.0496 
+#>  4 Income            Yes   No       65     4 70.5  29.9    3.70  48      0.0736 
+#>  5 Income            Yes   Yes     179     4 70.3  27.2    2.03  46.5    0.00490
+#>  6 Income            Yes   <NA>      6     0 75.3  34.3   14.0   47.2   -0.412  
+#>  7 Sales             No    No       46     0  6.46  2.72   0.402  3.15   0.0889 
+#>  8 Sales             No    Yes      92     0  7.00  2.58   0.269  3.49   0.492  
+#>  9 Sales             No    <NA>      4     0  6.99  1.28   0.639  0.827  1.69   
+#> 10 Sales             Yes   No       69     0  8.23  2.65   0.319  4.1   -0.0212 
+#> 11 Sales             Yes   Yes     183     0  7.74  2.97   0.219  4.11   0.123  
+#> 12 Sales             Yes   <NA>      6     0  7.61  2.61   1.06   3.25   0.489  
+#> # … with 18 more variables: kurtosis <dbl>, p00 <dbl>, p01 <dbl>, p05 <dbl>,
+#> #   p10 <dbl>, p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>,
+#> #   p60 <dbl>, p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>,
+#> #   p99 <dbl>, p100 <dbl>
 ```
 
 ##### Test of normality on numeric variables using `normality()`
@@ -710,7 +712,7 @@ follows.
 
 ``` r
 normality(carseats)
-#> # A tibble: 8 x 4
+#> # A tibble: 8 × 4
 #>   vars        statistic  p_value sample
 #>   <chr>           <dbl>    <dbl>  <dbl>
 #> 1 Sales           0.995 2.54e- 1    400
@@ -731,7 +733,7 @@ carseats %>%
   normality() %>%
   filter(p_value <= 0.01) %>% 
   arrange(abs(p_value))
-#> # A tibble: 5 x 4
+#> # A tibble: 5 × 4
 #>   vars        statistic  p_value sample
 #>   <chr>           <dbl>    <dbl>  <dbl>
 #> 1 Advertising     0.874 1.49e-17    400
@@ -752,7 +754,7 @@ carseats %>%
   group_by(ShelveLoc, US) %>%
   normality(Income) %>% 
   arrange(desc(p_value))
-#> # A tibble: 6 x 6
+#> # A tibble: 6 × 6
 #>   variable ShelveLoc US    statistic  p_value sample
 #>   <chr>    <fct>     <fct>     <dbl>    <dbl>  <dbl>
 #> 1 Income   Bad       No        0.969 0.470        34
@@ -777,7 +779,7 @@ carseats %>%
   group_by(ShelveLoc, US) %>%
   normality(log_income) %>%
   filter(p_value > 0.01)
-#> # A tibble: 1 x 6
+#> # A tibble: 1 × 6
 #>   variable   ShelveLoc US    statistic p_value sample
 #>   <chr>      <fct>     <fct>     <dbl>   <dbl>  <dbl>
 #> 1 log_income Bad       No        0.940  0.0737     34
@@ -831,7 +833,7 @@ of `carseats` numerical variables as follows:
 
 ``` r
 correlate(carseats)
-#> # A tibble: 56 x 3
+#> # A tibble: 56 × 3
 #>    var1        var2      coef_corr
 #>    <fct>       <fct>         <dbl>
 #>  1 CompPrice   Sales        0.0641
@@ -853,7 +855,7 @@ that include several selected variables.
 ``` r
 # Select columns by name
 correlate(carseats, Sales, CompPrice, Income)
-#> # A tibble: 21 x 3
+#> # A tibble: 21 × 3
 #>    var1      var2        coef_corr
 #>    <fct>     <fct>           <dbl>
 #>  1 CompPrice Sales          0.0641
@@ -877,7 +879,7 @@ example uses `filter()` to get the correlation coefficient for
 carseats %>%
   correlate(Sales:Income) %>%
   filter(as.integer(var1) > as.integer(var2))
-#> # A tibble: 3 x 3
+#> # A tibble: 3 × 3
 #>   var1      var2      coef_corr
 #>   <fct>     <fct>         <dbl>
 #> 1 CompPrice Sales        0.0641
@@ -894,7 +896,7 @@ carseats %>%
   group_by(Urban, US) %>%
   correlate(Sales) %>%
   filter(abs(coef_corr) > 0.5)
-#> # A tibble: 10 x 5
+#> # A tibble: 10 × 5
 #>    Urban US    var1  var2       coef_corr
 #>    <fct> <fct> <fct> <fct>          <dbl>
 #>  1 No    No    Sales Population    -0.530
@@ -909,38 +911,43 @@ carseats %>%
 #> 10 <NA>  Yes   Sales Age           -0.984
 ```
 
-##### Visualization of the correlation matrix using `plot_correlate()`
+##### Visualization of the correlation matrix using `plot.correlate()`
 
-`plot_correlate()` visualizes the correlation matrix.
+`plot.correlate()` visualizes the correlation matrix.
 
 ``` r
-plot_correlate(carseats)
+carseats %>% 
+  correlate() %>%
+  plot()
 ```
 
 <img src="figures/README-plot_correlate-1.png" width="70%" />
 
-`plot_correlate()` can also specify multiple variables, like the
+`plot.correlate()` can also specify multiple variables with
 `correlate()` function. The following is a visualization of the
 correlation matrix including several selected variables.
 
 ``` r
 # Select columns by name
-plot_correlate(carseats, Sales, Price)
+carseats %>% 
+  correlate(Sales, Price) %>%
+  plot()
 ```
 
 ![](figures/README-plot_correlate2-1.png)<!-- -->
 
-The `plot_correlate()` function also supports the `group_by()` function
+The `plot.correlate()` function also supports the `group_by()` function
 syntax in the `dplyr` package.
 
 ``` r
 carseats %>%
   filter(ShelveLoc == "Good") %>%
   group_by(Urban, US) %>%
-  plot_correlate(Sales)
+  correlate(Sales) %>% 
+  plot()
 ```
 
-![](figures/README-plot_correlate3-1.png)<!-- -->![](figures/README-plot_correlate3-2.png)<!-- -->![](figures/README-plot_correlate3-3.png)<!-- -->![](figures/README-plot_correlate3-4.png)<!-- -->
+![](figures/README-plot_correlate3-1.png)<!-- -->![](figures/README-plot_correlate3-2.png)<!-- -->![](figures/README-plot_correlate3-3.png)<!-- -->![](figures/README-plot_correlate3-4.png)<!-- -->![](figures/README-plot_correlate3-5.png)<!-- -->
 
 #### EDA based on target variable
 
@@ -977,23 +984,24 @@ level of the target variable.
 # If the variable of interest is a numerical variable
 cat_num <- relate(categ, Sales)
 cat_num
-#> # A tibble: 3 x 27
-#>   variable US        n    na  mean    sd se_mean   IQR skewness kurtosis   p00
-#>   <chr>    <fct> <int> <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>    <dbl> <dbl>
-#> 1 Sales    No      142     0  6.82  2.60   0.218  3.44   0.323    0.808   0   
-#> 2 Sales    Yes     258     0  7.87  2.88   0.179  4.23   0.0760  -0.326   0.37
-#> 3 Sales    total   400     0  7.50  2.82   0.141  3.93   0.186   -0.0809  0   
-#> # … with 16 more variables: p01 <dbl>, p05 <dbl>, p10 <dbl>, p20 <dbl>,
-#> #   p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>, p60 <dbl>, p70 <dbl>,
-#> #   p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>, p99 <dbl>, p100 <dbl>
+#> # A tibble: 3 × 27
+#>   described_varia… US        n    na  mean    sd se_mean   IQR skewness kurtosis
+#>   <chr>            <fct> <int> <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>    <dbl>
+#> 1 Sales            No      142     0  6.82  2.60   0.218  3.44   0.323    0.808 
+#> 2 Sales            Yes     258     0  7.87  2.88   0.179  4.23   0.0760  -0.326 
+#> 3 Sales            total   400     0  7.50  2.82   0.141  3.93   0.186   -0.0809
+#> # … with 17 more variables: p00 <dbl>, p01 <dbl>, p05 <dbl>, p10 <dbl>,
+#> #   p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>, p60 <dbl>,
+#> #   p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>, p99 <dbl>,
+#> #   p100 <dbl>
 summary(cat_num)
-#>    variable             US          n               na         mean      
-#>  Length:3           No   :1   Min.   :142.0   Min.   :0   Min.   :6.823  
-#>  Class :character   Yes  :1   1st Qu.:200.0   1st Qu.:0   1st Qu.:7.160  
-#>  Mode  :character   total:1   Median :258.0   Median :0   Median :7.496  
-#>                               Mean   :266.7   Mean   :0   Mean   :7.395  
-#>                               3rd Qu.:329.0   3rd Qu.:0   3rd Qu.:7.682  
-#>                               Max.   :400.0   Max.   :0   Max.   :7.867  
+#>  described_variables     US          n               na         mean      
+#>  Length:3            No   :1   Min.   :142.0   Min.   :0   Min.   :6.823  
+#>  Class :character    Yes  :1   1st Qu.:200.0   1st Qu.:0   1st Qu.:7.160  
+#>  Mode  :character    total:1   Median :258.0   Median :0   Median :7.496  
+#>                                Mean   :266.7   Mean   :0   Mean   :7.395  
+#>                                3rd Qu.:329.0   3rd Qu.:0   3rd Qu.:7.682  
+#>                                Max.   :400.0   Max.   :0   Max.   :7.867  
 #>        sd           se_mean            IQR           skewness      
 #>  Min.   :2.603   Min.   :0.1412   Min.   :3.442   Min.   :0.07603  
 #>  1st Qu.:2.713   1st Qu.:0.1602   1st Qu.:3.686   1st Qu.:0.13080  
@@ -1349,32 +1357,33 @@ summary(income)
 #>  - method : rpart
 #> 
 #> * Information of Imputation (before vs after)
-#>            Original   Imputation
-#> n        380.000000 400.00000000
-#> na        20.000000   0.00000000
-#> mean      68.860526  69.05073137
-#> sd        28.091615  27.57381661
-#> se_mean    1.441069   1.37869083
-#> IQR       48.250000  46.00000000
-#> skewness   0.044906   0.02935732
-#> kurtosis  -1.089201  -1.03508622
-#> p00       21.000000  21.00000000
-#> p01       21.790000  21.99000000
-#> p05       26.000000  26.00000000
-#> p10       30.000000  30.90000000
-#> p20       39.000000  40.00000000
-#> p25       42.750000  44.00000000
-#> p30       48.000000  51.58333333
-#> p40       62.000000  63.00000000
-#> p50       69.000000  69.00000000
-#> p60       78.000000  77.40000000
-#> p70       86.300000  84.30000000
-#> p75       91.000000  90.00000000
-#> p80       96.200000  96.00000000
-#> p90      108.100000 106.10000000
-#> p95      115.050000 115.00000000
-#> p99      119.210000 119.01000000
-#> p100     120.000000 120.00000000
+#>                     Original     Imputation  
+#> described_variables "value"      "value"     
+#> n                   "380"        "400"       
+#> na                  "20"         " 0"        
+#> mean                "68.86053"   "69.05073"  
+#> sd                  "28.09161"   "27.57382"  
+#> se_mean             "1.441069"   "1.378691"  
+#> IQR                 "48.25"      "46.00"     
+#> skewness            "0.04490600" "0.02935732"
+#> kurtosis            "-1.089201"  "-1.035086" 
+#> p00                 "21"         "21"        
+#> p01                 "21.79"      "21.99"     
+#> p05                 "26"         "26"        
+#> p10                 "30.0"       "30.9"      
+#> p20                 "39"         "40"        
+#> p25                 "42.75"      "44.00"     
+#> p30                 "48.00000"   "51.58333"  
+#> p40                 "62"         "63"        
+#> p50                 "69"         "69"        
+#> p60                 "78.0"       "77.4"      
+#> p70                 "86.3"       "84.3"      
+#> p75                 "91"         "90"        
+#> p80                 "96.2"       "96.0"      
+#> p90                 "108.1"      "106.1"     
+#> p95                 "115.05"     "115.00"    
+#> p99                 "119.21"     "119.01"    
+#> p100                "120"        "120"
 
 # viz of imputation
 plot(income)
@@ -1424,6 +1433,8 @@ urban <- imputate_na(carseats, Urban, US, method = "mice")
 #>   5   3  Income  Urban
 #>   5   4  Income  Urban
 #>   5   5  Income  Urban
+#> Warning in (function (kind = NULL, normal.kind = NULL, sample.kind = NULL) :
+#> non-uniform 'Rounding' sampler used
 
 # result of imputation
 urban
@@ -1431,10 +1442,10 @@ urban
 #>  [19] No  Yes Yes No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes
 #>  [37] No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes
 #>  [55] No  Yes Yes Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes Yes Yes Yes No 
-#>  [73] Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes No  No  Yes No  Yes No 
+#>  [73] Yes No  No  No  Yes No  Yes Yes Yes Yes Yes No  No  No  Yes No  Yes No 
 #>  [91] No  Yes Yes Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes
-#> [109] Yes No  Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes No 
-#> [127] Yes Yes Yes No  Yes No  Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes
+#> [109] Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes No 
+#> [127] Yes Yes Yes No  Yes Yes Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes
 #> [145] No  Yes Yes No  No  Yes No  No  No  No  No  Yes Yes No  No  No  No  No 
 #> [163] Yes No  No  Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes No  Yes No  Yes
 #> [181] Yes Yes Yes Yes No  Yes No  Yes Yes No  No  Yes No  Yes Yes Yes Yes Yes
@@ -1444,8 +1455,8 @@ urban
 #> [253] Yes No  Yes Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes No  No  Yes Yes
 #> [271] Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes No  No  Yes No  Yes
 #> [289] No  Yes No  No  Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
-#> [307] Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No  No  No  Yes Yes Yes Yes
-#> [325] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No 
+#> [307] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes No  No  No  Yes Yes Yes Yes
+#> [325] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No 
 #> [343] No  Yes No  Yes No  No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes
 #> [361] No  No  Yes Yes Yes No  No  Yes No  Yes Yes Yes No  Yes Yes Yes Yes No 
 #> [379] Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes No  Yes Yes
@@ -1474,9 +1485,9 @@ summary(urban)
 #> 
 #> * Information of Imputation (before vs after)
 #>      original imputation original_percent imputation_percent
-#> No        115        120            28.75                 30
-#> Yes       275        280            68.75                 70
-#> <NA>       10          0             2.50                  0
+#> No        115        121            28.75              30.25
+#> Yes       275        279            68.75              69.75
+#> <NA>       10          0             2.50               0.00
 
 # viz of imputation
 plot(urban)
@@ -1498,7 +1509,7 @@ carseats %>%
   group_by(US) %>%
   summarise(orig = mean(Income, na.rm = TRUE),
     imputation = mean(Income_imp))
-#> # A tibble: 2 x 3
+#> # A tibble: 2 × 3
 #>   US     orig imputation
 #>   <fct> <dbl>      <dbl>
 #> 1 No     65.8       66.1
@@ -1592,32 +1603,33 @@ summary(price)
 #> Impute outliers with capping
 #> 
 #> * Information of Imputation (before vs after)
-#>             Original  Imputation
-#> n        400.0000000 400.0000000
-#> na         0.0000000   0.0000000
-#> mean     115.7950000 115.8927500
-#> sd        23.6766644  22.6109187
-#> se_mean    1.1838332   1.1305459
-#> IQR       31.0000000  31.0000000
-#> skewness  -0.1252862  -0.0461621
-#> kurtosis   0.4518850  -0.3030578
-#> p00       24.0000000  54.0000000
-#> p01       54.9900000  67.9600000
-#> p05       77.0000000  77.0000000
-#> p10       87.0000000  87.0000000
-#> p20       96.8000000  96.8000000
-#> p25      100.0000000 100.0000000
-#> p30      104.0000000 104.0000000
-#> p40      110.0000000 110.0000000
-#> p50      117.0000000 117.0000000
-#> p60      122.0000000 122.0000000
-#> p70      128.3000000 128.3000000
-#> p75      131.0000000 131.0000000
-#> p80      134.0000000 134.0000000
-#> p90      146.0000000 146.0000000
-#> p95      155.0500000 155.0025000
-#> p99      166.0500000 164.0200000
-#> p100     191.0000000 173.0000000
+#>                     Original     Imputation  
+#> described_variables "value"      "value"     
+#> n                   "400"        "400"       
+#> na                  "0"          "0"         
+#> mean                "115.7950"   "115.8928"  
+#> sd                  "23.67666"   "22.61092"  
+#> se_mean             "1.183833"   "1.130546"  
+#> IQR                 "31"         "31"        
+#> skewness            "-0.1252862" "-0.0461621"
+#> kurtosis            " 0.4518850" "-0.3030578"
+#> p00                 "24"         "54"        
+#> p01                 "54.99"      "67.96"     
+#> p05                 "77"         "77"        
+#> p10                 "87"         "87"        
+#> p20                 "96.8"       "96.8"      
+#> p25                 "100"        "100"       
+#> p30                 "104"        "104"       
+#> p40                 "110"        "110"       
+#> p50                 "117"        "117"       
+#> p60                 "122"        "122"       
+#> p70                 "128.3"      "128.3"     
+#> p75                 "131"        "131"       
+#> p80                 "134"        "134"       
+#> p90                 "146"        "146"       
+#> p95                 "155.0500"   "155.0025"  
+#> p99                 "166.05"     "164.02"    
+#> p100                "191"        "173"
 
 # viz of imputation
 plot(price)
@@ -1639,7 +1651,7 @@ carseats %>%
   group_by(US) %>%
   summarise(orig = mean(Price, na.rm = TRUE),
     imputation = mean(Price_imp, na.rm = TRUE))
-#> # A tibble: 2 x 3
+#> # A tibble: 2 × 3
 #>   US     orig imputation
 #>   <fct> <dbl>      <dbl>
 #> 1 No     114.       114.
@@ -1878,14 +1890,14 @@ binning(carseats$Income, nbins = 5, type = "kmeans")
 #> binned type: kmeans
 #> number of bins: 5
 #> x
-#>      [21,49]    (49,71.5]  (71.5,89.5] (89.5,106.5]  (106.5,120]         <NA> 
-#>          115           88           75           62           40           20
+#>      [21,49]    (49,70.5]  (70.5,86.5] (86.5,103.5]  (103.5,120]         <NA> 
+#>          115           86           65           63           51           20
 binning(carseats$Income, nbins = 5, type = "bclust")
 #> binned type: bclust
 #> number of bins: 5
 #> x
-#>   [21,44.5] (44.5,60.5]   (60.5,85]  (85,108.5] (108.5,120]        <NA> 
-#>         100          46         118          78          38          20
+#>     [21,49]   (49,66.5] (66.5,77.5] (77.5,95.5]  (95.5,120]        <NA> 
+#>         115          59          52          75          79          20
 
 # Extract the binned results
 extract(bin)
@@ -1930,8 +1942,9 @@ carseats %>%
  summarise(freq = n()) %>%
  arrange(desc(freq)) %>%
  head(10)
-#> `summarise()` has grouped output by 'ShelveLoc'. You can override using the `.groups` argument.
-#> # A tibble: 10 x 3
+#> `summarise()` has grouped output by 'ShelveLoc'. You can override using the
+#> `.groups` argument.
+#> # A tibble: 10 × 3
 #> # Groups:   ShelveLoc [1]
 #>    ShelveLoc Income_bin       freq
 #>    <fct>     <ord>           <int>
@@ -2660,7 +2673,7 @@ of samples of data into R.
     -   `normality()`
     -   `plot_normality()`  
     -   `correlate()`  
-    -   `plot_correlate()`
+    -   `plot.correlate()`
     -   `describe()`
     -   `eda_web_report()`
     -   `eda_paged_report()`
@@ -2714,7 +2727,7 @@ specified as tbl\_dbi object instead of data frame object.
 con_sqlite %>% 
   tbl("TB_CARSEATS") %>% 
   diagnose()
-#> # A tibble: 11 x 6
+#> # A tibble: 11 × 6
 #>    variables   types     missing_count missing_percent unique_count unique_rate
 #>    <chr>       <chr>             <dbl>           <dbl>        <int>       <dbl>
 #>  1 Sales       double                0            0             336      0.84  
@@ -2733,7 +2746,7 @@ con_sqlite %>%
 con_sqlite %>% 
   tbl("TB_CARSEATS") %>% 
   diagnose(1, 3, 8, in_database = FALSE)
-#> # A tibble: 3 x 6
+#> # A tibble: 3 × 6
 #>   variables types   missing_count missing_percent unique_count unique_rate
 #>   <chr>     <chr>           <int>           <dbl>        <int>       <dbl>
 #> 1 Sales     numeric             0               0          336       0.84 
@@ -2748,7 +2761,7 @@ con_sqlite %>%
 con_sqlite %>% 
   tbl("TB_CARSEATS") %>% 
   diagnose_category(7, in_database = FALSE, collect_size = 200) 
-#> # A tibble: 3 x 6
+#> # A tibble: 3 × 6
 #>   variables levels     N  freq ratio  rank
 #>   <chr>     <chr>  <int> <int> <dbl> <int>
 #> 1 ShelveLoc Medium   200   113  56.5     1
@@ -2763,12 +2776,12 @@ con_sqlite %>%
 con_sqlite %>% 
   tbl("TB_CARSEATS") %>% 
   diagnose_numeric()
-#> # A tibble: 8 x 10
+#> # A tibble: 8 × 10
 #>   variables     min     Q1   mean median     Q3   max  zero minus outlier
 #>   <chr>       <dbl>  <dbl>  <dbl>  <dbl>  <dbl> <dbl> <int> <int>   <int>
 #> 1 Sales           0   5.39   7.50   7.49   9.32  16.3     1     0       2
 #> 2 CompPrice      77 115    125.   125    135    175       0     0       2
-#> 3 Income         21  44     68.9   69     91    120       0     0       0
+#> 3 Income         21  42.8   68.4   69     90    120       0     0       0
 #> 4 Advertising     0   0      6.64   5     12     29     144     0       0
 #> 5 Population     10 139    265.   272    398.   509       0     0       0
 #> 6 Price          24 100    116.   117    131    191       0     0       5
@@ -2783,7 +2796,7 @@ con_sqlite %>%
   tbl("TB_CARSEATS") %>% 
   diagnose_outlier()  %>%
   filter(outliers_ratio > 1)
-#> # A tibble: 1 x 6
+#> # A tibble: 1 × 6
 #>   variables outliers_cnt outliers_ratio outliers_mean with_mean without_mean
 #>   <chr>            <int>          <dbl>         <dbl>     <dbl>        <dbl>
 #> 1 Price                5           1.25          100.      116.         116.
@@ -2843,19 +2856,19 @@ con_sqlite %>%
   filter(Urban == "Yes") %>%
   group_by(ShelveLoc, US) %>%
   describe(Sales)
-#> # A tibble: 6 x 28
-#>   variable ShelveLoc US        n    na  mean    sd se_mean   IQR skewness
-#>   <chr>    <chr>     <chr> <int> <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>
-#> 1 Sales    Bad       No       22     0  5.33  1.95   0.416  2.40  -0.231 
-#> 2 Sales    Bad       Yes      51     0  5.59  2.57   0.359  3.76   0.173 
-#> 3 Sales    Good      No       18     0  9.21  2.97   0.700  3.71   0.0291
-#> 4 Sales    Good      Yes      39     0 10.9   2.32   0.372  3.12  -0.0738
-#> 5 Sales    Medium    No       54     0  6.92  2.08   0.283  3.18   0.300 
-#> 6 Sales    Medium    Yes      94     0  7.51  2.20   0.227  3.31   0.230 
-#> # … with 18 more variables: kurtosis <dbl>, p00 <dbl>, p01 <dbl>, p05 <dbl>,
-#> #   p10 <dbl>, p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>,
-#> #   p60 <dbl>, p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>,
-#> #   p99 <dbl>, p100 <dbl>
+#> # A tibble: 6 × 28
+#>   described_variables ShelveLoc US        n    na  mean    sd se_mean   IQR
+#>   <chr>               <chr>     <chr> <int> <int> <dbl> <dbl>   <dbl> <dbl>
+#> 1 Sales               Bad       No       21     0  5.31  1.98   0.432  2.38
+#> 2 Sales               Bad       Yes      51     0  5.59  2.57   0.359  3.76
+#> 3 Sales               Good      No       18     0  9.21  2.97   0.700  3.71
+#> 4 Sales               Good      Yes      38     0 10.8   2.32   0.376  2.97
+#> 5 Sales               Medium    No       54     0  6.96  2.09   0.285  3.22
+#> 6 Sales               Medium    Yes      96     0  7.55  2.19   0.224  3.39
+#> # … with 19 more variables: skewness <dbl>, kurtosis <dbl>, p00 <dbl>,
+#> #   p01 <dbl>, p05 <dbl>, p10 <dbl>, p20 <dbl>, p25 <dbl>, p30 <dbl>,
+#> #   p40 <dbl>, p50 <dbl>, p60 <dbl>, p70 <dbl>, p75 <dbl>, p80 <dbl>,
+#> #   p90 <dbl>, p95 <dbl>, p99 <dbl>, p100 <dbl>
 ```
 
 #### Test of normality on numeric columns using in the DBMS
@@ -2873,10 +2886,10 @@ con_sqlite %>%
  group_by(ShelveLoc, US) %>%
  normality(log_income) %>%
  filter(p_value > 0.01)
-#> # A tibble: 1 x 6
+#> # A tibble: 1 × 6
 #>   variable   ShelveLoc US    statistic p_value sample
 #>   <chr>      <chr>     <chr>     <dbl>   <dbl>  <dbl>
-#> 1 log_income Bad       No        0.946   0.112     34
+#> 1 log_income Bad       No        0.949   0.143     34
 ```
 
 #### Normalization visualization of numerical column in the DBMS
@@ -2907,7 +2920,7 @@ con_sqlite %>%
   correlate(Sales) %>%
   filter(coef_corr < 0) %>%
   filter(abs(coef_corr) > 0.5)
-#> # A tibble: 6 x 5
+#> # A tibble: 6 × 5
 #>   Urban US    var1  var2       coef_corr
 #>   <chr> <chr> <fct> <fct>          <dbl>
 #> 1 No    No    Sales Population    -0.530
@@ -2915,7 +2928,7 @@ con_sqlite %>%
 #> 3 No    Yes   Sales Price         -0.644
 #> 4 Yes   No    Sales Price         -0.833
 #> 5 Yes   No    Sales Age           -0.649
-#> 6 Yes   Yes   Sales Price         -0.604
+#> 6 Yes   Yes   Sales Price         -0.594
 ```
 
 #### Visualize correlation plot of numerical columns in the DBMS
@@ -2928,10 +2941,11 @@ con_sqlite %>%
   tbl("TB_CARSEATS") %>% 
   filter(ShelveLoc == "Good") %>%
   group_by(Urban, US) %>%
-  plot_correlate(Sales)
+  correlate(Sales) %>% 
+  plot()
 ```
 
-![](figures/README-plot_correlation_dbi-1.png)<!-- -->![](figures/README-plot_correlation_dbi-2.png)<!-- -->![](figures/README-plot_correlation_dbi-3.png)<!-- -->![](figures/README-plot_correlation_dbi-4.png)<!-- -->
+![](figures/README-plot_correlation_dbi-1.png)<!-- -->![](figures/README-plot_correlation_dbi-2.png)<!-- -->![](figures/README-plot_correlation_dbi-3.png)<!-- -->![](figures/README-plot_correlation_dbi-4.png)<!-- -->![](figures/README-plot_correlation_dbi-5.png)<!-- -->
 
 #### EDA based on target variable
 
@@ -2945,23 +2959,24 @@ categ <- target_by(con_sqlite %>% tbl("TB_CARSEATS") , US)
 # If the variable of interest is a numarical variable
 cat_num <- relate(categ, Sales)
 cat_num
-#> # A tibble: 3 x 27
-#>   variable US        n    na  mean    sd se_mean   IQR skewness kurtosis   p00
-#>   <chr>    <fct> <int> <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>    <dbl> <dbl>
-#> 1 Sales    No      142     0  6.82  2.60   0.218  3.44   0.323    0.808   0   
-#> 2 Sales    Yes     258     0  7.87  2.88   0.179  4.23   0.0760  -0.326   0.37
-#> 3 Sales    total   400     0  7.50  2.82   0.141  3.93   0.186   -0.0809  0   
-#> # … with 16 more variables: p01 <dbl>, p05 <dbl>, p10 <dbl>, p20 <dbl>,
-#> #   p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>, p60 <dbl>, p70 <dbl>,
-#> #   p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>, p99 <dbl>, p100 <dbl>
+#> # A tibble: 3 × 27
+#>   described_varia… US        n    na  mean    sd se_mean   IQR skewness kurtosis
+#>   <chr>            <fct> <int> <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>    <dbl>
+#> 1 Sales            No      142     0  6.82  2.60   0.218  3.44   0.323    0.808 
+#> 2 Sales            Yes     258     0  7.87  2.88   0.179  4.23   0.0760  -0.326 
+#> 3 Sales            total   400     0  7.50  2.82   0.141  3.93   0.186   -0.0809
+#> # … with 17 more variables: p00 <dbl>, p01 <dbl>, p05 <dbl>, p10 <dbl>,
+#> #   p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>, p60 <dbl>,
+#> #   p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>, p99 <dbl>,
+#> #   p100 <dbl>
 summary(cat_num)
-#>    variable             US          n               na         mean      
-#>  Length:3           No   :1   Min.   :142.0   Min.   :0   Min.   :6.823  
-#>  Class :character   Yes  :1   1st Qu.:200.0   1st Qu.:0   1st Qu.:7.160  
-#>  Mode  :character   total:1   Median :258.0   Median :0   Median :7.496  
-#>                               Mean   :266.7   Mean   :0   Mean   :7.395  
-#>                               3rd Qu.:329.0   3rd Qu.:0   3rd Qu.:7.682  
-#>                               Max.   :400.0   Max.   :0   Max.   :7.867  
+#>  described_variables     US          n               na         mean      
+#>  Length:3            No   :1   Min.   :142.0   Min.   :0   Min.   :6.823  
+#>  Class :character    Yes  :1   1st Qu.:200.0   1st Qu.:0   1st Qu.:7.160  
+#>  Mode  :character    total:1   Median :258.0   Median :0   Median :7.496  
+#>                                Mean   :266.7   Mean   :0   Mean   :7.395  
+#>                                3rd Qu.:329.0   3rd Qu.:0   3rd Qu.:7.682  
+#>                                Max.   :400.0   Max.   :0   Max.   :7.867  
 #>        sd           se_mean            IQR           skewness      
 #>  Min.   :2.603   Min.   :0.1412   Min.   :3.442   Min.   :0.07603  
 #>  1st Qu.:2.713   1st Qu.:0.1602   1st Qu.:3.686   1st Qu.:0.13080  
