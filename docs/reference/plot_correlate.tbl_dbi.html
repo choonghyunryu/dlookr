@@ -19,7 +19,7 @@ the DBMS table through tbl_dbi."><!-- mathjax --><script src="https://cdnjs.clou
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.6</span>
       </span>
     </div>
 
@@ -67,7 +67,7 @@ the DBMS table through tbl_dbi.</p>
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for tbl_dbi</span>
-<span class="fu"><a href="plot_correlate.data.frame.html">plot_correlate</a></span><span class="op">(</span>
+<span class="fu"><a href="dlookr-deprecated.html">plot_correlate</a></span><span class="op">(</span>
   <span class="va">.data</span>,
   <span class="va">...</span>,
   in_database <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -121,84 +121,9 @@ use it after loading the Google font with import_google_font().</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="plot_correlate.data.frame.html">plot_correlate.data.frame</a></code>, <code><a href="plot_outlier.tbl_dbi.html">plot_outlier.tbl_dbi</a></code>.</p></div>
+    <div class="dont-index"><p><code><a href="plot.correlate.html">plot.correlate</a></code>, <code><a href="plot_outlier.tbl_dbi.html">plot_outlier.tbl_dbi</a></code>.</p></div>
     </div>
 
-    <div id="ref-examples">
-    <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># connect DBMS</span></span>
-<span class="r-in"><span class="va">con_sqlite</span> <span class="op">&lt;-</span> <span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html" class="external-link">dbConnect</a></span><span class="op">(</span><span class="fu">RSQLite</span><span class="fu">::</span><span class="fu"><a href="https://rsqlite.r-dbi.org/reference/SQLite.html" class="external-link">SQLite</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">":memory:"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># copy heartfailure to the DBMS with a table named TB_HEARTFAILURE</span></span>
-<span class="r-in"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/copy_to.html" class="external-link">copy_to</a></span><span class="op">(</span><span class="va">con_sqlite</span>, <span class="va">heartfailure</span>, name <span class="op">=</span> <span class="st">"TB_HEARTFAILURE"</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Using pipes ---------------------------------</span></span>
-<span class="r-in"><span class="co"># Visualize correlation plot of all numerical variables</span></span>
-<span class="r-in"><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_HEARTFAILURE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="plot_correlate.data.frame.html">plot_correlate</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="plot_correlate.tbl_dbi-1.png" alt="" width="700" height="433"></span>
-<span class="r-in">  </span>
-<span class="r-in"><span class="co"># Positive values select variables, and In-memory mode and collect size is 200</span></span>
-<span class="r-in"><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_HEARTFAILURE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="plot_correlate.data.frame.html">plot_correlate</a></span><span class="op">(</span><span class="va">platelets</span>, <span class="va">sodium</span>, collect_size <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="plot_correlate.tbl_dbi-2.png" alt="" width="700" height="433"></span>
-<span class="r-in">  </span>
-<span class="r-in"><span class="co"># Negative values to drop variables</span></span>
-<span class="r-in"><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_HEARTFAILURE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="plot_correlate.data.frame.html">plot_correlate</a></span><span class="op">(</span><span class="op">-</span><span class="va">platelets</span>, <span class="op">-</span><span class="va">sodium</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="plot_correlate.tbl_dbi-3.png" alt="" width="700" height="433"></span>
-<span class="r-in">  </span>
-<span class="r-in"><span class="co"># Positions values select variables</span></span>
-<span class="r-in"><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_HEARTFAILURE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="plot_correlate.data.frame.html">plot_correlate</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="plot_correlate.tbl_dbi-4.png" alt="" width="700" height="433"></span>
-<span class="r-in">  </span>
-<span class="r-in"><span class="co"># Negative values to drop variables</span></span>
-<span class="r-in"><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_HEARTFAILURE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="plot_correlate.data.frame.html">plot_correlate</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="op">-</span><span class="fl">2</span>, <span class="op">-</span><span class="fl">3</span>, <span class="op">-</span><span class="fl">5</span>, <span class="op">-</span><span class="fl">6</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="plot_correlate.tbl_dbi-5.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Using pipes &amp; dplyr -------------------------</span></span>
-<span class="r-in"><span class="co"># Visualize correlation plot of 'sodiumsodium' variable by 'smoking'</span></span>
-<span class="r-in"><span class="co"># and 'death_event' variables.</span></span>
-<span class="r-in"><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_HEARTFAILURE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">smoking</span>, <span class="va">death_event</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="plot_correlate.data.frame.html">plot_correlate</a></span><span class="op">(</span><span class="va">sodium</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="plot_correlate.tbl_dbi-6.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_correlate.tbl_dbi-7.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_correlate.tbl_dbi-8.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_correlate.tbl_dbi-9.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Extract only those with 'smoking' variable level is "Yes",</span></span>
-<span class="r-in"><span class="co"># and visualize correlation plot of 'sodium' variable by 'sex'</span></span>
-<span class="r-in"><span class="co"># and 'death_event' variables.</span></span>
-<span class="r-in"><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_HEARTFAILURE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">smoking</span> <span class="op">==</span> <span class="st">"Yes"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">death_event</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="plot_correlate.data.frame.html">plot_correlate</a></span><span class="op">(</span><span class="va">sodium</span><span class="op">)</span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Passed a group with no more than five observations.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (sex == Female and death_event == No)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Passed a group with no more than five observations.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (sex == Female and death_event == Yes)</span>
-<span class="r-plt img"><img src="plot_correlate.tbl_dbi-10.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_correlate.tbl_dbi-11.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Disconnect DBMS   </span></span>
-<span class="r-in"><span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbDisconnect.html" class="external-link">dbDisconnect</a></span><span class="op">(</span><span class="va">con_sqlite</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"></span>
-</code></pre></div>
-    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
