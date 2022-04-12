@@ -1,3 +1,10 @@
+CHANGES IN R VERSION 0.6.0:
+  BUG FIXES:
+    * Fixed an error in eda_web_report() when `variable` is included in the 
+      name of a variable applied to select(). (thanks to Ashirwad Barnwal, #65) 
+      
+        
+
 CHANGES IN R VERSION 0.5.6:
   BUG FIXES:
     * Fixed a CRAN Additional issue that is "deprecated wrning" in donttest. 
