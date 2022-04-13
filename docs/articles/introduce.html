@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.0.9000</span>
       </span>
     </div>
 
@@ -55,8 +57,8 @@
   <a href="../reference/index.html">Function reference</a>
 </li>
 <li>
-  <a href="https://github.com/choonghyunryu/dlookr/">
-    <span class="fas fa-github fa-lg"></span>
+  <a href="https://github.com/choonghyunryu/dlookr/" class="external-link">
+    <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -70,24 +72,24 @@
 
       
 
-      </header><script src="introduce_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduce dlookr</h1>
-                        <h4 class="author">Choonghyun Ryu</h4>
+                        <h4 data-toc-skip class="author">Choonghyun Ryu</h4>
             
-            <h4 class="date">2022-02-27</h4>
+            <h4 data-toc-skip class="date">2022-04-14</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/choonghyunryu/dlookr/blob/master/vignettes/introduce.Rmd"><code>vignettes/introduce.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/choonghyunryu/dlookr/blob/HEAD/vignettes/introduce.Rmd" class="external-link"><code>vignettes/introduce.Rmd</code></a></small>
       <div class="hidden name"><code>introduce.Rmd</code></div>
 
     </div>
 
     
     
-<div id="preface" class="section level2">
-<h2 class="hasAnchor">
-<a href="#preface" class="anchor"></a>Preface</h2>
+<div class="section level2">
+<h2 id="preface">Preface<a class="anchor" aria-label="anchor" href="#preface"></a>
+</h2>
 <p>After you have acquired the data, you should do the following:</p>
 <ul>
 <li>Diagnose data quality.
@@ -107,9 +109,9 @@
 </ul>
 <p>dlookr increases synergy with <code>dplyr</code>. Particularly in data exploration and data wrangle, it increases the efficiency of the <code>tidyverse</code> package group.</p>
 </div>
-<div id="supported-data-structures" class="section level2">
-<h2 class="hasAnchor">
-<a href="#supported-data-structures" class="anchor"></a>Supported data structures</h2>
+<div class="section level2">
+<h2 id="supported-data-structures">Supported data structures<a class="anchor" aria-label="anchor" href="#supported-data-structures"></a>
+</h2>
 <p>Data diagnosis supports the following data structures.</p>
 <ul>
 <li>data frame : data.frame class.</li>
@@ -121,15 +123,15 @@
 </li>
 </ul>
 </div>
-<div id="list-of-supported-tasks-of-data-analytics" class="section level2">
-<h2 class="hasAnchor">
-<a href="#list-of-supported-tasks-of-data-analytics" class="anchor"></a>List of supported tasks of data analytics</h2>
-<div id="diagnose-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#diagnose-data" class="anchor"></a>Diagnose Data</h3>
-<div id="overall-diagnose-data" class="section level4">
-<h4 class="hasAnchor">
-<a href="#overall-diagnose-data" class="anchor"></a>Overall Diagnose Data</h4>
+<div class="section level2">
+<h2 id="list-of-supported-tasks-of-data-analytics">List of supported tasks of data analytics<a class="anchor" aria-label="anchor" href="#list-of-supported-tasks-of-data-analytics"></a>
+</h2>
+<div class="section level3">
+<h3 id="diagnose-data">Diagnose Data<a class="anchor" aria-label="anchor" href="#diagnose-data"></a>
+</h3>
+<div class="section level4">
+<h4 id="overall-diagnose-data">Overall Diagnose Data<a class="anchor" aria-label="anchor" href="#overall-diagnose-data"></a>
+</h4>
 <table class="table">
 <colgroup>
 <col width="25%">
@@ -207,9 +209,9 @@
 </tbody>
 </table>
 </div>
-<div id="visualize-missing-values" class="section level4">
-<h4 class="hasAnchor">
-<a href="#visualize-missing-values" class="anchor"></a>Visualize Missing Values</h4>
+<div class="section level4">
+<h4 id="visualize-missing-values">Visualize Missing Values<a class="anchor" aria-label="anchor" href="#visualize-missing-values"></a>
+</h4>
 <table class="table">
 <colgroup>
 <col width="25%">
@@ -245,9 +247,9 @@
 </tbody>
 </table>
 </div>
-<div id="reporting" class="section level4">
-<h4 class="hasAnchor">
-<a href="#reporting" class="anchor"></a>Reporting</h4>
+<div class="section level4">
+<h4 id="reporting">Reporting<a class="anchor" aria-label="anchor" href="#reporting"></a>
+</h4>
 <table class="table">
 <colgroup>
 <col width="26%">
@@ -290,12 +292,12 @@
 </table>
 </div>
 </div>
-<div id="eda" class="section level3">
-<h3 class="hasAnchor">
-<a href="#eda" class="anchor"></a>EDA</h3>
-<div id="univariate-eda" class="section level4">
-<h4 class="hasAnchor">
-<a href="#univariate-eda" class="anchor"></a>Univariate EDA</h4>
+<div class="section level3">
+<h3 id="eda">EDA<a class="anchor" aria-label="anchor" href="#eda"></a>
+</h3>
+<div class="section level4">
+<h4 id="univariate-eda">Univariate EDA<a class="anchor" aria-label="anchor" href="#univariate-eda"></a>
+</h4>
 <table class="table">
 <colgroup>
 <col width="16%">
@@ -392,9 +394,9 @@
 </tbody>
 </table>
 </div>
-<div id="bivariate-eda" class="section level4">
-<h4 class="hasAnchor">
-<a href="#bivariate-eda" class="anchor"></a>Bivariate EDA</h4>
+<div class="section level4">
+<h4 id="bivariate-eda">Bivariate EDA<a class="anchor" aria-label="anchor" href="#bivariate-eda"></a>
+</h4>
 <table class="table">
 <colgroup>
 <col width="16%">
@@ -463,16 +465,44 @@
 <tr class="even">
 <td align="left">numerical</td>
 <td align="left">Correlate</td>
+<td align="left">summaries with correlation matrix</td>
+<td align="left"><code><a href="../reference/summary.correlate.html">summary.correlate()</a></code></td>
+<td align="center">x</td>
+</tr>
+<tr class="odd">
+<td align="left">numerical</td>
+<td align="left">Correlate</td>
 <td align="left">visualization of a correlation matrix</td>
-<td align="left"><code><a href="../reference/plot_correlate.data.frame.html">plot_correlate()</a></code></td>
+<td align="left"><code><a href="../reference/plot.correlate.html">plot.correlate()</a></code></td>
+<td align="center">x</td>
+</tr>
+<tr class="even">
+<td align="left">both</td>
+<td align="left">PPS</td>
+<td align="left">PPS(Predictive Power Score)</td>
+<td align="left"><code><a href="../reference/pps.html">pps()</a></code></td>
+<td align="center">x</td>
+</tr>
+<tr class="odd">
+<td align="left">both</td>
+<td align="left">PPS</td>
+<td align="left">summaries with PPS</td>
+<td align="left"><code><a href="../reference/summary.pps.html">summary.pps()</a></code></td>
+<td align="center">x</td>
+</tr>
+<tr class="even">
+<td align="left">both</td>
+<td align="left">PPS</td>
+<td align="left">visualization of a PPS matrix</td>
+<td align="left"><code><a href="../reference/plot.pps.html">plot.pps()</a></code></td>
 <td align="center">x</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="normality-test" class="section level4">
-<h4 class="hasAnchor">
-<a href="#normality-test" class="anchor"></a>Normality Test</h4>
+<div class="section level4">
+<h4 id="normality-test">Normality Test<a class="anchor" aria-label="anchor" href="#normality-test"></a>
+</h4>
 <table class="table">
 <colgroup>
 <col width="16%">
@@ -506,9 +536,9 @@
 </tbody>
 </table>
 </div>
-<div id="relationship-between-target-variable-and-predictors" class="section level4">
-<h4 class="hasAnchor">
-<a href="#relationship-between-target-variable-and-predictors" class="anchor"></a>Relationship between target variable and predictors</h4>
+<div class="section level4">
+<h4 id="relationship-between-target-variable-and-predictors">Relationship between target variable and predictors<a class="anchor" aria-label="anchor" href="#relationship-between-target-variable-and-predictors"></a>
+</h4>
 <table class="table">
 <colgroup>
 <col width="16%">
@@ -612,9 +642,9 @@
 </tbody>
 </table>
 </div>
-<div id="reporting-1" class="section level4">
-<h4 class="hasAnchor">
-<a href="#reporting-1" class="anchor"></a>Reporting</h4>
+<div class="section level4">
+<h4 id="reporting-1">Reporting<a class="anchor" aria-label="anchor" href="#reporting-1"></a>
+</h4>
 <table class="table">
 <colgroup>
 <col width="25%">
@@ -657,12 +687,12 @@
 </table>
 </div>
 </div>
-<div id="transform-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#transform-data" class="anchor"></a>Transform Data</h3>
-<div id="find-variables" class="section level4">
-<h4 class="hasAnchor">
-<a href="#find-variables" class="anchor"></a>Find Variables</h4>
+<div class="section level3">
+<h3 id="transform-data">Transform Data<a class="anchor" aria-label="anchor" href="#transform-data"></a>
+</h3>
+<div class="section level4">
+<h4 id="find-variables">Find Variables<a class="anchor" aria-label="anchor" href="#find-variables"></a>
+</h4>
 <table class="table">
 <colgroup>
 <col width="19%">
@@ -698,9 +728,9 @@
 </tbody>
 </table>
 </div>
-<div id="imputation" class="section level4">
-<h4 class="hasAnchor">
-<a href="#imputation" class="anchor"></a>Imputation</h4>
+<div class="section level4">
+<h4 id="imputation">Imputation<a class="anchor" aria-label="anchor" href="#imputation"></a>
+</h4>
 <table class="table">
 <colgroup>
 <col width="19%">
@@ -742,9 +772,9 @@
 </tbody>
 </table>
 </div>
-<div id="binning" class="section level4">
-<h4 class="hasAnchor">
-<a href="#binning" class="anchor"></a>Binning</h4>
+<div class="section level4">
+<h4 id="binning">Binning<a class="anchor" aria-label="anchor" href="#binning"></a>
+</h4>
 <table class="table">
 <colgroup>
 <col width="19%">
@@ -834,9 +864,9 @@
 </tbody>
 </table>
 </div>
-<div id="diagnose-binned-variable" class="section level4">
-<h4 class="hasAnchor">
-<a href="#diagnose-binned-variable" class="anchor"></a>Diagnose Binned Variable</h4>
+<div class="section level4">
+<h4 id="diagnose-binned-variable">Diagnose Binned Variable<a class="anchor" aria-label="anchor" href="#diagnose-binned-variable"></a>
+</h4>
 <table class="table">
 <colgroup>
 <col width="19%">
@@ -872,9 +902,9 @@
 </tbody>
 </table>
 </div>
-<div id="transformation" class="section level4">
-<h4 class="hasAnchor">
-<a href="#transformation" class="anchor"></a>Transformation</h4>
+<div class="section level4">
+<h4 id="transformation">Transformation<a class="anchor" aria-label="anchor" href="#transformation"></a>
+</h4>
 <table class="table">
 <colgroup>
 <col width="19%">
@@ -910,9 +940,9 @@
 </tbody>
 </table>
 </div>
-<div id="reporting-2" class="section level4">
-<h4 class="hasAnchor">
-<a href="#reporting-2" class="anchor"></a>Reporting</h4>
+<div class="section level4">
+<h4 id="reporting-2">Reporting<a class="anchor" aria-label="anchor" href="#reporting-2"></a>
+</h4>
 <table class="table">
 <colgroup>
 <col width="25%">
@@ -955,12 +985,12 @@
 </table>
 </div>
 </div>
-<div id="miscellaneous" class="section level3">
-<h3 class="hasAnchor">
-<a href="#miscellaneous" class="anchor"></a>Miscellaneous</h3>
-<div id="statistics" class="section level4">
-<h4 class="hasAnchor">
-<a href="#statistics" class="anchor"></a>Statistics</h4>
+<div class="section level3">
+<h3 id="miscellaneous">Miscellaneous<a class="anchor" aria-label="anchor" href="#miscellaneous"></a>
+</h3>
+<div class="section level4">
+<h4 id="statistics">Statistics<a class="anchor" aria-label="anchor" href="#statistics"></a>
+</h4>
 <table class="table">
 <colgroup>
 <col width="19%">
@@ -1017,12 +1047,24 @@
 <td align="left"><code><a href="../reference/get_transform.html">get_transform()</a></code></td>
 <td align="center"></td>
 </tr>
+<tr class="even">
+<td align="left">statistics</td>
+<td align="left">calculate the Cramer’s V statistic</td>
+<td align="left"><code>cramer()</code></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="left">statistics</td>
+<td align="left">calculate the Theil’s U statistic</td>
+<td align="left"><code>theil()</code></td>
+<td align="center"></td>
+</tr>
 </tbody>
 </table>
 </div>
-<div id="programming" class="section level4">
-<h4 class="hasAnchor">
-<a href="#programming" class="anchor"></a>Programming</h4>
+<div class="section level4">
+<h4 id="programming">Programming<a class="anchor" aria-label="anchor" href="#programming"></a>
+</h4>
 <table class="table">
 <colgroup>
 <col width="19%">
@@ -1085,11 +1127,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Choonghyun Ryu.</p>
+  <p></p>
+<p>Developed by Choonghyun Ryu.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -1097,6 +1141,8 @@
 
   
 
+
+  
 
   </body>
 </html>

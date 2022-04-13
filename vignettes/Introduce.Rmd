@@ -106,7 +106,11 @@ numerical | summaries | correlation coefficient, linear model summaries | `compa
 numerical | summaries | correlation coefficient, linear model summaries with threshold  | `summary.compare_numeric()` | 
 numerical | visualize | scatter plot with marginal box plot | `plot.compare_numeric()` | 
 numerical | Correlate | correlation coefficient | `correlate()` | x
-numerical | Correlate | visualization of a correlation matrix | `plot_correlate()` | x
+numerical | Correlate | summaries with correlation matrix | `summary.correlate()` | x
+numerical | Correlate | visualization of a correlation matrix | `plot.correlate()` | x
+both | PPS | PPS(Predictive Power Score) | `pps()` | x
+both | PPS | summaries with PPS | `summary.pps()` | x
+both | PPS | visualization of a PPS matrix | `plot.pps()` | x
 
 #### Normality Test
 Types | Tasks | Descriptions | Functions | Support DBI
@@ -208,6 +212,8 @@ statistics  | calculate the Jensen-Shannon divergence between two probability di
 statistics  | calculate the Kullback-Leibler divergence between two probability distributions. | `kld()` | 
 statistics  | finding percentile of numerical variable. | `get_percentile()` | 
 statistics  | transform a numeric vector using several methods like "log", "sqrt", "log+1", "log+a", "1/x", "x^2", "x^3", "Box-Cox", "Yeo-Johnson"| `get_transform()` | 
+statistics  | calculate the Cramer's V statistic | `cramer()` | 
+statistics  | calculate the Theil's U statistic | `theil()` | 
 
 #### Programming
 Types | Descriptions | Functions | Support DBI
