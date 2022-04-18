@@ -116,7 +116,31 @@ get_tab_chisq <- function(x) {
   df
 }
 
-# function to get chi square p value and Cramer's V statistic
+
+#' Cramer's V statistic 
+#'
+#' @description Computes the Cramer's V statistic and Chisquare p value between two categorical variables in data.frame.
+#'
+#' @param dfm data.frame. probability distributions.
+#' @param x character. name of categorical or discrete variable.
+#' @param y character. name of another categorical or discrete variable.
+#' 
+#' @return data.frame. It has the following variables.:
+#' \itemize{
+#' \item var1 : character. first variable name.
+#' \item var2 : character. second variable name.
+#' \item chisq : numeric. Chisquare statistic.
+#' \item df : integer. degree of freedom.
+#' \item pval : numeric. p value of Chisquare test.
+#' \item coef_corr : numeric. Cramer's V statistic.
+#' }
+#' 
+#' @seealso \code{\link{theil}}.
+#' @export
+#' @examples
+#' cramer(mtcars, "gear", "carb")
+#' 
+#' @export
 cramer <- function(dfm, x, y) {
   chisq_test <- dfm %>% 
     select(x, y) %>% 
@@ -140,6 +164,27 @@ cramer <- function(dfm, x, y) {
 
 
 # function to get Theil's U statistic 
+#' Theil's U statistic 
+#'
+#' @description Computes the Theil's U statistic between two categorical variables in data.frame.
+#'
+#' @param dfm data.frame. probability distributions.
+#' @param x character. name of categorical or discrete variable.
+#' @param y character. name of another categorical or discrete variable.
+#' 
+#' @return data.frame. It has the following variables.:
+#' \itemize{
+#' \item var1 : character. first variable name.
+#' \item var2 : character. second variable name.
+#' \item coef_corr : numeric. Theil's U statistic.
+#' }
+#' 
+#' @seealso \code{\link{cramer}}.
+#' @export
+#' @examples
+#' theil(mtcars, "gear", "carb")
+#' 
+#' @export
 theil <- function (dfm, x, y) {
   tab <- dfm %>% 
     select(x, y) %>% 

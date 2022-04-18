@@ -210,6 +210,8 @@ statistics  | calculate the skewness of the data. | `skewness()` |
 statistics  | calculate the kurtosis of the data. | `kurtosis()` | 
 statistics  | calculate the Jensen-Shannon divergence between two probability distributions. | `jsd()` | 
 statistics  | calculate the Kullback-Leibler divergence between two probability distributions. | `kld()` | 
+statistics  | calculate the Cramer's V statistic between two categorical(discrete) variables. | `cramer()` | 
+statistics  | calculate the Theil's U statistic between two categorical(discrete) variables. | `theil()` | 
 statistics  | finding percentile of numerical variable. | `get_percentile()` | 
 statistics  | transform a numeric vector using several methods like "log", "sqrt", "log+1", "log+a", "1/x", "x^2", "x^3", "Box-Cox", "Yeo-Johnson"| `get_transform()` | 
 statistics  | calculate the Cramer's V statistic | `cramer()` | 
