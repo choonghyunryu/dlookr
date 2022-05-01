@@ -839,6 +839,7 @@ plot_correlate_group_impl <- function(df, vars, method, typographic, base_family
 #' plot(tab_corr)
 #' 
 #' # correlate type is group ====================================
+#' # Draw a correlation matrix plot by category of Species.
 #' tab_corr <- iris %>% 
 #'   group_by(Species) %>% 
 #'   correlate()
