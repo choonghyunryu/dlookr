@@ -682,11 +682,13 @@ eda_web_report.data.frame <- function(.data, target = NULL, output_file = NULL,
                        base_family = NULL, ...) {
   theme <- match.arg(theme)
   
+  pram <- as.character(substitute(target))
+  
   tryCatch(vars <- tidyselect::vars_select(names(.data),
                                            !! rlang::enquo(target)),
            error = function(e) {
-             pram <- as.character(substitute(target))
-             stop(sprintf("Column %s is unknown", pram))
+             # pram <- as.character(substitute(target))
+             stop(sprintf("The target variable '%s' does not exist.", pram))
            },
            finally = NULL)
 
@@ -951,11 +953,13 @@ eda_paged_report.data.frame <- function(.data, target = NULL, output_format = c(
     stop("sample_percent must be a value between (0, 100].")
   }
   
+  pram <- as.character(substitute(target))
+  
   tryCatch(vars <- tidyselect::vars_select(names(.data),
                                            !! rlang::enquo(target)),
            error = function(e) {
-             pram <- as.character(substitute(target))
-             stop(sprintf("Column %s is unknown", pram))
+             # pram <- as.character(substitute(target))
+             stop(sprintf("The target variable '%s' does not exist.", pram))
            },
            finally = NULL)
   
@@ -1179,11 +1183,13 @@ transformation_web_report <- function(.data, target = NULL, output_file = NULL,
                        sample_percent = 100, base_family = NULL, ...) {
   theme <- match.arg(theme)
   
+  pram <- as.character(substitute(target))
+  
   tryCatch(vars <- tidyselect::vars_select(names(.data),
                                            !! rlang::enquo(target)),
            error = function(e) {
-             pram <- as.character(substitute(target))
-             stop(sprintf("Column %s is unknown", pram))
+             # pram <- as.character(substitute(target))
+             stop(sprintf("The target variable '%s' does not exist.", pram))
            },
            finally = NULL)
   
@@ -1414,11 +1420,13 @@ transformation_paged_report <- function(.data, target = NULL,
     stop("sample_percent must be a value between (0, 100].")
   }
   
+  pram <- as.character(substitute(target))
+  
   tryCatch(vars <- tidyselect::vars_select(names(.data),
                                            !! rlang::enquo(target)),
            error = function(e) {
-             pram <- as.character(substitute(target))
-             stop(sprintf("Column %s is unknown", pram))
+             # pram <- as.character(substitute(target))
+             stop(sprintf("The target variable '%s' does not exist.", pram))
            },
            finally = NULL)
   
