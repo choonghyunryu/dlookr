@@ -100,6 +100,7 @@ univar_category.data.frame <- function(.data, ...) {
 
 #' @import tibble
 #' @importFrom purrr map
+#' @importFrom tidyselect all_of
 univar_category_impl <- function(df, vars) {
   if (length(vars) == 0) vars <- names(df)
   
@@ -116,7 +117,7 @@ univar_category_impl <- function(df, vars) {
   
   get_frequency <- function(x) {
     suppressWarnings(agg_tab <- df %>% 
-      select(variable = x) %>% 
+      select(variable = tidyselect::all_of(x)) %>% 
       count(variable) %>% 
       mutate(rate = n / sum(n)))
     

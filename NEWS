@@ -2,6 +2,8 @@ CHANGES IN R VERSION 0.6.0:
   BUG FIXES:
     * Fixed an error in eda_web_report() when `variable` is included in the 
       name of a variable applied to select(). (thanks to Ashirwad Barnwal, #65) 
+    * Fixed a wrong summary in univar_category() when `x` is included in the 
+      name of a variable applied to select(). (#69)       
     * Fixed some wrong case in plot.correlate. (#66)
         - Change the x-axis to 'variable1' and the y-axis to 'variable2'.
         - Rotate the x-axis tick labels to 40 degrees for group_by case.
