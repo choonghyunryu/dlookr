@@ -8,7 +8,10 @@ CHANGES IN R VERSION 0.6.0:
         - Change the x-axis to 'variable1' and the y-axis to 'variable2'.
         - Rotate the x-axis tick labels to 40 degrees for group_by case.
         - Fixed incorrect title of individual plot for group_by case.
-        
+    * Cases that may cause errors in the binning process are not output 
+      in the report. For example, if you want to bin constant value. 
+      (thanks to Iqbal Jamal, #68)           
+      
         
 
 CHANGES IN R VERSION 0.5.6:

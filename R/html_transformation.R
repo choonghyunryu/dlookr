@@ -639,6 +639,12 @@ html_binning <- function(.data, base_family = NULL) {
           return(binn)
         }  
       })
+    
+    # remove error cases
+    is_complete <- sapply(bins, function(x) is(x)[1] == "bins")
+    bins <- bins[is_complete]
+    tab_numerical <- tab_numerical %>% 
+      filter(is_complete)
       
     options(show.error.messages = TRUE)
     
