@@ -52,8 +52,8 @@
 #' 
 get_column_info <- function(df) {
   if (requireNamespace("DBI", quietly = TRUE)) {
-    res <- DBI::dbSendQuery(df$src$con, 
-                            sprintf("select * from %s", df$ops$x))
+    res <- DBI::dbSendQuery(df$src$con,
+                            dbplyr::remote_query(df))
   } else {
     stop("Package 'DBI' needed for this function to work. Please install it.", 
          call. = FALSE)
@@ -842,7 +842,7 @@ normality.tbl_dbi <- function(.data, ..., sample = 5000,
   if (in_database) {
     stop("It does not yet support in-database mode. Use in_database = FALSE.")
   } else {
-    if (class(.data$ops)[1] != "op_group_by") {
+    if (!is_grouped(.data)) {
       sample <- min(5000, tally(.data) %>% pull, sample, collect_size)
       
       .data %>% 
@@ -996,8 +996,8 @@ plot_normality.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
   if (in_database) {
     stop("It does not yet support in-database mode. Use in_database = FALSE.")
   } else {
-    if (class(.data$ops)[1] != "op_group_by") {
-      .data %>% 
+    if (!is_grouped(.data)) {
+      .data %>%
         dplyr::collect(n = collect_size) %>%
         plot_normality_impl(vars, left, right, col, typographic, base_family)
     } else {
@@ -1054,7 +1054,7 @@ correlate.tbl_dbi <- function(.data, ...,
   if (in_database) {
     stop("It does not yet support in-database mode. Use in_database = FALSE.")
   } else {
-    if (class(.data$ops)[1] != "op_group_by") {
+    if (!is_grouped(.data)) {
       if (method %in% c("pearson", "kendall", "spearman")) {
         result <- .data %>% 
           dplyr::collect(n = collect_size) %>%
@@ -1134,8 +1134,8 @@ plot_correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
   if (in_database) {
     stop("It does not yet support in-database mode. Use in_database = FALSE.")
   } else {
-    if (class(.data$ops)[1] != "op_group_by") {
-      .data %>% 
+    if (!is_grouped(.data)) {
+      .data %>%
         dplyr::collect(n = collect_size) %>%
         plot_correlate_impl(vars, method, typographic, base_family)
     } else {
@@ -1282,16 +1282,12 @@ describe.tbl_dbi <- function(.data, ..., statistics = NULL, quantiles = NULL,
   if (in_database) {
     stop("It does not yet support in-database mode. Use in_database = FALSE.")
   } else {
-    if (class(.data$ops)[1] != "op_group_by") {
-      .data %>% 
+    if (!is_grouped(.data)) {
+      .data %>%
         dplyr::collect(n = collect_size) %>%
         describe_impl(vars, statistics, quantiles)
     } else {
-      group <- .data$ops$dots %>% 
-        names()
-      
-      .data %>% 
-        group_by_at(group) %>% 
+      .data %>%
         dplyr::collect(n = collect_size) %>%
         describe(vars, statistics = statistics, quantiles = quantiles,
                  all.combinations = all.combinations)
@@ -1695,4 +1691,8 @@ eda_report.tbl_dbi <- function(.data, target = NULL,  output_format = c("pdf", "
     eda_report(tab, target = vars, output_format, 
       output_file, output_dir, font_family)    
   }
+}
+
+is_grouped <- function(x) {
+  length(group_vars(x)) > 0
 }
