@@ -130,10 +130,10 @@ diagnose_web_report.tbl_dbi <- function(.data, output_file = NULL, output_dir = 
     
     diagnose_web_report(raw_data, output_file = output_file, 
                         output_dir = output_dir, browse = browse, title = title,
-                        subtitle = .data[["ops"]]["x"] %>% as.character(), author = author,
                         title_color = title_color, thres_uniq_cat = thres_uniq_cat, 
                         thres_uniq_num = thres_uniq_num, logo_img = logo_img, 
                         create_date = create_date, theme = theme, 
+                        subtitle = dbplyr::remote_name(.data) %>% as.character(), author = author,
                         sample_percent = sample_percent, is_tbl_dbi = TRUE)
   }  
 }
@@ -297,9 +297,9 @@ diagnose_paged_report.tbl_dbi <- function(.data, output_format = c("pdf", "html"
     diagnose_paged_report(raw_data, 
                           output_format = output_format, output_file = output_file, 
                           output_dir = output_dir, browse = browse, title = title,
-                          subtitle = .data[["ops"]]["x"] %>% as.character(), author = author,
                           title_color = title_color, thres_uniq_cat = thres_uniq_cat, 
                           thres_uniq_num = thres_uniq_num, 
+                          subtitle = dbplyr::remote_name(.data) %>% as.character(), author = author,
                           flag_content_zero = flag_content_zero,
                           flag_content_minus = flag_content_minus, 
                           flag_content_missing = flag_content_missing,
@@ -434,9 +434,9 @@ eda_web_report.tbl_dbi <- function(.data, target = NULL, output_file = NULL,
     
     eda_web_report(raw_data, target = target, output_file = output_file, 
                    output_dir = output_dir, browse = browse, title = title,
-                   subtitle = .data[["ops"]]["x"] %>% as.character(), author = author,
                    title_color = title_color, logo_img = logo_img, 
                    create_date = create_date, theme = theme, 
+                   subtitle = dbplyr::remote_name(.data) %>% as.character(), author = author,
                    sample_percent = sample_percent, is_tbl_dbi = TRUE)
   }  
 }
@@ -587,7 +587,7 @@ eda_paged_report.tbl_dbi <- function(.data, target = NULL, output_format = c("pd
     eda_paged_report(raw_data, target = target, 
                      output_format = output_format, output_file = output_file, 
                      output_dir = output_dir, browse = browse, title = title,
-                     subtitle = .data[["ops"]]["x"] %>% as.character(), author = author,
+                     subtitle = dbplyr::remote_name(.data) %>% as.character(), author = author,
                      abstract_title = abstract_title, abstract = abstract,
                      title_color = title_color, subtitle_color = subtitle_color,
                      cover_img = cover_img, create_date = create_date, 
