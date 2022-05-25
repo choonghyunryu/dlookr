@@ -10,7 +10,14 @@ CHANGES IN R VERSION 0.6.0:
         - Fixed incorrect title of individual plot for group_by case.
     * Cases that may cause errors in the binning process are not output 
       in the report. For example, if you want to bin constant value. 
-      (thanks to Iqbal Jamal, #68)           
+      (thanks to Iqbal Jamal, #68)
+      
+  MINOR CHANGES:
+    * dlookr supports 'tbl_dbi' that can be analyzed in conjunction with DBMS. 
+      This is done using the dbplyr package. The related code has been modified 
+      to be compatible with the new version 2.2.0 of the dbplyr package. 
+      This work was done by Maximilian Girlich.
+      (thanks to @mgirlich, #70)        
       
         
 

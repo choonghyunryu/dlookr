@@ -1019,6 +1019,8 @@ plot_normality.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
 #' @export
 #' @examples
 #' \donttest{
+#' library(dplyr)
+#' 
 #' # connect DBMS
 #' con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 #' 
