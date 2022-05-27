@@ -4,7 +4,7 @@
 \alias{imputate_outlier}
 \title{Impute Outliers}
 \usage{
-imputate_outlier(.data, xvar, method, no_attrs)
+imputate_outlier(.data, xvar, method, no_attrs, cap_ntiles)
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}
@@ -15,6 +15,10 @@ imputate_outlier(.data, xvar, method, no_attrs)
 
 \item{no_attrs}{logical. If TRUE, return numerical variable or categorical variable. 
 else If FALSE, imputation class.}
+
+\item{cap_ntiles}{numeric. Only used when method is "capping".
+Specifies the value of percentiles replaced by the values of lower outliers 
+and upper outliers. The default is c(0.05, 0.95).}
 }
 \value{
 An object of imputation class. or numerical variable. 
@@ -30,7 +34,10 @@ Attributes of imputation class is as follows.
     \item "median" : median
     \item "mode" : mode
     \item "capping" : Impute the upper outliers with 95 percentile,
-    and Impute the bottom outliers with 5 percentile.
+    and Impute the lower outliers with 5 percentile. 
+    \itemize{     
+      \item You can change this criterion with the cap_ntiles argument.
+    }
   }
 }
 \item outlier_pos : position of outliers in predictor.
@@ -57,6 +64,8 @@ imputate_outlier(heartfailure, sodium, method = "median")
 
 # Replace the outliers of the sodium variable with capping.
 imputate_outlier(heartfailure, sodium, method = "capping")
+imputate_outlier(heartfailure, sodium, method = "capping", 
+                 cap_ntiles = c(0.1, 0.9))
 
 ## using dplyr -------------------------------------
 library(dplyr)

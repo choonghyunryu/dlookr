@@ -327,6 +327,9 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL,
 #' @param .data a data.frame or a \code{\link{tbl_df}}.
 #' @param xvar variable name to replace missing value.
 #' @param method method of missing values imputation.
+#' @param cap_ntiles numeric. Only used when method is "capping".
+#' Specifies the value of percentiles replaced by the values of lower outliers 
+#' and upper outliers. The default is c(0.05, 0.95).
 #' @param no_attrs logical. If TRUE, return numerical variable or categorical variable. 
 #' else If FALSE, imputation class. 
 #' @return An object of imputation class. or numerical variable. 
@@ -342,7 +345,10 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL,
 #'     \item "median" : median
 #'     \item "mode" : mode
 #'     \item "capping" : Impute the upper outliers with 95 percentile,
-#'     and Impute the bottom outliers with 5 percentile.
+#'     and Impute the lower outliers with 5 percentile. 
+#'     \itemize{     
+#'       \item You can change this criterion with the cap_ntiles argument.
+#'     }
 #'   }
 #' }
 #' \item outlier_pos : position of outliers in predictor.
@@ -357,6 +363,8 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL,
 #' 
 #' # Replace the outliers of the sodium variable with capping.
 #' imputate_outlier(heartfailure, sodium, method = "capping")
+#' imputate_outlier(heartfailure, sodium, method = "capping", 
+#'                  cap_ntiles = c(0.1, 0.9))
 #' 
 #' ## using dplyr -------------------------------------
 #' library(dplyr)
@@ -378,7 +386,7 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL,
 #' }
 #' 
 #' @export
-imputate_outlier <- function(.data, xvar, method, no_attrs) {
+imputate_outlier <- function(.data, xvar, method, no_attrs, cap_ntiles) {
   UseMethod("imputate_outlier")
 }
 
@@ -387,7 +395,8 @@ imputate_outlier <- function(.data, xvar, method, no_attrs) {
 #' @importFrom rlang enquo
 #' @export
 imputate_outlier.data.frame <- function(.data, xvar,
-  method = c("capping", "mean", "median", "mode"), no_attrs = FALSE) {
+  method = c("capping", "mean", "median", "mode"), no_attrs = FALSE,
+  cap_ntiles = c(0.05, 0.95)) {
   tryCatch(vars <- tidyselect::vars_select(names(.data), !! rlang::enquo(xvar)),
     error = function(e) {
       pram <- as.character(substitute(xvar))
@@ -396,16 +405,21 @@ imputate_outlier.data.frame <- function(.data, xvar,
 
   method <- match.arg(method)
 
-  imputate_outlier_impl(.data, vars, method, no_attrs)
+  imputate_outlier_impl(.data, vars, method, no_attrs, cap_ntiles)
 }
 
 #' @import dplyr
 #' @importFrom methods is
 #' @importFrom grDevices boxplot.stats
-imputate_outlier_impl <- function(df, xvar, method, no_attrs = FALSE) {
+imputate_outlier_impl <- function(df, xvar, method, no_attrs = FALSE, 
+                                  cap_ntiles = c(0.05, 0.95)) {
   if (!is(pull(df, xvar))[1] %in% c("integer", "numeric")) {
     stop(sprintf("Categorical variable(%s) not support imputate_outlier()",
       xvar))
+  }
+  
+  if (method %in% "capping" & length(cap_ntiles) != 2) {
+    stop("The cap_ntiles argument must be a numeric vector of length 2.")
   }
 
   data <- pull(df, xvar)
@@ -434,9 +448,9 @@ imputate_outlier_impl <- function(df, xvar, method, no_attrs = FALSE) {
     data
   }
 
-  get_capping <- function() {
+  get_capping <- function(cap_ntiles = c(0.05, 0.95)) {
     hinges <- quantile(data, probs = c(0.25, 0.75), na.rm = TRUE)
-    caps <- quantile(data, probs = c(0.05, 0.95), na.rm = TRUE)
+    caps <- quantile(data, probs = cap_ntiles, na.rm = TRUE)
 
     whisker <- 1.5 * diff(hinges)
 
@@ -452,7 +466,7 @@ imputate_outlier_impl <- function(df, xvar, method, no_attrs = FALSE) {
   else if (method == "mode")
     result <- get_mode()
   else if (method == "capping")
-    result <- get_capping()
+    result <- get_capping(cap_ntiles)
 
   if (!no_attrs) {
     attr(result, "method") <- method

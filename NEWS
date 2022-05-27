@@ -2,22 +2,31 @@ CHANGES IN R VERSION 0.6.0:
   BUG FIXES:
     * Fixed an error in eda_web_report() when `variable` is included in the 
       name of a variable applied to select(). (thanks to Ashirwad Barnwal, #65) 
+      
     * Fixed a wrong summary in univar_category() when `x` is included in the 
-      name of a variable applied to select(). (#69)       
+      name of a variable applied to select(). (#69)    
+      
     * Fixed some wrong case in plot.correlate. (#66)
         - Change the x-axis to 'variable1' and the y-axis to 'variable2'.
         - Rotate the x-axis tick labels to 40 degrees for group_by case.
         - Fixed incorrect title of individual plot for group_by case.
+        
     * Cases that may cause errors in the binning process are not output 
       in the report. For example, if you want to bin constant value. 
       (thanks to Iqbal Jamal, #68)
+      
+    * Fixed an error in eda_web_report() when there are missing values in 
+      categorical data. (#72)      
       
   MINOR CHANGES:
     * dlookr supports 'tbl_dbi' that can be analyzed in conjunction with DBMS. 
       This is done using the dbplyr package. The related code has been modified 
       to be compatible with the new version 2.2.0 of the dbplyr package. 
       This work was done by Maximilian Girlich.
-      (thanks to @mgirlich, #70)        
+      (thanks to @mgirlich, #70) 
+      
+    * Now, possible to implement imputation capping in imputate_outlier() 
+      function with user specified values of caps. (thanks to @Tomas Janik, #71)       
       
         
 

@@ -572,7 +572,7 @@ html_compare_category <- function(.data, n_cells = 20, n_levels = 10,
     yvar <- y
     
     data <- ctab %>% 
-      select(a = xvar, b = yvar, n) 
+      select(a = all_of(xvar), b = all_of(yvar), n) 
     
     first <- data[1, 1] %>% pull %>% as.character
     y <- data %>% 
@@ -699,6 +699,9 @@ html_compare_category <- function(.data, n_cells = 20, n_levels = 10,
             ctable <- tabs$table[[variable]]
             
             contingency <- function(tab, relate = FALSE) {
+              rname <- rownames(tab)
+              rownames(tab) <- ifelse(rname %in% NA, "<NA>", rname)
+              
               dname <-  tab %>% dimnames()
               dframe <- tab %>% data.frame()
               

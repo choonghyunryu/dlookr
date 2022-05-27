@@ -155,6 +155,8 @@ heartfailure \%>\%
 }
 
 \donttest{
+library(dplyr)
+
 # connect DBMS
 con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 
