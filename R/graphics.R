@@ -54,13 +54,13 @@ theme_typographic <- function(base_family = NULL) {
   hrbrthemes::theme_ipsum_rc(base_family = base_family)
 }
 
-
+#' @importFrom graphics text
 plot_message <- function(msg = NULL, cex = 1) {
   if (is.null(msg)) {
     stop("msg is NULL. Please describe the msg value.")
   }
   
   plot(1:3, type = "n", axes = FALSE, xlab = "", ylab = "")  
-  text(x = 2, y = 2, msg, cex = cex)
+  graphics::text(x = 2, y = 2, msg, cex = cex)
 }
 
