@@ -937,7 +937,10 @@ html_target_numerical <- function(.data, target, base_family = NULL) {
   if (!target %in% names(.data)) {
     html_cat("The data does not contain the variable specified for target.")    
     return()
-  }  
+  } else {
+    factor_flag <- class(pull(.data, target))[1] %in% c("factor", "ordered")
+    numeric_flag <- class(pull(.data, target))[1] %in% c("integer", "numeric")    
+  } 
   
   nm_numeric <- .data %>% 
     find_class("numerical", index = FALSE) %>% 
@@ -950,72 +953,163 @@ html_target_numerical <- function(.data, target, base_family = NULL) {
       tab_main <- data.frame(Variable = nm_numeric, target_variable = target)
     })
     
-    
     tgt_by <- .data %>% 
-      target_by(target)
+      target_by(all_of(target))
       
     cap <- "Relationship between two numerical variables by level of target variable"
     html_cat(cap)
-    
-    tab_main %>% 
-      reactable(
-        defaultColDef = colDef(style = "font-size: 14px;color: hsl(0, 0%, 40%);"),
-        columns = list(
-          target_variable = colDef(
-            name = "Target Variable"
-          )
-        ),
-        details = function(index) {
-          nm_var <- nm_numeric[index]
-          
-          mat <- relate(tgt_by, all_of(nm_var)) %>% 
-            select(-p20, -p30, -p40, -p60, -p70, -p80) %>% 
-            select(-described_variables) %>% 
-            t()
-          
-          colnames(mat) <- mat[1, ] %>%
-            ifelse(. %in% "total", "<Total>", .)
-          mat  <- mat[-1, ] 
-          
-          rownames(mat) <- c("N", "Missing", "Mean", "Standard Deviation", 
-                             "Standard Error Mean", "IQR", "Skewness", 
-                             "Kurtosis", "Min", "1%", "5%", "10%", "25%", 
-                             "50%", "75%", "90%", "95%", "99%", "Max")
-          
-          tab_stat <- mat %>% 
-            reactable(
-              defaultColDef = colDef(
-                style = "font-size: 14px;color: hsl(0, 0%, 40%);",
-                align = "right"
-              ),
-              columns = list(
-                .rownames = colDef(
-                  name = "Statistics",
-                  align = "left"
-                )
-              ),
-              columnGroups = list(
-                colGroup(name = target %>% as.character, columns = colnames(mat))
-              ) 
+  
+    if (factor_flag) {
+      tabs <- tab_main %>% 
+        reactable(
+          defaultColDef = colDef(style = "font-size: 14px;color: hsl(0, 0%, 40%);"),
+          columns = list(
+            target_variable = colDef(
+              name = "Target Variable"
             )
-          
-          p_box <- htmltools::plotTag({
-            plot_outlier(tgt_by, all_of(nm_var), base_family = base_family)
-          }, sprintf("A plot of the %s and %s variable", target, nm_var), 
-          width = 600, height = 400, device = grDevices::png)
-          
-          
-          
-          shiny::tabsetPanel(
-            shiny::tabPanel("Distribution Plot", p_box,
-                            hr(style = "border-top: 1px solid black;"),
-                            style = "padding-top:5px; padding-bottom:25px;"),
-            shiny::tabPanel("Descriptive Statistics", tab_stat,
-                            hr(style = "border-top: 1px solid black;"),
-                            style = "padding-top:5px; padding-bottom:25px;")          
-          ) 
-        }
-      )
+          ),
+          details = function(index) {
+            nm_var <- nm_numeric[index]
+            
+            mat <- relate(tgt_by, all_of(nm_var)) %>% 
+              select(-p20, -p30, -p40, -p60, -p70, -p80) %>% 
+              select(-described_variables) %>% 
+              t()
+            
+            colnames(mat) <- mat[1, ] %>%
+              ifelse(. %in% "total", "<Total>", .)
+            mat  <- mat[-1, ] 
+            
+            rownames(mat) <- c("N", "Missing", "Mean", "Standard Deviation", 
+                               "Standard Error Mean", "IQR", "Skewness", 
+                               "Kurtosis", "Min", "1%", "5%", "10%", "25%", 
+                               "50%", "75%", "90%", "95%", "99%", "Max")
+            
+            tab_stat <- mat %>% 
+              reactable(
+                defaultColDef = colDef(
+                  style = "font-size: 14px;color: hsl(0, 0%, 40%);",
+                  align = "right"
+                ),
+                columns = list(
+                  .rownames = colDef(
+                    name = "Statistics",
+                    align = "left"
+                  )
+                ),
+                columnGroups = list(
+                  colGroup(name = target %>% as.character, columns = colnames(mat))
+                ) 
+              )
+            
+            p_box <- htmltools::plotTag({
+              plot_outlier(tgt_by, all_of(nm_var), base_family = base_family)
+            }, sprintf("A plot of the %s and %s variable", target, nm_var), 
+            width = 600, height = 400, device = grDevices::png)
+            
+            shiny::tabsetPanel(
+              shiny::tabPanel("Distribution Plot", p_box,
+                              hr(style = "border-top: 1px solid black;"),
+                              style = "padding-top:5px; padding-bottom:25px;"),
+              shiny::tabPanel("Descriptive Statistics", tab_stat,
+                              hr(style = "border-top: 1px solid black;"),
+                              style = "padding-top:5px; padding-bottom:25px;")          
+            ) 
+          }
+        )      
+    } else if (numeric_flag) {
+      tabs <- tab_main %>% 
+        reactable(
+          defaultColDef = colDef(style = "font-size: 14px;color: hsl(0, 0%, 40%);"),
+          columns = list(
+            target_variable = colDef(
+              name = "Target Variable"
+            )
+          ),
+          details = function(index) {
+            nm_var <- nm_numeric[index]
+            
+            fit_lm <- relate(tgt_by, all_of(nm_var)) 
+            
+            tab <- summary(fit_lm)$coefficients
+            rsq <- summary(fit_lm)$r.squared
+            adj <- summary(fit_lm)$adj.r.squared
+            fstat <- summary(fit_lm)$fstatistic
+            df <- summary(fit_lm)$df
+            rse <- summary(fit_lm)$sigma
+            p_value <- tab[2, 4] 
+            
+            stat_name <- c(
+              "Residual standard error",
+              "Degrees of freedom",
+              "Multiple R-squared",
+              "Adjusted R-squared",
+              "F-statistic",
+              "p-value"
+            )
+            
+            digits <- 7
+            stat_value <- c(
+              round(rse, digits),
+              max(df),
+              round(rsq, digits),
+              round(adj, digits),
+              round(fstat[1], digits), 
+              round(p_value, digits)
+            )            
+            
+            statistics <- data.frame(
+              statistics = stat_name,
+              values = stat_value
+            )
+            
+            tab_stat <- statistics %>% 
+              reactable(
+                defaultColDef = colDef(
+                  style = "font-size: 14px;color: hsl(0, 0%, 40%);",
+                  align = "right"
+                ),
+                columns = list(
+                  statistics = colDef(
+                    name = "Statistics",
+                    align = "left"
+                  ),
+                  values = colDef(
+                    name = "Values"
+                  )                 
+                )
+              )
+            
+            tab_coef <- tab %>% 
+              reactable(
+                defaultColDef = colDef(
+                  style = "font-size: 14px;color: hsl(0, 0%, 40%);",
+                  align = "right",
+                  format = colFormat(digits = digits)
+                )
+              )
+            
+            p_relate <- htmltools::plotTag({
+              plot(fit_lm)
+            }, "Visuzlization of relation",
+            width = 600, height = 400, device = grDevices::png)
+            
+            shiny::tabsetPanel(
+              shiny::tabPanel("Visuzlization of relation", p_relate,
+                              hr(style = "border-top: 1px solid black;"),
+                              style = "padding-top:5px; padding-bottom:25px;"),              
+              shiny::tabPanel("Summarizing Linear Model Fits", tab_stat,
+                              hr(style = "border-top: 1px solid black;"),
+                              style = "padding-top:5px; padding-bottom:25px;"),
+              shiny::tabPanel("Coefficients", tab_coef,
+                              hr(style = "border-top: 1px solid black;"),
+                              style = "padding-top:5px; padding-bottom:25px;")          
+            ) 
+          }
+        )        
+    }  
+    
+    tabs
   }
 }
 
@@ -1035,7 +1129,10 @@ html_target_categorical <- function(.data, target, base_family = NULL) {
   
   if (!target %in% names(.data)) {
     stop("The data does not contain the variable specified for target.")    
-  }  
+  } else {
+    factor_flag <- class(pull(.data, target))[1] %in% c("factor", "ordered")
+    numeric_flag <- class(pull(.data, target))[1] %in% c("integer", "numeric")    
+  } 
   
   nm_categorical <- .data %>% 
     find_class("categorical", index = FALSE) %>% 
@@ -1054,75 +1151,183 @@ html_target_categorical <- function(.data, target, base_family = NULL) {
     cap <- "Relationship between two categorical variables by level of target variable"
     html_cat(cap)
     
-    tab_main %>% 
-      reactable(
-        defaultColDef = colDef(style = "font-size: 14px;color: hsl(0, 0%, 40%);"),
-        columns = list(
-          target_variable = colDef(
-            name = "Target Variable"
-          )
-        ),
-        details = function(index) {
-          nm_var <- nm_categorical[index]
-          
-          freq <- relate(tgt_by, all_of(nm_var)) %>% 
-            stats::addmargins() %>% 
-            as.data.frame() %>% 
-            tidyr::spread(all_of(target), Freq) 
-          
-          names(freq) <- names(freq) %>% 
-            ifelse(. %in% "Sum", "<Total>", .)
-          freq[, 1] <- freq[, 1] %>% 
-            as.character(.) %>% 
-            ifelse(. %in% "Sum", "<Total>", .)
-          
-          tab_stat <- freq %>% 
-            reactable(
-              defaultColDef = colDef(
-                format = colFormat(separators = TRUE)
-              ),
-              columnGroups = list(
-                colGroup(name = target %>% as.character(), 
-                         columns = names(freq)[-1]
-                )
-              )  
+    if (factor_flag) {
+      tab_main %>% 
+        reactable(
+          defaultColDef = colDef(style = "font-size: 14px;color: hsl(0, 0%, 40%);"),
+          columns = list(
+            target_variable = colDef(
+              name = "Target Variable"
             )
-          
-          ratio <- freq
-          ratio[, -1] <- ratio[, -1] / freq[nrow(freq), ncol(freq)]
-          
-          tab_ratio <- ratio %>% 
-            reactable(
-              defaultColDef = colDef(
-                style = "font-size: 14px;color: hsl(0, 0%, 40%);",
-                format = colFormat(percent = TRUE,
-                                   digits = 1)
-              ),
-              columnGroups = list(
-                colGroup(name = target %>% as.character(), 
-                         columns = names(freq)[-1]
+          ),
+          details = function(index) {
+            nm_var <- nm_categorical[index]
+            
+            freq <- relate(tgt_by, all_of(nm_var)) %>% 
+              stats::addmargins() %>% 
+              as.data.frame() %>% 
+              tidyr::spread(all_of(target), Freq) 
+            
+            names(freq) <- names(freq) %>% 
+              ifelse(. %in% "Sum", "<Total>", .)
+            freq[, 1] <- freq[, 1] %>% 
+              as.character(.) %>% 
+              ifelse(. %in% "Sum", "<Total>", .)
+            
+            tab_stat <- freq %>% 
+              reactable(
+                defaultColDef = colDef(
+                  format = colFormat(separators = TRUE)
+                ),
+                columnGroups = list(
+                  colGroup(name = target %>% as.character(), 
+                           columns = names(freq)[-1]
+                  )
+                )  
+              )
+            
+            ratio <- freq
+            ratio[, -1] <- ratio[, -1] / freq[nrow(freq), ncol(freq)]
+            
+            tab_ratio <- ratio %>% 
+              reactable(
+                defaultColDef = colDef(
+                  style = "font-size: 14px;color: hsl(0, 0%, 40%);",
+                  format = colFormat(percent = TRUE,
+                                     digits = 1)
+                ),
+                columnGroups = list(
+                  colGroup(name = target %>% as.character(), 
+                           columns = names(freq)[-1]
+                  )
+                )  
+              )          
+            
+            p_mosaics <- htmltools::plotTag({
+              plot(relate(tgt_by, all_of(nm_var)), base_family = base_family)
+            }, sprintf("A plot of the %s and %s variable", target, nm_var), 
+            width = 600, height = 400, device = grDevices::png)
+            
+            shiny::tabsetPanel(
+              shiny::tabPanel("Distribution Plot", p_mosaics,
+                              hr(style = "border-top: 1px solid black;"),
+                              style = "padding-top:5px; padding-bottom:25px;"),
+              shiny::tabPanel("Contingency Table", tab_stat,
+                              hr(style = "border-top: 1px solid black;"),
+                              style = "padding-top:5px; padding-bottom:25px;"),
+              shiny::tabPanel("Relative Contingency Table", tab_ratio,
+                              hr(style = "border-top: 1px solid black;"),
+                              style = "padding-top:5px; padding-bottom:25px;")            
+            ) 
+          }
+        )      
+    } else if (numeric_flag) {
+      tab_main %>% 
+        reactable(
+          defaultColDef = colDef(style = "font-size: 14px;color: hsl(0, 0%, 40%);"),
+          columns = list(
+            target_variable = colDef(
+              name = "Target Variable"
+            )
+          ),
+          details = function(index) {
+            nm_var <- nm_categorical[index]
+            
+            num_cat <- relate(tgt_by, all_of(nm_var))
+            
+            tab_aov <- num_cat %>% 
+              anova() %>% 
+              reactable(
+                defaultColDef = colDef(
+                  format = colFormat(separators = TRUE, digits = 7)
+                ),
+                columns = list(
+                  Df = colDef(
+                    format = colFormat(digits = 0)
+                  )
                 )
-              )  
-            )          
-          
-          p_mosaics <- htmltools::plotTag({
-            plot(relate(tgt_by, all_of(nm_var)), base_family = base_family)
-          }, sprintf("A plot of the %s and %s variable", target, nm_var), 
-          width = 600, height = 400, device = grDevices::png)
-          
-          shiny::tabsetPanel(
-            shiny::tabPanel("Distribution Plot", p_mosaics,
-                            hr(style = "border-top: 1px solid black;"),
-                            style = "padding-top:5px; padding-bottom:25px;"),
-            shiny::tabPanel("Contingency Table", tab_stat,
-                            hr(style = "border-top: 1px solid black;"),
-                            style = "padding-top:5px; padding-bottom:25px;"),
-            shiny::tabPanel("Relative Contingency Table", tab_ratio,
-                            hr(style = "border-top: 1px solid black;"),
-                            style = "padding-top:5px; padding-bottom:25px;")            
-          ) 
-        }
-      )
+              )
+            
+            tab <- summary(num_cat)$coefficients
+            rsq <- summary(num_cat)$r.squared
+            adj <- summary(num_cat)$adj.r.squared
+            fstat <- summary(num_cat)$fstatistic
+            df <- summary(num_cat)$df
+            rse <- summary(num_cat)$sigma
+            p_value <- tab[2, 4] 
+            
+            stat_name <- c(
+              "Residual standard error",
+              "Degrees of freedom",
+              "Multiple R-squared",
+              "Adjusted R-squared",
+              "F-statistic",
+              "p-value"
+            )
+            
+            digits <- 7
+            stat_value <- c(
+              round(rse, digits),
+              max(df),
+              round(rsq, digits),
+              round(adj, digits),
+              round(fstat[1], digits), 
+              round(p_value, digits)
+            )            
+            
+            statistics <- data.frame(
+              statistics = stat_name,
+              values = stat_value
+            )
+            
+            tab_stat <- statistics %>% 
+              reactable(
+                defaultColDef = colDef(
+                  style = "font-size: 14px;color: hsl(0, 0%, 40%);",
+                  align = "right"
+                ),
+                columns = list(
+                  statistics = colDef(
+                    name = "Statistics",
+                    align = "left"
+                  ),
+                  values = colDef(
+                    name = "Values"
+                  )                 
+                )
+              )
+            
+            tab_coef <- tab %>% 
+              reactable(
+                defaultColDef = colDef(
+                  style = "font-size: 14px;color: hsl(0, 0%, 40%);",
+                  align = "right",
+                  format = colFormat(digits = digits)
+                )
+              )
+            
+            p_relate <- htmltools::plotTag({
+              plot(num_cat)
+            }, "Visuzlization of relation",
+            width = 600, height = 400, device = grDevices::png)
+            
+            shiny::tabsetPanel(
+              shiny::tabPanel("Visuzlization of relation", p_relate,
+                              hr(style = "border-top: 1px solid black;"),
+                              style = "padding-top:5px; padding-bottom:25px;"),              
+              shiny::tabPanel("ANOVA Table", tab_aov,
+                              hr(style = "border-top: 1px solid black;"),
+                              style = "padding-top:5px; padding-bottom:25px;"),
+              shiny::tabPanel("Simple Linear Model Information", tab_stat,
+                              hr(style = "border-top: 1px solid black;"),
+                              style = "padding-top:5px; padding-bottom:25px;"),
+              shiny::tabPanel("Coefficients", tab_coef,
+                              hr(style = "border-top: 1px solid black;"),
+                              style = "padding-top:5px; padding-bottom:25px;")            
+            ) 
+          }
+        )      
+    }  
   }
 }
 

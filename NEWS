@@ -1,3 +1,9 @@
+CHANGES IN R VERSION 0.6.1.9000:
+  BUG FIXES:
+    * Fixed EDA report failing when target variable is number or integer 
+      in eda_web_report(). (thanks to neural-oracle, #75) 
+      
+      
 CHANGES IN R VERSION 0.6.0:
   BUG FIXES:
     * Fixed an error in eda_web_report() when `variable` is included in the 

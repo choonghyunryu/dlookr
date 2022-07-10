@@ -354,7 +354,7 @@ if (!is.null(targetVariable))
 
 ```{r, results='asis'}
 if (!is.null(targetVariable))
-  h2("Grouped Numerical Variables", id = "ID-h2-group-numerical", class = "title-h2")
+  h2("Target Variable and Numeric Variables", id = "ID-h2-group-numerical", class = "title-h2")
 ```
 
 ```{r group-numerical, results='asis'}
@@ -374,7 +374,7 @@ if (!is.null(targetVariable)) {
 
 ```{r, results='asis'}
 if (!is.null(targetVariable))
-  h2("Grouped Categorical Variables", id = "ID-h2-group-categorical", class = "title-h2")
+  h2("Target Variable and Categorical Variables", id = "ID-h2-group-categorical", class = "title-h2")
 ```
 
 ```{r group-categorical, results='asis'}
@@ -394,12 +394,12 @@ if (!is.null(targetVariable)) {
 
 
 ```{r, results='asis'}
-if (!is.null(targetVariable))
+if (!is.null(targetVariable) & factor_flag)
   h2("Grouped Correlation", id = "ID-h2-group-correlation", class = "title-h2")
 ```
 
 ```{r group-correlation, results='asis'}
-if (!is.null(targetVariable)) {
+if (!is.null(targetVariable) & factor_flag) {
   cap <- "Correlation by level of target variable"
   html_cat(cap)
   
