@@ -2069,6 +2069,9 @@ html_paged_target_numerical <- function(.data, target, full_width = TRUE,
   } else if (!target %in% names(.data)) {
     html_cat("The data does not contain the variable specified for target.")    
   } else {
+    factor_flag <- class(pull(.data, target))[1] %in% c("factor", "ordered")
+    numeric_flag <- class(pull(.data, target))[1] %in% c("integer", "numeric")
+    
     nm_numeric <- .data %>% 
       find_class("numerical", index = FALSE) %>% 
       setdiff(target)
@@ -2081,50 +2084,53 @@ html_paged_target_numerical <- function(.data, target, full_width = TRUE,
       })
       
       tgt_by <- .data %>% 
-        target_by(target)
-      
-      for (i in seq(NROW(tab_main))) {
-        nm_var <- nm_numeric[i]
-        
-        el <- div(h3(nm_var))
-        cat(as.character(el))
-        
-        plot_outlier(tgt_by, all_of(nm_var), base_family = base_family)
-        
-        if (i == 1) {
-          break_line_asis(20)
-        } else {
-          break_line_asis(1)
-        }
-        
-        mat <- relate(tgt_by, all_of(nm_var)) %>% 
-          select(-se_mean, -p10, -p20, -p30, -p40, -p60, -p70, -p80, -p90) %>% 
-          select(-variable) %>% 
-          t()
-        
-        colnames(mat) <- mat[1, ] %>%
-          ifelse(. %in% "total", "<Total>", .)
-        mat  <- mat[-1, ] 
-        
-        rownames(mat) <- c("N", "Missing", "Mean", "Standard Deviation", 
-                           "IQR", "Skewness", "Kurtosis", "Min", "1%", "5%", 
-                           "Q1", "Median", "Q3", "95%", "99%", "Max")
-        
-        header_above <- c(1, NCOL(mat))
-        names(header_above) <- c(" ", target)
-        
-        caption <- "Descriptive statistics with levels of target variable"
-        
-        mat %>% 
-          knitr::kable(format = "html", digits = 3, caption = caption) %>% 
-          kableExtra::add_header_above(header_above) %>% 
-          kableExtra::kable_styling(full_width = full_width, font_size = font_size, 
-                                    position = "left") %>%
-          gsub("font-size: initial !important;",
-               "font-size: 12px !important;", .) %>%          
-          cat() 
-        
-        break_page_asis()
+        target_by(all_of(target))
+
+      if (factor_flag) {
+        for (i in seq(NROW(tab_main))) {
+          nm_var <- nm_numeric[i]
+          
+          el <- div(h3(nm_var))
+          cat(as.character(el))
+          
+          plot_outlier(tgt_by, all_of(nm_var), base_family = base_family)
+          
+          if (i == 1) {
+            break_line_asis(20)
+          } else {
+            break_line_asis(1)
+          }
+          
+          mat <- relate(tgt_by, all_of(nm_var)) %>% 
+            select(-se_mean, -p10, -p20, -p30, -p40, -p60, -p70, -p80, -p90) %>% 
+            select(-described_variables) %>% 
+            t()
+          
+          colnames(mat) <- mat[1, ] %>%
+            ifelse(. %in% "total", "<Total>", .)
+          mat  <- mat[-1, ] 
+          
+          rownames(mat) <- c("N", "Missing", "Mean", "Standard Deviation", 
+                             "IQR", "Skewness", "Kurtosis", "Min", "1%", "5%", 
+                             "Q1", "Median", "Q3", "95%", "99%", "Max")
+          
+          header_above <- c(1, NCOL(mat))
+          names(header_above) <- c(" ", target)
+          
+          caption <- "Descriptive statistics with levels of target variable"
+          
+          mat %>% 
+            knitr::kable(format = "html", digits = 3, caption = caption) %>% 
+            kableExtra::add_header_above(header_above) %>% 
+            kableExtra::kable_styling(full_width = full_width, font_size = font_size, 
+                                      position = "left") %>%
+            gsub("font-size: initial !important;",
+                 "font-size: 12px !important;", .) %>%          
+            cat() 
+          
+          break_page_asis()
+        }        
+      } else if (numeric_flag) {
       }
     }    
   } 
@@ -2162,7 +2168,7 @@ html_paged_target_categorical <- function(.data, target, full_width = TRUE,
       })
       
       tgt_by <- .data %>% 
-        target_by(target)
+        target_by(all_of(target))
       
       for (i in seq(NROW(tab_main))) {
         nm_var <- nm_categorical[i]

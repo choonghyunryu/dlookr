@@ -242,13 +242,13 @@ break_page_asis()
 $targeted_eda$
 
 # Target based Analysis
-## Grouped Numerical Variables
+## Target Variable and Numerical Variables
 
 ```{r group-numerical, results='asis', dpi=400, fig.height=5, fig.width=7, out.width="85%"}
 html_paged_target_numerical(reportData, targetVariable, base_family = base_family)  
 ```
 
-## Grouped Categorical Variables
+## Target Variable and Categorical Variables
 
 ```{r group-categorical, results='asis', dpi=400, fig.height=6, fig.width=7, out.width="85%"}
 html_paged_target_categorical(reportData, targetVariable, base_family = base_family)  
