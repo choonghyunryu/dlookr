@@ -2059,7 +2059,8 @@ html_paged_correlation <- function(.data, full_width = TRUE, font_size = 13) {
 #' @importFrom knitr kable
 #' @importFrom kableExtra kable_styling add_header_above
 html_paged_target_numerical <- function(.data, target, full_width = TRUE, 
-                                        font_size = 13, base_family = NULL) {
+                                        font_size = 13, digits = 7,
+                                        base_family = NULL) {
   if (is.null(base_family)) {
     base_family <- "Roboto Condensed"
   }
@@ -2096,7 +2097,8 @@ html_paged_target_numerical <- function(.data, target, full_width = TRUE,
           plot_outlier(tgt_by, all_of(nm_var), base_family = base_family)
           
           if (i == 1) {
-            break_line_asis(20)
+            break_page_asis()
+            break_line_asis(1)            
           } else {
             break_line_asis(1)
           }
@@ -2128,9 +2130,81 @@ html_paged_target_numerical <- function(.data, target, full_width = TRUE,
                  "font-size: 12px !important;", .) %>%          
             cat() 
           
-          break_page_asis()
+          if (i != 1) {
+            break_page_asis()
+          } else {
+            break_line_asis(1)
+            break_page_asis()
+          }
         }        
       } else if (numeric_flag) {
+        for (i in seq(NROW(tab_main))) {
+          nm_var <- nm_numeric[index]
+          
+          el <- div(h3(nm_var))
+          cat(as.character(el))
+          
+          fit_lm <- relate(tgt_by, all_of(nm_var)) 
+          
+          suppressMessages(
+            plot(fit_lm, base_family = "NanumSquare")
+          ) 
+          
+          tab <- summary(fit_lm)$coefficients
+          rsq <- summary(fit_lm)$r.squared
+          adj <- summary(fit_lm)$adj.r.squared
+          fstat <- summary(fit_lm)$fstatistic
+          df <- summary(fit_lm)$df
+          rse <- summary(fit_lm)$sigma
+          p_value <- tab[2, 4] 
+          
+          stat_name <- c(
+            "Residual standard error",
+            "Degrees of freedom",
+            "Multiple R-squared",
+            "Adjusted R-squared",
+            "F-statistic",
+            "p-value"
+          )
+          
+          stat_value <- c(
+            round(rse, digits),
+            max(df),
+            round(rsq, digits),
+            round(adj, digits),
+            round(fstat[1], digits), 
+            round(p_value, digits)
+          )            
+          
+          statistics <- data.frame(
+            Statistics = stat_name,
+            Values = stat_value
+          )
+          
+          caption <- "Statistics of Simple Linear Model"
+          
+          statistics %>% 
+            knitr::kable(format = "html", digits = digits, caption = caption) %>% 
+            kableExtra::kable_styling(full_width = full_width, font_size = font_size, 
+                                      position = "left") %>%
+            gsub("font-size: initial !important;",
+                 "font-size: 12px !important;", .) %>%          
+            cat() 
+          
+          cat("<br>") 
+          
+          caption <- "Coefficients"
+          
+          tab %>% 
+            knitr::kable(format = "html", digits = digits, caption = caption) %>% 
+            kableExtra::kable_styling(full_width = full_width, font_size = font_size, 
+                                      position = "left") %>%
+            gsub("font-size: initial !important;",
+                 "font-size: 12px !important;", .) %>%          
+            cat()       
+          
+          break_page_asis()          
+        } 
       }
     }    
   } 
@@ -2143,7 +2217,8 @@ html_paged_target_numerical <- function(.data, target, full_width = TRUE,
 #' @importFrom kableExtra kable_styling add_header_above
 #' @importFrom stats addmargins
 html_paged_target_categorical <- function(.data, target, full_width = TRUE, 
-                                        font_size = 13, base_family = NULL) {
+                                        font_size = 13, digits = 7, 
+                                        base_family = NULL) {
   if (is.null(base_family)) {
     base_family <- "Roboto Condensed"
   }
@@ -2155,6 +2230,9 @@ html_paged_target_categorical <- function(.data, target, full_width = TRUE,
     html_cat("The data does not contain the variable specified for target.")  
     break_page_asis()
   } else {
+    factor_flag <- class(pull(.data, target))[1] %in% c("factor", "ordered")
+    numeric_flag <- class(pull(.data, target))[1] %in% c("integer", "numeric")
+    
     nm_categorical <- .data %>% 
       find_class("categorical", index = FALSE) %>% 
       setdiff(target)
@@ -2170,47 +2248,124 @@ html_paged_target_categorical <- function(.data, target, full_width = TRUE,
       tgt_by <- .data %>% 
         target_by(all_of(target))
       
-      for (i in seq(NROW(tab_main))) {
-        nm_var <- nm_categorical[i]
-        
-        el <- div(h3(nm_var))
-        cat(as.character(el))
-        
-        print(plot(relate(tgt_by, all_of(nm_var)), base_family = base_family))
-        
-        if (i == 1 & length(levels(.data[, nm_var])) > 12) {
-          break_line_asis(20)
-        } else {
-          break_line_asis(1)
-        }
-        
-        mat <- relate(tgt_by, all_of(nm_var)) %>% 
-          stats::addmargins() %>% 
-          as.data.frame() %>% 
-          tidyr::spread(all_of(target), Freq) 
-        
-        names(mat) <- names(mat) %>% 
-          ifelse(. %in% "Sum", "<Total>", .)
-        mat[, 1] <- mat[, 1] %>% 
-          as.character(.) %>% 
-          ifelse(. %in% "Sum", "<Total>", .)
-        
-        header_above <- c(1, NCOL(mat) - 1)
-        names(header_above) <- c(" ", target)
-        
-        caption <- "Contingency table with target variable"
-        
-        mat %>% 
-          knitr::kable(format = "html", digits = 3, caption = caption) %>% 
-          kableExtra::add_header_above(header_above) %>% 
-          kableExtra::kable_styling(full_width = full_width, font_size = font_size, 
-                                    position = "left") %>%
-          gsub("font-size: initial !important;",
-               "font-size: 12px !important;", .) %>%            
-          cat() 
-        
-        break_page_asis()
-      }
+      if (factor_flag) {
+        for (i in seq(NROW(tab_main))) {
+          nm_var <- nm_categorical[i]
+          
+          el <- div(h3(nm_var))
+          cat(as.character(el))
+          
+          print(plot(relate(tgt_by, all_of(nm_var)), base_family = base_family))
+          
+          if (i == 1 & length(levels(.data[, nm_var])) > 12) {
+            break_line_asis(20)
+          } else {
+            break_line_asis(1)
+          }
+          
+          mat <- relate(tgt_by, all_of(nm_var)) %>% 
+            stats::addmargins() %>% 
+            as.data.frame() %>% 
+            tidyr::spread(all_of(target), Freq) 
+          
+          names(mat) <- names(mat) %>% 
+            ifelse(. %in% "Sum", "<Total>", .)
+          mat[, 1] <- mat[, 1] %>% 
+            as.character(.) %>% 
+            ifelse(. %in% "Sum", "<Total>", .)
+          
+          header_above <- c(1, NCOL(mat) - 1)
+          names(header_above) <- c(" ", target)
+          
+          caption <- "Contingency table with target variable"
+          
+          mat %>% 
+            knitr::kable(format = "html", digits = 3, caption = caption) %>% 
+            kableExtra::add_header_above(header_above) %>% 
+            kableExtra::kable_styling(full_width = full_width, font_size = font_size, 
+                                      position = "left") %>%
+            gsub("font-size: initial !important;",
+                 "font-size: 12px !important;", .) %>%            
+            cat() 
+          
+          break_page_asis()
+        }        
+      } else if (numeric_flag) {
+        for (i in seq(NROW(tab_main))) {
+          nm_var <- nm_categorical[index]
+          
+          num_cat <- relate(tgt_by, all_of(nm_var))
+          
+          el <- div(h3(nm_var))
+          cat(as.character(el))
+          
+          print(plot(num_cat))
+          
+          caption <- "ANOVA Table"
+          
+          num_cat %>% 
+            anova() %>% 
+            knitr::kable(format = "html", digits = digits, caption = caption) %>% 
+            kableExtra::kable_styling(full_width = full_width, font_size = font_size, 
+                                      position = "left") %>%
+            gsub("font-size: initial !important;",
+                 "font-size: 12px !important;", .) %>%            
+            cat() 
+          
+          caption <- "Statistics of Simple Linear Model"
+          
+          tab <- summary(num_cat)$coefficients
+          rsq <- summary(num_cat)$r.squared
+          adj <- summary(num_cat)$adj.r.squared
+          fstat <- summary(num_cat)$fstatistic
+          df <- summary(num_cat)$df
+          rse <- summary(num_cat)$sigma
+          p_value <- tab[2, 4] 
+          
+          stat_name <- c(
+            "Residual standard error",
+            "Degrees of freedom",
+            "Multiple R-squared",
+            "Adjusted R-squared",
+            "F-statistic",
+            "p-value"
+          )
+          
+          stat_value <- c(
+            round(rse, digits),
+            max(df),
+            round(rsq, digits),
+            round(adj, digits),
+            round(fstat[1], digits), 
+            round(p_value, digits)
+          )            
+          
+          statistics <- data.frame(
+            Statistics = stat_name,
+            Values = stat_value
+          )
+          
+          statistics %>% 
+            knitr::kable(format = "html", digits = digits, caption = caption) %>% 
+            kableExtra::kable_styling(full_width = full_width, font_size = font_size, 
+                                      position = "left") %>%
+            gsub("font-size: initial !important;",
+                 "font-size: 12px !important;", .) %>%          
+            cat() 
+          
+          caption <- "Coefficients"
+          
+          tab %>% 
+            knitr::kable(format = "html", digits = digits, caption = caption) %>% 
+            kableExtra::kable_styling(full_width = full_width, font_size = font_size, 
+                                      position = "left") %>%
+            gsub("font-size: initial !important;",
+                 "font-size: 12px !important;", .) %>%          
+            cat()  
+          
+          break_page_asis()
+        } 
+      }  
     }    
   } 
 }
