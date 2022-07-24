@@ -624,6 +624,14 @@ plot.relate <- function(x, model = FALSE, hex_thres = 1000,
     
     suppressWarnings(p_cross)
   } else if (type == "linear") {
+    # for Exception handling in plot.relate() #76
+    # Code of MASS::bandwidth.nrd
+    bandwidth.nrd <- function (x) {
+      r <- quantile(x, c(0.25, 0.75))
+      h <- (r[2L] - r[1L])/1.34
+      4 * 1.06 * min(sqrt(var(x)), h) * length(x)^(-1/5)
+    }
+    
     if (model) {
       op <- par(no.readonly = TRUE)
       on.exit(par(op))
@@ -636,12 +644,21 @@ plot.relate <- function(x, model = FALSE, hex_thres = 1000,
       plot(x, which = 3, ...)
       plot(x, which = 5, ...)
     } else {
+      # for Exception handling in plot.relate() #76
+      bandwidth_x_zero <- bandwidth.nrd(attr(x, "raw")[[xvar]]) == 0
+      bandwidth_y_zero <- bandwidth.nrd(attr(x, "raw")[[yvar]]) == 0
+      
       fig1 <- ggplot(aes(x = !!sym(yvar), y = !!sym(xvar)), data = attr(x, "raw")) 
       if (NROW(attr(x, "raw")) >= hex_thres) {
         fig1 <- fig1 + 
           geom_hex(color = "grey") +
-          scale_fill_gradientn(colours = pal) + 
-          geom_density2d(colour = "black")
+          scale_fill_gradientn(colours = pal)
+        
+        # for Exception handling in plot.relate() #76
+        if (!bandwidth_x_zero & !bandwidth_y_zero) {
+          fig1 <- fig1 + 
+            geom_density2d(colour = "black")
+        }
       } else {
         fig1 <- fig1 + geom_point(alpha = 1/5)
       }
@@ -672,8 +689,13 @@ plot.relate <- function(x, model = FALSE, hex_thres = 1000,
       if (NROW(attr(x, "raw")) >= hex_thres) {
         fig2 <- fig2 + 
           geom_hex(color = "grey") +
-          scale_fill_gradientn(colours = pal) + 
-          geom_density2d(colour = "black")
+          scale_fill_gradientn(colours = pal)
+  
+        # for Exception handling in plot.relate() #76
+        if (!bandwidth_x_zero & !bandwidth_y_zero) {
+          fig2 <- fig2 + 
+            geom_density2d(colour = "black")
+        }              
       } else {
         fig2 <- fig2 + geom_point(alpha = 1/5)
       }
