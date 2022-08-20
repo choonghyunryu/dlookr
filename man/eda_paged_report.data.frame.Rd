@@ -34,7 +34,7 @@ eda_paged_report(.data, ...)
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}
 
-\item{...}{arguments to be passed to methods.}
+\item{...}{arguments to be passed to pagedown::chrome_print().}
 
 \item{target}{character. target variable.}
 

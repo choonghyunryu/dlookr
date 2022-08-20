@@ -234,7 +234,7 @@ diagnose_web_report.tbl_dbi <- function(.data, output_file = NULL, output_dir = 
 #' It has a value between (0, 100]. 100 means all data, and 5 means 5\% of sample data.
 #' This is useful for data with a large number of observations.
 #' @param as_factor logical. whether to convert to factor when importing a character type variable from DBMS table into R.
-#' @param ... arguments to be passed to methods.
+#' @param ... arguments to be passed to pagedown::chrome_print().
 #' 
 #' @seealso \code{\link{diagnose_paged_report.data.frame}}.
 #' @examples
@@ -294,18 +294,30 @@ diagnose_paged_report.tbl_dbi <- function(.data, output_format = c("pdf", "html"
         mutate_if(is.character, as.factor)
     }
     
+    if (output_format == "pdf") {
+      args <- list(...)
+
+      if ("extra_args" %in% names(args)) {
+        extra_args <- args$extra_args
+      } else {
+        extra_args <- c("--disable-gpu")
+      }       
+    }
+    
     diagnose_paged_report(raw_data, 
                           output_format = output_format, output_file = output_file, 
                           output_dir = output_dir, browse = browse, title = title,
                           title_color = title_color, thres_uniq_cat = thres_uniq_cat, 
                           thres_uniq_num = thres_uniq_num, 
-                          subtitle = dbplyr::remote_name(.data) %>% as.character(), author = author,
+                          subtitle = dbplyr::remote_name(.data) %>% as.character(), 
+                          author = author,
                           flag_content_zero = flag_content_zero,
                           flag_content_minus = flag_content_minus, 
                           flag_content_missing = flag_content_missing,
                           logo_img = logo_img, create_date = create_date, 
                           theme = theme, sample_percent = sample_percent, 
-                          is_tbl_dbi = TRUE)
+                          is_tbl_dbi = TRUE,
+                          extra_args = extra_args)
   }  
 }  
   
@@ -526,7 +538,7 @@ eda_web_report.tbl_dbi <- function(.data, target = NULL, output_file = NULL,
 #' It has a value between (0, 100]. 100 means all data, and 5 means 5\% of sample data.
 #' This is useful for data with a large number of observations.
 #' @param as_factor logical. whether to convert to factor when importing a character type variable from DBMS table into R.
-#' @param ... arguments to be passed to methods.
+#' @param ... arguments to be passed to pagedown::chrome_print().
 #' 
 #' @seealso \code{\link{eda_paged_report.data.frame}}.
 #' @examples
@@ -583,15 +595,27 @@ eda_paged_report.tbl_dbi <- function(.data, target = NULL, output_format = c("pd
       raw_data <- raw_data %>% 
         mutate_if(is.character, as.factor)
     }
+  
+    if (output_format == "pdf") {
+      args <- list(...)
+      
+      if ("extra_args" %in% names(args)) {
+        extra_args <- args$extra_args
+      } else {
+        extra_args <- c("--disable-gpu")
+      }       
+    }
     
     eda_paged_report(raw_data, target = target, 
                      output_format = output_format, output_file = output_file, 
                      output_dir = output_dir, browse = browse, title = title,
-                     subtitle = dbplyr::remote_name(.data) %>% as.character(), author = author,
-                     abstract_title = abstract_title, abstract = abstract,
+                     subtitle = dbplyr::remote_name(.data) %>% as.character(), 
+                     author = author, abstract_title = abstract_title, 
+                     abstract = abstract,
                      title_color = title_color, subtitle_color = subtitle_color,
                      cover_img = cover_img, create_date = create_date, 
                      logo_img = logo_img, theme = theme, 
-                     sample_percent = sample_percent, is_tbl_dbi = TRUE)
+                     sample_percent = sample_percent, is_tbl_dbi = TRUE,
+                     extra_args = extra_args)
   }  
 }

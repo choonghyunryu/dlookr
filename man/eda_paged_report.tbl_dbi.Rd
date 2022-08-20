@@ -83,7 +83,7 @@ Applies only if in_database = FALSE.}
 
 \item{as_factor}{logical. whether to convert to factor when importing a character type variable from DBMS table into R.}
 
-\item{...}{arguments to be passed to methods.}
+\item{...}{arguments to be passed to pagedown::chrome_print().}
 }
 \description{
 The eda_paged_report() paged report the information for EDA of the DBMS table through tbl_dbi

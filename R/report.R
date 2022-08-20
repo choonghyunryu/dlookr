@@ -349,7 +349,7 @@ diagnose_web_report.data.frame <- function(.data, output_file = NULL, output_dir
 #' @param is_tbl_dbi logical. whether .data is a tbl_dbi object.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
-#' @param ... arguments to be passed to methods.
+#' @param ... arguments to be passed to pagedown::chrome_print().
 #' 
 #' @seealso \code{\link{diagnose_paged_report.tbl_dbi}}.
 #' @examples
@@ -402,6 +402,8 @@ diagnose_paged_report.data.frame <- function(.data, output_format = c("pdf", "ht
   theme <- match.arg(theme)
   
   if (output_format == "pdf") {
+    args <- list(...)
+    
     browser <- pagedown::find_chrome()    
   }
   
@@ -558,7 +560,13 @@ diagnose_paged_report.data.frame <- function(.data, output_format = c("pdf", "ht
     }
     
     html_out <- rmarkdown::render(paste(path, rmd, sep = "/"))
-    pagedown::chrome_print(html_out, output = output_file)
+    
+    if ("extra_args" %in% names(args)) {
+      extra_args <- args$extra_args
+    } else {
+      extra_args <- c("--disable-gpu")
+    }
+    pagedown::chrome_print(html_out, output = output_file, extra_args = extra_args)
     
     file.remove(paste(path, html, sep = "/"))
   } else {
@@ -898,7 +906,7 @@ eda_web_report.data.frame <- function(.data, target = NULL, output_file = NULL,
 #' @param is_tbl_dbi logical. whether .data is a tbl_dbi object.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details) 
-#' @param ... arguments to be passed to methods.
+#' @param ... arguments to be passed to pagedown::chrome_print().
 #' 
 #' @seealso \code{\link{eda_paged_report.tbl_dbi}}.
 #' @examples
@@ -946,6 +954,8 @@ eda_paged_report.data.frame <- function(.data, target = NULL, output_format = c(
   theme <- match.arg(theme)
   
   if (output_format == "pdf") {
+    args <- list(...)
+    
     browser <- pagedown::find_chrome()    
   }
   
@@ -1084,7 +1094,13 @@ eda_paged_report.data.frame <- function(.data, target = NULL, output_format = c(
     }
     
     html_out <- rmarkdown::render(paste(path, rmd, sep = "/"))
-    pagedown::chrome_print(html_out, output = output_file)
+    
+    if ("extra_args" %in% names(args)) {
+      extra_args <- args$extra_args
+    } else {
+      extra_args <- c("--disable-gpu")
+    }
+    pagedown::chrome_print(html_out, output = output_file, extra_args = extra_args)
     
     file.remove(paste(path, html, sep = "/"))
   } else {
@@ -1371,7 +1387,7 @@ transformation_web_report <- function(.data, target = NULL, output_file = NULL,
 #' This is useful for data with a large number of observations.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
-#' @param ... arguments to be passed to methods.
+#' @param ... arguments to be passed to pagedown::chrome_print().
 #' 
 #' @examples
 #' \donttest{
@@ -1413,6 +1429,8 @@ transformation_paged_report <- function(.data, target = NULL,
   theme <- match.arg(theme)
   
   if (output_format == "pdf") {
+    args <- list(...)
+    
     browser <- pagedown::find_chrome()    
   }
   
@@ -1546,7 +1564,13 @@ transformation_paged_report <- function(.data, target = NULL,
     }
     
     html_out <- rmarkdown::render(paste(path, rmd, sep = "/"))
-    pagedown::chrome_print(html_out, output = output_file, timeout = 120)
+    
+    if ("extra_args" %in% names(args)) {
+      extra_args <- args$extra_args
+    } else {
+      extra_args <- c("--disable-gpu")
+    }
+    pagedown::chrome_print(html_out, output = output_file, extra_args = extra_args)
     
     file.remove(paste(path, html, sep = "/"))
   } else {

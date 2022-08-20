@@ -5,7 +5,14 @@ CHANGES IN R VERSION 0.6.1.9000:
       
     * Added exception handling logic for errors that occur when the bandwidth 
       estimate of a numeric variable is 0 in plot.relate(). (#76)       
-      
+
+  MINOR CHANGES:
+    * Added new arguments to functions that generate pdf reports for use 
+      in shinyapps.io (#77)     
+        - diagnose_paged_report()
+        - eda_paged_report()
+        - transformation_paged_report()
+        
 
       
 CHANGES IN R VERSION 0.6.0:

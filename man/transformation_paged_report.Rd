@@ -75,7 +75,7 @@ This is useful for data with a large number of observations.}
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
 
-\item{...}{arguments to be passed to methods.}
+\item{...}{arguments to be passed to pagedown::chrome_print().}
 }
 \description{
 The eda_paged_report() paged report the information for data transformatiom.

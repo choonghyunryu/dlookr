@@ -38,7 +38,7 @@ diagnose_paged_report(.data, ...)
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}}.}
 
-\item{...}{arguments to be passed to methods.}
+\item{...}{arguments to be passed to pagedown::chrome_print().}
 
 \item{output_format}{report output type. Choose either "pdf" and "html".
 "pdf" create pdf file by rmarkdown::render() and pagedown::chrome_print(). so, 
