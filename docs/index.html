@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.7.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.1.9001</span>
       </span>
     </div>
 
@@ -1573,8 +1573,6 @@ the “mice” method.</p>
 <span class="co">#&gt;   5   3  Income  Urban</span>
 <span class="co">#&gt;   5   4  Income  Urban</span>
 <span class="co">#&gt;   5   5  Income  Urban</span>
-<span class="co">#&gt; Warning in (function (kind = NULL, normal.kind = NULL, sample.kind = NULL) :</span>
-<span class="co">#&gt; non-uniform 'Rounding' sampler used</span>
 
 <span class="co"># result of imputation</span>
 <span class="va">urban</span>
@@ -1583,9 +1581,9 @@ the “mice” method.</p>
 <span class="co">#&gt;  [37] No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes</span>
 <span class="co">#&gt;  [55] No  Yes Yes Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes Yes Yes Yes No </span>
 <span class="co">#&gt;  [73] Yes No  No  No  Yes No  Yes Yes Yes Yes Yes No  No  No  Yes No  Yes No </span>
-<span class="co">#&gt;  [91] No  Yes Yes Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes</span>
+<span class="co">#&gt;  [91] No  Yes Yes No  Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes</span>
 <span class="co">#&gt; [109] Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes No </span>
-<span class="co">#&gt; [127] Yes Yes Yes No  Yes Yes Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes</span>
+<span class="co">#&gt; [127] Yes Yes Yes No  Yes No  Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes</span>
 <span class="co">#&gt; [145] No  Yes Yes No  No  Yes No  No  No  No  No  Yes Yes No  No  No  No  No </span>
 <span class="co">#&gt; [163] Yes No  No  Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes No  Yes No  Yes</span>
 <span class="co">#&gt; [181] Yes Yes Yes Yes No  Yes No  Yes Yes No  No  Yes No  Yes Yes Yes Yes Yes</span>
@@ -1594,8 +1592,8 @@ the “mice” method.</p>
 <span class="co">#&gt; [235] No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes</span>
 <span class="co">#&gt; [253] Yes No  Yes Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes No  No  Yes Yes</span>
 <span class="co">#&gt; [271] Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes No  No  Yes No  Yes</span>
-<span class="co">#&gt; [289] No  Yes No  No  Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes</span>
-<span class="co">#&gt; [307] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes No  No  No  Yes Yes Yes Yes</span>
+<span class="co">#&gt; [289] No  Yes No  Yes Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes</span>
+<span class="co">#&gt; [307] Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No  No  No  Yes Yes Yes Yes</span>
 <span class="co">#&gt; [325] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No </span>
 <span class="co">#&gt; [343] No  Yes No  Yes No  No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes</span>
 <span class="co">#&gt; [361] No  No  Yes Yes Yes No  No  Yes No  Yes Yes Yes No  Yes Yes Yes Yes No </span>
@@ -2036,14 +2034,14 @@ frequencies</li>
 <span class="co">#&gt; binned type: kmeans</span>
 <span class="co">#&gt; number of bins: 5</span>
 <span class="co">#&gt; x</span>
-<span class="co">#&gt;      [21,49]    (49,70.5]  (70.5,86.5] (86.5,103.5]  (103.5,120]         &lt;NA&gt; </span>
-<span class="co">#&gt;          115           86           65           63           51           20</span>
+<span class="co">#&gt;   [21,36.5] (36.5,55.5] (55.5,75.5] (75.5,97.5]  (97.5,120]        &lt;NA&gt; </span>
+<span class="co">#&gt;          66          62          91          86          75          20</span>
 <span class="fu"><a href="reference/binning.html">binning</a></span><span class="op">(</span><span class="va">carseats</span><span class="op">$</span><span class="va">Income</span>, nbins <span class="op">=</span> <span class="fl">5</span>, type <span class="op">=</span> <span class="st">"bclust"</span><span class="op">)</span>
 <span class="co">#&gt; binned type: bclust</span>
 <span class="co">#&gt; number of bins: 5</span>
 <span class="co">#&gt; x</span>
-<span class="co">#&gt;     [21,49]   (49,66.5] (66.5,77.5] (77.5,95.5]  (95.5,120]        &lt;NA&gt; </span>
-<span class="co">#&gt;         115          59          52          75          79          20</span>
+<span class="co">#&gt;   [21,37.5] (37.5,55.5] (55.5,75.5] (75.5,94.5]  (94.5,120]        &lt;NA&gt; </span>
+<span class="co">#&gt;          70          58          91          81          80          20</span>
 
 <span class="co"># Extract the binned results</span>
 <span class="fu"><a href="reference/extract.bins.html">extract</a></span><span class="op">(</span><span class="va">bin</span><span class="op">)</span>
@@ -2177,7 +2175,8 @@ with a binary class.</p>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">bin</span><span class="op">)</span></code></pre></div>
 <p><img src="figures/README-binning_by-1.png" width="80%"></p>
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># extract binned results</span>
+<code class="sourceCode R">
+<span class="co"># extract binned results</span>
 <span class="fu"><a href="reference/extract.bins.html">extract</a></span><span class="op">(</span><span class="va">bin</span><span class="op">)</span>
 <span class="co">#&gt;   [1] (6,29] (6,29] (6,29] (0,6]  (0,6]  (6,29] [-1,0] (6,29] [-1,0] [-1,0]</span>
 <span class="co">#&gt;  [11] (6,29] (0,6]  (0,6]  (6,29] (6,29] (0,6]  [-1,0] (6,29] [-1,0] (6,29]</span>
@@ -2365,20 +2364,12 @@ arguments.</p>
 <ul>
 <li>The part of the report is shown in the following figure.:</li>
 </ul>
-<div class="figure" style="text-align: center">
-<img src="articles/img/diag_web_title.jpg" alt="The part of the report" width="60%"><p class="caption">
-The part of the report
-</p>
-</div>
+<p><img src="articles/img/diag_web_title.jpg" title="The part of the report" alt="The part of the report" width="60%" style="display: block; margin: auto;"></p>
 <ul>
 <li>The dynamic contents of the report is shown in the following
 figure.:</li>
 </ul>
-<div class="figure" style="text-align: center">
-<img src="articles/img/diag_web_content.jpg" alt="The dynamic contents of the report" width="60%"><p class="caption">
-The dynamic contents of the report
-</p>
-</div>
+<p><img src="articles/img/diag_web_content.jpg" title="The dynamic contents of the report" alt="The dynamic contents of the report" width="60%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level4">
@@ -2554,19 +2545,11 @@ arguments.</p>
 <ul>
 <li>The cover of the report is shown in the following figure.:</li>
 </ul>
-<div class="figure" style="text-align: center">
-<img src="articles/img/diag_paged_cover.jpg" alt="The part of the report" width="60%"><p class="caption">
-The part of the report
-</p>
-</div>
+<p><img src="articles/img/diag_paged_cover.jpg" title="The part of the report" alt="The part of the report" width="60%" style="display: block; margin: auto;"></p>
 <ul>
 <li>The contents of the report is shown in the following figure.:</li>
 </ul>
-<div class="figure" style="text-align: center">
-<img src="articles/img/diag_paged_content.jpg" alt="The dynamic contents of the report" width="60%"><p class="caption">
-The dynamic contents of the report
-</p>
-</div>
+<p><img src="articles/img/diag_paged_content.jpg" title="The dynamic contents of the report" alt="The dynamic contents of the report" width="60%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 </div>
@@ -2706,11 +2689,7 @@ arguments.</p>
 <li>The dynamic contents of the report is shown in the following
 figure.:</li>
 </ul>
-<div class="figure" style="text-align: center">
-<img src="articles/img/eda_web_title.jpg" alt="The part of the report" width="60%"><p class="caption">
-The part of the report
-</p>
-</div>
+<p><img src="articles/img/eda_web_title.jpg" title="The part of the report" alt="The part of the report" width="60%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level4">
@@ -2863,19 +2842,11 @@ arguments.</p>
 <ul>
 <li>The cover of the report is shown in the following figure.:</li>
 </ul>
-<div class="figure" style="text-align: center">
-<img src="articles/img/eda_paged_cover.jpg" alt="The part of the report" width="60%"><p class="caption">
-The part of the report
-</p>
-</div>
+<p><img src="articles/img/eda_paged_cover.jpg" title="The part of the report" alt="The part of the report" width="60%" style="display: block; margin: auto;"></p>
 <ul>
 <li>The contents of the report is shown in the following figure.:</li>
 </ul>
-<div class="figure" style="text-align: center">
-<img src="articles/img/eda_paged_content.jpg" alt="The dynamic contents of the report" width="60%"><p class="caption">
-The dynamic contents of the report
-</p>
-</div>
+<p><img src="articles/img/eda_paged_content.jpg" title="The dynamic contents of the report" alt="The dynamic contents of the report" width="60%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 </div>
@@ -2997,11 +2968,7 @@ following arguments.</p>
 <li>The dynamic contents of the report is shown in the following
 figure.:</li>
 </ul>
-<div class="figure" style="text-align: center">
-<img src="articles/img/transformation_web_title.jpg" alt="The part of the report" width="60%"><p class="caption">
-The part of the report
-</p>
-</div>
+<p><img src="articles/img/transformation_web_title.jpg" title="The part of the report" alt="The part of the report" width="60%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level4">
@@ -3130,19 +3097,11 @@ following arguments.</p>
 <ul>
 <li>The cover of the report is shown in the following figure.:</li>
 </ul>
-<div class="figure" style="text-align: center">
-<img src="articles/img/transformation_paged_cover.jpg" alt="The part of the report" width="60%"><p class="caption">
-The part of the report
-</p>
-</div>
+<p><img src="articles/img/transformation_paged_cover.jpg" title="The part of the report" alt="The part of the report" width="60%" style="display: block; margin: auto;"></p>
 <ul>
 <li>The contents of the report is shown in the following figure.:</li>
 </ul>
-<div class="figure" style="text-align: center">
-<img src="articles/img/transformation_paged_content.jpg" alt="The dynamic contents of the report" width="60%"><p class="caption">
-The dynamic contents of the report
-</p>
-</div>
+<p><img src="articles/img/transformation_paged_content.jpg" title="The dynamic contents of the report" alt="The dynamic contents of the report" width="60%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 </div>
@@ -3267,7 +3226,7 @@ object.</p>
 <span class="co">#&gt;    &lt;chr&gt;       &lt;chr&gt;             &lt;dbl&gt;           &lt;dbl&gt;        &lt;int&gt;       &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 Sales       double                0            0             336      0.84  </span>
 <span class="co">#&gt;  2 CompPrice   double                0            0              73      0.182 </span>
-<span class="co">#&gt;  3 Income      double               20            5              99      0.248 </span>
+<span class="co">#&gt;  3 Income      double               20            5              98      0.245 </span>
 <span class="co">#&gt;  4 Advertising double                0            0              28      0.07  </span>
 <span class="co">#&gt;  5 Population  double                0            0             275      0.688 </span>
 <span class="co">#&gt;  6 Price       double                0            0             101      0.252 </span>
@@ -3285,7 +3244,7 @@ object.</p>
 <span class="co">#&gt;   variables types   missing_count missing_percent unique_count unique_rate</span>
 <span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;           &lt;int&gt;           &lt;dbl&gt;        &lt;int&gt;       &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 Sales     numeric             0               0          336       0.84 </span>
-<span class="co">#&gt; 2 Income    numeric            20               5           99       0.248</span>
+<span class="co">#&gt; 2 Income    numeric            20               5           98       0.245</span>
 <span class="co">#&gt; 3 Age       numeric             0               0           56       0.14</span></code></pre></div>
 </div>
 <div class="section level4">
@@ -3316,7 +3275,7 @@ object.</p>
 <span class="co">#&gt;   &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt;   &lt;int&gt;</span>
 <span class="co">#&gt; 1 Sales           0   5.39   7.50   7.49   9.32  16.3     1     0       2</span>
 <span class="co">#&gt; 2 CompPrice      77 115    125.   125    135    175       0     0       2</span>
-<span class="co">#&gt; 3 Income         21  42.8   68.4   69     90    120       0     0       0</span>
+<span class="co">#&gt; 3 Income         21  42     68.7   69     92    120       0     0       0</span>
 <span class="co">#&gt; 4 Advertising     0   0      6.64   5     12     29     144     0       0</span>
 <span class="co">#&gt; 5 Population     10 139    265.   272    398.   509       0     0       0</span>
 <span class="co">#&gt; 6 Price          24 100    116.   117    131    191       0     0       5</span>
@@ -3395,11 +3354,11 @@ is specified as tbl_dbi object instead of data frame object.</p>
 <span class="co">#&gt; # A tibble: 6 × 28</span>
 <span class="co">#&gt;   described_variables ShelveLoc US        n    na  mean    sd se_mean   IQR</span>
 <span class="co">#&gt;   &lt;chr&gt;               &lt;chr&gt;     &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 Sales               Bad       No       21     0  5.31  1.98   0.432  2.38</span>
+<span class="co">#&gt; 1 Sales               Bad       No       23     0  5.36  1.91   0.398  2.32</span>
 <span class="co">#&gt; 2 Sales               Bad       Yes      51     0  5.59  2.57   0.359  3.76</span>
 <span class="co">#&gt; 3 Sales               Good      No       18     0  9.21  2.97   0.700  3.71</span>
-<span class="co">#&gt; 4 Sales               Good      Yes      38     0 10.8   2.32   0.376  2.97</span>
-<span class="co">#&gt; 5 Sales               Medium    No       54     0  6.96  2.09   0.285  3.22</span>
+<span class="co">#&gt; 4 Sales               Good      Yes      38     0 10.8   2.22   0.360  2.97</span>
+<span class="co">#&gt; 5 Sales               Medium    No       54     0  6.92  2.08   0.283  3.18</span>
 <span class="co">#&gt; 6 Sales               Medium    Yes      96     0  7.55  2.19   0.224  3.39</span>
 <span class="co">#&gt; # … with 19 more variables: skewness &lt;dbl&gt;, kurtosis &lt;dbl&gt;, p00 &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   p01 &lt;dbl&gt;, p05 &lt;dbl&gt;, p10 &lt;dbl&gt;, p20 &lt;dbl&gt;, p25 &lt;dbl&gt;, p30 &lt;dbl&gt;,</span>
@@ -3425,7 +3384,7 @@ is specified as tbl_dbi object instead of data frame object.</p>
 <span class="co">#&gt; # A tibble: 1 × 6</span>
 <span class="co">#&gt;   variable   ShelveLoc US    statistic p_value sample</span>
 <span class="co">#&gt;   &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 log_income Bad       No        0.949   0.143     34</span></code></pre></div>
+<span class="co">#&gt; 1 log_income Bad       No        0.945  0.0938     34</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="normalization-visualization-of-numerical-column-in-the-dbms">Normalization visualization of numerical column in the DBMS<a class="anchor" aria-label="anchor" href="#normalization-visualization-of-numerical-column-in-the-dbms"></a>
@@ -3456,15 +3415,16 @@ DBMS<a class="anchor" aria-label="anchor" href="#compute-the-correlation-coeffic
   <span class="fu"><a href="reference/correlate.data.frame.html">correlate</a></span><span class="op">(</span><span class="va">Sales</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">coef_corr</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">coef_corr</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0.5</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 6 × 5</span>
+<span class="co">#&gt; # A tibble: 7 × 5</span>
 <span class="co">#&gt;   Urban US    var1  var2       coef_corr</span>
 <span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt; &lt;fct&gt; &lt;fct&gt;          &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 No    No    Sales Population    -0.530</span>
-<span class="co">#&gt; 2 No    No    Sales Price         -0.838</span>
-<span class="co">#&gt; 3 No    Yes   Sales Price         -0.644</span>
-<span class="co">#&gt; 4 Yes   No    Sales Price         -0.833</span>
-<span class="co">#&gt; 5 Yes   No    Sales Age           -0.649</span>
-<span class="co">#&gt; 6 Yes   Yes   Sales Price         -0.594</span></code></pre></div>
+<span class="co">#&gt; 1 No    No    Sales Income        -1    </span>
+<span class="co">#&gt; 2 No    No    Sales Population    -0.530</span>
+<span class="co">#&gt; 3 No    No    Sales Price         -0.838</span>
+<span class="co">#&gt; 4 No    Yes   Sales Price         -0.644</span>
+<span class="co">#&gt; 5 Yes   No    Sales Price         -0.833</span>
+<span class="co">#&gt; 6 Yes   No    Sales Age           -0.649</span>
+<span class="co">#&gt; 7 Yes   Yes   Sales Price         -0.559</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="visualize-correlation-plot-of-numerical-columns-in-the-dbms">Visualize correlation plot of numerical columns in the DBMS<a class="anchor" aria-label="anchor" href="#visualize-correlation-plot-of-numerical-columns-in-the-dbms"></a>

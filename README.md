@@ -5,7 +5,7 @@
 
 <!-- badges: start -->
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/dlookr)](https://cran.r-project.org/package=dlookr)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/dlookr)](https://cran.r-project.org/package=dlookr)
 [![Total
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/dlookr)](https://cran.r-project.org/package=dlookr)
 <!-- badges: end -->
@@ -55,8 +55,8 @@ documentation.
 
 Provided vignettes is as follows.
 
--   Data quality diagnosis for data.frame, tbl\_df, and table of DBMS
--   Exploratory Data Analysis for data.frame, tbl\_df, and table of DBMS
+-   Data quality diagnosis for data.frame, tbl_df, and table of DBMS
+-   Exploratory Data Analysis for data.frame, tbl_df, and table of DBMS
 -   Data Transformation
 -   Data diagnosis and EDA for table of DBMS
 
@@ -112,7 +112,7 @@ follows.
 -   `missing_count` : number of missing values
 -   `missing_percent` : percentage of missing values
 -   `unique_count` : number of unique values
--   `unique_rate` : rate of unique value. unique\_count / number of
+-   `unique_rate` : rate of unique value. unique_count / number of
     observation
 
 For example, we can diagnose all variables in `flights`:
@@ -152,7 +152,7 @@ diagnose(flights)
 -   `Unique value` : Variables with a unique value (`unique_count` = 1)
     are considered to be excluded from data analysis. And if the data
     type is not numeric (integer, numeric) and the number of unique
-    values is equal to the number of observations (unique\_rate = 1),
+    values is equal to the number of observations (unique_rate = 1),
     then the variable is likely to be an identifier. Therefore, this
     variable is also not suitable for the analysis model.
 
@@ -250,7 +250,7 @@ values of numeric variables are `min`, `Q1`, `mean`, `median`, `Q3` and
 
 However, the result displayed on the console has the disadvantage that
 the analyst has to look at it with the eyes. However, when the summary
-information is returned in a data frame structure such as tbl\_df, the
+information is returned in a data frame structure such as tbl_df, the
 scope of utilization is expanded. `diagnose_numeric()` supports this.
 
 `zero`, `minus`, and `outlier` are useful measures to diagnose data
@@ -622,7 +622,7 @@ describe(carseats)
     transformations to follow the normal distribution. The variables
     `Advertising` seem to need to consider variable transformation.
 -   `mean` and `sd`, `se_mean` : The`Population` with a large
-    `standard error of the mean`(se\_mean) has low representativeness of
+    `standard error of the mean`(se_mean) has low representativeness of
     the `arithmetic mean`(mean). The `standard deviation`(sd) is much
     larger than the arithmetic average.
 
@@ -1433,8 +1433,6 @@ urban <- imputate_na(carseats, Urban, US, method = "mice")
 #>   5   3  Income  Urban
 #>   5   4  Income  Urban
 #>   5   5  Income  Urban
-#> Warning in (function (kind = NULL, normal.kind = NULL, sample.kind = NULL) :
-#> non-uniform 'Rounding' sampler used
 
 # result of imputation
 urban
@@ -1443,9 +1441,9 @@ urban
 #>  [37] No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes
 #>  [55] No  Yes Yes Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes Yes Yes Yes No 
 #>  [73] Yes No  No  No  Yes No  Yes Yes Yes Yes Yes No  No  No  Yes No  Yes No 
-#>  [91] No  Yes Yes Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes
+#>  [91] No  Yes Yes No  Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes
 #> [109] Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes No 
-#> [127] Yes Yes Yes No  Yes Yes Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes
+#> [127] Yes Yes Yes No  Yes No  Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes
 #> [145] No  Yes Yes No  No  Yes No  No  No  No  No  Yes Yes No  No  No  No  No 
 #> [163] Yes No  No  Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes No  Yes No  Yes
 #> [181] Yes Yes Yes Yes No  Yes No  Yes Yes No  No  Yes No  Yes Yes Yes Yes Yes
@@ -1454,8 +1452,8 @@ urban
 #> [235] No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes
 #> [253] Yes No  Yes Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes No  No  Yes Yes
 #> [271] Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes No  No  Yes No  Yes
-#> [289] No  Yes No  No  Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
-#> [307] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes No  No  No  Yes Yes Yes Yes
+#> [289] No  Yes No  Yes Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
+#> [307] Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No  No  No  Yes Yes Yes Yes
 #> [325] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No 
 #> [343] No  Yes No  Yes No  No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes
 #> [361] No  No  Yes Yes Yes No  No  Yes No  Yes Yes Yes No  Yes Yes Yes Yes No 
@@ -1890,14 +1888,14 @@ binning(carseats$Income, nbins = 5, type = "kmeans")
 #> binned type: kmeans
 #> number of bins: 5
 #> x
-#>      [21,49]    (49,70.5]  (70.5,86.5] (86.5,103.5]  (103.5,120]         <NA> 
-#>          115           86           65           63           51           20
+#>   [21,36.5] (36.5,55.5] (55.5,75.5] (75.5,97.5]  (97.5,120]        <NA> 
+#>          66          62          91          86          75          20
 binning(carseats$Income, nbins = 5, type = "bclust")
 #> binned type: bclust
 #> number of bins: 5
 #> x
-#>     [21,49]   (49,66.5] (66.5,77.5] (77.5,95.5]  (95.5,120]        <NA> 
-#>         115          59          52          75          79          20
+#>   [21,37.5] (37.5,55.5] (55.5,75.5] (75.5,94.5]  (94.5,120]        <NA> 
+#>          70          58          91          81          80          20
 
 # Extract the binned results
 extract(bin)
@@ -2034,6 +2032,7 @@ plot(bin)
 <img src="figures/README-binning_by-1.png" width="80%" />
 
 ``` r
+
 # extract binned results
 extract(bin)
 #>   [1] (6,29] (6,29] (6,29] (0,6]  (0,6]  (6,29] [-1,0] (6,29] [-1,0] [-1,0]
@@ -2120,12 +2119,12 @@ The contents of the report are as follows.:
 
 ##### Some arguments for dynamic web report
 
-diagnose\_web\_report() generates various reports with the following
+diagnose_web_report() generates various reports with the following
 arguments.
 
--   output\_file
+-   output_file
     -   name of generated file.
--   output\_dir
+-   output_dir
     -   name of directory to generate report file.
 -   title
     -   title of report.
@@ -2133,19 +2132,19 @@ arguments.
     -   subtitle of report.
 -   author
     -   author of report.
--   title\_color
+-   title_color
     -   color of title.
--   thres\_uniq\_cat
+-   thres_uniq_cat
     -   threshold to use for “Unique Values - Categorical Variables”.
--   thres\_uniq\_num
+-   thres_uniq_num
     -   threshold to use for “Unique Values - Numerical Variables”.
--   logo\_img
+-   logo_img
     -   name of logo image file on top left.
--   create\_date
+-   create_date
     -   The date on which the report is generated.
 -   theme
     -   name of theme for report. support “orange” and “blue”.
--   sample\_percent
+-   sample_percent
     -   Sample percent of data for performing Diagnosis.
 
 The following script creates a quality diagnosis report for the `tbl_df`
@@ -2161,26 +2160,12 @@ flights %>%
 
 -   The part of the report is shown in the following figure.:
 
-<div class="figure" style="text-align: center">
-
-<img src="vignettes/img/diag_web_title.jpg" alt="The part of the report" width="60%" />
-<p class="caption">
-The part of the report
-</p>
-
-</div>
+<img src="vignettes/img/diag_web_title.jpg" title="The part of the report" alt="The part of the report" width="60%" style="display: block; margin: auto;" />
 
 -   The dynamic contents of the report is shown in the following
     figure.:
 
-<div class="figure" style="text-align: center">
-
-<img src="vignettes/img/diag_web_content.jpg" alt="The dynamic contents of the report" width="60%" />
-<p class="caption">
-The dynamic contents of the report
-</p>
-
-</div>
+<img src="vignettes/img/diag_web_content.jpg" title="The dynamic contents of the report" alt="The dynamic contents of the report" width="60%" style="display: block; margin: auto;" />
 
 #### Create a diagnostic report using `diagnose_paged_report()`
 
@@ -2214,46 +2199,46 @@ The contents of the report are as follows.:
 
 ##### Some arguments for static paged report
 
-diagnose\_paged\_report() generates various reports with the following
+diagnose_paged_report() generates various reports with the following
 arguments.
 
--   output\_format
+-   output_format
     -   report output type. Choose either “pdf” and “html”.
--   output\_file
+-   output_file
     -   name of generated file.
--   output\_dir
+-   output_dir
     -   name of directory to generate report file.
 -   title
     -   title of report.
 -   subtitle
     -   subtitle of report.
--   abstract\_title
+-   abstract_title
     -   abstract of report
 -   author
     -   author of report.
--   title\_color
+-   title_color
     -   color of title.
--   subtitle\_color
+-   subtitle_color
     -   color of subtitle.
--   thres\_uniq\_cat
+-   thres_uniq_cat
     -   threshold to use for “Unique Values - Categorical Variables”.
--   thres\_uniq\_num
+-   thres_uniq_num
     -   threshold to use for “Unique Values - Numerical Variables”.
--   flag\_content\_zero
+-   flag_content_zero
     -   whether to output “Zero Values” information.
--   flag\_content\_minus
+-   flag_content_minus
     -   whether to output “Minus Values” information.
--   flag\_content\_missing
+-   flag_content_missing
     -   whether to output “Missing Value” information.  
--   logo\_img
+-   logo_img
     -   name of logo image file on top left.
--   cover\_img
+-   cover_img
     -   name of cover image file on center.
--   create\_date
+-   create_date
     -   The date on which the report is generated.
 -   theme
     -   name of theme for report. support “orange” and “blue”.
--   sample\_percent
+-   sample_percent
     -   Sample percent of data for performing Diagnosis.
 
 The following script creates a quality diagnosis report for the `tbl_df`
@@ -2269,25 +2254,11 @@ flights %>%
 
 -   The cover of the report is shown in the following figure.:
 
-<div class="figure" style="text-align: center">
-
-<img src="vignettes/img/diag_paged_cover.jpg" alt="The part of the report" width="60%" />
-<p class="caption">
-The part of the report
-</p>
-
-</div>
+<img src="vignettes/img/diag_paged_cover.jpg" title="The part of the report" alt="The part of the report" width="60%" style="display: block; margin: auto;" />
 
 -   The contents of the report is shown in the following figure.:
 
-<div class="figure" style="text-align: center">
-
-<img src="vignettes/img/diag_paged_content.jpg" alt="The dynamic contents of the report" width="60%" />
-<p class="caption">
-The dynamic contents of the report
-</p>
-
-</div>
+<img src="vignettes/img/diag_paged_content.jpg" title="The dynamic contents of the report" alt="The dynamic contents of the report" width="60%" style="display: block; margin: auto;" />
 
 ### EDA Report
 
@@ -2328,14 +2299,13 @@ The contents of the report are as follows.:
 
 ##### Some arguments for dynamic web report
 
-eda\_web\_report() generates various reports with the following
-arguments.
+eda_web_report() generates various reports with the following arguments.
 
 -   target
     -   target variable
--   output\_file
+-   output_file
     -   name of generated file.
--   output\_dir
+-   output_dir
     -   name of directory to generate report file.
 -   title
     -   title of report.
@@ -2343,15 +2313,15 @@ arguments.
     -   subtitle of report.
 -   author
     -   author of report.
--   title\_color
+-   title_color
     -   color of title.
--   logo\_img
+-   logo_img
     -   name of logo image file on top left.
--   create\_date
+-   create_date
     -   The date on which the report is generated.
 -   theme
     -   name of theme for report. support “orange” and “blue”.
--   sample\_percent
+-   sample_percent
     -   Sample percent of data for performing EDA.
 
 The following script creates a EDA report for the `data.frame` class
@@ -2368,14 +2338,7 @@ heartfailure %>%
 -   The dynamic contents of the report is shown in the following
     figure.:
 
-<div class="figure" style="text-align: center">
-
-<img src="vignettes/img/eda_web_title.jpg" alt="The part of the report" width="60%" />
-<p class="caption">
-The part of the report
-</p>
-
-</div>
+<img src="vignettes/img/eda_web_title.jpg" title="The part of the report" alt="The part of the report" width="60%" style="display: block; margin: auto;" />
 
 #### Create a EDA report using `eda_paged_report()`
 
@@ -2408,38 +2371,38 @@ The contents of the report are as follows.:
 
 ##### Some arguments for static paged report
 
-eda\_paged\_report() generates various reports with the following
+eda_paged_report() generates various reports with the following
 arguments.
 
 -   target
     -   target variable
--   output\_format
+-   output_format
     -   report output type. Choose either “pdf” and “html”.
--   output\_file
+-   output_file
     -   name of generated file.
--   output\_dir
+-   output_dir
     -   name of directory to generate report file.
 -   title
     -   title of report.
 -   subtitle
     -   subtitle of report.
--   abstract\_title
+-   abstract_title
     -   abstract of report
 -   author
     -   author of report.
--   title\_color
+-   title_color
     -   color of title.
--   subtitle\_color
+-   subtitle_color
     -   color of subtitle.
--   logo\_img
+-   logo_img
     -   name of logo image file on top left.
--   cover\_img
+-   cover_img
     -   name of cover image file on center.
--   create\_date
+-   create_date
     -   The date on which the report is generated.
 -   theme
     -   name of theme for report. support “orange” and “blue”.
--   sample\_percent
+-   sample_percent
     -   Sample percent of data for performing EDA.
 
 The following script creates a EDA report for the `data.frame` class
@@ -2455,25 +2418,11 @@ heartfailure %>%
 
 -   The cover of the report is shown in the following figure.:
 
-<div class="figure" style="text-align: center">
-
-<img src="vignettes/img/eda_paged_cover.jpg" alt="The part of the report" width="60%" />
-<p class="caption">
-The part of the report
-</p>
-
-</div>
+<img src="vignettes/img/eda_paged_cover.jpg" title="The part of the report" alt="The part of the report" width="60%" style="display: block; margin: auto;" />
 
 -   The contents of the report is shown in the following figure.:
 
-<div class="figure" style="text-align: center">
-
-<img src="vignettes/img/eda_paged_content.jpg" alt="The dynamic contents of the report" width="60%" />
-<p class="caption">
-The dynamic contents of the report
-</p>
-
-</div>
+<img src="vignettes/img/eda_paged_content.jpg" title="The dynamic contents of the report" alt="The dynamic contents of the report" width="60%" style="display: block; margin: auto;" />
 
 ### Data Transformation Report
 
@@ -2506,14 +2455,14 @@ The contents of the report are as follows.:
 
 ##### Some arguments for dynamic web report
 
-transformation\_web\_report() generates various reports with the
-following arguments.
+transformation_web_report() generates various reports with the following
+arguments.
 
 -   target
     -   target variable
--   output\_file
+-   output_file
     -   name of generated file.
--   output\_dir
+-   output_dir
     -   name of directory to generate report file.
 -   title
     -   title of report.
@@ -2521,15 +2470,15 @@ following arguments.
     -   subtitle of report.
 -   author
     -   author of report.
--   title\_color
+-   title_color
     -   color of title.
--   logo\_img
+-   logo_img
     -   name of logo image file on top left.
--   create\_date
+-   create_date
     -   The date on which the report is generated.
 -   theme
     -   name of theme for report. support “orange” and “blue”.
--   sample\_percent
+-   sample_percent
     -   Sample percent of data for performing data transformation.
 
 The following script creates a data transformation report for the
@@ -2547,14 +2496,7 @@ heartfailure %>%
 -   The dynamic contents of the report is shown in the following
     figure.:
 
-<div class="figure" style="text-align: center">
-
-<img src="vignettes/img/transformation_web_title.jpg" alt="The part of the report" width="60%" />
-<p class="caption">
-The part of the report
-</p>
-
-</div>
+<img src="vignettes/img/transformation_web_title.jpg" title="The part of the report" alt="The part of the report" width="60%" style="display: block; margin: auto;" />
 
 #### Create a static report using `transformation_paged_report()`
 
@@ -2577,38 +2519,38 @@ The contents of the report are as follows.:
 
 ##### Some arguments for static paged report
 
-transformation\_paged\_report() generates various reports with the
+transformation_paged_report() generates various reports with the
 following arguments.
 
 -   target
     -   target variable
--   output\_format
+-   output_format
     -   report output type. Choose either “pdf” and “html”.
--   output\_file
+-   output_file
     -   name of generated file.
--   output\_dir
+-   output_dir
     -   name of directory to generate report file.
 -   title
     -   title of report.
 -   subtitle
     -   subtitle of report.
--   abstract\_title
+-   abstract_title
     -   abstract of report
 -   author
     -   author of report.
--   title\_color
+-   title_color
     -   color of title.
--   subtitle\_color
+-   subtitle_color
     -   color of subtitle.
--   logo\_img
+-   logo_img
     -   name of logo image file on top left.
--   cover\_img
+-   cover_img
     -   name of cover image file on center.
--   create\_date
+-   create_date
     -   The date on which the report is generated.
 -   theme
     -   name of theme for report. support “orange” and “blue”.
--   sample\_percent
+-   sample_percent
     -   Sample percent of data for performing data tansformation.
 
 The following script creates a data transformation report for the
@@ -2625,25 +2567,11 @@ heartfailure %>%
 
 -   The cover of the report is shown in the following figure.:
 
-<div class="figure" style="text-align: center">
-
-<img src="vignettes/img/transformation_paged_cover.jpg" alt="The part of the report" width="60%" />
-<p class="caption">
-The part of the report
-</p>
-
-</div>
+<img src="vignettes/img/transformation_paged_cover.jpg" title="The part of the report" alt="The part of the report" width="60%" style="display: block; margin: auto;" />
 
 -   The contents of the report is shown in the following figure.:
 
-<div class="figure" style="text-align: center">
-
-<img src="vignettes/img/transformation_paged_content.jpg" alt="The dynamic contents of the report" width="60%" />
-<p class="caption">
-The dynamic contents of the report
-</p>
-
-</div>
+<img src="vignettes/img/transformation_paged_content.jpg" title="The dynamic contents of the report" alt="The dynamic contents of the report" width="60%" style="display: block; margin: auto;" />
 
 ## Supports table of DBMS
 
@@ -2658,7 +2586,7 @@ algorithm in SQL of DBMS. So some functions do not yet support
 In-database mode. In this case, it is performed in In-memory mode in
 which table data is brought to R side and calculated. In this case, if
 the data size is large, the execution speed may be slow. It supports the
-collect\_size argument, which allows you to import the specified number
+collect_size argument, which allows you to import the specified number
 of samples of data into R.
 
 -   In-database support functions
@@ -2681,11 +2609,11 @@ of samples of data into R.
 #### How to use functions
 
 -   Function calls using the In-database mode
-    -   in\_database = TRUE
+    -   in_database = TRUE
 -   Function calls using the In-memory mode
-    -   in\_database = FALSE
+    -   in_database = FALSE
 -   Diagnosis and EDA using sample data from DBMS
-    -   collect\_size = <sample size>
+    -   collect_size = <sample size>
     -   only In-memory mode
 
 ### Preparing table data
@@ -2718,9 +2646,9 @@ copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
 
 #### Diagnose data quality of variables in the DBMS
 
-Use `dplyr::tbl()` to create a tbl\_dbi object, then use it as a data
+Use `dplyr::tbl()` to create a tbl_dbi object, then use it as a data
 frame object. That is, the data argument of all diagnose function is
-specified as tbl\_dbi object instead of data frame object.
+specified as tbl_dbi object instead of data frame object.
 
 ``` r
 # Diagnosis of all columns
@@ -2732,7 +2660,7 @@ con_sqlite %>%
 #>    <chr>       <chr>             <dbl>           <dbl>        <int>       <dbl>
 #>  1 Sales       double                0            0             336      0.84  
 #>  2 CompPrice   double                0            0              73      0.182 
-#>  3 Income      double               20            5              99      0.248 
+#>  3 Income      double               20            5              98      0.245 
 #>  4 Advertising double                0            0              28      0.07  
 #>  5 Population  double                0            0             275      0.688 
 #>  6 Price       double                0            0             101      0.252 
@@ -2750,7 +2678,7 @@ con_sqlite %>%
 #>   variables types   missing_count missing_percent unique_count unique_rate
 #>   <chr>     <chr>           <int>           <dbl>        <int>       <dbl>
 #> 1 Sales     numeric             0               0          336       0.84 
-#> 2 Income    numeric            20               5           99       0.248
+#> 2 Income    numeric            20               5           98       0.245
 #> 3 Age       numeric             0               0           56       0.14
 ```
 
@@ -2781,7 +2709,7 @@ con_sqlite %>%
 #>   <chr>       <dbl>  <dbl>  <dbl>  <dbl>  <dbl> <dbl> <int> <int>   <int>
 #> 1 Sales           0   5.39   7.50   7.49   9.32  16.3     1     0       2
 #> 2 CompPrice      77 115    125.   125    135    175       0     0       2
-#> 3 Income         21  42.8   68.4   69     90    120       0     0       0
+#> 3 Income         21  42     68.7   69     92    120       0     0       0
 #> 4 Advertising     0   0      6.64   5     12     29     144     0       0
 #> 5 Population     10 139    265.   272    398.   509       0     0       0
 #> 6 Price          24 100    116.   117    131    191       0     0       5
@@ -2844,9 +2772,9 @@ con_sqlite %>%
 
 #### Calculating descriptive statistics of numerical column of table in the DBMS
 
-Use `dplyr::tbl()` to create a tbl\_dbi object, then use it as a data
+Use `dplyr::tbl()` to create a tbl_dbi object, then use it as a data
 frame object. That is, the data argument of all EDA function is
-specified as tbl\_dbi object instead of data frame object.
+specified as tbl_dbi object instead of data frame object.
 
 ``` r
 # extract only those with 'Urban' variable level is "Yes",
@@ -2859,11 +2787,11 @@ con_sqlite %>%
 #> # A tibble: 6 × 28
 #>   described_variables ShelveLoc US        n    na  mean    sd se_mean   IQR
 #>   <chr>               <chr>     <chr> <int> <int> <dbl> <dbl>   <dbl> <dbl>
-#> 1 Sales               Bad       No       21     0  5.31  1.98   0.432  2.38
+#> 1 Sales               Bad       No       23     0  5.36  1.91   0.398  2.32
 #> 2 Sales               Bad       Yes      51     0  5.59  2.57   0.359  3.76
 #> 3 Sales               Good      No       18     0  9.21  2.97   0.700  3.71
-#> 4 Sales               Good      Yes      38     0 10.8   2.32   0.376  2.97
-#> 5 Sales               Medium    No       54     0  6.96  2.09   0.285  3.22
+#> 4 Sales               Good      Yes      38     0 10.8   2.22   0.360  2.97
+#> 5 Sales               Medium    No       54     0  6.92  2.08   0.283  3.18
 #> 6 Sales               Medium    Yes      96     0  7.55  2.19   0.224  3.39
 #> # … with 19 more variables: skewness <dbl>, kurtosis <dbl>, p00 <dbl>,
 #> #   p01 <dbl>, p05 <dbl>, p10 <dbl>, p20 <dbl>, p25 <dbl>, p30 <dbl>,
@@ -2889,7 +2817,7 @@ con_sqlite %>%
 #> # A tibble: 1 × 6
 #>   variable   ShelveLoc US    statistic p_value sample
 #>   <chr>      <chr>     <chr>     <dbl>   <dbl>  <dbl>
-#> 1 log_income Bad       No        0.949   0.143     34
+#> 1 log_income Bad       No        0.945  0.0938     34
 ```
 
 #### Normalization visualization of numerical column in the DBMS
@@ -2920,15 +2848,16 @@ con_sqlite %>%
   correlate(Sales) %>%
   filter(coef_corr < 0) %>%
   filter(abs(coef_corr) > 0.5)
-#> # A tibble: 6 × 5
+#> # A tibble: 7 × 5
 #>   Urban US    var1  var2       coef_corr
 #>   <chr> <chr> <fct> <fct>          <dbl>
-#> 1 No    No    Sales Population    -0.530
-#> 2 No    No    Sales Price         -0.838
-#> 3 No    Yes   Sales Price         -0.644
-#> 4 Yes   No    Sales Price         -0.833
-#> 5 Yes   No    Sales Age           -0.649
-#> 6 Yes   Yes   Sales Price         -0.594
+#> 1 No    No    Sales Income        -1    
+#> 2 No    No    Sales Population    -0.530
+#> 3 No    No    Sales Price         -0.838
+#> 4 No    Yes   Sales Price         -0.644
+#> 5 Yes   No    Sales Price         -0.833
+#> 6 Yes   No    Sales Age           -0.649
+#> 7 Yes   Yes   Sales Price         -0.559
 ```
 
 #### Visualize correlation plot of numerical columns in the DBMS
