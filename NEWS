@@ -6,7 +6,7 @@ CHANGES IN R VERSION 0.6.1.9002:
     * Added exception handling logic for errors that occur when the bandwidth 
       estimate of a numeric variable is 0 in plot.relate(). (#76)
       
-    * Fix error while performing eda_web_report() without target variable. 
+    * Fixed error while performing eda_web_report() without target variable. 
       (thanks to Ashirwad Barnwal, #81, #83)         
 
   MINOR CHANGES:
