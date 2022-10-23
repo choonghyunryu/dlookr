@@ -78,6 +78,9 @@ if (!is.null(targetVariable)) {
   target <- if (!factor_flag & numeric_flag) 
     factor(pull(edaData, targetVariable)) else
       pull(edaData, targetVariable)
+} else { # fix error while performing eda_web_report() #83
+  factor_flag <- FALSE
+  numeric_flag <- FALSE
 }
 
 # if all elements of a numerical variable are NA,

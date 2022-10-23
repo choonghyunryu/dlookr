@@ -1,8 +1,8 @@
 Package: dlookr
 Type: Package
 Title: Tools for Data Diagnosis, Exploration, Transformation
-Version: 0.6.1.9001
-Date: 2022-07-10
+Version: 0.6.1.9002
+Date: 2022-10-23
 Authors@R: c(
   person("Choonghyun", "Ryu",, "choonghyun.ryu@gmail.com", role = c("aut", "cre"))
   )
