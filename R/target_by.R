@@ -540,7 +540,7 @@ print.relate <- function(x, ...) {
 #' @import ggplot2
 #' @import hrbrthemes
 #' @importFrom gridExtra grid.arrange
-#' @importFrom stats complete.cases
+#' @importFrom stats complete.cases var
 #' @importFrom graphics plot
 #' @export
 plot.relate <- function(x, model = FALSE, hex_thres = 1000, 
@@ -629,7 +629,7 @@ plot.relate <- function(x, model = FALSE, hex_thres = 1000,
     bandwidth.nrd <- function (x) {
       r <- quantile(x, c(0.25, 0.75))
       h <- (r[2L] - r[1L])/1.34
-      4 * 1.06 * min(sqrt(var(x)), h) * length(x)^(-1/5)
+      4 * 1.06 * min(sqrt(stats::var(x)), h) * length(x)^(-1/5)
     }
     
     if (model) {
