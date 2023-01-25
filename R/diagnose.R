@@ -33,7 +33,7 @@ diagnose <- function(.data, ...) {
 #'
 #' See vignette("diagonosis") for an introduction to these concepts.
 #'
-#' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param .data a data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
 #' Positive values select variables; negative values to drop variables.
@@ -82,6 +82,12 @@ diagnose <- function(.data, ...) {
 #'   filter(missing_count > 0)
 #' }
 #'    
+#' # Using group_by ------------------------------
+#' # Calculate the diagnosis of all variables by 'job_chnge' using group_by()
+#' jobchange %>%
+#'   group_by(job_chnge) %>% 
+#'   diagnose() 
+#'   
 #' @method diagnose data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
@@ -96,20 +102,127 @@ diagnose.data.frame <- function(.data, ...) {
 #' @importFrom stats complete.cases
 diagn_std_impl <- function(df, vars) {
   if (length(vars) == 0) vars <- names(df)
-
+  
   variable_type <- sapply(vars,
-    function(x) is(df[, x][[1]])[1])
+                          function(x) is(df[, x][[1]])[1])
   missing_count <- sapply(vars,
-    function(x) sum(!complete.cases(df[, x])))
+                          function(x) sum(!complete.cases(df[, x])))
   unique_count <- sapply(vars,
-    function(x) n_distinct(df[, x]))
+                         function(x) n_distinct(df[, x]))
   data_count <- nrow(df)
-
+  
   tibble(variables = vars, types = variable_type,
-    missing_count = missing_count,
-    missing_percent = missing_count / data_count * 100,
-    unique_count = unique_count,
-    unique_rate = unique_count / data_count)
+         missing_count = missing_count,
+         missing_percent = missing_count / data_count * 100,
+         unique_count = unique_count,
+         unique_rate = unique_count / data_count)
+}
+
+
+#' @rdname diagnose.data.frame
+#' @method diagnose grouped_df
+#' @importFrom tidyselect vars_select
+#' @importFrom rlang quos
+#' @export
+diagnose.grouped_df <- function(.data, ..., all.combinations = FALSE) {
+  vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
+  diagnose_group_impl(.data, vars, all.combinations)
+}
+
+
+#' @import tibble
+#' @import dplyr
+#' @importFrom purrr map_df map
+#' @importFrom tibble is_tibble as_tibble
+#' @importFrom tidyselect matches
+#' @importFrom rlang set_names
+diagnose_group_impl <- function(df, vars, all.combinations) {
+  if (length(vars) == 0) vars <- names(df)
+  
+  if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
+  
+  suppressWarnings(
+    if (utils::packageVersion("dplyr") >= "0.8.0") {
+      gdf <- attr(df, "groups")
+      n_group <- ncol(gdf) - 1
+      gvars <- gdf %>% 
+        names() %>% 
+        setdiff(".rows") 
+      
+      statistic <- purrr::map_df(seq(nrow(gdf)), function(x) {
+        variable_type <- sapply(vars,
+                                function(y) is(df[gdf$.rows[[x]], y][[1]])[1])
+        missing_count <- sapply(vars,
+                                function(y) sum(!complete.cases(df[gdf$.rows[[x]], y])))
+        unique_count <- sapply(vars,
+                               function(y) n_distinct(df[gdf$.rows[[x]], y]))
+        data_count <- nrow(df[gdf$.rows[[x]], ])
+        
+        gdf[x, ] %>% 
+          select(-tidyselect::matches("\\.rows")) %>% 
+          cbind(
+            tibble(variables = vars, 
+                   types = variable_type,
+                   data_count = data_count,
+                   missing_count = missing_count,
+                   missing_percent = missing_count / data_count * 100,
+                   unique_count = unique_count,
+                   unique_rate = unique_count / data_count)            
+          )
+      })
+    } else {
+      gdf_index <- attr(df, "indices")
+      glables <- attr(df, "labels")
+      n_group <- ncol(glables)
+      gvars <- glables %>% 
+        names() 
+      
+      statistic <- purrr::map_df(seq(nrow(glables)), function(x) {
+        variable_type <- sapply(vars,
+                                function(y) is(df[gdf_index[[x]], y][[1]])[1])
+        missing_count <- sapply(vars,
+                                function(y) sum(!complete.cases(df[gdf_index[[x]], y])))
+        unique_count <- sapply(vars,
+                               function(y) n_distinct(df[gdf_index[[x]], y]))
+        data_count <- nrow(df[gdf_index[[x]], ])
+        
+        glables[x, ] %>% 
+          cbind(
+            tibble(variables = vars, 
+                   types = variable_type,
+                   data_count = data_count,
+                   missing_count = missing_count,
+                   missing_percent = missing_count / data_count * 100,
+                   unique_count = unique_count,
+                   unique_rate = unique_count / data_count) 
+          )
+      })
+    } 
+  )
+  
+  if (all.combinations) {
+    expand_vars <- gvars %>% 
+      purrr::map({
+        function(x) {
+          unique(df[[x]])
+        }
+      }) %>%
+      append(list(unique(statistic$variables))) %>% 
+      expand.grid() %>% 
+      rlang::set_names(c(gvars, "variables")) 
+    
+    statistic <- expand_vars %>% 
+      left_join(
+        statistic,
+        by = c(gvars, "variables")
+      ) %>% 
+      arrange_at(gvars)
+  }
+  
+  statistic %>% 
+    select(n_group + 1, seq(n_group), (n_group + 1):ncol(statistic)) %>% 
+    tibble::as_tibble() %>% 
+    arrange(variables)
 }
 
 
@@ -145,7 +258,7 @@ diagnose_category <- function(.data, ...) {
 #'
 #' See vignette("diagonosis") for an introduction to these concepts.
 #'
-#' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param .data a data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
 #' Positive values select variables; negative values to drop variables.
@@ -232,6 +345,12 @@ diagnose_category <- function(.data, ...) {
 #' jobchange %>% 
 #'   diagnose_category(enrollee_id, top = 3, type = "n")
 #' }
+#' 
+#' # Using group_by ------------------------------
+#' # Calculate the diagnosis of 'company_type' variable by 'job_chnge' using group_by()
+#' jobchange %>%
+#'   group_by(job_chnge) %>% 
+#'   diagnose_category(company_type) 
 #'   
 #' @method diagnose_category data.frame
 #' @importFrom tidyselect vars_select
@@ -245,9 +364,9 @@ diagnose_category.data.frame <- function(.data, ..., top = 10, type = c("rank", 
 
 diagn_category_impl <- function(df, vars, top, type, add_character, add_date) {
   if (length(vars) == 0) vars <- names(df)
-
+  
   if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
-
+  
   if (add_date & add_character)
     idx_factor <- find_class(df[, vars], type = "date_categorical2")  
   else if (add_character & !add_date)
@@ -284,13 +403,139 @@ diagn_category_impl <- function(df, vars, top, type, add_character, add_date) {
         top_n(n = top, freq)      
     }
   }
-
+  
   result <- lapply(vars[idx_factor],
                    function(x) get_topn(df, x, top, type))
   suppressWarnings(
     do.call("rbind", result) %>% 
       tibble::as_tibble()
   )
+}
+
+
+#' @rdname diagnose_category.data.frame
+#' @method diagnose_category grouped_df
+#' @importFrom tidyselect vars_select
+#' @importFrom rlang quos
+#' @export
+diagnose_category.grouped_df <- function(.data, ..., top = 10, type = c("rank", "n")[2], 
+                                         add_character = TRUE, add_date = TRUE,
+                                         all.combinations = FALSE) {
+  vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
+  diagnose_category_group_impl(.data, vars, top, type, add_character, add_date,
+                               all.combinations)
+}
+
+
+#' @import tibble
+#' @import dplyr
+#' @importFrom purrr map_df map
+#' @importFrom tibble is_tibble as_tibble
+#' @importFrom tidyselect matches
+#' @importFrom rlang set_names
+diagnose_category_group_impl <- function(df, vars, top, type, add_character, 
+                                         add_date, all.combinations) {
+  if (length(vars) == 0) vars <- names(df)
+  
+  if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
+  
+  if (add_date & add_character)
+    idx_factor <- find_class(df[, vars], type = "date_categorical2")  
+  else if (add_character & !add_date)
+    idx_factor <- find_class(df[, vars], type = "categorical2")
+  else if (!add_character & add_date)
+    idx_factor <- find_class(df[, vars], type = "date_categorical")
+  else
+    idx_factor <- find_class(df[, vars], type = "categorical")
+  
+  if (length(type) != 1 | !type %in% c("rank", "n")) {
+    message("The type argument must be one of \"rank\" or \"n\".\n")
+    return(NULL)    
+  }
+  
+  if (length(idx_factor) == 0) {
+    message("There is no categorical variable in the data or variable list.\n")
+    return(NULL)
+  }
+  
+  get_topn <- function(df, var, top, type) {
+    suppressMessages(
+      tab <- df %>%
+        select(variable = var) %>%
+        mutate(variable = as.character(variable)) %>% 
+        count(variable, sort = TRUE) %>%
+        transmute(variables = var, levels = variable, N = sum(n), freq = n,
+                  ratio = n / sum(n) * 100, 
+                  rank = rank(max(freq) - freq, ties.method = "min"))      
+    )
+    
+    if (type == "n") {
+      tab %>% 
+        slice_head(n = top)
+    } else if (type == "rank") {
+      tab %>% 
+        top_n(n = top, freq)      
+    }
+  }
+  
+  suppressWarnings(
+    if (utils::packageVersion("dplyr") >= "0.8.0") {
+      gdf <- attr(df, "groups")
+      n_group <- ncol(gdf) - 1
+      gvars <- gdf %>% 
+        names() %>% 
+        setdiff(".rows") 
+      
+      statistic <- purrr::map_df(seq(nrow(gdf)), function(x) {
+        result <- lapply(vars[idx_factor],
+                         function(y) get_topn(df[gdf$.rows[[x]], ], y, top, type))
+        suppressWarnings(
+          do.call("rbind", result) %>% 
+            tibble::as_tibble()
+        )
+      })
+    } else {
+      gdf_index <- attr(df, "indices")
+      glables <- attr(df, "labels")
+      n_group <- ncol(glables)
+      gvars <- glables %>% 
+        names() 
+      
+      statistic <- purrr::map_df(seq(nrow(glables)), function(x) {
+        result <- lapply(vars[idx_factor],
+                         function(y) get_topn(df[gdf_index[[x]], ], y, top, type))
+        suppressWarnings(
+          do.call("rbind", result) %>% 
+            tibble::as_tibble()
+        )
+      })
+    } 
+  )
+  
+  if (all.combinations) {
+    expand_vars <- gvars %>% 
+      purrr::map({
+        function(x) {
+          unique(df[[x]])
+        }
+      }) %>%
+      append(list(unique(statistic$variables))) %>% 
+      expand.grid() %>% 
+      rlang::set_names(c(gvars, "variables")) 
+    
+    statistic <- expand_vars %>% 
+      left_join(
+        statistic,
+        by = c(gvars, "variables")
+      ) %>% 
+      arrange_at(gvars)
+  }
+  
+  statistic %>% 
+    select(n_group + 1, seq(n_group), (n_group + 1):ncol(statistic)) %>% 
+    tibble::as_tibble() %>% 
+    arrange(variables) %>% 
+    select(!tidyselect::matches("^variable$"))    
 }
 
 
@@ -331,7 +576,7 @@ diagnose_numeric <- function(.data, ...) {
 #'
 #' See vignette("diagonosis") for an introduction to these concepts.
 #'
-#' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param .data a data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
 #' Positive values select variables; negative values to drop variables.
@@ -379,6 +624,12 @@ diagnose_numeric <- function(.data, ...) {
 #' heartfailure %>%
 #'   diagnose_numeric()  %>%
 #'   filter(outlier > 0)
+#'   
+#' # Using group_by ------------------------------
+#' # Calculate the diagnosis of all variables by 'death_event' using group_by()
+#' heartfailure %>%
+#'   group_by(death_event) %>% 
+#'   diagnose_numeric() 
 #' }
 #' 
 #' @method diagnose_numeric data.frame
@@ -393,11 +644,11 @@ diagnose_numeric.data.frame <- function(.data, ...) {
 #' @importFrom stats median quantile
 diagn_numeric_impl <- function(df, vars) {
   if (length(vars) == 0) vars <- names(df)
-
+  
   if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
-
+  
   idx_numeric <- find_class(df[, vars], type = "numerical")
-
+  
   if (length(idx_numeric) == 0) {
     message("There is no numeric variable in the data or variable list.\n")
     return(NULL)
@@ -407,24 +658,131 @@ diagn_numeric_impl <- function(df, vars) {
     df %>%
       select(variable = var) %>%
       summarise(min = min(variable, na.rm = TRUE),
-        Q1 = quantile(variable, 0.25, na.rm = TRUE),
-        mean = mean(variable, na.rm = TRUE),
-        median = median(variable, na.rm = TRUE),
-        Q3 = quantile(variable, 0.75, na.rm = TRUE),
-        max = max(variable, na.rm = TRUE),
-        zero = sum(variable == 0, na.rm = TRUE),
-        minus = sum(variable < 0, na.rm = TRUE),
-        outlier = length(boxplot.stats(variable)$out)) %>%
+                Q1 = quantile(variable, 0.25, na.rm = TRUE),
+                mean = mean(variable, na.rm = TRUE),
+                median = median(variable, na.rm = TRUE),
+                Q3 = quantile(variable, 0.75, na.rm = TRUE),
+                max = max(variable, na.rm = TRUE),
+                zero = sum(variable == 0, na.rm = TRUE),
+                minus = sum(variable < 0, na.rm = TRUE),
+                outlier = length(boxplot.stats(variable)$out)) %>%
       transmute(variables = var, min, Q1, mean, median, Q3, max,
-        zero, minus, outlier)
+                zero, minus, outlier)
   }
-
+  
   result <- lapply(vars[idx_numeric],
-    function(x) get_descr(df, x))
+                   function(x) get_descr(df, x))
   
   suppressWarnings(
     as.tbl(do.call("rbind", result))
   )  
+}
+
+
+#' @rdname diagnose_numeric.data.frame
+#' @method diagnose_numeric grouped_df
+#' @importFrom tidyselect vars_select
+#' @importFrom rlang quos
+#' @export
+diagnose_numeric.grouped_df <- function(.data, ..., all.combinations = FALSE) {
+  vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
+  diagnose_numeric_group_impl(.data, vars, all.combinations)
+}
+
+
+#' @import tibble
+#' @import dplyr
+#' @importFrom purrr map_df map
+#' @importFrom tibble is_tibble as_tibble
+#' @importFrom tidyselect matches
+#' @importFrom rlang set_names
+diagnose_numeric_group_impl <- function(df, vars, all.combinations) {
+  if (length(vars) == 0) vars <- names(df)
+  
+  if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
+  
+  idx_numeric <- find_class(df[, vars], type = "numerical")
+  
+  if (length(idx_numeric) == 0) {
+    message("There is no numeric variable in the data or variable list.\n")
+    return(NULL)
+  }
+  
+  get_descr <- function(df, var) {
+    suppressMessages(
+      df %>%
+        select(variable = var) %>%
+        summarise(min = min(variable, na.rm = TRUE),
+                  Q1 = quantile(variable, 0.25, na.rm = TRUE),
+                  mean = mean(variable, na.rm = TRUE),
+                  median = median(variable, na.rm = TRUE),
+                  Q3 = quantile(variable, 0.75, na.rm = TRUE),
+                  max = max(variable, na.rm = TRUE),
+                  zero = sum(variable == 0, na.rm = TRUE),
+                  minus = sum(variable < 0, na.rm = TRUE),
+                  outlier = length(boxplot.stats(variable)$out)) %>%
+        mutate(variables = var) 
+    )
+  }
+  
+  suppressWarnings(
+    if (utils::packageVersion("dplyr") >= "0.8.0") {
+      gdf <- attr(df, "groups")
+      n_group <- ncol(gdf) - 1
+      gvars <- gdf %>% 
+        names() %>% 
+        setdiff(".rows") 
+      
+      statistic <- purrr::map_df(seq(nrow(gdf)), function(x) {
+        result <- lapply(vars[idx_numeric],
+                         function(y) get_descr(df[gdf$.rows[[x]], ], y))
+        suppressWarnings(
+          do.call("rbind", result) %>% 
+            tibble::as_tibble()
+        )
+      })
+    } else {
+      gdf_index <- attr(df, "indices")
+      glables <- attr(df, "labels")
+      n_group <- ncol(glables)
+      gvars <- glables %>% 
+        names() 
+      
+      statistic <- purrr::map_df(seq(nrow(glables)), function(x) {
+        result <- lapply(vars[idx_numeric],
+                         function(y) get_descr(df[gdf_index[[x]], ], y))
+        suppressWarnings(
+          do.call("rbind", result) %>% 
+            tibble::as_tibble()
+        )
+      })
+    } 
+  )
+  
+  if (all.combinations) {
+    expand_vars <- gvars %>% 
+      purrr::map({
+        function(x) {
+          unique(df[[x]])
+        }
+      }) %>%
+      append(list(unique(statistic$variables))) %>% 
+      expand.grid() %>% 
+      rlang::set_names(c(gvars, "variables")) 
+    
+    statistic <- expand_vars %>% 
+      left_join(
+        statistic,
+        by = c(gvars, "variables")
+      ) %>% 
+      arrange_at(gvars)
+  }
+  
+  statistic %>% 
+    select(ncol(statistic), seq(n_group), (n_group + 1):(ncol(statistic) - 1)) %>% 
+    tibble::as_tibble() %>% 
+    arrange(variables) %>% 
+    select(!matches("^variable$"))    
 }
 
 
@@ -459,7 +817,7 @@ diagnose_outlier <- function(.data, ...) {
 #'
 #' See vignette("diagonosis") for an introduction to these concepts.
 #'
-#' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param .data a data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
 #' Positive values select variables; negative values to drop variables.
@@ -507,6 +865,12 @@ diagnose_outlier <- function(.data, ...) {
 #' heartfailure %>%
 #'   diagnose_outlier()  %>%
 #'   filter(outliers_ratio > 1)
+#'   
+#' # Using group_by ------------------------------
+#' # Calculate the diagnosis of all variables by 'death_event' using group_by()
+#' heartfailure %>%
+#'   group_by(death_event) %>% 
+#'   diagnose_outlier() 
 #' }
 #' 
 #' @method diagnose_outlier data.frame
@@ -521,11 +885,11 @@ diagnose_outlier.data.frame <- function(.data, ...) {
 #' @import dplyr
 diagnose_outlier_impl <- function(df, vars) {
   if (length(vars) == 0) vars <- names(df)
-
+  
   if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
-
+  
   idx_numeric <- find_class(df[, vars], type = "numerical")
-
+  
   if (length(idx_numeric) == 0) {
     message("There is no numeric variable in the data or variable list.\n")
     return(NULL)
@@ -535,23 +899,129 @@ diagnose_outlier_impl <- function(df, vars) {
     df %>%
       select(variable = var) %>%
       summarise(outliers_cnt = length(boxplot.stats(variable)$out),
-        outliers_ratio = length(boxplot.stats(variable)$out) / n(),
-        outliers_mean = mean(ifelse(variable %in% boxplot.stats(variable)$out,
-          variable, NA), na.rm = TRUE),
-        with_mean = mean(variable, na.rm = TRUE),
-        without_mean = mean(ifelse(variable %in% boxplot.stats(variable)$out,
-          NA, variable), na.rm = TRUE)) %>%
+                outliers_ratio = length(boxplot.stats(variable)$out) / n(),
+                outliers_mean = mean(ifelse(variable %in% boxplot.stats(variable)$out,
+                                            variable, NA), na.rm = TRUE),
+                with_mean = mean(variable, na.rm = TRUE),
+                without_mean = mean(ifelse(variable %in% boxplot.stats(variable)$out,
+                                           NA, variable), na.rm = TRUE)) %>%
       transmute(variables = var, outliers_cnt,
-        outliers_ratio = outliers_ratio * 100,
-        outliers_mean, with_mean, without_mean)
+                outliers_ratio = outliers_ratio * 100,
+                outliers_mean, with_mean, without_mean)
   }
-
+  
   result <- lapply(vars[idx_numeric],
-    function(x) get_outlier(df, x))
+                   function(x) get_outlier(df, x))
   
   suppressWarnings(
     do.call("rbind", result)
   )  
+}
+
+
+#' @rdname diagnose_outlier.data.frame
+#' @method diagnose_outlier grouped_df
+#' @importFrom tidyselect vars_select
+#' @importFrom rlang quos
+#' @export
+diagnose_outlier.grouped_df <- function(.data, ..., all.combinations = FALSE) {
+  vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
+  diagnose_outlier_group_impl(.data, vars, all.combinations)
+}
+
+
+#' @import tibble
+#' @import dplyr
+#' @importFrom purrr map_df map
+#' @importFrom tibble is_tibble as_tibble
+#' @importFrom tidyselect matches
+#' @importFrom rlang set_names
+diagnose_outlier_group_impl <- function(df, vars, all.combinations) {
+  if (length(vars) == 0) vars <- names(df)
+  
+  if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
+  
+  idx_numeric <- find_class(df[, vars], type = "numerical")
+  
+  if (length(idx_numeric) == 0) {
+    message("There is no numeric variable in the data or variable list.\n")
+    return(NULL)
+  }
+  
+  get_outlier <- function(df, var) {
+    suppressMessages(
+      df %>%
+        select(variable = var) %>%
+        summarise(data_cnt = n(),
+                  outliers_cnt = length(boxplot.stats(variable)$out),
+                  outliers_ratio = length(boxplot.stats(variable)$out) / n() * 100,
+                  outliers_mean = mean(ifelse(variable %in% boxplot.stats(variable)$out,
+                                              variable, NA), na.rm = TRUE),
+                  with_mean = mean(variable, na.rm = TRUE),
+                  without_mean = mean(ifelse(variable %in% boxplot.stats(variable)$out,
+                                             NA, variable), na.rm = TRUE)) %>%
+        mutate(variables = var)      
+    )
+  }
+  
+  suppressWarnings(
+    if (utils::packageVersion("dplyr") >= "0.8.0") {
+      gdf <- attr(df, "groups")
+      n_group <- ncol(gdf) - 1
+      gvars <- gdf %>% 
+        names() %>% 
+        setdiff(".rows") 
+      
+      statistic <- purrr::map_df(seq(nrow(gdf)), function(x) {
+        result <- lapply(vars[idx_numeric],
+                         function(y) get_outlier(df[gdf$.rows[[x]], ], y))
+        suppressWarnings(
+          do.call("rbind", result) %>% 
+            tibble::as_tibble()
+        )
+      })
+    } else {
+      gdf_index <- attr(df, "indices")
+      glables <- attr(df, "labels")
+      n_group <- ncol(glables)
+      gvars <- glables %>% 
+        names() 
+      
+      statistic <- purrr::map_df(seq(nrow(glables)), function(x) {
+        result <- lapply(vars[idx_numeric],
+                         function(y) get_outlier(df[gdf_index[[x]], ], y))
+        suppressWarnings(
+          do.call("rbind", result) %>% 
+            tibble::as_tibble()
+        )
+      })
+    } 
+  )
+  
+  if (all.combinations) {
+    expand_vars <- gvars %>% 
+      purrr::map({
+        function(x) {
+          unique(df[[x]])
+        }
+      }) %>%
+      append(list(unique(statistic$variables))) %>% 
+      expand.grid() %>% 
+      rlang::set_names(c(gvars, "variables")) 
+    
+    statistic <- expand_vars %>% 
+      left_join(
+        statistic,
+        by = c(gvars, "variables")
+      ) %>% 
+      arrange_at(gvars)
+  }
+  
+  statistic %>% 
+    select(ncol(statistic), seq(n_group), (n_group + 1):(ncol(statistic) - 1)) %>% 
+    tibble::as_tibble() %>% 
+    arrange(variables) %>% 
+    select(!matches("^variable$"))    
 }
 
 

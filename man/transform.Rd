@@ -6,8 +6,8 @@
 \usage{
 transform(
   x,
-  method = c("zscore", "minmax", "log", "log+1", "sqrt", "1/x", "x^2", "x^3",
-    "Box-Cox", "Yeo-Johnson")
+  method = c("zscore", "minmax", "log", "log+1", "sqrt", "1/x", "x^2", "x^3", "Box-Cox",
+    "Yeo-Johnson")
 )
 }
 \arguments{

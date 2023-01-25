@@ -2,9 +2,7 @@
 % Please edit documentation in R/dlookr_templ_html.R
 \name{dlookr_templ_html}
 \alias{dlookr_templ_html}
-\title{dlookr HTML template
-
-Loads additional style and template file}
+\title{dlookr HTML template}
 \usage{
 dlookr_templ_html(toc = TRUE, ...)
 }
@@ -17,8 +15,6 @@ dlookr_templ_html(toc = TRUE, ...)
 An R Markdown output format.
 }
 \description{
-dlookr HTML template
-
 Loads additional style and template file
 }
 \references{

@@ -2,7 +2,7 @@
 #' @rdname dlookr_templ_html
 #' @title dlookr HTML template
 #'
-#' Loads additional style and template file
+#' @description Loads additional style and template file
 #'
 #' @references https://raw.githubusercontent.com/dr-harper/example-rmd-templates/master/R/my_html_format.R
 #'

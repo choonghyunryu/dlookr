@@ -2,6 +2,13 @@
 
 ## MINOR CHANGES
 
+* Add group_by() support functions. (thanks to Jüri Kuusik, #90)
+   - diagnose()
+   - diagnose_category()
+   - diagnose_numeric()
+   - diagnose_outlier()
+  
+  
 
 # dlookr 0.6.1
 
