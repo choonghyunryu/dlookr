@@ -35,7 +35,8 @@ the column of the DBMS table through tbl_dbi.
 The scope of data quality diagnosis is information on missing values
 and unique value information. Data quality diagnosis can determine variables
 that require missing value processing. Also, the unique value information can
-determine the variable to be removed from the data analysis.
+determine the variable to be removed from the data analysis. You can use
+grouped_df as the group_by() function.
 }
 \section{Diagnostic information}{
 
@@ -99,6 +100,13 @@ con_sqlite \%>\%
   tbl("TB_JOBCHANGE") \%>\% 
   diagnose() \%>\%
   filter(missing_count > 0)
+  
+# Using pipes & dplyr -------------------------
+# Diagnosis of missing variables
+con_sqlite \%>\% 
+  tbl("TB_JOBCHANGE") \%>\% 
+  group_by(job_chnge) \%>\% 
+  diagnose()
   
 # Disconnect DBMS   
 DBI::dbDisconnect(con_sqlite)

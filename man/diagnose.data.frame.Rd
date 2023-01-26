@@ -10,7 +10,7 @@ diagnose(.data, ...)
 
 \method{diagnose}{data.frame}(.data, ...)
 
-\method{diagnose}{grouped_df}(.data, ..., all.combinations = FALSE)
+\method{diagnose}{grouped_df}(.data, ...)
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.}
@@ -91,14 +91,14 @@ jobchange \%>\%
 jobchange \%>\%
   diagnose() \%>\%
   filter(missing_count > 0)
-}
    
 # Using group_by ------------------------------
 # Calculate the diagnosis of all variables by 'job_chnge' using group_by()
 jobchange \%>\%
   group_by(job_chnge) \%>\% 
   diagnose() 
-  
+}
+
 }
 \seealso{
 \code{\link{diagnose.tbl_dbi}}, \code{\link{diagnose_category.data.frame}}, \code{\link{diagnose_numeric.data.frame}}.

@@ -23,8 +23,7 @@ diagnose_category(.data, ...)
   top = 10,
   type = c("rank", "n")[2],
   add_character = TRUE,
-  add_date = TRUE,
-  all.combinations = FALSE
+  add_date = TRUE
 )
 }
 \arguments{
@@ -146,13 +145,13 @@ jobchange \%>\%
 # extract only 3 rows
 jobchange \%>\% 
   diagnose_category(enrollee_id, top = 3, type = "n")
-}
 
 # Using group_by ------------------------------
 # Calculate the diagnosis of 'company_type' variable by 'job_chnge' using group_by()
 jobchange \%>\%
   group_by(job_chnge) \%>\% 
   diagnose_category(company_type) 
+}   
   
 }
 \seealso{

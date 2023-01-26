@@ -10,7 +10,7 @@ diagnose_outlier(.data, ...)
 
 \method{diagnose_outlier}{data.frame}(.data, ...)
 
-\method{diagnose_outlier}{grouped_df}(.data, ..., all.combinations = FALSE)
+\method{diagnose_outlier}{grouped_df}(.data, ...)
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.}

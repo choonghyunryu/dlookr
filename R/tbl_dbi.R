@@ -58,7 +58,7 @@ get_column_info <- function(df) {
     stop("Package 'DBI' needed for this function to work. Please install it.", 
          call. = FALSE)
   }
-
+  
   column_info <- DBI::dbColumnInfo(res)
   DBI::dbClearResult(res)
   
@@ -74,7 +74,8 @@ get_column_info <- function(df) {
 #' @details The scope of data quality diagnosis is information on missing values
 #' and unique value information. Data quality diagnosis can determine variables
 #' that require missing value processing. Also, the unique value information can
-#' determine the variable to be removed from the data analysis.
+#' determine the variable to be removed from the data analysis. You can use
+#' grouped_df as the group_by() function.
 #'
 #' @section Diagnostic information:
 #' The information derived from the data diagnosis is as follows.:
@@ -155,57 +156,109 @@ get_column_info <- function(df) {
 #'   diagnose() %>%
 #'   filter(missing_count > 0)
 #'   
+#' # Using pipes & dplyr -------------------------
+#' # Diagnosis of missing variables
+#' con_sqlite %>% 
+#'   tbl("TB_JOBCHANGE") %>% 
+#'   group_by(job_chnge) %>% 
+#'   diagnose()
+#'   
 #' # Disconnect DBMS   
 #' DBI::dbDisconnect(con_sqlite)
 #' }
 #'    
-diagnose.tbl_dbi <- function(.data, ..., in_database = TRUE, collect_size = Inf) {
+diagnose.tbl_dbi <- function(.data, ..., in_database = TRUE, 
+                             collect_size = Inf) {
   vars <- tidyselect::vars_select(colnames(.data), !!! rlang::quos(...))
   
   if (in_database) {
-    diagn_std_impl_dbi(.data, vars)
+    if (!is_grouped(.data)) {  
+      diagn_std_impl_dbi(.data, vars)
+    } else {
+      diagn_group_impl_dbi(.data, vars)      
+    }  
   } else {
-    .data %>% 
-      dplyr::collect(n = collect_size) %>% 
-      diagn_std_impl(vars)
+    if (!is_grouped(.data)) {
+      .data %>% 
+        dplyr::collect(n = collect_size) %>% 
+        diagn_std_impl(vars)
+    } else {
+      .data %>%
+        dplyr::collect(n = collect_size) %>%
+        diagnose_group_impl(vars)
+    }    
   }
 }
 
 diagn_std_impl_dbi <- function(df, vars) {
   if (length(vars) == 0) vars <- colnames(df)
   
-  get_na_cnt <- function(df, x) {
-    suppressWarnings(df %>%
-                       select(variable = !!x) %>%
-                       summarise(missing_count = sum(ifelse(is.na(variable), 1, 0))) %>%
-                       pull())
-  }
-  
-  get_unique_cnt <- function(df, x) {
-    df %>%
-      select(variable = !!x) %>%
-      distinct(variable) %>%
-      summarise(unique_count = n()) %>%
-      pull()
-  }
   
   col_info <- df %>%
     get_column_info %>%
     filter(.[, 1] %in% vars) %>% 
     select(variables = 1, types = 2)
   
-  missing_count <- sapply(vars,
-                          function(x) get_na_cnt(df, x))
-  unique_count <- sapply(vars,
-                         function(x) get_unique_cnt(df, x))
-  data_count <- tally(df) %>%
-    pull
+  tabs <- vars %>% 
+    purrr::map_df(
+      function(x) {
+        suppressMessages(
+          con_sqlite %>% 
+            tbl("TB_JOBCHANGE") %>% 
+            select(variable = !!x) %>%
+            summarise(missing_count = sum(ifelse(is.na(variable), 1, 0), na.rm = TRUE),
+                      missing_percent = sum(ifelse(is.na(variable), 1, 0), na.rm = TRUE) / n() * 100,
+                      unique_count = n_distinct(variable),
+                      unique_rate = n_distinct(variable) * 1.0 / n()) %>% 
+            mutate(variables = x) %>% 
+            collect()      
+        )
+      }
+    )
   
-  as_tibble(cbind(col_info,
-                  tibble(missing_count = missing_count,
-                         missing_percent = missing_count / data_count * 100,
-                         unique_count = unique_count,
-                         unique_rate = unique_count / data_count))) 
+  col_info %>% 
+    right_join(
+      tabs,
+      by = "variables") %>% 
+    tibble::as_tibble()
+}
+
+#' @importFrom purrr map_df
+#' @importFrom tidyselect matches
+#' @importFrom tibble as_tibble
+diagn_group_impl_dbi <- function(df, vars) {
+  if (length(vars) == 0) vars <- colnames(df)
+  
+  col_info <- df %>%
+    get_column_info %>%
+    filter(.[, 1] %in% vars) %>% 
+    select(variables = 1, types = 2)
+  
+  tabs <- vars %>% 
+    purrr::map_df(
+      function(x) {
+        suppressMessages(
+          con_sqlite %>% 
+            tbl("TB_JOBCHANGE") %>% 
+            group_by_at(df$lazy_query$group_vars) %>% 
+            select(variable = !!x) %>%
+            summarise(data_count = n(),
+                      missing_count = sum(ifelse(is.na(variable), 1, 0), na.rm = TRUE),
+                      missing_percent = sum(ifelse(is.na(variable), 1, 0), na.rm = TRUE) / n() * 100,
+                      unique_count = n_distinct(variable),
+                      unique_rate = n_distinct(variable) * 1.0 / n()) %>% 
+            mutate(variables = x) %>% 
+            collect() %>% 
+            select(!tidyselect::matches("^variable$"))          
+        )
+      }
+    )
+  
+  col_info %>% 
+    right_join(
+      tabs,
+      by = "variables") %>% 
+    tibble::as_tibble()
 }
 
 

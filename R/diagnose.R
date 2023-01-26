@@ -80,14 +80,14 @@ diagnose <- function(.data, ...) {
 #' jobchange %>%
 #'   diagnose() %>%
 #'   filter(missing_count > 0)
-#' }
 #'    
 #' # Using group_by ------------------------------
 #' # Calculate the diagnosis of all variables by 'job_chnge' using group_by()
 #' jobchange %>%
 #'   group_by(job_chnge) %>% 
 #'   diagnose() 
-#'   
+#' }
+#' 
 #' @method diagnose data.frame
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
@@ -124,105 +124,59 @@ diagn_std_impl <- function(df, vars) {
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
 #' @export
-diagnose.grouped_df <- function(.data, ..., all.combinations = FALSE) {
+diagnose.grouped_df <- function(.data, ...) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
-  diagnose_group_impl(.data, vars, all.combinations)
+  diagnose_group_impl(.data, vars)
 }
 
 
 #' @import tibble
 #' @import dplyr
-#' @importFrom purrr map_df map
+#' @importFrom purrr map_df 
 #' @importFrom tibble is_tibble as_tibble
 #' @importFrom tidyselect matches
-#' @importFrom rlang set_names
-diagnose_group_impl <- function(df, vars, all.combinations) {
+diagnose_group_impl <- function(df, vars) {
   if (length(vars) == 0) vars <- names(df)
   
-  if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
+  if (length(vars) == 1 & !tibble::is_tibble(df)) df <- tibble::as_tibble(df)
   
-  suppressWarnings(
-    if (utils::packageVersion("dplyr") >= "0.8.0") {
-      gdf <- attr(df, "groups")
-      n_group <- ncol(gdf) - 1
-      gvars <- gdf %>% 
-        names() %>% 
-        setdiff(".rows") 
-      
-      statistic <- purrr::map_df(seq(nrow(gdf)), function(x) {
-        variable_type <- sapply(vars,
-                                function(y) is(df[gdf$.rows[[x]], y][[1]])[1])
-        missing_count <- sapply(vars,
-                                function(y) sum(!complete.cases(df[gdf$.rows[[x]], y])))
-        unique_count <- sapply(vars,
-                               function(y) n_distinct(df[gdf$.rows[[x]], y]))
-        data_count <- nrow(df[gdf$.rows[[x]], ])
-        
-        gdf[x, ] %>% 
-          select(-tidyselect::matches("\\.rows")) %>% 
-          cbind(
-            tibble(variables = vars, 
-                   types = variable_type,
-                   data_count = data_count,
-                   missing_count = missing_count,
-                   missing_percent = missing_count / data_count * 100,
-                   unique_count = unique_count,
-                   unique_rate = unique_count / data_count)            
-          )
-      })
-    } else {
-      gdf_index <- attr(df, "indices")
-      glables <- attr(df, "labels")
-      n_group <- ncol(glables)
-      gvars <- glables %>% 
-        names() 
-      
-      statistic <- purrr::map_df(seq(nrow(glables)), function(x) {
-        variable_type <- sapply(vars,
-                                function(y) is(df[gdf_index[[x]], y][[1]])[1])
-        missing_count <- sapply(vars,
-                                function(y) sum(!complete.cases(df[gdf_index[[x]], y])))
-        unique_count <- sapply(vars,
-                               function(y) n_distinct(df[gdf_index[[x]], y]))
-        data_count <- nrow(df[gdf_index[[x]], ])
-        
-        glables[x, ] %>% 
-          cbind(
-            tibble(variables = vars, 
-                   types = variable_type,
-                   data_count = data_count,
-                   missing_count = missing_count,
-                   missing_percent = missing_count / data_count * 100,
-                   unique_count = unique_count,
-                   unique_rate = unique_count / data_count) 
-          )
-      })
-    } 
-  )
+  col_info <- df %>%
+    get_class %>%
+    filter(.[, 1] %in% vars) %>% 
+    select(variables = 1, types = 2)
   
-  if (all.combinations) {
-    expand_vars <- gvars %>% 
-      purrr::map({
-        function(x) {
-          unique(df[[x]])
-        }
-      }) %>%
-      append(list(unique(statistic$variables))) %>% 
-      expand.grid() %>% 
-      rlang::set_names(c(gvars, "variables")) 
-    
-    statistic <- expand_vars %>% 
-      left_join(
-        statistic,
-        by = c(gvars, "variables")
-      ) %>% 
-      arrange_at(gvars)
+  if (utils::packageVersion("dplyr") >= "0.8.0") {
+    gvars <- attr(df, "groups") %>% 
+      names() %>% 
+      setdiff(".rows") 
+  } else {
+    gvars <- attr(df, "labels") %>%
+      names() 
   }
+
+  tabs <- vars %>% 
+    purrr::map_df(
+      function(x) {
+        suppressMessages(
+          df %>% 
+            group_by_at(gvars) %>% 
+            select(variable = !!x) %>%
+            summarise(data_count = n(),
+                      missing_count = sum(ifelse(is.na(variable), 1, 0), na.rm = TRUE),
+                      missing_percent = sum(ifelse(is.na(variable), 1, 0), na.rm = TRUE) / n() * 100,
+                      unique_count = n_distinct(variable),
+                      unique_rate = n_distinct(variable) * 1.0 / n()) %>% 
+            mutate(variables = x) %>% 
+            select(!tidyselect::matches("^variable$"))          
+        )
+      }
+    )
   
-  statistic %>% 
-    select(n_group + 1, seq(n_group), (n_group + 1):ncol(statistic)) %>% 
-    tibble::as_tibble() %>% 
-    arrange(variables)
+  col_info %>% 
+    right_join(
+      tabs,
+      by = "variables") %>% 
+    tibble::as_tibble()
 }
 
 
@@ -344,13 +298,13 @@ diagnose_category <- function(.data, ...) {
 #' # extract only 3 rows
 #' jobchange %>% 
 #'   diagnose_category(enrollee_id, top = 3, type = "n")
-#' }
 #' 
 #' # Using group_by ------------------------------
 #' # Calculate the diagnosis of 'company_type' variable by 'job_chnge' using group_by()
 #' jobchange %>%
 #'   group_by(job_chnge) %>% 
 #'   diagnose_category(company_type) 
+#' }   
 #'   
 #' @method diagnose_category data.frame
 #' @importFrom tidyselect vars_select
@@ -386,30 +340,29 @@ diagn_category_impl <- function(df, vars, top, type, add_character, add_date) {
     return(NULL)
   }
   
-  get_topn <- function(df, var, top, type) {
-    tab <- df %>%
-      select(variable = var) %>%
-      mutate(variable = as.character(variable)) %>% 
-      count(variable, sort = TRUE) %>%
-      transmute(variables = var, levels = variable, N = sum(n), freq = n,
-                ratio = n / sum(n) * 100, 
-                rank = rank(max(freq) - freq, ties.method = "min"))
-    
-    if (type == "n") {
-      tab %>% 
-        slice_head(n = top)
-    } else if (type == "rank") {
-      tab %>% 
-        top_n(n = top, freq)      
-    }
-  }
-  
-  result <- lapply(vars[idx_factor],
-                   function(x) get_topn(df, x, top, type))
-  suppressWarnings(
-    do.call("rbind", result) %>% 
-      tibble::as_tibble()
-  )
+  vars[idx_factor] %>% 
+    purrr::map_df(
+      function(x) {
+        suppressMessages(
+          tab <- df %>% 
+            select(variable = x) %>%
+            count(variable, sort = TRUE) %>% 
+            transmute(variables = x, levels = variable, N = sum(n), freq = n,
+                      ratio = n / sum(n) * 100, 
+                      rank = rank(max(freq) - freq, ties.method = "min"))
+        )  
+        
+        tab <- tab[, c("variables", setdiff(names(tab), "variables"))]
+        
+        if (type == "n") {
+          tab %>% 
+            slice_head(n = top)
+        } else if (type == "rank") {
+          tab %>% 
+            top_n(n = top, freq)      
+        }   
+      }
+    ) 
 }
 
 
@@ -419,11 +372,9 @@ diagn_category_impl <- function(df, vars, top, type, add_character, add_date) {
 #' @importFrom rlang quos
 #' @export
 diagnose_category.grouped_df <- function(.data, ..., top = 10, type = c("rank", "n")[2], 
-                                         add_character = TRUE, add_date = TRUE,
-                                         all.combinations = FALSE) {
+                                         add_character = TRUE, add_date = TRUE) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
-  diagnose_category_group_impl(.data, vars, top, type, add_character, add_date,
-                               all.combinations)
+  diagnose_category_group_impl(.data, vars, top, type, add_character, add_date)
 }
 
 
@@ -434,7 +385,7 @@ diagnose_category.grouped_df <- function(.data, ..., top = 10, type = c("rank", 
 #' @importFrom tidyselect matches
 #' @importFrom rlang set_names
 diagnose_category_group_impl <- function(df, vars, top, type, add_character, 
-                                         add_date, all.combinations) {
+                                         add_date) {
   if (length(vars) == 0) vars <- names(df)
   
   if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
@@ -458,84 +409,43 @@ diagnose_category_group_impl <- function(df, vars, top, type, add_character,
     return(NULL)
   }
   
-  get_topn <- function(df, var, top, type) {
-    suppressMessages(
-      tab <- df %>%
-        select(variable = var) %>%
-        mutate(variable = as.character(variable)) %>% 
-        count(variable, sort = TRUE) %>%
-        transmute(variables = var, levels = variable, N = sum(n), freq = n,
-                  ratio = n / sum(n) * 100, 
-                  rank = rank(max(freq) - freq, ties.method = "min"))      
-    )
-    
-    if (type == "n") {
-      tab %>% 
-        slice_head(n = top)
-    } else if (type == "rank") {
-      tab %>% 
-        top_n(n = top, freq)      
-    }
-  }
+  if (utils::packageVersion("dplyr") >= "0.8.0") {
+    gvars <- attr(df, "groups") %>% 
+      names() %>% 
+      setdiff(".rows") 
+  } else {
+    gvars <- attr(df, "labels") %>% 
+      names() 
+  } 
   
-  suppressWarnings(
-    if (utils::packageVersion("dplyr") >= "0.8.0") {
-      gdf <- attr(df, "groups")
-      n_group <- ncol(gdf) - 1
-      gvars <- gdf %>% 
-        names() %>% 
-        setdiff(".rows") 
-      
-      statistic <- purrr::map_df(seq(nrow(gdf)), function(x) {
-        result <- lapply(vars[idx_factor],
-                         function(y) get_topn(df[gdf$.rows[[x]], ], y, top, type))
-        suppressWarnings(
-          do.call("rbind", result) %>% 
-            tibble::as_tibble()
-        )
-      })
-    } else {
-      gdf_index <- attr(df, "indices")
-      glables <- attr(df, "labels")
-      n_group <- ncol(glables)
-      gvars <- glables %>% 
-        names() 
-      
-      statistic <- purrr::map_df(seq(nrow(glables)), function(x) {
-        result <- lapply(vars[idx_factor],
-                         function(y) get_topn(df[gdf_index[[x]], ], y, top, type))
-        suppressWarnings(
-          do.call("rbind", result) %>% 
-            tibble::as_tibble()
-        )
-      })
-    } 
-  )
+  tabs <- vars[idx_factor] %>% 
+    purrr::map_df(
+      function(x) {
+        suppressMessages(
+          tab <- df %>% 
+            group_by_at(gvars) %>% 
+            select(variable = x) %>%
+            count(variable, sort = TRUE) %>% 
+            transmute(variables = x, levels = variable, N = sum(n), freq = n,
+                      ratio = n / sum(n) * 100, 
+                      rank = rank(max(freq) - freq, ties.method = "min"))
+        )  
+        
+        tab <- tab[, c("variables", setdiff(names(tab), "variables"))]
+        
+        if (type == "n") {
+          tab %>% 
+            slice_head(n = top)
+        } else if (type == "rank") {
+          tab %>% 
+            top_n(n = top, freq)      
+        }   
+      }
+    ) 
   
-  if (all.combinations) {
-    expand_vars <- gvars %>% 
-      purrr::map({
-        function(x) {
-          unique(df[[x]])
-        }
-      }) %>%
-      append(list(unique(statistic$variables))) %>% 
-      expand.grid() %>% 
-      rlang::set_names(c(gvars, "variables")) 
-    
-    statistic <- expand_vars %>% 
-      left_join(
-        statistic,
-        by = c(gvars, "variables")
-      ) %>% 
-      arrange_at(gvars)
-  }
-  
-  statistic %>% 
-    select(n_group + 1, seq(n_group), (n_group + 1):ncol(statistic)) %>% 
-    tibble::as_tibble() %>% 
-    arrange(variables) %>% 
-    select(!tidyselect::matches("^variable$"))    
+  tabs %>% 
+    ungroup() %>% 
+    select(!tidyselect::matches("^variable$"))
 }
 
 
@@ -684,9 +594,9 @@ diagn_numeric_impl <- function(df, vars) {
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
 #' @export
-diagnose_numeric.grouped_df <- function(.data, ..., all.combinations = FALSE) {
+diagnose_numeric.grouped_df <- function(.data, ...) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
-  diagnose_numeric_group_impl(.data, vars, all.combinations)
+  diagnose_numeric_group_impl(.data, vars)
 }
 
 
@@ -696,7 +606,7 @@ diagnose_numeric.grouped_df <- function(.data, ..., all.combinations = FALSE) {
 #' @importFrom tibble is_tibble as_tibble
 #' @importFrom tidyselect matches
 #' @importFrom rlang set_names
-diagnose_numeric_group_impl <- function(df, vars, all.combinations) {
+diagnose_numeric_group_impl <- function(df, vars) {
   if (length(vars) == 0) vars <- names(df)
   
   if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
@@ -758,25 +668,6 @@ diagnose_numeric_group_impl <- function(df, vars, all.combinations) {
       })
     } 
   )
-  
-  if (all.combinations) {
-    expand_vars <- gvars %>% 
-      purrr::map({
-        function(x) {
-          unique(df[[x]])
-        }
-      }) %>%
-      append(list(unique(statistic$variables))) %>% 
-      expand.grid() %>% 
-      rlang::set_names(c(gvars, "variables")) 
-    
-    statistic <- expand_vars %>% 
-      left_join(
-        statistic,
-        by = c(gvars, "variables")
-      ) %>% 
-      arrange_at(gvars)
-  }
   
   statistic %>% 
     select(ncol(statistic), seq(n_group), (n_group + 1):(ncol(statistic) - 1)) %>% 
@@ -924,9 +815,9 @@ diagnose_outlier_impl <- function(df, vars) {
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
 #' @export
-diagnose_outlier.grouped_df <- function(.data, ..., all.combinations = FALSE) {
+diagnose_outlier.grouped_df <- function(.data, ...) {
   vars <- tidyselect::vars_select(names(.data), !!! rlang::quos(...))
-  diagnose_outlier_group_impl(.data, vars, all.combinations)
+  diagnose_outlier_group_impl(.data, vars)
 }
 
 
@@ -936,7 +827,7 @@ diagnose_outlier.grouped_df <- function(.data, ..., all.combinations = FALSE) {
 #' @importFrom tibble is_tibble as_tibble
 #' @importFrom tidyselect matches
 #' @importFrom rlang set_names
-diagnose_outlier_group_impl <- function(df, vars, all.combinations) {
+diagnose_outlier_group_impl <- function(df, vars) {
   if (length(vars) == 0) vars <- names(df)
   
   if (length(vars) == 1 & !tibble::is_tibble(df)) df <- as_tibble(df)
@@ -997,25 +888,6 @@ diagnose_outlier_group_impl <- function(df, vars, all.combinations) {
       })
     } 
   )
-  
-  if (all.combinations) {
-    expand_vars <- gvars %>% 
-      purrr::map({
-        function(x) {
-          unique(df[[x]])
-        }
-      }) %>%
-      append(list(unique(statistic$variables))) %>% 
-      expand.grid() %>% 
-      rlang::set_names(c(gvars, "variables")) 
-    
-    statistic <- expand_vars %>% 
-      left_join(
-        statistic,
-        by = c(gvars, "variables")
-      ) %>% 
-      arrange_at(gvars)
-  }
   
   statistic %>% 
     select(ncol(statistic), seq(n_group), (n_group + 1):(ncol(statistic) - 1)) %>% 

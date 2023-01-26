@@ -10,7 +10,7 @@ diagnose_numeric(.data, ...)
 
 \method{diagnose_numeric}{data.frame}(.data, ...)
 
-\method{diagnose_numeric}{grouped_df}(.data, ..., all.combinations = FALSE)
+\method{diagnose_numeric}{grouped_df}(.data, ...)
 }
 \arguments{
 \item{.data}{a data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.}
