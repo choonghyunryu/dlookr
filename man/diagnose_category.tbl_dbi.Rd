@@ -123,6 +123,12 @@ con_sqlite \%>\%
   diagnose_category()  \%>\%
   filter(ratio >= 60)
   
+# Using group_by() ---------------------------- 
+con_sqlite \%>\% 
+  tbl("TB_JOBCHANGE") \%>\% 
+  group_by(job_chnge) \%>\% 
+  diagnose_category(company_type) 
+  
 # Using type argument -------------------------
  dfm <- data.frame(alpabet = c(rep(letters[1:5], times = 5), "c")) 
  

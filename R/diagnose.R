@@ -316,6 +316,7 @@ diagnose_category.data.frame <- function(.data, ..., top = 10, type = c("rank", 
   diagn_category_impl(.data, vars, top, type, add_character, add_date)
 }
 
+#' @importFrom purrr map_df
 diagn_category_impl <- function(df, vars, top, type, add_character, add_date) {
   if (length(vars) == 0) vars <- names(df)
   
@@ -380,7 +381,7 @@ diagnose_category.grouped_df <- function(.data, ..., top = 10, type = c("rank", 
 
 #' @import tibble
 #' @import dplyr
-#' @importFrom purrr map_df map
+#' @importFrom purrr map_df
 #' @importFrom tibble is_tibble as_tibble
 #' @importFrom tidyselect matches
 #' @importFrom rlang set_names
@@ -563,6 +564,7 @@ diagnose_numeric.data.frame <- function(.data, ...) {
 }
 
 #' @importFrom stats median quantile
+#' @importFrom purrr map_df
 diagn_numeric_impl <- function(df, vars) {
   if (length(vars) == 0) vars <- names(df)
   
@@ -575,28 +577,24 @@ diagn_numeric_impl <- function(df, vars) {
     return(NULL)
   }
   
-  get_descr <- function(df, var) {
-    df %>%
-      select(variable = var) %>%
-      summarise(min = min(variable, na.rm = TRUE),
-                Q1 = quantile(variable, 0.25, na.rm = TRUE),
-                mean = mean(variable, na.rm = TRUE),
-                median = median(variable, na.rm = TRUE),
-                Q3 = quantile(variable, 0.75, na.rm = TRUE),
-                max = max(variable, na.rm = TRUE),
-                zero = sum(variable == 0, na.rm = TRUE),
-                minus = sum(variable < 0, na.rm = TRUE),
-                outlier = length(boxplot.stats(variable)$out)) %>%
-      transmute(variables = var, min, Q1, mean, median, Q3, max,
-                zero, minus, outlier)
-  }
-  
-  result <- lapply(vars[idx_numeric],
-                   function(x) get_descr(df, x))
-  
-  suppressWarnings(
-    as.tbl(do.call("rbind", result))
-  )  
+  vars[idx_numeric] %>% 
+    purrr::map_df(
+      function(x) {
+        df %>%
+          select(variable = x) %>%
+          summarise(min = min(variable, na.rm = TRUE),
+                    Q1 = quantile(variable, 0.25, na.rm = TRUE),
+                    mean = mean(variable, na.rm = TRUE),
+                    median = median(variable, na.rm = TRUE),
+                    Q3 = quantile(variable, 0.75, na.rm = TRUE),
+                    max = max(variable, na.rm = TRUE),
+                    zero = sum(variable == 0, na.rm = TRUE),
+                    minus = sum(variable < 0, na.rm = TRUE),
+                    outlier = length(boxplot.stats(variable)$out)) %>%
+          transmute(variables = x, min, Q1, mean, median, Q3, max,
+                    zero, minus, outlier)
+      }
+    ) 
 }
 
 
@@ -629,62 +627,50 @@ diagnose_numeric_group_impl <- function(df, vars) {
     return(NULL)
   }
   
-  get_descr <- function(df, var) {
-    suppressMessages(
-      df %>%
-        select(variable = var) %>%
-        summarise(min = min(variable, na.rm = TRUE),
-                  Q1 = quantile(variable, 0.25, na.rm = TRUE),
-                  mean = mean(variable, na.rm = TRUE),
-                  median = median(variable, na.rm = TRUE),
-                  Q3 = quantile(variable, 0.75, na.rm = TRUE),
-                  max = max(variable, na.rm = TRUE),
-                  zero = sum(variable == 0, na.rm = TRUE),
-                  minus = sum(variable < 0, na.rm = TRUE),
-                  outlier = length(boxplot.stats(variable)$out)) %>%
-        mutate(variables = var) 
-    )
-  }
+  col_info <- df %>%
+    get_class %>%
+    filter(.[, 1] %in% vars) %>% 
+    select(variables = 1, types = 2)
   
-  suppressWarnings(
-    if (utils::packageVersion("dplyr") >= "0.8.0") {
-      gdf <- attr(df, "groups")
-      n_group <- ncol(gdf) - 1
-      gvars <- gdf %>% 
-        names() %>% 
-        setdiff(".rows") 
-      
-      statistic <- purrr::map_df(seq(nrow(gdf)), function(x) {
-        result <- lapply(vars[idx_numeric],
-                         function(y) get_descr(df[gdf$.rows[[x]], ], y))
-        suppressWarnings(
-          do.call("rbind", result) %>% 
-            tibble::as_tibble()
-        )
-      })
-    } else {
-      gdf_index <- attr(df, "indices")
-      glables <- attr(df, "labels")
-      n_group <- ncol(glables)
-      gvars <- glables %>% 
-        names() 
-      
-      statistic <- purrr::map_df(seq(nrow(glables)), function(x) {
-        result <- lapply(vars[idx_numeric],
-                         function(y) get_descr(df[gdf_index[[x]], ], y))
-        suppressWarnings(
-          do.call("rbind", result) %>% 
-            tibble::as_tibble()
-        )
-      })
-    } 
-  )
+  if (utils::packageVersion("dplyr") >= "0.8.0") {
+    gvars <- attr(df, "groups") %>% 
+      names() %>% 
+      setdiff(".rows") 
+  } else {
+    gvars <- attr(df, "labels") %>% 
+      names() 
+  } 
   
-  statistic %>% 
-    select(ncol(statistic), seq(n_group), (n_group + 1):(ncol(statistic) - 1)) %>% 
+  tabs <- vars[idx_numeric] %>% 
+    purrr::map_df(
+      function(x) {
+        suppressMessages(
+          tab <- df %>%
+            select(variable = x) %>%
+            summarise(min = min(variable, na.rm = TRUE),
+                      Q1 = quantile(variable, 0.25, na.rm = TRUE),
+                      mean = mean(variable, na.rm = TRUE),
+                      median = median(variable, na.rm = TRUE),
+                      Q3 = quantile(variable, 0.75, na.rm = TRUE),
+                      max = max(variable, na.rm = TRUE),
+                      zero = sum(variable == 0, na.rm = TRUE),
+                      minus = sum(variable < 0, na.rm = TRUE),
+                      outlier = length(boxplot.stats(variable)$out)) %>%
+            mutate(variables = x) 
+        )  
+        
+        tab <- tab[, c("variables", setdiff(names(tab), "variables"))]
+      }
+    ) 
+  
+  col_info %>% 
+    filter(types %in% "numerical") %>% 
+    select(1) %>%     
+    right_join(
+      tabs,
+      by = "variables") %>% 
     tibble::as_tibble() %>% 
-    arrange(variables) %>% 
-    select(!matches("^variable$"))    
+    select(!tidyselect::matches("^variable$"))
 }
 
 
@@ -785,6 +771,7 @@ diagnose_outlier.data.frame <- function(.data, ...) {
 }
 
 #' @import dplyr
+#' @importFrom purrr map_df
 diagnose_outlier_impl <- function(df, vars) {
   if (length(vars) == 0) vars <- names(df)
   
@@ -797,27 +784,23 @@ diagnose_outlier_impl <- function(df, vars) {
     return(NULL)
   }
   
-  get_outlier <- function(df, var) {
-    df %>%
-      select(variable = var) %>%
-      summarise(outliers_cnt = length(boxplot.stats(variable)$out),
-                outliers_ratio = length(boxplot.stats(variable)$out) / n(),
-                outliers_mean = mean(ifelse(variable %in% boxplot.stats(variable)$out,
-                                            variable, NA), na.rm = TRUE),
-                with_mean = mean(variable, na.rm = TRUE),
-                without_mean = mean(ifelse(variable %in% boxplot.stats(variable)$out,
-                                           NA, variable), na.rm = TRUE)) %>%
-      transmute(variables = var, outliers_cnt,
-                outliers_ratio = outliers_ratio * 100,
-                outliers_mean, with_mean, without_mean)
-  }
-  
-  result <- lapply(vars[idx_numeric],
-                   function(x) get_outlier(df, x))
-  
-  suppressWarnings(
-    do.call("rbind", result)
-  )  
+  vars[idx_numeric] %>% 
+    purrr::map_df(
+      function(x) {
+        df %>%
+          select(variable = x) %>%
+          summarise(outliers_cnt = length(boxplot.stats(variable)$out),
+                    outliers_ratio = length(boxplot.stats(variable)$out) / n(),
+                    outliers_mean = mean(ifelse(variable %in% boxplot.stats(variable)$out,
+                                                variable, NA), na.rm = TRUE),
+                    with_mean = mean(variable, na.rm = TRUE),
+                    without_mean = mean(ifelse(variable %in% boxplot.stats(variable)$out,
+                                               NA, variable), na.rm = TRUE)) %>%
+          transmute(variables = x, outliers_cnt,
+                    outliers_ratio = outliers_ratio * 100,
+                    outliers_mean, with_mean, without_mean)
+      }
+    ) 
 }
 
 
@@ -834,7 +817,7 @@ diagnose_outlier.grouped_df <- function(.data, ...) {
 
 #' @import tibble
 #' @import dplyr
-#' @importFrom purrr map_df map
+#' @importFrom purrr map_df
 #' @importFrom tibble is_tibble as_tibble
 #' @importFrom tidyselect matches
 #' @importFrom rlang set_names
@@ -850,61 +833,49 @@ diagnose_outlier_group_impl <- function(df, vars) {
     return(NULL)
   }
   
-  get_outlier <- function(df, var) {
-    suppressMessages(
-      df %>%
-        select(variable = var) %>%
-        summarise(data_cnt = n(),
-                  outliers_cnt = length(boxplot.stats(variable)$out),
-                  outliers_ratio = length(boxplot.stats(variable)$out) / n() * 100,
-                  outliers_mean = mean(ifelse(variable %in% boxplot.stats(variable)$out,
-                                              variable, NA), na.rm = TRUE),
-                  with_mean = mean(variable, na.rm = TRUE),
-                  without_mean = mean(ifelse(variable %in% boxplot.stats(variable)$out,
-                                             NA, variable), na.rm = TRUE)) %>%
-        mutate(variables = var)      
-    )
-  }
+  col_info <- df %>%
+    get_class %>%
+    filter(.[, 1] %in% vars) %>% 
+    select(variables = 1, types = 2)
   
-  suppressWarnings(
-    if (utils::packageVersion("dplyr") >= "0.8.0") {
-      gdf <- attr(df, "groups")
-      n_group <- ncol(gdf) - 1
-      gvars <- gdf %>% 
-        names() %>% 
-        setdiff(".rows") 
-      
-      statistic <- purrr::map_df(seq(nrow(gdf)), function(x) {
-        result <- lapply(vars[idx_numeric],
-                         function(y) get_outlier(df[gdf$.rows[[x]], ], y))
-        suppressWarnings(
-          do.call("rbind", result) %>% 
-            tibble::as_tibble()
-        )
-      })
-    } else {
-      gdf_index <- attr(df, "indices")
-      glables <- attr(df, "labels")
-      n_group <- ncol(glables)
-      gvars <- glables %>% 
-        names() 
-      
-      statistic <- purrr::map_df(seq(nrow(glables)), function(x) {
-        result <- lapply(vars[idx_numeric],
-                         function(y) get_outlier(df[gdf_index[[x]], ], y))
-        suppressWarnings(
-          do.call("rbind", result) %>% 
-            tibble::as_tibble()
-        )
-      })
-    } 
-  )
+  if (utils::packageVersion("dplyr") >= "0.8.0") {
+    gvars <- attr(df, "groups") %>% 
+      names() %>% 
+      setdiff(".rows") 
+  } else {
+    gvars <- attr(df, "labels") %>% 
+      names() 
+  } 
   
-  statistic %>% 
-    select(ncol(statistic), seq(n_group), (n_group + 1):(ncol(statistic) - 1)) %>% 
+  tabs <- vars[idx_numeric] %>% 
+    purrr::map_df(
+      function(x) {
+        suppressMessages(
+          tab <- df %>%
+            select(variable = x) %>%
+            summarise(data_cnt = n(),
+                      outliers_cnt = length(boxplot.stats(variable)$out),
+                      outliers_ratio = length(boxplot.stats(variable)$out) / n() * 100,
+                      outliers_mean = mean(ifelse(variable %in% boxplot.stats(variable)$out,
+                                                  variable, NA), na.rm = TRUE),
+                      with_mean = mean(variable, na.rm = TRUE),
+                      without_mean = mean(ifelse(variable %in% boxplot.stats(variable)$out,
+                                                 NA, variable), na.rm = TRUE)) %>%
+            mutate(variables = x)  
+        )  
+        
+        tab <- tab[, c("variables", setdiff(names(tab), "variables"))]
+      }
+    ) 
+  
+  col_info %>% 
+    filter(types %in% "numerical") %>% 
+    select(1) %>%     
+    right_join(
+      tabs,
+      by = "variables") %>% 
     tibble::as_tibble() %>% 
-    arrange(variables) %>% 
-    select(!matches("^variable$"))    
+    select(!tidyselect::matches("^variable$"))
 }
 
 

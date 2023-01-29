@@ -364,6 +364,12 @@ diagn_group_impl_dbi <- function(df, vars) {
 #'   diagnose_category()  %>%
 #'   filter(ratio >= 60)
 #'   
+#' # Using group_by() ---------------------------- 
+#' con_sqlite %>% 
+#'   tbl("TB_JOBCHANGE") %>% 
+#'   group_by(job_chnge) %>% 
+#'   diagnose_category(company_type) 
+#'   
 #' # Using type argument -------------------------
 #'  dfm <- data.frame(alpabet = c(rep(letters[1:5], times = 5), "c")) 
 #'  
@@ -533,7 +539,8 @@ diagn_category_group_impl_dbi <- function(df, vars, top, type) {
 #' of data. If the number of zero or minus is large, it is necessary to suspect
 #' the error of the data. If the number of outliers is large, a strategy of
 #' eliminating or replacing outliers is needed.
-#'
+#' You can use grouped_df as the group_by() function.
+#' 
 #' @section Numerical diagnostic information:
 #' The information derived from the numerical data diagnosis is as follows.
 #'
@@ -612,6 +619,12 @@ diagn_category_group_impl_dbi <- function(df, vars, top, type) {
 #'   diagnose_numeric()  %>%
 #'   filter(outlier > 0)
 #'
+#' # Using group_by() ---------------------------- 
+#' con_sqlite %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   group_by(death_event) %>% 
+#'   diagnose_numeric() 
+#'   
 #' # Disconnect DBMS   
 #' DBI::dbDisconnect(con_sqlite)
 #' }
@@ -622,9 +635,15 @@ diagnose_numeric.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_si
   if (in_database) {
     stop("It does not yet support in-database mode. Use in_database = FALSE.")
   } else {
-    .data %>% 
-      dplyr::collect(n = collect_size) %>% 
-      diagn_numeric_impl(vars)
+    if (!is_grouped(.data)) {
+      .data %>% 
+        dplyr::collect(n = collect_size) %>% 
+        diagn_numeric_impl(vars)
+    } else {
+      .data %>% 
+        dplyr::collect(n = collect_size) %>% 
+        diagnose_numeric_group_impl(vars)
+    }     
   }
 }
 
@@ -639,7 +658,8 @@ diagnose_numeric.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_si
 #' If the number of outliers is small and the difference between the averages
 #' including outliers and the averages not including them is large,
 #' it is necessary to eliminate or replace the outliers.
-#'
+#' You can use grouped_df as the group_by() function.
+#' 
 #' @section Outlier Diagnostic information:
 #' The information derived from the numerical data diagnosis is as follows.
 #'
@@ -715,6 +735,12 @@ diagnose_numeric.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_si
 #'   diagnose_outlier()  %>%
 #'   filter(outliers_ratio > 1)
 #'
+#' # Using group_by() ----------------------------
+#' con_sqlite %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   group_by(death_event) %>% 
+#'   diagnose_outlier() 
+#'   
 #' # Disconnect DBMS   
 #' DBI::dbDisconnect(con_sqlite)
 #' }
@@ -725,9 +751,15 @@ diagnose_outlier.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_si
   if (in_database) {
     stop("It does not yet support in-database mode. Use dbi = FALSE.")
   } else {
-    .data %>% 
-      dplyr::collect(n = collect_size) %>%
-      diagnose_outlier_impl(vars)
+    if (!is_grouped(.data)) {
+      .data %>% 
+        dplyr::collect(n = collect_size) %>% 
+        diagnose_outlier_impl(vars)
+    } else {
+      .data %>% 
+        dplyr::collect(n = collect_size) %>% 
+        diagnose_outlier_group_impl(vars)
+    }      
   }
 }
 

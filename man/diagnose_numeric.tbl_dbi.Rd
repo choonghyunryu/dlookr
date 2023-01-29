@@ -40,6 +40,7 @@ min, Q1, mean, median, Q3, max can be used to estimate the distribution
 of data. If the number of zero or minus is large, it is necessary to suspect
 the error of the data. If the number of outliers is large, a strategy of
 eliminating or replacing outliers is needed.
+You can use grouped_df as the group_by() function.
 }
 \section{Numerical diagnostic information}{
 
@@ -104,6 +105,12 @@ con_sqlite \%>\%
   diagnose_numeric()  \%>\%
   filter(outlier > 0)
 
+# Using group_by() ---------------------------- 
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  group_by(death_event) \%>\% 
+  diagnose_numeric() 
+  
 # Disconnect DBMS   
 DBI::dbDisconnect(con_sqlite)
 }

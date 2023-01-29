@@ -11,6 +11,8 @@
 * Add group_by() support functions for DBMS. (#93)
    - diagnose.tbl_dbi()
    - diagnose_category.tbl_dbi()
+   - diagnose_numeric.tbl_dbi()
+   - diagnose_outlier.tbl_dbi()
 
 
 
