@@ -57,6 +57,7 @@ in categorical data. If a certain level of occupancy is close to 100%,
 then the removal of this variable in the forecast model will have to be
 considered. Also, if the occupancy of all levels is close to 0%, this
 variable is likely to be an identifier.
+You can use grouped_df as the group_by() function.
 }
 \section{Categorical diagnostic information}{
 
@@ -156,5 +157,7 @@ DBI::dbDisconnect(con_sqlite)
 
 }
 \seealso{
-\code{\link{diagnose_category.data.frame}}, \code{\link{diagnose.tbl_dbi}}, \code{\link{diagnose_category.tbl_dbi}}, \code{\link{diagnose_numeric.tbl_dbi}}, \code{\link{diagnose_outlier.tbl_dbi}}.
+\code{\link{diagnose_category.data.frame}}, \code{\link{diagnose.tbl_dbi}}, 
+\code{\link{diagnose_category.tbl_dbi}}, \code{\link{diagnose_numeric.tbl_dbi}}, 
+\code{\link{diagnose_outlier.tbl_dbi}}.
 }

@@ -35,8 +35,8 @@ the column of the DBMS table through tbl_dbi.
 The scope of data quality diagnosis is information on missing values
 and unique value information. Data quality diagnosis can determine variables
 that require missing value processing. Also, the unique value information can
-determine the variable to be removed from the data analysis. You can use
-grouped_df as the group_by() function.
+determine the variable to be removed from the data analysis. 
+You can use grouped_df as the group_by() function.
 }
 \section{Diagnostic information}{
 

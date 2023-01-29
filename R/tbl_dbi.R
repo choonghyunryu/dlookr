@@ -74,8 +74,8 @@ get_column_info <- function(df) {
 #' @details The scope of data quality diagnosis is information on missing values
 #' and unique value information. Data quality diagnosis can determine variables
 #' that require missing value processing. Also, the unique value information can
-#' determine the variable to be removed from the data analysis. You can use
-#' grouped_df as the group_by() function.
+#' determine the variable to be removed from the data analysis. 
+#' You can use grouped_df as the group_by() function.
 #'
 #' @section Diagnostic information:
 #' The information derived from the data diagnosis is as follows.:
@@ -203,8 +203,7 @@ diagn_std_impl_dbi <- function(df, vars) {
     purrr::map_df(
       function(x) {
         suppressMessages(
-          con_sqlite %>% 
-            tbl("TB_JOBCHANGE") %>% 
+          df %>% 
             select(variable = !!x) %>%
             summarise(missing_count = sum(ifelse(is.na(variable), 1, 0), na.rm = TRUE),
                       missing_percent = sum(ifelse(is.na(variable), 1, 0), na.rm = TRUE) / n() * 100,
@@ -238,8 +237,7 @@ diagn_group_impl_dbi <- function(df, vars) {
     purrr::map_df(
       function(x) {
         suppressMessages(
-          con_sqlite %>% 
-            tbl("TB_JOBCHANGE") %>% 
+          df %>% 
             group_by_at(df$lazy_query$group_vars) %>% 
             select(variable = !!x) %>%
             summarise(data_count = n(),
@@ -273,7 +271,8 @@ diagn_group_impl_dbi <- function(df, vars) {
 #' then the removal of this variable in the forecast model will have to be
 #' considered. Also, if the occupancy of all levels is close to 0%, this
 #' variable is likely to be an identifier.
-#'
+#' You can use grouped_df as the group_by() function.
+#' 
 #' @section Categorical diagnostic information:
 #' The information derived from the categorical data diagnosis is as follows.
 #'
@@ -313,7 +312,9 @@ diagn_group_impl_dbi <- function(df, vars) {
 #' Applies only if in_database = FALSE.
 #' 
 #' @return an object of tbl_df.
-#' @seealso \code{\link{diagnose_category.data.frame}}, \code{\link{diagnose.tbl_dbi}}, \code{\link{diagnose_category.tbl_dbi}}, \code{\link{diagnose_numeric.tbl_dbi}}, \code{\link{diagnose_outlier.tbl_dbi}}.
+#' @seealso \code{\link{diagnose_category.data.frame}}, \code{\link{diagnose.tbl_dbi}}, 
+#' \code{\link{diagnose_category.tbl_dbi}}, \code{\link{diagnose_numeric.tbl_dbi}}, 
+#' \code{\link{diagnose_outlier.tbl_dbi}}.
 #' @export
 #' @examples
 #' \donttest{
@@ -400,11 +401,21 @@ diagnose_category.tbl_dbi <- function(.data, ..., top = 10, type = c("rank", "n"
   vars <- tidyselect::vars_select(colnames(.data), !!! rlang::quos(...))
   
   if (in_database) {
-    diagn_category_impl_dbi(.data, vars, top, type)
+    if (!is_grouped(.data)) {  
+      diagn_category_impl_dbi(.data, vars, top, type)
+    } else {
+      diagn_category_group_impl_dbi(.data, vars, top, type)      
+    }      
   } else {
-    .data %>% 
-      dplyr::collect(n = collect_size) %>% 
-      diagn_category_impl(vars, top, type, add_character = TRUE, add_date = TRUE)
+    if (!is_grouped(.data)) {
+      .data %>% 
+        dplyr::collect(n = collect_size) %>% 
+        diagn_category_impl(vars, top, type, add_character = TRUE, add_date = TRUE)
+    } else {
+      .data %>% 
+        dplyr::collect(n = collect_size) %>% 
+        diagnose_category_group_impl(vars, top, type, add_character = TRUE, add_date = TRUE)
+    }      
   }
 }
 
@@ -424,35 +435,89 @@ diagn_category_impl_dbi <- function(df, vars, top, type) {
   
   idx_factor <- which(col_type == "character")
   
-  N <- tally(df) %>% 
-    pull
-  
-  get_topn <- function(df, var, top, type) {
-    suppressMessages({
-      tab <- df %>%
-        select(levels = var) %>%
-        group_by(levels) %>% 
-        tally %>% 
-        arrange(desc(n)) %>% 
-        as_tibble %>% 
-        cbind(var, .) %>% 
-        transmute(variables = var, levels, N, freq = n,
-                  ratio = n / N * 100, 
-                  rank = rank(max(freq) - freq, ties.method = "min"))
-      
-      if (type == "n") {
-        tab %>% 
-          slice_head(n = top)
-      } else if (type == "rank") {
-        tab %>% 
-          top_n(n = top, freq)      
-      }
-    })
+  if (length(idx_factor) == 0) {
+    message("There is no categorical variable in the data or variable list.\n")
+    return(NULL)
   }
   
-  result <- lapply(vars[idx_factor],
-                   function(x) get_topn(df, x, top, type))
-  as_tibble(do.call("rbind", result))
+  vars[idx_factor] %>% 
+    purrr::map_df(
+      function(x) {
+        suppressMessages(
+          tab <- df %>% 
+            select(variable = x) %>%
+            count(variable, sort = TRUE) %>% 
+            collect() %>%           
+            transmute(variables = x, levels = variable, N = sum(n), freq = n,
+                      ratio = n / sum(n) * 100, 
+                      rank = rank(max(freq) - freq, ties.method = "min"))
+        )  
+        
+        if (type == "n") {
+          tab %>% 
+            slice_head(n = top)
+        } else if (type == "rank") {
+          tab %>% 
+            top_n(n = top, freq)      
+        }   
+      }
+    ) 
+}
+
+diagn_category_group_impl_dbi <- function(df, vars, top, type) {
+  if (length(vars) == 0) vars <- colnames(df)
+  
+  if (length(type) != 1 | !type %in% c("rank", "n")) {
+    message("The type argument must be one of \"rank\" or \"n\".\n")
+    return(NULL)    
+  }
+  
+  col_info <- df %>%
+    get_column_info %>%
+    filter(.[, 1] %in% vars) %>% 
+    select(variables = 1, types = 2)
+  
+  idx_factor <- which(col_info$types %in% "character")
+  
+  if (length(idx_factor) == 0) {
+    message("There is no categorical variable in the data or variable list.\n")
+    return(NULL)
+  }
+  
+  tabs <- vars[idx_factor] %>% 
+    purrr::map_df(
+      function(x) {
+        suppressMessages(
+          tab <- df %>% 
+            group_by_at(df$lazy_query$group_vars) %>% 
+            select(variable = !!x) %>%
+            count(variable, sort = TRUE) %>% 
+            collect() %>% 
+            transmute(variables = x, levels = variable, N = sum(n), freq = n,
+                      ratio = n / sum(n) * 100, 
+                      rank = rank(max(freq) - freq, ties.method = "min"))
+        )  
+        
+        tab <- tab[, c("variables", setdiff(names(tab), "variables"))]
+        
+        if (type == "n") {
+          tab %>% 
+            slice_head(n = top)
+        } else if (type == "rank") {
+          tab %>% 
+            top_n(n = top, freq)      
+        }   
+      }
+    ) 
+  
+  col_info %>% 
+    filter(types %in% "character") %>% 
+    select(1) %>% 
+    right_join(
+      tabs %>% 
+        arrange_at(c("variables", df$lazy_query$group_vars, "rank")),
+      by = "variables") %>% 
+    tibble::as_tibble() 
 }
 
 

@@ -409,6 +409,11 @@ diagnose_category_group_impl <- function(df, vars, top, type, add_character,
     return(NULL)
   }
   
+  col_info <- df %>%
+    get_class %>%
+    filter(.[, 1] %in% vars) %>% 
+    select(variables = 1, types = 2)
+  
   if (utils::packageVersion("dplyr") >= "0.8.0") {
     gvars <- attr(df, "groups") %>% 
       names() %>% 
@@ -443,8 +448,14 @@ diagnose_category_group_impl <- function(df, vars, top, type, add_character,
       }
     ) 
   
-  tabs %>% 
-    ungroup() %>% 
+  col_info %>% 
+    filter(types %in% "character") %>% 
+    select(1) %>%     
+    right_join(
+      tabs %>% 
+        arrange_at(c("variables", gvars, "rank")),
+      by = "variables") %>% 
+    tibble::as_tibble() %>% 
     select(!tidyselect::matches("^variable$"))
 }
 
