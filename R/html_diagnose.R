@@ -102,6 +102,7 @@ html_toprank <- function(.data, variable = NULL, drop_variable = FALSE) {
   
   reactable(top_rank, defaultPageSize = nrow(top_rank),
             defaultColDef = colDef(style = "font-size: 14px;color: hsl(0, 0%, 40%);"),
+            filterable = TRUE, 
             columns = list(
               levels = colDef(
                 name = "Levels"
@@ -260,6 +261,7 @@ html_variable <- function(.data, thres_uniq_cat = 0.5, thres_uniq_num = 5,
     # defaultPageSize = nrow(tabs),
     #fullWidth = FALSE,
     defaultColDef = colDef(style = "font-size: 14px;color: hsl(0, 0%, 40%);"),
+    filterable = TRUE, 
     columns = list(
       variables = colDef(
       #   cell = function(value) a(name = value, value)
@@ -324,6 +326,7 @@ html_variable <- function(.data, thres_uniq_cat = 0.5, thres_uniq_num = 5,
         reactable(
           fullWidth = FALSE,
           defaultColDef = colDef(style = "font-size: 14px;color: hsl(0, 0%, 40%);"),
+          filterable = TRUE, 
           columns = list(
             metric = colDef(
               name = "Metric"
@@ -364,6 +367,7 @@ html_variable <- function(.data, thres_uniq_cat = 0.5, thres_uniq_num = 5,
         stat_char <- stat_char %>% 
           reactable(fullWidth = FALSE,
                     defaultColDef = colDef(style = "font-size: 14px;color: hsl(0, 0%, 40%);"),
+                    filterable = TRUE, 
                     columns = list(Class = colDef(width = 150))
           )          
         
@@ -400,6 +404,7 @@ html_variable <- function(.data, thres_uniq_cat = 0.5, thres_uniq_num = 5,
                     defaultColDef = colDef(
                       style = "font-size: 14px;color: hsl(0, 0%, 40%);"
                     ),
+                    filterable = TRUE, 
                     columns = list(
                       min = colDef(
                         name = "Min"
@@ -539,6 +544,7 @@ html_missing <- function(tab, grade = c("Good" = 0.05, "OK" = 0.1,
     reactable(
       diagn_missing,
       defaultColDef = colDef(style = "font-size: 14px;color: hsl(0, 0%, 40%);"),
+      filterable = TRUE, 
       columns = list(
         variables = colDef(name = "Variables"),  
         missing_count = colDef(name = "Missing",
@@ -670,6 +676,7 @@ html_outlier <- function(.data, theme = c("orange", "blue")[1],
   tabs %>% 
     reactable(
       defaultColDef = colDef(style = "font-size: 14px;color: hsl(0, 0%, 40%);"),
+      filterable = TRUE, 
       columns = list(
         variables = colDef(
           name = "Variables"
@@ -719,6 +726,7 @@ html_outlier <- function(.data, theme = c("orange", "blue")[1],
         outlier_df <- outlier_df %>% 
           reactable(fullWidth = FALSE,
                     defaultColDef = colDef(style = "font-size: 14px;color: hsl(0, 0%, 40%);"),
+                    filterable = TRUE, 
                     columns = list(
                       Measures = colDef(width = 200),
                       Values = colDef(align = "right")
@@ -770,6 +778,7 @@ html_unique_cat <- function(tab, thres) {
     reactable(
       diagn_uniq_cat,
       defaultColDef = colDef(style = "font-size: 14px;color: hsl(0, 0%, 40%);"),
+      filterable = TRUE, 
       columns = list(
         unique_count = colDef(
           name = "unique",
@@ -879,6 +888,7 @@ html_unique_num <- function(tab, thres) {
     
     reactable(
       diagn_uniq_num, 
+      filterable = TRUE, 
       columns = list(
         unique_count = colDef(
           name = "unique",

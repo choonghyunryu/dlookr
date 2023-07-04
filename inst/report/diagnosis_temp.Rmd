@@ -450,6 +450,7 @@ tab_warning %>%
   reactable(
     defaultColDef = colDef(style = "font-size: 14px;color: hsl(0, 0%, 40%);",
                            minWidth = 120),
+    filterable = TRUE, 
     columns = list(
       check = colDef(
         name = "Checks",
@@ -481,6 +482,7 @@ tab_warning %>%
   select(warnings, status, recommand) %>% 
   reactable(
     defaultColDef = colDef(style = "font-size: 14px;color: hsl(0, 0%, 40%);"),
+    filterable = TRUE, 
     columns = list(
       warnings = colDef(
         name = "Warnings",
@@ -648,6 +650,7 @@ idx_dup <- attr(ov, "duplicated")
 if (length(idx_dup)) {
   tabs <- reportData[idx_dup, ] %>%
   reactable::reactable(
+    filterable = TRUE, 
     defaultColDef = colDef(style = "font-size: 14px;color: hsl(0, 0%, 40%);",
                            minWidth = 150)
   )
@@ -675,6 +678,7 @@ h2("Heads", id = "ID-h2-head", class = "title-h2")
 tabs <- reportData %>% 
   head(10) %>% 
   reactable::reactable(
+    filterable = TRUE, 
     defaultColDef = colDef(style = "font-size: 14px;color: hsl(0, 0%, 40%);",
                            minWidth = 150)
   )
@@ -696,6 +700,7 @@ h2("Tails", id = "ID-h2-tail", class = "title-h2")
 tabs <- reportData %>% 
   tail(10) %>% 
   reactable::reactable(
+    filterable = TRUE, 
     defaultColDef = colDef(style = "font-size: 14px;color: hsl(0, 0%, 40%);",
                            minWidth = 150)
   )
