@@ -1,3 +1,17 @@
+# dlookr 0.6.3.9002
+
+## MINOR CHANGES
+
+* Remove the funModeling package dependency of the binning_rgr() function. 
+  (thanks to Pablo Casas, #96)
+
+## BUG FIXES
+
+* Fixed a wrong of degree of freedom in eda_web_report(), eda_paged_report(). 
+  (thanks to Jessica N Busler, #98) 
+  
+  
+
 # dlookr 0.6.2.9001
 
 ## MAJOR CHANGES

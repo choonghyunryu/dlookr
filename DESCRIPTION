@@ -1,8 +1,8 @@
 Package: dlookr
 Type: Package
 Title: Tools for Data Diagnosis, Exploration, Transformation
-Version: 0.6.2.9001
-Date: 2022-12-30
+Version: 0.6.3.9002
+Date: 2023-07-18
 Authors@R: c(
   person("Choonghyun", "Ryu",, "choonghyun.ryu@gmail.com", role = c("aut", "cre"))
   )
@@ -50,7 +50,7 @@ Suggests:
     classInt,
     dbplyr,
     forecast (>= 8.3),
-    funModeling,
+    Hmisc,
     ISLR,
     nycflights13,
     ppsr,
@@ -64,4 +64,4 @@ Author: Choonghyun Ryu [aut, cre]
 Maintainer: Choonghyun Ryu <choonghyun.ryu@gmail.com>    
 BugReports: https://github.com/choonghyunryu/dlookr/issues
 VignetteBuilder: knitr    
-RoxygenNote: 7.2.2
+RoxygenNote: 7.2.3

@@ -573,7 +573,15 @@ summary.compare_category <- function(object, method = c("all", "table", "relativ
       relative[[j]] <- prop.table(contingency[[j]])
     }
     
-    suppressWarnings(chisq[j, ] <- contingency[[j]] %>% 
+    ## Remove the margimal
+    tab <- contingency[[j]][, colnames(contingency[[j]]) != "<Total>"]
+    tab <- tab[rownames(tab) != "<Total>", ]
+    
+    ## Remove the missing
+    tab <- tab[, !is.na(colnames(tab))]
+    tab <- tab[!is.na(rownames(tab)), ]    
+    
+    suppressWarnings(chisq[j, ] <- tab %>% 
                        chisq.test() %>% 
                        get_tab_chisq() %>% 
                        select(-method))

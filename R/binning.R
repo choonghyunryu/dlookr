@@ -1476,17 +1476,24 @@ binning_rgr <- function(.data, y, x, min_perc_bins = 0.1, max_n_bins = 5, ordere
   if (length(unique(.data[, x])) < 5) 
     stop("x must be number of unique values greater then 4.")
   
-  if (requireNamespace("funModeling", quietly = TRUE)) {
-    bins <- funModeling::discretize_rgr(
-      .data[, x],
-      .data[, y],
-      min_perc_bins = min_perc_bins,
-      max_n_bins = max_n_bins
-    )
-  } else {
-    stop("Package 'funModeling' needed for this function to work. Please install it.", 
-         call. = FALSE)
-  }
+  # if (requireNamespace("funModeling", quietly = TRUE)) {
+  #   bins <- funModeling::discretize_rgr(
+  #     .data[, x],
+  #     .data[, y],
+  #     min_perc_bins = min_perc_bins,
+  #     max_n_bins = max_n_bins
+  #   )
+  # } else {
+  #   stop("Package 'funModeling' needed for this function to work. Please install it.", 
+  #        call. = FALSE)
+  # }
+  
+  bins <- discretize_rgr(
+    .data[, x],
+    .data[, y],
+    min_perc_bins = min_perc_bins,
+    max_n_bins = max_n_bins
+  )
   
   bin_levels <- levels(bins)
   

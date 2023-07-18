@@ -742,3 +742,259 @@ cat_bullet <- function(x, bullet = "\u2022") {
   cat(str, "\n")
 }
 
+# from funModeling
+discretize_rgr <- function(input, target, min_perc_bins = 0.1, max_n_bins = 5) {
+  fpoints <- c()
+  max_depth <- 20
+  target <- as.character(target)
+  min_n <- round(min_perc_bins * length(input))
+  
+  all_cuts <- recursive_gr_cuts_aux(input, target, fpoints, max_depth, min_n)
+  
+  max_n_bins <- max_n_bins-1
+  fpoints_top <- all_cuts[1:min(max_n_bins,length(all_cuts))]
+  fpoints_top_ord <- fpoints_top[order(fpoints_top)]
+  
+  input_bin <- cut2(input, cuts = c(fpoints_top_ord, max(input)))
+  
+  return(input_bin)
+}
+
+recursive_gr_cuts_aux <- function(input, target, fpoints, max_depth, min_n) {
+  points <- unique(quantile(input, probs = seq(0.2, 0.8, by = 0.2)))
+  
+  if (length(points) == 1 | length(fpoints) >= max_depth) 
+    return(fpoints)
+  
+  r <- c()
+  for(p in points) {
+    gr <- binary_gain_ratio(input, target, test_points = p)
+    
+    # check sample size against the total
+    total_left <- sum(input < p)
+    total_right <- sum(input >= p)
+    gr <- if(total_left < min_n | total_right < min_n) 0 else gr
+    
+    r <- c(r, gr)
+  }
+  
+  # Quality stopping criteria
+  position_max <- which(max(r) == r)[1]
+  max_point <- points[position_max];
+  
+  input_left <- input[input < max_point]
+  input_right <- input[input >= max_point]
+  target_left <- target[input < max_point]
+  target_right <- target[input >= max_point]
+  
+  if (length(input_left) > min_n & length(input_right) > min_n & 
+      length(fpoints) <= max_depth) {
+    fpoints <- c(fpoints, max_point)
+    
+    fpoints_left <- recursive_gr_cuts_aux(input = input_left,
+                                          target = target_left, 
+                                          fpoints, max_depth, min_n)
+    fpoints_right <- recursive_gr_cuts_aux(input = input_right, 
+                                           target = target_right, 
+                                           fpoints, max_depth, min_n)
+    fpoints <- unique(c(fpoints_right, fpoints_left))
+  }
+  
+  return(fpoints)
+}
+
+binary_gain_ratio <- function(input, target, test_points) {
+  input_bin <- cut2(input, cuts = test_points)
+  
+  if(length(levels(input_bin)) == 1) return(0)
+  
+  gr <- gain_ratio(input_bin, target)
+  
+  return(gr)
+}
+
+
+gain_ratio <- function(input, target) {
+  ig <- information_gain(input, target)
+  split <- information_gain(input, input)
+  
+  gain_r <- ig / split
+  
+  return(gain_r)
+}
+
+
+information_gain <- function(input, target) {
+  tbl <- table(target)
+  en_y <- entropy(tbl) / log(2)
+  en <- entropy_2(input, target)
+  info_gain <- en_y - en
+  
+  return(info_gain)
+}
+
+
+entropy_2 <- function(input, target) {
+  # converting x input into frequency table
+  tbl_input <- table(input)
+  
+  # cell percentages (distribution)
+  probs_input <- prop.table(tbl_input)
+  
+  tbl <- table(input, target)
+  
+  # get partial entropy
+  df_tbl <- as.data.frame.matrix(tbl)
+  res_entropy <- data.frame(t(df_tbl)) %>% 
+    mutate_all(function(x) entropy(x) / log(2)) %>% 
+    head(., 1)
+  
+  # computing total entropy
+  total_en <- sum(probs_input * res_entropy)
+  
+  return(total_en)
+}
+
+
+## from Hmisc
+#' @importFrom utils getFromNamespace
+#' @importFrom stats approx
+cut2 <- function(x, cuts, m = 150, g, levels.mean = FALSE, digits, minmax = TRUE,
+                 oneval = TRUE, onlycuts = FALSE, formatfun = format, ...) {
+  if (inherits(formatfun, "formula")) {
+    if (!requireNamespace("rlang")) 
+      stop("Package 'rlang' must be installed to use formula notation")
+    formatfun <- utils::getFromNamespace("as_function", "rlang")(formatfun)
+  }
+  method <- 1
+  x.unique <- sort(unique(c(x[!is.na(x)], if (!missing(cuts)) cuts)))
+  min.dif <- min(diff(x.unique))/2
+  min.dif.factor <- 1
+  if (missing(digits)) 
+    digits <- if (levels.mean) 
+      5
+  else 3
+  format.args <- if (any(c("...", "digits") %in% names(formals(args(formatfun))))) {
+    c(digits = digits, list(...))
+  }
+  else {
+    list(...)
+  }
+  oldopt <- options("digits")
+  options(digits = digits)
+  on.exit(options(oldopt))
+  xlab <- attr(x, "label")
+  if (missing(cuts)) {
+    nnm <- sum(!is.na(x))
+    if (missing(g)) 
+      g <- max(1, floor(nnm/m))
+    if (g < 1) 
+      stop("g must be >=1, m must be positive")
+    options(digits = 15)
+    n <- table(x)
+    xx <- as.double(names(n))
+    options(digits = digits)
+    cum <- cumsum(n)
+    m <- length(xx)
+    y <- as.integer(ifelse(is.na(x), NA, 1))
+    labs <- character(g)
+    cuts <- stats::approx(cum, xx, xout = (1:g) * nnm/g, method = "constant", 
+                          rule = 2, f = 1)$y
+    cuts[length(cuts)] <- max(xx)
+    lower <- xx[1]
+    upper <- 1e+45
+    up <- low <- double(g)
+    i <- 0
+    for (j in 1:g) {
+      cj <- if (method == 1 || j == 1) 
+        cuts[j]
+      else {
+        if (i == 0) 
+          stop("program logic error")
+        s <- if (is.na(lower)) 
+          FALSE
+        else xx >= lower
+        cum.used <- if (all(s)) 
+          0
+        else max(cum[!s])
+        if (j == m) 
+          max(xx)
+        else if (sum(s) < 2) 
+          max(xx)
+        else approx(cum[s] - cum.used, xx[s], xout = (nnm - 
+                                                        cum.used)/(g - j + 1), method = "constant", 
+                    rule = 2, f = 1)$y
+      }
+      if (cj == upper) 
+        next
+      i <- i + 1
+      upper <- cj
+      y[x >= (lower - min.dif.factor * min.dif)] <- i
+      low[i] <- lower
+      lower <- if (j == g) 
+        upper
+      else min(xx[xx > upper])
+      if (is.na(lower)) 
+        lower <- upper
+      up[i] <- lower
+    }
+    low <- low[1:i]
+    up <- up[1:i]
+    variation <- logical(i)
+    for (ii in 1:i) {
+      r <- range(x[y == ii], na.rm = TRUE)
+      variation[ii] <- diff(r) > 0
+    }
+    if (onlycuts) 
+      return(unique(c(low, max(xx))))
+    flow <- do.call(formatfun, c(list(low), format.args))
+    fup <- do.call(formatfun, c(list(up), format.args))
+    bb <- c(rep(")", i - 1), "]")
+    labs <- ifelse(low == up | (oneval & !variation), flow, 
+                   paste("[", flow, ",", fup, bb, sep = ""))
+    ss <- y == 0 & !is.na(y)
+    if (any(ss)) 
+      stop(paste("categorization error in cut2.  Values of x not appearing in any interval:\n", 
+                 paste(format(x[ss], digits = 12), collapse = " "), 
+                 "\nLower endpoints:", paste(format(low, digits = 12), 
+                                             collapse = " "), "\nUpper endpoints:", paste(format(up, 
+                                                                                                 digits = 12), collapse = " ")))
+    y <- structure(y, class = "factor", levels = labs)
+  }
+  else {
+    if (minmax) {
+      r <- range(x, na.rm = TRUE)
+      if (r[1] < cuts[1]) 
+        cuts <- c(r[1], cuts)
+      if (r[2] > max(cuts)) 
+        cuts <- c(cuts, r[2])
+    }
+    l <- length(cuts)
+    k2 <- cuts - min.dif
+    k2[l] <- cuts[l]
+    y <- cut(x, k2)
+    if (!levels.mean) {
+      brack <- rep(")", l - 1)
+      brack[l - 1] <- "]"
+      fmt <- do.call(formatfun, c(list(cuts), format.args))
+      labs <- paste("[", fmt[1:(l - 1)], ",", fmt[2:l], 
+                    brack, sep = "")
+      if (oneval) {
+        nu <- table(cut(x.unique, k2))
+        if (length(nu) != length(levels(y))) 
+          stop("program logic error")
+        levels(y) <- ifelse(nu == 1, c(fmt[1:(l - 2)], 
+                                       fmt[l]), labs)
+      }
+      else levels(y) <- labs
+    }
+  }
+  if (levels.mean) {
+    means <- tapply(x, y, function(w) mean(w, na.rm = TRUE))
+    levels(y) <- do.call(formatfun, c(list(means), format.args))
+  }
+  attr(y, "class") <- "factor"
+  if (length(xlab)) 
+    attr(y, "label") <- xlab
+  y
+}
