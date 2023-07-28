@@ -350,7 +350,8 @@ diagn_category_impl <- function(df, vars, top, type, add_character, add_date) {
             count(variable, sort = TRUE) %>% 
             transmute(variables = x, levels = variable, N = sum(n), freq = n,
                       ratio = n / sum(n) * 100, 
-                      rank = rank(max(freq) - freq, ties.method = "min"))
+                      rank = rank(max(freq) - freq, ties.method = "min")) %>% 
+            mutate(levels = as.character(levels))
         )  
         
         tab <- tab[, c("variables", setdiff(names(tab), "variables"))]
@@ -434,7 +435,8 @@ diagnose_category_group_impl <- function(df, vars, top, type, add_character,
             count(variable, sort = TRUE) %>% 
             transmute(variables = x, levels = variable, N = sum(n), freq = n,
                       ratio = n / sum(n) * 100, 
-                      rank = rank(max(freq) - freq, ties.method = "min"))
+                      rank = rank(max(freq) - freq, ties.method = "min")) %>% 
+            mutate(levels = as.character(levels))
         )  
         
         tab <- tab[, c("variables", setdiff(names(tab), "variables"))]
