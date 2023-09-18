@@ -505,7 +505,7 @@ html_paged_variable <- function(.data, thres_uniq_cat = 0.5, thres_uniq_num = 5,
 html_missing <- function(tab, grade = c("Good" = 0.05, "OK" = 0.1, 
                                         "NotBad" = 0.2, "Bad" = 0.5, 
                                         "Remove" = 1),
-                         recommand = c("Delete or Imputation", 
+                         recommend = c("Delete or Imputation", 
                                        "Delete or Imputation",
                                        "Model based Imputation", 
                                        "Model based Imputation", 
@@ -516,7 +516,7 @@ html_missing <- function(tab, grade = c("Good" = 0.05, "OK" = 0.1,
     mutate(missing_percent = missing_percent / 100) %>% 
     mutate(status = cut(missing_percent, breaks = c(0, grade),
                         labels = names(grade))) %>% 
-    mutate(recommand = recommand[status]) %>%   
+    mutate(recommend = recommend[status]) %>%   
     arrange(desc(missing_count))
   
   if (NROW(diagn_missing) > 0) {
@@ -559,8 +559,8 @@ html_missing <- function(tab, grade = c("Good" = 0.05, "OK" = 0.1,
                           badge <- status_badge(color = color)
                           tagList(badge, value)
                         }),
-        recommand = colDef(
-          name = "Recommand"
+        recommend = colDef(
+          name = "Recommend"
         )
       )
     )
@@ -578,7 +578,7 @@ html_missing <- function(tab, grade = c("Good" = 0.05, "OK" = 0.1,
 html_paged_missing <- function(tab, grade = c("Good" = 0.05, "OK" = 0.1, 
                                         "NotBad" = 0.2, "Bad" = 0.5, 
                                         "Remove" = 1),
-                               recommand = c("Delete or Imputation", 
+                               recommend = c("Delete or Imputation", 
                                              "Delete or Imputation",
                                              "Model based Imputation", 
                                              "Model based Imputation", 
@@ -591,7 +591,7 @@ html_paged_missing <- function(tab, grade = c("Good" = 0.05, "OK" = 0.1,
     mutate(missing_percent = missing_percent / 100) %>% 
     mutate(status = cut(missing_percent, breaks = c(0, grade),
                         labels = names(grade))) %>% 
-    mutate(recommand = recommand[status]) %>%   
+    mutate(recommend = recommend[status]) %>%   
     mutate(missing_percent = paste0(round(missing_percent * 100, 1), "%")) %>%     
     arrange(desc(missing_count)) %>% 
     rename("missing" = missing_percent,
@@ -756,7 +756,7 @@ html_unique_cat <- function(tab, thres) {
     mutate(status = ifelse(unique_rate <= thres, "low cardinality", status)) %>% 
     mutate(status = ifelse(unique_rate == 1, "identifier", status)) %>% 
     mutate(status = ifelse(unique_count == 1, "constant", status)) %>%    
-    mutate(recommand = case_when(
+    mutate(recommend = case_when(
       status %in% "constant" ~ "Remove Variable",
       status %in% "identifier" ~ "Use as ID",
       status %in% c("high cardinality", "low cardinality") ~ "Judgment"
@@ -810,7 +810,7 @@ html_paged_unique_cat <- function(tab, thres, n_rows = 25, add_row = 3, caption 
     mutate(status = ifelse(unique_rate == 1, "identifier", status)) %>% 
     mutate(status = ifelse(unique_count == 1, "constant", status)) %>%    
     mutate(unique_rate = paste0(round(unique_rate * 100, 1), "%")) %>%    
-    mutate(recommand = case_when(
+    mutate(recommend = case_when(
       status %in% "constant" ~ "Remove Variable",
       status %in% "identifier" ~ "Use as ID",
       status %in% c("high cardinality", "low cardinality") ~ "Judgment"
@@ -848,7 +848,7 @@ html_unique_num <- function(tab, thres) {
     mutate(status = ifelse(unique_count <= thres, "low cardinality", "")) %>% 
     mutate(status = ifelse(unique_rate == 1, "identifier", status)) %>% 
     mutate(status = ifelse(unique_count == 1, "constant", status)) %>%    
-    mutate(recommand = case_when(
+    mutate(recommend = case_when(
       status %in% "constant" ~ "Remove Variable",
       status %in% "identifier" ~ "Use as ID",
       status %in% c("low cardinality") ~ "Judgment"
@@ -916,7 +916,7 @@ html_paged_unique_num <- function(tab, thres, n_rows = 25, add_row = 3,
     mutate(status = ifelse(unique_rate == 1, "identifier", status)) %>% 
     mutate(status = ifelse(unique_count == 1, "constant", status)) %>%
     mutate(unique_rate = paste0(round(unique_rate * 100, 1), "%")) %>%       
-    mutate(recommand = case_when(
+    mutate(recommend = case_when(
       status %in% "constant" ~ "Remove Variable",
       status %in% "identifier" ~ "Use as ID",
       status %in% c("low cardinality") ~ "Judgment"
