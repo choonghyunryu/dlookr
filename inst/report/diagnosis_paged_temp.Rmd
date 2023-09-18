@@ -69,17 +69,17 @@ base_family <- get("base_family", .dlookrEnv)
   font-size: 12px;
 }
 
-.recommand-check {
+.recommend-check {
   background: hsl(116, 60%, 90%);
   color: hsl(116, 30%, 25%);
 }
 
-.recommand-judgement {
+.recommend-judgement {
   background: hsl(230, 70%, 90%);
   color: hsl(230, 45%, 30%);
 }
 
-.recommand-remove {
+.recommend-remove {
   background: hsl(350, 70%, 90%);
   color: hsl(350, 45%, 30%);
 }
@@ -111,7 +111,7 @@ diagn_numeric <- diagnose_numeric(reportData)
 tab_warning <- data.frame(
   warnings = character(5000), status = character(5000), variables = character(5000),
   types = character(5000), indicator = numeric(5000), ratio = numeric(5000), 
-  recommand = character(5000), stringsAsFactors = FALSE)
+  recommend = character(5000), stringsAsFactors = FALSE)
 
 # duplicate --------------------------------------------------------------------
 idx_last <- 0
@@ -129,7 +129,7 @@ if (n_duplicate > 0) {
     "dataset has %s (%s%%) duplicated observations", 
     format(n_duplicate, big.mark = ","),
     round(n_duplicate / N * 100, 1))
-  tab_warning$recommand[idx]  <- "check"  
+  tab_warning$recommend[idx]  <- "check"  
 } else {
   idx <- NULL
 }
@@ -154,7 +154,7 @@ if (nrow(warn_miss) > 0) {
     "%s has %s (%s%%) missing values", warn_miss$variables,
     format(warn_miss$missing_count, big.mark = ","),
     round(warn_miss$missing_percent, 1))
-  tab_warning$recommand[idx]  <- "judgement"
+  tab_warning$recommend[idx]  <- "judgement"
 } else {
   idx <- NULL
 }
@@ -177,7 +177,7 @@ if (nrow(warn_identifier) > 0) {
   tab_warning$warnings[idx]   <- sprintf(
     "%s has high(%.2f) cardinality, Maybe identifier",
     warn_identifier$variables, warn_identifier$unique_rate)
-  tab_warning$recommand[idx]  <- "check"  
+  tab_warning$recommend[idx]  <- "check"  
 } else {
   idx <- NULL
 }
@@ -204,7 +204,7 @@ if (nrow(warn_constant) > 0) {
       t() %>% 
       as.vector()
     )  
-  tab_warning$recommand[idx]  <- "remove"
+  tab_warning$recommend[idx]  <- "remove"
 } else {
   idx <- NULL
 }
@@ -230,7 +230,7 @@ if (nrow(warn_unique_cat) > 0) {
     warn_unique_cat$variables, 
     format(warn_unique_cat$unique_count, big.mark = ","),
     round(warn_unique_cat$unique_rate * 100, 1))  
-  tab_warning$recommand[idx]  <- "judgement"
+  tab_warning$recommend[idx]  <- "judgement"
 } else {
   idx <- NULL
 }
@@ -254,7 +254,7 @@ if (nrow(warn_unique_num) > 0) {
     warn_unique_num$variables, 
     format(warn_unique_num$unique_count, big.mark = ","),
     round(warn_unique_num$unique_rate * 100, 1))  
-  tab_warning$recommand[idx]  <- "judgement"
+  tab_warning$recommend[idx]  <- "judgement"
 } else {
   idx <- NULL
 }
@@ -279,7 +279,7 @@ if (!is.null(diagn_numeric)) {
     tab_warning$warnings[idx]   <- sprintf(
       "%s has %s (%s%%) zeros", warn_zero$variables, 
       format(warn_zero$zero, big.mark = ","), round(warn_zero$zero / N * 100, 2))  
-    tab_warning$recommand[idx]  <- "check"
+    tab_warning$recommend[idx]  <- "check"
   } else {
     idx <- NULL
   }
@@ -309,7 +309,7 @@ if (!is.null(diagn_numeric)) {
       "%s has %s (%s%%) negatives",
       warn_minus$variables, format(warn_minus$minus, big.mark = ","),
       round(warn_minus$minus / N * 100, 2))  
-    tab_warning$recommand[idx]  <- "check"
+    tab_warning$recommend[idx]  <- "check"
   } else {
     idx <- NULL
   }
@@ -338,7 +338,7 @@ if (!is.null(diagn_numeric)) {
       "%s has %s (%s%%) outliers",
       warn_outlier$variables, format(warn_outlier$outlier, big.mark = ","),
       round(warn_outlier$outlier / N * 100, 2))  
-    tab_warning$recommand[idx]  <- "judgement"
+    tab_warning$recommend[idx]  <- "judgement"
   } else {
     idx <- NULL
   }
@@ -410,10 +410,10 @@ if (NROW(tab_warning) < 1) {
   html_cat("No warnings")
 } else {
   tab <- tab_warning %>%
-    count(recommand) %>% 
-    right_join(data.frame(recommand = c("check", "judgement", "remove")),
-               by = "recommand") %>% 
-    tidyr::spread(recommand, n) %>% 
+    count(recommend) %>% 
+    right_join(data.frame(recommend = c("check", "judgement", "remove")),
+               by = "recommend") %>% 
+    tidyr::spread(recommend, n) %>% 
     mutate_all(function(x) ifelse(is.na(x), 0, x))
 
   knitr::kable(tab, format = "html", caption = "Summary of warnings",
@@ -429,7 +429,7 @@ if (NROW(tab_warning) < 1) {
 
 ```{r warnings, results='asis'}
 tab_warning <- tab_warning %>% 
-  select(warnings, status, recommand)
+  select(warnings, status, recommend)
 
 if (NROW(tab_warning) > 0) {
   cap <- "Warnings in dataset and variables"
