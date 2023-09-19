@@ -114,16 +114,18 @@ transform <- function(x, method = c("zscore", "minmax", "log", "log+1", "sqrt",
     result <- x^3
   else if (method == "Box-Cox") {
     if (!requireNamespace("forecast", quietly = TRUE)) {
-      stop("Package \"forecast\" needed for this function to work. Please install it.",
+      warning("Package \"forecast\" needed for this function to work. Please install it.",
            call. = FALSE)
+      return(NULL)
     }
 
     result <- get_boxcox(x)        
   }
   else if (method == "Yeo-Johnson")  {
     if (!requireNamespace("forecast", quietly = TRUE)) {
-      stop("Package \"forecast\" needed for this function to work. Please install it.",
+      warning("Package \"forecast\" needed for this function to work. Please install it.",
            call. = FALSE)
+      return(NULL)
     }
     
     result <- get_yjohnson(x)
@@ -449,8 +451,9 @@ transformation_report <- function(.data, target = NULL, output_format = c("pdf",
     file.copy(from = Rmd_file, to = path, recursive = TRUE)
 
     if (!requireNamespace("forecast", quietly = TRUE)) {
-      stop("Package \"forecast\" needed for this function to work. Please install it.",
+      warning("Package \"forecast\" needed for this function to work. Please install it.",
            call. = FALSE)
+      return(NULL)
     }
     
     rmarkdown::render(paste(path, rmd, sep = "/"),

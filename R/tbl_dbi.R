@@ -55,8 +55,9 @@ get_column_info <- function(df) {
     res <- DBI::dbSendQuery(df$src$con,
                             dbplyr::remote_query(df))
   } else {
-    stop("Package 'DBI' needed for this function to work. Please install it.", 
+    warning("Package 'DBI' needed for this function to work. Please install it.", 
          call. = FALSE)
+    return(NULL)
   }
   
   column_info <- DBI::dbColumnInfo(res)

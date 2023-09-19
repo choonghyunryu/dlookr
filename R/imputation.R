@@ -226,8 +226,9 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL,
                             data = df[!is.na(pull(df, x)), setdiff(intersect(names(df), complete_flag), y)],
                             method = method, na.action = na.omit)
     } else {
-      stop("Package 'rpart' needed for this function to work. Please install it.", 
+      warning("Package 'rpart' needed for this function to work. Please install it.", 
            call. = FALSE)
+      return(NULL)
     }
 
     pred <- predict(model, df[is.na(pull(df, x)), !names(df) %in% y],
@@ -250,8 +251,9 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL,
       if (requireNamespace("mice", quietly = TRUE)) {
         model <- mice::mice(df[, !names(df) %in% y], method = "rf", printFlag = print_flag)
       } else {
-        stop("Package 'mice' needed for this function to work. Please install it.", 
+        warning("Package 'mice' needed for this function to work. Please install it.", 
              call. = FALSE)
+        return(NULL)
       }
 
       if (all(is.na(model$imp[[x]]))) {

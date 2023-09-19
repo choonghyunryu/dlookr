@@ -654,16 +654,18 @@ get_transform <- function(x, method = c("log", "sqrt", "log+1", "log+a", "1/x",
     result <- x^3
   else if (method == "Box-Cox") {
     if (!requireNamespace("forecast", quietly = TRUE)) {
-      stop("Package \"forecast\" needed for this function to work. Please install it.",
+      warning("Package \"forecast\" needed for this function to work. Please install it.",
            call. = FALSE)
+      return(NULL)
     }
     
     result <- get_boxcox(x) 
   }
   else if (method == "Yeo-Johnson") {
     if (!requireNamespace("forecast", quietly = TRUE)) {
-      stop("Package \"forecast\" needed for this function to work. Please install it.",
+      warning("Package \"forecast\" needed for this function to work. Please install it.",
            call. = FALSE)
+      return(NULL)
     }
     
     result <- get_yjohnson(x)

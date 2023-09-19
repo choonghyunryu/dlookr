@@ -5,6 +5,9 @@
 * Remove the funModeling package dependency of the binning_rgr() function. 
   (thanks to Pablo Casas, #96)
 
+* Error occurred in binning() during CRAN test. (#104) 
+  
+
 ## BUG FIXES
 
 * Fixed a wrong of degree of freedom in eda_web_report(), eda_paged_report(). 

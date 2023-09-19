@@ -42,8 +42,9 @@ To illustrate the basic use of data transformation in the dlookr package, I use 
 `Carseats` in the `ISLR` package is simulation dataset that sells children's car seats at 400 stores. This data is a data.frame created for the purpose of predicting sales volume.
 
 ```{r import_data}
-library(ISLR)
-str(Carseats)
+if (!require("ISLR")) install.packages("ISLR")
+
+str(ISLR::Carseats)
 ```
 
 The contents of individual variables are as follows. (Refer to ISLR::Carseats Man page)

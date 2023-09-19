@@ -153,8 +153,9 @@ pps.target_df <- function(.data, ..., cv_folds = 5, do_parallel = FALSE,
 
 pps_impl <- function(.data, vars, cv_folds, do_parallel, n_cores) {
   if (!requireNamespace("ppsr", quietly = TRUE)) {
-    stop("Package \"ppsr\" needed for this function to work. Please install it.",
+    warning("Package \"ppsr\" needed for this function to work. Please install it.",
          call. = FALSE)
+    return(NULL)
   }
   
   if (length(vars) == 0) vars <- names(.data)
@@ -175,8 +176,9 @@ pps_impl <- function(.data, vars, cv_folds, do_parallel, n_cores) {
 
 pps_impl_target <- function(.data, vars, cv_folds, do_parallel, n_cores) {
   if (!requireNamespace("ppsr", quietly = TRUE)) {
-    stop("Package \"ppsr\" needed for this function to work. Please install it.",
+    warning("Package \"ppsr\" needed for this function to work. Please install it.",
          call. = FALSE)
+    return(NULL)
   }
   
   if (length(vars) == 0) vars <- names(.data)

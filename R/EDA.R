@@ -210,8 +210,9 @@ eda_report.data.frame <- function(.data, target = NULL, output_format = c("pdf",
     file.copy(from = Rmd_file, to = path, recursive = TRUE)
     
     if (!requireNamespace("prettydoc", quietly = TRUE)) {
-      stop("Package \"prettydoc\" needed for this function to work. Please install it.",
+      warning("Package \"prettydoc\" needed for this function to work. Please install it.",
            call. = FALSE)
+      return(NULL)
     }
     
     rmarkdown::render(paste(path, rmd, sep = "/"),

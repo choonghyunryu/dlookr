@@ -131,6 +131,7 @@ if (!require(DBI)) install.packages('DBI')
 if (!require(RSQLite)) install.packages('RSQLite')
 if (!require(dplyr)) install.packages('dplyr')
 if (!require(dbplyr)) install.packages('dbplyr')
+if (!require(ISLR)) install.packages('ISLR')
 
 library(dplyr)
 

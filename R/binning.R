@@ -157,8 +157,9 @@ binning <- function(x, nbins,
     breaks <- pretty(x = x, n = nbins)
   } else {
     if (!requireNamespace("classInt", quietly = TRUE)) {
-      stop("Package \"classInt\" needed for this function to work. Please install it.",
+      warning("Package \"classInt\" needed for this function to work. Please install it.",
            call. = FALSE)
+      return(NULL)
     }
     
     xx <- na.omit(x)

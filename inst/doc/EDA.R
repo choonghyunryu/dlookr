@@ -7,8 +7,9 @@ library(dplyr)
 library(ggplot2)
 
 ## ----import_data, warning=FALSE-----------------------------------------------
-library(ISLR)
-str(Carseats)
+if (!require("ISLR")) install.packages("ISLR")
+
+str(ISLR::Carseats)
 
 ## ----missing------------------------------------------------------------------
 carseats <- ISLR::Carseats
