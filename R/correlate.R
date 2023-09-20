@@ -453,6 +453,8 @@ correlate_group_impl_cat <- function(df, vars, method) {
 #' mat
 #' 
 #' # connect DBMS
+#' if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
+#' if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
 #' con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 #' 
 #' # copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
@@ -848,6 +850,8 @@ plot_correlate_group_impl <- function(df, vars, method, typographic, base_family
 #' plot(tab_corr)
 #' 
 #' # S3 method for correlate class by 'tbl_dbi' ================
+#' if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
+#' if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
 #' # connect DBMS
 #' con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 #' 

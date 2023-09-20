@@ -50,7 +50,7 @@ To illustrate the basic use of EDA in the dlookr package, I use a `Carseats` dat
 `Carseats` in the `ISLR` package is a simulated data set containing sales of child car seats at 400 different stores. This data is a data.frame created for the purpose of predicting sales volume.
 
 ```{r import_data, warning=FALSE}
-if (!require("ISLR")) install.packages("ISLR")
+if (!require("ISLR")) install.packages("ISLR", repos = "http://cran.us.r-project.org")
 
 str(ISLR::Carseats)
 ```
@@ -624,10 +624,10 @@ Copy the `carseats` data frame to the SQLite DBMS and create it as a table named
 Mysql/MariaDB, PostgreSQL, Oracle DBMS, other DBMS are also available for your environment. 
 
 ```{r dbi_table, warning=FALSE, message=FALSE}
-if (!require(DBI)) install.packages('DBI')
-if (!require(RSQLite)) install.packages('RSQLite')
-if (!require(dplyr)) install.packages('dplyr')
-if (!require(dbplyr)) install.packages('dbplyr')
+if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
+if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
+if (!require(dplyr)) install.packages('dplyr', repos = "http://cran.us.r-project.org")
+if (!require(dbplyr)) install.packages('dbplyr', repos = "http://cran.us.r-project.org")
 
 library(dplyr)
 

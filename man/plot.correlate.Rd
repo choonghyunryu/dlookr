@@ -54,6 +54,8 @@ tab_corr <- iris \%>\%
 plot(tab_corr)
 
 # S3 method for correlate class by 'tbl_dbi' ================
+if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
+if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
 # connect DBMS
 con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 

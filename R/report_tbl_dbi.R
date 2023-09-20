@@ -85,6 +85,8 @@
 #' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
 #'
 #' # connect DBMS
+#' if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
+#' if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
 #' con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 #' 
 #' # copy heartfailure2 to the DBMS with a table named TB_HEARTFAILURE
@@ -248,6 +250,8 @@ diagnose_web_report.tbl_dbi <- function(.data, output_file = NULL, output_dir = 
 #' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
 #'
 #' # connect DBMS
+#' if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
+#' if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
 #' con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 #' 
 #' # copy heartfailure2 to the DBMS with a table named TB_HEARTFAILURE
@@ -403,6 +407,8 @@ diagnose_paged_report.tbl_dbi <- function(.data, output_format = c("pdf", "html"
 #' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
 #'
 #' # connect DBMS
+#' if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
+#' if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
 #' con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 #' 
 #' # copy heartfailure2 to the DBMS with a table named TB_HEARTFAILURE
@@ -552,6 +558,8 @@ eda_web_report.tbl_dbi <- function(.data, target = NULL, output_file = NULL,
 #' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
 #'
 #' # connect DBMS
+#' if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
+#' if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
 #' con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 #' 
 #' # copy heartfailure2 to the DBMS with a table named TB_HEARTFAILURE

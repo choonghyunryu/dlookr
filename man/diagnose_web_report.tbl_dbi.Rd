@@ -131,6 +131,8 @@ heartfailure2[sample(seq(NROW(heartfailure2)), 20), "platelets"] <- NA
 heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
 
 # connect DBMS
+if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
+if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
 con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 
 # copy heartfailure2 to the DBMS with a table named TB_HEARTFAILURE

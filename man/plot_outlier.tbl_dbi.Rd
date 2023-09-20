@@ -74,6 +74,8 @@ use it after loading the Google font with import_google_font().
 library(dplyr)
 
 # connect DBMS
+if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
+if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
 con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 
 # copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
