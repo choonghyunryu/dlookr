@@ -1395,6 +1395,8 @@ diagnose_report <- function(.data, output_format, output_file, output_dir, ...) 
 #' @examples
 #' \donttest{
 #' if (FALSE) {
+#' if (!require(prettydoc)) install.packages('prettydoc', repos = "http://cran.us.r-project.org")
+#' 
 #' # reporting the diagnosis information -------------------------
 #' # create pdf file. file name is DataDiagnosis_Report.pdf
 #' diagnose_report(heartfailure)

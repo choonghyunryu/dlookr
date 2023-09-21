@@ -88,6 +88,8 @@ See vignette("transformation") for an introduction to these concepts.
 \examples{
 \donttest{
 if (FALSE) {
+if (!require(prettydoc)) install.packages('prettydoc', repos = "http://cran.us.r-project.org")
+
 # reporting the Binning information -------------------------
 # create pdf file. file name is Transformation_Report.pdf & No target variable
 transformation_report(heartfailure)

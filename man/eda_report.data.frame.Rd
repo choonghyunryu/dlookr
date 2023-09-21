@@ -97,6 +97,8 @@ See vignette("EDA") for an introduction to these concepts.
 if (FALSE) {
 library(dplyr)
 
+if (!require(prettydoc)) install.packages('prettydoc', repos = "http://cran.us.r-project.org")
+
 ## target variable is categorical variable ----------------------------------
 # reporting the EDA information
 # create pdf file. file name is EDA_Report.pdf

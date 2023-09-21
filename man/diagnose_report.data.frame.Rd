@@ -83,6 +83,8 @@ See vignette("diagonosis") for an introduction to these concepts.
 \examples{
 \donttest{
 if (FALSE) {
+if (!require(prettydoc)) install.packages('prettydoc', repos = "http://cran.us.r-project.org")
+
 # reporting the diagnosis information -------------------------
 # create pdf file. file name is DataDiagnosis_Report.pdf
 diagnose_report(heartfailure)
