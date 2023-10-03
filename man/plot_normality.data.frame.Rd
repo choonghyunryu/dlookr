@@ -116,7 +116,7 @@ plot_normality(heartfailure2, platelets, right = "1/x")
 if (requireNamespace("forecast", quietly = TRUE)) {
   plot_normality(heartfailure2, platelets, left = "Box-Cox", right = "Yeo-Johnson")
 } else {
-  cat("If you want to use this feature, you need to install the rpart package.\n")
+  cat("If you want to use this feature, you need to install the forecast package.\n")
 }
 # Non typographic elements
 plot_normality(heartfailure2, platelets, typographic = FALSE)
@@ -155,7 +155,7 @@ if (requireNamespace("forecast", quietly = TRUE)) {
    group_by(smoking) \%>\%
    plot_normality(platelets, right = "Box-Cox")
 } else {
-  cat("If you want to use this feature, you need to install the rpart package.\n")
+  cat("If you want to use this feature, you need to install the forecast package.\n")
 }
 }
 }

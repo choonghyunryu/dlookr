@@ -7,7 +7,7 @@ library(dplyr)
 library(ggplot2)
 
 ## ----import_data--------------------------------------------------------------
-if (!require("ISLR")) install.packages("ISLR")
+if (!require("ISLR")) install.packages("ISLR", repos = "http://cran.us.r-project.org")
 
 str(ISLR::Carseats)
 
@@ -23,6 +23,8 @@ set.seed(456)
 carseats[sample(seq(NROW(carseats)), 10), "Urban"] <- NA
 
 ## ----imputate_na, fig.align='center', fig.width = 7, fig.height = 5-----------
+# if (!require("rpart")) install.packages("rpart", repos = "http://cran.us.r-project.org")
+
 if (requireNamespace("rpart", quietly = TRUE)) {
   income <- imputate_na(carseats, Income, US, method = "rpart")
 
@@ -161,7 +163,9 @@ carseats %>%
  head(10)
 
 ## ----binning_by, fig.width = 7, fig.height = 5--------------------------------
+if (!require("partykit")) install.packages("partykit", repos = "http://cran.us.r-project.org")
 library(dplyr)
+library(partykit)
 
 # optimal binning using character
 bin <- binning_by(carseats, "US", "Advertising")

@@ -7,6 +7,10 @@
 
 * Error occurred in binning() during CRAN test. (#104) 
   
+* Moved partykit package from Imports to Suggests (#105)
+    - What is affected:
+        - When performing binning_by(), it checks if the partykit package is installed,
+        - and if not, it prints a warning message and exits.  
 
 ## BUG FIXES
 

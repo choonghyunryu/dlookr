@@ -42,7 +42,7 @@ To illustrate the basic use of data transformation in the dlookr package, I use 
 `Carseats` in the `ISLR` package is simulation dataset that sells children's car seats at 400 stores. This data is a data.frame created for the purpose of predicting sales volume.
 
 ```{r import_data}
-if (!require("ISLR")) install.packages("ISLR")
+if (!require("ISLR")) install.packages("ISLR", repos = "http://cran.us.r-project.org")
 
 str(ISLR::Carseats)
 ```
@@ -130,6 +130,8 @@ Here is a list of the data conversion functions and functions provided by dlookr
 In the following example, `imputate_na()` imputes the missing value of `Income`, a numeric variable of carseats, using the "rpart" method. `summary()` summarizes missing value imputation information, and `plot()` visualizes missing information.
 
 ```{r imputate_na, fig.align='center', fig.width = 7, fig.height = 5}
+# if (!require("rpart")) install.packages("rpart", repos = "http://cran.us.r-project.org")
+
 if (requireNamespace("rpart", quietly = TRUE)) {
   income <- imputate_na(carseats, Income, US, method = "rpart")
 
@@ -346,7 +348,9 @@ carseats %>%
 The following `binning_by()` example optimally binning `Advertising` considering the target variable `US` with a binary class.
 
 ```{r binning_by, fig.width = 7, fig.height = 5}
+if (!require("partykit")) install.packages("partykit", repos = "http://cran.us.r-project.org")
 library(dplyr)
+library(partykit)
 
 # optimal binning using character
 bin <- binning_by(carseats, "US", "Advertising")

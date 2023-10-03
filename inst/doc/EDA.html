@@ -12,7 +12,7 @@
 
 <meta name="author" content="Choonghyun Ryu" />
 
-<meta name="date" content="2023-09-20" />
+<meta name="date" content="2023-10-03" />
 
 <title>Exploratory Data Analysis</title>
 
@@ -340,7 +340,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Exploratory Data Analysis</h1>
 <h4 class="author">Choonghyun Ryu</h4>
-<h4 class="date">2023-09-20</h4>
+<h4 class="date">2023-10-03</h4>
 
 
 
@@ -396,7 +396,7 @@ database.</strong></li>
 <code>ISLR</code> package is a simulated data set containing sales of
 child car seats at 400 different stores. This data is a data.frame
 created for the purpose of predicting sales volume.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;ISLR&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;ISLR&quot;</span>)</span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;ISLR&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;ISLR&quot;</span>, <span class="at">repos =</span> <span class="st">&quot;http://cran.us.r-project.org&quot;</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">str</span>(ISLR<span class="sc">::</span>Carseats)</span>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="st">&#39;data.frame&#39;</span><span class="sc">:</span>   <span class="dv">400</span> obs. of  <span class="dv">11</span> variables<span class="sc">:</span></span>
@@ -1446,10 +1446,10 @@ of samples of data into R.</p>
 create it as a table named <code>TB_CARSEATS</code>. Mysql/MariaDB,
 PostgreSQL, Oracle DBMS, other DBMS are also available for your
 environment.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(DBI)) <span class="fu">install.packages</span>(<span class="st">&#39;DBI&#39;</span>)</span>
-<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(RSQLite)) <span class="fu">install.packages</span>(<span class="st">&#39;RSQLite&#39;</span>)</span>
-<span id="cb35-3"><a href="#cb35-3" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(dplyr)) <span class="fu">install.packages</span>(<span class="st">&#39;dplyr&#39;</span>)</span>
-<span id="cb35-4"><a href="#cb35-4" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(dbplyr)) <span class="fu">install.packages</span>(<span class="st">&#39;dbplyr&#39;</span>)</span>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(DBI)) <span class="fu">install.packages</span>(<span class="st">&#39;DBI&#39;</span>, <span class="at">repos =</span> <span class="st">&quot;http://cran.us.r-project.org&quot;</span>)</span>
+<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(RSQLite)) <span class="fu">install.packages</span>(<span class="st">&#39;RSQLite&#39;</span>, <span class="at">repos =</span> <span class="st">&quot;http://cran.us.r-project.org&quot;</span>)</span>
+<span id="cb35-3"><a href="#cb35-3" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(dplyr)) <span class="fu">install.packages</span>(<span class="st">&#39;dplyr&#39;</span>, <span class="at">repos =</span> <span class="st">&quot;http://cran.us.r-project.org&quot;</span>)</span>
+<span id="cb35-4"><a href="#cb35-4" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(dbplyr)) <span class="fu">install.packages</span>(<span class="st">&#39;dbplyr&#39;</span>, <span class="at">repos =</span> <span class="st">&quot;http://cran.us.r-project.org&quot;</span>)</span>
 <span id="cb35-5"><a href="#cb35-5" tabindex="-1"></a></span>
 <span id="cb35-6"><a href="#cb35-6" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb35-7"><a href="#cb35-7" tabindex="-1"></a></span>

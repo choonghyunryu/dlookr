@@ -27,10 +27,11 @@ heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
 
 # Impute missing values -----------------------------
 # If the variable of interest is a numerical variables
-platelets <- imputate_na(heartfailure2, platelets, death_event, method = "rpart")
-platelets
-summary(platelets)
-plot(platelets)
+# Require rpart package
+# platelets <- imputate_na(heartfailure2, platelets, death_event, method = "rpart")
+# platelets
+# summary(platelets)
+# plot(platelets)
 
 # If the variable of interest is a categorical variables
 smoking <- imputate_na(heartfailure2, smoking, death_event, method = "mice")

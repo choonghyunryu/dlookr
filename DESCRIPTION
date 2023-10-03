@@ -2,7 +2,7 @@ Package: dlookr
 Type: Package
 Title: Tools for Data Diagnosis, Exploration, Transformation
 Version: 0.6.3
-Date: 2023-09-21
+Date: 2023-10-03
 Authors@R: c(
   person("Choonghyun", "Ryu",, "choonghyun.ryu@gmail.com", role = c("aut", "cre"))
   )
@@ -35,11 +35,11 @@ Imports:
     methods,
     mice,      
     pagedown (>= 0.15),
-    partykit,
     purrr,
     reactable,
     rlang,
     rmarkdown,
+    rpart,    
     shiny,
     tibble,
     tidyr,
@@ -53,10 +53,10 @@ Suggests:
     Hmisc,
     ISLR,
     nycflights13,
-    ppsr,
-    randomForest,
-    rpart,
+    partykit,    
+    ppsr,    
     prettydoc,    
+    randomForest,
     RSQLite,
     ranger,
     stringi

@@ -80,6 +80,7 @@ imputate_na(heartfailure2, platelets, method = "median")
 
 # Replace the missing value of the platelets variable with rpart
 # The target variable is death_event.
+# Require rpart package
 # imputate_na(heartfailure2, platelets, death_event, method = "rpart")
 
 # Replace the missing value of the smoking variable with mode
@@ -101,9 +102,10 @@ heartfailure2 \%>\%
             imputation = mean(platelets_imp))
 
 # If the variable of interest is a numerical variable
-platelets <- imputate_na(heartfailure2, platelets, death_event, method = "rpart")
-platelets
-summary(platelets)
+# Require rpart package
+# platelets <- imputate_na(heartfailure2, platelets, death_event, method = "rpart")
+# platelets
+# summary(platelets)
 
 # plot(platelets)
 

@@ -65,6 +65,7 @@
 #' 
 #' # Replace the missing value of the platelets variable with rpart
 #' # The target variable is death_event.
+#' # Require rpart package
 #' # imputate_na(heartfailure2, platelets, death_event, method = "rpart")
 #' 
 #' # Replace the missing value of the smoking variable with mode
@@ -86,9 +87,10 @@
 #'             imputation = mean(platelets_imp))
 #' 
 #' # If the variable of interest is a numerical variable
-#' platelets <- imputate_na(heartfailure2, platelets, death_event, method = "rpart")
-#' platelets
-#' summary(platelets)
+#' # Require rpart package
+#' # platelets <- imputate_na(heartfailure2, platelets, death_event, method = "rpart")
+#' # platelets
+#' # summary(platelets)
 #' 
 #' # plot(platelets)
 #' 
@@ -513,10 +515,11 @@ imputate_outlier_impl <- function(df, xvar, method, no_attrs = FALSE,
 #'
 #' # Impute missing values -----------------------------
 #' # If the variable of interest is a numerical variables
-#' platelets <- imputate_na(heartfailure2, platelets, death_event, method = "rpart")
-#' platelets
-#' summary(platelets)
-#' plot(platelets)
+#' # Require rpart package
+#' # platelets <- imputate_na(heartfailure2, platelets, death_event, method = "rpart")
+#' # platelets
+#' # summary(platelets)
+#' # plot(platelets)
 #'
 #' # If the variable of interest is a categorical variables
 #' smoking <- imputate_na(heartfailure2, smoking, death_event, method = "mice")
@@ -646,11 +649,12 @@ summary.imputation <- function(object, ...) {
 #'
 #' # Impute missing values -----------------------------
 #' # If the variable of interest is a numerical variables
-#' platelets <- imputate_na(heartfailure2, platelets, death_event, method = "rpart")
-#' platelets
-#' summary(platelets)
+#' # Require rpart package
+#' # platelets <- imputate_na(heartfailure2, platelets, death_event, method = "rpart")
+#' # platelets
+#' # summary(platelets)
 #' 
-#' plot(platelets)
+#' # plot(platelets)
 #'
 #' # If the variable of interest is a categorical variables
 #' smoking <- imputate_na(heartfailure2, smoking, death_event, method = "mice")

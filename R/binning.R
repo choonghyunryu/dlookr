@@ -467,11 +467,16 @@ plot.bins <- function(x, typographic = TRUE, base_family = NULL, ...) {
 #' 
 #' @export
 #' @importFrom tibble is_tibble
-#' @importFrom partykit ctree ctree_control width
 #' @importFrom tidyselect vars_select
 #' @importFrom rlang quos
 #' @import dplyr
 binning_by <- function(.data, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
+  if (!requireNamespace("partykit", quietly = TRUE)) {
+    warning("Package \"partykit\" needed for this function to work. Please install it.",
+            call. = FALSE)
+    return(NULL)
+  }
+  
   y <- tidyselect::vars_select(names(.data), !! enquo(y))
   x <- tidyselect::vars_select(names(.data), !! enquo(x))
   
@@ -532,7 +537,7 @@ binning_by <- function(.data, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
       )
     )
   
-  bins <- width(ctree)
+  bins <- partykit::width(ctree)
   if (bins < 2) {
     msg <- "No significant splits"
     
