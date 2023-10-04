@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.3</span>
       </span>
     </div>
 
@@ -55,8 +57,8 @@
   <a href="../reference/index.html">Function reference</a>
 </li>
 <li>
-  <a href="https://github.com/choonghyunryu/dlookr/">
-    <span class="fas fa-github fa-lg"></span>
+  <a href="https://github.com/choonghyunryu/dlookr/" class="external-link">
+    <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -70,24 +72,25 @@
 
       
 
-      </header><script src="diagonosis_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Data quality diagnosis</h1>
-                        <h4 class="author">Choonghyun Ryu</h4>
+                        <h4 data-toc-skip class="author">Choonghyun
+Ryu</h4>
             
-            <h4 class="date">2021-08-01</h4>
+            <h4 data-toc-skip class="date">2023-10-05</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/choonghyunryu/dlookr/blob/master/vignettes/diagonosis.Rmd"><code>vignettes/diagonosis.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/choonghyunryu/dlookr/blob/HEAD/vignettes/diagonosis.Rmd" class="external-link"><code>vignettes/diagonosis.Rmd</code></a></small>
       <div class="hidden name"><code>diagonosis.Rmd</code></div>
 
     </div>
 
     
     
-<div id="preface" class="section level2">
-<h2 class="hasAnchor">
-<a href="#preface" class="anchor"></a>Preface</h2>
+<div class="section level2">
+<h2 id="preface">Preface<a class="anchor" aria-label="anchor" href="#preface"></a>
+</h2>
 <p>After you have acquired the data, you should do the following:</p>
 <ul>
 <li>
@@ -97,21 +100,31 @@
 <li><strong>The data must be corrected or re-acquired.</strong></li>
 </ul>
 </li>
-<li>Explore data to understand the data and find scenarios for performing the analysis.</li>
+<li>Explore data to understand the data and find scenarios for
+performing the analysis.</li>
 <li>Derive new variables or perform variable transformations.</li>
 </ul>
 <p>The dlookr package makes these steps fast and easy:</p>
 <ul>
-<li><strong>Performs a data diagnosis or automatically generates a data diagnosis report.</strong></li>
-<li>Discover data in a variety of ways, and automatically generate EDA(exploratory data analysis) report.</li>
-<li>Impute missing values and outliers, resolve skewed data, and categorize continuous variables into categorical variables. And generates an automated report to support it.</li>
+<li><strong>Performs a data diagnosis or automatically generates a data
+diagnosis report.</strong></li>
+<li>Discover data in a variety of ways, and automatically generate
+EDA(exploratory data analysis) report.</li>
+<li>Impute missing values and outliers, resolve skewed data, and
+categorize continuous variables into categorical variables. And
+generates an automated report to support it.</li>
 </ul>
-<p>This document introduces <strong>Data Quality Diagnosis</strong> methods provided by the dlookr package. You will learn how to diagnose the quality of <code>tbl_df</code> data that inherits from data.frame and <code>data.frame</code> with functions provided by dlookr.</p>
-<p>dlookr increases synergy with <code>dplyr</code>. Particularly in data exploration and data wrangle, it increases the efficiency of the <code>tidyverse</code> package group.</p>
+<p>This document introduces <strong>Data Quality Diagnosis</strong>
+methods provided by the dlookr package. You will learn how to diagnose
+the quality of <code>tbl_df</code> data that inherits from data.frame
+and <code>data.frame</code> with functions provided by dlookr.</p>
+<p>dlookr increases synergy with <code>dplyr</code>. Particularly in
+data exploration and data wrangle, it increases the efficiency of the
+<code>tidyverse</code> package group.</p>
 </div>
-<div id="supported-data-structures" class="section level2">
-<h2 class="hasAnchor">
-<a href="#supported-data-structures" class="anchor"></a>Supported data structures</h2>
+<div class="section level2">
+<h2 id="supported-data-structures">Supported data structures<a class="anchor" aria-label="anchor" href="#supported-data-structures"></a>
+</h2>
 <p>Data diagnosis supports the following data structures.</p>
 <ul>
 <li>data frame : data.frame class.</li>
@@ -119,50 +132,69 @@
 <li>
 <strong>table of DBMS</strong> : table of the DBMS through tbl_dbi.
 <ul>
-<li><strong>Use dplyr as the back-end interface for any DBI-compatible database.</strong></li>
+<li><strong>Use dplyr as the back-end interface for any DBI-compatible
+database.</strong></li>
 </ul>
 </li>
 </ul>
 </div>
-<div id="data-nycflights13" class="section level2">
-<h2 class="hasAnchor">
-<a href="#data-nycflights13" class="anchor"></a>Data: nycflights13</h2>
-<p>To illustrate basic use of the dlookr package, use the <code>flights</code> data from the <code>nycflights13</code> package. The <code>flights</code> data frame is data about departure and arrival on all flights departing from NYC in 2013.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r">library(nycflights13)
-dim(flights)
-[1] 336776     19
-flights
-# A tibble: 336,776 x 19
-   year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
-  &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
-1  2013     1     1      517            515         2      830            819
-2  2013     1     1      533            529         4      850            830
-3  2013     1     1      542            540         2      923            850
-4  2013     1     1      544            545        -1     1004           1022
-# … with 336,772 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
-#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
-#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</pre></body></html></div>
+<div class="section level2">
+<h2 id="data-nycflights13">Data: nycflights13<a class="anchor" aria-label="anchor" href="#data-nycflights13"></a>
+</h2>
+<p>To illustrate basic use of the dlookr package, use the
+<code>flights</code> data from the <code>nycflights13</code> package.
+The <code>flights</code> data frame is data about departure and arrival
+on all flights departing from NYC in 2013.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(ISLR)) <span class="fu">install.packages</span>(<span class="st">'ISLR'</span>, <span class="at">repos =</span> <span class="st">"http://cran.us.r-project.org"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>Loading required package<span class="sc">:</span> ISLR</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(nycflights13)) <span class="fu">install.packages</span>(<span class="st">'nycflights13'</span>, <span class="at">repos =</span> <span class="st">"http://cran.us.r-project.org"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>Loading required package<span class="sc">:</span> nycflights13</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">library</span>(nycflights13)</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="fu">dim</span>(flights)</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">336776</span>     <span class="dv">19</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>flights</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 336,776 × 19 [39m</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>   year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m     [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m           [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m      [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m     [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m           [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m1 [39m   [4m2 [24m013     <span class="dv">1</span>     <span class="dv">1</span>      <span class="dv">517</span>            <span class="dv">515</span>         <span class="dv">2</span>      <span class="dv">830</span>            <span class="dv">819</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m2 [39m   [4m2 [24m013     <span class="dv">1</span>     <span class="dv">1</span>      <span class="dv">533</span>            <span class="dv">529</span>         <span class="dv">4</span>      <span class="dv">850</span>            <span class="dv">830</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m3 [39m   [4m2 [24m013     <span class="dv">1</span>     <span class="dv">1</span>      <span class="dv">542</span>            <span class="dv">540</span>         <span class="dv">2</span>      <span class="dv">923</span>            <span class="dv">850</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m4 [39m   [4m2 [24m013     <span class="dv">1</span>     <span class="dv">1</span>      <span class="dv">544</span>            <span class="dv">545</span>        <span class="sc">-</span> [31m1 [39m      [4m1 [24m004            [4m1 [24m022</span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># ℹ 336,772 more rows [39m</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, [39m</span></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co">#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, [39m</span></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co">#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt; [39m</span></span></code></pre></div>
 </div>
-<div id="data-diagnosis" class="section level2">
-<h2 class="hasAnchor">
-<a href="#data-diagnosis" class="anchor"></a>Data diagnosis</h2>
-<p>dlookr aims to diagnose the data and to select variables that can not be used for data analysis or to find the variables that need to be calibrated.:</p>
+<div class="section level2">
+<h2 id="data-diagnosis">Data diagnosis<a class="anchor" aria-label="anchor" href="#data-diagnosis"></a>
+</h2>
+<p>dlookr aims to diagnose the data and to select variables that can not
+be used for data analysis or to find the variables that need to be
+calibrated.:</p>
 <ul>
 <li>
-<code><a href="../reference/diagnose.data.frame.html">diagnose()</a></code> provides basic diagnostic information for variables.</li>
+<code><a href="../reference/diagnose.data.frame.html">diagnose()</a></code> provides basic diagnostic information for
+variables.</li>
 <li>
-<code><a href="../reference/diagnose_category.data.frame.html">diagnose_category()</a></code> provides detailed diagnostic information for categorical variables.</li>
+<code><a href="../reference/diagnose_category.data.frame.html">diagnose_category()</a></code> provides detailed diagnostic
+information for categorical variables.</li>
 <li>
-<code><a href="../reference/diagnose_numeric.data.frame.html">diagnose_numeric()</a></code> provides detailed diagnostic information for numerical variables.</li>
+<code><a href="../reference/diagnose_numeric.data.frame.html">diagnose_numeric()</a></code> provides detailed diagnostic
+information for numerical variables.</li>
 <li>
-<code><a href="../reference/diagnose_outlier.data.frame.html">diagnose_outlier()</a></code> and <code><a href="../reference/plot_outlier.data.frame.html">plot_outlier()</a></code> provide information and visualization of outliers.</li>
+<code><a href="../reference/diagnose_outlier.data.frame.html">diagnose_outlier()</a></code> and <code><a href="../reference/plot_outlier.data.frame.html">plot_outlier()</a></code>
+provide information and visualization of outliers.</li>
 </ul>
-<div id="general-diagnosis-of-all-variables-with-diagnose" class="section level3">
-<h3 class="hasAnchor">
-<a href="#general-diagnosis-of-all-variables-with-diagnose" class="anchor"></a>General diagnosis of all variables with <code>diagnose()</code>
+<div class="section level3">
+<h3 id="general-diagnosis-of-all-variables-with-diagnose">General diagnosis of all variables with <code>diagnose()</code><a class="anchor" aria-label="anchor" href="#general-diagnosis-of-all-variables-with-diagnose"></a>
 </h3>
-<p><code><a href="../reference/diagnose.data.frame.html">diagnose()</a></code> allows to diagnosis a variables in a data frame. Like function of dplyr, the first argument is the tibble (or data frame). The second and subsequent arguments refer to variables within that data frame.</p>
-<p>The variables of the <code>tbl_df</code> object returned by <code><a href="../reference/diagnose.data.frame.html">diagnose ()</a></code> are as follows.</p>
+<p><code><a href="../reference/diagnose.data.frame.html">diagnose()</a></code> allows to diagnosis a variables in a data
+frame. Like function of dplyr, the first argument is the tibble (or data
+frame). The second and subsequent arguments refer to variables within
+that data frame.</p>
+<p>The variables of the <code>tbl_df</code> object returned by
+<code><a href="../reference/diagnose.data.frame.html">diagnose ()</a></code> are as follows.</p>
 <ul>
 <li>
 <code>variables</code> : variable names</li>
@@ -175,73 +207,92 @@ flights
 <li>
 <code>unique_count</code> : number of unique values</li>
 <li>
-<code>unique_rate</code> : rate of unique value. unique_count / number of observation</li>
+<code>unique_rate</code> : rate of unique value. unique_count /
+number of observation</li>
 </ul>
-<p>For example, we can diagnose all variables in <code>flights</code>:</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r">diagnose(flights)
-# A tibble: 19 x 6
-  variables types   missing_count missing_percent unique_count unique_rate
-  &lt;chr&gt;     &lt;chr&gt;           &lt;int&gt;           &lt;dbl&gt;        &lt;int&gt;       &lt;dbl&gt;
-1 year      integer             0            0               1  0.00000297
-2 month     integer             0            0              12  0.0000356 
-3 day       integer             0            0              31  0.0000920 
-4 dep_time  integer          8255            2.45         1319  0.00392   
-# … with 15 more rows</pre></body></html></div>
+<p>For example, we can diagnose all variables in
+<code>flights</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">diagnose</span>(flights)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 19 × 6 [39m</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  variables types   missing_count missing_percent unique_count unique_rate</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m      [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m            [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m            [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m         [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m        [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m1 [39m year      integer             <span class="dv">0</span>            <span class="dv">0</span>               <span class="dv">1</span>  <span class="fl">0.000</span> [4m0 [24m [4m0 [24m [4m2 [24m97</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m2 [39m month     integer             <span class="dv">0</span>            <span class="dv">0</span>              <span class="dv">12</span>  <span class="fl">0.000</span> [4m0 [24m [4m3 [24m [4m5 [24m6 </span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m3 [39m day       integer             <span class="dv">0</span>            <span class="dv">0</span>              <span class="dv">31</span>  <span class="fl">0.000</span> [4m0 [24m [4m9 [24m [4m2 [24m0 </span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m4 [39m dep_time  integer           [4m8 [24m255            <span class="fl">2.45</span>          [4m1 [24m319  <span class="fl">0.003</span> [4m9 [24m [4m2 [24m   </span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># ℹ 15 more rows [39m</span></span></code></pre></div>
 <ul>
 <li>
-<code>Missing Value(NA)</code> : Variables with many missing values, ie those with a <code>missing_percent</code> close to 100, should be excluded from the analysis.</li>
+<code>Missing Value(NA)</code> : Variables with many missing values,
+ie those with a <code>missing_percent</code> close to 100, should be
+excluded from the analysis.</li>
 <li>
-<code>Unique value</code> : Variables with a unique value (<code>unique_count</code> = 1) are considered to be excluded from data analysis. And if the data type is not numeric (integer, numeric) and the number of unique values is equal to the number of observations (unique_rate = 1), then the variable is likely to be an identifier. Therefore, this variable is also not suitable for the analysis model.</li>
+<code>Unique value</code> : Variables with a unique value
+(<code>unique_count</code> = 1) are considered to be excluded from data
+analysis. And if the data type is not numeric (integer, numeric) and the
+number of unique values is equal to the number of observations
+(unique_rate = 1), then the variable is likely to be an identifier.
+Therefore, this variable is also not suitable for the analysis
+model.</li>
 </ul>
-<p><code>year</code> can be considered not to be used in the analysis model since <code>unique_count</code> is 1. However, you do not have to remove it if you configure <code>date</code> as a combination of <code>year</code>, <code>month</code>, and <code>day</code>.</p>
+<p><code>year</code> can be considered not to be used in the analysis
+model since <code>unique_count</code> is 1. However, you do not have to
+remove it if you configure <code>date</code> as a combination of
+<code>year</code>, <code>month</code>, and <code>day</code>.</p>
 <p>For example, we can diagnose only a few selected variables:</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"># Select columns by name
-diagnose(flights, year, month, day)
-# A tibble: 3 x 6
-  variables types   missing_count missing_percent unique_count unique_rate
-  &lt;chr&gt;     &lt;chr&gt;           &lt;int&gt;           &lt;dbl&gt;        &lt;int&gt;       &lt;dbl&gt;
-1 year      integer             0               0            1  0.00000297
-2 month     integer             0               0           12  0.0000356 
-3 day       integer             0               0           31  0.0000920 
-# Select all columns between year and day (include)
-diagnose(flights, year:day)
-# A tibble: 3 x 6
-  variables types   missing_count missing_percent unique_count unique_rate
-  &lt;chr&gt;     &lt;chr&gt;           &lt;int&gt;           &lt;dbl&gt;        &lt;int&gt;       &lt;dbl&gt;
-1 year      integer             0               0            1  0.00000297
-2 month     integer             0               0           12  0.0000356 
-3 day       integer             0               0           31  0.0000920 
-# Select all columns except those from year to day (exclude)
-diagnose(flights, -(year:day))
-# A tibble: 16 x 6
-  variables      types   missing_count missing_percent unique_count unique_rate
-  &lt;chr&gt;          &lt;chr&gt;           &lt;int&gt;           &lt;dbl&gt;        &lt;int&gt;       &lt;dbl&gt;
-1 dep_time       integer          8255            2.45         1319     0.00392
-2 sched_dep_time integer             0            0            1021     0.00303
-3 dep_delay      numeric          8255            2.45          528     0.00157
-4 arr_time       integer          8713            2.59         1412     0.00419
-# … with 12 more rows</pre></body></html></div>
-<p>By using with dplyr, variables including missing values can be sorted by the weight of missing values.:</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r">flights %&gt;%
-  diagnose() %&gt;%
-  select(-unique_count, -unique_rate) %&gt;% 
-  filter(missing_count &gt; 0) %&gt;% 
-  arrange(desc(missing_count))
-# A tibble: 6 x 4
-  variables types   missing_count missing_percent
-  &lt;chr&gt;     &lt;chr&gt;           &lt;int&gt;           &lt;dbl&gt;
-1 arr_delay numeric          9430            2.80
-2 air_time  numeric          9430            2.80
-3 arr_time  integer          8713            2.59
-4 dep_time  integer          8255            2.45
-# … with 2 more rows</pre></body></html></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Select columns by name</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">diagnose</span>(flights, year, month, day)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 3 × 6 [39m</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  variables types   missing_count missing_percent unique_count unique_rate</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m      [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m            [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m            [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m         [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m        [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m1 [39m year      integer             <span class="dv">0</span>               <span class="dv">0</span>            <span class="dv">1</span>  <span class="fl">0.000</span> [4m0 [24m [4m0 [24m [4m2 [24m97</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m2 [39m month     integer             <span class="dv">0</span>               <span class="dv">0</span>           <span class="dv">12</span>  <span class="fl">0.000</span> [4m0 [24m [4m3 [24m [4m5 [24m6 </span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m3 [39m day       integer             <span class="dv">0</span>               <span class="dv">0</span>           <span class="dv">31</span>  <span class="fl">0.000</span> [4m0 [24m [4m9 [24m [4m2 [24m0 </span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co"># Select all columns between year and day (include)</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="fu">diagnose</span>(flights, year<span class="sc">:</span>day)</span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 3 × 6 [39m</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>  variables types   missing_count missing_percent unique_count unique_rate</span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m      [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m            [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m            [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m         [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m        [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m</span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m1 [39m year      integer             <span class="dv">0</span>               <span class="dv">0</span>            <span class="dv">1</span>  <span class="fl">0.000</span> [4m0 [24m [4m0 [24m [4m2 [24m97</span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m2 [39m month     integer             <span class="dv">0</span>               <span class="dv">0</span>           <span class="dv">12</span>  <span class="fl">0.000</span> [4m0 [24m [4m3 [24m [4m5 [24m6 </span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m3 [39m day       integer             <span class="dv">0</span>               <span class="dv">0</span>           <span class="dv">31</span>  <span class="fl">0.000</span> [4m0 [24m [4m9 [24m [4m2 [24m0 </span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="co"># Select all columns except those from year to day (exclude)</span></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="fu">diagnose</span>(flights, <span class="sc">-</span>(year<span class="sc">:</span>day))</span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 16 × 6 [39m</span></span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a>  variables      types   missing_count missing_percent unique_count unique_rate</span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a>   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m           [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m            [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m            [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m         [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m        [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m</span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m1 [39m dep_time       integer           [4m8 [24m255            <span class="fl">2.45</span>          [4m1 [24m319     <span class="fl">0.003</span> [4m9 [24m [4m2 [24m</span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m2 [39m sched_dep_time integer             <span class="dv">0</span>            <span class="dv">0</span>             [4m1 [24m021     <span class="fl">0.003</span> [4m0 [24m [4m3 [24m</span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m3 [39m dep_delay      numeric           [4m8 [24m255            <span class="fl">2.45</span>          <span class="dv">528</span>     <span class="fl">0.001</span> [4m5 [24m [4m7 [24m</span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m4 [39m arr_time       integer           [4m8 [24m713            <span class="fl">2.59</span>          [4m1 [24m412     <span class="fl">0.004</span> [4m1 [24m [4m9 [24m</span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># ℹ 12 more rows [39m</span></span></code></pre></div>
+<p>By using with dplyr, variables including missing values can be sorted
+by the weight of missing values.:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="fu">diagnose</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>unique_count, <span class="sc">-</span>unique_rate) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  <span class="fu">filter</span>(missing_count <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(missing_count))</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 6 × 4 [39m</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  variables types   missing_count missing_percent</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m      [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m            [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m            [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m1 [39m arr_delay numeric           [4m9 [24m430            <span class="fl">2.80</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m2 [39m air_time  numeric           [4m9 [24m430            <span class="fl">2.80</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m3 [39m arr_time  integer           [4m8 [24m713            <span class="fl">2.59</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m4 [39m dep_time  integer           [4m8 [24m255            <span class="fl">2.45</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># ℹ 2 more rows [39m</span></span></code></pre></div>
 </div>
-<div id="diagnosis-of-numeric-variables-with-diagnose_numeric" class="section level3">
-<h3 class="hasAnchor">
-<a href="#diagnosis-of-numeric-variables-with-diagnose_numeric" class="anchor"></a>Diagnosis of numeric variables with <code>diagnose_numeric()</code>
+<div class="section level3">
+<h3 id="diagnosis-of-numeric-variables-with-diagnose_numeric">Diagnosis of numeric variables with
+<code>diagnose_numeric()</code><a class="anchor" aria-label="anchor" href="#diagnosis-of-numeric-variables-with-diagnose_numeric"></a>
 </h3>
-<p><code><a href="../reference/diagnose_numeric.data.frame.html">diagnose_numeric()</a></code> diagnoses numeric(continuous and discrete) variables in a data frame. Usage is the same as <code><a href="../reference/diagnose.data.frame.html">diagnose()</a></code> but returns more diagnostic information. However, if you specify a non-numeric variable in the second and subsequent argument list, the variable is automatically ignored.</p>
-<p>The variables of the <code>tbl_df</code> object returned by <code><a href="../reference/diagnose_numeric.data.frame.html">diagnose_numeric()</a></code> are as follows.</p>
+<p><code><a href="../reference/diagnose_numeric.data.frame.html">diagnose_numeric()</a></code> diagnoses numeric(continuous and
+discrete) variables in a data frame. Usage is the same as
+<code><a href="../reference/diagnose.data.frame.html">diagnose()</a></code> but returns more diagnostic information.
+However, if you specify a non-numeric variable in the second and
+subsequent argument list, the variable is automatically ignored.</p>
+<p>The variables of the <code>tbl_df</code> object returned by
+<code><a href="../reference/diagnose_numeric.data.frame.html">diagnose_numeric()</a></code> are as follows.</p>
 <ul>
 <li>
 <code>min</code> : minimum value</li>
@@ -258,40 +309,65 @@ diagnose(flights, -(year:day))
 <li>
 <code>zero</code> : number of observations with a value of 0</li>
 <li>
-<code>minus</code> : number of observations with negative numbers</li>
+<code>minus</code> : number of observations with negative
+numbers</li>
 <li>
 <code>outlier</code> : number of outliers</li>
 </ul>
-<p>The summary() function summarizes the distribution of individual variables in the data frame and outputs it to the console. The summary values of numeric variables are <code>min</code>, <code>Q1</code>, <code>mean</code>, <code>median</code>, <code>Q3</code> and <code>max</code>, which help to understand the distribution of data.</p>
-<p>However, the result displayed on the console has the disadvantage that the analyst has to look at it with the eyes. However, when the summary information is returned in a data frame structure such as tbl_df, the scope of utilization is expanded. <code><a href="../reference/diagnose_numeric.data.frame.html">diagnose_numeric()</a></code> supports this.</p>
-<p><code>zero</code>, <code>minus</code>, and <code>outlier</code> are useful measures to diagnose data integrity. For example, numerical data in some cases cannot have zero or negative numbers. A numeric variable called <code>employee salary</code> cannot have negative numbers or zeros. Therefore, this variable should be checked for the inclusion of zero or negative numbers in the data diagnosis process.</p>
-<p><code><a href="../reference/diagnose_numeric.data.frame.html">diagnose_numeric()</a></code> can diagnose all numeric variables of <code>flights</code> as follows.:</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r">diagnose_numeric(flights)
-# A tibble: 14 x 10
-  variables   min    Q1    mean median    Q3   max  zero minus outlier
-  &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt;   &lt;int&gt;
-1 year       2013  2013 2013      2013  2013  2013     0     0       0
-2 month         1     4    6.55      7    10    12     0     0       0
-3 day           1     8   15.7      16    23    31     0     0       0
-4 dep_time      1   907 1349.     1401  1744  2400     0     0       0
-# … with 10 more rows</pre></body></html></div>
-<p>If a numeric variable can not logically have a negative or zero value, it can be used with <code><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter()</a></code> to easily find a variable that does not logically match:</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r">diagnose_numeric(flights) %&gt;% 
-  filter(minus &gt; 0 | zero &gt; 0) 
-# A tibble: 3 x 10
-  variables   min    Q1  mean median    Q3   max  zero  minus outlier
-  &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;  &lt;int&gt;   &lt;int&gt;
-1 dep_delay   -43    -5 12.6      -2    11  1301 16514 183575   43216
-2 arr_delay   -86   -17  6.90     -5    14  1272  5409 188933   27880
-3 minute        0     8 26.2      29    44    59 60696      0       0</pre></body></html></div>
+<p>The summary() function summarizes the distribution of individual
+variables in the data frame and outputs it to the console. The summary
+values of numeric variables are <code>min</code>, <code>Q1</code>,
+<code>mean</code>, <code>median</code>, <code>Q3</code> and
+<code>max</code>, which help to understand the distribution of data.</p>
+<p>However, the result displayed on the console has the disadvantage
+that the analyst has to look at it with the eyes. However, when the
+summary information is returned in a data frame structure such as
+tbl_df, the scope of utilization is expanded.
+<code><a href="../reference/diagnose_numeric.data.frame.html">diagnose_numeric()</a></code> supports this.</p>
+<p><code>zero</code>, <code>minus</code>, and <code>outlier</code> are
+useful measures to diagnose data integrity. For example, numerical data
+in some cases cannot have zero or negative numbers. A numeric variable
+called <code>employee salary</code> cannot have negative numbers or
+zeros. Therefore, this variable should be checked for the inclusion of
+zero or negative numbers in the data diagnosis process.</p>
+<p><code><a href="../reference/diagnose_numeric.data.frame.html">diagnose_numeric()</a></code> can diagnose all numeric variables of
+<code>flights</code> as follows.:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">diagnose_numeric</span>(flights)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 14 × 10 [39m</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  variables   min    Q1    mean median    Q3   max  zero minus outlier</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m      [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m    [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m    [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m1 [39m year        [4m2 [24m013   [4m2 [24m013  [4m2 [24m013       [4m2 [24m013   [4m2 [24m013   [4m2 [24m013     <span class="dv">0</span>     <span class="dv">0</span>       <span class="dv">0</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m2 [39m month         <span class="dv">1</span>     <span class="dv">4</span>    <span class="fl">6.55</span>      <span class="dv">7</span>    <span class="dv">10</span>    <span class="dv">12</span>     <span class="dv">0</span>     <span class="dv">0</span>       <span class="dv">0</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m3 [39m day           <span class="dv">1</span>     <span class="dv">8</span>   <span class="fl">15.7</span>      <span class="dv">16</span>    <span class="dv">23</span>    <span class="dv">31</span>     <span class="dv">0</span>     <span class="dv">0</span>       <span class="dv">0</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m4 [39m dep_time      <span class="dv">1</span>   <span class="dv">907</span>  [4m1 [24m349.      [4m1 [24m401   [4m1 [24m744   [4m2 [24m400     <span class="dv">0</span>     <span class="dv">0</span>       <span class="dv">0</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># ℹ 10 more rows [39m</span></span></code></pre></div>
+<p>If a numeric variable can not logically have a negative or zero
+value, it can be used with <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code> to easily find a
+variable that does not logically match:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">diagnose_numeric</span>(flights) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">filter</span>(minus <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">|</span> zero <span class="sc">&gt;</span> <span class="dv">0</span>) </span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 3 × 10 [39m</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  variables   min    Q1  mean median    Q3   max  zero  minus outlier</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m      [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m    [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m1 [39m dep_delay   <span class="sc">-</span> [31m43 [39m    <span class="sc">-</span> [31m5 [39m <span class="fl">12.6</span>      <span class="sc">-</span> [31m2 [39m    <span class="dv">11</span>   [4m1 [24m301  [4m1 [24m [4m6 [24m514  [4m1 [24m [4m8 [24m [4m3 [24m575    [4m4 [24m [4m3 [24m216</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m2 [39m arr_delay   <span class="sc">-</span> [31m86 [39m   <span class="sc">-</span> [31m17 [39m  <span class="fl">6.90</span>     <span class="sc">-</span> [31m5 [39m    <span class="dv">14</span>   [4m1 [24m272   [4m5 [24m409  [4m1 [24m [4m8 [24m [4m8 [24m933    [4m2 [24m [4m7 [24m880</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m3 [39m minute        <span class="dv">0</span>     <span class="dv">8</span> <span class="fl">26.2</span>      <span class="dv">29</span>    <span class="dv">44</span>    <span class="dv">59</span>  [4m6 [24m [4m0 [24m696      <span class="dv">0</span>       <span class="dv">0</span></span></code></pre></div>
 </div>
-<div id="diagnosis-of-categorical-variables-with-diagnose_category" class="section level3">
-<h3 class="hasAnchor">
-<a href="#diagnosis-of-categorical-variables-with-diagnose_category" class="anchor"></a>Diagnosis of categorical variables with <code>diagnose_category()</code>
+<div class="section level3">
+<h3 id="diagnosis-of-categorical-variables-with-diagnose_category">Diagnosis of categorical variables with
+<code>diagnose_category()</code><a class="anchor" aria-label="anchor" href="#diagnosis-of-categorical-variables-with-diagnose_category"></a>
 </h3>
-<p><code><a href="../reference/diagnose_category.data.frame.html">diagnose_category()</a></code> diagnoses the categorical(factor, ordered, character) variables of a data frame. The usage is similar to <code><a href="../reference/diagnose.data.frame.html">diagnose()</a></code> but returns more diagnostic information. If you specify a non-categorical variable in the second and subsequent argument list, the variable is automatically ignored.</p>
-<p>The <code>top</code> argument specifies the number of levels to return for each variable. The default is 10, which returns the top 10 level. Of course, if the number of levels is less than 10, all levels are returned.</p>
-<p>The variables of the <code>tbl_df</code> object returned by <code><a href="../reference/diagnose_category.data.frame.html">diagnose_category()</a></code> are as follows.</p>
+<p><code><a href="../reference/diagnose_category.data.frame.html">diagnose_category()</a></code> diagnoses the categorical(factor,
+ordered, character) variables of a data frame. The usage is similar to
+<code><a href="../reference/diagnose.data.frame.html">diagnose()</a></code> but returns more diagnostic information. If you
+specify a non-categorical variable in the second and subsequent argument
+list, the variable is automatically ignored.</p>
+<p>The <code>top</code> argument specifies the number of levels to
+return for each variable. The default is 10, which returns the top 10
+level. Of course, if the number of levels is less than 10, all levels
+are returned.</p>
+<p>The variables of the <code>tbl_df</code> object returned by
+<code><a href="../reference/diagnose_category.data.frame.html">diagnose_category()</a></code> are as follows.</p>
 <ul>
 <li>
 <code>variables</code> : variable names</li>
@@ -306,43 +382,54 @@ diagnose(flights, -(year:day))
 <li>
 <code>rank</code> : rank of occupancy ratio of levels</li>
 </ul>
-<p>`<code><a href="../reference/diagnose_category.data.frame.html">diagnose_category()</a></code> can diagnose all categorical variables of <code>flights</code> as follows.:</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r">diagnose_category(flights)
-# A tibble: 43 x 6
-  variables levels      N  freq ratio  rank
-  &lt;chr&gt;     &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt;
-1 carrier   UA     336776 58665  17.4     1
-2 carrier   B6     336776 54635  16.2     2
-3 carrier   EV     336776 54173  16.1     3
-4 carrier   DL     336776 48110  14.3     4
-# … with 39 more rows</pre></body></html></div>
-<p>In collaboration with <code><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter()</a></code> in the <code>dplyr</code> package, we can see that the <code>tailnum</code> variable is ranked in top 1 with 2,512 missing values in the case where the missing value is included in the top 10:</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r">diagnose_category(flights) %&gt;% 
-  filter(is.na(levels))
-# A tibble: 1 x 6
-  variables levels      N  freq ratio  rank
-  &lt;chr&gt;     &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt;
-1 tailnum   &lt;NA&gt;   336776  2512 0.746     1</pre></body></html></div>
-<p>The following example returns a list where the level’s relative percentage is 0.01% or less. Note that the value of the <code>top</code> argument is set to a large value such as 500. If the default value of 10 was used, values below 0.01% would not be included in the list:</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r">flights %&gt;%
-  diagnose_category(top = 500)  %&gt;%
-  filter(ratio &lt;= 0.01)
-# A tibble: 10 x 6
-  variables levels      N  freq   ratio  rank
-  &lt;chr&gt;     &lt;chr&gt;   &lt;int&gt; &lt;int&gt;   &lt;dbl&gt; &lt;int&gt;
-1 carrier   OO     336776    32 0.00950    16
-2 dest      JAC    336776    25 0.00742    97
-3 dest      PSP    336776    19 0.00564    98
-4 dest      EYW    336776    17 0.00505    99
-# … with 6 more rows</pre></body></html></div>
-<p>In the analytics model, you can also consider removing levels where the relative frequency is very small in the observations or, if possible, combining them together.</p>
+<p>`<code><a href="../reference/diagnose_category.data.frame.html">diagnose_category()</a></code> can diagnose all categorical
+variables of <code>flights</code> as follows.:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">diagnose_category</span>(flights)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 43 × 6 [39m</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  variables levels      N  freq ratio  rank</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m      [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m    [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m1 [39m carrier   UA      [4m3 [24m [4m3 [24m [4m6 [24m776  [4m5 [24m [4m8 [24m665  <span class="fl">17.4</span>     <span class="dv">1</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m2 [39m carrier   B6      [4m3 [24m [4m3 [24m [4m6 [24m776  [4m5 [24m [4m4 [24m635  <span class="fl">16.2</span>     <span class="dv">2</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m3 [39m carrier   EV      [4m3 [24m [4m3 [24m [4m6 [24m776  [4m5 [24m [4m4 [24m173  <span class="fl">16.1</span>     <span class="dv">3</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m4 [39m carrier   DL      [4m3 [24m [4m3 [24m [4m6 [24m776  [4m4 [24m [4m8 [24m110  <span class="fl">14.3</span>     <span class="dv">4</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># ℹ 39 more rows [39m</span></span></code></pre></div>
+<p>In collaboration with <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code> in the <code>dplyr</code>
+package, we can see that the <code>tailnum</code> variable is ranked in
+top 1 with 2,512 missing values in the case where the missing value is
+included in the top 10:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">diagnose_category</span>(flights) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(levels))</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 1 × 6 [39m</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  variables levels      N  freq ratio  rank</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m      [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m    [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m1 [39m tailnum    [31mNA [39m      [4m3 [24m [4m3 [24m [4m6 [24m776   [4m2 [24m512 <span class="fl">0.746</span>     <span class="dv">1</span></span></code></pre></div>
+<p>The following example returns a list where the level’s relative
+percentage is 0.01% or less. Note that the value of the <code>top</code>
+argument is set to a large value such as 500. If the default value of 10
+was used, values below 0.01% would not be included in the list:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">diagnose_category</span>(<span class="at">top =</span> <span class="dv">500</span>)  <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  <span class="fu">filter</span>(ratio <span class="sc">&lt;=</span> <span class="fl">0.01</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 10 × 6 [39m</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>  variables levels      N  freq   ratio  rank</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m      [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m    [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m    [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m1 [39m carrier   OO      [4m3 [24m [4m3 [24m [4m6 [24m776    <span class="dv">32</span> <span class="fl">0.009</span> [4m5 [24m [4m0 [24m    <span class="dv">16</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m2 [39m dest      JAC     [4m3 [24m [4m3 [24m [4m6 [24m776    <span class="dv">25</span> <span class="fl">0.007</span> [4m4 [24m [4m2 [24m    <span class="dv">97</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m3 [39m dest      PSP     [4m3 [24m [4m3 [24m [4m6 [24m776    <span class="dv">19</span> <span class="fl">0.005</span> [4m6 [24m [4m4 [24m    <span class="dv">98</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m4 [39m dest      EYW     [4m3 [24m [4m3 [24m [4m6 [24m776    <span class="dv">17</span> <span class="fl">0.005</span> [4m0 [24m [4m5 [24m    <span class="dv">99</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># ℹ 6 more rows [39m</span></span></code></pre></div>
+<p>In the analytics model, you can also consider removing levels where
+the relative frequency is very small in the observations or, if
+possible, combining them together.</p>
 </div>
-<div id="diagnosing-outliers-with-diagnose_outlier" class="section level3">
-<h3 class="hasAnchor">
-<a href="#diagnosing-outliers-with-diagnose_outlier" class="anchor"></a>Diagnosing outliers with <code>diagnose_outlier()</code>
+<div class="section level3">
+<h3 id="diagnosing-outliers-with-diagnose_outlier">Diagnosing outliers with <code>diagnose_outlier()</code><a class="anchor" aria-label="anchor" href="#diagnosing-outliers-with-diagnose_outlier"></a>
 </h3>
-<p><code><a href="../reference/diagnose_outlier.data.frame.html">diagnose_outlier()</a></code> diagnoses the outliers of the numeric (continuous and discrete) variables of the data frame. The usage is the same as <code><a href="../reference/diagnose.data.frame.html">diagnose()</a></code>.</p>
-<p>The variables of the <code>tbl_df</code> object returned by <code><a href="../reference/diagnose_outlier.data.frame.html">diagnose_outlier()</a></code> are as follows.</p>
+<p><code><a href="../reference/diagnose_outlier.data.frame.html">diagnose_outlier()</a></code> diagnoses the outliers of the numeric
+(continuous and discrete) variables of the data frame. The usage is the
+same as <code><a href="../reference/diagnose.data.frame.html">diagnose()</a></code>.</p>
+<p>The variables of the <code>tbl_df</code> object returned by
+<code><a href="../reference/diagnose_outlier.data.frame.html">diagnose_outlier()</a></code> are as follows.</p>
 <ul>
 <li>
 <code>outliers_cnt</code> : number of outliers</li>
@@ -353,47 +440,55 @@ diagnose(flights, -(year:day))
 <li>
 <code>with_mean</code> : arithmetic average of with outliers</li>
 <li>
-<code>without_mean</code> : arithmetic average of without outliers</li>
+<code>without_mean</code> : arithmetic average of without
+outliers</li>
 </ul>
-<p><code><a href="../reference/diagnose_outlier.data.frame.html">diagnose_outlier()</a></code> can diagnose outliers of all numerical variables on <code>flights</code> as follows:</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r">diagnose_outlier(flights)
-# A tibble: 14 x 6
-  variables outliers_cnt outliers_ratio outliers_mean with_mean without_mean
-  &lt;chr&gt;            &lt;int&gt;          &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
-1 year                 0              0           NaN   2013         2013   
-2 month                0              0           NaN      6.55         6.55
-3 day                  0              0           NaN     15.7         15.7 
-4 dep_time             0              0           NaN   1349.        1349.  
-# … with 10 more rows</pre></body></html></div>
-<p>Numeric variables that contained outliers are easily found with <code><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter()</a></code>.:</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r">diagnose_outlier(flights) %&gt;% 
-  filter(outliers_cnt &gt; 0) 
-# A tibble: 5 x 6
-  variables outliers_cnt outliers_ratio outliers_mean with_mean without_mean
-  &lt;chr&gt;            &lt;int&gt;          &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
-1 dep_delay        43216      12.8               93.1     12.6         0.444
-2 arr_delay        27880       8.28             121.       6.90       -3.69 
-3 flight               1       0.000297        8500     1972.       1972.   
-4 air_time          5448       1.62             400.     151.        146.   
-# … with 1 more row</pre></body></html></div>
-<p>The following example finds a numeric variable with an outlier ratio of 5% or more, and then returns the result of dividing mean of outliers by overall mean in descending order:</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r">diagnose_outlier(flights) %&gt;% 
-  filter(outliers_ratio &gt; 5) %&gt;% 
-  mutate(rate = outliers_mean / with_mean) %&gt;% 
-  arrange(desc(rate)) %&gt;% 
-  select(-outliers_cnt)
-# A tibble: 2 x 6
-  variables outliers_ratio outliers_mean with_mean without_mean  rate
-  &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt;
-1 arr_delay           8.28         121.       6.90       -3.69  17.5 
-2 dep_delay          12.8           93.1     12.6         0.444  7.37</pre></body></html></div>
-<p>In cases where the mean of the outliers is large relative to the overall average, it may be desirable to impute or remove the outliers.</p>
+<p><code><a href="../reference/diagnose_outlier.data.frame.html">diagnose_outlier()</a></code> can diagnose outliers of all
+numerical variables on <code>flights</code> as follows:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">diagnose_outlier</span>(flights)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 14 × 6 [39m</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  variables outliers_cnt outliers_ratio outliers_mean with_mean without_mean</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m             [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m           [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m          [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m      [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m         [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m1 [39m year                 <span class="dv">0</span>              <span class="dv">0</span>            [31mNaN [39m    [4m2 [24m013          [4m2 [24m013   </span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m2 [39m month                <span class="dv">0</span>              <span class="dv">0</span>            [31mNaN [39m      <span class="fl">6.55</span>         <span class="fl">6.55</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m3 [39m day                  <span class="dv">0</span>              <span class="dv">0</span>            [31mNaN [39m     <span class="fl">15.7</span>         <span class="fl">15.7</span> </span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m4 [39m dep_time             <span class="dv">0</span>              <span class="dv">0</span>            [31mNaN [39m    [4m1 [24m349.         [4m1 [24m349.  </span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># ℹ 10 more rows [39m</span></span></code></pre></div>
+<p>Numeric variables that contained outliers are easily found with
+<code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code>.:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">diagnose_outlier</span>(flights) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="fu">filter</span>(outliers_cnt <span class="sc">&gt;</span> <span class="dv">0</span>) </span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 5 × 6 [39m</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>  variables outliers_cnt outliers_ratio outliers_mean with_mean without_mean</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m             [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m           [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m          [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m      [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m         [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m1 [39m dep_delay         [4m4 [24m [4m3 [24m216      <span class="fl">12.8</span>               <span class="fl">93.1</span>     <span class="fl">12.6</span>         <span class="fl">0.444</span></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m2 [39m arr_delay         [4m2 [24m [4m7 [24m880       <span class="fl">8.28</span>             <span class="fl">121.</span>       <span class="fl">6.90</span>       <span class="sc">-</span> [31m3 [39m [31m. [39m [31m69 [39m </span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m3 [39m flight               <span class="dv">1</span>       <span class="fl">0.000</span> [4m2 [24m [4m9 [24m [4m7 [24m         [4m8 [24m500      [4m1 [24m972.        [4m1 [24m972.   </span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m4 [39m air_time           [4m5 [24m448       <span class="fl">1.62</span>             <span class="fl">400.</span>     <span class="fl">151.</span>        <span class="fl">146.</span>   </span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># ℹ 1 more row [39m</span></span></code></pre></div>
+<p>The following example finds a numeric variable with an outlier ratio
+of 5% or more, and then returns the result of dividing mean of outliers
+by overall mean in descending order:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">diagnose_outlier</span>(flights) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="fu">filter</span>(outliers_ratio <span class="sc">&gt;</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rate =</span> outliers_mean <span class="sc">/</span> with_mean) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(rate)) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>outliers_cnt)</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 2 × 6 [39m</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>  variables outliers_ratio outliers_mean with_mean without_mean  rate</span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m               [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m          [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m      [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m         [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m</span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m1 [39m arr_delay           <span class="fl">8.28</span>         <span class="fl">121.</span>       <span class="fl">6.90</span>       <span class="sc">-</span> [31m3 [39m [31m. [39m [31m69 [39m  <span class="fl">17.5</span> </span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m2 [39m dep_delay          <span class="fl">12.8</span>           <span class="fl">93.1</span>     <span class="fl">12.6</span>         <span class="fl">0.444</span>  <span class="fl">7.37</span></span></code></pre></div>
+<p>In cases where the mean of the outliers is large relative to the
+overall average, it may be desirable to impute or remove the
+outliers.</p>
 </div>
-<div id="visualization-of-outliers-using-plot_outlier" class="section level3">
-<h3 class="hasAnchor">
-<a href="#visualization-of-outliers-using-plot_outlier" class="anchor"></a>Visualization of outliers using <code>plot_outlier()</code>
+<div class="section level3">
+<h3 id="visualization-of-outliers-using-plot_outlier">Visualization of outliers using <code>plot_outlier()</code><a class="anchor" aria-label="anchor" href="#visualization-of-outliers-using-plot_outlier"></a>
 </h3>
-<p><code><a href="../reference/plot_outlier.data.frame.html">plot_outlier()</a></code> visualizes outliers of numerical variables(continuous and discrete) of data.frame. Usage is the same <code><a href="../reference/diagnose.data.frame.html">diagnose()</a></code>.</p>
+<p><code><a href="../reference/plot_outlier.data.frame.html">plot_outlier()</a></code> visualizes outliers of numerical
+variables(continuous and discrete) of data.frame. Usage is the same
+<code><a href="../reference/diagnose.data.frame.html">diagnose()</a></code>.</p>
 <p>The plot derived from the numerical data diagnosis is as follows.</p>
 <ul>
 <li>With outliers box plot</li>
@@ -401,85 +496,141 @@ diagnose(flights, -(year:day))
 <li>With outliers histogram</li>
 <li>Without outliers histogram</li>
 </ul>
-<p><code><a href="../reference/plot_outlier.data.frame.html">plot_outlier()</a></code> can visualize an outliers in the <code>arr_delay</code> variable of <code>flights</code> as follows:</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">flights</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/plot_outlier.data.frame.html">plot_outlier</a></span>(<span class="no">arr_delay</span>)</pre></body></html></div>
+<p><code><a href="../reference/plot_outlier.data.frame.html">plot_outlier()</a></code> can visualize an outliers in the
+<code>arr_delay</code> variable of <code>flights</code> as follows:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">flights</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/plot_outlier.data.frame.html">plot_outlier</a></span><span class="op">(</span><span class="va">arr_delay</span><span class="op">)</span> </span></code></pre></div>
 <p><img src="diagonosis_files/figure-html/plot_outlier-1.png" width="600px" style="display: block; margin: auto;"></p>
-<p>The following example uses <code><a href="../reference/diagnose_outlier.data.frame.html">diagnose_outlier()</a></code>, <code><a href="../reference/plot_outlier.data.frame.html">plot_outlier()</a></code>, and <code>dplyr</code> packages to visualize all numerical variables with an outlier ratio of 5% or higher.</p>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="no">flights</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/plot_outlier.data.frame.html">plot_outlier</a></span>(<span class="fu"><a href="../reference/diagnose_outlier.data.frame.html">diagnose_outlier</a></span>(<span class="no">flights</span>) <span class="kw">%&gt;%</span>
-                 <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">outliers_ratio</span> <span class="kw">&gt;=</span> <span class="fl">5</span>) <span class="kw">%&gt;%</span>
-                 <span class="fu">select</span>(<span class="no">variables</span>) <span class="kw">%&gt;%</span>
-                 <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>())</pre></body></html></div>
-<p>Analysts should look at the results of the visualization to decide whether to remove or replace outliers. In some cases, you should consider removing variables with outliers from the data analysis model.</p>
-<p>Looking at the results of the visualization, <code>arr_delay</code> shows that the observed values without outliers are similar to the normal distribution. In the case of a linear model, we might consider removing or imputing outliers.</p>
+<p>The following example uses <code><a href="../reference/diagnose_outlier.data.frame.html">diagnose_outlier()</a></code>,
+<code><a href="../reference/plot_outlier.data.frame.html">plot_outlier()</a></code>, and <code>dplyr</code> packages to
+visualize all numerical variables with an outlier ratio of 5% or
+higher.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">flights</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/plot_outlier.data.frame.html">plot_outlier</a></span><span class="op">(</span><span class="fu"><a href="../reference/diagnose_outlier.data.frame.html">diagnose_outlier</a></span><span class="op">(</span><span class="va">flights</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>                 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">outliers_ratio</span> <span class="op">&gt;=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>                 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">variables</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>                 <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Analysts should look at the results of the visualization to decide
+whether to remove or replace outliers. In some cases, you should
+consider removing variables with outliers from the data analysis
+model.</p>
+<p>Looking at the results of the visualization, <code>arr_delay</code>
+shows that the observed values without outliers are similar to the
+normal distribution. In the case of a linear model, we might consider
+removing or imputing outliers.</p>
 </div>
-<div id="visualization-for-missing-values" class="section level3">
-<h3 class="hasAnchor">
-<a href="#visualization-for-missing-values" class="anchor"></a>Visualization for missing values</h3>
-<p>It is important to look at the missing values of individual variables, but it is also important to look at the relationship between the variables including the missing values.</p>
-<p>dlookr provides a visualization tool that looks at the relationship of variables including missing values.</p>
-<div id="visualize-pareto-chart-using-plot_na_pareto" class="section level4">
-<h4 class="hasAnchor">
-<a href="#visualize-pareto-chart-using-plot_na_pareto" class="anchor"></a>visualize pareto chart using <code>plot_na_pareto()</code>
+<div class="section level3">
+<h3 id="visualization-for-missing-values">Visualization for missing values<a class="anchor" aria-label="anchor" href="#visualization-for-missing-values"></a>
+</h3>
+<p>It is important to look at the missing values of individual
+variables, but it is also important to look at the relationship between
+the variables including the missing values.</p>
+<p>dlookr provides a visualization tool that looks at the relationship
+of variables including missing values.</p>
+<div class="section level4">
+<h4 id="visualize-pareto-chart-using-plot_na_pareto">visualize pareto chart using <code>plot_na_pareto()</code><a class="anchor" aria-label="anchor" href="#visualize-pareto-chart-using-plot_na_pareto"></a>
 </h4>
-<p><code><a href="../reference/plot_na_pareto.html">plot_na_pareto()</a></code> draws a pareto chart by collecting variables including missing values.</p>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="kw pkg">mice</span><span class="kw ns">::</span><span class="no"><a href="https://amices.org/mice/reference/boys.html">boys</a></span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/plot_na_pareto.html">plot_na_pareto</a></span>(<span class="kw">col</span> <span class="kw">=</span> <span class="st">"blue"</span>)</pre></body></html></div>
+<p><code><a href="../reference/plot_na_pareto.html">plot_na_pareto()</a></code> draws a pareto chart by collecting
+variables including missing values.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">mice</span><span class="fu">::</span><span class="va"><a href="https://amices.org/mice/reference/boys.html" class="external-link">boys</a></span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/plot_na_pareto.html">plot_na_pareto</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="diagonosis_files/figure-html/plot_na_pareto1-1.png" width="600px" style="display: block; margin: auto;"></p>
-<p>The default value of the <code>only_na</code> argument is FALSE, which includes variables that do not contain missing values, but if this value is set to TRUE, only variables containing missing values are visualized. The variable <code>age</code> was excluded from this plot.</p>
-<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="kw pkg">mice</span><span class="kw ns">::</span><span class="no"><a href="https://amices.org/mice/reference/boys.html">boys</a></span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/plot_na_pareto.html">plot_na_pareto</a></span>(<span class="kw">only_na</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">main</span> <span class="kw">=</span> <span class="st">"Pareto Chart for mice::boys"</span>)</pre></body></html></div>
-<p>The rating of the variable is expressed as a proportion of missing values. It is calculated as the ratio of missing values. If it is [0, 0.05), it is <code>Good</code>, if it is [0.05, 0.4) it is <code>OK</code>, if it is [0.4, 0.8) it is <code>Bad</code>, and if it is [0.8, 1.0] it is <code>Remove</code>. You can override this grade using the <code>grade</code> argument as follows:</p>
-<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="kw pkg">mice</span><span class="kw ns">::</span><span class="no"><a href="https://amices.org/mice/reference/boys.html">boys</a></span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/plot_na_pareto.html">plot_na_pareto</a></span>(<span class="kw">grade</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">High</span> <span class="kw">=</span> <span class="fl">0.1</span>, <span class="kw">Middle</span> <span class="kw">=</span> <span class="fl">0.6</span>, <span class="kw">Low</span> <span class="kw">=</span> <span class="fl">1</span>), <span class="kw">relative</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
-<p>If the <code>plot</code> argument is set to FALSE, information about missing values is returned instead of plotting.</p>
-<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="fu"><a href="../reference/plot_na_pareto.html">plot_na_pareto</a></span>(<span class="kw pkg">mice</span><span class="kw ns">::</span><span class="no"><a href="https://amices.org/mice/reference/boys.html">boys</a></span>, <span class="kw">only_na</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">plot</span> <span class="kw">=</span> <span class="fl">FALSE</span>)</pre></body></html></div>
+<p>The default value of the <code>only_na</code> argument is FALSE,
+which includes variables that do not contain missing values, but if this
+value is set to TRUE, only variables containing missing values are
+visualized. The variable <code>age</code> was excluded from this
+plot.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">mice</span><span class="fu">::</span><span class="va"><a href="https://amices.org/mice/reference/boys.html" class="external-link">boys</a></span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/plot_na_pareto.html">plot_na_pareto</a></span><span class="op">(</span>only_na <span class="op">=</span> <span class="cn">TRUE</span>, main <span class="op">=</span> <span class="st">"Pareto Chart for mice::boys"</span><span class="op">)</span></span></code></pre></div>
+<p>The rating of the variable is expressed as a proportion of missing
+values. It is calculated as the ratio of missing values. If it is [0,
+0.05), it is <code>Good</code>, if it is [0.05, 0.4) it is
+<code>OK</code>, if it is [0.4, 0.8) it is <code>Bad</code>, and if it
+is [0.8, 1.0] it is <code>Remove</code>. You can override this grade
+using the <code>grade</code> argument as follows:</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">mice</span><span class="fu">::</span><span class="va"><a href="https://amices.org/mice/reference/boys.html" class="external-link">boys</a></span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/plot_na_pareto.html">plot_na_pareto</a></span><span class="op">(</span>grade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>High <span class="op">=</span> <span class="fl">0.1</span>, Middle <span class="op">=</span> <span class="fl">0.6</span>, Low <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, relative <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>If the <code>plot</code> argument is set to FALSE, information about
+missing values is returned instead of plotting.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_na_pareto.html">plot_na_pareto</a></span><span class="op">(</span><span class="fu">mice</span><span class="fu">::</span><span class="va"><a href="https://amices.org/mice/reference/boys.html" class="external-link">boys</a></span>, only_na <span class="op">=</span> <span class="cn">TRUE</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="visualize-combination-chart-using-plot_na_hclust" class="section level4">
-<h4 class="hasAnchor">
-<a href="#visualize-combination-chart-using-plot_na_hclust" class="anchor"></a>visualize combination chart using <code>plot_na_hclust()</code>
+<div class="section level4">
+<h4 id="visualize-combination-chart-using-plot_na_hclust">visualize combination chart using <code>plot_na_hclust()</code><a class="anchor" aria-label="anchor" href="#visualize-combination-chart-using-plot_na_hclust"></a>
 </h4>
-<p>It is important to look at the relationship between variables, including missing values. <code><a href="../reference/plot_na_hclust.html">plot_na_hclust()</a></code> visualizes the relationship of variables that contain missing values. This function rearranges the positions of variables using hierarchical clustering. Then, the expression of the missing value is visualized by grouping similar variables.</p>
-<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="kw pkg">mice</span><span class="kw ns">::</span><span class="no"><a href="https://amices.org/mice/reference/boys.html">boys</a></span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/plot_na_hclust.html">plot_na_hclust</a></span>(<span class="kw">main</span> <span class="kw">=</span> <span class="st">"Distribution of missing value"</span>)</pre></body></html></div>
+<p>It is important to look at the relationship between variables,
+including missing values. <code><a href="../reference/plot_na_hclust.html">plot_na_hclust()</a></code> visualizes the
+relationship of variables that contain missing values. This function
+rearranges the positions of variables using hierarchical clustering.
+Then, the expression of the missing value is visualized by grouping
+similar variables.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">mice</span><span class="fu">::</span><span class="va"><a href="https://amices.org/mice/reference/boys.html" class="external-link">boys</a></span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/plot_na_hclust.html">plot_na_hclust</a></span><span class="op">(</span>main <span class="op">=</span> <span class="st">"Distribution of missing value"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="diagonosis_files/figure-html/plot_na_hclust-1.png" width="600px" style="display: block; margin: auto;"></p>
 </div>
-<div id="visualize-combination-chart-using-plot_na_intersect" class="section level4">
-<h4 class="hasAnchor">
-<a href="#visualize-combination-chart-using-plot_na_intersect" class="anchor"></a>visualize combination chart using <code>plot_na_intersect()</code>
+<div class="section level4">
+<h4 id="visualize-combination-chart-using-plot_na_intersect">visualize combination chart using
+<code>plot_na_intersect()</code><a class="anchor" aria-label="anchor" href="#visualize-combination-chart-using-plot_na_intersect"></a>
 </h4>
-<p><code><a href="../reference/plot_na_intersect.html">plot_na_intersect()</a></code> visualize the combinations of missing value across cases.</p>
-<p>The visualization consists of four parts. The bottom left, which is the most basic, visualizes the case of cross(intersection)-combination. The x-axis is the variable including the missing value, and the y-axis represents the case of a combination of variables. And on the marginal of the two axes, the frequency of the case is expressed as a bar graph. Finally, the visualization at the top right expresses the number of variables including missing values in the data set, and the number of observations including missing values and complete cases .</p>
-<p>This example visualize the combination variables that is include missing value.</p>
-<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="kw pkg">mice</span><span class="kw ns">::</span><span class="no"><a href="https://amices.org/mice/reference/boys.html">boys</a></span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/plot_na_intersect.html">plot_na_intersect</a></span>()</pre></body></html></div>
+<p><code><a href="../reference/plot_na_intersect.html">plot_na_intersect()</a></code> visualize the combinations of
+missing value across cases.</p>
+<p>The visualization consists of four parts. The bottom left, which is
+the most basic, visualizes the case of cross(intersection)-combination.
+The x-axis is the variable including the missing value, and the y-axis
+represents the case of a combination of variables. And on the marginal
+of the two axes, the frequency of the case is expressed as a bar graph.
+Finally, the visualization at the top right expresses the number of
+variables including missing values in the data set, and the number of
+observations including missing values and complete cases .</p>
+<p>This example visualize the combination variables that is include
+missing value.</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">mice</span><span class="fu">::</span><span class="va"><a href="https://amices.org/mice/reference/boys.html" class="external-link">boys</a></span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/plot_na_intersect.html">plot_na_intersect</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="diagonosis_files/figure-html/plot_na_hclust1-1.png" width="600px" style="display: block; margin: auto;"></p>
-<p>If the <code>n_vars</code> argument is used, only the top <code>n</code> variables containing many missing values are visualized.</p>
-<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="kw pkg">mice</span><span class="kw ns">::</span><span class="no"><a href="https://amices.org/mice/reference/boys.html">boys</a></span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/plot_na_intersect.html">plot_na_intersect</a></span>(<span class="kw">n_vars</span> <span class="kw">=</span> <span class="fl">5</span>)</pre></body></html></div>
-<p>If you use the <code>n_intersacts</code> argument, only the top n numbers of variable combinations(intersection) including missing values are visualized. and If you want to visualize the combination variables that is include missing value and complete case. You just add only_na = FALSE.</p>
-<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="kw pkg">mice</span><span class="kw ns">::</span><span class="no"><a href="https://amices.org/mice/reference/boys.html">boys</a></span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/plot_na_intersect.html">plot_na_intersect</a></span>(<span class="kw">only_na</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">n_intersacts</span> <span class="kw">=</span> <span class="fl">7</span>)</pre></body></html></div>
+<p>If the <code>n_vars</code> argument is used, only the top
+<code>n</code> variables containing many missing values are
+visualized.</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">mice</span><span class="fu">::</span><span class="va"><a href="https://amices.org/mice/reference/boys.html" class="external-link">boys</a></span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/plot_na_intersect.html">plot_na_intersect</a></span><span class="op">(</span>n_vars <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
+<p>If you use the <code>n_intersacts</code> argument, only the top n
+numbers of variable combinations(intersection) including missing values
+are visualized. and If you want to visualize the combination variables
+that is include missing value and complete case. You just add only_na =
+FALSE.</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">mice</span><span class="fu">::</span><span class="va"><a href="https://amices.org/mice/reference/boys.html" class="external-link">boys</a></span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/plot_na_intersect.html">plot_na_intersect</a></span><span class="op">(</span>only_na <span class="op">=</span> <span class="cn">FALSE</span>, n_intersacts <span class="op">=</span> <span class="fl">7</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 </div>
-<div id="automated-report" class="section level2">
-<h2 class="hasAnchor">
-<a href="#automated-report" class="anchor"></a>Automated report</h2>
+<div class="section level2">
+<h2 id="automated-report">Automated report<a class="anchor" aria-label="anchor" href="#automated-report"></a>
+</h2>
 <p>dlookr provides two automated data diagnostic reports:</p>
 <ul>
-<li>Web page-based dynamic reports can perform in-depth analysis through visualization and statistical tables.</li>
-<li>Static reports generated as pdf files or html files can be archived as output of data analysis.</li>
+<li>Web page-based dynamic reports can perform in-depth analysis through
+visualization and statistical tables.</li>
+<li>Static reports generated as pdf files or html files can be archived
+as output of data analysis.</li>
 </ul>
-<div id="create-a-diagnostic-report-using-diagnose_web_report" class="section level3">
-<h3 class="hasAnchor">
-<a href="#create-a-diagnostic-report-using-diagnose_web_report" class="anchor"></a>Create a diagnostic report using <code>diagnose_web_report()</code>
+<div class="section level3">
+<h3 id="create-a-diagnostic-report-using-diagnose_web_report">Create a diagnostic report using
+<code>diagnose_web_report()</code><a class="anchor" aria-label="anchor" href="#create-a-diagnostic-report-using-diagnose_web_report"></a>
 </h3>
-<p><code><a href="../reference/diagnose_web_report.data.frame.html">diagnose_web_report()</a></code> create dynamic report for object inherited from data.frame(<code>tbl_df</code>, <code>tbl</code>, etc) or data.frame.</p>
-<div id="contents-of-dynamic-web-report" class="section level4">
-<h4 class="hasAnchor">
-<a href="#contents-of-dynamic-web-report" class="anchor"></a>Contents of dynamic web report</h4>
+<p><code><a href="../reference/diagnose_web_report.data.frame.html">diagnose_web_report()</a></code> create dynamic report for object
+inherited from data.frame(<code>tbl_df</code>, <code>tbl</code>, etc) or
+data.frame.</p>
+<div class="section level4">
+<h4 id="contents-of-dynamic-web-report">Contents of dynamic web report<a class="anchor" aria-label="anchor" href="#contents-of-dynamic-web-report"></a>
+</h4>
 <p>The contents of the report are as follows.:</p>
 <ul>
 <li>Overview
@@ -517,10 +668,11 @@ diagnose(flights, -(year:day))
 </li>
 </ul>
 </div>
-<div id="some-arguments-for-dynamic-web-report" class="section level4">
-<h4 class="hasAnchor">
-<a href="#some-arguments-for-dynamic-web-report" class="anchor"></a>Some arguments for dynamic web report</h4>
-<p>diagnose_web_report() generates various reports with the following arguments.</p>
+<div class="section level4">
+<h4 id="some-arguments-for-dynamic-web-report">Some arguments for dynamic web report<a class="anchor" aria-label="anchor" href="#some-arguments-for-dynamic-web-report"></a>
+</h4>
+<p>diagnose_web_report() generates various reports with the following
+arguments.</p>
 <ul>
 <li>output_file
 <ul>
@@ -583,14 +735,16 @@ diagnose(flights, -(year:day))
 </ul>
 </li>
 </ul>
-<p>The following script creates a quality diagnosis report for the <code>tbl_df</code> class object, <code>flights</code>.</p>
-<div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="no">flights</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/diagnose_web_report.data.frame.html">diagnose_web_report</a></span>(<span class="kw">subtitle</span> <span class="kw">=</span> <span class="st">"flights"</span>, <span class="kw">output_dir</span> <span class="kw">=</span> <span class="st">"./"</span>,
-                      <span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"Diagn.html"</span>, <span class="kw">theme</span> <span class="kw">=</span> <span class="st">"blue"</span>)</pre></body></html></div>
+<p>The following script creates a quality diagnosis report for the
+<code>tbl_df</code> class object, <code>flights</code>.</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">flights</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/diagnose_web_report.data.frame.html">diagnose_web_report</a></span><span class="op">(</span>subtitle <span class="op">=</span> <span class="st">"flights"</span>, output_dir <span class="op">=</span> <span class="st">"./"</span>, </span>
+<span>                      output_file <span class="op">=</span> <span class="st">"Diagn.html"</span>, theme <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="screenshot-of-dynamic-report" class="section level4">
-<h4 class="hasAnchor">
-<a href="#screenshot-of-dynamic-report" class="anchor"></a>Screenshot of dynamic report</h4>
+<div class="section level4">
+<h4 id="screenshot-of-dynamic-report">Screenshot of dynamic report<a class="anchor" aria-label="anchor" href="#screenshot-of-dynamic-report"></a>
+</h4>
 <ul>
 <li>The part of the report is shown in the following figure.:</li>
 </ul>
@@ -600,7 +754,8 @@ The part of the report
 </p>
 </div>
 <ul>
-<li>The dynamic contents of the report is shown in the following figure.:</li>
+<li>The dynamic contents of the report is shown in the following
+figure.:</li>
 </ul>
 <div class="figure" style="text-align: center">
 <img src="img/diag_web_content.jpg" alt="The dynamic contents of the report" width="80%"><p class="caption">
@@ -609,14 +764,16 @@ The dynamic contents of the report
 </div>
 </div>
 </div>
-<div id="create-a-diagnostic-report-using-diagnose_paged_report" class="section level3">
-<h3 class="hasAnchor">
-<a href="#create-a-diagnostic-report-using-diagnose_paged_report" class="anchor"></a>Create a diagnostic report using <code>diagnose_paged_report()</code>
+<div class="section level3">
+<h3 id="create-a-diagnostic-report-using-diagnose_paged_report">Create a diagnostic report using
+<code>diagnose_paged_report()</code><a class="anchor" aria-label="anchor" href="#create-a-diagnostic-report-using-diagnose_paged_report"></a>
 </h3>
-<p><code><a href="../reference/diagnose_paged_report.data.frame.html">diagnose_paged_report()</a></code> create static report for object inherited from data.frame(<code>tbl_df</code>, <code>tbl</code>, etc) or data.frame.</p>
-<div id="contents-of-static-paged-report" class="section level4">
-<h4 class="hasAnchor">
-<a href="#contents-of-static-paged-report" class="anchor"></a>Contents of static paged report</h4>
+<p><code><a href="../reference/diagnose_paged_report.data.frame.html">diagnose_paged_report()</a></code> create static report for object
+inherited from data.frame(<code>tbl_df</code>, <code>tbl</code>, etc) or
+data.frame.</p>
+<div class="section level4">
+<h4 id="contents-of-static-paged-report">Contents of static paged report<a class="anchor" aria-label="anchor" href="#contents-of-static-paged-report"></a>
+</h4>
 <p>The contents of the report are as follows.:</p>
 <ul>
 <li>Overview
@@ -663,10 +820,11 @@ The dynamic contents of the report
 </li>
 </ul>
 </div>
-<div id="some-arguments-for-static-paged-report" class="section level4">
-<h4 class="hasAnchor">
-<a href="#some-arguments-for-static-paged-report" class="anchor"></a>Some arguments for static paged report</h4>
-<p>diagnose_paged_report() generates various reports with the following arguments.</p>
+<div class="section level4">
+<h4 id="some-arguments-for-static-paged-report">Some arguments for static paged report<a class="anchor" aria-label="anchor" href="#some-arguments-for-static-paged-report"></a>
+</h4>
+<p>diagnose_paged_report() generates various reports with the following
+arguments.</p>
 <ul>
 <li>output_format
 <ul>
@@ -765,14 +923,16 @@ The dynamic contents of the report
 </ul>
 </li>
 </ul>
-<p>The following script creates a quality diagnosis report for the <code>tbl_df</code> class object, <code>flights</code>.</p>
-<div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="no">flights</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/diagnose_paged_report.data.frame.html">diagnose_paged_report</a></span>(<span class="kw">subtitle</span> <span class="kw">=</span> <span class="st">"flights"</span>, <span class="kw">output_dir</span> <span class="kw">=</span> <span class="st">"./"</span>,
-                        <span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"Diagn.pdf"</span>, <span class="kw">theme</span> <span class="kw">=</span> <span class="st">"blue"</span>)</pre></body></html></div>
+<p>The following script creates a quality diagnosis report for the
+<code>tbl_df</code> class object, <code>flights</code>.</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">flights</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/diagnose_paged_report.data.frame.html">diagnose_paged_report</a></span><span class="op">(</span>subtitle <span class="op">=</span> <span class="st">"flights"</span>, output_dir <span class="op">=</span> <span class="st">"./"</span>,</span>
+<span>                        output_file <span class="op">=</span> <span class="st">"Diagn.pdf"</span>, theme <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="screenshot-of-static-report" class="section level4">
-<h4 class="hasAnchor">
-<a href="#screenshot-of-static-report" class="anchor"></a>Screenshot of static report</h4>
+<div class="section level4">
+<h4 id="screenshot-of-static-report">Screenshot of static report<a class="anchor" aria-label="anchor" href="#screenshot-of-static-report"></a>
+</h4>
 <ul>
 <li>The cover of the report is shown in the following figure.:</li>
 </ul>
@@ -792,11 +952,19 @@ The dynamic contents of the report
 </div>
 </div>
 </div>
-<div id="diagnosing-tables-in-dbms" class="section level2">
-<h2 class="hasAnchor">
-<a href="#diagnosing-tables-in-dbms" class="anchor"></a>Diagnosing tables in DBMS</h2>
-<p>The DBMS table diagnostic function supports In-database mode that performs SQL operations on the DBMS side. If the size of the data is large, using In-database mode is faster.</p>
-<p>It is difficult to obtain anomaly or to implement the sampling-based algorithm in SQL of DBMS. So some functions do not yet support In-database mode. In this case, it is performed in In-memory mode in which table data is brought to R side and calculated. In this case, if the data size is large, the execution speed may be slow. It supports the collect_size argument, which allows you to import the specified number of samples of data into R.</p>
+<div class="section level2">
+<h2 id="diagnosing-tables-in-dbms">Diagnosing tables in DBMS<a class="anchor" aria-label="anchor" href="#diagnosing-tables-in-dbms"></a>
+</h2>
+<p>The DBMS table diagnostic function supports In-database mode that
+performs SQL operations on the DBMS side. If the size of the data is
+large, using In-database mode is faster.</p>
+<p>It is difficult to obtain anomaly or to implement the sampling-based
+algorithm in SQL of DBMS. So some functions do not yet support
+In-database mode. In this case, it is performed in In-memory mode in
+which table data is brought to R side and calculated. In this case, if
+the data size is large, the execution speed may be slow. It supports the
+collect_size argument, which allows you to import the specified number
+of samples of data into R.</p>
 <ul>
 <li>In-database support functions
 <ul>
@@ -818,162 +986,176 @@ The dynamic contents of the report
 </ul>
 </li>
 </ul>
-<div id="preparing-table-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#preparing-table-data" class="anchor"></a>Preparing table data</h3>
-<p>Copy the <code>carseats</code> data frame to the SQLite DBMS and create it as a table named <code>TB_CARSEATS</code>. Mysql/MariaDB, PostgreSQL, Oracle DBMS, other DBMS are also available for your environment.</p>
-<div class="sourceCode" id="cb25"><html><body><pre class="r"><span class="kw">if</span> (!<span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="no">DBI</span>)) <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">'DBI'</span>)
-<span class="kw">if</span> (!<span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="no">RSQLite</span>)) <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">'RSQLite'</span>)
-<span class="kw">if</span> (!<span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="no">dplyr</span>)) <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">'dplyr'</span>)
-<span class="kw">if</span> (!<span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="no">dbplyr</span>)) <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">'dbplyr'</span>)
-
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
-
-<span class="no">carseats</span> <span class="kw">&lt;-</span> <span class="kw pkg">ISLR</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/ISLR/man/Carseats.html">Carseats</a></span>
-<span class="no">carseats</span>[<span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">NROW</a></span>(<span class="no">carseats</span>)), <span class="fl">20</span>), <span class="st">"Income"</span>] <span class="kw">&lt;-</span> <span class="fl">NA</span>
-<span class="no">carseats</span>[<span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">NROW</a></span>(<span class="no">carseats</span>)), <span class="fl">5</span>), <span class="st">"Urban"</span>] <span class="kw">&lt;-</span> <span class="fl">NA</span>
-
-<span class="co"># connect DBMS</span>
-<span class="no">con_sqlite</span> <span class="kw">&lt;-</span> <span class="kw pkg">DBI</span><span class="kw ns">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html">dbConnect</a></span>(<span class="kw pkg">RSQLite</span><span class="kw ns">::</span><span class="fu"><a href="https://rsqlite.r-dbi.org/reference/SQLite.html">SQLite</a></span>(), <span class="st">":memory:"</span>)
-
-<span class="co"># copy carseats to the DBMS with a table named TB_CARSEATS</span>
-<span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/copy_to.html">copy_to</a></span>(<span class="no">con_sqlite</span>, <span class="no">carseats</span>, <span class="kw">name</span> <span class="kw">=</span> <span class="st">"TB_CARSEATS"</span>, <span class="kw">overwrite</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<div class="section level3">
+<h3 id="preparing-table-data">Preparing table data<a class="anchor" aria-label="anchor" href="#preparing-table-data"></a>
+</h3>
+<p>Copy the <code>carseats</code> data frame to the SQLite DBMS and
+create it as a table named <code>TB_CARSEATS</code>. Mysql/MariaDB,
+PostgreSQL, Oracle DBMS, other DBMS are also available for your
+environment.</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://dbi.r-dbi.org" class="external-link">DBI</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'DBI'</span>, repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span><span class="op">)</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://rsqlite.r-dbi.org" class="external-link">RSQLite</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'RSQLite'</span>, repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span><span class="op">)</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'dplyr'</span>, repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span><span class="op">)</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://dbplyr.tidyverse.org/" class="external-link">dbplyr</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'dbplyr'</span>, repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">carseats</span> <span class="op">&lt;-</span> <span class="fu">ISLR</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/ISLR/man/Carseats.html" class="external-link">Carseats</a></span></span>
+<span><span class="va">carseats</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NROW</a></span><span class="op">(</span><span class="va">carseats</span><span class="op">)</span><span class="op">)</span>, <span class="fl">20</span><span class="op">)</span>, <span class="st">"Income"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
+<span><span class="va">carseats</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NROW</a></span><span class="op">(</span><span class="va">carseats</span><span class="op">)</span><span class="op">)</span>, <span class="fl">5</span><span class="op">)</span>, <span class="st">"Urban"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
+<span></span>
+<span><span class="co"># connect DBMS</span></span>
+<span><span class="va">con_sqlite</span> <span class="op">&lt;-</span> <span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html" class="external-link">dbConnect</a></span><span class="op">(</span><span class="fu">RSQLite</span><span class="fu">::</span><span class="fu"><a href="https://rsqlite.r-dbi.org/reference/SQLite.html" class="external-link">SQLite</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">":memory:"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># copy carseats to the DBMS with a table named TB_CARSEATS</span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/copy_to.html" class="external-link">copy_to</a></span><span class="op">(</span><span class="va">con_sqlite</span>, <span class="va">carseats</span>, name <span class="op">=</span> <span class="st">"TB_CARSEATS"</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="diagnose-data-quality-of-variables-in-the-dbms" class="section level3">
-<h3 class="hasAnchor">
-<a href="#diagnose-data-quality-of-variables-in-the-dbms" class="anchor"></a>Diagnose data quality of variables in the DBMS</h3>
-<p>Use <code><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">dplyr::tbl()</a></code> to create a tbl_dbi object, then use it as a data frame object. That is, the data argument of all diagnose function is specified as tbl_dbi object instead of data frame object.</p>
-<div class="sourceCode" id="cb26"><html><body><pre class="r"># Diagnosis of all columns
-con_sqlite %&gt;% 
-  tbl("TB_CARSEATS") %&gt;% 
-  diagnose()
-# A tibble: 11 x 6
-  variables   types  missing_count missing_percent unique_count unique_rate
-  &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;           &lt;dbl&gt;        &lt;int&gt;       &lt;dbl&gt;
-1 Sales       double             0               0          336       0.84 
-2 CompPrice   double             0               0           73       0.182
-3 Income      double            20               5           99       0.248
-4 Advertising double             0               0           28       0.07 
-# … with 7 more rows
-
-# Positions values select columns, and In-memory mode
-con_sqlite %&gt;% 
-  tbl("TB_CARSEATS") %&gt;% 
-  diagnose(1, 3, 8, in_database = FALSE)
-# A tibble: 3 x 6
-  variables types   missing_count missing_percent unique_count unique_rate
-  &lt;chr&gt;     &lt;chr&gt;           &lt;int&gt;           &lt;dbl&gt;        &lt;int&gt;       &lt;dbl&gt;
-1 Sales     numeric             0               0          336       0.84 
-2 Income    numeric            20               5           99       0.248
-3 Age       numeric             0               0           56       0.14 
-  
-# Positions values select columns, and In-memory mode and collect size is 200
-con_sqlite %&gt;% 
-  tbl("TB_CARSEATS") %&gt;% 
-  diagnose(-8, -9, -10, in_database = FALSE, collect_size = 200)
-# A tibble: 8 x 6
-  variables   types   missing_count missing_percent unique_count unique_rate
-  &lt;chr&gt;       &lt;chr&gt;           &lt;int&gt;           &lt;dbl&gt;        &lt;int&gt;       &lt;dbl&gt;
-1 Sales       numeric             0               0          182       0.91 
-2 CompPrice   numeric             0               0           65       0.325
-3 Income      numeric             8               4           83       0.415
-4 Advertising numeric             0               0           23       0.115
-# … with 4 more rows</pre></body></html></div>
+<div class="section level3">
+<h3 id="diagnose-data-quality-of-variables-in-the-dbms">Diagnose data quality of variables in the DBMS<a class="anchor" aria-label="anchor" href="#diagnose-data-quality-of-variables-in-the-dbms"></a>
+</h3>
+<p>Use <code><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">dplyr::tbl()</a></code> to create a tbl_dbi object, then use it
+as a data frame object. That is, the data argument of all diagnose
+function is specified as tbl_dbi object instead of data frame
+object.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="co"># Diagnosis of all columns</span></span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>con_sqlite <span class="sc">%&gt;%</span> </span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>  <span class="fu">tbl</span>(<span class="st">"TB_CARSEATS"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a>  <span class="fu">diagnose</span>()</span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 11 × 6 [39m</span></span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a>  variables   types  missing_count missing_percent unique_count unique_rate</span>
+<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a>   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m        [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m           [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m            [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m         [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m        [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m</span>
+<span id="cb26-8"><a href="#cb26-8" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m1 [39m Sales       double             <span class="dv">0</span>               <span class="dv">0</span>          <span class="dv">336</span>       <span class="fl">0.84</span> </span>
+<span id="cb26-9"><a href="#cb26-9" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m2 [39m CompPrice   double             <span class="dv">0</span>               <span class="dv">0</span>           <span class="dv">73</span>       <span class="fl">0.182</span></span>
+<span id="cb26-10"><a href="#cb26-10" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m3 [39m Income      double            <span class="dv">20</span>               <span class="dv">5</span>           <span class="dv">98</span>       <span class="fl">0.245</span></span>
+<span id="cb26-11"><a href="#cb26-11" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m4 [39m Advertising double             <span class="dv">0</span>               <span class="dv">0</span>           <span class="dv">28</span>       <span class="fl">0.07</span> </span>
+<span id="cb26-12"><a href="#cb26-12" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># ℹ 7 more rows [39m</span></span>
+<span id="cb26-13"><a href="#cb26-13" tabindex="-1"></a></span>
+<span id="cb26-14"><a href="#cb26-14" tabindex="-1"></a><span class="co"># Positions values select columns, and In-memory mode</span></span>
+<span id="cb26-15"><a href="#cb26-15" tabindex="-1"></a>con_sqlite <span class="sc">%&gt;%</span> </span>
+<span id="cb26-16"><a href="#cb26-16" tabindex="-1"></a>  <span class="fu">tbl</span>(<span class="st">"TB_CARSEATS"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-17"><a href="#cb26-17" tabindex="-1"></a>  <span class="fu">diagnose</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">8</span>, <span class="at">in_database =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb26-18"><a href="#cb26-18" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 3 × 6 [39m</span></span>
+<span id="cb26-19"><a href="#cb26-19" tabindex="-1"></a>  variables types   missing_count missing_percent unique_count unique_rate</span>
+<span id="cb26-20"><a href="#cb26-20" tabindex="-1"></a>   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m      [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m            [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m            [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m         [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m        [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m</span>
+<span id="cb26-21"><a href="#cb26-21" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m1 [39m Sales     numeric             <span class="dv">0</span>               <span class="dv">0</span>          <span class="dv">336</span>       <span class="fl">0.84</span> </span>
+<span id="cb26-22"><a href="#cb26-22" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m2 [39m Income    numeric            <span class="dv">20</span>               <span class="dv">5</span>           <span class="dv">99</span>       <span class="fl">0.248</span></span>
+<span id="cb26-23"><a href="#cb26-23" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m3 [39m Age       numeric             <span class="dv">0</span>               <span class="dv">0</span>           <span class="dv">56</span>       <span class="fl">0.14</span> </span>
+<span id="cb26-24"><a href="#cb26-24" tabindex="-1"></a>  </span>
+<span id="cb26-25"><a href="#cb26-25" tabindex="-1"></a><span class="co"># Positions values select columns, and In-memory mode and collect size is 200</span></span>
+<span id="cb26-26"><a href="#cb26-26" tabindex="-1"></a>con_sqlite <span class="sc">%&gt;%</span> </span>
+<span id="cb26-27"><a href="#cb26-27" tabindex="-1"></a>  <span class="fu">tbl</span>(<span class="st">"TB_CARSEATS"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-28"><a href="#cb26-28" tabindex="-1"></a>  <span class="fu">diagnose</span>(<span class="sc">-</span><span class="dv">8</span>, <span class="sc">-</span><span class="dv">9</span>, <span class="sc">-</span><span class="dv">10</span>, <span class="at">in_database =</span> <span class="cn">FALSE</span>, <span class="at">collect_size =</span> <span class="dv">200</span>)</span>
+<span id="cb26-29"><a href="#cb26-29" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 8 × 6 [39m</span></span>
+<span id="cb26-30"><a href="#cb26-30" tabindex="-1"></a>  variables   types   missing_count missing_percent unique_count unique_rate</span>
+<span id="cb26-31"><a href="#cb26-31" tabindex="-1"></a>   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m        [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m            [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m            [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m         [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m        [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m</span>
+<span id="cb26-32"><a href="#cb26-32" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m1 [39m Sales       numeric             <span class="dv">0</span>             <span class="dv">0</span>            <span class="dv">182</span>       <span class="fl">0.91</span> </span>
+<span id="cb26-33"><a href="#cb26-33" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m2 [39m CompPrice   numeric             <span class="dv">0</span>             <span class="dv">0</span>             <span class="dv">65</span>       <span class="fl">0.325</span></span>
+<span id="cb26-34"><a href="#cb26-34" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m3 [39m Income      numeric            <span class="dv">17</span>             <span class="fl">8.5</span>           <span class="dv">84</span>       <span class="fl">0.42</span> </span>
+<span id="cb26-35"><a href="#cb26-35" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m4 [39m Advertising numeric             <span class="dv">0</span>             <span class="dv">0</span>             <span class="dv">23</span>       <span class="fl">0.115</span></span>
+<span id="cb26-36"><a href="#cb26-36" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># ℹ 4 more rows [39m</span></span></code></pre></div>
 </div>
-<div id="diagnose-data-quality-of-categorical-variables-in-the-dbms" class="section level3">
-<h3 class="hasAnchor">
-<a href="#diagnose-data-quality-of-categorical-variables-in-the-dbms" class="anchor"></a>Diagnose data quality of categorical variables in the DBMS</h3>
-<div class="sourceCode" id="cb27"><html><body><pre class="r"># Positions values select variables, and In-memory mode and collect size is 200
-con_sqlite %&gt;% 
-  tbl("TB_CARSEATS") %&gt;% 
-  diagnose_category(7, in_database = FALSE, collect_size = 200) 
-# A tibble: 3 x 6
-  variables levels     N  freq ratio  rank
-  &lt;chr&gt;     &lt;chr&gt;  &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt;
-1 ShelveLoc Medium   200   113  56.5     1
-2 ShelveLoc Bad      200    47  23.5     2
-3 ShelveLoc Good     200    40  20       3
-  
-# Positions values select variables
-con_sqlite %&gt;% 
-  tbl("TB_CARSEATS") %&gt;% 
-  diagnose_category(-7)
-# A tibble: 5 x 6
-  variables levels     N  freq ratio  rank
-  &lt;chr&gt;     &lt;chr&gt;  &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt;
-1 Urban     Yes      400   280 70        1
-2 Urban     No       400   115 28.7      2
-3 Urban     &lt;NA&gt;     400     5  1.25     3
-4 US        Yes      400   258 64.5      1
-# … with 1 more row</pre></body></html></div>
+<div class="section level3">
+<h3 id="diagnose-data-quality-of-categorical-variables-in-the-dbms">Diagnose data quality of categorical variables in the DBMS<a class="anchor" aria-label="anchor" href="#diagnose-data-quality-of-categorical-variables-in-the-dbms"></a>
+</h3>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="co"># Positions values select variables, and In-memory mode and collect size is 200</span></span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>con_sqlite <span class="sc">%&gt;%</span> </span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>  <span class="fu">tbl</span>(<span class="st">"TB_CARSEATS"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a>  <span class="fu">diagnose_category</span>(<span class="dv">7</span>, <span class="at">in_database =</span> <span class="cn">FALSE</span>, <span class="at">collect_size =</span> <span class="dv">200</span>) </span>
+<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 3 × 6 [39m</span></span>
+<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a>  variables levels     N  freq ratio  rank</span>
+<span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a>   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m      [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m</span>
+<span id="cb27-8"><a href="#cb27-8" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m1 [39m ShelveLoc Medium   <span class="dv">200</span>   <span class="dv">113</span>  <span class="fl">56.5</span>     <span class="dv">1</span></span>
+<span id="cb27-9"><a href="#cb27-9" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m2 [39m ShelveLoc Bad      <span class="dv">200</span>    <span class="dv">47</span>  <span class="fl">23.5</span>     <span class="dv">2</span></span>
+<span id="cb27-10"><a href="#cb27-10" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m3 [39m ShelveLoc Good     <span class="dv">200</span>    <span class="dv">40</span>  <span class="dv">20</span>       <span class="dv">3</span></span>
+<span id="cb27-11"><a href="#cb27-11" tabindex="-1"></a>  </span>
+<span id="cb27-12"><a href="#cb27-12" tabindex="-1"></a><span class="co"># Positions values select variables</span></span>
+<span id="cb27-13"><a href="#cb27-13" tabindex="-1"></a>con_sqlite <span class="sc">%&gt;%</span> </span>
+<span id="cb27-14"><a href="#cb27-14" tabindex="-1"></a>  <span class="fu">tbl</span>(<span class="st">"TB_CARSEATS"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-15"><a href="#cb27-15" tabindex="-1"></a>  <span class="fu">diagnose_category</span>(<span class="sc">-</span><span class="dv">7</span>)</span>
+<span id="cb27-16"><a href="#cb27-16" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 5 × 6 [39m</span></span>
+<span id="cb27-17"><a href="#cb27-17" tabindex="-1"></a>  variables levels     N  freq ratio  rank</span>
+<span id="cb27-18"><a href="#cb27-18" tabindex="-1"></a>   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m      [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m</span>
+<span id="cb27-19"><a href="#cb27-19" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m1 [39m Urban     Yes      <span class="dv">400</span>   <span class="dv">278</span> <span class="fl">69.5</span>      <span class="dv">1</span></span>
+<span id="cb27-20"><a href="#cb27-20" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m2 [39m Urban     No       <span class="dv">400</span>   <span class="dv">117</span> <span class="fl">29.2</span>      <span class="dv">2</span></span>
+<span id="cb27-21"><a href="#cb27-21" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m3 [39m Urban      [31mNA [39m       <span class="dv">400</span>     <span class="dv">5</span>  <span class="fl">1.25</span>     <span class="dv">3</span></span>
+<span id="cb27-22"><a href="#cb27-22" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m4 [39m US        Yes      <span class="dv">400</span>   <span class="dv">258</span> <span class="fl">64.5</span>      <span class="dv">1</span></span>
+<span id="cb27-23"><a href="#cb27-23" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># ℹ 1 more row [39m</span></span></code></pre></div>
 </div>
-<div id="diagnose-data-quality-of-numerical-variables-in-the-dbms" class="section level3">
-<h3 class="hasAnchor">
-<a href="#diagnose-data-quality-of-numerical-variables-in-the-dbms" class="anchor"></a>Diagnose data quality of numerical variables in the DBMS</h3>
-<div class="sourceCode" id="cb28"><html><body><pre class="r"># Diagnosis of all numerical variables
-con_sqlite %&gt;% 
-  tbl("TB_CARSEATS") %&gt;% 
-  diagnose_numeric()
-# A tibble: 8 x 10
-  variables     min     Q1   mean median     Q3   max  zero minus outlier
-  &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt;   &lt;int&gt;
-1 Sales           0   5.39   7.50   7.49   9.32  16.3     1     0       2
-2 CompPrice      77 115    125.   125    135    175       0     0       2
-3 Income         21  42     68.1   69     90.2  120       0     0       0
-4 Advertising     0   0      6.64   5     12     29     144     0       0
-# … with 4 more rows
-  
-# Positive values select variables, and In-memory mode and collect size is 200
-con_sqlite %&gt;% 
-  tbl("TB_CARSEATS") %&gt;% 
-  diagnose_numeric(Sales, Income, collect_size = 200)
-# A tibble: 2 x 10
-  variables   min    Q1  mean median    Q3   max  zero minus outlier
-* &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt;   &lt;int&gt;
-1 Sales         0  5.26  7.42   7.50  9.10  14.9     1     0       0
-2 Income       21 46.8  71.3   73.5  93    120       0     0       0</pre></body></html></div>
+<div class="section level3">
+<h3 id="diagnose-data-quality-of-numerical-variables-in-the-dbms">Diagnose data quality of numerical variables in the DBMS<a class="anchor" aria-label="anchor" href="#diagnose-data-quality-of-numerical-variables-in-the-dbms"></a>
+</h3>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="co"># Diagnosis of all numerical variables</span></span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a>con_sqlite <span class="sc">%&gt;%</span> </span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a>  <span class="fu">tbl</span>(<span class="st">"TB_CARSEATS"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a>  <span class="fu">diagnose_numeric</span>()</span>
+<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 8 × 10 [39m</span></span>
+<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a>  variables     min     Q1   mean median     Q3   max  zero minus outlier</span>
+<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a>   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m        [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m    [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m</span>
+<span id="cb28-8"><a href="#cb28-8" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m1 [39m Sales           <span class="dv">0</span>   <span class="fl">5.39</span>   <span class="fl">7.50</span>   <span class="fl">7.49</span>   <span class="fl">9.32</span>  <span class="fl">16.3</span>     <span class="dv">1</span>     <span class="dv">0</span>       <span class="dv">2</span></span>
+<span id="cb28-9"><a href="#cb28-9" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m2 [39m CompPrice      <span class="dv">77</span> <span class="dv">115</span>    <span class="fl">125.</span>   <span class="dv">125</span>    <span class="dv">135</span>    <span class="dv">175</span>       <span class="dv">0</span>     <span class="dv">0</span>       <span class="dv">2</span></span>
+<span id="cb28-10"><a href="#cb28-10" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m3 [39m Income         <span class="dv">21</span>  <span class="fl">42.8</span>   <span class="fl">68.2</span>   <span class="dv">69</span>     <span class="dv">90</span>    <span class="dv">120</span>       <span class="dv">0</span>     <span class="dv">0</span>       <span class="dv">0</span></span>
+<span id="cb28-11"><a href="#cb28-11" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m4 [39m Advertising     <span class="dv">0</span>   <span class="dv">0</span>      <span class="fl">6.64</span>   <span class="dv">5</span>     <span class="dv">12</span>     <span class="dv">29</span>     <span class="dv">144</span>     <span class="dv">0</span>       <span class="dv">0</span></span>
+<span id="cb28-12"><a href="#cb28-12" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># ℹ 4 more rows [39m</span></span>
+<span id="cb28-13"><a href="#cb28-13" tabindex="-1"></a>  </span>
+<span id="cb28-14"><a href="#cb28-14" tabindex="-1"></a><span class="co"># Positive values select variables, and In-memory mode and collect size is 200</span></span>
+<span id="cb28-15"><a href="#cb28-15" tabindex="-1"></a>con_sqlite <span class="sc">%&gt;%</span> </span>
+<span id="cb28-16"><a href="#cb28-16" tabindex="-1"></a>  <span class="fu">tbl</span>(<span class="st">"TB_CARSEATS"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-17"><a href="#cb28-17" tabindex="-1"></a>  <span class="fu">diagnose_numeric</span>(Sales, Income, <span class="at">collect_size =</span> <span class="dv">200</span>)</span>
+<span id="cb28-18"><a href="#cb28-18" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 2 × 10 [39m</span></span>
+<span id="cb28-19"><a href="#cb28-19" tabindex="-1"></a>  variables   min    Q1  mean median    Q3   max  zero minus outlier</span>
+<span id="cb28-20"><a href="#cb28-20" tabindex="-1"></a>   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m      [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m    [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m</span>
+<span id="cb28-21"><a href="#cb28-21" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m1 [39m Sales         <span class="dv">0</span>  <span class="fl">5.26</span>  <span class="fl">7.42</span>   <span class="fl">7.50</span>  <span class="fl">9.10</span>  <span class="fl">14.9</span>     <span class="dv">1</span>     <span class="dv">0</span>       <span class="dv">0</span></span>
+<span id="cb28-22"><a href="#cb28-22" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m2 [39m Income       <span class="dv">21</span> <span class="dv">48</span>    <span class="fl">70.9</span>   <span class="dv">72</span>    <span class="dv">93</span>    <span class="dv">120</span>       <span class="dv">0</span>     <span class="dv">0</span>       <span class="dv">0</span></span></code></pre></div>
 </div>
-<div id="diagnose-outlier-of-numerical-variables-in-the-dbms" class="section level3">
-<h3 class="hasAnchor">
-<a href="#diagnose-outlier-of-numerical-variables-in-the-dbms" class="anchor"></a>Diagnose outlier of numerical variables in the DBMS</h3>
-<div class="sourceCode" id="cb29"><html><body><pre class="r">con_sqlite %&gt;% 
-  tbl("TB_CARSEATS") %&gt;% 
-  diagnose_outlier()  %&gt;%
-  filter(outliers_ratio &gt; 1)
-# A tibble: 1 x 6
-  variables outliers_cnt outliers_ratio outliers_mean with_mean without_mean
-  &lt;chr&gt;            &lt;int&gt;          &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
-1 Price                5           1.25          100.      116.         116.</pre></body></html></div>
+<div class="section level3">
+<h3 id="diagnose-outlier-of-numerical-variables-in-the-dbms">Diagnose outlier of numerical variables in the DBMS<a class="anchor" aria-label="anchor" href="#diagnose-outlier-of-numerical-variables-in-the-dbms"></a>
+</h3>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>con_sqlite <span class="sc">%&gt;%</span> </span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a>  <span class="fu">tbl</span>(<span class="st">"TB_CARSEATS"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a>  <span class="fu">diagnose_outlier</span>()  <span class="sc">%&gt;%</span></span>
+<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a>  <span class="fu">filter</span>(outliers_ratio <span class="sc">&gt;</span> <span class="dv">1</span>)</span>
+<span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 1 × 6 [39m</span></span>
+<span id="cb29-6"><a href="#cb29-6" tabindex="-1"></a>  variables outliers_cnt outliers_ratio outliers_mean with_mean without_mean</span>
+<span id="cb29-7"><a href="#cb29-7" tabindex="-1"></a>   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m             [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m           [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m          [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m      [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m         [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m</span>
+<span id="cb29-8"><a href="#cb29-8" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m1 [39m Price                <span class="dv">5</span>           <span class="fl">1.25</span>          <span class="fl">100.</span>      <span class="fl">116.</span>         <span class="fl">116.</span></span></code></pre></div>
 </div>
-<div id="plot-outlier-information-of-numerical-data-diagnosis-in-the-dbms" class="section level3">
-<h3 class="hasAnchor">
-<a href="#plot-outlier-information-of-numerical-data-diagnosis-in-the-dbms" class="anchor"></a>Plot outlier information of numerical data diagnosis in the DBMS</h3>
-<div class="sourceCode" id="cb30"><html><body><pre class="r"><span class="co"># Visualization of numerical variables with a ratio of</span>
-<span class="co"># outliers greater than 1%</span>
-<span class="co"># the result is same as a data.frame, but not display here. reference above in document.</span>
-<span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/plot_outlier.data.frame.html">plot_outlier</a></span>(<span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-                 <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
-                 <span class="fu"><a href="../reference/diagnose_outlier.data.frame.html">diagnose_outlier</a></span>() <span class="kw">%&gt;%</span>
-                 <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span>(<span class="no">outliers_ratio</span> <span class="kw">&gt;</span> <span class="fl">1</span>) <span class="kw">%&gt;%</span>
-                 <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/select.html">select</a></span>(<span class="no">variables</span>) <span class="kw">%&gt;%</span>
-                 <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/pull.html">pull</a></span>())</pre></body></html></div>
+<div class="section level3">
+<h3 id="plot-outlier-information-of-numerical-data-diagnosis-in-the-dbms">Plot outlier information of numerical data diagnosis in the
+DBMS<a class="anchor" aria-label="anchor" href="#plot-outlier-information-of-numerical-data-diagnosis-in-the-dbms"></a>
+</h3>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Visualization of numerical variables with a ratio of</span></span>
+<span><span class="co"># outliers greater than 1%</span></span>
+<span><span class="co"># the result is same as a data.frame, but not display here. reference above in document.</span></span>
+<span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_CARSEATS"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/plot_outlier.data.frame.html">plot_outlier</a></span><span class="op">(</span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>                 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_CARSEATS"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>                 <span class="fu"><a href="../reference/diagnose_outlier.data.frame.html">diagnose_outlier</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>                 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">outliers_ratio</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>                 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">variables</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>                 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="reporting-the-information-of-data-diagnosis-for-table-of-thr-dbms" class="section level3">
-<h3 class="hasAnchor">
-<a href="#reporting-the-information-of-data-diagnosis-for-table-of-thr-dbms" class="anchor"></a>Reporting the information of data diagnosis for table of thr DBMS</h3>
-<p>The following shows several examples of creating an data diagnosis report for a DBMS table.</p>
-<p>Using the <code>collect_size</code> argument, you can perform data diagnosis with the corresponding number of sample data. If the number of data is very large, use <code>collect_size</code>.</p>
-<div class="sourceCode" id="cb31"><html><body><pre class="r"><span class="co"># create web report file. </span>
-<span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/diagnose_web_report.data.frame.html">diagnose_web_report</a></span>()
-
-<span class="co"># create pdf file. file name is Diagn.pdf, and collect size is 350</span>
-<span class="no">con_sqlite</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/tbl.html">tbl</a></span>(<span class="st">"TB_CARSEATS"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/diagnose_paged_report.data.frame.html">diagnose_paged_report</a></span>(<span class="kw">collect_size</span> <span class="kw">=</span> <span class="fl">350</span>, <span class="kw">output_file</span> <span class="kw">=</span> <span class="st">"Diagn.pdf"</span>)</pre></body></html></div>
+<div class="section level3">
+<h3 id="reporting-the-information-of-data-diagnosis-for-table-of-thr-dbms">Reporting the information of data diagnosis for table of thr
+DBMS<a class="anchor" aria-label="anchor" href="#reporting-the-information-of-data-diagnosis-for-table-of-thr-dbms"></a>
+</h3>
+<p>The following shows several examples of creating an data diagnosis
+report for a DBMS table.</p>
+<p>Using the <code>collect_size</code> argument, you can perform data
+diagnosis with the corresponding number of sample data. If the number of
+data is very large, use <code>collect_size</code>.</p>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># create web report file. </span></span>
+<span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_CARSEATS"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/diagnose_web_report.data.frame.html">diagnose_web_report</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  </span>
+<span><span class="co"># create pdf file. file name is Diagn.pdf, and collect size is 350</span></span>
+<span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_CARSEATS"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/diagnose_paged_report.data.frame.html">diagnose_paged_report</a></span><span class="op">(</span>collect_size <span class="op">=</span> <span class="fl">350</span>, output_file <span class="op">=</span> <span class="st">"Diagn.pdf"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </div>
@@ -989,11 +1171,13 @@ con_sqlite %&gt;%
 
 
       <footer><div class="copyright">
-  <p>Developed by Choonghyun Ryu.</p>
+  <p></p>
+<p>Developed by Choonghyun Ryu.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -1001,6 +1185,8 @@ con_sqlite %&gt;%
 
   
 
+
+  
 
   </body>
 </html>

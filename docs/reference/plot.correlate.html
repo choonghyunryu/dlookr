@@ -18,7 +18,7 @@ The plot of correlation matrix is a tile plot."><!-- mathjax --><script src="htt
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.3</span>
       </span>
     </div>
 
@@ -64,22 +64,29 @@ The plot of correlation matrix is a tile plot.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for correlate</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, typographic <span class="op">=</span> <span class="cn">TRUE</span>, base_family <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for correlate</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, typographic <span class="op">=</span> <span class="cn">TRUE</span>, base_family <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>an object of class "correlate", usually, a result of a call to correlate().</p></dd>
+
+
 <dt>typographic</dt>
 <dd><p>logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.</p></dd>
+
+
 <dt>base_family</dt>
 <dd><p>character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)</p></dd>
+
+
 <dt>...</dt>
 <dd><p>arguments to be passed to methods, such as graphical parameters (see par).</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -94,35 +101,28 @@ use it after loading the Google font with import_google_font().</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># correlate type is generic ==================================</span></span>
-<span class="r-in"><span class="va">tab_corr</span> <span class="op">&lt;-</span> <span class="fu"><a href="correlate.data.frame.html">correlate</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">tab_corr</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># correlate type is generic ==================================</span></span></span>
+<span class="r-in"><span><span class="va">tab_corr</span> <span class="op">&lt;-</span> <span class="fu"><a href="correlate.data.frame.html">correlate</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tab_corr</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 12 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    var1         var2         coef_corr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Sepal.Width  Sepal.Length    -<span style="color: #BB0000;">0.118</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Petal.Length Sepal.Length     0.872</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Petal.Width  Sepal.Length     0.818</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Sepal.Length Sepal.Width     -<span style="color: #BB0000;">0.118</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Petal.Length Sepal.Width     -<span style="color: #BB0000;">0.428</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Petal.Width  Sepal.Width     -<span style="color: #BB0000;">0.366</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Sepal.Length Petal.Length     0.872</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Sepal.Width  Petal.Length    -<span style="color: #BB0000;">0.428</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Petal.Width  Petal.Length     0.963</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Sepal.Length Petal.Width      0.818</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> Sepal.Width  Petal.Width     -<span style="color: #BB0000;">0.366</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> Petal.Length Petal.Width      0.963</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># visualize correlate class </span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tab_corr</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   var1         var2         coef_corr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Sepal.Width  Sepal.Length    -<span style="color: #BB0000;">0.118</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Petal.Length Sepal.Length     0.872</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Petal.Width  Sepal.Length     0.818</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Sepal.Length Sepal.Width     -<span style="color: #BB0000;">0.118</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 8 more rows</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># visualize correlate class </span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tab_corr</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot.correlate-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">tab_corr</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="correlate.data.frame.html">correlate</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Petal.Length</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">tab_corr</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">tab_corr</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="correlate.data.frame.html">correlate</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Petal.Length</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tab_corr</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   var1         var2         coef_corr</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -130,21 +130,20 @@ use it after loading the Google font with import_google_font().</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Sepal.Length Sepal.Width     -<span style="color: #BB0000;">0.118</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Petal.Length Sepal.Width     -<span style="color: #BB0000;">0.428</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Sepal.Length Petal.Length     0.872</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Sepal.Length Petal.Width      0.818</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> Petal.Length Petal.Width      0.963</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># visualize correlate class </span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tab_corr</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 2 more rows</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># visualize correlate class </span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tab_corr</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot.correlate-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># correlate type is group ====================================</span></span>
-<span class="r-in"><span class="co"># Draw a correlation matrix plot by category of Species.</span></span>
-<span class="r-in"><span class="va">tab_corr</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="correlate.data.frame.html">correlate</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># plot correlate class</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tab_corr</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># correlate type is group ====================================</span></span></span>
+<span class="r-in"><span><span class="co"># Draw a correlation matrix plot by category of Species.</span></span></span>
+<span class="r-in"><span><span class="va">tab_corr</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="correlate.data.frame.html">correlate</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># plot correlate class</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tab_corr</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>font family 'Roboto Condensed Light' not found, will use 'sans' instead</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>font family 'Roboto Condensed Light' not found, will use 'sans' instead</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>font family 'Roboto Condensed Light' not found, will use 'sans' instead</span>
@@ -198,26 +197,28 @@ use it after loading the Google font with import_google_font().</p>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>font family 'Roboto Condensed Light' not found, will use 'sans' instead</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>font family 'Roboto Condensed Light' not found, will use 'sans' instead</span>
 <span class="r-plt img"><img src="plot.correlate-5.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># S3 method for correlate class by 'tbl_dbi' ================</span></span>
-<span class="r-in"><span class="co"># connect DBMS</span></span>
-<span class="r-in"><span class="va">con_sqlite</span> <span class="op">&lt;-</span> <span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html" class="external-link">dbConnect</a></span><span class="op">(</span><span class="fu">RSQLite</span><span class="fu">::</span><span class="fu"><a href="https://rsqlite.r-dbi.org/reference/SQLite.html" class="external-link">SQLite</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">":memory:"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># copy iris to the DBMS with a table named TB_IRIS</span></span>
-<span class="r-in"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/copy_to.html" class="external-link">copy_to</a></span><span class="op">(</span><span class="va">con_sqlite</span>, <span class="va">iris</span>, name <span class="op">=</span> <span class="st">"TB_IRIS"</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># correlation coefficients of all numerical variables</span></span>
-<span class="r-in"><span class="va">tab_corr</span> <span class="op">&lt;-</span> <span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_IRIS"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="correlate.data.frame.html">correlate</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in">  </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tab_corr</span><span class="op">)</span>   </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># S3 method for correlate class by 'tbl_dbi' ================</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://dbi.r-dbi.org" class="external-link">DBI</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'DBI'</span>, repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://rsqlite.r-dbi.org" class="external-link">RSQLite</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'RSQLite'</span>, repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># connect DBMS</span></span></span>
+<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op">&lt;-</span> <span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html" class="external-link">dbConnect</a></span><span class="op">(</span><span class="fu">RSQLite</span><span class="fu">::</span><span class="fu"><a href="https://rsqlite.r-dbi.org/reference/SQLite.html" class="external-link">SQLite</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">":memory:"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># copy iris to the DBMS with a table named TB_IRIS</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/copy_to.html" class="external-link">copy_to</a></span><span class="op">(</span><span class="va">con_sqlite</span>, <span class="va">iris</span>, name <span class="op">=</span> <span class="st">"TB_IRIS"</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># correlation coefficients of all numerical variables</span></span></span>
+<span class="r-in"><span><span class="va">tab_corr</span> <span class="op">&lt;-</span> <span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_IRIS"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="correlate.data.frame.html">correlate</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tab_corr</span><span class="op">)</span>   </span></span>
 <span class="r-plt img"><img src="plot.correlate-6.png" alt="" width="700" height="433"></span>
-<span class="r-in">  </span>
-<span class="r-in"><span class="co"># Disconnect DBMS   </span></span>
-<span class="r-in"><span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbDisconnect.html" class="external-link">dbDisconnect</a></span><span class="op">(</span><span class="va">con_sqlite</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span><span class="co"># Disconnect DBMS   </span></span></span>
+<span class="r-in"><span><span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbDisconnect.html" class="external-link">dbDisconnect</a></span><span class="op">(</span><span class="va">con_sqlite</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -232,7 +233,7 @@ use it after loading the Google font with import_google_font().</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

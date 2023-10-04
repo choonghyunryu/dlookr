@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.3</span>
       </span>
     </div>
 
@@ -62,36 +62,38 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">correlate</span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for data.frame</span>
-<span class="fu">correlate</span><span class="op">(</span>
-  <span class="va">.data</span>,
-  <span class="va">...</span>,
-  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pearson"</span>, <span class="st">"kendall"</span>, <span class="st">"spearman"</span>, <span class="st">"cramer"</span>, <span class="st">"theil"</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for grouped_df</span>
-<span class="fu">correlate</span><span class="op">(</span>
-  <span class="va">.data</span>,
-  <span class="va">...</span>,
-  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pearson"</span>, <span class="st">"kendall"</span>, <span class="st">"spearman"</span>, <span class="st">"cramer"</span>, <span class="st">"theil"</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for tbl_dbi</span>
-<span class="fu">correlate</span><span class="op">(</span>
-  <span class="va">.data</span>,
-  <span class="va">...</span>,
-  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pearson"</span>, <span class="st">"kendall"</span>, <span class="st">"spearman"</span>, <span class="st">"cramer"</span>, <span class="st">"theil"</span><span class="op">)</span>,
-  in_database <span class="op">=</span> <span class="cn">FALSE</span>,
-  collect_size <span class="op">=</span> <span class="cn">Inf</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">correlate</span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for data.frame</span></span>
+<span><span class="fu">correlate</span><span class="op">(</span></span>
+<span>  <span class="va">.data</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pearson"</span>, <span class="st">"kendall"</span>, <span class="st">"spearman"</span>, <span class="st">"cramer"</span>, <span class="st">"theil"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for grouped_df</span></span>
+<span><span class="fu">correlate</span><span class="op">(</span></span>
+<span>  <span class="va">.data</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pearson"</span>, <span class="st">"kendall"</span>, <span class="st">"spearman"</span>, <span class="st">"cramer"</span>, <span class="st">"theil"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for tbl_dbi</span></span>
+<span><span class="fu">correlate</span><span class="op">(</span></span>
+<span>  <span class="va">.data</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pearson"</span>, <span class="st">"kendall"</span>, <span class="st">"spearman"</span>, <span class="st">"cramer"</span>, <span class="st">"theil"</span><span class="op">)</span>,</span>
+<span>  in_database <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  collect_size <span class="op">=</span> <span class="cn">Inf</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>.data</dt>
 <dd><p>a data.frame or a <code><a href="https://dplyr.tidyverse.org/reference/grouped_df.html" class="external-link">grouped_df</a></code> or a tbl_dbi.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
@@ -101,6 +103,8 @@ These arguments are automatically quoted and evaluated in a context where column
 represent column positions.
 They support unquoting and splicing.</p>
 <p>See vignette("EDA") for an introduction to these concepts.</p></dd>
+
+
 <dt>method</dt>
 <dd><p>a character string indicating which correlation coefficient (or covariance) is 
 to be computed. One of "pearson" (default), "kendall", or "spearman": can be abbreviated.
@@ -108,13 +112,18 @@ For numerical variables, one of "pearson" (default), "kendall", or
 "spearman": can be used as an abbreviation.
 For categorical variables, "cramer" and "theil" can be used. "cramer" 
 computes Cramer's V statistic, "theil" computes Theil's U statistic.</p></dd>
+
+
 <dt>in_database</dt>
 <dd><p>Specifies whether to perform in-database operations. 
 If TRUE, most operations are performed in the DBMS. if FALSE, 
 table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.</p></dd>
+
+
 <dt>collect_size</dt>
 <dd><p>a integer. The number of data samples from the DBMS to R. 
 Applies only if in_database = FALSE.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -146,26 +155,20 @@ And support categorical variable with theil's U correlation coefficient and Cram
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="co"># Correlation coefficients of all numerical variables</span></span>
-<span class="r-in"><span class="va">tab_corr</span> <span class="op">&lt;-</span> <span class="fu">correlate</span><span class="op">(</span><span class="va">heartfailure</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">tab_corr</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="co"># Correlation coefficients of all numerical variables</span></span></span>
+<span class="r-in"><span><span class="va">tab_corr</span> <span class="op">&lt;-</span> <span class="fu">correlate</span><span class="op">(</span><span class="va">heartfailure</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tab_corr</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 42 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    var1              var2       coef_corr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> cpk_enzyme        age          -<span style="color: #BB0000;">0.081</span><span style="color: #BB0000; text-decoration: underline;">4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> ejection_fraction age           0.060<span style="text-decoration: underline;">2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> platelets         age          -<span style="color: #BB0000;">0.052</span><span style="color: #BB0000; text-decoration: underline;">5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> creatinine        age           0.159 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> sodium            age          -<span style="color: #BB0000;">0.045</span><span style="color: #BB0000; text-decoration: underline;">9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> time              age          -<span style="color: #BB0000;">0.224</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> age               cpk_enzyme   -<span style="color: #BB0000;">0.081</span><span style="color: #BB0000; text-decoration: underline;">4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> ejection_fraction cpk_enzyme   -<span style="color: #BB0000;">0.044</span><span style="color: #BB0000; text-decoration: underline;">1</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> platelets         cpk_enzyme    0.024<span style="text-decoration: underline;">5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> creatinine        cpk_enzyme   -<span style="color: #BB0000;">0.016</span><span style="color: #BB0000; text-decoration: underline;">4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 32 more rows</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">mat_corr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">tab_corr</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   var1              var2  coef_corr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> cpk_enzyme        age     -<span style="color: #BB0000;">0.081</span><span style="color: #BB0000; text-decoration: underline;">4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> ejection_fraction age      0.060<span style="text-decoration: underline;">2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> platelets         age     -<span style="color: #BB0000;">0.052</span><span style="color: #BB0000; text-decoration: underline;">5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> creatinine        age      0.159 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 38 more rows</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">mat_corr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">tab_corr</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * correlation type   : generic </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * variable type      : numeric </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * correlation method : pearson </span>
@@ -187,7 +190,7 @@ And support categorical variable with theil's U correlation coefficient and Cram
 <span class="r-out co"><span class="r-pr">#&gt;</span> creatinine         1.00000000 -0.18909521 -0.149315418</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sodium            -0.18909521  1.00000000  0.087640000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> time              -0.14931542  0.08764000  1.000000000</span>
-<span class="r-in"><span class="va">mat_corr</span></span>
+<span class="r-in"><span><span class="va">mat_corr</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                           age   cpk_enzyme ejection_fraction   platelets</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> age                1.00000000 -0.081406394        0.06019547 -0.05247529</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cpk_enzyme        -0.08140639  1.000000000       -0.04407955  0.02446339</span>
@@ -204,30 +207,23 @@ And support categorical variable with theil's U correlation coefficient and Cram
 <span class="r-out co"><span class="r-pr">#&gt;</span> creatinine         1.00000000 -0.18909521 -0.149315418</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sodium            -0.18909521  1.00000000  0.087640000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> time              -0.14931542  0.08764000  1.000000000</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tab_corr</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tab_corr</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="correlate.data.frame-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Select the variable to compute</span></span>
-<span class="r-in"><span class="fu">correlate</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="st">"creatinine"</span>, <span class="st">"sodium"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Select the variable to compute</span></span></span>
+<span class="r-in"><span><span class="fu">correlate</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="st">"creatinine"</span>, <span class="st">"sodium"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 12 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    var1       var2              coef_corr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> creatinine age                  0.159 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> sodium     age                 -<span style="color: #BB0000;">0.045</span><span style="color: #BB0000; text-decoration: underline;">9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> creatinine cpk_enzyme          -<span style="color: #BB0000;">0.016</span><span style="color: #BB0000; text-decoration: underline;">4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> sodium     cpk_enzyme           0.059<span style="text-decoration: underline;">6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> creatinine ejection_fraction   -<span style="color: #BB0000;">0.011</span><span style="color: #BB0000; text-decoration: underline;">3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> sodium     ejection_fraction    0.176 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> creatinine platelets           -<span style="color: #BB0000;">0.041</span><span style="color: #BB0000; text-decoration: underline;">2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> sodium     platelets            0.062<span style="text-decoration: underline;">1</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> sodium     creatinine          -<span style="color: #BB0000;">0.189</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> creatinine sodium              -<span style="color: #BB0000;">0.189</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> creatinine time                -<span style="color: #BB0000;">0.149</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> sodium     time                 0.087<span style="text-decoration: underline;">6</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Non-parametric correlation coefficient by kendall method</span></span>
-<span class="r-in"><span class="fu">correlate</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="va">creatinine</span>, method <span class="op">=</span> <span class="st">"kendall"</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   var1       var2       coef_corr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> creatinine age           0.159 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> sodium     age          -<span style="color: #BB0000;">0.045</span><span style="color: #BB0000; text-decoration: underline;">9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> creatinine cpk_enzyme   -<span style="color: #BB0000;">0.016</span><span style="color: #BB0000; text-decoration: underline;">4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> sodium     cpk_enzyme    0.059<span style="text-decoration: underline;">6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 8 more rows</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Non-parametric correlation coefficient by kendall method</span></span></span>
+<span class="r-in"><span><span class="fu">correlate</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="va">creatinine</span>, method <span class="op">=</span> <span class="st">"kendall"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   var1       var2              coef_corr</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -235,12 +231,11 @@ And support categorical variable with theil's U correlation coefficient and Cram
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> creatinine cpk_enzyme          -<span style="color: #BB0000;">0.035</span><span style="color: #BB0000; text-decoration: underline;">1</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> creatinine ejection_fraction   -<span style="color: #BB0000;">0.130</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> creatinine platelets           -<span style="color: #BB0000;">0.035</span><span style="color: #BB0000; text-decoration: underline;">7</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> creatinine sodium              -<span style="color: #BB0000;">0.223</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> creatinine time                -<span style="color: #BB0000;">0.110</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># theil's U correlation coefficient (Uncertainty Coefficient)</span></span>
-<span class="r-in"><span class="va">tab_corr</span> <span class="op">&lt;-</span> <span class="fu">correlate</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="va">anaemia</span>, <span class="va">hblood_pressure</span>, method <span class="op">=</span> <span class="st">"theil"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">tab_corr</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 2 more rows</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># theil's U correlation coefficient (Uncertainty Coefficient)</span></span></span>
+<span class="r-in"><span><span class="va">tab_corr</span> <span class="op">&lt;-</span> <span class="fu">correlate</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="va">anaemia</span>, <span class="va">hblood_pressure</span>, method <span class="op">=</span> <span class="st">"theil"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tab_corr</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               var1            var2    coef_corr</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  hblood_pressure         anaemia 0.0010925763</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2          anaemia        diabetes 0.0001188941</span>
@@ -252,8 +247,8 @@ And support categorical variable with theil's U correlation coefficient and Cram
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8  hblood_pressure         smoking 0.0024572165</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9          anaemia     death_event 0.0033373058</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 hblood_pressure     death_event 0.0048836271</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">tab_corr</span><span class="op">)</span>   </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">tab_corr</span><span class="op">)</span>   </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * correlation type   : generic </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * variable type      : categorical </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * correlation method : theil </span>
@@ -265,104 +260,71 @@ And support categorical variable with theil's U correlation coefficient and Cram
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     smoking death_event</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> anaemia         0.008874759 0.003337306</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> hblood_pressure 0.002457216 0.004883627</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tab_corr</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tab_corr</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="correlate.data.frame-2.png" alt="" width="700" height="433"></span>
-<span class="r-in">   </span>
-<span class="r-in"><span class="co"># Using dplyr::grouped_dt</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘dplyr’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:stats’:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     filter, lag</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:base’:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     intersect, setdiff, setequal, union</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">gdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">heartfailure</span>, <span class="va">smoking</span>, <span class="va">death_event</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">correlate</span><span class="op">(</span><span class="va">gdata</span><span class="op">)</span></span>
+<span class="r-in"><span>   </span></span>
+<span class="r-in"><span><span class="co"># Using dplyr::grouped_dt</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">gdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">heartfailure</span>, <span class="va">smoking</span>, <span class="va">death_event</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">correlate</span><span class="op">(</span><span class="va">gdata</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 168 × 5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    smoking death_event var1              var2       coef_corr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> No      No          cpk_enzyme        age          -<span style="color: #BB0000;">0.039</span><span style="color: #BB0000; text-decoration: underline;">3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> No      No          ejection_fraction age           0.074<span style="text-decoration: underline;">9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> No      No          platelets         age          -<span style="color: #BB0000;">0.057</span><span style="color: #BB0000; text-decoration: underline;">9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> No      No          creatinine        age           0.199 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> No      No          sodium            age          -<span style="color: #BB0000;">0.042</span><span style="color: #BB0000; text-decoration: underline;">7</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> No      No          time              age          -<span style="color: #BB0000;">0.019</span><span style="color: #BB0000; text-decoration: underline;">3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> No      No          age               cpk_enzyme   -<span style="color: #BB0000;">0.039</span><span style="color: #BB0000; text-decoration: underline;">3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> No      No          ejection_fraction cpk_enzyme   -<span style="color: #BB0000;">0.081</span><span style="color: #BB0000; text-decoration: underline;">9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> No      No          platelets         cpk_enzyme    0.061<span style="text-decoration: underline;">0</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> No      No          creatinine        cpk_enzyme   -<span style="color: #BB0000;">0.033</span><span style="color: #BB0000; text-decoration: underline;">9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 158 more rows</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Using pipes ---------------------------------</span></span>
-<span class="r-in"><span class="co"># Correlation coefficients of all numerical variables</span></span>
-<span class="r-in"><span class="va">heartfailure</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">correlate</span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   smoking death_event var1              var2  coef_corr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> No      No          cpk_enzyme        age     -<span style="color: #BB0000;">0.039</span><span style="color: #BB0000; text-decoration: underline;">3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> No      No          ejection_fraction age      0.074<span style="text-decoration: underline;">9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> No      No          platelets         age     -<span style="color: #BB0000;">0.057</span><span style="color: #BB0000; text-decoration: underline;">9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> No      No          creatinine        age      0.199 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 164 more rows</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Using pipes ---------------------------------</span></span></span>
+<span class="r-in"><span><span class="co"># Correlation coefficients of all numerical variables</span></span></span>
+<span class="r-in"><span><span class="va">heartfailure</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">correlate</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 42 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    var1              var2       coef_corr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> cpk_enzyme        age          -<span style="color: #BB0000;">0.081</span><span style="color: #BB0000; text-decoration: underline;">4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> ejection_fraction age           0.060<span style="text-decoration: underline;">2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> platelets         age          -<span style="color: #BB0000;">0.052</span><span style="color: #BB0000; text-decoration: underline;">5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> creatinine        age           0.159 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> sodium            age          -<span style="color: #BB0000;">0.045</span><span style="color: #BB0000; text-decoration: underline;">9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> time              age          -<span style="color: #BB0000;">0.224</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> age               cpk_enzyme   -<span style="color: #BB0000;">0.081</span><span style="color: #BB0000; text-decoration: underline;">4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> ejection_fraction cpk_enzyme   -<span style="color: #BB0000;">0.044</span><span style="color: #BB0000; text-decoration: underline;">1</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> platelets         cpk_enzyme    0.024<span style="text-decoration: underline;">5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> creatinine        cpk_enzyme   -<span style="color: #BB0000;">0.016</span><span style="color: #BB0000; text-decoration: underline;">4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 32 more rows</span></span>
-<span class="r-in">  </span>
-<span class="r-in"><span class="co"># Non-parametric correlation coefficient by spearman method</span></span>
-<span class="r-in"><span class="va">heartfailure</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">correlate</span><span class="op">(</span><span class="va">creatinine</span>, <span class="va">sodium</span>, method <span class="op">=</span> <span class="st">"spearman"</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   var1              var2  coef_corr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> cpk_enzyme        age     -<span style="color: #BB0000;">0.081</span><span style="color: #BB0000; text-decoration: underline;">4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> ejection_fraction age      0.060<span style="text-decoration: underline;">2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> platelets         age     -<span style="color: #BB0000;">0.052</span><span style="color: #BB0000; text-decoration: underline;">5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> creatinine        age      0.159 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 38 more rows</span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span><span class="co"># Non-parametric correlation coefficient by spearman method</span></span></span>
+<span class="r-in"><span><span class="va">heartfailure</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">correlate</span><span class="op">(</span><span class="va">creatinine</span>, <span class="va">sodium</span>, method <span class="op">=</span> <span class="st">"spearman"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 12 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    var1       var2              coef_corr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> creatinine age                  0.271 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> sodium     age                 -<span style="color: #BB0000;">0.101</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> creatinine cpk_enzyme          -<span style="color: #BB0000;">0.049</span><span style="color: #BB0000; text-decoration: underline;">9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> sodium     cpk_enzyme           0.016<span style="text-decoration: underline;">9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> creatinine ejection_fraction   -<span style="color: #BB0000;">0.178</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> sodium     ejection_fraction    0.162 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> creatinine platelets           -<span style="color: #BB0000;">0.051</span><span style="color: #BB0000; text-decoration: underline;">0</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> sodium     platelets            0.049<span style="text-decoration: underline;">5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> sodium     creatinine          -<span style="color: #BB0000;">0.300</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> creatinine sodium              -<span style="color: #BB0000;">0.300</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> creatinine time                -<span style="color: #BB0000;">0.161</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> sodium     time                 0.086<span style="text-decoration: underline;">4</span></span>
-<span class="r-in"> </span>
-<span class="r-in"><span class="co"># ---------------------------------------------</span></span>
-<span class="r-in"><span class="co"># Correlation coefficient</span></span>
-<span class="r-in"><span class="co"># that eliminates redundant combination of variables</span></span>
-<span class="r-in"><span class="va">heartfailure</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">correlate</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">var1</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">var2</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   var1       var2       coef_corr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> creatinine age           0.271 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> sodium     age          -<span style="color: #BB0000;">0.101</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> creatinine cpk_enzyme   -<span style="color: #BB0000;">0.049</span><span style="color: #BB0000; text-decoration: underline;">9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> sodium     cpk_enzyme    0.016<span style="text-decoration: underline;">9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 8 more rows</span></span>
+<span class="r-in"><span> </span></span>
+<span class="r-in"><span><span class="co"># ---------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co"># Correlation coefficient</span></span></span>
+<span class="r-in"><span><span class="co"># that eliminates redundant combination of variables</span></span></span>
+<span class="r-in"><span><span class="va">heartfailure</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">correlate</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">var1</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">var2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 21 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    var1              var2       coef_corr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> cpk_enzyme        age          -<span style="color: #BB0000;">0.081</span><span style="color: #BB0000; text-decoration: underline;">4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> ejection_fraction age           0.060<span style="text-decoration: underline;">2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> platelets         age          -<span style="color: #BB0000;">0.052</span><span style="color: #BB0000; text-decoration: underline;">5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> creatinine        age           0.159 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> sodium            age          -<span style="color: #BB0000;">0.045</span><span style="color: #BB0000; text-decoration: underline;">9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> time              age          -<span style="color: #BB0000;">0.224</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> ejection_fraction cpk_enzyme   -<span style="color: #BB0000;">0.044</span><span style="color: #BB0000; text-decoration: underline;">1</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> platelets         cpk_enzyme    0.024<span style="text-decoration: underline;">5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> creatinine        cpk_enzyme   -<span style="color: #BB0000;">0.016</span><span style="color: #BB0000; text-decoration: underline;">4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> sodium            cpk_enzyme    0.059<span style="text-decoration: underline;">6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 11 more rows</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Using pipes &amp; dplyr -------------------------</span></span>
-<span class="r-in"><span class="co"># Compute the correlation coefficient of 'creatinine' variable by 'smoking'</span></span>
-<span class="r-in"><span class="co"># and 'death_event' variables. And extract only those with absolute</span></span>
-<span class="r-in"><span class="co"># value of correlation coefficient is greater than 0.2</span></span>
-<span class="r-in"><span class="va">heartfailure</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">smoking</span>, <span class="va">death_event</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">correlate</span><span class="op">(</span><span class="va">creatinine</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">coef_corr</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="fl">0.2</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   var1              var2  coef_corr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> cpk_enzyme        age     -<span style="color: #BB0000;">0.081</span><span style="color: #BB0000; text-decoration: underline;">4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> ejection_fraction age      0.060<span style="text-decoration: underline;">2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> platelets         age     -<span style="color: #BB0000;">0.052</span><span style="color: #BB0000; text-decoration: underline;">5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> creatinine        age      0.159 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 17 more rows</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Using pipes &amp; dplyr -------------------------</span></span></span>
+<span class="r-in"><span><span class="co"># Compute the correlation coefficient of 'creatinine' variable by 'smoking'</span></span></span>
+<span class="r-in"><span><span class="co"># and 'death_event' variables. And extract only those with absolute</span></span></span>
+<span class="r-in"><span><span class="co"># value of correlation coefficient is greater than 0.2</span></span></span>
+<span class="r-in"><span><span class="va">heartfailure</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">smoking</span>, <span class="va">death_event</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">correlate</span><span class="op">(</span><span class="va">creatinine</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">coef_corr</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="fl">0.2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 7 × 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   smoking death_event var1       var2              coef_corr</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -370,81 +332,71 @@ And support categorical variable with theil's U correlation coefficient and Cram
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Yes     No          creatinine ejection_fraction    -<span style="color: #BB0000;">0.201</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Yes     No          creatinine sodium               -<span style="color: #BB0000;">0.290</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Yes     No          creatinine time                  0.246</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Yes     Yes         creatinine age                   0.255</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> Yes     Yes         creatinine sodium               -<span style="color: #BB0000;">0.286</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> Yes     Yes         creatinine time                 -<span style="color: #BB0000;">0.201</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># extract only those with 'smoking' variable level is "Yes",</span></span>
-<span class="r-in"><span class="co"># and compute the correlation coefficient of 'Sales' variable</span></span>
-<span class="r-in"><span class="co"># by 'hblood_pressure' and 'death_event' variables.</span></span>
-<span class="r-in"><span class="co"># And the correlation coefficient is negative and smaller than 0.5</span></span>
-<span class="r-in"><span class="va">heartfailure</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">smoking</span> <span class="op">==</span> <span class="st">"Yes"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">hblood_pressure</span>, <span class="va">death_event</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">correlate</span><span class="op">(</span><span class="va">creatinine</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">coef_corr</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">coef_corr</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0.5</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 3 more rows</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># extract only those with 'smoking' variable level is "Yes",</span></span></span>
+<span class="r-in"><span><span class="co"># and compute the correlation coefficient of 'Sales' variable</span></span></span>
+<span class="r-in"><span><span class="co"># by 'hblood_pressure' and 'death_event' variables.</span></span></span>
+<span class="r-in"><span><span class="co"># And the correlation coefficient is negative and smaller than 0.5</span></span></span>
+<span class="r-in"><span><span class="va">heartfailure</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">smoking</span> <span class="op">==</span> <span class="st">"Yes"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">hblood_pressure</span>, <span class="va">death_event</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">correlate</span><span class="op">(</span><span class="va">creatinine</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">coef_corr</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">coef_corr</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   hblood_pressure death_event var1       var2   coef_corr</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Yes             Yes         creatinine sodium    -<span style="color: #BB0000;">0.561</span></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># connect DBMS</span></span>
-<span class="r-in"><span class="va">con_sqlite</span> <span class="op">&lt;-</span> <span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html" class="external-link">dbConnect</a></span><span class="op">(</span><span class="fu">RSQLite</span><span class="fu">::</span><span class="fu"><a href="https://rsqlite.r-dbi.org/reference/SQLite.html" class="external-link">SQLite</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">":memory:"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># copy heartfailure to the DBMS with a table named TB_HEARTFAILURE</span></span>
-<span class="r-in"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/copy_to.html" class="external-link">copy_to</a></span><span class="op">(</span><span class="va">con_sqlite</span>, <span class="va">heartfailure</span>, name <span class="op">=</span> <span class="st">"TB_HEARTFAILURE"</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Using pipes ---------------------------------</span></span>
-<span class="r-in"><span class="co"># Correlation coefficients of all numerical variables</span></span>
-<span class="r-in"><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_HEARTFAILURE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu">correlate</span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># connect DBMS</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://dbi.r-dbi.org" class="external-link">DBI</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'DBI'</span>, repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: DBI</span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://rsqlite.r-dbi.org" class="external-link">RSQLite</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'RSQLite'</span>, repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: RSQLite</span>
+<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op">&lt;-</span> <span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html" class="external-link">dbConnect</a></span><span class="op">(</span><span class="fu">RSQLite</span><span class="fu">::</span><span class="fu"><a href="https://rsqlite.r-dbi.org/reference/SQLite.html" class="external-link">SQLite</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">":memory:"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># copy heartfailure to the DBMS with a table named TB_HEARTFAILURE</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/copy_to.html" class="external-link">copy_to</a></span><span class="op">(</span><span class="va">con_sqlite</span>, <span class="va">heartfailure</span>, name <span class="op">=</span> <span class="st">"TB_HEARTFAILURE"</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Using pipes ---------------------------------</span></span></span>
+<span class="r-in"><span><span class="co"># Correlation coefficients of all numerical variables</span></span></span>
+<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_HEARTFAILURE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu">correlate</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 42 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    var1              var2       coef_corr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> cpk_enzyme        age          -<span style="color: #BB0000;">0.081</span><span style="color: #BB0000; text-decoration: underline;">4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> ejection_fraction age           0.060<span style="text-decoration: underline;">2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> platelets         age          -<span style="color: #BB0000;">0.052</span><span style="color: #BB0000; text-decoration: underline;">5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> creatinine        age           0.159 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> sodium            age          -<span style="color: #BB0000;">0.045</span><span style="color: #BB0000; text-decoration: underline;">9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> time              age          -<span style="color: #BB0000;">0.224</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> age               cpk_enzyme   -<span style="color: #BB0000;">0.081</span><span style="color: #BB0000; text-decoration: underline;">4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> ejection_fraction cpk_enzyme   -<span style="color: #BB0000;">0.044</span><span style="color: #BB0000; text-decoration: underline;">1</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> platelets         cpk_enzyme    0.024<span style="text-decoration: underline;">5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> creatinine        cpk_enzyme   -<span style="color: #BB0000;">0.016</span><span style="color: #BB0000; text-decoration: underline;">4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 32 more rows</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Using pipes &amp; dplyr -------------------------</span></span>
-<span class="r-in"><span class="co"># Compute the correlation coefficient of creatinine variable by 'hblood_pressure'</span></span>
-<span class="r-in"><span class="co"># and 'death_event' variables.</span></span>
-<span class="r-in"><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_HEARTFAILURE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">hblood_pressure</span>, <span class="va">death_event</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">correlate</span><span class="op">(</span><span class="va">creatinine</span><span class="op">)</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   var1              var2  coef_corr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> cpk_enzyme        age     -<span style="color: #BB0000;">0.081</span><span style="color: #BB0000; text-decoration: underline;">4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> ejection_fraction age      0.060<span style="text-decoration: underline;">2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> platelets         age     -<span style="color: #BB0000;">0.052</span><span style="color: #BB0000; text-decoration: underline;">5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> creatinine        age      0.159 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 38 more rows</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Using pipes &amp; dplyr -------------------------</span></span></span>
+<span class="r-in"><span><span class="co"># Compute the correlation coefficient of creatinine variable by 'hblood_pressure'</span></span></span>
+<span class="r-in"><span><span class="co"># and 'death_event' variables.</span></span></span>
+<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_HEARTFAILURE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">hblood_pressure</span>, <span class="va">death_event</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">correlate</span><span class="op">(</span><span class="va">creatinine</span><span class="op">)</span> </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 24 × 5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    hblood_pressure death_event var1       var2              coef_corr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> No              No          creatinine age                  0.164 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> No              No          creatinine cpk_enzyme          -<span style="color: #BB0000;">0.025</span><span style="color: #BB0000; text-decoration: underline;">2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> No              No          creatinine ejection_fraction   -<span style="color: #BB0000;">0.094</span><span style="color: #BB0000; text-decoration: underline;">4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> No              No          creatinine platelets           -<span style="color: #BB0000;">0.012</span><span style="color: #BB0000; text-decoration: underline;">4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> No              No          creatinine sodium              -<span style="color: #BB0000;">0.252</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> No              No          creatinine time                -<span style="color: #BB0000;">0.038</span><span style="color: #BB0000; text-decoration: underline;">2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> No              Yes         creatinine age                 -<span style="color: #BB0000;">0.020</span><span style="color: #BB0000; text-decoration: underline;">0</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> No              Yes         creatinine cpk_enzyme           0.048<span style="text-decoration: underline;">8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> No              Yes         creatinine ejection_fraction    0.170 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> No              Yes         creatinine platelets           -<span style="color: #BB0000;">0.020</span><span style="color: #BB0000; text-decoration: underline;">2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 14 more rows</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Disconnect DBMS   </span></span>
-<span class="r-in"><span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbDisconnect.html" class="external-link">dbDisconnect</a></span><span class="op">(</span><span class="va">con_sqlite</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in">  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   hblood_pressure death_event var1       var2              coef_corr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> No              No          creatinine age                  0.164 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> No              No          creatinine cpk_enzyme          -<span style="color: #BB0000;">0.025</span><span style="color: #BB0000; text-decoration: underline;">2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> No              No          creatinine ejection_fraction   -<span style="color: #BB0000;">0.094</span><span style="color: #BB0000; text-decoration: underline;">4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> No              No          creatinine platelets           -<span style="color: #BB0000;">0.012</span><span style="color: #BB0000; text-decoration: underline;">4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 20 more rows</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Disconnect DBMS   </span></span></span>
+<span class="r-in"><span><span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbDisconnect.html" class="external-link">dbDisconnect</a></span><span class="op">(</span><span class="va">con_sqlite</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span>  </span></span>
 </code></pre></div>
     </div>
   </div>
@@ -459,8 +411,7 @@ And support categorical variable with theil's U correlation coefficient and Cram
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
