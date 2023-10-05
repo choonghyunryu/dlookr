@@ -44,27 +44,27 @@ use it after loading the Google font with import_google_font().
 \examples{
 \donttest{
 # Generate data for the example
-heartfailure2 <- heartfailure
-heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] <- NA
+# heartfailure2 <- heartfailure
+# heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] <- NA
 
 # optimal binning using binning_by()
-bin <- binning_by(heartfailure2, "death_event", "creatinine")
-bin
+# bin <- binning_by(heartfailure2, "death_event", "creatinine")
+# bin
 
 # summary optimal_bins class.
-summary(bin)
+# summary(bin)
 
 # visualize all information for optimal_bins class
-plot(bin)
+# plot(bin)
 
 # rotate the x-axis labels by 45 degrees so that they do not overlap.
-plot(bin, rotate_angle = 45)
+# plot(bin, rotate_angle = 45)
 
 # visualize WoE information for optimal_bins class
-plot(bin, type = "WoE")
+# plot(bin, type = "WoE")
 
 # visualize all information with typographic
-plot(bin)
+# plot(bin)
 }
 
 }
