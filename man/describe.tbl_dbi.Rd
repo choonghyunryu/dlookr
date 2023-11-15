@@ -90,57 +90,57 @@ The information derived from the numerical data describe is as follows.
 \donttest{
 library(dplyr)
 
-# connect DBMS
-if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
-if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
-con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+## connect DBMS
+#if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
+#if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
+#con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+#
+## copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+#copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
 
-# copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
-copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
+## Using pipes ---------------------------------
+## Positive values select variables
+#con_sqlite \%>\% 
+#  tbl("TB_HEARTFAILURE") \%>\% 
+#  describe(platelets, creatinine, sodium)
+#  
+#con_sqlite \%>\% 
+#  tbl("TB_HEARTFAILURE") \%>\% 
+#  describe(platelets, creatinine, sodium, 
+#    statistics = c("mean", "sd", "quantiles"), quantiles = 0.1)
 
-# Using pipes ---------------------------------
-# Positive values select variables
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  describe(platelets, creatinine, sodium)
-  
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  describe(platelets, creatinine, sodium, 
-    statistics = c("mean", "sd", "quantiles"), quantiles = 0.1)
+## Negative values to drop variables, and In-memory mode and collect size is 200
+#con_sqlite \%>\% 
+#  tbl("TB_HEARTFAILURE") \%>\% 
+#  describe(-platelets, -creatinine, -sodium, collect_size = 200)
 
-# Negative values to drop variables, and In-memory mode and collect size is 200
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  describe(-platelets, -creatinine, -sodium, collect_size = 200)
+## Using pipes & dplyr -------------------------
+## Find the statistic of all numerical variables by 'smoking' and 'death_event',
+## and extract only those with 'smoking' variable level is "Yes".
+#con_sqlite \%>\% 
+#  tbl("TB_HEARTFAILURE") \%>\% 
+#  group_by(smoking, death_event) \%>\%
+#  describe() \%>\%
+#  filter(smoking == "Yes")
 
-# Using pipes & dplyr -------------------------
-# Find the statistic of all numerical variables by 'smoking' and 'death_event',
-# and extract only those with 'smoking' variable level is "Yes".
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  group_by(smoking, death_event) \%>\%
-  describe() \%>\%
-  filter(smoking == "Yes")
+## Using all.combinations = TRUE
+#con_sqlite \%>\% 
+#  tbl("TB_HEARTFAILURE") \%>\% 
+#  filter(!smoking \%in\% "Yes" | !death_event \%in\% "Yes") \%>\% 
+#  group_by(smoking, death_event) \%>\%
+#  describe(all.combinations = TRUE) \%>\%
+#  filter(smoking == "Yes")
+#  
+## extract only those with 'sex' variable level is "Male",
+## and find 'sodium' statistics by 'smoking' and 'death_event'
+#con_sqlite \%>\% 
+#  tbl("TB_HEARTFAILURE") \%>\% 
+#  filter(sex == "Male") \%>\%
+#  group_by(smoking, death_event) \%>\%
+#  describe(sodium)
 
-# Using all.combinations = TRUE
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  filter(!smoking \%in\% "Yes" | !death_event \%in\% "Yes") \%>\% 
-  group_by(smoking, death_event) \%>\%
-  describe(all.combinations = TRUE) \%>\%
-  filter(smoking == "Yes")
-  
-# extract only those with 'sex' variable level is "Male",
-# and find 'sodium' statistics by 'smoking' and 'death_event'
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  filter(sex == "Male") \%>\%
-  group_by(smoking, death_event) \%>\%
-  describe(sodium)
-
-# Disconnect DBMS   
-DBI::dbDisconnect(con_sqlite)
+## Disconnect DBMS   
+#DBI::dbDisconnect(con_sqlite)
 }
 
 }

@@ -73,59 +73,59 @@ use it after loading the Google font with import_google_font().
 \donttest{
 library(dplyr)
 
-# connect DBMS
-if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
-if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
-con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+## connect DBMS
+#if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
+#if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
+#con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+#
+## copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+#copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
+#
+## Using pipes ---------------------------------
+## Visualization of all numerical variables
+#con_sqlite \%>\% 
+#  tbl("TB_HEARTFAILURE") \%>\% 
+#  plot_outlier()
+#  
+## Positive values select variables
+# con_sqlite \%>\% 
+#   tbl("TB_HEARTFAILURE") \%>\% 
+#   plot_outlier(platelets, sodium)
+#  
+## Negative values to drop variables, and In-memory mode and collect size is 200
+#con_sqlite \%>\% 
+#  tbl("TB_HEARTFAILURE") \%>\% 
+#  plot_outlier(-platelets, -sodium, collect_size = 200)
+#  
+## Positions values select variables
+#con_sqlite \%>\% 
+#  tbl("TB_HEARTFAILURE") \%>\% 
+#  plot_outlier(6)
+#  
+## Negative values to drop variables
+#con_sqlite \%>\% 
+#  tbl("TB_HEARTFAILURE") \%>\% 
+#  plot_outlier(-1, -5)
+#  
+## Not allow the typographic elements
+#con_sqlite \%>\% 
+#  tbl("TB_HEARTFAILURE") \%>\% 
+#  plot_outlier(-1, -5, typographic = FALSE)
 
-# copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
-copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
+## Using pipes & dplyr -------------------------
+## Visualization of numerical variables with a ratio of
+## outliers greater than 1\%
+#con_sqlite \%>\% 
+#  tbl("TB_HEARTFAILURE") \%>\% 
+#  plot_outlier(con_sqlite \%>\% 
+#                 tbl("TB_HEARTFAILURE") \%>\% 
+#                 diagnose_outlier() \%>\%
+#                 filter(outliers_ratio > 1) \%>\%
+#                 select(variables) \%>\%
+#                 pull())
 
-# Using pipes ---------------------------------
-# Visualization of all numerical variables
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  plot_outlier()
-  
-# Positive values select variables
- con_sqlite \%>\% 
-   tbl("TB_HEARTFAILURE") \%>\% 
-   plot_outlier(platelets, sodium)
-  
-# Negative values to drop variables, and In-memory mode and collect size is 200
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  plot_outlier(-platelets, -sodium, collect_size = 200)
-  
-# Positions values select variables
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  plot_outlier(6)
-  
-# Negative values to drop variables
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  plot_outlier(-1, -5)
-  
-# Not allow the typographic elements
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  plot_outlier(-1, -5, typographic = FALSE)
-
-# Using pipes & dplyr -------------------------
-# Visualization of numerical variables with a ratio of
-# outliers greater than 1\%
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  plot_outlier(con_sqlite \%>\% 
-                 tbl("TB_HEARTFAILURE") \%>\% 
-                 diagnose_outlier() \%>\%
-                 filter(outliers_ratio > 1) \%>\%
-                 select(variables) \%>\%
-                 pull())
-
-# Disconnect DBMS   
-DBI::dbDisconnect(con_sqlite)
+## Disconnect DBMS   
+#DBI::dbDisconnect(con_sqlite)
 }
       
 }

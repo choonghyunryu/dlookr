@@ -157,30 +157,30 @@ heartfailure \%>\%
 \donttest{
 library(dplyr)
 
-# connect DBMS
-if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
-if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
-con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+## connect DBMS
+#if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
+#if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
+#con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+#
+## copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+#copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
 
-# copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
-copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
+## Using pipes ---------------------------------
+## Correlation coefficients of all numerical variables
+#con_sqlite \%>\% 
+#  tbl("TB_HEARTFAILURE") \%>\% 
+#  correlate()
 
-# Using pipes ---------------------------------
-# Correlation coefficients of all numerical variables
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  correlate()
+## Using pipes & dplyr -------------------------
+## Compute the correlation coefficient of creatinine variable by 'hblood_pressure'
+## and 'death_event' variables.
+#con_sqlite \%>\% 
+#  tbl("TB_HEARTFAILURE") \%>\% 
+#  group_by(hblood_pressure, death_event) \%>\%
+#  correlate(creatinine) 
 
-# Using pipes & dplyr -------------------------
-# Compute the correlation coefficient of creatinine variable by 'hblood_pressure'
-# and 'death_event' variables.
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  group_by(hblood_pressure, death_event) \%>\%
-  correlate(creatinine) 
-
-# Disconnect DBMS   
-DBI::dbDisconnect(con_sqlite)
+## Disconnect DBMS   
+#DBI::dbDisconnect(con_sqlite)
 }
   
 }

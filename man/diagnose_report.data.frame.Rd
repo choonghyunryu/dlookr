@@ -83,24 +83,24 @@ See vignette("diagonosis") for an introduction to these concepts.
 \examples{
 \donttest{
 if (FALSE) {
-if (!require(prettydoc)) install.packages('prettydoc', repos = "http://cran.us.r-project.org")
-
-# reporting the diagnosis information -------------------------
-# create pdf file. file name is DataDiagnosis_Report.pdf
-diagnose_report(heartfailure)
-
-# create pdf file. file name is Diagn.pdf
-diagnose_report(heartfailure, output_file = "Diagn.pdf")
-
-# create pdf file. file name is ./Diagn.pdf and not browse
-diagnose_report(heartfailure, output_dir = ".", output_file = "Diagn.pdf", 
-  browse = FALSE)
-
-# create html file. file name is Diagnosis_Report.html
-diagnose_report(heartfailure, output_format = "html")
-
-# create html file. file name is Diagn.html
-diagnose_report(heartfailure, output_format = "html", output_file = "Diagn.html")
+#if (!require(prettydoc)) install.packages('prettydoc', repos = "http://cran.us.r-project.org")
+#
+## reporting the diagnosis information -------------------------
+## create pdf file. file name is DataDiagnosis_Report.pdf
+#diagnose_report(heartfailure)
+#
+## create pdf file. file name is Diagn.pdf
+#diagnose_report(heartfailure, output_file = "Diagn.pdf")
+#
+## create pdf file. file name is ./Diagn.pdf and not browse
+#diagnose_report(heartfailure, output_dir = ".", output_file = "Diagn.pdf", 
+#  browse = FALSE)
+#
+## create html file. file name is Diagnosis_Report.html
+#diagnose_report(heartfailure, output_format = "html")
+#
+## create html file. file name is Diagn.html
+#diagnose_report(heartfailure, output_format = "html", output_file = "Diagn.html")
 }
 }
 

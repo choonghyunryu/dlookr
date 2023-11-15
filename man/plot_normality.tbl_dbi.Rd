@@ -93,58 +93,58 @@ use it after loading the Google font with import_google_font().
 \donttest{
 library(dplyr)
 
-# connect DBMS
-if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
-if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
-con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+## connect DBMS
+#if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
+#if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
+#con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+#
+## copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+#copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
 
-# copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
-copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
+## Using pipes ---------------------------------
+## Visualization of all numerical variables
+#con_sqlite \%>\% 
+#  tbl("TB_HEARTFAILURE") \%>\% 
+#  plot_normality()
 
-# Using pipes ---------------------------------
-# Visualization of all numerical variables
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  plot_normality()
+## Positive values select variables, and In-memory mode and collect size is 200
+#con_sqlite \%>\% 
+#  tbl("TB_HEARTFAILURE") \%>\% 
+#  plot_normality(platelets, sodium, collect_size = 200)
 
-# Positive values select variables, and In-memory mode and collect size is 200
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  plot_normality(platelets, sodium, collect_size = 200)
+## Positions values select variables
+#con_sqlite \%>\% 
+#  tbl("TB_HEARTFAILURE") \%>\% 
+#  plot_normality(1)
 
-# Positions values select variables
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  plot_normality(1)
+## Not allow the typographic elements
+#con_sqlite \%>\% 
+#  tbl("TB_HEARTFAILURE") \%>\% 
+#  plot_normality(1, typographic = FALSE)
+#  
+## Using pipes & dplyr -------------------------
+## Plot 'sodium' variable by 'smoking' and 'death_event'
+#con_sqlite \%>\% 
+#  tbl("TB_HEARTFAILURE") \%>\% 
+#  group_by(smoking, death_event) \%>\%
+#  plot_normality(sodium)
 
-# Not allow the typographic elements
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  plot_normality(1, typographic = FALSE)
-  
-# Using pipes & dplyr -------------------------
-# Plot 'sodium' variable by 'smoking' and 'death_event'
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  group_by(smoking, death_event) \%>\%
-  plot_normality(sodium)
+## Plot using left and right arguments
+#con_sqlite \%>\% 
+#  tbl("TB_HEARTFAILURE") \%>\% 
+#  group_by(smoking, death_event) \%>\%
+#  plot_normality(sodium, left = "Box-Cox", right = "log")
 
-# Plot using left and right arguments
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  group_by(smoking, death_event) \%>\%
-  plot_normality(sodium, left = "Box-Cox", right = "log")
-
-# extract only those with 'smoking' variable level is "Yes",
-# and plot 'sodium' by 'death_event'
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  filter(smoking == "Yes") \%>\%
-  group_by(death_event) \%>\%
-  plot_normality(sodium)
-  
-# Disconnect DBMS   
-DBI::dbDisconnect(con_sqlite)
+## extract only those with 'smoking' variable level is "Yes",
+## and plot 'sodium' by 'death_event'
+#con_sqlite \%>\% 
+#  tbl("TB_HEARTFAILURE") \%>\% 
+#  filter(smoking == "Yes") \%>\%
+#  group_by(death_event) \%>\%
+#  plot_normality(sodium)
+#  
+## Disconnect DBMS   
+#DBI::dbDisconnect(con_sqlite)
 }
 
 }

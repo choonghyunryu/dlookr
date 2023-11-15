@@ -79,88 +79,88 @@ See vignette("diagonosis") for an introduction to these concepts.
 \donttest{
 library(dplyr)
 
-# connect DBMS
-if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
-if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
-con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+## connect DBMS
+#if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
+#if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
+#con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+#
+## copy jobchange to the DBMS with a table named TB_JOBCHANGE
+#copy_to(con_sqlite, jobchange, name = "TB_JOBCHANGE", overwrite = TRUE)
+#
+## Using pipes ---------------------------------
+## Diagnosis of all categorical variables
+#con_sqlite \%>\% 
+#  tbl("TB_JOBCHANGE") \%>\% 
+#  diagnose_category()
+#  
+## Positive values select variables
+#con_sqlite \%>\% 
+#  tbl("TB_JOBCHANGE") \%>\% 
+#  diagnose_category(company_type, job_chnge)
+#  
+## Negative values to drop variables, and In-memory mode
+#con_sqlite \%>\% 
+#  tbl("TB_JOBCHANGE") \%>\% 
+#  diagnose_category(-company_type, -job_chnge, in_database = FALSE)
+#  
+## Positions values select variables, and In-memory mode and collect size is 200
+#con_sqlite \%>\% 
+#  tbl("TB_JOBCHANGE") \%>\% 
+#  diagnose_category(7, in_database = FALSE, collect_size = 200) 
+#  
+## Negative values to drop variables
+#con_sqlite \%>\% 
+#  tbl("TB_JOBCHANGE") \%>\% 
+#  diagnose_category(-7)
+#  
+## Top rank levels with top argument
+#con_sqlite \%>\% 
+#  tbl("TB_JOBCHANGE") \%>\% 
+#  diagnose_category(top = 2)
 
-# copy jobchange to the DBMS with a table named TB_JOBCHANGE
-copy_to(con_sqlite, jobchange, name = "TB_JOBCHANGE", overwrite = TRUE)
+## Using pipes & dplyr -------------------------
+## Extraction of level that is more than 60\% of categorical data
+#con_sqlite \%>\% 
+#  tbl("TB_JOBCHANGE") \%>\% 
+#  diagnose_category()  \%>\%
+#  filter(ratio >= 60)
+#  
+## Using group_by() ---------------------------- 
+#con_sqlite \%>\% 
+#  tbl("TB_JOBCHANGE") \%>\% 
+#  group_by(job_chnge) \%>\% 
+#  diagnose_category(company_type) 
+#  
+## Using type argument -------------------------
+# dfm <- data.frame(alpabet = c(rep(letters[1:5], times = 5), "c")) 
+# 
+## copy dfm to the DBMS with a table named TB_EXAMPLE
+#copy_to(con_sqlite, dfm, name = "TB_EXAMPLE", overwrite = TRUE)  
+# 
+## extract rows that less than equal rank 10
+## default of top argument is 10
+#con_sqlite \%>\% 
+#  tbl("TB_EXAMPLE") \%>\% 
+#  diagnose_category()
+#   
+## extract rows that less than equal rank 2
+#con_sqlite \%>\% 
+#  tbl("TB_EXAMPLE") \%>\% 
+#  diagnose_category(top = 2, type = "rank")
+#   
+## extract rows that less than equal rank 2
+## default of type argument is "rank"
+#con_sqlite \%>\% 
+#  tbl("TB_EXAMPLE") \%>\% 
+#  diagnose_category(top = 2)
+# 
+## extract only 2 rows
+#con_sqlite \%>\% 
+#  tbl("TB_EXAMPLE") \%>\% 
+#  diagnose_category(top = 2, type = "n")
 
-# Using pipes ---------------------------------
-# Diagnosis of all categorical variables
-con_sqlite \%>\% 
-  tbl("TB_JOBCHANGE") \%>\% 
-  diagnose_category()
-  
-# Positive values select variables
-con_sqlite \%>\% 
-  tbl("TB_JOBCHANGE") \%>\% 
-  diagnose_category(company_type, job_chnge)
-  
-# Negative values to drop variables, and In-memory mode
-con_sqlite \%>\% 
-  tbl("TB_JOBCHANGE") \%>\% 
-  diagnose_category(-company_type, -job_chnge, in_database = FALSE)
-  
-# Positions values select variables, and In-memory mode and collect size is 200
-con_sqlite \%>\% 
-  tbl("TB_JOBCHANGE") \%>\% 
-  diagnose_category(7, in_database = FALSE, collect_size = 200) 
-  
-# Negative values to drop variables
-con_sqlite \%>\% 
-  tbl("TB_JOBCHANGE") \%>\% 
-  diagnose_category(-7)
-  
-# Top rank levels with top argument
-con_sqlite \%>\% 
-  tbl("TB_JOBCHANGE") \%>\% 
-  diagnose_category(top = 2)
-
-# Using pipes & dplyr -------------------------
-# Extraction of level that is more than 60\% of categorical data
-con_sqlite \%>\% 
-  tbl("TB_JOBCHANGE") \%>\% 
-  diagnose_category()  \%>\%
-  filter(ratio >= 60)
-  
-# Using group_by() ---------------------------- 
-con_sqlite \%>\% 
-  tbl("TB_JOBCHANGE") \%>\% 
-  group_by(job_chnge) \%>\% 
-  diagnose_category(company_type) 
-  
-# Using type argument -------------------------
- dfm <- data.frame(alpabet = c(rep(letters[1:5], times = 5), "c")) 
- 
-# copy dfm to the DBMS with a table named TB_EXAMPLE
-copy_to(con_sqlite, dfm, name = "TB_EXAMPLE", overwrite = TRUE)  
- 
-# extract rows that less than equal rank 10
-# default of top argument is 10
-con_sqlite \%>\% 
-  tbl("TB_EXAMPLE") \%>\% 
-  diagnose_category()
-   
-# extract rows that less than equal rank 2
-con_sqlite \%>\% 
-  tbl("TB_EXAMPLE") \%>\% 
-  diagnose_category(top = 2, type = "rank")
-   
-# extract rows that less than equal rank 2
-# default of type argument is "rank"
-con_sqlite \%>\% 
-  tbl("TB_EXAMPLE") \%>\% 
-  diagnose_category(top = 2)
- 
-# extract only 2 rows
-con_sqlite \%>\% 
-  tbl("TB_EXAMPLE") \%>\% 
-  diagnose_category(top = 2, type = "n")
-
-# Disconnect DBMS   
-DBI::dbDisconnect(con_sqlite)
+## Disconnect DBMS   
+#DBI::dbDisconnect(con_sqlite)
 }
 
 }

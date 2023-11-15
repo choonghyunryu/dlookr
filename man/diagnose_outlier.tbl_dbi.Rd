@@ -60,55 +60,55 @@ See vignette("diagonosis") for an introduction to these concepts.
 \donttest{
 library(dplyr)
 
-# connect DBMS
-if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
-if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
-con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+## connect DBMS
+#if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
+#if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
+#con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+#
+## copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+#copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
 
-# copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
-copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
+## Using pipes ---------------------------------
+## Diagnosis of all numerical variables
+#con_sqlite \%>\% 
+#  tbl("TB_HEARTFAILURE") \%>\% 
+#  diagnose_outlier()
+#  
+## Positive values select variables, and In-memory mode and collect size is 200
+#con_sqlite \%>\% 
+#  tbl("TB_HEARTFAILURE") \%>\% 
+#  diagnose_outlier(platelets, sodium, collect_size = 200)
+#  
+## Negative values to drop variables
+#con_sqlite \%>\% 
+#  tbl("TB_HEARTFAILURE") \%>\% 
+#  diagnose_outlier(-platelets, -sodium)
+#  
+## Positions values select variables
+#con_sqlite \%>\% 
+#  tbl("TB_HEARTFAILURE") \%>\% 
+#  diagnose_outlier(5)
+#  
+## Negative values to drop variables
+#con_sqlite \%>\% 
+#  tbl("TB_HEARTFAILURE") \%>\% 
+#  diagnose_outlier(-1, -5)
 
-# Using pipes ---------------------------------
-# Diagnosis of all numerical variables
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  diagnose_outlier()
-  
-# Positive values select variables, and In-memory mode and collect size is 200
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  diagnose_outlier(platelets, sodium, collect_size = 200)
-  
-# Negative values to drop variables
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  diagnose_outlier(-platelets, -sodium)
-  
-# Positions values select variables
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  diagnose_outlier(5)
-  
-# Negative values to drop variables
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  diagnose_outlier(-1, -5)
+## Using pipes & dplyr -------------------------
+## outlier_ratio is more than 1\%
+#con_sqlite \%>\% 
+#  tbl("TB_HEARTFAILURE") \%>\% 
+#  diagnose_outlier()  \%>\%
+#  filter(outliers_ratio > 1)
 
-# Using pipes & dplyr -------------------------
-# outlier_ratio is more than 1\%
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  diagnose_outlier()  \%>\%
-  filter(outliers_ratio > 1)
-
-# Using group_by() ----------------------------
-con_sqlite \%>\% 
-  tbl("TB_HEARTFAILURE") \%>\% 
-  group_by(death_event) \%>\% 
-  diagnose_outlier() 
-  
-# Disconnect DBMS   
-DBI::dbDisconnect(con_sqlite)
+## Using group_by() ----------------------------
+#con_sqlite \%>\% 
+#  tbl("TB_HEARTFAILURE") \%>\% 
+#  group_by(death_event) \%>\% 
+#  diagnose_outlier() 
+#  
+## Disconnect DBMS   
+#DBI::dbDisconnect(con_sqlite)
 }
 
 }
