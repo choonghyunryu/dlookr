@@ -8,9 +8,8 @@ library(ggplot2)
 
 ## ----import_data, warning=FALSE-----------------------------------------------
 if (!require(ISLR)) install.packages('ISLR', repos = "http://cran.us.r-project.org")
-if (!require(nycflights13)) install.packages('nycflights13', repos = "http://cran.us.r-project.org")
 
-library(nycflights13)
+data(flights)
 dim(flights)
 flights
 

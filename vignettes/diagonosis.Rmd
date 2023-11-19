@@ -51,9 +51,8 @@ To illustrate basic use of the dlookr package, use the `flights` data from the `
 
 ```{r import_data, warning=FALSE}
 if (!require(ISLR)) install.packages('ISLR', repos = "http://cran.us.r-project.org")
-if (!require(nycflights13)) install.packages('nycflights13', repos = "http://cran.us.r-project.org")
 
-library(nycflights13)
+data(flights)
 dim(flights)
 flights
 ```

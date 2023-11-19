@@ -2,7 +2,7 @@ Package: dlookr
 Type: Package
 Title: Tools for Data Diagnosis, Exploration, Transformation
 Version: 0.6.3
-Date: 2023-11-06
+Date: 2023-11-19
 Authors@R: c(
   person("Choonghyun", "Ryu",, "choonghyun.ryu@gmail.com", role = c("aut", "cre"))
   )
@@ -52,7 +52,6 @@ Suggests:
     forecast (>= 8.3),
     Hmisc,
     ISLR,
-    nycflights13,
     partykit,    
     ppsr,    
     prettydoc,    
