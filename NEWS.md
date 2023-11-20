@@ -14,6 +14,9 @@
 
 ## BUG FIXES
 
+* Fixed misstyop in html_missing(), html_paged_missing(), html_missing(), and some functions.
+  (thanks to @jcochanc, #103)
+
 * Fixed a wrong of degree of freedom in eda_web_report(), eda_paged_report(). 
   (thanks to Jessica N Busler, #98) 
   
