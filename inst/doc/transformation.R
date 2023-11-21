@@ -43,16 +43,20 @@ if (requireNamespace("rpart", quietly = TRUE)) {
 ## ----imputate_na2, fig.align='center', fig.width = 7, fig.height = 5----------
 library(mice)
 
-urban <- imputate_na(carseats, Urban, US, method = "mice")
-
-# result of imputation
-urban
-
-# summary of imputation
-summary(urban)
-
-# viz of imputation
-plot(urban)
+if (requireNamespace("ranger", quietly = TRUE)) {
+  urban <- imputate_na(carseats, Urban, US, method = "mice")
+  
+  # result of imputation
+  urban
+  
+  # summary of imputation
+  summary(urban)
+  
+  # viz of imputation
+  plot(urban)
+} else {
+  cat("If you want to use this feature, you need to install the 'ranger' package.\n")
+}
 
 ## ----imputate_na3-------------------------------------------------------------
 # The mean before and after the imputation of the Income variable
@@ -143,7 +147,7 @@ if (requireNamespace("classInt", quietly = TRUE)) {
   binning(carseats$Income, nbins = 5, type = "kmeans")
   binning(carseats$Income, nbins = 5, type = "bclust")
 } else {
-  cat("If you want to use this feature, you need to install the classInt package.\n")
+  cat("If you want to use this feature, you need to install the 'classInt' package.\n")
 }
 
 # Extract the binned results
@@ -163,29 +167,32 @@ carseats %>%
  head(10)
 
 ## ----binning_by, fig.width = 7, fig.height = 5--------------------------------
-if (!require("partykit")) install.packages("partykit", repos = "http://cran.us.r-project.org")
-library(dplyr)
-library(partykit)
-
-# optimal binning using character
-bin <- binning_by(carseats, "US", "Advertising")
-
-# optimal binning using name
-bin <- binning_by(carseats, US, Advertising)
-bin
-
-# summary optimal_bins class
-summary(bin)
-
-# performance table
-attr(bin, "performance")
-
-# visualize optimal_bins class
-plot(bin)
-
-# extract binned results
-extract(bin) %>% 
-  head(20)
+#if (!require("partykit")) install.packages("partykit", repos = "http://cran.us.r-project.org")
+if (requireNamespace("partykit", quietly = TRUE)) {
+  library(dplyr)
+  
+  # optimal binning using character
+  bin <- binning_by(carseats, "US", "Advertising")
+  
+  # optimal binning using name
+  bin <- binning_by(carseats, US, Advertising)
+  bin
+  
+  # summary optimal_bins class
+  summary(bin)
+  
+  # performance table
+  attr(bin, "performance")
+  
+  # visualize optimal_bins class
+  plot(bin)
+  
+  # extract binned results
+  extract(bin) %>% 
+    head(20)
+} else {
+  cat("If you want to use this feature, you need to install the 'partykit' package.\n")
+}
 
 ## ----trans_web_report, eval=FALSE---------------------------------------------
 #  heartfailure %>%
