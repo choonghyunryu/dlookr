@@ -135,104 +135,55 @@ You can use grouped_df as the group_by() function.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># connect DBMS</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://dbi.r-dbi.org" class="external-link">DBI</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'DBI'</span>, repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://rsqlite.r-dbi.org" class="external-link">RSQLite</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'RSQLite'</span>, repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op">&lt;-</span> <span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html" class="external-link">dbConnect</a></span><span class="op">(</span><span class="fu">RSQLite</span><span class="fu">::</span><span class="fu"><a href="https://rsqlite.r-dbi.org/reference/SQLite.html" class="external-link">SQLite</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">":memory:"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co">## connect DBMS</span></span></span>
+<span class="r-in"><span><span class="co">#if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")</span></span></span>
+<span class="r-in"><span><span class="co">#if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")</span></span></span>
+<span class="r-in"><span><span class="co">#con_sqlite &lt;- DBI::dbConnect(RSQLite::SQLite(), ":memory:")</span></span></span>
+<span class="r-in"><span><span class="co">#</span></span></span>
+<span class="r-in"><span><span class="co">## copy heartfailure to the DBMS with a table named TB_HEARTFAILURE</span></span></span>
+<span class="r-in"><span><span class="co">#copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># copy heartfailure to the DBMS with a table named TB_HEARTFAILURE</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/copy_to.html" class="external-link">copy_to</a></span><span class="op">(</span><span class="va">con_sqlite</span>, <span class="va">heartfailure</span>, name <span class="op">=</span> <span class="st">"TB_HEARTFAILURE"</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co">## Using pipes ---------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Diagnosis of all numerical variables</span></span></span>
+<span class="r-in"><span><span class="co">#con_sqlite %&gt;% </span></span></span>
+<span class="r-in"><span><span class="co">#  tbl("TB_HEARTFAILURE") %&gt;% </span></span></span>
+<span class="r-in"><span><span class="co">#  diagnose_outlier()</span></span></span>
+<span class="r-in"><span><span class="co">#  </span></span></span>
+<span class="r-in"><span><span class="co">## Positive values select variables, and In-memory mode and collect size is 200</span></span></span>
+<span class="r-in"><span><span class="co">#con_sqlite %&gt;% </span></span></span>
+<span class="r-in"><span><span class="co">#  tbl("TB_HEARTFAILURE") %&gt;% </span></span></span>
+<span class="r-in"><span><span class="co">#  diagnose_outlier(platelets, sodium, collect_size = 200)</span></span></span>
+<span class="r-in"><span><span class="co">#  </span></span></span>
+<span class="r-in"><span><span class="co">## Negative values to drop variables</span></span></span>
+<span class="r-in"><span><span class="co">#con_sqlite %&gt;% </span></span></span>
+<span class="r-in"><span><span class="co">#  tbl("TB_HEARTFAILURE") %&gt;% </span></span></span>
+<span class="r-in"><span><span class="co">#  diagnose_outlier(-platelets, -sodium)</span></span></span>
+<span class="r-in"><span><span class="co">#  </span></span></span>
+<span class="r-in"><span><span class="co">## Positions values select variables</span></span></span>
+<span class="r-in"><span><span class="co">#con_sqlite %&gt;% </span></span></span>
+<span class="r-in"><span><span class="co">#  tbl("TB_HEARTFAILURE") %&gt;% </span></span></span>
+<span class="r-in"><span><span class="co">#  diagnose_outlier(5)</span></span></span>
+<span class="r-in"><span><span class="co">#  </span></span></span>
+<span class="r-in"><span><span class="co">## Negative values to drop variables</span></span></span>
+<span class="r-in"><span><span class="co">#con_sqlite %&gt;% </span></span></span>
+<span class="r-in"><span><span class="co">#  tbl("TB_HEARTFAILURE") %&gt;% </span></span></span>
+<span class="r-in"><span><span class="co">#  diagnose_outlier(-1, -5)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Using pipes ---------------------------------</span></span></span>
-<span class="r-in"><span><span class="co"># Diagnosis of all numerical variables</span></span></span>
-<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_HEARTFAILURE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="diagnose_outlier.data.frame.html">diagnose_outlier</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 7 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variables     outliers_cnt outliers_ratio outliers_mean with_mean without_mean</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> age                      0          0              <span style="color: #BB0000;">NaN</span>       60.8         60.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> cpk_enzyme              29          9.70          <span style="text-decoration: underline;">2</span>905.     582.         332. </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> ejection_fra…            2          0.669           75       38.1         37.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> platelets               21          7.02        <span style="text-decoration: underline;">378</span>386.  <span style="text-decoration: underline;">263</span>358.      <span style="text-decoration: underline;">254</span>669. </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 3 more rows</span></span>
-<span class="r-in"><span>  </span></span>
-<span class="r-in"><span><span class="co"># Positive values select variables, and In-memory mode and collect size is 200</span></span></span>
-<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_HEARTFAILURE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="diagnose_outlier.data.frame.html">diagnose_outlier</a></span><span class="op">(</span><span class="va">platelets</span>, <span class="va">sodium</span>, collect_size <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variables outliers_cnt outliers_ratio outliers_mean with_mean without_mean</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> platelets           11            5.5       <span style="text-decoration: underline;">407</span>364.   <span style="text-decoration: underline;">261</span>477.      <span style="text-decoration: underline;">252</span>986.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> sodium               5            2.5          120       137.         137.</span>
-<span class="r-in"><span>  </span></span>
-<span class="r-in"><span><span class="co"># Negative values to drop variables</span></span></span>
-<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_HEARTFAILURE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="diagnose_outlier.data.frame.html">diagnose_outlier</a></span><span class="op">(</span><span class="op">-</span><span class="va">platelets</span>, <span class="op">-</span><span class="va">sodium</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variables     outliers_cnt outliers_ratio outliers_mean with_mean without_mean</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> age                      0          0            <span style="color: #BB0000;">NaN</span>        60.8         60.8 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> cpk_enzyme              29          9.70        <span style="text-decoration: underline;">2</span>905.      582.         332.  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> ejection_fra…            2          0.669         75        38.1         37.8 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> creatinine              29          9.70           3.79      1.39         1.14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more row</span></span>
-<span class="r-in"><span>  </span></span>
-<span class="r-in"><span><span class="co"># Positions values select variables</span></span></span>
-<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_HEARTFAILURE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="diagnose_outlier.data.frame.html">diagnose_outlier</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variables     outliers_cnt outliers_ratio outliers_mean with_mean without_mean</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> ejection_fra…            2          0.669            75      38.1         37.8</span>
-<span class="r-in"><span>  </span></span>
-<span class="r-in"><span><span class="co"># Negative values to drop variables</span></span></span>
-<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_HEARTFAILURE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="diagnose_outlier.data.frame.html">diagnose_outlier</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="op">-</span><span class="fl">5</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variables  outliers_cnt outliers_ratio outliers_mean with_mean without_mean</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> cpk_enzyme           29           9.70       <span style="text-decoration: underline;">2</span>905.      582.         332.  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> platelets            21           7.02     <span style="text-decoration: underline;">378</span>386.   <span style="text-decoration: underline;">263</span>358.      <span style="text-decoration: underline;">254</span>669.  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> creatinine           29           9.70          3.79      1.39         1.14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> sodium                4           1.34        118.      137.         137.  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more row</span></span>
+<span class="r-in"><span><span class="co">## Using pipes &amp; dplyr -------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## outlier_ratio is more than 1%</span></span></span>
+<span class="r-in"><span><span class="co">#con_sqlite %&gt;% </span></span></span>
+<span class="r-in"><span><span class="co">#  tbl("TB_HEARTFAILURE") %&gt;% </span></span></span>
+<span class="r-in"><span><span class="co">#  diagnose_outlier()  %&gt;%</span></span></span>
+<span class="r-in"><span><span class="co">#  filter(outliers_ratio &gt; 1)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Using pipes &amp; dplyr -------------------------</span></span></span>
-<span class="r-in"><span><span class="co"># outlier_ratio is more than 1%</span></span></span>
-<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_HEARTFAILURE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="diagnose_outlier.data.frame.html">diagnose_outlier</a></span><span class="op">(</span><span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">outliers_ratio</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variables  outliers_cnt outliers_ratio outliers_mean with_mean without_mean</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> cpk_enzyme           29           9.70       <span style="text-decoration: underline;">2</span>905.      582.         332.  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> platelets            21           7.02     <span style="text-decoration: underline;">378</span>386.   <span style="text-decoration: underline;">263</span>358.      <span style="text-decoration: underline;">254</span>669.  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> creatinine           29           9.70          3.79      1.39         1.14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> sodium                4           1.34        118.      137.         137.  </span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Using group_by() ----------------------------</span></span></span>
-<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_HEARTFAILURE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">death_event</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="diagnose_outlier.data.frame.html">diagnose_outlier</a></span><span class="op">(</span><span class="op">)</span> </span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 14 × 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variables  death_event data_cnt outliers_cnt outliers_ratio outliers_mean</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> age        No               203            1          0.493           90 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> age        Yes               96            0          0              <span style="color: #BB0000;">NaN</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> cpk_enzyme No               203           20          9.85          <span style="text-decoration: underline;">2</span>439.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> cpk_enzyme Yes               96            9          9.38          <span style="text-decoration: underline;">3</span>942 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 10 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 2 more variables: with_mean &lt;dbl&gt;, without_mean &lt;dbl&gt;</span></span>
-<span class="r-in"><span>  </span></span>
-<span class="r-in"><span><span class="co"># Disconnect DBMS   </span></span></span>
-<span class="r-in"><span><span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbDisconnect.html" class="external-link">dbDisconnect</a></span><span class="op">(</span><span class="va">con_sqlite</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co">## Using group_by() ----------------------------</span></span></span>
+<span class="r-in"><span><span class="co">#con_sqlite %&gt;% </span></span></span>
+<span class="r-in"><span><span class="co">#  tbl("TB_HEARTFAILURE") %&gt;% </span></span></span>
+<span class="r-in"><span><span class="co">#  group_by(death_event) %&gt;% </span></span></span>
+<span class="r-in"><span><span class="co">#  diagnose_outlier() </span></span></span>
+<span class="r-in"><span><span class="co">#  </span></span></span>
+<span class="r-in"><span><span class="co">## Disconnect DBMS   </span></span></span>
+<span class="r-in"><span><span class="co">#DBI::dbDisconnect(con_sqlite)</span></span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

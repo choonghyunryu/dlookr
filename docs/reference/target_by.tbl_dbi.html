@@ -122,190 +122,49 @@ Attributes of target_df class is as follows.</p><ul><li><p>type_y : the data typ
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># connect DBMS</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://dbi.r-dbi.org" class="external-link">DBI</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'DBI'</span>, repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://rsqlite.r-dbi.org" class="external-link">RSQLite</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'RSQLite'</span>, repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op">&lt;-</span> <span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html" class="external-link">dbConnect</a></span><span class="op">(</span><span class="fu">RSQLite</span><span class="fu">::</span><span class="fu"><a href="https://rsqlite.r-dbi.org/reference/SQLite.html" class="external-link">SQLite</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">":memory:"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co">## connect DBMS</span></span></span>
+<span class="r-in"><span><span class="co">#if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")</span></span></span>
+<span class="r-in"><span><span class="co">#if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")</span></span></span>
+<span class="r-in"><span><span class="co">#con_sqlite &lt;- DBI::dbConnect(RSQLite::SQLite(), ":memory:")</span></span></span>
+<span class="r-in"><span><span class="co">#</span></span></span>
+<span class="r-in"><span><span class="co">## copy heartfailure to the DBMS with a table named TB_HEARTFAILURE</span></span></span>
+<span class="r-in"><span><span class="co">#copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># copy heartfailure to the DBMS with a table named TB_HEARTFAILURE</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/copy_to.html" class="external-link">copy_to</a></span><span class="op">(</span><span class="va">con_sqlite</span>, <span class="va">heartfailure</span>, name <span class="op">=</span> <span class="st">"TB_HEARTFAILURE"</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co">## If the target variable is a categorical variable</span></span></span>
+<span class="r-in"><span><span class="co">#categ &lt;- target_by(con_sqlite %&gt;% tbl("TB_HEARTFAILURE") , death_event)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># If the target variable is a categorical variable</span></span></span>
-<span class="r-in"><span><span class="va">categ</span> <span class="op">&lt;-</span> <span class="fu"><a href="target_by.data.frame.html">target_by</a></span><span class="op">(</span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_HEARTFAILURE"</span><span class="op">)</span> , <span class="va">death_event</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co">## If the variable of interest is a numerical variable</span></span></span>
+<span class="r-in"><span><span class="co">#cat_num &lt;- relate(categ, sodium)</span></span></span>
+<span class="r-in"><span><span class="co">#cat_num</span></span></span>
+<span class="r-in"><span><span class="co">#summary(cat_num)</span></span></span>
+<span class="r-in"><span><span class="co">#plot(cat_num)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># If the variable of interest is a numerical variable</span></span></span>
-<span class="r-in"><span><span class="va">cat_num</span> <span class="op">&lt;-</span> <span class="fu"><a href="relate.html">relate</a></span><span class="op">(</span><span class="va">categ</span>, <span class="va">sodium</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">cat_num</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 27</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   described_variables death_event     n    na  mean    sd se_mean   IQR skewness</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> sodium              No            203     0  137.  3.98   0.280  4.5    -<span style="color: #BB0000;">1.22</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> sodium              Yes            96     0  135.  5.00   0.510  5.25   -<span style="color: #BB0000;">0.677</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> sodium              total         299     0  137.  4.41   0.255  6      -<span style="color: #BB0000;">1.05</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 18 more variables: kurtosis &lt;dbl&gt;, p00 &lt;dbl&gt;, p01 &lt;dbl&gt;, p05 &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   p10 &lt;dbl&gt;, p20 &lt;dbl&gt;, p25 &lt;dbl&gt;, p30 &lt;dbl&gt;, p40 &lt;dbl&gt;, p50 &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   p60 &lt;dbl&gt;, p70 &lt;dbl&gt;, p75 &lt;dbl&gt;, p80 &lt;dbl&gt;, p90 &lt;dbl&gt;, p95 &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   p99 &lt;dbl&gt;, p100 &lt;dbl&gt;</span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cat_num</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  described_variables death_event       n               na         mean      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Length:3            No   :1     Min.   : 96.0   Min.   :0   Min.   :135.4  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Class :character    Yes  :1     1st Qu.:149.5   1st Qu.:0   1st Qu.:136.0  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Mode  :character    total:1     Median :203.0   Median :0   Median :136.6  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                  Mean   :199.3   Mean   :0   Mean   :136.4  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                  3rd Qu.:251.0   3rd Qu.:0   3rd Qu.:136.9  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                  Max.   :299.0   Max.   :0   Max.   :137.2  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        sd           se_mean            IQR           skewness      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Min.   :3.983   Min.   :0.2552   Min.   :4.500   Min.   :-1.2189  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1st Qu.:4.198   1st Qu.:0.2674   1st Qu.:4.875   1st Qu.:-1.1335  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Median :4.412   Median :0.2795   Median :5.250   Median :-1.0481  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Mean   :4.466   Mean   :0.3484   Mean   :5.250   Mean   :-0.9812  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3rd Qu.:4.707   3rd Qu.:0.3950   3rd Qu.:5.625   3rd Qu.:-0.8624  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Max.   :5.002   Max.   :0.5105   Max.   :6.000   Max.   :-0.6766  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     kurtosis          p00             p01             p05       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Min.   :2.081   Min.   :113.0   Min.   :120.8   Min.   :127.0  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1st Qu.:3.100   1st Qu.:113.0   1st Qu.:122.3   1st Qu.:128.5  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Median :4.120   Median :113.0   Median :123.9   Median :130.0  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Mean   :4.229   Mean   :114.0   Mean   :123.6   Mean   :129.3  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3rd Qu.:5.304   3rd Qu.:114.5   3rd Qu.:125.0   3rd Qu.:130.5  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Max.   :6.488   Max.   :116.0   Max.   :126.0   Max.   :131.0  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       p10             p20             p25             p30       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Min.   :130.0   Min.   :132.0   Min.   :133.0   Min.   :134.0  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1st Qu.:131.0   1st Qu.:133.0   1st Qu.:133.5   1st Qu.:134.5  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Median :132.0   Median :134.0   Median :134.0   Median :135.0  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Mean   :131.7   Mean   :133.5   Mean   :134.2   Mean   :135.0  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3rd Qu.:132.5   3rd Qu.:134.2   3rd Qu.:134.8   3rd Qu.:135.5  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Max.   :133.0   Max.   :134.4   Max.   :135.5   Max.   :136.0  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       p40             p50             p60             p70       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Min.   :134.0   Min.   :135.5   Min.   :136.0   Min.   :138.0  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1st Qu.:135.0   1st Qu.:136.2   1st Qu.:137.0   1st Qu.:138.5  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Median :136.0   Median :137.0   Median :138.0   Median :139.0  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Mean   :135.7   Mean   :136.5   Mean   :137.3   Mean   :138.7  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3rd Qu.:136.5   3rd Qu.:137.0   3rd Qu.:138.0   3rd Qu.:139.0  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Max.   :137.0   Max.   :137.0   Max.   :138.0   Max.   :139.0  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       p75             p80             p90             p95             p99     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Min.   :138.2   Min.   :139.0   Min.   :141.0   Min.   :143.0   Min.   :145  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1st Qu.:139.1   1st Qu.:139.5   1st Qu.:141.1   1st Qu.:143.5   1st Qu.:145  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Median :140.0   Median :140.0   Median :141.2   Median :144.0   Median :145  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Mean   :139.4   Mean   :139.7   Mean   :141.2   Mean   :143.7   Mean   :145  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3rd Qu.:140.0   3rd Qu.:140.0   3rd Qu.:141.3   3rd Qu.:144.0   3rd Qu.:145  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Max.   :140.0   Max.   :140.0   Max.   :141.5   Max.   :144.0   Max.   :145  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       p100      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Min.   :146.0  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1st Qu.:147.0  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Median :148.0  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Mean   :147.3  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3rd Qu.:148.0  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Max.   :148.0  </span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cat_num</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="target_by.tbl_dbi-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="co">## If the variable of interest is a categorical column</span></span></span>
+<span class="r-in"><span><span class="co">#cat_cat &lt;- relate(categ, hblood_pressure)</span></span></span>
+<span class="r-in"><span><span class="co">#cat_cat</span></span></span>
+<span class="r-in"><span><span class="co">#summary(cat_cat)</span></span></span>
+<span class="r-in"><span><span class="co">#plot(cat_cat)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># If the variable of interest is a categorical column</span></span></span>
-<span class="r-in"><span><span class="va">cat_cat</span> <span class="op">&lt;-</span> <span class="fu"><a href="relate.html">relate</a></span><span class="op">(</span><span class="va">categ</span>, <span class="va">hblood_pressure</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">cat_cat</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            hblood_pressure</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> death_event  No Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         No  137  66</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         Yes  57  39</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cat_cat</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Call: xtabs(formula = formula_str, data = data, addNA = TRUE)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Number of cases in table: 299 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Number of factors: 2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Test for independence of all factors:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	Chisq = 1.8827, df = 1, p-value = 0.17</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cat_cat</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="target_by.tbl_dbi-2.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="co">###---------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## If the target variable is a categorical column, </span></span></span>
+<span class="r-in"><span><span class="co">## and In-memory mode and collect size is 200</span></span></span>
+<span class="r-in"><span><span class="co">#num &lt;- target_by(con_sqlite %&gt;% tbl("TB_HEARTFAILURE"), death_event, collect_size = 250)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">##---------------------------------------------------</span></span></span>
-<span class="r-in"><span><span class="co"># If the target variable is a categorical column, </span></span></span>
-<span class="r-in"><span><span class="co"># and In-memory mode and collect size is 200</span></span></span>
-<span class="r-in"><span><span class="va">num</span> <span class="op">&lt;-</span> <span class="fu"><a href="target_by.data.frame.html">target_by</a></span><span class="op">(</span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_HEARTFAILURE"</span><span class="op">)</span>, <span class="va">death_event</span>, collect_size <span class="op">=</span> <span class="fl">250</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co">## If the variable of interest is a numerical column</span></span></span>
+<span class="r-in"><span><span class="co">#num_num &lt;- relate(num, creatinine)</span></span></span>
+<span class="r-in"><span><span class="co">#num_num</span></span></span>
+<span class="r-in"><span><span class="co">#summary(num_num)</span></span></span>
+<span class="r-in"><span><span class="co">#plot(num_num)</span></span></span>
+<span class="r-in"><span><span class="co">#plot(num_num, hex_thres = 200)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># If the variable of interest is a numerical column</span></span></span>
-<span class="r-in"><span><span class="va">num_num</span> <span class="op">&lt;-</span> <span class="fu"><a href="relate.html">relate</a></span><span class="op">(</span><span class="va">num</span>, <span class="va">creatinine</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">num_num</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 27</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   described_variables death_event     n    na  mean    sd se_mean   IQR skewness</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> creatinine          No            156     0  1.20 0.686  0.054<span style="text-decoration: underline;">9</span> 0.3       4.26</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> creatinine          Yes            94     0  1.84 1.48   0.153  0.875     3.37</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> creatinine          total         250     0  1.44 1.10   0.069<span style="text-decoration: underline;">7</span> 0.6       4.27</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 18 more variables: kurtosis &lt;dbl&gt;, p00 &lt;dbl&gt;, p01 &lt;dbl&gt;, p05 &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   p10 &lt;dbl&gt;, p20 &lt;dbl&gt;, p25 &lt;dbl&gt;, p30 &lt;dbl&gt;, p40 &lt;dbl&gt;, p50 &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   p60 &lt;dbl&gt;, p70 &lt;dbl&gt;, p75 &lt;dbl&gt;, p80 &lt;dbl&gt;, p90 &lt;dbl&gt;, p95 &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   p99 &lt;dbl&gt;, p100 &lt;dbl&gt;</span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">num_num</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  described_variables death_event       n               na         mean      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Length:3            No   :1     Min.   : 94.0   Min.   :0   Min.   :1.196  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Class :character    Yes  :1     1st Qu.:125.0   1st Qu.:0   1st Qu.:1.317  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Mode  :character    total:1     Median :156.0   Median :0   Median :1.438  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                  Mean   :166.7   Mean   :0   Mean   :1.491  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                  3rd Qu.:203.0   3rd Qu.:0   3rd Qu.:1.639  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                  Max.   :250.0   Max.   :0   Max.   :1.841  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        sd            se_mean             IQR            skewness    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Min.   :0.6858   Min.   :0.05491   Min.   :0.3000   Min.   :3.365  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1st Qu.:0.8935   1st Qu.:0.06228   1st Qu.:0.4500   1st Qu.:3.814  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Median :1.1013   Median :0.06965   Median :0.6000   Median :4.263  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Mean   :1.0902   Mean   :0.09253   Mean   :0.5917   Mean   :3.966  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3rd Qu.:1.2924   3rd Qu.:0.11133   3rd Qu.:0.7375   3rd Qu.:4.266  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Max.   :1.4836   Max.   :0.15302   Max.   :0.8750   Max.   :4.270  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     kurtosis          p00           p01              p05        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Min.   :13.14   Min.   :0.6   Min.   :0.6000   Min.   :0.7000  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1st Qu.:18.14   1st Qu.:0.6   1st Qu.:0.6000   1st Qu.:0.7000  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Median :23.15   Median :0.6   Median :0.6000   Median :0.7000  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Mean   :19.86   Mean   :0.6   Mean   :0.6183   Mean   :0.7667  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3rd Qu.:23.23   3rd Qu.:0.6   3rd Qu.:0.6275   3rd Qu.:0.8000  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Max.   :23.31   Max.   :0.6   Max.   :0.6550   Max.   :0.9000  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       p10              p20            p25              p30      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Min.   :0.7250   Min.   :0.80   Min.   :0.9000   Min.   :0.90  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1st Qu.:0.7625   1st Qu.:0.85   1st Qu.:0.9000   1st Qu.:0.95  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Median :0.8000   Median :0.90   Median :0.9000   Median :1.00  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Mean   :0.8417   Mean   :0.90   Mean   :0.9417   Mean   :1.00  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3rd Qu.:0.9000   3rd Qu.:0.95   3rd Qu.:0.9625   3rd Qu.:1.05  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Max.   :1.0000   Max.   :1.00   Max.   :1.0250   Max.   :1.10  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       p40             p50             p60             p70       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Min.   :1.000   Min.   :1.000   Min.   :1.100   Min.   :1.190  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1st Qu.:1.000   1st Qu.:1.050   1st Qu.:1.150   1st Qu.:1.245  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Median :1.000   Median :1.100   Median :1.200   Median :1.300  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Mean   :1.067   Mean   :1.133   Mean   :1.333   Mean   :1.440  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3rd Qu.:1.100   3rd Qu.:1.200   3rd Qu.:1.450   3rd Qu.:1.565  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Max.   :1.200   Max.   :1.300   Max.   :1.700   Max.   :1.830  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       p75             p80           p90             p95             p99       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Min.   :1.200   Min.   :1.3   Min.   :1.650   Min.   :2.300   Min.   :4.175  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1st Qu.:1.350   1st Qu.:1.5   1st Qu.:1.975   1st Qu.:2.705   1st Qu.:5.316  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Median :1.500   Median :1.7   Median :2.300   Median :3.110   Median :6.457  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Mean   :1.533   Mean   :1.7   Mean   :2.307   Mean   :3.183   Mean   :6.553  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3rd Qu.:1.700   3rd Qu.:1.9   3rd Qu.:2.635   3rd Qu.:3.625   3rd Qu.:7.742  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Max.   :1.900   Max.   :2.1   Max.   :2.970   Max.   :4.140   Max.   :9.028  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       p100     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Min.   :6.10  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1st Qu.:7.75  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Median :9.40  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Mean   :8.30  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3rd Qu.:9.40  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Max.   :9.40  </span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">num_num</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="target_by.tbl_dbi-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">num_num</span>, hex_thres <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="target_by.tbl_dbi-4.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># If the variable of interest is a categorical column</span></span></span>
-<span class="r-in"><span><span class="va">num_cat</span> <span class="op">&lt;-</span> <span class="fu"><a href="relate.html">relate</a></span><span class="op">(</span><span class="va">num</span>, <span class="va">smoking</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">num_cat</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            smoking</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> death_event  No Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         No  103  53</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         Yes  65  29</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">num_cat</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Call: xtabs(formula = formula_str, data = data, addNA = TRUE)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Number of cases in table: 250 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Number of factors: 2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Test for independence of all factors:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	Chisq = 0.25959, df = 1, p-value = 0.6104</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">num_cat</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="target_by.tbl_dbi-5.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Disconnect DBMS   </span></span></span>
-<span class="r-in"><span><span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbDisconnect.html" class="external-link">dbDisconnect</a></span><span class="op">(</span><span class="va">con_sqlite</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co">## If the variable of interest is a categorical column</span></span></span>
+<span class="r-in"><span><span class="co">#num_cat &lt;- relate(num, smoking)</span></span></span>
+<span class="r-in"><span><span class="co">#num_cat</span></span></span>
+<span class="r-in"><span><span class="co">#summary(num_cat)</span></span></span>
+<span class="r-in"><span><span class="co">#plot(num_cat)</span></span></span>
+<span class="r-in"><span><span class="co">#</span></span></span>
+<span class="r-in"><span><span class="co">## Disconnect DBMS   </span></span></span>
+<span class="r-in"><span><span class="co">#DBI::dbDisconnect(con_sqlite)</span></span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
