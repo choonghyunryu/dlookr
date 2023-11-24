@@ -79,7 +79,7 @@
                         <h4 data-toc-skip class="author">Choonghyun
 Ryu</h4>
             
-            <h4 data-toc-skip class="date">2023-11-23</h4>
+            <h4 data-toc-skip class="date">2023-11-25</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/choonghyunryu/dlookr/blob/HEAD/vignettes/transformation.Rmd" class="external-link"><code>vignettes/transformation.Rmd</code></a></small>
       <div class="hidden name"><code>transformation.Rmd</code></div>
@@ -434,9 +434,9 @@ the “mice” method.</p>
 <span id="cb4-55"><a href="#cb4-55" tabindex="-1"></a></span>
 <span id="cb4-56"><a href="#cb4-56" tabindex="-1"></a><span class="sc">*</span> Information of <span class="fu">Imputation</span> (before vs after)</span>
 <span id="cb4-57"><a href="#cb4-57" tabindex="-1"></a>     original imputation original_percent imputation_percent</span>
-<span id="cb4-58"><a href="#cb4-58" tabindex="-1"></a>No        <span class="dv">115</span>        <span class="dv">117</span>            <span class="fl">28.75</span>              <span class="fl">29.25</span></span>
-<span id="cb4-59"><a href="#cb4-59" tabindex="-1"></a>Yes       <span class="dv">275</span>        <span class="dv">283</span>            <span class="fl">68.75</span>              <span class="fl">70.75</span></span>
-<span id="cb4-60"><a href="#cb4-60" tabindex="-1"></a><span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span>       <span class="dv">10</span>          <span class="dv">0</span>             <span class="fl">2.50</span>               <span class="fl">0.00</span></span></code></pre></div>
+<span id="cb4-58"><a href="#cb4-58" tabindex="-1"></a>No        <span class="dv">115</span>        <span class="dv">120</span>            <span class="fl">28.75</span>                 <span class="dv">30</span></span>
+<span id="cb4-59"><a href="#cb4-59" tabindex="-1"></a>Yes       <span class="dv">275</span>        <span class="dv">280</span>            <span class="fl">68.75</span>                 <span class="dv">70</span></span>
+<span id="cb4-60"><a href="#cb4-60" tabindex="-1"></a><span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span>       <span class="dv">10</span>          <span class="dv">0</span>             <span class="fl">2.50</span>                  <span class="dv">0</span></span></code></pre></div>
 <p><img src="transformation_files/figure-html/imputate_na2-1.png" width="600px" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
@@ -634,10 +634,10 @@ contain 0.</li>
 </h3>
 <p>Use the methods “zscore” and “minmax” to perform standardization.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">carseats</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Income_minmax <span class="op">=</span> <span class="fu"><a href="../reference/transform.html">transform</a></span><span class="op">(</span><span class="va">carseats</span><span class="op">$</span><span class="va">Income</span>, method <span class="op">=</span> <span class="st">"minmax"</span><span class="op">)</span>,</span>
-<span>    Sales_minmax <span class="op">=</span> <span class="fu"><a href="../reference/transform.html">transform</a></span><span class="op">(</span><span class="va">carseats</span><span class="op">$</span><span class="va">Sales</span>, method <span class="op">=</span> <span class="st">"minmax"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Income_minmax</span>, <span class="va">Sales_minmax</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="va">carseats</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>Income_minmax <span class="op">=</span> <span class="fu"><a href="../reference/transform.html">transform</a></span><span class="op">(</span><span class="va">carseats</span><span class="op">$</span><span class="va">Income</span>, method <span class="op">=</span> <span class="st">"minmax"</span><span class="op">)</span>,</span>
+<span>    Sales_minmax <span class="op">=</span> <span class="fu"><a href="../reference/transform.html">transform</a></span><span class="op">(</span><span class="va">carseats</span><span class="op">$</span><span class="va">Sales</span>, method <span class="op">=</span> <span class="st">"minmax"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">Income_minmax</span>, <span class="va">Sales_minmax</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html" class="external-link">boxplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="transformation_files/figure-html/standardization-1.png" width="600px" style="display: block; margin: auto;"></p>
 </div>
@@ -834,8 +834,8 @@ frequencies</li>
 <span id="cb13-30"><a href="#cb13-30" tabindex="-1"></a>binned type<span class="sc">:</span> bclust</span>
 <span id="cb13-31"><a href="#cb13-31" tabindex="-1"></a>number of bins<span class="sc">:</span> <span class="dv">5</span></span>
 <span id="cb13-32"><a href="#cb13-32" tabindex="-1"></a>x</span>
-<span id="cb13-33"><a href="#cb13-33" tabindex="-1"></a>  [<span class="dv">21</span>,<span class="fl">38.5</span>]   (<span class="fl">38.5</span>,<span class="dv">49</span>]   (<span class="dv">49</span>,<span class="fl">77.5</span>] (<span class="fl">77.5</span>,<span class="fl">95.5</span>]  (<span class="fl">95.5</span>,<span class="dv">120</span>]        <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> </span>
-<span id="cb13-34"><a href="#cb13-34" tabindex="-1"></a>         <span class="dv">74</span>          <span class="dv">41</span>         <span class="dv">111</span>          <span class="dv">75</span>          <span class="dv">79</span>          <span class="dv">20</span> </span>
+<span id="cb13-33"><a href="#cb13-33" tabindex="-1"></a>  [<span class="dv">21</span>,<span class="fl">31.5</span>] (<span class="fl">31.5</span>,<span class="fl">50.5</span>] (<span class="fl">50.5</span>,<span class="fl">78.5</span>] (<span class="fl">78.5</span>,<span class="fl">95.5</span>]  (<span class="fl">95.5</span>,<span class="dv">120</span>]        <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> </span>
+<span id="cb13-34"><a href="#cb13-34" tabindex="-1"></a>         <span class="dv">43</span>          <span class="dv">73</span>         <span class="dv">114</span>          <span class="dv">71</span>          <span class="dv">79</span>          <span class="dv">20</span> </span>
 <span id="cb13-35"><a href="#cb13-35" tabindex="-1"></a></span>
 <span id="cb13-36"><a href="#cb13-36" tabindex="-1"></a><span class="co"># Extract the binned results</span></span>
 <span id="cb13-37"><a href="#cb13-37" tabindex="-1"></a><span class="fu">extract</span>(bin)</span>
@@ -1067,7 +1067,7 @@ following arguments.</p>
 <p>The following script creates a data transformation report for the
 <code>tbl_df</code> class object, <code>heartfailure</code>.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">heartfailure</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">heartfailure</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="../reference/transformation_web_report.html">transformation_web_report</a></span><span class="op">(</span>target <span class="op">=</span> <span class="st">"death_event"</span>, subtitle <span class="op">=</span> <span class="st">"heartfailure"</span>,</span>
 <span>                            output_dir <span class="op">=</span> <span class="st">"./"</span>, output_file <span class="op">=</span> <span class="st">"transformation.html"</span>, </span>
 <span>                            theme <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></span></code></pre></div>
@@ -1200,7 +1200,7 @@ following arguments.</p>
 <p>The following script creates a data transformation report for the
 <code>data.frame</code> class object, <code>heartfailure</code>.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">heartfailure</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">heartfailure</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="../reference/transformation_paged_report.html">transformation_paged_report</a></span><span class="op">(</span>target <span class="op">=</span> <span class="st">"death_event"</span>, subtitle <span class="op">=</span> <span class="st">"heartfailure"</span>,</span>
 <span>                              output_dir <span class="op">=</span> <span class="st">"./"</span>, output_file <span class="op">=</span> <span class="st">"transformation.pdf"</span>, </span>
 <span>                              theme <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></span></code></pre></div>
