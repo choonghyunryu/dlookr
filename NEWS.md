@@ -1,5 +1,9 @@
 # dlookr 0.6.3
 
+## NEW FEATURES
+  
+* New data medicost. (#107)
+
 ## MINOR CHANGES
 
 * Remove the funModeling package dependency of the binning_rgr() function. 
