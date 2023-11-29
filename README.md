@@ -16,13 +16,13 @@ Diagnose, explore and transform data with `dlookr`.
 
 Features:
 
--   Diagnose data quality.
--   Find appropriate scenarios to pursuit the follow-up analysis through
-    data exploration and understanding.
--   Derive new variables or perform variable transformations.
--   Automatically generate reports for the above three tasks.
--   Supports quality diagnosis and EDA of table of DBMS.
-    -   version (≥ 0.3.2)
+- Diagnose data quality.
+- Find appropriate scenarios to pursuit the follow-up analysis through
+  data exploration and understanding.
+- Derive new variables or perform variable transformations.
+- Automatically generate reports for the above three tasks.
+- Supports quality diagnosis and EDA of table of DBMS.
+  - version (≥ 0.3.2)
 
 The name `dlookr` comes from `looking at the data` in the data analysis
 process.
@@ -44,7 +44,7 @@ devtools::install_github("choonghyunryu/dlookr")
 Or you can get the development version with vignettes from GitHub:
 
 ``` r
-install.packages(c("nycflights13", "ISLR", "DBI", "RSQLite"))
+install.packages(c("ISLR", "DBI", "RSQLite"))
 devtools::install_github("choonghyunryu/dlookr", build_vignettes = TRUE)
 ```
 
@@ -55,10 +55,10 @@ documentation.
 
 Provided vignettes is as follows.
 
--   Data quality diagnosis for data.frame, tbl_df, and table of DBMS
--   Exploratory Data Analysis for data.frame, tbl_df, and table of DBMS
--   Data Transformation
--   Data diagnosis and EDA for table of DBMS
+- Data quality diagnosis for data.frame, tbl_df, and table of DBMS
+- Exploratory Data Analysis for data.frame, tbl_df, and table of DBMS
+- Data Transformation
+- Data diagnosis and EDA for table of DBMS
 
 ``` r
 browseVignettes(package = "dlookr")
@@ -66,16 +66,21 @@ browseVignettes(package = "dlookr")
 
 ### Data quality diagnosis
 
-#### Data: nycflights13
+#### Data: flights
 
-To illustrate basic use of the dlookr package, use the `flights` data
-from the `nycflights13` package. Once loading `nycflights13` library,
-the `flights` data frame is available. The `flights` data frame contains
-departure and arrival information on all flights departing from
+To illustrate basic use of the dlookr package, use the `flights` data in
+dlookr from the `nycflights13` package. The `flights` data frame
+contains departure and arrival information on all flights departing from
 NYC(i.e. JFK, LGA or EWR) in 2013.
 
 ``` r
-library(nycflights13)
+library(dlookr)
+#> 
+#> Attaching package: 'dlookr'
+#> The following object is masked from 'package:base':
+#> 
+#>     transform
+data(flights)
 dim(flights)
 #> [1] 336776     19
 flights
@@ -92,9 +97,10 @@ flights
 #>  8  2013     1     1      557            600        -3      709            723
 #>  9  2013     1     1      557            600        -3      838            846
 #> 10  2013     1     1      558            600        -2      753            745
-#> # … with 336,766 more rows, and 11 more variables: arr_delay <dbl>,
-#> #   carrier <chr>, flight <int>, tailnum <chr>, origin <chr>, dest <chr>,
-#> #   air_time <dbl>, distance <dbl>, hour <dbl>, minute <dbl>, time_hour <dttm>
+#> # ℹ 336,766 more rows
+#> # ℹ 11 more variables: arr_delay <dbl>, carrier <chr>, flight <int>,
+#> #   tailnum <chr>, origin <chr>, dest <chr>, air_time <dbl>, distance <dbl>,
+#> #   hour <dbl>, minute <dbl>, time_hour <dttm>
 ```
 
 #### General diagnosis of all variables with `diagnose()`
@@ -107,13 +113,13 @@ the data frame.
 The variables of the `tbl_df` object returned by `diagnose ()` are as
 follows.
 
--   `variables` : variable names
--   `types` : the data type of the variables
--   `missing_count` : number of missing values
--   `missing_percent` : percentage of missing values
--   `unique_count` : number of unique values
--   `unique_rate` : rate of unique value. unique_count / number of
-    observation
+- `variables` : variable names
+- `types` : the data type of the variables
+- `missing_count` : number of missing values
+- `missing_percent` : percentage of missing values
+- `unique_count` : number of unique values
+- `unique_rate` : rate of unique value. unique_count / number of
+  observation
 
 For example, we can diagnose all variables in `flights`:
 
@@ -146,15 +152,15 @@ diagnose(flights)
 #> 19 time_hour      POSIXct             0           0             6936  0.0206
 ```
 
--   `Missing Value(NA)` : Variables with many missing values, i.e. those
-    with a `missing_percent` close to 100, should be excluded from the
-    analysis.
--   `Unique value` : Variables with a unique value (`unique_count` = 1)
-    are considered to be excluded from data analysis. And if the data
-    type is not numeric (integer, numeric) and the number of unique
-    values is equal to the number of observations (unique_rate = 1),
-    then the variable is likely to be an identifier. Therefore, this
-    variable is also not suitable for the analysis model.
+- `Missing Value(NA)` : Variables with many missing values, i.e. those
+  with a `missing_percent` close to 100, should be excluded from the
+  analysis.
+- `Unique value` : Variables with a unique value (`unique_count` = 1)
+  are considered to be excluded from data analysis. And if the data type
+  is not numeric (integer, numeric) and the number of unique values is
+  equal to the number of observations (unique_rate = 1), then the
+  variable is likely to be an identifier. Therefore, this variable is
+  also not suitable for the analysis model.
 
 `year` can be considered not to be used in the analysis model since
 `unique_count` is 1. However, you do not have to remove it if you
@@ -233,15 +239,15 @@ automatically ignored.
 The variables of the `tbl_df` object returned by `diagnose_numeric()`
 are as follows.
 
--   `min` : minimum value
--   `Q1` : 1/4 quartile, 25th percentile
--   `mean` : arithmetic mean
--   `median` : median, 50th percentile
--   `Q3` : 3/4 quartile, 75th percentile
--   `max` : maximum value
--   `zero` : number of observations with a value of 0
--   `minus` : number of observations with negative numbers
--   `outlier` : number of outliers
+- `min` : minimum value
+- `Q1` : 1/4 quartile, 25th percentile
+- `mean` : arithmetic mean
+- `median` : median, 50th percentile
+- `Q3` : 3/4 quartile, 75th percentile
+- `max` : maximum value
+- `zero` : number of observations with a value of 0
+- `minus` : number of observations with negative numbers
+- `outlier` : number of outliers
 
 The summary() function summarizes the distribution of individual
 variables in the data frame and outputs it to the console. The summary
@@ -314,12 +320,12 @@ if the number of levels is less than 10, all levels are returned.
 The variables of the `tbl_df` object returned by `diagnose_category()`
 are as follows.
 
--   `variables` : variable names
--   `levels`: level names
--   `N` : number of observation
--   `freq` : number of observation at the levels
--   `ratio` : percentage of observation at the levels
--   `rank` : rank of occupancy ratio of levels
+- `variables` : variable names
+- `levels`: level names
+- `N` : number of observation
+- `freq` : number of observation at the levels
+- `ratio` : percentage of observation at the levels
+- `rank` : rank of occupancy ratio of levels
 
 \``diagnose_category()` can diagnose all categorical variables of
 `flights` as follows.:
@@ -339,7 +345,7 @@ diagnose_category(flights)
 #>  8 carrier   9E     336776 18460  5.48     8
 #>  9 carrier   WN     336776 12275  3.64     9
 #> 10 carrier   VX     336776  5162  1.53    10
-#> # … with 33 more rows
+#> # ℹ 33 more rows
 ```
 
 In collaboration with `filter()` in the `dplyr` package, we can see that
@@ -392,11 +398,11 @@ and discrete) variables of the data frame. The usage is the same as
 The variables of the `tbl_df` object returned by `diagnose_outlier()`
 are as follows.
 
--   `outliers_cnt` : number of outliers
--   `outliers_ratio` : percent of outliers
--   `outliers_mean` : arithmetic average of outliers
--   `with_mean` : arithmetic average of with outliers
--   `without_mean` : arithmetic average of without outliers
+- `outliers_cnt` : number of outliers
+- `outliers_ratio` : percent of outliers
+- `outliers_mean` : arithmetic average of outliers
+- `with_mean` : arithmetic average of with outliers
+- `without_mean` : arithmetic average of without outliers
 
 `diagnose_outlier()` can diagnose outliers of all numerical variables on
 `flights` as follows:
@@ -465,10 +471,10 @@ and discrete) of data.frame. Usage is the same `diagnose()`.
 
 The plot derived from the numerical data diagnosis is as follows.
 
--   With outliers box plot
--   Without outliers box plot
--   With outliers histogram
--   Without outliers histogram
+- With outliers box plot
+- Without outliers box plot
+- With outliers histogram
+- Without outliers histogram
 
 The following example uses `diagnose_outlier()`, `plot_outlier()`, and
 `dplyr` packages to visualize all numerical variables with an outlier
@@ -523,32 +529,32 @@ str(Carseats)
 The contents of individual variables are as follows. (Refer to
 ISLR::Carseats Man page)
 
--   Sales
-    -   Unit sales (in thousands) at each location
--   CompPrice
-    -   Price charged by competitor at each location
--   Income
-    -   Community income level (in thousands of dollars)
--   Advertising
-    -   Local advertising budget for company at each location (in
-        thousands of dollars)
--   Population
-    -   Population size in region (in thousands)
--   Price
-    -   Price company charges for car seats at each site
--   ShelveLoc
-    -   A factor with levels Bad, Good and Medium indicating the quality
-        of the shelving location for the car seats at each site
--   Age
-    -   Average age of the local population
--   Education
-    -   Education level at each location
--   Urban
-    -   A factor with levels No and Yes to indicate whether the store is
-        in an urban or rural location
--   US
-    -   A factor with levels No and Yes to indicate whether the store is
-        in the US or not
+- Sales
+  - Unit sales (in thousands) at each location
+- CompPrice
+  - Price charged by competitor at each location
+- Income
+  - Community income level (in thousands of dollars)
+- Advertising
+  - Local advertising budget for company at each location (in thousands
+    of dollars)
+- Population
+  - Population size in region (in thousands)
+- Price
+  - Price company charges for car seats at each site
+- ShelveLoc
+  - A factor with levels Bad, Good and Medium indicating the quality of
+    the shelving location for the car seats at each site
+- Age
+  - Average age of the local population
+- Education
+  - Education level at each location
+- Urban
+  - A factor with levels No and Yes to indicate whether the store is in
+    an urban or rural location
+- US
+  - A factor with levels No and Yes to indicate whether the store is in
+    the US or not
 
 When data analysis is performed, data containing missing values is
 frequently encountered. However, ‘Carseats’ is complete data without
@@ -580,20 +586,20 @@ within that data frame.
 The variables of the `tbl_df` object returned by `describe()` are as
 follows.
 
--   `n` : number of observations excluding missing values
--   `na` : number of missing values
--   `mean` : arithmetic average
--   `sd` : standard deviation
--   `se_mean` : standard error mean. sd/sqrt(n)
--   `IQR` : interquartile range (Q3-Q1)
--   `skewness` : skewness
--   `kurtosis` : kurtosis
--   `p25` : Q1. 25% percentile
--   `p50` : median. 50% percentile
--   `p75` : Q3. 75% percentile
--   `p01`, `p05`, `p10`, `p20`, `p30` : 1%, 5%, 20%, 30% percentiles
--   `p40`, `p60`, `p70`, `p80` : 40%, 60%, 70%, 80% percentiles
--   `p90`, `p95`, `p99`, `p100` : 90%, 95%, 99%, 100% percentiles
+- `n` : number of observations excluding missing values
+- `na` : number of missing values
+- `mean` : arithmetic average
+- `sd` : standard deviation
+- `se_mean` : standard error mean. sd/sqrt(n)
+- `IQR` : interquartile range (Q3-Q1)
+- `skewness` : skewness
+- `kurtosis` : kurtosis
+- `p25` : Q1. 25% percentile
+- `p50` : median. 50% percentile
+- `p75` : Q3. 75% percentile
+- `p01`, `p05`, `p10`, `p20`, `p30` : 1%, 5%, 20%, 30% percentiles
+- `p40`, `p60`, `p70`, `p80` : 40%, 60%, 70%, 80% percentiles
+- `p90`, `p95`, `p99`, `p100` : 90%, 95%, 99%, 100% percentiles
 
 For example, we can computes the statistics of all numerical variables
 in `carseats`:
@@ -611,20 +617,19 @@ describe(carseats)
 #> 6 Price                 400     0 116.    23.7    1.18   31     -0.125    0.452 
 #> 7 Age                   400     0  53.3   16.2    0.810  26.2   -0.0772  -1.13  
 #> 8 Education             400     0  13.9    2.62   0.131   4      0.0440  -1.30  
-#> # … with 17 more variables: p00 <dbl>, p01 <dbl>, p05 <dbl>, p10 <dbl>,
-#> #   p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>, p60 <dbl>,
-#> #   p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>, p99 <dbl>,
-#> #   p100 <dbl>
+#> # ℹ 17 more variables: p00 <dbl>, p01 <dbl>, p05 <dbl>, p10 <dbl>, p20 <dbl>,
+#> #   p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>, p60 <dbl>, p70 <dbl>,
+#> #   p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>, p99 <dbl>, p100 <dbl>
 ```
 
--   `skewness` : The left-skewed distribution data that is the variables
-    with large positive skewness should consider the log or sqrt
-    transformations to follow the normal distribution. The variables
-    `Advertising` seem to need to consider variable transformation.
--   `mean` and `sd`, `se_mean` : The`Population` with a large
-    `standard error of the mean`(se_mean) has low representativeness of
-    the `arithmetic mean`(mean). The `standard deviation`(sd) is much
-    larger than the arithmetic average.
+- `skewness` : The left-skewed distribution data that is the variables
+  with large positive skewness should consider the log or sqrt
+  transformations to follow the normal distribution. The variables
+  `Advertising` seem to need to consider variable transformation.
+- `mean` and `sd`, `se_mean` : The`Population` with a large
+  `standard error of the mean`(se_mean) has low representativeness of
+  the `arithmetic mean`(mean). The `standard deviation`(sd) is much
+  larger than the arithmetic average.
 
 The `describe()` function can be sorted by
 `left or right skewed size`(skewness) using `dplyr`.:
@@ -656,16 +661,16 @@ carseats %>%
   group_by(US) %>% 
   describe(Sales, Income) 
 #> # A tibble: 4 × 27
-#>   described_varia… US        n    na  mean    sd se_mean   IQR skewness kurtosis
-#>   <chr>            <fct> <int> <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>    <dbl>
-#> 1 Income           No      130    12 65.8  28.2    2.48  50      0.100    -1.14 
-#> 2 Income           Yes     250     8 70.4  27.9    1.77  48      0.0199   -1.06 
-#> 3 Sales            No      142     0  6.82  2.60   0.218  3.44   0.323     0.808
-#> 4 Sales            Yes     258     0  7.87  2.88   0.179  4.23   0.0760   -0.326
-#> # … with 17 more variables: p00 <dbl>, p01 <dbl>, p05 <dbl>, p10 <dbl>,
-#> #   p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>, p60 <dbl>,
-#> #   p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>, p99 <dbl>,
-#> #   p100 <dbl>
+#>   described_variables US        n    na  mean    sd se_mean   IQR skewness
+#>   <chr>               <fct> <int> <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>
+#> 1 Income              No      130    12 65.8  28.2    2.48  50      0.100 
+#> 2 Income              Yes     250     8 70.4  27.9    1.77  48      0.0199
+#> 3 Sales               No      142     0  6.82  2.60   0.218  3.44   0.323 
+#> 4 Sales               Yes     258     0  7.87  2.88   0.179  4.23   0.0760
+#> # ℹ 18 more variables: kurtosis <dbl>, p00 <dbl>, p01 <dbl>, p05 <dbl>,
+#> #   p10 <dbl>, p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>,
+#> #   p60 <dbl>, p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>,
+#> #   p99 <dbl>, p100 <dbl>
 ```
 
 ``` r
@@ -673,24 +678,24 @@ carseats %>%
   group_by(US, Urban) %>% 
   describe(Sales, Income) 
 #> # A tibble: 12 × 28
-#>    described_variab… US    Urban     n    na  mean    sd se_mean    IQR skewness
-#>    <chr>             <fct> <fct> <int> <int> <dbl> <dbl>   <dbl>  <dbl>    <dbl>
-#>  1 Income            No    No       42     4 60.2  29.1    4.49  45.2    0.408  
-#>  2 Income            No    Yes      84     8 69.5  27.4    2.99  47     -0.0497 
-#>  3 Income            No    <NA>      4     0 48.2  24.7   12.3   40.8   -0.0496 
-#>  4 Income            Yes   No       65     4 70.5  29.9    3.70  48      0.0736 
-#>  5 Income            Yes   Yes     179     4 70.3  27.2    2.03  46.5    0.00490
-#>  6 Income            Yes   <NA>      6     0 75.3  34.3   14.0   47.2   -0.412  
-#>  7 Sales             No    No       46     0  6.46  2.72   0.402  3.15   0.0889 
-#>  8 Sales             No    Yes      92     0  7.00  2.58   0.269  3.49   0.492  
-#>  9 Sales             No    <NA>      4     0  6.99  1.28   0.639  0.827  1.69   
-#> 10 Sales             Yes   No       69     0  8.23  2.65   0.319  4.1   -0.0212 
-#> 11 Sales             Yes   Yes     183     0  7.74  2.97   0.219  4.11   0.123  
-#> 12 Sales             Yes   <NA>      6     0  7.61  2.61   1.06   3.25   0.489  
-#> # … with 18 more variables: kurtosis <dbl>, p00 <dbl>, p01 <dbl>, p05 <dbl>,
-#> #   p10 <dbl>, p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>,
-#> #   p60 <dbl>, p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>,
-#> #   p99 <dbl>, p100 <dbl>
+#>    described_variables US    Urban     n    na  mean    sd se_mean    IQR
+#>    <chr>               <fct> <fct> <int> <int> <dbl> <dbl>   <dbl>  <dbl>
+#>  1 Income              No    No       42     4 60.2  29.1    4.49  45.2  
+#>  2 Income              No    Yes      84     8 69.5  27.4    2.99  47    
+#>  3 Income              No    <NA>      4     0 48.2  24.7   12.3   40.8  
+#>  4 Income              Yes   No       65     4 70.5  29.9    3.70  48    
+#>  5 Income              Yes   Yes     179     4 70.3  27.2    2.03  46.5  
+#>  6 Income              Yes   <NA>      6     0 75.3  34.3   14.0   47.2  
+#>  7 Sales               No    No       46     0  6.46  2.72   0.402  3.15 
+#>  8 Sales               No    Yes      92     0  7.00  2.58   0.269  3.49 
+#>  9 Sales               No    <NA>      4     0  6.99  1.28   0.639  0.827
+#> 10 Sales               Yes   No       69     0  8.23  2.65   0.319  4.1  
+#> 11 Sales               Yes   Yes     183     0  7.74  2.97   0.219  4.11 
+#> 12 Sales               Yes   <NA>      6     0  7.61  2.61   1.06   3.25 
+#> # ℹ 19 more variables: skewness <dbl>, kurtosis <dbl>, p00 <dbl>, p01 <dbl>,
+#> #   p05 <dbl>, p10 <dbl>, p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>,
+#> #   p50 <dbl>, p60 <dbl>, p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>,
+#> #   p95 <dbl>, p99 <dbl>, p100 <dbl>
 ```
 
 ##### Test of normality on numeric variables using `normality()`
@@ -703,9 +708,9 @@ samples by random simple sampling.
 The variables of `tbl_df` object returned by `normality()` are as
 follows.
 
--   `statistic` : Statistics of the Shapiro-Wilk test
--   `p_value` : p-value of the Shapiro-Wilk test
--   `sample` : Number of sample observations performed Shapiro-Wilk test
+- `statistic` : Statistics of the Shapiro-Wilk test
+- `p_value` : p-value of the Shapiro-Wilk test
+- `sample` : Number of sample observations performed Shapiro-Wilk test
 
 `normality()` performs the normality test for all numerical variables of
 `carseats` as follows.:
@@ -791,10 +796,10 @@ carseats %>%
 
 The information that `plot_normality()` visualizes is as follows.
 
--   `Histogram of original data`
--   `Q-Q plot of original data`
--   `histogram of log transformed data`
--   `Histogram of square root transformed data`
+- `Histogram of original data`
+- `Q-Q plot of original data`
+- `histogram of log transformed data`
+- `Histogram of square root transformed data`
 
 In the data analysis process, it often encounters numerical data that
 follows the `power-law distribution`. Since the numerical data that
@@ -846,7 +851,7 @@ correlate(carseats)
 #>  8 Sales       CompPrice    0.0641
 #>  9 Income      CompPrice   -0.0761
 #> 10 Advertising CompPrice   -0.0242
-#> # … with 46 more rows
+#> # ℹ 46 more rows
 ```
 
 The following example performs a normality test only on combinations
@@ -868,7 +873,7 @@ correlate(carseats, Sales, CompPrice, Income)
 #>  8 CompPrice Advertising   -0.0242
 #>  9 Income    Advertising    0.0435
 #> 10 Sales     Population     0.0505
-#> # … with 11 more rows
+#> # ℹ 11 more rows
 ```
 
 `correlate()` produces `two pairs of variables`. So the following
@@ -985,15 +990,15 @@ level of the target variable.
 cat_num <- relate(categ, Sales)
 cat_num
 #> # A tibble: 3 × 27
-#>   described_varia… US        n    na  mean    sd se_mean   IQR skewness kurtosis
-#>   <chr>            <fct> <int> <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>    <dbl>
-#> 1 Sales            No      142     0  6.82  2.60   0.218  3.44   0.323    0.808 
-#> 2 Sales            Yes     258     0  7.87  2.88   0.179  4.23   0.0760  -0.326 
-#> 3 Sales            total   400     0  7.50  2.82   0.141  3.93   0.186   -0.0809
-#> # … with 17 more variables: p00 <dbl>, p01 <dbl>, p05 <dbl>, p10 <dbl>,
-#> #   p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>, p60 <dbl>,
-#> #   p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>, p99 <dbl>,
-#> #   p100 <dbl>
+#>   described_variables US        n    na  mean    sd se_mean   IQR skewness
+#>   <chr>               <fct> <int> <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>
+#> 1 Sales               No      142     0  6.82  2.60   0.218  3.44   0.323 
+#> 2 Sales               Yes     258     0  7.87  2.88   0.179  4.23   0.0760
+#> 3 Sales               total   400     0  7.50  2.82   0.141  3.93   0.186 
+#> # ℹ 18 more variables: kurtosis <dbl>, p00 <dbl>, p01 <dbl>, p05 <dbl>,
+#> #   p10 <dbl>, p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>,
+#> #   p60 <dbl>, p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>,
+#> #   p99 <dbl>, p100 <dbl>
 summary(cat_num)
 #>  described_variables     US          n               na         mean      
 #>  Length:3            No   :1   Min.   :142.0   Min.   :0   Min.   :6.823  
@@ -1220,25 +1225,25 @@ variables.
 Here is a list of the data conversion functions and functions provided
 by dlookr:
 
--   `find_na()` finds a variable that contains the missing values
-    variable, and `imputate_na()` imputes the missing values.
--   `find_outliers()` finds a variable that contains the outliers, and
-    `imputate_outlier()` imputes the outlier.
--   `summary.imputation()` and `plot.imputation()` provide information
-    and visualization of the imputed variables.
--   `find_skewness()` finds the variables of the skewed data, and
-    `transform()` performs the resolving of the skewed data.
--   `transform()` also performs standardization of numeric variables.
--   `summary.transform()` and `plot.transform()` provide information and
-    visualization of transformed variables.
--   `binning()` and `binning_by()` convert binational data into
-    categorical data.
--   `print.bins()` and `summary.bins()` show and summarize the binning
-    results.
--   `plot.bins()` and `plot.optimal_bins()` provide visualization of the
-    binning result.
--   `transformation_report()` performs the data transform and reports
-    the result.
+- `find_na()` finds a variable that contains the missing values
+  variable, and `imputate_na()` imputes the missing values.
+- `find_outliers()` finds a variable that contains the outliers, and
+  `imputate_outlier()` imputes the outlier.
+- `summary.imputation()` and `plot.imputation()` provide information and
+  visualization of the imputed variables.
+- `find_skewness()` finds the variables of the skewed data, and
+  `transform()` performs the resolving of the skewed data.
+- `transform()` also performs standardization of numeric variables.
+- `summary.transform()` and `plot.transform()` provide information and
+  visualization of transformed variables.
+- `binning()` and `binning_by()` convert binational data into
+  categorical data.
+- `print.bins()` and `summary.bins()` show and summarize the binning
+  results.
+- `plot.bins()` and `plot.optimal_bins()` provide visualization of the
+  binning result.
+- `transformation_report()` performs the data transform and reports the
+  result.
 
 #### Imputation of missing values
 
@@ -1248,24 +1253,24 @@ by dlookr:
 predictor with missing values support both numeric and categorical
 variables, and supports the following `method`.
 
--   predictor is numerical variable
-    -   “mean” : arithmetic mean
-    -   “median” : median
-    -   “mode” : mode
-    -   “knn” : K-nearest neighbors
-        -   target variable must be specified
-    -   “rpart” : Recursive Partitioning and Regression Trees
-        -   target variable must be specified  
-    -   “mice” : Multivariate Imputation by Chained Equations
-        -   target variable must be specified  
-        -   random seed must be set
--   predictor is categorical variable
-    -   “mode” : mode
-    -   “rpart” : Recursive Partitioning and Regression Trees
-        -   target variable must be specified  
-    -   “mice” : Multivariate Imputation by Chained Equations
-        -   target variable must be specified  
-        -   random seed must be set
+- predictor is numerical variable
+  - “mean” : arithmetic mean
+  - “median” : median
+  - “mode” : mode
+  - “knn” : K-nearest neighbors
+    - target variable must be specified
+  - “rpart” : Recursive Partitioning and Regression Trees
+    - target variable must be specified  
+  - “mice” : Multivariate Imputation by Chained Equations
+    - target variable must be specified  
+    - random seed must be set
+- predictor is categorical variable
+  - “mode” : mode
+  - “rpart” : Recursive Partitioning and Regression Trees
+    - target variable must be specified  
+  - “mice” : Multivariate Imputation by Chained Equations
+    - target variable must be specified  
+    - random seed must be set
 
 In the following example, `imputate_na()` imputes the missing value of
 `Income`, a numeric variable of carseats, using the “rpart” method.
@@ -1437,14 +1442,14 @@ urban <- imputate_na(carseats, Urban, US, method = "mice")
 # result of imputation
 urban
 #>   [1] Yes Yes Yes Yes Yes No  Yes Yes No  No  No  Yes Yes Yes Yes No  Yes Yes
-#>  [19] No  Yes Yes No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes
+#>  [19] No  Yes Yes No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes Yes Yes No 
 #>  [37] No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes
 #>  [55] No  Yes Yes Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes Yes Yes Yes No 
-#>  [73] Yes No  No  No  Yes No  Yes Yes Yes Yes Yes No  No  No  Yes No  Yes No 
-#>  [91] No  Yes Yes No  Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes
+#>  [73] Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes No  No  Yes No  Yes No 
+#>  [91] No  Yes Yes Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes
 #> [109] Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes No 
-#> [127] Yes Yes Yes No  Yes No  Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes
-#> [145] No  Yes Yes No  No  Yes No  No  No  No  No  Yes Yes No  No  No  No  No 
+#> [127] Yes Yes Yes No  Yes Yes Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes
+#> [145] No  Yes Yes No  No  Yes Yes No  No  No  No  Yes Yes No  No  No  No  No 
 #> [163] Yes No  No  Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes No  Yes No  Yes
 #> [181] Yes Yes Yes Yes No  Yes No  Yes Yes No  No  Yes No  Yes Yes Yes Yes Yes
 #> [199] Yes Yes No  Yes No  Yes Yes Yes Yes No  Yes No  No  Yes Yes Yes Yes Yes
@@ -1452,7 +1457,7 @@ urban
 #> [235] No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes
 #> [253] Yes No  Yes Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes No  No  Yes Yes
 #> [271] Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes No  No  Yes No  Yes
-#> [289] No  Yes No  Yes Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
+#> [289] No  Yes No  No  Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
 #> [307] Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No  No  No  Yes Yes Yes Yes
 #> [325] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No 
 #> [343] No  Yes No  Yes No  No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes
@@ -1483,9 +1488,9 @@ summary(urban)
 #> 
 #> * Information of Imputation (before vs after)
 #>      original imputation original_percent imputation_percent
-#> No        115        121            28.75              30.25
-#> Yes       275        279            68.75              69.75
-#> <NA>       10          0             2.50               0.00
+#> No        115        118            28.75               29.5
+#> Yes       275        282            68.75               70.5
+#> <NA>       10          0             2.50                0.0
 
 # viz of imputation
 plot(urban)
@@ -1522,12 +1527,12 @@ carseats %>%
 outliers supports only numeric variables and supports the following
 methods.
 
--   predictor is numerical variable
-    -   “mean” : arithmetic mean
-    -   “median” : median
-    -   “mode” : mode
-    -   “capping” : Imputate the upper outliers with 95 percentile, and
-        Imputate the bottom outliers with 5 percentile.
+- predictor is numerical variable
+  - “mean” : arithmetic mean
+  - “median” : median
+  - “mode” : mode
+  - “capping” : Imputate the upper outliers with 95 percentile, and
+    Imputate the bottom outliers with 5 percentile.
 
 `imputate_outlier()` imputes the outliers with the numeric variable
 `Price` as the “capping” method, as follows. `summary()` summarizes
@@ -1605,7 +1610,7 @@ summary(price)
 #> described_variables "value"      "value"     
 #> n                   "400"        "400"       
 #> na                  "0"          "0"         
-#> mean                "115.7950"   "115.8928"  
+#> mean                "115.7950"   "115.8927"  
 #> sd                  "23.67666"   "22.61092"  
 #> se_mean             "1.183833"   "1.130546"  
 #> IQR                 "31"         "31"        
@@ -1663,17 +1668,17 @@ carseats %>%
 `transform()` performs data transformation. Only numeric variables are
 supported, and the following methods are provided.
 
--   Standardization
-    -   “zscore” : z-score transformation. (x - mu) / sigma
-    -   “minmax” : minmax transformation. (x - min) / (max - min)
--   Resolving Skewness
-    -   “log” : log transformation. log(x)
-    -   “log+1” : log transformation. log(x + 1). Used for values that
-        contain 0.
-    -   “sqrt” : square root transformation.
-    -   “1/x” : 1 / x transformation
-    -   “x^2” : x square transformation
-    -   “x^3” : x^3 square transformation
+- Standardization
+  - “zscore” : z-score transformation. (x - mu) / sigma
+  - “minmax” : minmax transformation. (x - min) / (max - min)
+- Resolving Skewness
+  - “log” : log transformation. log(x)
+  - “log+1” : log transformation. log(x + 1). Used for values that
+    contain 0.
+  - “sqrt” : square root transformation.
+  - “1/x” : 1 / x transformation
+  - “x^2” : x square transformation
+  - “x^3” : x^3 square transformation
 
 ###### Standardization with `transform()`
 
@@ -1818,12 +1823,11 @@ plot(Advertising_log)
 `binning()` transforms a numeric variable into a categorical variable by
 binning it. The following types of binning are supported.
 
--   “quantile” : categorize using quantile to include the same
-    frequencies
--   “equal” : categorize to have equal length segments
--   “pretty” : categorized into moderately good segments
--   “kmeans” : categorization using K-means clustering
--   “bclust” : categorization using bagged clustering technique
+- “quantile” : categorize using quantile to include the same frequencies
+- “equal” : categorize to have equal length segments
+- “pretty” : categorized into moderately good segments
+- “kmeans” : categorization using K-means clustering
+- “bclust” : categorization using bagged clustering technique
 
 Here are some examples of how to bin `Income` using `binning()`.:
 
@@ -1888,14 +1892,14 @@ binning(carseats$Income, nbins = 5, type = "kmeans")
 #> binned type: kmeans
 #> number of bins: 5
 #> x
-#>   [21,36.5] (36.5,55.5] (55.5,75.5] (75.5,97.5]  (97.5,120]        <NA> 
-#>          66          62          91          86          75          20
+#>      [21,49]    (49,70.5]  (70.5,87.5] (87.5,104.5]  (104.5,120]         <NA> 
+#>          115           86           68           62           49           20
 binning(carseats$Income, nbins = 5, type = "bclust")
 #> binned type: bclust
 #> number of bins: 5
 #> x
-#>   [21,37.5] (37.5,55.5] (55.5,75.5] (75.5,94.5]  (94.5,120]        <NA> 
-#>          70          58          91          81          80          20
+#>   [21,33.5] (33.5,55.5] (55.5,74.5] (74.5,96.5]  (96.5,120]        <NA> 
+#>          55          73          88          88          76          20
 
 # Extract the binned results
 extract(bin)
@@ -2084,10 +2088,10 @@ extract(bin)
 
 dlookr provides two automated data diagnostic reports:
 
--   Web page-based dynamic reports can perform in-depth analysis through
-    visualization and statistical tables.
--   Static reports generated as pdf files or html files can be archived
-    as output of data analysis.
+- Web page-based dynamic reports can perform in-depth analysis through
+  visualization and statistical tables.
+- Static reports generated as pdf files or html files can be archived as
+  output of data analysis.
 
 #### Create a diagnostic report using `diagnose_web_report()`
 
@@ -2098,54 +2102,54 @@ data.frame(`tbl_df`, `tbl`, etc) or data.frame.
 
 The contents of the report are as follows.:
 
--   Overview
-    -   Data Structures
-        -   Data Structures
-        -   Data Types
-        -   Job Informations
-    -   Warnings
-    -   Variables
--   Missing Values
-    -   List of Missing Values
-    -   Visualization
--   Unique Values
-    -   Categorical Variables
-    -   Numerical Variables
--   Outliers
--   Samples
-    -   Duplicated
-    -   Heads
-    -   Tails
+- Overview
+  - Data Structures
+    - Data Structures
+    - Data Types
+    - Job Informations
+  - Warnings
+  - Variables
+- Missing Values
+  - List of Missing Values
+  - Visualization
+- Unique Values
+  - Categorical Variables
+  - Numerical Variables
+- Outliers
+- Samples
+  - Duplicated
+  - Heads
+  - Tails
 
 ##### Some arguments for dynamic web report
 
 diagnose_web_report() generates various reports with the following
 arguments.
 
--   output_file
-    -   name of generated file.
--   output_dir
-    -   name of directory to generate report file.
--   title
-    -   title of report.
--   subtitle
-    -   subtitle of report.
--   author
-    -   author of report.
--   title_color
-    -   color of title.
--   thres_uniq_cat
-    -   threshold to use for “Unique Values - Categorical Variables”.
--   thres_uniq_num
-    -   threshold to use for “Unique Values - Numerical Variables”.
--   logo_img
-    -   name of logo image file on top left.
--   create_date
-    -   The date on which the report is generated.
--   theme
-    -   name of theme for report. support “orange” and “blue”.
--   sample_percent
-    -   Sample percent of data for performing Diagnosis.
+- output_file
+  - name of generated file.
+- output_dir
+  - name of directory to generate report file.
+- title
+  - title of report.
+- subtitle
+  - subtitle of report.
+- author
+  - author of report.
+- title_color
+  - color of title.
+- thres_uniq_cat
+  - threshold to use for “Unique Values - Categorical Variables”.
+- thres_uniq_num
+  - threshold to use for “Unique Values - Numerical Variables”.
+- logo_img
+  - name of logo image file on top left.
+- create_date
+  - The date on which the report is generated.
+- theme
+  - name of theme for report. support “orange” and “blue”.
+- sample_percent
+  - Sample percent of data for performing Diagnosis.
 
 The following script creates a quality diagnosis report for the `tbl_df`
 class object, `flights`.
@@ -2158,14 +2162,27 @@ flights %>%
 
 ##### Screenshot of dynamic report
 
--   The part of the report is shown in the following figure.:
+- The part of the report is shown in the following figure.:
 
-<img src="vignettes/img/diag_web_title.jpg" title="The part of the report" alt="The part of the report" width="60%" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
 
--   The dynamic contents of the report is shown in the following
-    figure.:
+<img src="vignettes/img/diag_web_title.jpg" alt="The part of the report" width="60%" />
+<p class="caption">
+The part of the report
+</p>
 
-<img src="vignettes/img/diag_web_content.jpg" title="The dynamic contents of the report" alt="The dynamic contents of the report" width="60%" style="display: block; margin: auto;" />
+</div>
+
+- The dynamic contents of the report is shown in the following figure.:
+
+<div class="figure" style="text-align: center">
+
+<img src="vignettes/img/diag_web_content.jpg" alt="The dynamic contents of the report" width="60%" />
+<p class="caption">
+The dynamic contents of the report
+</p>
+
+</div>
 
 #### Create a diagnostic report using `diagnose_paged_report()`
 
@@ -2176,70 +2193,70 @@ data.frame(`tbl_df`, `tbl`, etc) or data.frame.
 
 The contents of the report are as follows.:
 
--   Overview
-    -   Data Structures
-    -   Job Informations
-    -   Warnings
-    -   Variables
--   Missing Values
-    -   List of Missing Values
-    -   Visualization
--   Unique Values
-    -   Categorical Variables
-    -   Numerical Variables  
--   Categorical Variable Diagnosis
-    -   Top Ranks
--   Numerical Variable Diagnosis
-    -   Distribution
-        -   Zero Values
-        -   Minus Values
-    -   Outliers
-        -   List of Outliers
-        -   Individual Outliers
+- Overview
+  - Data Structures
+  - Job Informations
+  - Warnings
+  - Variables
+- Missing Values
+  - List of Missing Values
+  - Visualization
+- Unique Values
+  - Categorical Variables
+  - Numerical Variables  
+- Categorical Variable Diagnosis
+  - Top Ranks
+- Numerical Variable Diagnosis
+  - Distribution
+    - Zero Values
+    - Minus Values
+  - Outliers
+    - List of Outliers
+    - Individual Outliers
 
 ##### Some arguments for static paged report
 
 diagnose_paged_report() generates various reports with the following
 arguments.
 
--   output_format
-    -   report output type. Choose either “pdf” and “html”.
--   output_file
-    -   name of generated file.
--   output_dir
-    -   name of directory to generate report file.
--   title
-    -   title of report.
--   subtitle
-    -   subtitle of report.
--   abstract_title
-    -   abstract of report
--   author
-    -   author of report.
--   title_color
-    -   color of title.
--   subtitle_color
-    -   color of subtitle.
--   thres_uniq_cat
-    -   threshold to use for “Unique Values - Categorical Variables”.
--   thres_uniq_num
-    -   threshold to use for “Unique Values - Numerical Variables”.
--   flag_content_zero
-    -   whether to output “Zero Values” information.
--   flag_content_minus
-    -   whether to output “Minus Values” information.
--   flag_content_missing
-    -   whether to output “Missing Value” information.  
--   logo_img
-    -   name of logo image file on top left.
--   cover_img
-    -   name of cover image file on center.
--   create_date
-    -   The date on which the report is generated.
--   theme
-    -   name of theme for report. support “orange” and “blue”.
--   sample_percent
-    -   Sample percent of data for performing Diagnosis.
+- output_format
+  - report output type. Choose either “pdf” and “html”.
+- output_file
+  - name of generated file.
+- output_dir
+  - name of directory to generate report file.
+- title
+  - title of report.
+- subtitle
+  - subtitle of report.
+- abstract_title
+  - abstract of report
+- author
+  - author of report.
+- title_color
+  - color of title.
+- subtitle_color
+  - color of subtitle.
+- thres_uniq_cat
+  - threshold to use for “Unique Values - Categorical Variables”.
+- thres_uniq_num
+  - threshold to use for “Unique Values - Numerical Variables”.
+- flag_content_zero
+  - whether to output “Zero Values” information.
+- flag_content_minus
+  - whether to output “Minus Values” information.
+- flag_content_missing
+  - whether to output “Missing Value” information.  
+- logo_img
+  - name of logo image file on top left.
+- cover_img
+  - name of cover image file on center.
+- create_date
+  - The date on which the report is generated.
+- theme
+  - name of theme for report. support “orange” and “blue”.
+- sample_percent
+  - Sample percent of data for performing Diagnosis.
 
 The following script creates a quality diagnosis report for the `tbl_df`
 class object, `flights`.
@@ -2252,22 +2269,36 @@ flights %>%
 
 ##### Screenshot of static report
 
--   The cover of the report is shown in the following figure.:
+- The cover of the report is shown in the following figure.:
 
-<img src="vignettes/img/diag_paged_cover.jpg" title="The part of the report" alt="The part of the report" width="60%" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
 
--   The contents of the report is shown in the following figure.:
+<img src="vignettes/img/diag_paged_cover.jpg" alt="The part of the report" width="60%" />
+<p class="caption">
+The part of the report
+</p>
 
-<img src="vignettes/img/diag_paged_content.jpg" title="The dynamic contents of the report" alt="The dynamic contents of the report" width="60%" style="display: block; margin: auto;" />
+</div>
+
+- The contents of the report is shown in the following figure.:
+
+<div class="figure" style="text-align: center">
+
+<img src="vignettes/img/diag_paged_content.jpg" alt="The dynamic contents of the report" width="60%" />
+<p class="caption">
+The dynamic contents of the report
+</p>
+
+</div>
 
 ### EDA Report
 
 dlookr provides two automated EDA reports:
 
--   Web page-based dynamic reports can perform in-depth analysis through
-    visualization and statistical tables.
--   Static reports generated as pdf files or html files can be archived
-    as output of data analysis.
+- Web page-based dynamic reports can perform in-depth analysis through
+  visualization and statistical tables.
+- Static reports generated as pdf files or html files can be archived as
+  output of data analysis.
 
 #### Create a dynamic report using `eda_web_report()`
 
@@ -2278,51 +2309,51 @@ data.frame(`tbl_df`, `tbl`, etc) or data.frame.
 
 The contents of the report are as follows.:
 
--   Overview
-    -   Data Structures
-    -   Data Types
-    -   Job Informations
--   Univariate Analysis
-    -   Descriptive Statistics
-    -   Normality Test
--   Bivariate Analysis
-    -   Compare Numerical Variables
-    -   Compare Categorical Variables
--   Multivariate Analysis
-    -   Correlation Analysis
-        -   Correlation Matrix
-        -   Correlation Plot
--   Target based Analysis
-    -   Grouped Numerical Variables
-    -   Grouped Categorical Variables
-    -   Grouped Correlation
+- Overview
+  - Data Structures
+  - Data Types
+  - Job Informations
+- Univariate Analysis
+  - Descriptive Statistics
+  - Normality Test
+- Bivariate Analysis
+  - Compare Numerical Variables
+  - Compare Categorical Variables
+- Multivariate Analysis
+  - Correlation Analysis
+    - Correlation Matrix
+    - Correlation Plot
+- Target based Analysis
+  - Grouped Numerical Variables
+  - Grouped Categorical Variables
+  - Grouped Correlation
 
 ##### Some arguments for dynamic web report
 
 eda_web_report() generates various reports with the following arguments.
 
--   target
-    -   target variable
--   output_file
-    -   name of generated file.
--   output_dir
-    -   name of directory to generate report file.
--   title
-    -   title of report.
--   subtitle
-    -   subtitle of report.
--   author
-    -   author of report.
--   title_color
-    -   color of title.
--   logo_img
-    -   name of logo image file on top left.
--   create_date
-    -   The date on which the report is generated.
--   theme
-    -   name of theme for report. support “orange” and “blue”.
--   sample_percent
-    -   Sample percent of data for performing EDA.
+- target
+  - target variable
+- output_file
+  - name of generated file.
+- output_dir
+  - name of directory to generate report file.
+- title
+  - title of report.
+- subtitle
+  - subtitle of report.
+- author
+  - author of report.
+- title_color
+  - color of title.
+- logo_img
+  - name of logo image file on top left.
+- create_date
+  - The date on which the report is generated.
+- theme
+  - name of theme for report. support “orange” and “blue”.
+- sample_percent
+  - Sample percent of data for performing EDA.
 
 The following script creates a EDA report for the `data.frame` class
 object, `heartfailure`.
@@ -2335,10 +2366,16 @@ heartfailure %>%
 
 ##### Screenshot of dynamic report
 
--   The dynamic contents of the report is shown in the following
-    figure.:
+- The dynamic contents of the report is shown in the following figure.:
 
-<img src="vignettes/img/eda_web_title.jpg" title="The part of the report" alt="The part of the report" width="60%" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+
+<img src="vignettes/img/eda_web_title.jpg" alt="The part of the report" width="60%" />
+<p class="caption">
+The part of the report
+</p>
+
+</div>
 
 #### Create a EDA report using `eda_paged_report()`
 
@@ -2349,61 +2386,61 @@ data.frame(`tbl_df`, `tbl`, etc) or data.frame.
 
 The contents of the report are as follows.:
 
--   Overview
-    -   Data Structures
-    -   Job Informations
--   Univariate Analysis
-    -   Descriptive Statistics
-        -   Numerical Variables
-        -   Categorical Variables
-    -   Normality Test  
--   Bivariate Analysis
-    -   Compare Numerical Variables
-    -   Compare Categorical Variables
--   Multivariate Analysis
-    -   Correlation Analysis
-        -   Correlation Coefficient Matrix
-        -   Correlation Plot
--   Target based Analysis
-    -   Grouped Numerical Variables
-    -   Grouped Categorical Variables
-    -   Grouped Correlation
+- Overview
+  - Data Structures
+  - Job Informations
+- Univariate Analysis
+  - Descriptive Statistics
+    - Numerical Variables
+    - Categorical Variables
+  - Normality Test  
+- Bivariate Analysis
+  - Compare Numerical Variables
+  - Compare Categorical Variables
+- Multivariate Analysis
+  - Correlation Analysis
+    - Correlation Coefficient Matrix
+    - Correlation Plot
+- Target based Analysis
+  - Grouped Numerical Variables
+  - Grouped Categorical Variables
+  - Grouped Correlation
 
 ##### Some arguments for static paged report
 
 eda_paged_report() generates various reports with the following
 arguments.
 
--   target
-    -   target variable
--   output_format
-    -   report output type. Choose either “pdf” and “html”.
--   output_file
-    -   name of generated file.
--   output_dir
-    -   name of directory to generate report file.
--   title
-    -   title of report.
--   subtitle
-    -   subtitle of report.
--   abstract_title
-    -   abstract of report
--   author
-    -   author of report.
--   title_color
-    -   color of title.
--   subtitle_color
-    -   color of subtitle.
--   logo_img
-    -   name of logo image file on top left.
--   cover_img
-    -   name of cover image file on center.
--   create_date
-    -   The date on which the report is generated.
--   theme
-    -   name of theme for report. support “orange” and “blue”.
--   sample_percent
-    -   Sample percent of data for performing EDA.
+- target
+  - target variable
+- output_format
+  - report output type. Choose either “pdf” and “html”.
+- output_file
+  - name of generated file.
+- output_dir
+  - name of directory to generate report file.
+- title
+  - title of report.
+- subtitle
+  - subtitle of report.
+- abstract_title
+  - abstract of report
+- author
+  - author of report.
+- title_color
+  - color of title.
+- subtitle_color
+  - color of subtitle.
+- logo_img
+  - name of logo image file on top left.
+- cover_img
+  - name of cover image file on center.
+- create_date
+  - The date on which the report is generated.
+- theme
+  - name of theme for report. support “orange” and “blue”.
+- sample_percent
+  - Sample percent of data for performing EDA.
 
 The following script creates a EDA report for the `data.frame` class
 object, `heartfailure`.
@@ -2416,22 +2453,36 @@ heartfailure %>%
 
 ##### Screenshot of static report
 
--   The cover of the report is shown in the following figure.:
+- The cover of the report is shown in the following figure.:
 
-<img src="vignettes/img/eda_paged_cover.jpg" title="The part of the report" alt="The part of the report" width="60%" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
 
--   The contents of the report is shown in the following figure.:
+<img src="vignettes/img/eda_paged_cover.jpg" alt="The part of the report" width="60%" />
+<p class="caption">
+The part of the report
+</p>
 
-<img src="vignettes/img/eda_paged_content.jpg" title="The dynamic contents of the report" alt="The dynamic contents of the report" width="60%" style="display: block; margin: auto;" />
+</div>
+
+- The contents of the report is shown in the following figure.:
+
+<div class="figure" style="text-align: center">
+
+<img src="vignettes/img/eda_paged_content.jpg" alt="The dynamic contents of the report" width="60%" />
+<p class="caption">
+The dynamic contents of the report
+</p>
+
+</div>
 
 ### Data Transformation Report
 
 dlookr provides two automated data transformation reports:
 
--   Web page-based dynamic reports can perform in-depth analysis through
-    visualization and statistical tables.
--   Static reports generated as pdf files or html files can be archived
-    as output of data analysis.
+- Web page-based dynamic reports can perform in-depth analysis through
+  visualization and statistical tables.
+- Static reports generated as pdf files or html files can be archived as
+  output of data analysis.
 
 #### Create a dynamic report using `transformation_web_report()`
 
@@ -2442,44 +2493,44 @@ from data.frame(`tbl_df`, `tbl`, etc) or data.frame.
 
 The contents of the report are as follows.:
 
--   Overview
-    -   Data Structures
-    -   Data Types
-    -   Job Informations
--   Imputation
-    -   Missing Values
-    -   Outliers
--   Resolving Skewness
--   Binning
--   Optimal Binning
+- Overview
+  - Data Structures
+  - Data Types
+  - Job Informations
+- Imputation
+  - Missing Values
+  - Outliers
+- Resolving Skewness
+- Binning
+- Optimal Binning
 
 ##### Some arguments for dynamic web report
 
 transformation_web_report() generates various reports with the following
 arguments.
 
--   target
-    -   target variable
--   output_file
-    -   name of generated file.
--   output_dir
-    -   name of directory to generate report file.
--   title
-    -   title of report.
--   subtitle
-    -   subtitle of report.
--   author
-    -   author of report.
--   title_color
-    -   color of title.
--   logo_img
-    -   name of logo image file on top left.
--   create_date
-    -   The date on which the report is generated.
--   theme
-    -   name of theme for report. support “orange” and “blue”.
--   sample_percent
-    -   Sample percent of data for performing data transformation.
+- target
+  - target variable
+- output_file
+  - name of generated file.
+- output_dir
+  - name of directory to generate report file.
+- title
+  - title of report.
+- subtitle
+  - subtitle of report.
+- author
+  - author of report.
+- title_color
+  - color of title.
+- logo_img
+  - name of logo image file on top left.
+- create_date
+  - The date on which the report is generated.
+- theme
+  - name of theme for report. support “orange” and “blue”.
+- sample_percent
+  - Sample percent of data for performing data transformation.
 
 The following script creates a data transformation report for the
 `tbl_df` class object, `heartfailure`.
@@ -2493,10 +2544,16 @@ heartfailure %>%
 
 ##### Screenshot of dynamic report
 
--   The dynamic contents of the report is shown in the following
-    figure.:
+- The dynamic contents of the report is shown in the following figure.:
 
-<img src="vignettes/img/transformation_web_title.jpg" title="The part of the report" alt="The part of the report" width="60%" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+
+<img src="vignettes/img/transformation_web_title.jpg" alt="The part of the report" width="60%" />
+<p class="caption">
+The part of the report
+</p>
+
+</div>
 
 #### Create a static report using `transformation_paged_report()`
 
@@ -2507,51 +2564,51 @@ inherited from data.frame(`tbl_df`, `tbl`, etc) or data.frame.
 
 The contents of the report are as follows.:
 
--   Overview
-    -   Data Structures
-    -   Job Informations
--   Imputation
-    -   Missing Values
-    -   Outliers
--   Resolving Skewness
--   Binning
--   Optimal Binning
+- Overview
+  - Data Structures
+  - Job Informations
+- Imputation
+  - Missing Values
+  - Outliers
+- Resolving Skewness
+- Binning
+- Optimal Binning
 
 ##### Some arguments for static paged report
 
 transformation_paged_report() generates various reports with the
 following arguments.
 
--   target
-    -   target variable
--   output_format
-    -   report output type. Choose either “pdf” and “html”.
--   output_file
-    -   name of generated file.
--   output_dir
-    -   name of directory to generate report file.
--   title
-    -   title of report.
--   subtitle
-    -   subtitle of report.
--   abstract_title
-    -   abstract of report
--   author
-    -   author of report.
--   title_color
-    -   color of title.
--   subtitle_color
-    -   color of subtitle.
--   logo_img
-    -   name of logo image file on top left.
--   cover_img
-    -   name of cover image file on center.
--   create_date
-    -   The date on which the report is generated.
--   theme
-    -   name of theme for report. support “orange” and “blue”.
--   sample_percent
-    -   Sample percent of data for performing data tansformation.
+- target
+  - target variable
+- output_format
+  - report output type. Choose either “pdf” and “html”.
+- output_file
+  - name of generated file.
+- output_dir
+  - name of directory to generate report file.
+- title
+  - title of report.
+- subtitle
+  - subtitle of report.
+- abstract_title
+  - abstract of report
+- author
+  - author of report.
+- title_color
+  - color of title.
+- subtitle_color
+  - color of subtitle.
+- logo_img
+  - name of logo image file on top left.
+- cover_img
+  - name of cover image file on center.
+- create_date
+  - The date on which the report is generated.
+- theme
+  - name of theme for report. support “orange” and “blue”.
+- sample_percent
+  - Sample percent of data for performing data tansformation.
 
 The following script creates a data transformation report for the
 `data.frame` class object, `heartfailure`.
@@ -2565,13 +2622,27 @@ heartfailure %>%
 
 ##### Screenshot of static report
 
--   The cover of the report is shown in the following figure.:
+- The cover of the report is shown in the following figure.:
 
-<img src="vignettes/img/transformation_paged_cover.jpg" title="The part of the report" alt="The part of the report" width="60%" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
 
--   The contents of the report is shown in the following figure.:
+<img src="vignettes/img/transformation_paged_cover.jpg" alt="The part of the report" width="60%" />
+<p class="caption">
+The part of the report
+</p>
 
-<img src="vignettes/img/transformation_paged_content.jpg" title="The dynamic contents of the report" alt="The dynamic contents of the report" width="60%" style="display: block; margin: auto;" />
+</div>
+
+- The contents of the report is shown in the following figure.:
+
+<div class="figure" style="text-align: center">
+
+<img src="vignettes/img/transformation_paged_content.jpg" alt="The dynamic contents of the report" width="60%" />
+<p class="caption">
+The dynamic contents of the report
+</p>
+
+</div>
 
 ## Supports table of DBMS
 
@@ -2589,32 +2660,32 @@ the data size is large, the execution speed may be slow. It supports the
 collect_size argument, which allows you to import the specified number
 of samples of data into R.
 
--   In-database support functions
-    -   `diagonse()`
-    -   `diagnose_category()`
--   In-database not support functions
-    -   `diagnose_numeric()`
-    -   `diagnose_outlier()`  
-    -   `plot_outlier()`  
-    -   `diagnose_web_report()`
-    -   `diagnose_paged_report()`  
-    -   `normality()`
-    -   `plot_normality()`  
-    -   `correlate()`  
-    -   `plot.correlate()`
-    -   `describe()`
-    -   `eda_web_report()`
-    -   `eda_paged_report()`
+- In-database support functions
+  - `diagonse()`
+  - `diagnose_category()`
+- In-database not support functions
+  - `diagnose_numeric()`
+  - `diagnose_outlier()`  
+  - `plot_outlier()`  
+  - `diagnose_web_report()`
+  - `diagnose_paged_report()`  
+  - `normality()`
+  - `plot_normality()`  
+  - `correlate()`  
+  - `plot.correlate()`
+  - `describe()`
+  - `eda_web_report()`
+  - `eda_paged_report()`
 
 #### How to use functions
 
--   Function calls using the In-database mode
-    -   in_database = TRUE
--   Function calls using the In-memory mode
-    -   in_database = FALSE
--   Diagnosis and EDA using sample data from DBMS
-    -   collect_size = <sample size>
-    -   only In-memory mode
+- Function calls using the In-database mode
+  - in_database = TRUE
+- Function calls using the In-memory mode
+  - in_database = FALSE
+- Diagnosis and EDA using sample data from DBMS
+  - collect_size = <sample size>
+  - only In-memory mode
 
 ### Preparing table data
 
@@ -2667,7 +2738,7 @@ con_sqlite %>%
 #>  7 ShelveLoc   character             0            0               3      0.0075
 #>  8 Age         double                0            0              56      0.14  
 #>  9 Education   double                0            0               9      0.0225
-#> 10 Urban       character             5            1.25            3      0.0075
+#> 10 Urban       character             5            1.25            2      0.005 
 #> 11 US          character             0            0               2      0.005
 
 # Positions values select columns, and In-memory mode
@@ -2678,7 +2749,7 @@ con_sqlite %>%
 #>   variables types   missing_count missing_percent unique_count unique_rate
 #>   <chr>     <chr>           <int>           <dbl>        <int>       <dbl>
 #> 1 Sales     numeric             0               0          336       0.84 
-#> 2 Income    numeric            20               5           98       0.245
+#> 2 Income    numeric            20               5           99       0.248
 #> 3 Age       numeric             0               0           56       0.14
 ```
 
@@ -2709,7 +2780,7 @@ con_sqlite %>%
 #>   <chr>       <dbl>  <dbl>  <dbl>  <dbl>  <dbl> <dbl> <int> <int>   <int>
 #> 1 Sales           0   5.39   7.50   7.49   9.32  16.3     1     0       2
 #> 2 CompPrice      77 115    125.   125    135    175       0     0       2
-#> 3 Income         21  42     68.7   69     92    120       0     0       0
+#> 3 Income         21  42     68.3   68.5   91    120       0     0       0
 #> 4 Advertising     0   0      6.64   5     12     29     144     0       0
 #> 5 Population     10 139    265.   272    398.   509       0     0       0
 #> 6 Price          24 100    116.   117    131    191       0     0       5
@@ -2788,15 +2859,15 @@ con_sqlite %>%
 #>   described_variables ShelveLoc US        n    na  mean    sd se_mean   IQR
 #>   <chr>               <chr>     <chr> <int> <int> <dbl> <dbl>   <dbl> <dbl>
 #> 1 Sales               Bad       No       23     0  5.36  1.91   0.398  2.32
-#> 2 Sales               Bad       Yes      51     0  5.59  2.57   0.359  3.76
+#> 2 Sales               Bad       Yes      50     0  5.69  2.49   0.352  3.71
 #> 3 Sales               Good      No       18     0  9.21  2.97   0.700  3.71
-#> 4 Sales               Good      Yes      38     0 10.8   2.22   0.360  2.97
-#> 5 Sales               Medium    No       54     0  6.92  2.08   0.283  3.18
-#> 6 Sales               Medium    Yes      96     0  7.55  2.19   0.224  3.39
-#> # … with 19 more variables: skewness <dbl>, kurtosis <dbl>, p00 <dbl>,
-#> #   p01 <dbl>, p05 <dbl>, p10 <dbl>, p20 <dbl>, p25 <dbl>, p30 <dbl>,
-#> #   p40 <dbl>, p50 <dbl>, p60 <dbl>, p70 <dbl>, p75 <dbl>, p80 <dbl>,
-#> #   p90 <dbl>, p95 <dbl>, p99 <dbl>, p100 <dbl>
+#> 4 Sales               Good      Yes      39     0 10.9   2.32   0.372  3.12
+#> 5 Sales               Medium    No       55     0  6.96  2.07   0.280  3.16
+#> 6 Sales               Medium    Yes      94     0  7.47  2.12   0.219  3.14
+#> # ℹ 19 more variables: skewness <dbl>, kurtosis <dbl>, p00 <dbl>, p01 <dbl>,
+#> #   p05 <dbl>, p10 <dbl>, p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>,
+#> #   p50 <dbl>, p60 <dbl>, p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>,
+#> #   p95 <dbl>, p99 <dbl>, p100 <dbl>
 ```
 
 #### Test of normality on numeric columns using in the DBMS
@@ -2817,7 +2888,7 @@ con_sqlite %>%
 #> # A tibble: 1 × 6
 #>   variable   ShelveLoc US    statistic p_value sample
 #>   <chr>      <chr>     <chr>     <dbl>   <dbl>  <dbl>
-#> 1 log_income Bad       No        0.945  0.0938     34
+#> 1 log_income Bad       No        0.942  0.0913     34
 ```
 
 #### Normalization visualization of numerical column in the DBMS
@@ -2848,16 +2919,15 @@ con_sqlite %>%
   correlate(Sales) %>%
   filter(coef_corr < 0) %>%
   filter(abs(coef_corr) > 0.5)
-#> # A tibble: 7 × 5
+#> # A tibble: 6 × 5
 #>   Urban US    var1  var2       coef_corr
 #>   <chr> <chr> <fct> <fct>          <dbl>
-#> 1 No    No    Sales Income        -1    
-#> 2 No    No    Sales Population    -0.530
-#> 3 No    No    Sales Price         -0.838
-#> 4 No    Yes   Sales Price         -0.644
-#> 5 Yes   No    Sales Price         -0.833
-#> 6 Yes   No    Sales Age           -0.649
-#> 7 Yes   Yes   Sales Price         -0.559
+#> 1 No    No    Sales Population    -0.530
+#> 2 No    No    Sales Price         -0.838
+#> 3 No    Yes   Sales Price         -0.644
+#> 4 Yes   No    Sales Price         -0.833
+#> 5 Yes   No    Sales Age           -0.649
+#> 6 Yes   Yes   Sales Price         -0.604
 ```
 
 #### Visualize correlation plot of numerical columns in the DBMS
@@ -2874,7 +2944,7 @@ con_sqlite %>%
   plot()
 ```
 
-![](figures/README-plot_correlation_dbi-1.png)<!-- -->![](figures/README-plot_correlation_dbi-2.png)<!-- -->![](figures/README-plot_correlation_dbi-3.png)<!-- -->![](figures/README-plot_correlation_dbi-4.png)<!-- -->![](figures/README-plot_correlation_dbi-5.png)<!-- -->
+![](figures/README-plot_correlation_dbi-1.png)<!-- -->![](figures/README-plot_correlation_dbi-2.png)<!-- -->![](figures/README-plot_correlation_dbi-3.png)<!-- -->![](figures/README-plot_correlation_dbi-4.png)<!-- -->
 
 #### EDA based on target variable
 
@@ -2889,15 +2959,15 @@ categ <- target_by(con_sqlite %>% tbl("TB_CARSEATS") , US)
 cat_num <- relate(categ, Sales)
 cat_num
 #> # A tibble: 3 × 27
-#>   described_varia… US        n    na  mean    sd se_mean   IQR skewness kurtosis
-#>   <chr>            <fct> <int> <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>    <dbl>
-#> 1 Sales            No      142     0  6.82  2.60   0.218  3.44   0.323    0.808 
-#> 2 Sales            Yes     258     0  7.87  2.88   0.179  4.23   0.0760  -0.326 
-#> 3 Sales            total   400     0  7.50  2.82   0.141  3.93   0.186   -0.0809
-#> # … with 17 more variables: p00 <dbl>, p01 <dbl>, p05 <dbl>, p10 <dbl>,
-#> #   p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>, p60 <dbl>,
-#> #   p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>, p99 <dbl>,
-#> #   p100 <dbl>
+#>   described_variables US        n    na  mean    sd se_mean   IQR skewness
+#>   <chr>               <fct> <int> <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>
+#> 1 Sales               No      142     0  6.82  2.60   0.218  3.44   0.323 
+#> 2 Sales               Yes     258     0  7.87  2.88   0.179  4.23   0.0760
+#> 3 Sales               total   400     0  7.50  2.82   0.141  3.93   0.186 
+#> # ℹ 18 more variables: kurtosis <dbl>, p00 <dbl>, p01 <dbl>, p05 <dbl>,
+#> #   p10 <dbl>, p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>, p50 <dbl>,
+#> #   p60 <dbl>, p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>,
+#> #   p99 <dbl>, p100 <dbl>
 summary(cat_num)
 #>  described_variables     US          n               na         mean      
 #>  Length:3            No   :1   Min.   :142.0   Min.   :0   Min.   :6.823  
