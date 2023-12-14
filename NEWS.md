@@ -1,8 +1,8 @@
-# dlookr 0.6.3
+# dlookr 0.6.3.9002
 
 ## NEW FEATURES
   
-* New data medicost. (#107)
+* New data medicost and Carseats. (#107)
 
 ## MINOR CHANGES
 

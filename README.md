@@ -44,7 +44,7 @@ devtools::install_github("choonghyunryu/dlookr")
 Or you can get the development version with vignettes from GitHub:
 
 ``` r
-install.packages(c("ISLR", "DBI", "RSQLite"))
+install.packages(c("DBI", "RSQLite"))
 devtools::install_github("choonghyunryu/dlookr", build_vignettes = TRUE)
 ```
 
@@ -510,7 +510,6 @@ set containing sales of child car seats at 400 different stores. This
 data is a data.frame created for the purpose of predicting sales volume.
 
 ``` r
-library(ISLR)
 str(Carseats)
 #> 'data.frame':    400 obs. of  11 variables:
 #>  $ Sales      : num  9.5 11.22 10.06 7.4 4.15 ...
@@ -562,7 +561,7 @@ missing values. So the following script created the missing values and
 saved them as `carseats`.
 
 ``` r
-carseats <- ISLR::Carseats
+carseats <- Carseats
 
 suppressWarnings(RNGversion("3.5.0"))
 set.seed(123)
@@ -1410,42 +1409,15 @@ library(mice)
 #> 
 #>     cbind, rbind
 
-urban <- imputate_na(carseats, Urban, US, method = "mice")
-#> 
-#>  iter imp variable
-#>   1   1  Income  Urban
-#>   1   2  Income  Urban
-#>   1   3  Income  Urban
-#>   1   4  Income  Urban
-#>   1   5  Income  Urban
-#>   2   1  Income  Urban
-#>   2   2  Income  Urban
-#>   2   3  Income  Urban
-#>   2   4  Income  Urban
-#>   2   5  Income  Urban
-#>   3   1  Income  Urban
-#>   3   2  Income  Urban
-#>   3   3  Income  Urban
-#>   3   4  Income  Urban
-#>   3   5  Income  Urban
-#>   4   1  Income  Urban
-#>   4   2  Income  Urban
-#>   4   3  Income  Urban
-#>   4   4  Income  Urban
-#>   4   5  Income  Urban
-#>   5   1  Income  Urban
-#>   5   2  Income  Urban
-#>   5   3  Income  Urban
-#>   5   4  Income  Urban
-#>   5   5  Income  Urban
+urban <- imputate_na(carseats, Urban, US, method = "mice", print_flag = FALSE)
 
 # result of imputation
 urban
 #>   [1] Yes Yes Yes Yes Yes No  Yes Yes No  No  No  Yes Yes Yes Yes No  Yes Yes
-#>  [19] No  Yes Yes No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes Yes Yes No 
+#>  [19] No  Yes Yes No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes Yes Yes Yes
 #>  [37] No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes
 #>  [55] No  Yes Yes Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes Yes Yes Yes No 
-#>  [73] Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes No  No  Yes No  Yes No 
+#>  [73] Yes No  No  No  Yes No  Yes Yes Yes Yes Yes No  No  No  Yes No  Yes No 
 #>  [91] No  Yes Yes Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes
 #> [109] Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes No 
 #> [127] Yes Yes Yes No  Yes Yes Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes
@@ -1457,9 +1429,9 @@ urban
 #> [235] No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes
 #> [253] Yes No  Yes Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes No  No  Yes Yes
 #> [271] Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes No  No  Yes No  Yes
-#> [289] No  Yes No  No  Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
-#> [307] Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No  No  No  Yes Yes Yes Yes
-#> [325] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No 
+#> [289] No  Yes No  Yes Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
+#> [307] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes No  No  No  Yes Yes Yes Yes
+#> [325] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No 
 #> [343] No  Yes No  Yes No  No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes
 #> [361] No  No  Yes Yes Yes No  No  Yes No  Yes Yes Yes No  Yes Yes Yes Yes No 
 #> [379] Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes No  Yes Yes
@@ -1488,9 +1460,9 @@ summary(urban)
 #> 
 #> * Information of Imputation (before vs after)
 #>      original imputation original_percent imputation_percent
-#> No        115        118            28.75               29.5
-#> Yes       275        282            68.75               70.5
-#> <NA>       10          0             2.50                0.0
+#> No        115        117            28.75              29.25
+#> Yes       275        283            68.75              70.75
+#> <NA>       10          0             2.50               0.00
 
 # viz of imputation
 plot(urban)
@@ -1892,14 +1864,14 @@ binning(carseats$Income, nbins = 5, type = "kmeans")
 #> binned type: kmeans
 #> number of bins: 5
 #> x
-#>      [21,49]    (49,70.5]  (70.5,87.5] (87.5,104.5]  (104.5,120]         <NA> 
-#>          115           86           68           62           49           20
+#>      [21,49]    (49,71.5]  (71.5,89.5] (89.5,106.5]  (106.5,120]         <NA> 
+#>          115           88           75           62           40           20
 binning(carseats$Income, nbins = 5, type = "bclust")
 #> binned type: bclust
 #> number of bins: 5
 #> x
-#>   [21,33.5] (33.5,55.5] (55.5,74.5] (74.5,96.5]  (96.5,120]        <NA> 
-#>          55          73          88          88          76          20
+#>     [21,49]   (49,67.5] (67.5,77.5] (77.5,94.5]  (94.5,120]        <NA> 
+#>         115          66          45          74          80          20
 
 # Extract the binned results
 extract(bin)
@@ -2702,7 +2674,7 @@ if (!require(dbplyr)) install.packages('dbplyr')
 library(dbplyr)
 library(dplyr)
 
-carseats <- ISLR::Carseats
+carseats <- Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 
@@ -2780,7 +2752,7 @@ con_sqlite %>%
 #>   <chr>       <dbl>  <dbl>  <dbl>  <dbl>  <dbl> <dbl> <int> <int>   <int>
 #> 1 Sales           0   5.39   7.50   7.49   9.32  16.3     1     0       2
 #> 2 CompPrice      77 115    125.   125    135    175       0     0       2
-#> 3 Income         21  42     68.3   68.5   91    120       0     0       0
+#> 3 Income         21  42     68.5   69     91.2  120       0     0       0
 #> 4 Advertising     0   0      6.64   5     12     29     144     0       0
 #> 5 Population     10 139    265.   272    398.   509       0     0       0
 #> 6 Price          24 100    116.   117    131    191       0     0       5
@@ -2859,11 +2831,11 @@ con_sqlite %>%
 #>   described_variables ShelveLoc US        n    na  mean    sd se_mean   IQR
 #>   <chr>               <chr>     <chr> <int> <int> <dbl> <dbl>   <dbl> <dbl>
 #> 1 Sales               Bad       No       23     0  5.36  1.91   0.398  2.32
-#> 2 Sales               Bad       Yes      50     0  5.69  2.49   0.352  3.71
+#> 2 Sales               Bad       Yes      50     0  5.58  2.59   0.366  3.77
 #> 3 Sales               Good      No       18     0  9.21  2.97   0.700  3.71
 #> 4 Sales               Good      Yes      39     0 10.9   2.32   0.372  3.12
 #> 5 Sales               Medium    No       55     0  6.96  2.07   0.280  3.16
-#> 6 Sales               Medium    Yes      94     0  7.47  2.12   0.219  3.14
+#> 6 Sales               Medium    Yes      94     0  7.60  2.20   0.227  3.24
 #> # ℹ 19 more variables: skewness <dbl>, kurtosis <dbl>, p00 <dbl>, p01 <dbl>,
 #> #   p05 <dbl>, p10 <dbl>, p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>,
 #> #   p50 <dbl>, p60 <dbl>, p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>,
@@ -2888,7 +2860,7 @@ con_sqlite %>%
 #> # A tibble: 1 × 6
 #>   variable   ShelveLoc US    statistic p_value sample
 #>   <chr>      <chr>     <chr>     <dbl>   <dbl>  <dbl>
-#> 1 log_income Bad       No        0.942  0.0913     34
+#> 1 log_income Bad       No        0.945  0.0938     34
 ```
 
 #### Normalization visualization of numerical column in the DBMS
