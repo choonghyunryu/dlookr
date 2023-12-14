@@ -45,14 +45,12 @@ Data diagnosis supports the following data structures.
 * **table of DBMS** : table of the DBMS through tbl_dbi.
   + **Use dplyr as the back-end interface for any DBI-compatible database.**
   
-## Data: flights
+## Data: nycflights13
 
-To illustrate basic use of the dlookr package, use the `flights` data in dlookr from the `nycflights13` package. The `flights` data frame is data about departure and arrival on all flights departing from NYC in 2013.
+To illustrate basic use of the dlookr package, use the `flights` data from the `nycflights13` package. The `flights` data frame is data about departure and arrival on all flights departing from NYC in 2013.
 
 ```{r import_data, warning=FALSE}
-if (!require(ISLR)) install.packages('ISLR', repos = "http://cran.us.r-project.org")
-
-data(flights)
+library(nycflights13)
 dim(flights)
 flights
 ```
@@ -534,14 +532,14 @@ Copy the `carseats` data frame to the SQLite DBMS and create it as a table named
 Mysql/MariaDB, PostgreSQL, Oracle DBMS, other DBMS are also available for your environment. 
 
 ```{r dbi_table, warning=FALSE, message=FALSE}
-if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
-if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
-if (!require(dplyr)) install.packages('dplyr', repos = "http://cran.us.r-project.org")
-if (!require(dbplyr)) install.packages('dbplyr', repos = "http://cran.us.r-project.org")
+if (!require(DBI)) install.packages('DBI')
+if (!require(RSQLite)) install.packages('RSQLite')
+if (!require(dplyr)) install.packages('dplyr')
+if (!require(dbplyr)) install.packages('dbplyr')
 
 library(dplyr)
 
-carseats <- ISLR::Carseats
+carseats <- Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 

@@ -51,7 +51,6 @@ Suggests:
     dbplyr,
     forecast (>= 8.3),
     Hmisc,
-    ISLR,
     partykit,    
     ppsr,    
     prettydoc,    

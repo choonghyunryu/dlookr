@@ -42,9 +42,7 @@ To illustrate the basic use of data transformation in the dlookr package, I use 
 `Carseats` in the `ISLR` package is simulation dataset that sells children's car seats at 400 stores. This data is a data.frame created for the purpose of predicting sales volume.
 
 ```{r import_data}
-if (!require("ISLR")) install.packages("ISLR", repos = "http://cran.us.r-project.org")
-
-str(ISLR::Carseats)
+str(Carseats)
 ```
 
 The contents of individual variables are as follows. (Refer to ISLR::Carseats Man page)
@@ -75,7 +73,7 @@ The contents of individual variables are as follows. (Refer to ISLR::Carseats Ma
 When data analysis is performed, data containing missing values is often encountered. However, `Carseats` is complete data without missing. Therefore, the missing values are generated as follows. And I created a data.frame object named carseats.
 
 ```{r missing}
-carseats <- ISLR::Carseats
+carseats <- Carseats
 
 suppressWarnings(RNGversion("3.5.0"))
 set.seed(123)
@@ -130,8 +128,6 @@ Here is a list of the data conversion functions and functions provided by dlookr
 In the following example, `imputate_na()` imputes the missing value of `Income`, a numeric variable of carseats, using the "rpart" method. `summary()` summarizes missing value imputation information, and `plot()` visualizes missing information.
 
 ```{r imputate_na, fig.align='center', fig.width = 7, fig.height = 5}
-# if (!require("rpart")) install.packages("rpart", repos = "http://cran.us.r-project.org")
-
 if (requireNamespace("rpart", quietly = TRUE)) {
   income <- imputate_na(carseats, Income, US, method = "rpart")
 
@@ -153,20 +149,16 @@ The following imputes the categorical variable `urban` by the "mice" method.
 ```{r imputate_na2, fig.align='center', fig.width = 7, fig.height = 5}
 library(mice)
 
-if (requireNamespace("ranger", quietly = TRUE)) {
-  urban <- imputate_na(carseats, Urban, US, method = "mice")
-  
-  # result of imputation
-  urban
-  
-  # summary of imputation
-  summary(urban)
-  
-  # viz of imputation
-  plot(urban)
-} else {
-  cat("If you want to use this feature, you need to install the 'ranger' package.\n")
-}
+urban <- imputate_na(carseats, Urban, US, method = "mice")
+
+# result of imputation
+urban
+
+# summary of imputation
+summary(urban)
+
+# viz of imputation
+plot(urban)
 ```
     
 ### Collaboration with dplyr
@@ -325,7 +317,7 @@ if (requireNamespace("classInt", quietly = TRUE)) {
   binning(carseats$Income, nbins = 5, type = "kmeans")
   binning(carseats$Income, nbins = 5, type = "bclust")
 } else {
-  cat("If you want to use this feature, you need to install the 'classInt' package.\n")
+  cat("If you want to use this feature, you need to install the classInt package.\n")
 }
 
 # Extract the binned results
@@ -352,32 +344,27 @@ carseats %>%
 The following `binning_by()` example optimally binning `Advertising` considering the target variable `US` with a binary class.
 
 ```{r binning_by, fig.width = 7, fig.height = 5}
-#if (!require("partykit")) install.packages("partykit", repos = "http://cran.us.r-project.org")
-if (requireNamespace("partykit", quietly = TRUE)) {
-  library(dplyr)
-  
-  # optimal binning using character
-  bin <- binning_by(carseats, "US", "Advertising")
-  
-  # optimal binning using name
-  bin <- binning_by(carseats, US, Advertising)
-  bin
-  
-  # summary optimal_bins class
-  summary(bin)
-  
-  # performance table
-  attr(bin, "performance")
-  
-  # visualize optimal_bins class
-  plot(bin)
-  
-  # extract binned results
-  extract(bin) %>% 
-    head(20)
-} else {
-  cat("If you want to use this feature, you need to install the 'partykit' package.\n")
-}
+library(dplyr)
+
+# optimal binning using character
+bin <- binning_by(carseats, "US", "Advertising")
+
+# optimal binning using name
+bin <- binning_by(carseats, US, Advertising)
+bin
+
+# summary optimal_bins class
+summary(bin)
+
+# performance table
+attr(bin, "performance")
+
+# visualize optimal_bins class
+plot(bin)
+
+# extract binned results
+extract(bin) %>% 
+  head(20)
 ```
 
 

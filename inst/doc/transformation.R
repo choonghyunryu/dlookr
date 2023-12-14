@@ -7,12 +7,10 @@ library(dplyr)
 library(ggplot2)
 
 ## ----import_data--------------------------------------------------------------
-if (!require("ISLR")) install.packages("ISLR", repos = "http://cran.us.r-project.org")
-
-str(ISLR::Carseats)
+str(Carseats)
 
 ## ----missing------------------------------------------------------------------
-carseats <- ISLR::Carseats
+carseats <- Carseats
 
 suppressWarnings(RNGversion("3.5.0"))
 set.seed(123)
@@ -23,8 +21,6 @@ set.seed(456)
 carseats[sample(seq(NROW(carseats)), 10), "Urban"] <- NA
 
 ## ----imputate_na, fig.align='center', fig.width = 7, fig.height = 5-----------
-# if (!require("rpart")) install.packages("rpart", repos = "http://cran.us.r-project.org")
-
 if (requireNamespace("rpart", quietly = TRUE)) {
   income <- imputate_na(carseats, Income, US, method = "rpart")
 
@@ -43,20 +39,16 @@ if (requireNamespace("rpart", quietly = TRUE)) {
 ## ----imputate_na2, fig.align='center', fig.width = 7, fig.height = 5----------
 library(mice)
 
-if (requireNamespace("ranger", quietly = TRUE)) {
-  urban <- imputate_na(carseats, Urban, US, method = "mice")
-  
-  # result of imputation
-  urban
-  
-  # summary of imputation
-  summary(urban)
-  
-  # viz of imputation
-  plot(urban)
-} else {
-  cat("If you want to use this feature, you need to install the 'ranger' package.\n")
-}
+urban <- imputate_na(carseats, Urban, US, method = "mice")
+
+# result of imputation
+urban
+
+# summary of imputation
+summary(urban)
+
+# viz of imputation
+plot(urban)
 
 ## ----imputate_na3-------------------------------------------------------------
 # The mean before and after the imputation of the Income variable
@@ -147,7 +139,7 @@ if (requireNamespace("classInt", quietly = TRUE)) {
   binning(carseats$Income, nbins = 5, type = "kmeans")
   binning(carseats$Income, nbins = 5, type = "bclust")
 } else {
-  cat("If you want to use this feature, you need to install the 'classInt' package.\n")
+  cat("If you want to use this feature, you need to install the classInt package.\n")
 }
 
 # Extract the binned results
@@ -167,32 +159,27 @@ carseats %>%
  head(10)
 
 ## ----binning_by, fig.width = 7, fig.height = 5--------------------------------
-#if (!require("partykit")) install.packages("partykit", repos = "http://cran.us.r-project.org")
-if (requireNamespace("partykit", quietly = TRUE)) {
-  library(dplyr)
-  
-  # optimal binning using character
-  bin <- binning_by(carseats, "US", "Advertising")
-  
-  # optimal binning using name
-  bin <- binning_by(carseats, US, Advertising)
-  bin
-  
-  # summary optimal_bins class
-  summary(bin)
-  
-  # performance table
-  attr(bin, "performance")
-  
-  # visualize optimal_bins class
-  plot(bin)
-  
-  # extract binned results
-  extract(bin) %>% 
-    head(20)
-} else {
-  cat("If you want to use this feature, you need to install the 'partykit' package.\n")
-}
+library(dplyr)
+
+# optimal binning using character
+bin <- binning_by(carseats, "US", "Advertising")
+
+# optimal binning using name
+bin <- binning_by(carseats, US, Advertising)
+bin
+
+# summary optimal_bins class
+summary(bin)
+
+# performance table
+attr(bin, "performance")
+
+# visualize optimal_bins class
+plot(bin)
+
+# extract binned results
+extract(bin) %>% 
+  head(20)
 
 ## ----trans_web_report, eval=FALSE---------------------------------------------
 #  heartfailure %>%

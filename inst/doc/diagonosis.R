@@ -7,9 +7,7 @@ library(dplyr)
 library(ggplot2)
 
 ## ----import_data, warning=FALSE-----------------------------------------------
-if (!require(ISLR)) install.packages('ISLR', repos = "http://cran.us.r-project.org")
-
-data(flights)
+library(nycflights13)
 dim(flights)
 flights
 
@@ -129,14 +127,14 @@ knitr::include_graphics('img/diag_paged_cover.jpg')
 knitr::include_graphics('img/diag_paged_content.jpg')
 
 ## ----dbi_table, warning=FALSE, message=FALSE----------------------------------
-if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
-if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
-if (!require(dplyr)) install.packages('dplyr', repos = "http://cran.us.r-project.org")
-if (!require(dbplyr)) install.packages('dbplyr', repos = "http://cran.us.r-project.org")
+if (!require(DBI)) install.packages('DBI')
+if (!require(RSQLite)) install.packages('RSQLite')
+if (!require(dplyr)) install.packages('dplyr')
+if (!require(dbplyr)) install.packages('dbplyr')
 
 library(dplyr)
 
-carseats <- ISLR::Carseats
+carseats <- Carseats
 carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
 carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
 
