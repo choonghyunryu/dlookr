@@ -28,7 +28,7 @@ The default is TRUE. if TRUE provides a base theme that focuses on typographic e
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
 
 \item{...}{arguments to be passed to methods, such as graphical parameters (see par).
-However, it only support las parameter. las is numeric in {0,1}; the style of axis labels.
+However, it only support las parameter. las is numeric in 0, 1; the style of axis labels.
 \itemize{
   \item 0 : always parallel to the axis [default],
   \item 1 : always horizontal to the axis,
