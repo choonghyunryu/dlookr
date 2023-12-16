@@ -1,9 +1,9 @@
 #' Flights data
 #' 
 #' @description 
-#' On-time data for all flights that departed NYC (i.e. JFK, LGA or EWR) in 2013. 
+#' Sample of on-time data for all flights that departed NYC (i.e. JFK, LGA or EWR) in 2013. 
 #' 
-#' @format A data frame with 336776 rows and 19 variables. The variables are as follows:
+#' @format A data frame with 3000 rows and 19 variables. The variables are as follows:
 #' \describe{
 #'   \item{year, month, day}{Date of departure.}
 #'   \item{dep_time, arr_time}{Actual departure and arrival times (format HHMM or HMM), local tz.}
@@ -27,5 +27,6 @@
 #' "Flights data" in nycflights13 package <https://github.com/hadley/nycflights13>, License : CC0(Public Domain)
 NULL
 
-# library(nycflights13)
-# save(flights, file = "data/flights.rda")
+# set.seed(1234)
+# flights <- nycflights13::flights[sample(NROW(nycflights13::flights), size = 3000), ]
+# save(flights, file = "data/flights.rda", version = 2)

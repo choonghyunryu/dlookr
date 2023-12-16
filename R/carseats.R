@@ -25,4 +25,4 @@
 #' "Sales of Child Car Seats" in ISLR package <https://CRAN.R-project.org/package=ISLR>, License : GPL-2
 NULL
 # Carseats <- ISLR::Carseats
-# save(Carseats, file = "data/Carseats.rda")
+# save(Carseats, file = "data/Carseats.rda", version = 2)

@@ -5,7 +5,7 @@
 \alias{flights}
 \title{Flights data}
 \format{
-A data frame with 336776 rows and 19 variables. The variables are as follows:
+A data frame with 3000 rows and 19 variables. The variables are as follows:
 \describe{
   \item{year, month, day}{Date of departure.}
   \item{dep_time, arr_time}{Actual departure and arrival times (format HHMM or HMM), local tz.}
@@ -29,6 +29,6 @@ RITA, Bureau of transportation statistics, <https://www.transtats.bts.gov/DL_Sel
 data(flights)
 }
 \description{
-On-time data for all flights that departed NYC (i.e. JFK, LGA or EWR) in 2013.
+Sample of on-time data for all flights that departed NYC (i.e. JFK, LGA or EWR) in 2013.
 }
 \keyword{datasets}

@@ -364,7 +364,7 @@ plot.transform <- function(x, typographic = TRUE, base_family = NULL, ...) {
 #' ## create html file. file name is Transformation_heartfailure.html
 #' #transformation_report(heartfailure, death_event, output_format = "html", 
 #' #                      output_file = "Transformation_heartfailure.html")
-#' }
+#' #}
 #' }
 #' 
 #' @importFrom knitr knit2pdf
