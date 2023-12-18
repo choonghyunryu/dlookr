@@ -46,11 +46,13 @@ heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
 # plot(platelets)
 
 # If the variable of interest is a categorical variables
-smoking <- imputate_na(heartfailure2, smoking, death_event, method = "mice")
-smoking
-summary(smoking)
+# The "mice" method must require the `mice`, `ranger` package. 
+# If you want to use this feature, you need to install the `mice` and `ranger` package.
+# smoking <- imputate_na(heartfailure2, smoking, death_event, method = "mice")
+# smoking
+# summary(smoking)
 
-plot(smoking)
+# plot(smoking)
 
 # Impute outliers ----------------------------------
 # If the variable of interest is a numerical variable

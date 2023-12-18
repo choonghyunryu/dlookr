@@ -44,11 +44,13 @@ plot(bin)
 bin <- binning(heartfailure2$platelets, nbins = 5, type = "pretty")
 plot(bin)
 
-bin <- binning(heartfailure2$platelets, nbins = 5, type = "kmeans")
-plot(bin)
+# "kmeans" and "bclust" was implemented by classInt::classIntervals() function.
+# So, you must install classInt package.
+# bin <- binning(heartfailure2$platelets, nbins = 5, type = "kmeans")
+# plot(bin)
 
-bin <- binning(heartfailure2$platelets, nbins = 5, type = "bclust")
-plot(bin)
+# bin <- binning(heartfailure2$platelets, nbins = 5, type = "bclust")
+# plot(bin)
 }
 
 }

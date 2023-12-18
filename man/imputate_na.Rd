@@ -88,6 +88,8 @@ imputate_na(heartfailure2, platelets, method = "median")
 
 # Replace the missing value of the smoking variable with mice
 # The target variable is death_event.
+# The "mice" method must require the `mice`, `ranger` package. 
+# If you want to use this feature, you need to install the `mice` and `ranger` package.
 # imputate_na(heartfailure2, smoking, death_event, method = "mice")
 
 ## using dplyr -------------------------------------

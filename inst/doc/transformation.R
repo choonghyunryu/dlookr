@@ -36,19 +36,19 @@ if (requireNamespace("rpart", quietly = TRUE)) {
   cat("If you want to use this feature, you need to install the rpart package.\n")
 }
 
-## ----imputate_na2, fig.align='center', fig.width = 6, fig.height = 4----------
-library(mice)
-
-urban <- imputate_na(carseats, Urban, US, method = "mice")
-
-# result of imputation
-urban
-
-# summary of imputation
-summary(urban)
-
-# viz of imputation
-plot(urban)
+## ----imputate_na2, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE----
+#  library(mice)
+#  
+#  urban <- imputate_na(carseats, Urban, US, method = "mice")
+#  
+#  # result of imputation
+#  urban
+#  
+#  # summary of imputation
+#  summary(urban)
+#  
+#  # viz of imputation
+#  plot(urban)
 
 ## ----imputate_na3-------------------------------------------------------------
 # The mean before and after the imputation of the Income variable

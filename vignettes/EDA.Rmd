@@ -621,12 +621,7 @@ In this case, if the data size is large, the execution speed may be slow. It sup
 Copy the `carseats` data frame to the SQLite DBMS and create it as a table named `TB_CARSEATS`.
 Mysql/MariaDB, PostgreSQL, Oracle DBMS, other DBMS are also available for your environment. 
 
-```{r dbi_table, warning=FALSE, message=FALSE}
-if (!require(DBI)) install.packages('DBI')
-if (!require(RSQLite)) install.packages('RSQLite')
-if (!require(dplyr)) install.packages('dplyr')
-if (!require(dbplyr)) install.packages('dbplyr')
-
+```{r dbi_table, warning=FALSE, message=FALSE, eval=FALSE}
 library(dplyr)
 
 carseats <- Carseats
@@ -644,7 +639,7 @@ copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
 Use `dplyr::tbl()` to create a tbl_dbi object, then use it as a data frame object. That is, the data argument of all EDA function is specified as tbl_dbi object instead of data frame object.
 
 
-```{r dbi_describe}
+```{r dbi_describe, eval=FALSE}
 # Positive values select variables
 con_sqlite %>% 
   tbl("TB_CARSEATS") %>% 
@@ -673,7 +668,7 @@ con_sqlite %>%
 ```
 
 ### Test of normality on numeric columns using in the DBMS
-```{r dbi_normality}
+```{r dbi_normality, eval=FALSE}
 # Test all numerical variables by 'ShelveLoc' and 'US',
 # and extract only those with 'ShelveLoc' variable level is "Good".
 con_sqlite %>% 
@@ -705,7 +700,7 @@ con_sqlite %>%
 ```
 
 ### Normalization visualization of numerical column in the DBMS
-```{r plot_normality_dbi, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE}
+```{r plot_normality_dbi, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE, eval=FALSE}
 # extract only those with 'ShelveLoc' variable level is "Good",
 # and plot 'Income' by 'US'
 # the result is same as a data.frame, but not display here. reference above in document.
@@ -717,7 +712,7 @@ con_sqlite %>%
 ```
 
 ### Compute the correlation coefficient between two columns of table in DBMS
-```{r dbi_correlation}
+```{r dbi_correlation, eval=FALSE}
 # Correlation coefficient
 # that eliminates redundant combination of variables
 con_sqlite %>% 
@@ -769,7 +764,7 @@ con_sqlite %>%
 ### EDA based on target variable
 The following is an EDA where the target column is character and the predictor column is a numeric type.
 
-```{r dbi_ctarget_by}
+```{r dbi_ctarget_by, eval=FALSE}
 # If the target variable is a categorical variable
 categ <- target_by(con_sqlite %>% tbl("TB_CARSEATS") , US)
 

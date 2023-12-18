@@ -73,6 +73,8 @@
 #' 
 #' # Replace the missing value of the smoking variable with mice
 #' # The target variable is death_event.
+#' # The "mice" method must require the `mice`, `ranger` package. 
+#' # If you want to use this feature, you need to install the `mice` and `ranger` package.
 #' # imputate_na(heartfailure2, smoking, death_event, method = "mice")
 #' 
 #' ## using dplyr -------------------------------------
@@ -522,11 +524,13 @@ imputate_outlier_impl <- function(df, xvar, method, no_attrs = FALSE,
 #' # plot(platelets)
 #'
 #' # If the variable of interest is a categorical variables
-#' smoking <- imputate_na(heartfailure2, smoking, death_event, method = "mice")
-#' smoking
-#' summary(smoking)
+#' # The "mice" method must require the `mice`, `ranger` package. 
+#' # If you want to use this feature, you need to install the `mice` and `ranger` package.
+#' # smoking <- imputate_na(heartfailure2, smoking, death_event, method = "mice")
+#' # smoking
+#' # summary(smoking)
 #' 
-#' plot(smoking)
+#' # plot(smoking)
 #'
 #' # Impute outliers ----------------------------------
 #' # If the variable of interest is a numerical variable
@@ -657,11 +661,13 @@ summary.imputation <- function(object, ...) {
 #' # plot(platelets)
 #'
 #' # If the variable of interest is a categorical variables
-#' smoking <- imputate_na(heartfailure2, smoking, death_event, method = "mice")
-#' smoking
-#' summary(smoking)
+#' # The "mice" method must require the `mice`, `ranger` package. 
+#' # If you want to use this feature, you need to install the `mice` and `ranger` package.
+#' # smoking <- imputate_na(heartfailure2, smoking, death_event, method = "mice")
+#' # smoking
+#' # summary(smoking)
 #' 
-#' plot(smoking)
+#' # plot(smoking)
 #'
 #' # Impute outliers ----------------------------------
 #' # If the variable of interest is a numerical variable

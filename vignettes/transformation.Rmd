@@ -146,7 +146,9 @@ if (requireNamespace("rpart", quietly = TRUE)) {
 
 The following imputes the categorical variable `urban` by the "mice" method.
 
-```{r imputate_na2, fig.align='center', fig.width = 6, fig.height = 4}
+The "mice" method must require the `mice`, `ranger` package. If you want to use this feature, you need to install the `mice` and `ranger` package.
+
+```{r imputate_na2, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE}
 library(mice)
 
 urban <- imputate_na(carseats, Urban, US, method = "mice")

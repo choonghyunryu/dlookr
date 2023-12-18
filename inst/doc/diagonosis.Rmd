@@ -530,12 +530,7 @@ In this case, if the data size is large, the execution speed may be slow. It sup
 Copy the `carseats` data frame to the SQLite DBMS and create it as a table named `TB_CARSEATS`.
 Mysql/MariaDB, PostgreSQL, Oracle DBMS, other DBMS are also available for your environment. 
 
-```{r dbi_table, warning=FALSE, message=FALSE}
-if (!require(DBI)) install.packages('DBI')
-if (!require(RSQLite)) install.packages('RSQLite')
-if (!require(dplyr)) install.packages('dplyr')
-if (!require(dbplyr)) install.packages('dbplyr')
-
+```{r dbi_table, warning=FALSE, message=FALSE, eval=FALSE}
 library(dplyr)
 
 carseats <- Carseats
@@ -552,7 +547,7 @@ copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
 ### Diagnose data quality of variables in the DBMS
 Use `dplyr::tbl()` to create a tbl_dbi object, then use it as a data frame object. That is, the data argument of all diagnose function is specified as tbl_dbi object instead of data frame object.
 
-```{r dbi_diag}
+```{r dbi_diag, eval=FALSE}
 # Diagnosis of all columns
 con_sqlite %>% 
   tbl("TB_CARSEATS") %>% 
@@ -570,7 +565,7 @@ con_sqlite %>%
 ```
 
 ### Diagnose data quality of categorical variables in the DBMS
-```{r dbi_category}
+```{r dbi_category, eval=FALSE}
 # Positions values select variables, and In-memory mode and collect size is 200
 con_sqlite %>% 
   tbl("TB_CARSEATS") %>% 
@@ -583,7 +578,7 @@ con_sqlite %>%
 ```
 
 ### Diagnose data quality of numerical variables in the DBMS
-```{r dbi_numeric}
+```{r dbi_numeric, eval=FALSE}
 # Diagnosis of all numerical variables
 con_sqlite %>% 
   tbl("TB_CARSEATS") %>% 
@@ -596,7 +591,7 @@ con_sqlite %>%
 ```
 
 ### Diagnose outlier of numerical variables in the DBMS
-```{r dbi_outlier}
+```{r dbi_outlier, eval=FALSE}
 con_sqlite %>% 
   tbl("TB_CARSEATS") %>% 
   diagnose_outlier()  %>%
@@ -604,7 +599,7 @@ con_sqlite %>%
 ```
 
 ### Plot outlier information of numerical data diagnosis in the DBMS
-```{r plot_outlier_dbi, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE}
+```{r plot_outlier_dbi, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE, eval=FALSE}
 # Visualization of numerical variables with a ratio of
 # outliers greater than 1%
 # the result is same as a data.frame, but not display here. reference above in document.

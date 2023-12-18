@@ -12,7 +12,7 @@
 
 <meta name="author" content="Choonghyun Ryu" />
 
-<meta name="date" content="2023-12-15" />
+<meta name="date" content="2023-12-16" />
 
 <title>Exploratory Data Analysis</title>
 
@@ -340,7 +340,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Exploratory Data Analysis</h1>
 <h4 class="author">Choonghyun Ryu</h4>
-<h4 class="date">2023-12-15</h4>
+<h4 class="date">2023-12-16</h4>
 
 
 
@@ -1444,22 +1444,17 @@ of samples of data into R.</p>
 create it as a table named <code>TB_CARSEATS</code>. Mysql/MariaDB,
 PostgreSQL, Oracle DBMS, other DBMS are also available for your
 environment.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(DBI)) <span class="fu">install.packages</span>(<span class="st">&#39;DBI&#39;</span>)</span>
-<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(RSQLite)) <span class="fu">install.packages</span>(<span class="st">&#39;RSQLite&#39;</span>)</span>
-<span id="cb35-3"><a href="#cb35-3" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(dplyr)) <span class="fu">install.packages</span>(<span class="st">&#39;dplyr&#39;</span>)</span>
-<span id="cb35-4"><a href="#cb35-4" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(dbplyr)) <span class="fu">install.packages</span>(<span class="st">&#39;dbplyr&#39;</span>)</span>
-<span id="cb35-5"><a href="#cb35-5" tabindex="-1"></a></span>
-<span id="cb35-6"><a href="#cb35-6" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb35-7"><a href="#cb35-7" tabindex="-1"></a></span>
-<span id="cb35-8"><a href="#cb35-8" tabindex="-1"></a>carseats <span class="ot">&lt;-</span> Carseats</span>
-<span id="cb35-9"><a href="#cb35-9" tabindex="-1"></a>carseats[<span class="fu">sample</span>(<span class="fu">seq</span>(<span class="fu">NROW</span>(carseats)), <span class="dv">20</span>), <span class="st">&quot;Income&quot;</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb35-10"><a href="#cb35-10" tabindex="-1"></a>carseats[<span class="fu">sample</span>(<span class="fu">seq</span>(<span class="fu">NROW</span>(carseats)), <span class="dv">5</span>), <span class="st">&quot;Urban&quot;</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb35-11"><a href="#cb35-11" tabindex="-1"></a></span>
-<span id="cb35-12"><a href="#cb35-12" tabindex="-1"></a><span class="co"># connect DBMS</span></span>
-<span id="cb35-13"><a href="#cb35-13" tabindex="-1"></a>con_sqlite <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(RSQLite<span class="sc">::</span><span class="fu">SQLite</span>(), <span class="st">&quot;:memory:&quot;</span>)</span>
-<span id="cb35-14"><a href="#cb35-14" tabindex="-1"></a></span>
-<span id="cb35-15"><a href="#cb35-15" tabindex="-1"></a><span class="co"># copy carseats to the DBMS with a table named TB_CARSEATS</span></span>
-<span id="cb35-16"><a href="#cb35-16" tabindex="-1"></a><span class="fu">copy_to</span>(con_sqlite, carseats, <span class="at">name =</span> <span class="st">&quot;TB_CARSEATS&quot;</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" tabindex="-1"></a>carseats <span class="ot">&lt;-</span> Carseats</span>
+<span id="cb35-4"><a href="#cb35-4" tabindex="-1"></a>carseats[<span class="fu">sample</span>(<span class="fu">seq</span>(<span class="fu">NROW</span>(carseats)), <span class="dv">20</span>), <span class="st">&quot;Income&quot;</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb35-5"><a href="#cb35-5" tabindex="-1"></a>carseats[<span class="fu">sample</span>(<span class="fu">seq</span>(<span class="fu">NROW</span>(carseats)), <span class="dv">5</span>), <span class="st">&quot;Urban&quot;</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb35-6"><a href="#cb35-6" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" tabindex="-1"></a><span class="co"># connect DBMS</span></span>
+<span id="cb35-8"><a href="#cb35-8" tabindex="-1"></a>con_sqlite <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(RSQLite<span class="sc">::</span><span class="fu">SQLite</span>(), <span class="st">&quot;:memory:&quot;</span>)</span>
+<span id="cb35-9"><a href="#cb35-9" tabindex="-1"></a></span>
+<span id="cb35-10"><a href="#cb35-10" tabindex="-1"></a><span class="co"># copy carseats to the DBMS with a table named TB_CARSEATS</span></span>
+<span id="cb35-11"><a href="#cb35-11" tabindex="-1"></a><span class="fu">copy_to</span>(con_sqlite, carseats, <span class="at">name =</span> <span class="st">&quot;TB_CARSEATS&quot;</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 </div>
 <div id="calculating-descriptive-statistics-of-numerical-column-of-table-in-the-dbms" class="section level3">
 <h3>Calculating descriptive statistics of numerical column of table in
@@ -1471,71 +1466,27 @@ is specified as tbl_dbi object instead of data frame object.</p>
 <span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a>con_sqlite <span class="sc">%&gt;%</span> </span>
 <span id="cb36-3"><a href="#cb36-3" tabindex="-1"></a>  <span class="fu">tbl</span>(<span class="st">&quot;TB_CARSEATS&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb36-4"><a href="#cb36-4" tabindex="-1"></a>  <span class="fu">describe</span>(Sales, CompPrice, Income)</span>
-<span id="cb36-5"><a href="#cb36-5" tabindex="-1"></a><span class="co"># A tibble: 3 × 26</span></span>
-<span id="cb36-6"><a href="#cb36-6" tabindex="-1"></a>  described_variables     n    na   mean    sd se_mean   IQR skewness kurtosis</span>
-<span id="cb36-7"><a href="#cb36-7" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>               <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span>  <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>   <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>    <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>    <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
-<span id="cb36-8"><a href="#cb36-8" tabindex="-1"></a><span class="dv">1</span> Sales                 <span class="dv">400</span>     <span class="dv">0</span>   <span class="fl">7.50</span>  <span class="fl">2.82</span>   <span class="fl">0.141</span>  <span class="fl">3.93</span>   <span class="fl">0.186</span>   <span class="sc">-</span><span class="fl">0.0809</span></span>
-<span id="cb36-9"><a href="#cb36-9" tabindex="-1"></a><span class="dv">2</span> CompPrice             <span class="dv">400</span>     <span class="dv">0</span> <span class="fl">125.</span>   <span class="fl">15.3</span>    <span class="fl">0.767</span> <span class="dv">20</span>     <span class="sc">-</span><span class="fl">0.0428</span>   <span class="fl">0.0417</span></span>
-<span id="cb36-10"><a href="#cb36-10" tabindex="-1"></a><span class="dv">3</span> Income                <span class="dv">380</span>    <span class="dv">20</span>  <span class="fl">68.8</span>  <span class="fl">28.0</span>    <span class="fl">1.44</span>  <span class="fl">47.2</span>    <span class="fl">0.0641</span>  <span class="sc">-</span><span class="fl">1.08</span>  </span>
-<span id="cb36-11"><a href="#cb36-11" tabindex="-1"></a><span class="co"># ℹ 17 more variables: p00 &lt;dbl&gt;, p01 &lt;dbl&gt;, p05 &lt;dbl&gt;, p10 &lt;dbl&gt;, p20 &lt;dbl&gt;,</span></span>
-<span id="cb36-12"><a href="#cb36-12" tabindex="-1"></a><span class="co">#   p25 &lt;dbl&gt;, p30 &lt;dbl&gt;, p40 &lt;dbl&gt;, p50 &lt;dbl&gt;, p60 &lt;dbl&gt;, p70 &lt;dbl&gt;,</span></span>
-<span id="cb36-13"><a href="#cb36-13" tabindex="-1"></a><span class="co">#   p75 &lt;dbl&gt;, p80 &lt;dbl&gt;, p90 &lt;dbl&gt;, p95 &lt;dbl&gt;, p99 &lt;dbl&gt;, p100 &lt;dbl&gt;</span></span>
-<span id="cb36-14"><a href="#cb36-14" tabindex="-1"></a></span>
-<span id="cb36-15"><a href="#cb36-15" tabindex="-1"></a><span class="co"># Negative values to drop variables, and In-memory mode and collect size is 200</span></span>
-<span id="cb36-16"><a href="#cb36-16" tabindex="-1"></a>con_sqlite <span class="sc">%&gt;%</span> </span>
-<span id="cb36-17"><a href="#cb36-17" tabindex="-1"></a>  <span class="fu">tbl</span>(<span class="st">&quot;TB_CARSEATS&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-18"><a href="#cb36-18" tabindex="-1"></a>  <span class="fu">describe</span>(<span class="sc">-</span>Sales, <span class="sc">-</span>CompPrice, <span class="sc">-</span>Income, <span class="at">collect_size =</span> <span class="dv">200</span>)</span>
-<span id="cb36-19"><a href="#cb36-19" tabindex="-1"></a><span class="co"># A tibble: 5 × 26</span></span>
-<span id="cb36-20"><a href="#cb36-20" tabindex="-1"></a>  described_variables     n    na   mean     sd se_mean   IQR skewness kurtosis</span>
-<span id="cb36-21"><a href="#cb36-21" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>               <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span>  <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>  <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>   <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>    <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>    <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
-<span id="cb36-22"><a href="#cb36-22" tabindex="-1"></a><span class="dv">1</span> Advertising           <span class="dv">200</span>     <span class="dv">0</span>   <span class="fl">5.88</span>   <span class="fl">6.07</span>   <span class="fl">0.429</span>  <span class="dv">11</span>     <span class="fl">0.648</span>    <span class="sc">-</span><span class="fl">0.667</span></span>
-<span id="cb36-23"><a href="#cb36-23" tabindex="-1"></a><span class="dv">2</span> Population            <span class="dv">200</span>     <span class="dv">0</span> <span class="fl">255.</span>   <span class="fl">149.</span>    <span class="fl">10.6</span>   <span class="fl">251.</span>    <span class="fl">0.0241</span>   <span class="sc">-</span><span class="fl">1.22</span> </span>
-<span id="cb36-24"><a href="#cb36-24" tabindex="-1"></a><span class="dv">3</span> Price                 <span class="dv">200</span>     <span class="dv">0</span> <span class="fl">114.</span>    <span class="fl">23.7</span>    <span class="fl">1.68</span>   <span class="fl">31.2</span>  <span class="sc">-</span><span class="fl">0.107</span>     <span class="fl">1.08</span> </span>
-<span id="cb36-25"><a href="#cb36-25" tabindex="-1"></a><span class="dv">4</span> Age                   <span class="dv">200</span>     <span class="dv">0</span>  <span class="fl">54.6</span>   <span class="fl">15.9</span>    <span class="fl">1.13</span>   <span class="dv">24</span>    <span class="sc">-</span><span class="fl">0.245</span>    <span class="sc">-</span><span class="fl">1.01</span> </span>
-<span id="cb36-26"><a href="#cb36-26" tabindex="-1"></a><span class="co"># ℹ 1 more row</span></span>
-<span id="cb36-27"><a href="#cb36-27" tabindex="-1"></a><span class="co"># ℹ 17 more variables: p00 &lt;dbl&gt;, p01 &lt;dbl&gt;, p05 &lt;dbl&gt;, p10 &lt;dbl&gt;, p20 &lt;dbl&gt;,</span></span>
-<span id="cb36-28"><a href="#cb36-28" tabindex="-1"></a><span class="co">#   p25 &lt;dbl&gt;, p30 &lt;dbl&gt;, p40 &lt;dbl&gt;, p50 &lt;dbl&gt;, p60 &lt;dbl&gt;, p70 &lt;dbl&gt;,</span></span>
-<span id="cb36-29"><a href="#cb36-29" tabindex="-1"></a><span class="co">#   p75 &lt;dbl&gt;, p80 &lt;dbl&gt;, p90 &lt;dbl&gt;, p95 &lt;dbl&gt;, p99 &lt;dbl&gt;, p100 &lt;dbl&gt;</span></span>
-<span id="cb36-30"><a href="#cb36-30" tabindex="-1"></a></span>
-<span id="cb36-31"><a href="#cb36-31" tabindex="-1"></a><span class="co"># Find the statistic of all numerical variables by &#39;ShelveLoc&#39; and &#39;US&#39;,</span></span>
-<span id="cb36-32"><a href="#cb36-32" tabindex="-1"></a><span class="co"># and extract only those with &#39;ShelveLoc&#39; variable level is &quot;Good&quot;.</span></span>
-<span id="cb36-33"><a href="#cb36-33" tabindex="-1"></a>con_sqlite <span class="sc">%&gt;%</span> </span>
-<span id="cb36-34"><a href="#cb36-34" tabindex="-1"></a>  <span class="fu">tbl</span>(<span class="st">&quot;TB_CARSEATS&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-35"><a href="#cb36-35" tabindex="-1"></a>  <span class="fu">group_by</span>(ShelveLoc, US) <span class="sc">%&gt;%</span></span>
-<span id="cb36-36"><a href="#cb36-36" tabindex="-1"></a>  <span class="fu">describe</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb36-37"><a href="#cb36-37" tabindex="-1"></a>  <span class="fu">filter</span>(ShelveLoc <span class="sc">==</span> <span class="st">&quot;Good&quot;</span>)</span>
-<span id="cb36-38"><a href="#cb36-38" tabindex="-1"></a><span class="co"># A tibble: 16 × 28</span></span>
-<span id="cb36-39"><a href="#cb36-39" tabindex="-1"></a>  described_variables ShelveLoc US        n    na    mean     sd se_mean   IQR</span>
-<span id="cb36-40"><a href="#cb36-40" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>               <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>chr<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span>   <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>  <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>   <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
-<span id="cb36-41"><a href="#cb36-41" tabindex="-1"></a><span class="dv">1</span> Advertising         Good      No       <span class="dv">24</span>     <span class="dv">0</span>  <span class="fl">0.0417</span>  <span class="fl">0.204</span>  <span class="fl">0.0417</span>     <span class="dv">0</span></span>
-<span id="cb36-42"><a href="#cb36-42" tabindex="-1"></a><span class="dv">2</span> Advertising         Good      Yes      <span class="dv">61</span>     <span class="dv">0</span> <span class="fl">10.2</span>     <span class="fl">5.91</span>   <span class="fl">0.757</span>      <span class="dv">7</span></span>
-<span id="cb36-43"><a href="#cb36-43" tabindex="-1"></a><span class="dv">3</span> Age                 Good      No       <span class="dv">24</span>     <span class="dv">0</span> <span class="fl">52.3</span>    <span class="fl">17.2</span>    <span class="fl">3.52</span>      <span class="dv">26</span></span>
-<span id="cb36-44"><a href="#cb36-44" tabindex="-1"></a><span class="dv">4</span> Age                 Good      Yes      <span class="dv">61</span>     <span class="dv">0</span> <span class="fl">52.7</span>    <span class="fl">14.8</span>    <span class="fl">1.90</span>      <span class="dv">22</span></span>
-<span id="cb36-45"><a href="#cb36-45" tabindex="-1"></a><span class="co"># ℹ 12 more rows</span></span>
-<span id="cb36-46"><a href="#cb36-46" tabindex="-1"></a><span class="co"># ℹ 19 more variables: skewness &lt;dbl&gt;, kurtosis &lt;dbl&gt;, p00 &lt;dbl&gt;, p01 &lt;dbl&gt;,</span></span>
-<span id="cb36-47"><a href="#cb36-47" tabindex="-1"></a><span class="co">#   p05 &lt;dbl&gt;, p10 &lt;dbl&gt;, p20 &lt;dbl&gt;, p25 &lt;dbl&gt;, p30 &lt;dbl&gt;, p40 &lt;dbl&gt;,</span></span>
-<span id="cb36-48"><a href="#cb36-48" tabindex="-1"></a><span class="co">#   p50 &lt;dbl&gt;, p60 &lt;dbl&gt;, p70 &lt;dbl&gt;, p75 &lt;dbl&gt;, p80 &lt;dbl&gt;, p90 &lt;dbl&gt;,</span></span>
-<span id="cb36-49"><a href="#cb36-49" tabindex="-1"></a><span class="co">#   p95 &lt;dbl&gt;, p99 &lt;dbl&gt;, p100 &lt;dbl&gt;</span></span>
-<span id="cb36-50"><a href="#cb36-50" tabindex="-1"></a></span>
-<span id="cb36-51"><a href="#cb36-51" tabindex="-1"></a><span class="co"># extract only those with &#39;Urban&#39; variable level is &quot;Yes&quot;,</span></span>
-<span id="cb36-52"><a href="#cb36-52" tabindex="-1"></a><span class="co"># and find &#39;Sales&#39; statistics by &#39;ShelveLoc&#39; and &#39;US&#39;</span></span>
-<span id="cb36-53"><a href="#cb36-53" tabindex="-1"></a>con_sqlite <span class="sc">%&gt;%</span> </span>
-<span id="cb36-54"><a href="#cb36-54" tabindex="-1"></a>  <span class="fu">tbl</span>(<span class="st">&quot;TB_CARSEATS&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-55"><a href="#cb36-55" tabindex="-1"></a>  <span class="fu">filter</span>(Urban <span class="sc">==</span> <span class="st">&quot;Yes&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb36-56"><a href="#cb36-56" tabindex="-1"></a>  <span class="fu">group_by</span>(ShelveLoc, US) <span class="sc">%&gt;%</span></span>
-<span id="cb36-57"><a href="#cb36-57" tabindex="-1"></a>  <span class="fu">describe</span>(Sales)</span>
-<span id="cb36-58"><a href="#cb36-58" tabindex="-1"></a><span class="co"># A tibble: 6 × 28</span></span>
-<span id="cb36-59"><a href="#cb36-59" tabindex="-1"></a>  described_variables ShelveLoc US        n    na  mean    sd se_mean   IQR</span>
-<span id="cb36-60"><a href="#cb36-60" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>               <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>chr<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>   <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
-<span id="cb36-61"><a href="#cb36-61" tabindex="-1"></a><span class="dv">1</span> Sales               Bad       No       <span class="dv">23</span>     <span class="dv">0</span>  <span class="fl">5.36</span>  <span class="fl">1.91</span>   <span class="fl">0.398</span>  <span class="fl">2.32</span></span>
-<span id="cb36-62"><a href="#cb36-62" tabindex="-1"></a><span class="dv">2</span> Sales               Bad       Yes      <span class="dv">50</span>     <span class="dv">0</span>  <span class="fl">5.54</span>  <span class="fl">2.57</span>   <span class="fl">0.364</span>  <span class="fl">3.74</span></span>
-<span id="cb36-63"><a href="#cb36-63" tabindex="-1"></a><span class="dv">3</span> Sales               Good      No       <span class="dv">18</span>     <span class="dv">0</span>  <span class="fl">9.21</span>  <span class="fl">2.97</span>   <span class="fl">0.700</span>  <span class="fl">3.71</span></span>
-<span id="cb36-64"><a href="#cb36-64" tabindex="-1"></a><span class="dv">4</span> Sales               Good      Yes      <span class="dv">37</span>     <span class="dv">0</span> <span class="fl">10.9</span>   <span class="fl">2.37</span>   <span class="fl">0.389</span>  <span class="fl">3.41</span></span>
-<span id="cb36-65"><a href="#cb36-65" tabindex="-1"></a><span class="co"># ℹ 2 more rows</span></span>
-<span id="cb36-66"><a href="#cb36-66" tabindex="-1"></a><span class="co"># ℹ 19 more variables: skewness &lt;dbl&gt;, kurtosis &lt;dbl&gt;, p00 &lt;dbl&gt;, p01 &lt;dbl&gt;,</span></span>
-<span id="cb36-67"><a href="#cb36-67" tabindex="-1"></a><span class="co">#   p05 &lt;dbl&gt;, p10 &lt;dbl&gt;, p20 &lt;dbl&gt;, p25 &lt;dbl&gt;, p30 &lt;dbl&gt;, p40 &lt;dbl&gt;,</span></span>
-<span id="cb36-68"><a href="#cb36-68" tabindex="-1"></a><span class="co">#   p50 &lt;dbl&gt;, p60 &lt;dbl&gt;, p70 &lt;dbl&gt;, p75 &lt;dbl&gt;, p80 &lt;dbl&gt;, p90 &lt;dbl&gt;,</span></span>
-<span id="cb36-69"><a href="#cb36-69" tabindex="-1"></a><span class="co">#   p95 &lt;dbl&gt;, p99 &lt;dbl&gt;, p100 &lt;dbl&gt;</span></span></code></pre></div>
+<span id="cb36-5"><a href="#cb36-5" tabindex="-1"></a></span>
+<span id="cb36-6"><a href="#cb36-6" tabindex="-1"></a><span class="co"># Negative values to drop variables, and In-memory mode and collect size is 200</span></span>
+<span id="cb36-7"><a href="#cb36-7" tabindex="-1"></a>con_sqlite <span class="sc">%&gt;%</span> </span>
+<span id="cb36-8"><a href="#cb36-8" tabindex="-1"></a>  <span class="fu">tbl</span>(<span class="st">&quot;TB_CARSEATS&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-9"><a href="#cb36-9" tabindex="-1"></a>  <span class="fu">describe</span>(<span class="sc">-</span>Sales, <span class="sc">-</span>CompPrice, <span class="sc">-</span>Income, <span class="at">collect_size =</span> <span class="dv">200</span>)</span>
+<span id="cb36-10"><a href="#cb36-10" tabindex="-1"></a></span>
+<span id="cb36-11"><a href="#cb36-11" tabindex="-1"></a><span class="co"># Find the statistic of all numerical variables by &#39;ShelveLoc&#39; and &#39;US&#39;,</span></span>
+<span id="cb36-12"><a href="#cb36-12" tabindex="-1"></a><span class="co"># and extract only those with &#39;ShelveLoc&#39; variable level is &quot;Good&quot;.</span></span>
+<span id="cb36-13"><a href="#cb36-13" tabindex="-1"></a>con_sqlite <span class="sc">%&gt;%</span> </span>
+<span id="cb36-14"><a href="#cb36-14" tabindex="-1"></a>  <span class="fu">tbl</span>(<span class="st">&quot;TB_CARSEATS&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-15"><a href="#cb36-15" tabindex="-1"></a>  <span class="fu">group_by</span>(ShelveLoc, US) <span class="sc">%&gt;%</span></span>
+<span id="cb36-16"><a href="#cb36-16" tabindex="-1"></a>  <span class="fu">describe</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb36-17"><a href="#cb36-17" tabindex="-1"></a>  <span class="fu">filter</span>(ShelveLoc <span class="sc">==</span> <span class="st">&quot;Good&quot;</span>)</span>
+<span id="cb36-18"><a href="#cb36-18" tabindex="-1"></a></span>
+<span id="cb36-19"><a href="#cb36-19" tabindex="-1"></a><span class="co"># extract only those with &#39;Urban&#39; variable level is &quot;Yes&quot;,</span></span>
+<span id="cb36-20"><a href="#cb36-20" tabindex="-1"></a><span class="co"># and find &#39;Sales&#39; statistics by &#39;ShelveLoc&#39; and &#39;US&#39;</span></span>
+<span id="cb36-21"><a href="#cb36-21" tabindex="-1"></a>con_sqlite <span class="sc">%&gt;%</span> </span>
+<span id="cb36-22"><a href="#cb36-22" tabindex="-1"></a>  <span class="fu">tbl</span>(<span class="st">&quot;TB_CARSEATS&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-23"><a href="#cb36-23" tabindex="-1"></a>  <span class="fu">filter</span>(Urban <span class="sc">==</span> <span class="st">&quot;Yes&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb36-24"><a href="#cb36-24" tabindex="-1"></a>  <span class="fu">group_by</span>(ShelveLoc, US) <span class="sc">%&gt;%</span></span>
+<span id="cb36-25"><a href="#cb36-25" tabindex="-1"></a>  <span class="fu">describe</span>(Sales)</span></code></pre></div>
 </div>
 <div id="test-of-normality-on-numeric-columns-using-in-the-dbms" class="section level3">
 <h3>Test of normality on numeric columns using in the DBMS</h3>
@@ -1546,47 +1497,27 @@ is specified as tbl_dbi object instead of data frame object.</p>
 <span id="cb37-5"><a href="#cb37-5" tabindex="-1"></a> <span class="fu">group_by</span>(ShelveLoc, US) <span class="sc">%&gt;%</span></span>
 <span id="cb37-6"><a href="#cb37-6" tabindex="-1"></a> <span class="fu">normality</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb37-7"><a href="#cb37-7" tabindex="-1"></a> <span class="fu">filter</span>(ShelveLoc <span class="sc">==</span> <span class="st">&quot;Good&quot;</span>)</span>
-<span id="cb37-8"><a href="#cb37-8" tabindex="-1"></a><span class="co"># A tibble: 16 × 6</span></span>
-<span id="cb37-9"><a href="#cb37-9" tabindex="-1"></a>  variable  ShelveLoc US    statistic p_value sample</span>
-<span id="cb37-10"><a href="#cb37-10" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>   <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>  <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
-<span id="cb37-11"><a href="#cb37-11" tabindex="-1"></a><span class="dv">1</span> Sales     Good      No        <span class="fl">0.955</span>   <span class="fl">0.342</span>     <span class="dv">24</span></span>
-<span id="cb37-12"><a href="#cb37-12" tabindex="-1"></a><span class="dv">2</span> Sales     Good      Yes       <span class="fl">0.983</span>   <span class="fl">0.567</span>     <span class="dv">61</span></span>
-<span id="cb37-13"><a href="#cb37-13" tabindex="-1"></a><span class="dv">3</span> CompPrice Good      No        <span class="fl">0.970</span>   <span class="fl">0.658</span>     <span class="dv">24</span></span>
-<span id="cb37-14"><a href="#cb37-14" tabindex="-1"></a><span class="dv">4</span> CompPrice Good      Yes       <span class="fl">0.984</span>   <span class="fl">0.598</span>     <span class="dv">61</span></span>
-<span id="cb37-15"><a href="#cb37-15" tabindex="-1"></a><span class="co"># ℹ 12 more rows</span></span>
+<span id="cb37-8"><a href="#cb37-8" tabindex="-1"></a></span>
+<span id="cb37-9"><a href="#cb37-9" tabindex="-1"></a><span class="co"># extract only those with &#39;Urban&#39; variable level is &quot;Yes&quot;,</span></span>
+<span id="cb37-10"><a href="#cb37-10" tabindex="-1"></a><span class="co"># and test &#39;Sales&#39; by &#39;ShelveLoc&#39; and &#39;US&#39;</span></span>
+<span id="cb37-11"><a href="#cb37-11" tabindex="-1"></a>con_sqlite <span class="sc">%&gt;%</span> </span>
+<span id="cb37-12"><a href="#cb37-12" tabindex="-1"></a>  <span class="fu">tbl</span>(<span class="st">&quot;TB_CARSEATS&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-13"><a href="#cb37-13" tabindex="-1"></a> <span class="fu">filter</span>(Urban <span class="sc">==</span> <span class="st">&quot;Yes&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb37-14"><a href="#cb37-14" tabindex="-1"></a> <span class="fu">group_by</span>(ShelveLoc, US) <span class="sc">%&gt;%</span></span>
+<span id="cb37-15"><a href="#cb37-15" tabindex="-1"></a> <span class="fu">normality</span>(Sales)</span>
 <span id="cb37-16"><a href="#cb37-16" tabindex="-1"></a></span>
-<span id="cb37-17"><a href="#cb37-17" tabindex="-1"></a><span class="co"># extract only those with &#39;Urban&#39; variable level is &quot;Yes&quot;,</span></span>
-<span id="cb37-18"><a href="#cb37-18" tabindex="-1"></a><span class="co"># and test &#39;Sales&#39; by &#39;ShelveLoc&#39; and &#39;US&#39;</span></span>
-<span id="cb37-19"><a href="#cb37-19" tabindex="-1"></a>con_sqlite <span class="sc">%&gt;%</span> </span>
-<span id="cb37-20"><a href="#cb37-20" tabindex="-1"></a>  <span class="fu">tbl</span>(<span class="st">&quot;TB_CARSEATS&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb37-21"><a href="#cb37-21" tabindex="-1"></a> <span class="fu">filter</span>(Urban <span class="sc">==</span> <span class="st">&quot;Yes&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb37-22"><a href="#cb37-22" tabindex="-1"></a> <span class="fu">group_by</span>(ShelveLoc, US) <span class="sc">%&gt;%</span></span>
-<span id="cb37-23"><a href="#cb37-23" tabindex="-1"></a> <span class="fu">normality</span>(Sales)</span>
-<span id="cb37-24"><a href="#cb37-24" tabindex="-1"></a><span class="co"># A tibble: 6 × 6</span></span>
-<span id="cb37-25"><a href="#cb37-25" tabindex="-1"></a>  variable ShelveLoc US    statistic p_value sample</span>
-<span id="cb37-26"><a href="#cb37-26" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>    <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>   <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>  <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
-<span id="cb37-27"><a href="#cb37-27" tabindex="-1"></a><span class="dv">1</span> Sales    Bad       No        <span class="fl">0.985</span>   <span class="fl">0.968</span>     <span class="dv">23</span></span>
-<span id="cb37-28"><a href="#cb37-28" tabindex="-1"></a><span class="dv">2</span> Sales    Bad       Yes       <span class="fl">0.985</span>   <span class="fl">0.774</span>     <span class="dv">50</span></span>
-<span id="cb37-29"><a href="#cb37-29" tabindex="-1"></a><span class="dv">3</span> Sales    Good      No        <span class="fl">0.959</span>   <span class="fl">0.576</span>     <span class="dv">18</span></span>
-<span id="cb37-30"><a href="#cb37-30" tabindex="-1"></a><span class="dv">4</span> Sales    Good      Yes       <span class="fl">0.969</span>   <span class="fl">0.384</span>     <span class="dv">37</span></span>
-<span id="cb37-31"><a href="#cb37-31" tabindex="-1"></a><span class="co"># ℹ 2 more rows</span></span>
-<span id="cb37-32"><a href="#cb37-32" tabindex="-1"></a></span>
-<span id="cb37-33"><a href="#cb37-33" tabindex="-1"></a><span class="co"># Test log(Income) variables by &#39;ShelveLoc&#39; and &#39;US&#39;,</span></span>
-<span id="cb37-34"><a href="#cb37-34" tabindex="-1"></a><span class="co"># and extract only p.value greater than 0.01.</span></span>
-<span id="cb37-35"><a href="#cb37-35" tabindex="-1"></a></span>
-<span id="cb37-36"><a href="#cb37-36" tabindex="-1"></a><span class="co"># SQLite extension functions for log transformation</span></span>
-<span id="cb37-37"><a href="#cb37-37" tabindex="-1"></a>RSQLite<span class="sc">::</span><span class="fu">initExtension</span>(con_sqlite)</span>
-<span id="cb37-38"><a href="#cb37-38" tabindex="-1"></a></span>
-<span id="cb37-39"><a href="#cb37-39" tabindex="-1"></a>con_sqlite <span class="sc">%&gt;%</span> </span>
-<span id="cb37-40"><a href="#cb37-40" tabindex="-1"></a>  <span class="fu">tbl</span>(<span class="st">&quot;TB_CARSEATS&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb37-41"><a href="#cb37-41" tabindex="-1"></a> <span class="fu">mutate</span>(<span class="at">log_income =</span> <span class="fu">log</span>(Income)) <span class="sc">%&gt;%</span></span>
-<span id="cb37-42"><a href="#cb37-42" tabindex="-1"></a> <span class="fu">group_by</span>(ShelveLoc, US) <span class="sc">%&gt;%</span></span>
-<span id="cb37-43"><a href="#cb37-43" tabindex="-1"></a> <span class="fu">normality</span>(log_income) <span class="sc">%&gt;%</span></span>
-<span id="cb37-44"><a href="#cb37-44" tabindex="-1"></a> <span class="fu">filter</span>(p_value <span class="sc">&gt;</span> <span class="fl">0.01</span>)</span>
-<span id="cb37-45"><a href="#cb37-45" tabindex="-1"></a><span class="co"># A tibble: 1 × 6</span></span>
-<span id="cb37-46"><a href="#cb37-46" tabindex="-1"></a>  variable   ShelveLoc US    statistic p_value sample</span>
-<span id="cb37-47"><a href="#cb37-47" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>      <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>   <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>  <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
-<span id="cb37-48"><a href="#cb37-48" tabindex="-1"></a><span class="dv">1</span> log_income Bad       No        <span class="fl">0.946</span>   <span class="fl">0.104</span>     <span class="dv">34</span></span></code></pre></div>
+<span id="cb37-17"><a href="#cb37-17" tabindex="-1"></a><span class="co"># Test log(Income) variables by &#39;ShelveLoc&#39; and &#39;US&#39;,</span></span>
+<span id="cb37-18"><a href="#cb37-18" tabindex="-1"></a><span class="co"># and extract only p.value greater than 0.01.</span></span>
+<span id="cb37-19"><a href="#cb37-19" tabindex="-1"></a></span>
+<span id="cb37-20"><a href="#cb37-20" tabindex="-1"></a><span class="co"># SQLite extension functions for log transformation</span></span>
+<span id="cb37-21"><a href="#cb37-21" tabindex="-1"></a>RSQLite<span class="sc">::</span><span class="fu">initExtension</span>(con_sqlite)</span>
+<span id="cb37-22"><a href="#cb37-22" tabindex="-1"></a></span>
+<span id="cb37-23"><a href="#cb37-23" tabindex="-1"></a>con_sqlite <span class="sc">%&gt;%</span> </span>
+<span id="cb37-24"><a href="#cb37-24" tabindex="-1"></a>  <span class="fu">tbl</span>(<span class="st">&quot;TB_CARSEATS&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-25"><a href="#cb37-25" tabindex="-1"></a> <span class="fu">mutate</span>(<span class="at">log_income =</span> <span class="fu">log</span>(Income)) <span class="sc">%&gt;%</span></span>
+<span id="cb37-26"><a href="#cb37-26" tabindex="-1"></a> <span class="fu">group_by</span>(ShelveLoc, US) <span class="sc">%&gt;%</span></span>
+<span id="cb37-27"><a href="#cb37-27" tabindex="-1"></a> <span class="fu">normality</span>(log_income) <span class="sc">%&gt;%</span></span>
+<span id="cb37-28"><a href="#cb37-28" tabindex="-1"></a> <span class="fu">filter</span>(p_value <span class="sc">&gt;</span> <span class="fl">0.01</span>)</span></code></pre></div>
 </div>
 <div id="normalization-visualization-of-numerical-column-in-the-dbms" class="section level3">
 <h3>Normalization visualization of numerical column in the DBMS</h3>
@@ -1608,64 +1539,32 @@ DBMS</h3>
 <span id="cb39-4"><a href="#cb39-4" tabindex="-1"></a>  <span class="fu">tbl</span>(<span class="st">&quot;TB_CARSEATS&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb39-5"><a href="#cb39-5" tabindex="-1"></a>  <span class="fu">correlate</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb39-6"><a href="#cb39-6" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">as.integer</span>(var1) <span class="sc">&gt;</span> <span class="fu">as.integer</span>(var2))</span>
-<span id="cb39-7"><a href="#cb39-7" tabindex="-1"></a><span class="co"># A tibble: 28 × 3</span></span>
-<span id="cb39-8"><a href="#cb39-8" tabindex="-1"></a>  var1        var2  coef_corr</span>
-<span id="cb39-9"><a href="#cb39-9" tabindex="-1"></a>  <span class="sc">&lt;</span>fct<span class="sc">&gt;</span>       <span class="er">&lt;</span>fct<span class="sc">&gt;</span>     <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
-<span id="cb39-10"><a href="#cb39-10" tabindex="-1"></a><span class="dv">1</span> CompPrice   Sales    <span class="fl">0.0641</span></span>
-<span id="cb39-11"><a href="#cb39-11" tabindex="-1"></a><span class="dv">2</span> Income      Sales    <span class="fl">0.141</span> </span>
-<span id="cb39-12"><a href="#cb39-12" tabindex="-1"></a><span class="dv">3</span> Advertising Sales    <span class="fl">0.270</span> </span>
-<span id="cb39-13"><a href="#cb39-13" tabindex="-1"></a><span class="dv">4</span> Population  Sales    <span class="fl">0.0505</span></span>
-<span id="cb39-14"><a href="#cb39-14" tabindex="-1"></a><span class="co"># ℹ 24 more rows</span></span>
-<span id="cb39-15"><a href="#cb39-15" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="#cb39-7" tabindex="-1"></a></span>
+<span id="cb39-8"><a href="#cb39-8" tabindex="-1"></a>con_sqlite <span class="sc">%&gt;%</span> </span>
+<span id="cb39-9"><a href="#cb39-9" tabindex="-1"></a>  <span class="fu">tbl</span>(<span class="st">&quot;TB_CARSEATS&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb39-10"><a href="#cb39-10" tabindex="-1"></a>  <span class="fu">correlate</span>(Sales, Price) <span class="sc">%&gt;%</span></span>
+<span id="cb39-11"><a href="#cb39-11" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">as.integer</span>(var1) <span class="sc">&gt;</span> <span class="fu">as.integer</span>(var2))</span>
+<span id="cb39-12"><a href="#cb39-12" tabindex="-1"></a></span>
+<span id="cb39-13"><a href="#cb39-13" tabindex="-1"></a><span class="co"># Compute the correlation coefficient of Sales variable by &#39;ShelveLoc&#39;</span></span>
+<span id="cb39-14"><a href="#cb39-14" tabindex="-1"></a><span class="co"># and &#39;US&#39; variables. And extract only those with absolute</span></span>
+<span id="cb39-15"><a href="#cb39-15" tabindex="-1"></a><span class="co"># value of correlation coefficient is greater than 0.5</span></span>
 <span id="cb39-16"><a href="#cb39-16" tabindex="-1"></a>con_sqlite <span class="sc">%&gt;%</span> </span>
 <span id="cb39-17"><a href="#cb39-17" tabindex="-1"></a>  <span class="fu">tbl</span>(<span class="st">&quot;TB_CARSEATS&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb39-18"><a href="#cb39-18" tabindex="-1"></a>  <span class="fu">correlate</span>(Sales, Price) <span class="sc">%&gt;%</span></span>
-<span id="cb39-19"><a href="#cb39-19" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">as.integer</span>(var1) <span class="sc">&gt;</span> <span class="fu">as.integer</span>(var2))</span>
-<span id="cb39-20"><a href="#cb39-20" tabindex="-1"></a><span class="co"># A tibble: 5 × 3</span></span>
-<span id="cb39-21"><a href="#cb39-21" tabindex="-1"></a>  var1  var2        coef_corr</span>
-<span id="cb39-22"><a href="#cb39-22" tabindex="-1"></a>  <span class="sc">&lt;</span>fct<span class="sc">&gt;</span> <span class="er">&lt;</span>fct<span class="sc">&gt;</span>           <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
-<span id="cb39-23"><a href="#cb39-23" tabindex="-1"></a><span class="dv">1</span> Price Sales         <span class="sc">-</span><span class="fl">0.445</span> </span>
-<span id="cb39-24"><a href="#cb39-24" tabindex="-1"></a><span class="dv">2</span> Price CompPrice      <span class="fl">0.585</span> </span>
-<span id="cb39-25"><a href="#cb39-25" tabindex="-1"></a><span class="dv">3</span> Price Income        <span class="sc">-</span><span class="fl">0.0484</span></span>
-<span id="cb39-26"><a href="#cb39-26" tabindex="-1"></a><span class="dv">4</span> Price Advertising    <span class="fl">0.0445</span></span>
-<span id="cb39-27"><a href="#cb39-27" tabindex="-1"></a><span class="co"># ℹ 1 more row</span></span>
-<span id="cb39-28"><a href="#cb39-28" tabindex="-1"></a></span>
-<span id="cb39-29"><a href="#cb39-29" tabindex="-1"></a><span class="co"># Compute the correlation coefficient of Sales variable by &#39;ShelveLoc&#39;</span></span>
-<span id="cb39-30"><a href="#cb39-30" tabindex="-1"></a><span class="co"># and &#39;US&#39; variables. And extract only those with absolute</span></span>
-<span id="cb39-31"><a href="#cb39-31" tabindex="-1"></a><span class="co"># value of correlation coefficient is greater than 0.5</span></span>
-<span id="cb39-32"><a href="#cb39-32" tabindex="-1"></a>con_sqlite <span class="sc">%&gt;%</span> </span>
-<span id="cb39-33"><a href="#cb39-33" tabindex="-1"></a>  <span class="fu">tbl</span>(<span class="st">&quot;TB_CARSEATS&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb39-34"><a href="#cb39-34" tabindex="-1"></a>  <span class="fu">group_by</span>(ShelveLoc, US) <span class="sc">%&gt;%</span></span>
-<span id="cb39-35"><a href="#cb39-35" tabindex="-1"></a>  <span class="fu">correlate</span>(Sales) <span class="sc">%&gt;%</span></span>
-<span id="cb39-36"><a href="#cb39-36" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">abs</span>(coef_corr) <span class="sc">&gt;=</span> <span class="fl">0.5</span>)</span>
-<span id="cb39-37"><a href="#cb39-37" tabindex="-1"></a><span class="co"># A tibble: 6 × 5</span></span>
-<span id="cb39-38"><a href="#cb39-38" tabindex="-1"></a>  ShelveLoc US    var1  var2  coef_corr</span>
-<span id="cb39-39"><a href="#cb39-39" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>chr<span class="sc">&gt;</span> <span class="er">&lt;</span>fct<span class="sc">&gt;</span> <span class="er">&lt;</span>fct<span class="sc">&gt;</span>     <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
-<span id="cb39-40"><a href="#cb39-40" tabindex="-1"></a><span class="dv">1</span> Bad       No    Sales Price    <span class="sc">-</span><span class="fl">0.527</span></span>
-<span id="cb39-41"><a href="#cb39-41" tabindex="-1"></a><span class="dv">2</span> Bad       Yes   Sales Price    <span class="sc">-</span><span class="fl">0.583</span></span>
-<span id="cb39-42"><a href="#cb39-42" tabindex="-1"></a><span class="dv">3</span> Good      No    Sales Price    <span class="sc">-</span><span class="fl">0.811</span></span>
-<span id="cb39-43"><a href="#cb39-43" tabindex="-1"></a><span class="dv">4</span> Good      Yes   Sales Price    <span class="sc">-</span><span class="fl">0.603</span></span>
-<span id="cb39-44"><a href="#cb39-44" tabindex="-1"></a><span class="co"># ℹ 2 more rows</span></span>
-<span id="cb39-45"><a href="#cb39-45" tabindex="-1"></a></span>
-<span id="cb39-46"><a href="#cb39-46" tabindex="-1"></a><span class="co"># extract only those with &#39;ShelveLoc&#39; variable level is &quot;Good&quot;,</span></span>
-<span id="cb39-47"><a href="#cb39-47" tabindex="-1"></a><span class="co"># and compute the correlation coefficient of &#39;Sales&#39; variable</span></span>
-<span id="cb39-48"><a href="#cb39-48" tabindex="-1"></a><span class="co"># by &#39;Urban&#39; and &#39;US&#39; variables.</span></span>
-<span id="cb39-49"><a href="#cb39-49" tabindex="-1"></a><span class="co"># And the correlation coefficient is negative and smaller than 0.5</span></span>
-<span id="cb39-50"><a href="#cb39-50" tabindex="-1"></a>con_sqlite <span class="sc">%&gt;%</span> </span>
-<span id="cb39-51"><a href="#cb39-51" tabindex="-1"></a>  <span class="fu">tbl</span>(<span class="st">&quot;TB_CARSEATS&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb39-52"><a href="#cb39-52" tabindex="-1"></a>  <span class="fu">filter</span>(ShelveLoc <span class="sc">==</span> <span class="st">&quot;Good&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb39-53"><a href="#cb39-53" tabindex="-1"></a>  <span class="fu">group_by</span>(Urban, US) <span class="sc">%&gt;%</span></span>
-<span id="cb39-54"><a href="#cb39-54" tabindex="-1"></a>  <span class="fu">correlate</span>(Sales) <span class="sc">%&gt;%</span></span>
-<span id="cb39-55"><a href="#cb39-55" tabindex="-1"></a>  <span class="fu">filter</span>(coef_corr <span class="sc">&lt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb39-56"><a href="#cb39-56" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">abs</span>(coef_corr) <span class="sc">&gt;</span> <span class="fl">0.5</span>)</span>
-<span id="cb39-57"><a href="#cb39-57" tabindex="-1"></a><span class="co"># A tibble: 10 × 5</span></span>
-<span id="cb39-58"><a href="#cb39-58" tabindex="-1"></a>  Urban US    var1  var2       coef_corr</span>
-<span id="cb39-59"><a href="#cb39-59" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span> <span class="er">&lt;</span>fct<span class="sc">&gt;</span> <span class="er">&lt;</span>fct<span class="sc">&gt;</span>          <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
-<span id="cb39-60"><a href="#cb39-60" tabindex="-1"></a><span class="dv">1</span> No    No    Sales Population    <span class="sc">-</span><span class="fl">0.530</span></span>
-<span id="cb39-61"><a href="#cb39-61" tabindex="-1"></a><span class="dv">2</span> No    No    Sales Price         <span class="sc">-</span><span class="fl">0.838</span></span>
-<span id="cb39-62"><a href="#cb39-62" tabindex="-1"></a><span class="dv">3</span> No    Yes   Sales Price         <span class="sc">-</span><span class="fl">0.644</span></span>
-<span id="cb39-63"><a href="#cb39-63" tabindex="-1"></a><span class="dv">4</span> Yes   No    Sales Price         <span class="sc">-</span><span class="fl">0.833</span></span>
-<span id="cb39-64"><a href="#cb39-64" tabindex="-1"></a><span class="co"># ℹ 6 more rows</span></span></code></pre></div>
+<span id="cb39-18"><a href="#cb39-18" tabindex="-1"></a>  <span class="fu">group_by</span>(ShelveLoc, US) <span class="sc">%&gt;%</span></span>
+<span id="cb39-19"><a href="#cb39-19" tabindex="-1"></a>  <span class="fu">correlate</span>(Sales) <span class="sc">%&gt;%</span></span>
+<span id="cb39-20"><a href="#cb39-20" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">abs</span>(coef_corr) <span class="sc">&gt;=</span> <span class="fl">0.5</span>)</span>
+<span id="cb39-21"><a href="#cb39-21" tabindex="-1"></a></span>
+<span id="cb39-22"><a href="#cb39-22" tabindex="-1"></a><span class="co"># extract only those with &#39;ShelveLoc&#39; variable level is &quot;Good&quot;,</span></span>
+<span id="cb39-23"><a href="#cb39-23" tabindex="-1"></a><span class="co"># and compute the correlation coefficient of &#39;Sales&#39; variable</span></span>
+<span id="cb39-24"><a href="#cb39-24" tabindex="-1"></a><span class="co"># by &#39;Urban&#39; and &#39;US&#39; variables.</span></span>
+<span id="cb39-25"><a href="#cb39-25" tabindex="-1"></a><span class="co"># And the correlation coefficient is negative and smaller than 0.5</span></span>
+<span id="cb39-26"><a href="#cb39-26" tabindex="-1"></a>con_sqlite <span class="sc">%&gt;%</span> </span>
+<span id="cb39-27"><a href="#cb39-27" tabindex="-1"></a>  <span class="fu">tbl</span>(<span class="st">&quot;TB_CARSEATS&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb39-28"><a href="#cb39-28" tabindex="-1"></a>  <span class="fu">filter</span>(ShelveLoc <span class="sc">==</span> <span class="st">&quot;Good&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb39-29"><a href="#cb39-29" tabindex="-1"></a>  <span class="fu">group_by</span>(Urban, US) <span class="sc">%&gt;%</span></span>
+<span id="cb39-30"><a href="#cb39-30" tabindex="-1"></a>  <span class="fu">correlate</span>(Sales) <span class="sc">%&gt;%</span></span>
+<span id="cb39-31"><a href="#cb39-31" tabindex="-1"></a>  <span class="fu">filter</span>(coef_corr <span class="sc">&lt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb39-32"><a href="#cb39-32" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">abs</span>(coef_corr) <span class="sc">&gt;</span> <span class="fl">0.5</span>)</span></code></pre></div>
 </div>
 <div id="visualize-correlation-plot-of-numerical-columns-in-the-dbms" class="section level3">
 <h3>Visualize correlation plot of numerical columns in the DBMS</h3>
@@ -1690,66 +1589,7 @@ predictor column is a numeric type.</p>
 <span id="cb41-4"><a href="#cb41-4" tabindex="-1"></a><span class="co"># If the variable of interest is a numerical variable</span></span>
 <span id="cb41-5"><a href="#cb41-5" tabindex="-1"></a>cat_num <span class="ot">&lt;-</span> <span class="fu">relate</span>(categ, Sales)</span>
 <span id="cb41-6"><a href="#cb41-6" tabindex="-1"></a>cat_num</span>
-<span id="cb41-7"><a href="#cb41-7" tabindex="-1"></a><span class="co"># A tibble: 3 × 27</span></span>
-<span id="cb41-8"><a href="#cb41-8" tabindex="-1"></a>  described_variables US        n    na  mean    sd se_mean   IQR skewness</span>
-<span id="cb41-9"><a href="#cb41-9" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>               <span class="er">&lt;</span>fct<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>   <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>    <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
-<span id="cb41-10"><a href="#cb41-10" tabindex="-1"></a><span class="dv">1</span> Sales               No      <span class="dv">142</span>     <span class="dv">0</span>  <span class="fl">6.82</span>  <span class="fl">2.60</span>   <span class="fl">0.218</span>  <span class="fl">3.44</span>   <span class="fl">0.323</span> </span>
-<span id="cb41-11"><a href="#cb41-11" tabindex="-1"></a><span class="dv">2</span> Sales               Yes     <span class="dv">258</span>     <span class="dv">0</span>  <span class="fl">7.87</span>  <span class="fl">2.88</span>   <span class="fl">0.179</span>  <span class="fl">4.23</span>   <span class="fl">0.0760</span></span>
-<span id="cb41-12"><a href="#cb41-12" tabindex="-1"></a><span class="dv">3</span> Sales               total   <span class="dv">400</span>     <span class="dv">0</span>  <span class="fl">7.50</span>  <span class="fl">2.82</span>   <span class="fl">0.141</span>  <span class="fl">3.93</span>   <span class="fl">0.186</span> </span>
-<span id="cb41-13"><a href="#cb41-13" tabindex="-1"></a><span class="co"># ℹ 18 more variables: kurtosis &lt;dbl&gt;, p00 &lt;dbl&gt;, p01 &lt;dbl&gt;, p05 &lt;dbl&gt;,</span></span>
-<span id="cb41-14"><a href="#cb41-14" tabindex="-1"></a><span class="co">#   p10 &lt;dbl&gt;, p20 &lt;dbl&gt;, p25 &lt;dbl&gt;, p30 &lt;dbl&gt;, p40 &lt;dbl&gt;, p50 &lt;dbl&gt;,</span></span>
-<span id="cb41-15"><a href="#cb41-15" tabindex="-1"></a><span class="co">#   p60 &lt;dbl&gt;, p70 &lt;dbl&gt;, p75 &lt;dbl&gt;, p80 &lt;dbl&gt;, p90 &lt;dbl&gt;, p95 &lt;dbl&gt;,</span></span>
-<span id="cb41-16"><a href="#cb41-16" tabindex="-1"></a><span class="co">#   p99 &lt;dbl&gt;, p100 &lt;dbl&gt;</span></span>
-<span id="cb41-17"><a href="#cb41-17" tabindex="-1"></a><span class="fu">summary</span>(cat_num)</span>
-<span id="cb41-18"><a href="#cb41-18" tabindex="-1"></a> described_variables     US          n               na         mean      </span>
-<span id="cb41-19"><a href="#cb41-19" tabindex="-1"></a> Length<span class="sc">:</span><span class="dv">3</span>            No   <span class="sc">:</span><span class="dv">1</span>   Min.   <span class="sc">:</span><span class="fl">142.0</span>   Min.   <span class="sc">:</span><span class="dv">0</span>   Min.   <span class="sc">:</span><span class="fl">6.823</span>  </span>
-<span id="cb41-20"><a href="#cb41-20" tabindex="-1"></a> Class <span class="sc">:</span>character    Yes  <span class="sc">:</span><span class="dv">1</span>   1st Qu.<span class="sc">:</span><span class="fl">200.0</span>   1st Qu.<span class="sc">:</span><span class="dv">0</span>   1st Qu.<span class="sc">:</span><span class="fl">7.160</span>  </span>
-<span id="cb41-21"><a href="#cb41-21" tabindex="-1"></a> Mode  <span class="sc">:</span>character    total<span class="sc">:</span><span class="dv">1</span>   Median <span class="sc">:</span><span class="fl">258.0</span>   Median <span class="sc">:</span><span class="dv">0</span>   Median <span class="sc">:</span><span class="fl">7.496</span>  </span>
-<span id="cb41-22"><a href="#cb41-22" tabindex="-1"></a>                               Mean   <span class="sc">:</span><span class="fl">266.7</span>   Mean   <span class="sc">:</span><span class="dv">0</span>   Mean   <span class="sc">:</span><span class="fl">7.395</span>  </span>
-<span id="cb41-23"><a href="#cb41-23" tabindex="-1"></a>                               3rd Qu.<span class="sc">:</span><span class="fl">329.0</span>   3rd Qu.<span class="sc">:</span><span class="dv">0</span>   3rd Qu.<span class="sc">:</span><span class="fl">7.682</span>  </span>
-<span id="cb41-24"><a href="#cb41-24" tabindex="-1"></a>                               Max.   <span class="sc">:</span><span class="fl">400.0</span>   Max.   <span class="sc">:</span><span class="dv">0</span>   Max.   <span class="sc">:</span><span class="fl">7.867</span>  </span>
-<span id="cb41-25"><a href="#cb41-25" tabindex="-1"></a>       sd           se_mean            IQR           skewness      </span>
-<span id="cb41-26"><a href="#cb41-26" tabindex="-1"></a> Min.   <span class="sc">:</span><span class="fl">2.603</span>   Min.   <span class="sc">:</span><span class="fl">0.1412</span>   Min.   <span class="sc">:</span><span class="fl">3.442</span>   Min.   <span class="sc">:</span><span class="fl">0.07603</span>  </span>
-<span id="cb41-27"><a href="#cb41-27" tabindex="-1"></a> 1st Qu.<span class="sc">:</span><span class="fl">2.713</span>   1st Qu.<span class="sc">:</span><span class="fl">0.1602</span>   1st Qu.<span class="sc">:</span><span class="fl">3.686</span>   1st Qu.<span class="sc">:</span><span class="fl">0.13080</span>  </span>
-<span id="cb41-28"><a href="#cb41-28" tabindex="-1"></a> Median <span class="sc">:</span><span class="fl">2.824</span>   Median <span class="sc">:</span><span class="fl">0.1791</span>   Median <span class="sc">:</span><span class="fl">3.930</span>   Median <span class="sc">:</span><span class="fl">0.18556</span>  </span>
-<span id="cb41-29"><a href="#cb41-29" tabindex="-1"></a> Mean   <span class="sc">:</span><span class="fl">2.768</span>   Mean   <span class="sc">:</span><span class="fl">0.1796</span>   Mean   <span class="sc">:</span><span class="fl">3.866</span>   Mean   <span class="sc">:</span><span class="fl">0.19489</span>  </span>
-<span id="cb41-30"><a href="#cb41-30" tabindex="-1"></a> 3rd Qu.<span class="sc">:</span><span class="fl">2.851</span>   3rd Qu.<span class="sc">:</span><span class="fl">0.1988</span>   3rd Qu.<span class="sc">:</span><span class="fl">4.077</span>   3rd Qu.<span class="sc">:</span><span class="fl">0.25432</span>  </span>
-<span id="cb41-31"><a href="#cb41-31" tabindex="-1"></a> Max.   <span class="sc">:</span><span class="fl">2.877</span>   Max.   <span class="sc">:</span><span class="fl">0.2184</span>   Max.   <span class="sc">:</span><span class="fl">4.225</span>   Max.   <span class="sc">:</span><span class="fl">0.32308</span>  </span>
-<span id="cb41-32"><a href="#cb41-32" tabindex="-1"></a>    kurtosis             p00              p01              p05       </span>
-<span id="cb41-33"><a href="#cb41-33" tabindex="-1"></a> Min.   <span class="sc">:-</span><span class="fl">0.32638</span>   Min.   <span class="sc">:</span><span class="fl">0.0000</span>   Min.   <span class="sc">:</span><span class="fl">0.4675</span>   Min.   <span class="sc">:</span><span class="fl">3.147</span>  </span>
-<span id="cb41-34"><a href="#cb41-34" tabindex="-1"></a> 1st Qu.<span class="sc">:-</span><span class="fl">0.20363</span>   1st Qu.<span class="sc">:</span><span class="fl">0.0000</span>   1st Qu.<span class="sc">:</span><span class="fl">0.6868</span>   1st Qu.<span class="sc">:</span><span class="fl">3.148</span>  </span>
-<span id="cb41-35"><a href="#cb41-35" tabindex="-1"></a> Median <span class="sc">:-</span><span class="fl">0.08088</span>   Median <span class="sc">:</span><span class="fl">0.0000</span>   Median <span class="sc">:</span><span class="fl">0.9062</span>   Median <span class="sc">:</span><span class="fl">3.149</span>  </span>
-<span id="cb41-36"><a href="#cb41-36" tabindex="-1"></a> Mean   <span class="sc">:</span> <span class="fl">0.13350</span>   Mean   <span class="sc">:</span><span class="fl">0.1233</span>   Mean   <span class="sc">:</span><span class="fl">1.0072</span>   Mean   <span class="sc">:</span><span class="fl">3.183</span>  </span>
-<span id="cb41-37"><a href="#cb41-37" tabindex="-1"></a> 3rd Qu.<span class="sc">:</span> <span class="fl">0.36344</span>   3rd Qu.<span class="sc">:</span><span class="fl">0.1850</span>   3rd Qu.<span class="sc">:</span><span class="fl">1.2771</span>   3rd Qu.<span class="sc">:</span><span class="fl">3.200</span>  </span>
-<span id="cb41-38"><a href="#cb41-38" tabindex="-1"></a> Max.   <span class="sc">:</span> <span class="fl">0.80776</span>   Max.   <span class="sc">:</span><span class="fl">0.3700</span>   Max.   <span class="sc">:</span><span class="fl">1.6480</span>   Max.   <span class="sc">:</span><span class="fl">3.252</span>  </span>
-<span id="cb41-39"><a href="#cb41-39" tabindex="-1"></a>      p10             p20             p25             p30       </span>
-<span id="cb41-40"><a href="#cb41-40" tabindex="-1"></a> Min.   <span class="sc">:</span><span class="fl">3.917</span>   Min.   <span class="sc">:</span><span class="fl">4.754</span>   Min.   <span class="sc">:</span><span class="fl">5.080</span>   Min.   <span class="sc">:</span><span class="fl">5.306</span>  </span>
-<span id="cb41-41"><a href="#cb41-41" tabindex="-1"></a> 1st Qu.<span class="sc">:</span><span class="fl">4.018</span>   1st Qu.<span class="sc">:</span><span class="fl">4.910</span>   1st Qu.<span class="sc">:</span><span class="fl">5.235</span>   1st Qu.<span class="sc">:</span><span class="fl">5.587</span>  </span>
-<span id="cb41-42"><a href="#cb41-42" tabindex="-1"></a> Median <span class="sc">:</span><span class="fl">4.119</span>   Median <span class="sc">:</span><span class="fl">5.066</span>   Median <span class="sc">:</span><span class="fl">5.390</span>   Median <span class="sc">:</span><span class="fl">5.867</span>  </span>
-<span id="cb41-43"><a href="#cb41-43" tabindex="-1"></a> Mean   <span class="sc">:</span><span class="fl">4.073</span>   Mean   <span class="sc">:</span><span class="fl">5.051</span>   Mean   <span class="sc">:</span><span class="fl">5.411</span>   Mean   <span class="sc">:</span><span class="fl">5.775</span>  </span>
-<span id="cb41-44"><a href="#cb41-44" tabindex="-1"></a> 3rd Qu.<span class="sc">:</span><span class="fl">4.152</span>   3rd Qu.<span class="sc">:</span><span class="fl">5.199</span>   3rd Qu.<span class="sc">:</span><span class="fl">5.576</span>   3rd Qu.<span class="sc">:</span><span class="fl">6.010</span>  </span>
-<span id="cb41-45"><a href="#cb41-45" tabindex="-1"></a> Max.   <span class="sc">:</span><span class="fl">4.184</span>   Max.   <span class="sc">:</span><span class="fl">5.332</span>   Max.   <span class="sc">:</span><span class="fl">5.763</span>   Max.   <span class="sc">:</span><span class="fl">6.153</span>  </span>
-<span id="cb41-46"><a href="#cb41-46" tabindex="-1"></a>      p40             p50             p60             p70       </span>
-<span id="cb41-47"><a href="#cb41-47" tabindex="-1"></a> Min.   <span class="sc">:</span><span class="fl">5.994</span>   Min.   <span class="sc">:</span><span class="fl">6.660</span>   Min.   <span class="sc">:</span><span class="fl">7.496</span>   Min.   <span class="sc">:</span><span class="fl">7.957</span>  </span>
-<span id="cb41-48"><a href="#cb41-48" tabindex="-1"></a> 1st Qu.<span class="sc">:</span><span class="fl">6.301</span>   1st Qu.<span class="sc">:</span><span class="fl">7.075</span>   1st Qu.<span class="sc">:</span><span class="fl">7.787</span>   1st Qu.<span class="sc">:</span><span class="fl">8.386</span>  </span>
-<span id="cb41-49"><a href="#cb41-49" tabindex="-1"></a> Median <span class="sc">:</span><span class="fl">6.608</span>   Median <span class="sc">:</span><span class="fl">7.490</span>   Median <span class="sc">:</span><span class="fl">8.078</span>   Median <span class="sc">:</span><span class="fl">8.815</span>  </span>
-<span id="cb41-50"><a href="#cb41-50" tabindex="-1"></a> Mean   <span class="sc">:</span><span class="fl">6.506</span>   Mean   <span class="sc">:</span><span class="fl">7.313</span>   Mean   <span class="sc">:</span><span class="fl">8.076</span>   Mean   <span class="sc">:</span><span class="fl">8.740</span>  </span>
-<span id="cb41-51"><a href="#cb41-51" tabindex="-1"></a> 3rd Qu.<span class="sc">:</span><span class="fl">6.762</span>   3rd Qu.<span class="sc">:</span><span class="fl">7.640</span>   3rd Qu.<span class="sc">:</span><span class="fl">8.366</span>   3rd Qu.<span class="sc">:</span><span class="fl">9.132</span>  </span>
-<span id="cb41-52"><a href="#cb41-52" tabindex="-1"></a> Max.   <span class="sc">:</span><span class="fl">6.916</span>   Max.   <span class="sc">:</span><span class="fl">7.790</span>   Max.   <span class="sc">:</span><span class="fl">8.654</span>   Max.   <span class="sc">:</span><span class="fl">9.449</span>  </span>
-<span id="cb41-53"><a href="#cb41-53" tabindex="-1"></a>      p75             p80              p90              p95       </span>
-<span id="cb41-54"><a href="#cb41-54" tabindex="-1"></a> Min.   <span class="sc">:</span><span class="fl">8.523</span>   Min.   <span class="sc">:</span> <span class="fl">8.772</span>   Min.   <span class="sc">:</span> <span class="fl">9.349</span>   Min.   <span class="sc">:</span><span class="fl">11.28</span>  </span>
-<span id="cb41-55"><a href="#cb41-55" tabindex="-1"></a> 1st Qu.<span class="sc">:</span><span class="fl">8.921</span>   1st Qu.<span class="sc">:</span> <span class="fl">9.265</span>   1st Qu.<span class="sc">:</span><span class="fl">10.325</span>   1st Qu.<span class="sc">:</span><span class="fl">11.86</span>  </span>
-<span id="cb41-56"><a href="#cb41-56" tabindex="-1"></a> Median <span class="sc">:</span><span class="fl">9.320</span>   Median <span class="sc">:</span> <span class="fl">9.758</span>   Median <span class="sc">:</span><span class="fl">11.300</span>   Median <span class="sc">:</span><span class="fl">12.44</span>  </span>
-<span id="cb41-57"><a href="#cb41-57" tabindex="-1"></a> Mean   <span class="sc">:</span><span class="fl">9.277</span>   Mean   <span class="sc">:</span> <span class="fl">9.665</span>   Mean   <span class="sc">:</span><span class="fl">10.795</span>   Mean   <span class="sc">:</span><span class="fl">12.08</span>  </span>
-<span id="cb41-58"><a href="#cb41-58" tabindex="-1"></a> 3rd Qu.<span class="sc">:</span><span class="fl">9.654</span>   3rd Qu.<span class="sc">:</span><span class="fl">10.111</span>   3rd Qu.<span class="sc">:</span><span class="fl">11.518</span>   3rd Qu.<span class="sc">:</span><span class="fl">12.49</span>  </span>
-<span id="cb41-59"><a href="#cb41-59" tabindex="-1"></a> Max.   <span class="sc">:</span><span class="fl">9.988</span>   Max.   <span class="sc">:</span><span class="fl">10.464</span>   Max.   <span class="sc">:</span><span class="fl">11.736</span>   Max.   <span class="sc">:</span><span class="fl">12.54</span>  </span>
-<span id="cb41-60"><a href="#cb41-60" tabindex="-1"></a>      p99             p100      </span>
-<span id="cb41-61"><a href="#cb41-61" tabindex="-1"></a> Min.   <span class="sc">:</span><span class="fl">13.64</span>   Min.   <span class="sc">:</span><span class="fl">14.90</span>  </span>
-<span id="cb41-62"><a href="#cb41-62" tabindex="-1"></a> 1st Qu.<span class="sc">:</span><span class="fl">13.78</span>   1st Qu.<span class="sc">:</span><span class="fl">15.59</span>  </span>
-<span id="cb41-63"><a href="#cb41-63" tabindex="-1"></a> Median <span class="sc">:</span><span class="fl">13.91</span>   Median <span class="sc">:</span><span class="fl">16.27</span>  </span>
-<span id="cb41-64"><a href="#cb41-64" tabindex="-1"></a> Mean   <span class="sc">:</span><span class="fl">13.86</span>   Mean   <span class="sc">:</span><span class="fl">15.81</span>  </span>
-<span id="cb41-65"><a href="#cb41-65" tabindex="-1"></a> 3rd Qu.<span class="sc">:</span><span class="fl">13.97</span>   3rd Qu.<span class="sc">:</span><span class="fl">16.27</span>  </span>
-<span id="cb41-66"><a href="#cb41-66" tabindex="-1"></a> Max.   <span class="sc">:</span><span class="fl">14.03</span>   Max.   <span class="sc">:</span><span class="fl">16.27</span>  </span></code></pre></div>
+<span id="cb41-7"><a href="#cb41-7" tabindex="-1"></a><span class="fu">summary</span>(cat_num)</span></code></pre></div>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a><span class="co"># the result is same as a data.frame, but not display here. reference above in document.</span></span>
 <span id="cb42-2"><a href="#cb42-2" tabindex="-1"></a><span class="fu">plot</span>(cat_num)</span></code></pre></div>
 </div>
