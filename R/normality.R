@@ -276,18 +276,18 @@ normality_group_impl <- function(df, vars, sample) {
 #' plot_normality(heartfailure2)
 #'
 #' # Select the variable to plot
-#' plot_normality(heartfailure2, platelets, sodium)
-#' plot_normality(heartfailure2, -platelets, -sodium, col = "gray")
-#' plot_normality(heartfailure2, 1)
+#' # plot_normality(heartfailure2, platelets, sodium)
+#' # plot_normality(heartfailure2, -platelets, -sodium, col = "gray")
+#' # plot_normality(heartfailure2, 1)
 #'
 #' # Change the method of transformation
-#' plot_normality(heartfailure2, platelets, right = "1/x")
+#' # plot_normality(heartfailure2, platelets, right = "1/x")
 #' 
-#' if (requireNamespace("forecast", quietly = TRUE)) {
-#'   plot_normality(heartfailure2, platelets, left = "Box-Cox", right = "Yeo-Johnson")
-#' } else {
-#'   cat("If you want to use this feature, you need to install the forecast package.\n")
-#' }
+#' # if (requireNamespace("forecast", quietly = TRUE)) {
+#' #   plot_normality(heartfailure2, platelets, left = "Box-Cox", right = "Yeo-Johnson")
+#' # } else {
+#' #   cat("If you want to use this feature, you need to install the forecast package.\n")
+#' # }
 #' # Non typographic elements
 #' plot_normality(heartfailure2, platelets, typographic = FALSE)
 #' 
@@ -295,7 +295,7 @@ normality_group_impl <- function(df, vars, sample) {
 #' library(dplyr)
 #'
 #' gdata <- group_by(heartfailure2, sex, smoking)
-#' plot_normality(gdata)
+#' # plot_normality(gdata)
 #' plot_normality(gdata, "creatinine")
 #'
 #' # Using pipes ---------------------------------
@@ -304,12 +304,12 @@ normality_group_impl <- function(df, vars, sample) {
 #'  plot_normality()
 #'
 #' # Positive values select variables
-#' heartfailure2 %>%
-#'   plot_normality(platelets, sodium)
+#' # heartfailure2 %>%
+#' #   plot_normality(platelets, sodium)
 #'
 #' # Positions values select variables
-#' heartfailure2 %>%
-#'   plot_normality(1)
+#' # heartfailure2 %>%
+#' #   plot_normality(1)
 #'
 #' # Using pipes & dplyr -------------------------
 #' # Plot 'creatinine' variable by 'sex' and 'smoking'
@@ -319,14 +319,14 @@ normality_group_impl <- function(df, vars, sample) {
 #'
 #' # extract only those with 'sex' variable level is "Male",
 #' # and plot 'platelets' by 'smoking'
-#' if (requireNamespace("forecast", quietly = TRUE)) {
-#'   heartfailure2 %>%
-#'    filter(sex == "Male") %>%
-#'    group_by(smoking) %>%
-#'    plot_normality(platelets, right = "Box-Cox")
-#' } else {
-#'   cat("If you want to use this feature, you need to install the forecast package.\n")
-#' }
+#' # if (requireNamespace("forecast", quietly = TRUE)) {
+#' #   heartfailure2 %>%
+#' #    filter(sex == "Male") %>%
+#' #    group_by(smoking) %>%
+#' #    plot_normality(platelets, right = "Box-Cox")
+#' # } else {
+#' #   cat("If you want to use this feature, you need to install the forecast package.\n")
+#' # }
 #' }
 #' @method plot_normality data.frame
 #' @importFrom tidyselect vars_select

@@ -27,6 +27,7 @@
 * Fixed an error that occurred when there was a non-character data type (such as a date) among categorical variables in diagnose_category(). 
   (thanks to @hope-data-science, #100, @marcozanotti, #102)   
   
+* Reduce example execution time (#112)
   
 
 # dlookr 0.6.2

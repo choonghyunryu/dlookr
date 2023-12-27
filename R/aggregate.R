@@ -56,7 +56,7 @@ plot_bar_category <- function(.data, ...) {
 #' 
 #' # Select the variable to diagnose
 #' plot_bar_category(heartfailure2, "test", "smoking")
-#' plot_bar_category(heartfailure2, -test, -smoking)
+#' # plot_bar_category(heartfailure2, -test, -smoking)
 #' 
 #' # Visualize the each plots
 #' plot_bar_category(heartfailure2, each = TRUE)
@@ -72,12 +72,12 @@ plot_bar_category <- function(.data, ...) {
 #'   plot_bar_category()
 #' 
 #' # Visualize just 7 levels of top frequency
-#' heartfailure2 %>%
-#'   plot_bar_category(top = 7)
+#' # heartfailure2 %>%
+#' #   plot_bar_category(top = 7)
 #'   
 #' # Visualize only factor, not character
-#' heartfailure2 %>%
-#'   plot_bar_category(add_character = FALSE) 
+#' # heartfailure2 %>%
+#' #   plot_bar_category(add_character = FALSE) 
 #' 
 #' # Using groupd_df  ------------------------------
 #' heartfailure2 %>% 
