@@ -113,12 +113,12 @@ the data frame.
 The variables of the `tbl_df` object returned by `diagnose ()` are as
 follows.
 
-- `variables` : variable names
-- `types` : the data type of the variables
-- `missing_count` : number of missing values
-- `missing_percent` : percentage of missing values
-- `unique_count` : number of unique values
-- `unique_rate` : rate of unique value. unique_count / number of
+- `variables`: variable names
+- `types`: the data type of the variables
+- `missing_count`: number of missing values
+- `missing_percent`: percentage of missing values
+- `unique_count`: number of unique values
+- `unique_rate`: rate of unique value. unique_count / number of
   observation
 
 For example, we can diagnose all variables in `flights`:
@@ -152,15 +152,15 @@ diagnose(flights)
 #> 19 time_hour      POSIXct             0           0             2391    0.797
 ```
 
-- `Missing Value(NA)` : Variables with many missing values, i.e., those
+- `Missing Value(NA)`: Variables with many missing values, i.e., those
   with a `missing_percent` close to 100, should be excluded from the
   analysis.
-- `Unique value` : Variables with a unique value (`unique_count` = 1)
-  are considered to be excluded from data analysis. If the data type is
-  not numeric (integer, numeric) and the number of unique values is
-  equal to the number of observations (unique_rate = 1), Then, the
-  variable is likely to be an identifier. Therefore, this variable is
-  also not suitable for the analysis model.
+- `Unique value`: Variables with a unique value (`unique_count` = 1) are
+  considered to be excluded from data analysis. If the data type is not
+  numeric (integer, numeric) and the number of unique values is equal to
+  the number of observations (unique_rate = 1), Then, the variable is
+  likely to be an identifier. Therefore, this variable is also not
+  suitable for the analysis model.
 
 `year` cannot be used in the analysis model since `unique_count` is 1.
 However, you do not have to remove it if you configure `date` as a
@@ -239,15 +239,15 @@ automatically ignored.
 The variables of the `tbl_df` object returned by `diagnose_numeric()`
 are as follows.
 
-- `min` : minimum value
-- `Q1` : 1/4 quartile, 25th percentile
-- `mean` : arithmetic mean
-- `median` : median, 50th percentile
-- `Q3` : 3/4 quartile, 75th percentile
-- `max` : maximum value
-- `zero` : number of observations with a value of 0
-- `minus` : number of observations with negative numbers
-- `outlier` : number of outliers
+- `min`: minimum value
+- `Q1`: 1/4 quartile, 25th percentile
+- `mean`: arithmetic mean
+- `median`: median, 50th percentile
+- `Q3`: 3/4 quartile, 75th percentile
+- `max`: maximum value
+- `zero`: number of observations with a value of 0
+- `minus`: number of observations with negative numbers
+- `outlier`: number of outliers
 
 The summary() function summarizes the distribution of individual
 variables in the data frame and outputs it to the console. The summary
@@ -320,12 +320,12 @@ if the number of levels is less than 10, all levels are returned.
 The variables of the `tbl_df` object returned by `diagnose_category()`
 are as follows.
 
-- `variables` : variable names
+- `variables`: variable names
 - `levels`: level names
-- `N` : number of observation
-- `freq` : number of observation at the levels
-- `ratio` : percentage of observation at the levels
-- `rank` : rank of occupancy ratio of levels
+- `N`: number of observation
+- `freq`: number of observation at the levels
+- `ratio`: percentage of observation at the levels
+- `rank`: rank of occupancy ratio of levels
 
 \``diagnose_category()` can diagnose all categorical variables of
 `flights` as follows.:
@@ -388,11 +388,11 @@ combining them together.
 The variables of the `tbl_df` object returned by `diagnose_outlier()`
 are as follows.
 
-- `outliers_cnt` : number of outliers
-- `outliers_ratio` : percent of outliers
-- `outliers_mean` : arithmetic average of outliers
-- `with_mean` : arithmetic average of with outliers
-- `without_mean` : arithmetic average of without outliers
+- `outliers_cnt`: number of outliers
+- `outliers_ratio`: percent of outliers
+- `outliers_mean`: arithmetic average of outliers
+- `with_mean`: arithmetic average of with outliers
+- `without_mean`: arithmetic average of without outliers
 
 `diagnose_outlier()` can diagnose outliers of all numerical variables on
 `flights` as follows:
@@ -575,20 +575,20 @@ within that data frame.
 The variables of the `tbl_df` object returned by `describe()` are as
 follows.
 
-- `n` : number of observations excluding missing values
-- `na` : number of missing values
-- `mean` : arithmetic average
-- `sd` : standard deviation
-- `se_mean` : standard error mean. sd/sqrt(n)
-- `IQR` : interquartile range (Q3-Q1)
-- `skewness` : skewness
-- `kurtosis` : kurtosis
-- `p25` : Q1. 25% percentile
-- `p50` : median. 50% percentile
-- `p75` : Q3. 75% percentile
-- `p01`, `p05`, `p10`, `p20`, `p30` : 1%, 5%, 20%, 30% percentiles
-- `p40`, `p60`, `p70`, `p80` : 40%, 60%, 70%, 80% percentiles
-- `p90`, `p95`, `p99`, `p100` : 90%, 95%, 99%, 100% percentiles
+- `n`: number of observations excluding missing values
+- `na`: number of missing values
+- `mean`: arithmetic average
+- `sd`: standard deviation
+- `se_mean`: standard error mean. sd/sqrt(n)
+- `IQR`: interquartile range (Q3-Q1)
+- `skewness`: skewness
+- `kurtosis`: kurtosis
+- `p25`: Q1. 25% percentile
+- `p50`: median. 50% percentile
+- `p75`: Q3. 75% percentile
+- `p01`, `p05`, `p10`, `p20`, `p30`: 1%, 5%, 20%, 30% percentiles
+- `p40`, `p60`, `p70`, `p80`: 40%, 60%, 70%, 80% percentiles
+- `p90`, `p95`, `p99`, `p100`: 90%, 95%, 99%, 100% percentiles
 
 For example, we can computes the statistics of all numerical variables
 in `carseats`:
@@ -611,11 +611,11 @@ describe(carseats)
 #> #   p75 <dbl>, p80 <dbl>, p90 <dbl>, p95 <dbl>, p99 <dbl>, p100 <dbl>
 ```
 
-- `skewness` : The left-skewed distribution data, that is, the variables
+- `skewness`: The left-skewed distribution data, that is, the variables
   with significant positive skewness, should consider the log or sqrt
   transformations to follow the normal distribution. The variable
   `Advertising` seems to need to consider variable transformation.
-- `mean` and `sd`, `se_mean` : The`Population` with a large
+- `mean` and `sd`, `se_mean`: The`Population` with a large
   `standard error of the mean`(se_mean) has low representativeness of
   the `arithmetic mean`(mean). The `standard deviation`(sd) is much
   larger than the arithmetic average.
@@ -697,9 +697,9 @@ random simple sampling.
 The variables of `tbl_df` object returned by `normality()` are as
 follows.
 
-- `statistic` : Statistics of the Shapiro-Wilk test
-- `p_value` : p-value of the Shapiro-Wilk test
-- `sample` : Number of sample observations performed Shapiro-Wilk test
+- `statistic`: Statistics of the Shapiro-Wilk test
+- `p_value`: p-value of the Shapiro-Wilk test
+- `sample`: Number of sample observations performed Shapiro-Wilk test
 
 `normality()` performs the normality test for all numerical variables of
 `carseats` as follows.:
@@ -1244,21 +1244,21 @@ predictor with missing values supports both numeric and categorical
 variables and supports the following `method`.
 
 - predictor is numerical variable
-  - “mean” : arithmetic mean
-  - “median” : median
-  - “mode” : mode
-  - “knn” : K-nearest neighbors
+  - “mean”: arithmetic mean
+  - “median”: median
+  - “mode”: mode
+  - “knn”: K-nearest neighbors
     - target variable must be specified
-  - “rpart” : Recursive Partitioning and Regression Trees
+  - “rpart”: Recursive Partitioning and Regression Trees
     - target variable must be specified  
-  - “mice” : Multivariate Imputation by Chained Equations
+  - “mice”: Multivariate Imputation by Chained Equations
     - target variable must be specified  
     - random seed must be set
 - predictor is categorical variable
-  - “mode” : mode
-  - “rpart” : Recursive Partitioning and Regression Trees
+  - “mode”: mode
+  - “rpart”: Recursive Partitioning and Regression Trees
     - target variable must be specified  
-  - “mice” : Multivariate Imputation by Chained Equations
+  - “mice”: Multivariate Imputation by Chained Equations
     - target variable must be specified  
     - random seed must be set
 
@@ -1432,11 +1432,11 @@ urban <- imputate_na(carseats, Urban, US, method = "mice")
 # result of imputation
 urban
 #>   [1] Yes Yes Yes Yes Yes No  Yes Yes No  No  No  Yes Yes Yes Yes No  Yes Yes
-#>  [19] No  Yes Yes No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes No 
+#>  [19] No  Yes Yes No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes Yes Yes No 
 #>  [37] No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes
 #>  [55] No  Yes Yes Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes Yes Yes Yes No 
-#>  [73] Yes No  No  No  Yes No  Yes Yes Yes Yes Yes No  No  No  Yes No  Yes No 
-#>  [91] No  Yes Yes No  Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes
+#>  [73] Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes No  No  Yes No  Yes No 
+#>  [91] No  Yes Yes Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes
 #> [109] Yes No  Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes No 
 #> [127] Yes Yes Yes No  Yes Yes Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes
 #> [145] No  Yes Yes No  No  Yes No  No  No  No  No  Yes Yes No  No  No  No  No 
@@ -1447,7 +1447,7 @@ urban
 #> [235] No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes
 #> [253] Yes No  Yes Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes No  No  Yes Yes
 #> [271] Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes No  No  Yes No  Yes
-#> [289] No  Yes No  Yes Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
+#> [289] No  Yes No  No  Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
 #> [307] Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No  No  No  Yes Yes Yes Yes
 #> [325] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No 
 #> [343] No  Yes No  Yes No  No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes
@@ -1478,9 +1478,9 @@ summary(urban)
 #> 
 #> * Information of Imputation (before vs after)
 #>      original imputation original_percent imputation_percent
-#> No        115        122            28.75               30.5
-#> Yes       275        278            68.75               69.5
-#> <NA>       10          0             2.50                0.0
+#> No        115        120            28.75                 30
+#> Yes       275        280            68.75                 70
+#> <NA>       10          0             2.50                  0
 
 # viz of imputation
 plot(urban)
@@ -1518,10 +1518,10 @@ outliers supports only numeric variables and supports the following
 methods.
 
 - predictor is numerical variable
-  - “mean” : arithmetic mean
-  - “median” : median
-  - “mode” : mode
-  - “capping” : Imputate the upper outliers with 95 percentile, and
+  - “mean”: arithmetic mean
+  - “median”: median
+  - “mode”: mode
+  - “capping”: Imputate the upper outliers with 95 percentile, and
     Imputate the bottom outliers with 5 percentile.
 
 `imputate_outlier()` imputes the outliers with the numeric variable
@@ -1659,16 +1659,16 @@ carseats %>%
 supported, and the following methods are provided.
 
 - Standardization
-  - “zscore” : z-score transformation. (x - mu) / sigma
-  - “minmax” : minmax transformation. (x - min) / (max - min)
+  - “zscore”: z-score transformation. (x - mu) / sigma
+  - “minmax”: minmax transformation. (x - min) / (max - min)
 - Resolving Skewness
-  - “log” : log transformation. log(x)
-  - “log+1” : log transformation. log(x + 1). Used for values that
+  - “log”: log transformation. log(x)
+  - “log+1”: log transformation. log(x + 1). Used for values that
     contain 0.
-  - “sqrt” : square root transformation.
-  - “1/x” : 1 / x transformation
-  - “x^2” : x square transformation
-  - “x^3” : x^3 square transformation
+  - “sqrt”: square root transformation.
+  - “1/x”: 1 / x transformation
+  - “x^2”: x square transformation
+  - “x^3”: x^3 square transformation
 
 ###### Standardization with `transform()`
 
@@ -1813,11 +1813,11 @@ plot(Advertising_log)
 `binning()` transforms a numeric variable into a categorical variable by
 binning it. The following types of binning are supported.
 
-- “quantile” : categorize using quantile to include the same frequencies
-- “equal” : categorize to have equal length segments
-- “pretty” : categorized into moderately good segments
-- “kmeans” : categorization using K-means clustering
-- “bclust” : categorization using bagged clustering technique
+- “quantile”: categorize using quantile to include the same frequencies
+- “equal”: categorize to have equal length segments
+- “pretty”: categorized into moderately good segments
+- “kmeans”: categorization using K-means clustering
+- “bclust”: categorization using bagged clustering technique
 
 Here are some examples of how to bin `Income` using `binning()`.:
 
@@ -1882,14 +1882,14 @@ binning(carseats$Income, nbins = 5, type = "kmeans")
 #> binned type: kmeans
 #> number of bins: 5
 #> x
-#>   [21,43.5] (43.5,64.5] (64.5,82.5]  (82.5,101]   (101,120]        <NA> 
-#>          96          71          84          69          60          20
+#>   [21,36.5] (36.5,55.5] (55.5,75.5] (75.5,97.5]  (97.5,120]        <NA> 
+#>          66          62          91          86          75          20
 binning(carseats$Income, nbins = 5, type = "bclust")
 #> binned type: bclust
 #> number of bins: 5
 #> x
-#>    [21,50.5]  (50.5,65.5]  (65.5,87.5] (87.5,106.5]  (106.5,120]         <NA> 
-#>          116           55           98           71           40           20
+#>   [21,33.5]   (33.5,56]     (56,85]  (85,109.5] (109.5,120]        <NA> 
+#>          55          76         133          79          37          20
 
 # Extract the binned results
 extract(bin)
@@ -2770,7 +2770,7 @@ con_sqlite %>%
 #>   <chr>       <dbl>  <dbl>  <dbl>  <dbl>  <dbl> <dbl> <int> <int>   <int>
 #> 1 Sales           0   5.39   7.50   7.49   9.32  16.3     1     0       2
 #> 2 CompPrice      77 115    125.   125    135    175       0     0       2
-#> 3 Income         21  43.8   68.9   69     92    120       0     0       0
+#> 3 Income         21  43.8   68.7   69     91    120       0     0       0
 #> 4 Advertising     0   0      6.64   5     12     29     144     0       0
 #> 5 Population     10 139    265.   272    398.   509       0     0       0
 #> 6 Price          24 100    116.   117    131    191       0     0       5
@@ -2848,12 +2848,12 @@ con_sqlite %>%
 #> # A tibble: 6 × 28
 #>   described_variables ShelveLoc US        n    na  mean    sd se_mean   IQR
 #>   <chr>               <chr>     <chr> <int> <int> <dbl> <dbl>   <dbl> <dbl>
-#> 1 Sales               Bad       No       22     0  5.39  1.95   0.416  2.40
-#> 2 Sales               Bad       Yes      50     0  5.58  2.59   0.367  3.77
+#> 1 Sales               Bad       No       22     0  5.19  1.76   0.376  2.21
+#> 2 Sales               Bad       Yes      50     0  5.59  2.59   0.367  3.77
 #> 3 Sales               Good      No       18     0  9.21  2.97   0.700  3.71
 #> 4 Sales               Good      Yes      39     0 10.9   2.32   0.372  3.12
-#> 5 Sales               Medium    No       55     0  6.96  2.07   0.280  3.16
-#> 6 Sales               Medium    Yes      94     0  7.57  2.16   0.223  3.27
+#> 5 Sales               Medium    No       54     0  6.98  2.09   0.284  3.22
+#> 6 Sales               Medium    Yes      95     0  7.53  2.20   0.225  3.26
 #> # ℹ 19 more variables: skewness <dbl>, kurtosis <dbl>, p00 <dbl>, p01 <dbl>,
 #> #   p05 <dbl>, p10 <dbl>, p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>,
 #> #   p50 <dbl>, p60 <dbl>, p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>,
@@ -2878,7 +2878,7 @@ con_sqlite %>%
 #> # A tibble: 1 × 6
 #>   variable   ShelveLoc US    statistic p_value sample
 #>   <chr>      <chr>     <chr>     <dbl>   <dbl>  <dbl>
-#> 1 log_income Bad       No        0.948   0.126     34
+#> 1 log_income Bad       No        0.946   0.121     34
 ```
 
 #### Normalization visualization of numerical column in the DBMS
