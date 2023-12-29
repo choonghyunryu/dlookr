@@ -226,7 +226,7 @@ knitr::include_graphics('img/eda_paged_content.jpg')
 #    describe(-Sales, -CompPrice, -Income, collect_size = 200)
 #  
 #  # Find the statistic of all numerical variables by 'ShelveLoc' and 'US',
-#  # and extract only those with 'ShelveLoc' variable level is "Good".
+#  # and extract only those with the 'ShelveLoc' variable level as "Good".
 #  con_sqlite %>%
 #    tbl("TB_CARSEATS") %>%
 #    group_by(ShelveLoc, US) %>%
@@ -243,7 +243,7 @@ knitr::include_graphics('img/eda_paged_content.jpg')
 
 ## ----dbi_normality, eval=FALSE------------------------------------------------
 #  # Test all numerical variables by 'ShelveLoc' and 'US',
-#  # and extract only those with 'ShelveLoc' variable level is "Good".
+#  # and extract only those with the 'ShelveLoc' variable level is "Good".
 #  con_sqlite %>%
 #    tbl("TB_CARSEATS") %>%
 #   group_by(ShelveLoc, US) %>%
@@ -272,9 +272,9 @@ knitr::include_graphics('img/eda_paged_content.jpg')
 #   filter(p_value > 0.01)
 
 ## ----plot_normality_dbi, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE, eval=FALSE----
-#  # extract only those with 'ShelveLoc' variable level is "Good",
+#  # Extract only those with the 'ShelveLoc' variable level is "Good",
 #  # and plot 'Income' by 'US'
-#  # the result is same as a data.frame, but not display here. reference above in document.
+#  # The result is the same as the data.frame, but not displayed here. Reference above in document.
 #  con_sqlite %>%
 #    tbl("TB_CARSEATS") %>%
 #    filter(ShelveLoc == "Good") %>%
@@ -294,17 +294,17 @@ knitr::include_graphics('img/eda_paged_content.jpg')
 #    correlate(Sales, Price) %>%
 #    filter(as.integer(var1) > as.integer(var2))
 #  
-#  # Compute the correlation coefficient of Sales variable by 'ShelveLoc'
+#  # Compute the correlation coefficient of the Sales variable by 'ShelveLoc'
 #  # and 'US' variables. And extract only those with absolute
-#  # value of correlation coefficient is greater than 0.5
+#  # value of the correlation coefficient is more significant than 0.5
 #  con_sqlite %>%
 #    tbl("TB_CARSEATS") %>%
 #    group_by(ShelveLoc, US) %>%
 #    correlate(Sales) %>%
 #    filter(abs(coef_corr) >= 0.5)
 #  
-#  # extract only those with 'ShelveLoc' variable level is "Good",
-#  # and compute the correlation coefficient of 'Sales' variable
+#  # Extract only those with the 'ShelveLoc' variable level is "Good",
+#  # and compute the correlation coefficient of the 'Sales' variable
 #  # by 'Urban' and 'US' variables.
 #  # And the correlation coefficient is negative and smaller than 0.5
 #  con_sqlite %>%
@@ -319,7 +319,7 @@ knitr::include_graphics('img/eda_paged_content.jpg')
 #  # Extract only those with 'ShelveLoc' variable level is "Good",
 #  # and visualize correlation plot of 'Sales' variable by 'Urban'
 #  # and 'US' variables.
-#  # the result is same as a data.frame, but not display here. reference above in document.
+#  # The result is the same as the data.frame, but not displayed here. Reference above in document.
 #  con_sqlite %>%
 #    tbl("TB_CARSEATS") %>%
 #    filter(ShelveLoc == "Good") %>%
@@ -337,16 +337,16 @@ knitr::include_graphics('img/eda_paged_content.jpg')
 #  summary(cat_num)
 
 ## ----plot_target_by_dbi, fig.align='center', fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE----
-#  # the result is same as a data.frame, but not display here. reference above in document.
+#  # The result is the same as the data.frame, but not displayed here. Reference above in document.
 #  plot(cat_num)
 
 ## ----dbi_eda_report, eval=FALSE-----------------------------------------------
-#  # create web report file.
+#  # create a web report file.
 #  con_sqlite %>%
 #    tbl("TB_CARSEATS") %>%
 #    eda_web_report()
 #  
-#  # create pdf file. file name is EDA.pdf, and collect size is 350
+#  # create a pdf file. the file name is EDA.pdf, and the collect size is 350
 #  con_sqlite %>%
 #    tbl("TB_CARSEATS") %>%
 #    eda_paged_report(collect_size = 350, output_file = "EDA.pdf")

@@ -30,17 +30,17 @@ After you have acquired the data, you should do the following:
 The dlookr package makes these steps fast and easy:
 
 * Performs a data diagnosis or automatically generates a data diagnosis report.
-* Discover data in a variety of ways, and automatically generate EDA(exploratory data analysis) report.
+* Discover data in various ways and automatically generate EDA(exploratory data analysis) reports.
 * Impute missing values and outliers, resolve skewed data, and binaries continuous variables into categorical variables. And generates an automated report to support it.
 
-dlookr increases synergy with `dplyr`. Particularly in data exploration and data wrangle, it increases the efficiency of the `tidyverse` package group.
+dlookr increases synergy with `dplyr`. Particularly in data exploration and data wrangling, it increases the efficiency of the `tidyverse` package group.
 
 ## Supported data structures
 Data diagnosis supports the following data structures.
 
-* data frame : data.frame class.
-* data table : tbl_df class.
-* table of DBMS : table of the DBMS through tbl_dbi.
+* data frame: data.frame class.
+* data table: tbl_df class.
+* table of DBMS: table of the DBMS through tbl_dbi
   + Use dplyr as the back-end interface for any DBI-compatible database.
   
   
@@ -52,31 +52,31 @@ Data diagnosis supports the following data structures.
 Tasks | Descriptions | Functions | Support DBI
 :-----|:--------|:---|:---:
 describe overview of data | Inquire basic information to understand the data in general | `overview()` | 
-summary overview object  | summary described overview of data  | `summary.overview()` | 
+summary overview object  | summary described overview of data | `summary.overview()` | 
 plot overview object | plot described overview of data | `plot.overview()` | 
 diagnose data quality of variables | The scope of data quality diagnosis is information on missing values and unique value information | `diagnose()` | x
 diagnose data quality of categorical variables | frequency, ratio, rank by levels of each variables | `diagnose_category()` | x
 diagnose data quality of numerical variables | descriptive statistics, number of zero, minus, outliers | `diagnose_numeric()` | x
 diagnose data quality for outlier  | number of outliers, ratio, mean of outliers, mean with outliers, mean without outliers | `diagnose_outlier()` | x
 plot outliers information of numerical data  | box plot and histogram whith outliers, without outliers | `plot_outlier.data.frame()` | x
-plot outliers information of numerical data by target variable  | box plot and density plot whith outliers, without outliers | `plot_outlier.target_df()` | x
+plot outliers information of numerical data by target variable | box plot and density plot whith outliers, without outliers | `plot_outlier.target_df()` | x
 diagnose combination of categorical variables | Check for sparse cases of level combinations of categorical variables | `diagnose_sparese()` | 
 
 #### Visualize Missing Values
 Tasks | Descriptions | Functions | Support DBI
 :-----|:--------|:---|:---:
-pareto chart for missing value | visualize pareto chart for variables with missing value. | `plot_na_pareto()` | 
-combination chart for missing value | visualize distribution of missing value by combination of variables. | `plot_na_hclust()` | 
-plot the combination variables that is include missing value | visualize the combinations of missing value across cases.. | `plot_na_intersect()` | 
+pareto chart for missing value | visualize the Pareto chart for variables with a missing value. | `plot_na_pareto()` | 
+combination chart for missing value | visualize the distribution of missing value by combining variables. | `plot_na_hclust()` | 
+plot the combination variables that is include missing value | visualize the combinations of missing value across cases | `plot_na_intersect()` | 
 
 
 #### Reporting
 Types | Descriptions | Functions | Support DBI
 :-----|:-------|:---|:---:
-reporting the information of data diagnosis into pdf file | report the information for diagnosing the quality of the data. | `diagnose_report()` | x
-reporting the information of data diagnosis into html file | report the information for diagnosing the quality of the data. | `diagnose_report()` | x
-reporting the information of data diagnosis into html file | dynamic report the information for diagnosing the quality of the data. | `diagnose_web_report()` | x
-reporting the information of data diagnosis into pdf and html file | paged report the information for diagnosing the quality of the data. | `diagnose_paged_report()` | x
+report the information of data diagnosis into a PDF file | report the information for diagnosing the data quality | `diagnose_report()` | x
+reporting the information of data diagnosis into HTML file | report the information for diagnosing the quality of the data | `diagnose_report()` | x
+reporting the information of data diagnosis into HTML file | dynamic report the information for diagnosing the quality of the data | `diagnose_web_report()` | x
+reporting the information of data diagnosis into PDF and HTML files | paged report the information for diagnosing the quality of the data | `diagnose_paged_report()` | x
 
 
 ### EDA
@@ -137,10 +137,10 @@ categorical | numerical | histogram | `plot_hist_numeric()` |
 #### Reporting
 Types | Descriptions | Functions | Support DBI
 :-----|:--------|:---|:---:
-reporting the information of EDA into pdf file | reporting the information of EDA. | `eda_report()` | x
-reporting the information of EDA into html file | reporting the information of EDA. | `eda_report()` | x
-reporting the information of EDA into pdf file | dynamic reporting the information of EDA. | `eda_web_report()` | x
-reporting the information of EDA into html file | paged reporting the information of EDA. | `eda_paged_report()` | x
+reporting the information of EDA into PDF file | reporting the information of EDA | `eda_report()` | x
+reporting the information of EDA into HTML file | reporting the information of EDA | `eda_report()` | x
+reporting the information of EDA into PDF file | dynamic reporting the information of EDA | `eda_web_report()` | x
+reporting the information of EDA into HTML file | paged reporting the information of EDA | `eda_paged_report()` | x
 
 
 ### Transform Data
@@ -150,7 +150,7 @@ Types | Descriptions | Functions | Support DBI
 :---|:-------|:---|:---:
 missing values  | find the variable that contains the missing value in the object that inherits the data.frame | `find_na()` | 
 outliers | find the numerical variable that contains outliers in the object that inherits the data.frame | `find_outliers()` | 
-skewed variable | find the numerical variable that skewed variable that inherits the data.frame | `find_skewness()` | 
+skewed variable | find the numerical variable that is the skewed variable that inherits the data.frame | `find_skewness()` | 
 
 #### Imputation
 Types | Descriptions | Functions | Support DBI
@@ -169,35 +169,35 @@ visualize | visualize two plots on a single screen. The plot at the top is a his
 optimal binning | categorizes a numeric characteristic into bins for ulterior usage in scoring modeling | `binning_by()` | 
 summaries | summary metrics to evaluate the performance of binomial classification model | `summary.optimal_bins()` | 
 visualize | generates plots for understand distribution, bad rate, and weight of evidence after running binning_by() | `plot.optimal_bins()` | 
-infogain binning | categorizes a numeric characteristic into bins for multi-class variable using recursive information gain ratio maximization | `binning_rgr()` | 
-visualize | generates plots for understand distribution and  distribution by target variable after running binning_rgr() | `plot.infogain_bins()` | 
+infogain binning | categorizes a numeric characteristic into bins for multi-class variables using recursive information gain ratio maximization | `binning_rgr()` | 
+visualize | generates plots for understanding distribution and  distribution by target variable after running binning_rgr() | `plot.infogain_bins()` | 
 evaluate | calculates metrics to evaluate the performance of binned variable for binomial classification model | `performance_bin()` | 
 summaries | summary metrics to evaluate the performance of binomial classification model after performance_bin() | `summary.performance_bin()` | 
-visualize | It generates plots for understand frequency, WoE by bins using performance_bin after running binning_by() | `plot.performance_bin()` | 
+visualize | It generates plots to understand frequency, WoE by bins using performance_bin after running binning_by() | `plot.performance_bin()` | 
 visualize | extract bins from "bins" and "optimal_bins" objects | `extract.bins()` | 
 
 #### Diagnose Binned Variable
 Types | Descriptions | Functions | Support DBI
 :---|:-------|:---|:---:
-diagnosis | performs diagnose performance that calculates metrics to evaluate the performance of binned variable for binomial classification model. | `performance_bin()` | 
-summaries | summary method for "performance_bin". summary metrics to evaluate the performance of binomial classification model. | `
+diagnosis | performs diagnose performance that calculates metrics to evaluate the performance of binned variable for binomial classification model | `performance_bin()` | 
+summaries | summary method for "performance_bin". summary metrics to evaluate the performance of the binomial classification model | `
 summary.performance_bin()` | 
-visualize | visualize for understand frequency, WoE by bins using performance_bin and something else. | `plot.performance_bin()` | 
+visualize | visualize for understanding frequency, WoE by bins using performance_bin and something else | `plot.performance_bin()` | 
 
 #### Transformation
 Types | Descriptions | Functions | Support DBI
 :---|:-------|:---|:---:
-transformation | performs variable transformation for standardization and resolving skewness of numerical variables. | `transform()` | 
+transformation | performs variable transformation for standardization and resolving skewness of numerical variables | `transform()` | 
 summaries | compares the distribution of data before and after data transformation | `summary.transform()` | 
-visualize | visualize two kinds of plot by attribute of 'transform' class. The transformation of a numerical variable is a density plot. | `plot.transform()` | 
+visualize | visualize two kinds of a plot by attribute of the 'transform' class. The transformation of a numerical variable is a density plot | `plot.transform()` | 
 
 #### Reporting
 Types | Descriptions | Functions | Support DBI
 :-----|:--------|:---|:---:
-reporting the information of transformation into pdf | reporting the information of transformation. | `transformation_report()` | 
-reporting the information of transformation into html | reporting the information of transformation. | `transformation_report()` | 
-reporting the information of transformation into pdf | dynamic reporting the information of transformation. | `transformation_web_report()` | 
-reporting the information of transformation into html | paged reporting the information of transformation. | `transformation_paged_report()` | 
+reporting the information of transformation into PDF | reporting the information of transformation | `transformation_report()` | 
+reporting the information of transformation into HTML | reporting the information of transformation | `transformation_report()` | 
+reporting the transformation information into PDF | dynamic reporting the transformation information | `transformation_web_report()` | 
+reporting the information of transformation into HTML | paged reporting the information of transformation | `transformation_paged_report()` | 
 
 
 ### Miscellaneous
@@ -205,14 +205,14 @@ reporting the information of transformation into html | paged reporting the info
 #### Statistics
 Types | Descriptions | Functions | Support DBI
 :---|:-------|:---|:---:
-statistics  | calculate the entropy. | `entropy()` | 
-statistics  | calculate the skewness of the data. | `skewness()` | 
-statistics  | calculate the kurtosis of the data. | `kurtosis()` | 
-statistics  | calculate the Jensen-Shannon divergence between two probability distributions. | `jsd()` | 
-statistics  | calculate the Kullback-Leibler divergence between two probability distributions. | `kld()` | 
-statistics  | calculate the Cramer's V statistic between two categorical(discrete) variables. | `cramer()` | 
-statistics  | calculate the Theil's U statistic between two categorical(discrete) variables. | `theil()` | 
-statistics  | finding percentile of numerical variable. | `get_percentile()` | 
+statistics  | calculate the entropy | `entropy()` | 
+statistics  | calculate the skewness of the data | `skewness()` | 
+statistics  | calculate the kurtosis of the data | `kurtosis()` | 
+statistics  | calculate the Jensen-Shannon divergence between two probability distributions | `jsd()` | 
+statistics  | calculate the Kullback-Leibler divergence between two probability distributions | `kld()` | 
+statistics  | calculate the Cramer's V statistic between two categorical(discrete) variables | `cramer()` | 
+statistics  | calculate the Theil's U statistic between two categorical(discrete) variables | `theil()` | 
+statistics  | finding percentile of a numerical variable. | `get_percentile()` | 
 statistics  | transform a numeric vector using several methods like "log", "sqrt", "log+1", "log+a", "1/x", "x^2", "x^3", "Box-Cox", "Yeo-Johnson"| `get_transform()` | 
 statistics  | calculate the Cramer's V statistic | `cramer()` | 
 statistics  | calculate the Theil's U statistic | `theil()` | 
@@ -220,8 +220,8 @@ statistics  | calculate the Theil's U statistic | `theil()` |
 #### Programming
 Types | Descriptions | Functions | Support DBI
 :---|:-------|:---|:---:
-programming  | extracts variable information having a certain class from an object inheriting data.frame. | `find_class()` | 
-programming  | gets class of variables in data.frame or tbl_df. | `get_class()` | 
-programming  | retrieves the column information of the DBMS table through the tbl_bdi object of dplyr. | `get_column_info()` | 
-programming  | finding Users Machine's OS. | `get_os()` | 
-programming  | import Google Fonts. | `import_google_font()` | 
+programming  | extracts variable information having a certain class from an object inheriting data.frame | `find_class()` | 
+programming  | gets class of variables in data.frame or tbl_df | `get_class()` | 
+programming  | retrieves the column information of the DBMS table through the tbl_bdi object of dplyr | `get_column_info()` | 
+programming  | finding the user machine's OS. | `get_os()` | 
+programming  | import Google fonts | `import_google_font()` | 

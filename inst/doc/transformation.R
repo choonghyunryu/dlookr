@@ -119,7 +119,7 @@ summary(Advertising_log)
 # plot(Advertising_log)
 
 ## ----binning, fig.width = 6, fig.height = 4-----------------------------------
-# Binning the carat variable. default type argument is "quantile"
+# Binning the carat variable. the default type argument is "quantile"
 bin <- binning(carseats$Income)
 # Print bins class object
 bin

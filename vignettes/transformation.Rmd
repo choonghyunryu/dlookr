@@ -29,16 +29,16 @@ After you have acquired the data, you should do the following:
 
 The dlookr package makes these steps fast and easy:
 
-* Performs an data diagnosis or automatically generates a data diagnosis report.
-* Discover data in a variety of ways, and automatically generate EDA(exploratory data analysis) report.
+* Performs a data diagnosis or automatically generates a data diagnosis report.
+* Discover data in various ways and automatically generate EDA(exploratory data analysis) reports.
 * **Impute missing values and outliers, resolve skewed data, and categorize continuous variables into categorical variables. And generates an automated report to support it.**
 
-This document introduces **data transformation** methods provided by the dlookr package. You will learn how to transform of `tbl_df` data that inherits from data.frame and `data.frame` with functions provided by dlookr.
+This document introduces **data transformation** methods provided by the dlookr package. You will learn how to transform `tbl_df` data that inherits from data.frame and `data.frame` with functions provided by dlookr
 
 dlookr increases synergy with `dplyr`. Particularly in data transformation and data wrangle, it increases the efficiency of the `tidyverse` package group.
 
 ## datasets
-To illustrate the basic use of data transformation in the dlookr package, I use a `Carseats` dataset.
+To illustrate the primary use of data transformation in the dlookr package, I use a `Carseats` dataset.
 `Carseats` in the `ISLR` package is simulation dataset that sells children's car seats at 400 stores. This data is a data.frame created for the purpose of predicting sales volume.
 
 ```{r import_data}
@@ -50,7 +50,7 @@ The contents of individual variables are as follows. (Refer to ISLR::Carseats Ma
 * Sales
     + Unit sales (in thousands) at each location
 * CompPrice
-    + Price charged by competitor at each location
+    + Price charged by a competitor at each location
 * Income
     + Community income level (in thousands of dollars)
 * Advertising
@@ -70,7 +70,7 @@ The contents of individual variables are as follows. (Refer to ISLR::Carseats Ma
 * US
     + A factor with levels No and Yes to indicate whether the store is in the US or not
 
-When data analysis is performed, data containing missing values is often encountered. However, `Carseats` is complete data without missing. Therefore, the missing values are generated as follows. And I created a data.frame object named carseats.
+When data analysis is performed, data containing missing values is often encountered. However, `Carseats` is complete data without missing. Therefore, the missing values are generated as follows. And I created a data.frame object named carseat.
 
 ```{r missing}
 carseats <- Carseats
@@ -92,7 +92,7 @@ Here is a list of the data conversion functions and functions provided by dlookr
 * `find_na()` finds a variable that contains the missing values variable, and `imputate_na()` imputes the missing values.
 * `find_outliers()` finds a variable that contains the outliers, and `imputate_outlier()` imputes the outlier.
 * `summary.imputation()` and `plot.imputation()` provide information and visualization of the imputed variables.
-* `find_skewness()` finds the variables of the skewed data, and `transform()` performs the resolving of the skewed data.
+* `find_skewness()` finds the variables of the skewed data, and `transform()` resolves the skewed data.
 * `transform()` also performs standardization of numeric variables.
 * `summary.transform()` and `plot.transform()` provide information and visualization of transformed variables.
 * `binning()` and `binning_by()` convert binational data into categorical data.
@@ -104,24 +104,24 @@ Here is a list of the data conversion functions and functions provided by dlookr
 ## Imputation of missing values
 ### imputes the missing value with `imputate_na()`
 
-`imputate_na()` imputes the missing value contained in the variable. The predictor with missing values support both numeric and categorical variables, and supports the following `method`.
+`imputate_na()` imputes the missing value contained in the variable. The predictor with missing values supports numeric and categorical variables and the following `method`.
 
 * predictor is numerical variable
-    + "mean" : arithmetic mean
-    + "median" : median
-    + "mode" : mode
-    + "knn" : K-nearest neighbors
+    + "mean": arithmetic mean
+    + "median": median
+    + "mode": mode
+    + "knn": K-nearest neighbors
         + target variable must be specified
-    + "rpart" : Recursive Partitioning and Regression Trees
+    + "rpart": Recursive Partitioning and Regression Trees
         + target variable must be specified    
-    + "mice" : Multivariate Imputation by Chained Equations
+    + "mice": Multivariate Imputation by Chained Equations
         + target variable must be specified  
         + random seed must be set
 * predictor is categorical variable
-    + "mode" : mode
-    + "rpart" : Recursive Partitioning and Regression Trees
+    + "mode": mode
+    + "rpart": Recursive Partitioning and Regression Trees
         + target variable must be specified    
-    + "mice" : Multivariate Imputation by Chained Equations
+    + "mice": Multivariate Imputation by Chained Equations
         + target variable must be specified  
         + random seed must be set
     
@@ -146,7 +146,7 @@ if (requireNamespace("rpart", quietly = TRUE)) {
 
 The following imputes the categorical variable `urban` by the "mice" method.
 
-The "mice" method must require the `mice`, `ranger` package. If you want to use this feature, you need to install the `mice` and `ranger` package.
+The "mice" method must require the `mice`, `ranger` package. If you want to use this feature, you need to install the `mice`, and `ranger` package.
 
 ```{r imputate_na2, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE}
 library(mice)
@@ -164,7 +164,7 @@ plot(urban)
 ```
     
 ### Collaboration with dplyr
-The following example imputes the missing value of the `Income` variable, and then calculates the arithmetic mean for each level of `US`. In this case, `dplyr` is used, and it is easily interpreted logically using pipes.
+The following example imputes the missing value of the `Income` variable and then calculates the arithmetic mean for each level of `US`. In this case, `dplyr` is used and is easily interpreted logically using pipes.
 
 ```{r imputate_na3}
 # The mean before and after the imputation of the Income variable
@@ -176,16 +176,16 @@ carseats %>%
 ```
 
 
-## Imputation of outliers
-### imputes thr outliers with `imputate_outlier()`
+## Impute outliers
+### imputes the outliers with `imputate_outlier()`
 
-`imputate_outlier()` imputes the outliers value. The predictor with outliers supports only numeric variables and supports the following methods.
+`imputate_outlier()` imputes the outlier value. The predictor with outliers supports only numeric variables and supports the following methods.
 
 * predictor is numerical variable
-    + "mean" : arithmetic mean
-    + "median" : median
-    + "mode" : mode
-    + "capping" : Impute the upper outliers with 95 percentile, and Impute the bottom outliers with 5 percentile.
+    + "mean": arithmetic mean
+    + "median": median
+    + "mode": mode
+    + "capping": Impute the upper outliers with the 95 percentile and the bottom outliers with the fifth percentile.
 
 `imputate_outlier()` imputes the outliers with the numeric variable `Price` as the "capping" method, as follows. `summary()` summarizes outliers imputation information, and `plot()` visualizes imputation information.
 
@@ -203,7 +203,7 @@ plot(price)
 ```
 
 ### Collaboration with dplyr
-The following example imputes the outliers of the `Price` variable, and then calculates the arithmetic mean for each level of `US`. In this case, `dplyr` is used, and it is easily interpreted logically using pipes.
+The following example imputes the outliers of the `Price` variable and then calculates the arithmetic mean for each level of `US`. In this case, `dplyr` is used and is easily interpreted logically using pipes.
 
 ```{r imputate_outlier2}
 # The mean before and after the imputation of the Price variable
@@ -220,15 +220,15 @@ carseats %>%
 `transform()` performs data transformation. Only numeric variables are supported, and the following methods are provided.
 
 * Standardization
-    + "zscore" : z-score transformation. (x - mu) / sigma
-    + "minmax" : minmax transformation. (x - min) / (max - min)
+    + "zscore": z-score transformation. (x - mu) / sigma
+    + "minmax": minmax transformation. (x - min) / (max - min)
 * Resolving Skewness
-    + "log" : log transformation. log(x)
-    + "log+1" : log transformation. log(x + 1). Used for values that contain 0.
-    + "sqrt" : square root transformation.
-    + "1/x" : 1 / x transformation
-    + "x^2" : x square transformation
-    + "x^3" : x^3 square transformation
+    + "log": log transformation. log(x)
+    + "log+1": log transformation. log(x + 1). Used for values that contain 0.
+    + "sqrt": square root transformation.
+    + "1/x": 1 / x transformation
+    + "x^2": x square transformation
+    + "x^3": x^3 square transformation
 
 ### Standardization with `transform()`
 Use the methods "zscore" and "minmax" to perform standardization.
@@ -258,7 +258,7 @@ find_skewness(carseats, value = TRUE)
 find_skewness(carseats, value = TRUE, thres = 0.1)
 ```
 
-The skewness of `Advertising` is 0.637. This means that the distribution of data is somewhat inclined to the left. So, for normal distribution, use `transform()` to convert to "log" method as follows.
+The skewness of `Advertising` is 0.637. This means that the distribution of data is somewhat inclined to the left. So, for normal distribution, use `transform()` to convert to the "log" method as follows.
 `summary()` summarizes transformation information, and `plot()` visualizes transformation information.
 
 ```{r resolving2, fig.align='center', fig.width = 6, fig.height = 4}
@@ -272,7 +272,7 @@ summary(Advertising_log)
 plot(Advertising_log)
 ```
 
-It seems that the raw data contains 0, as there is a -Inf in the log converted value. So this time, convert it to "log+1".
+The raw data seems to contain 0, as there is a -Inf in the log converted value. So this time, convert it to "log+1".
 
 ```{r resolving3, fig.align='center', fig.width = 6, fig.height = 4}
 Advertising_log <- transform(carseats$Advertising, method = "log+1")
@@ -290,16 +290,16 @@ summary(Advertising_log)
 
 `binning()` transforms a numeric variable into a categorical variable by binning it. The following types of binning are supported.
 
-* "quantile" : categorize using quantile to include the same frequencies
-* "equal" : categorize to have equal length segments
-* "pretty" : categorized into moderately good segments
-* "kmeans" : categorization using K-means clustering
-* "bclust" : categorization using bagged clustering technique
+* "quantile": categorize using quantile to include the same frequencies
+* "equal": categorize to have equal length segments
+* "pretty": categorized into moderately good segments
+* "kmeans": categorization using K-means clustering
+* "bclust": categorization using bagged clustering technique
 
-Here are some examples of how to bin `Income` using `binning()`.:
+Here are some examples of bin `Income` using `binning()`.
 
 ```{r binning, fig.width = 6, fig.height = 4}
-# Binning the carat variable. default type argument is "quantile"
+# Binning the carat variable. the default type argument is "quantile"
 bin <- binning(carseats$Income)
 # Print bins class object
 bin
@@ -378,7 +378,7 @@ dlookr provides two automated data transformation reports:
 * Static reports generated as pdf files or html files can be archived as output of data analysis.
 
 ### Create a dynamic report using `transformation_web_report()`
-`transformation_web_report()` create dynamic report for object inherited from data.frame(`tbl_df`, `tbl`, etc) or data.frame.
+`transformation_web_report()` creates a dynamic report for objects inherited from data.frame(`tbl_df`, `tbl`, etc) or data.frame.
 
 #### Contents of dynamic web report
 The contents of the report are as follows.:
@@ -400,23 +400,23 @@ transformation_web_report() generates various reports with the following argumen
 * target
     + target variable
 * output_file
-    + name of generated file.
+    + name of the generated file.
 * output_dir
-    + name of directory to generate report file.
+    + name of the directory to generate report file.
 * title
-    + title of report. 
+    + title of the report. 
 * subtitle
-    + subtitle of report. 
+    + subtitle of the report. 
 * author
-    + author of report. 
+    + author of the report. 
 * title_color
     + color of title.
 * logo_img
-    + name of logo image file on top left.
+    + The name of the logo image file is on the top left.
 * create_date
     + The date on which the report is generated.
 * theme
-    + name of theme for report. support "orange" and "blue". 
+    + name of the theme for the report. Support "orange" and "blue". 
 * sample_percent
     + Sample percent of data for performing data transformation.
 
@@ -432,7 +432,7 @@ heartfailure %>%
 
 #### Screenshot of dynamic report
 
-* The dynamic contents of the report is shown in the following figure.:
+* The dynamic contents of the report are shown in the following figure.:
 
 ```{r trans_web_title, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The part of the report"}
 knitr::include_graphics('img/transformation_web_title.jpg')
@@ -460,33 +460,33 @@ transformation_paged_report() generates various reports with the following argum
 * target
     + target variable
 * output_format
-    + report output type. Choose either "pdf" and "html".
+    + report output type. Choose either "pdf" or "html".
 * output_file
-    + name of generated file.
+    + name of the generated file.
 * output_dir
-    + name of directory to generate report file.
+    + name of the directory to generate the report file.
 * title
-    + title of report. 
+    + title of the report. 
 * subtitle
-    + subtitle of report. 
+    + subtitle of the report. 
 * abstract_title
-    + abstract of report
+    + abstract of the report
 * author
-    + author of report. 
+    + author of the report. 
 * title_color
     + color of title.
 * subtitle_color
     + color of subtitle.
 * logo_img
-    + name of logo image file on top left.
+    + The name of the logo image file is on the top left.
 * cover_img
     + name of cover image file on center.
 * create_date
     + The date on which the report is generated.
 * theme
-    + name of theme for report. support "orange" and "blue". 
+    + name of the theme for the report. Support "orange" and "blue". 
 * sample_percent
-    + Sample percent of data for performing data tansformation.
+    + Sample percent of data for performing data transformation.
 
 The following script creates a data transformation report for the `data.frame` class object, `heartfailure`.
 
@@ -505,7 +505,7 @@ heartfailure %>%
 knitr::include_graphics('img/transformation_paged_cover.jpg')
 ```
 
-* The contents of the report is shown in the following figure.:
+* The contents of the report are shown in the following figure.:
 
 ```{r trans_paged_cntent, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The dynamic contents of the report"}
 knitr::include_graphics('img/transformation_paged_content.jpg')
