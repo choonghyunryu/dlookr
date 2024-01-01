@@ -627,7 +627,7 @@ plot.relate <- function(x, model = FALSE, hex_thres = 1000,
     # for Exception handling in plot.relate() #76
     # Code of MASS::bandwidth.nrd
     bandwidth.nrd <- function (x) {
-      r <- quantile(x, c(0.25, 0.75))
+      r <- quantile(x, c(0.25, 0.75), na.rm = TRUE)
       h <- (r[2L] - r[1L])/1.34
       4 * 1.06 * min(sqrt(stats::var(x)), h) * length(x)^(-1/5)
     }

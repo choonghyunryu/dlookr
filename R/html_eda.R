@@ -2139,7 +2139,7 @@ html_paged_target_numerical <- function(.data, target, full_width = TRUE,
         }        
       } else if (numeric_flag) {
         for (i in seq(NROW(tab_main))) {
-          nm_var <- nm_numeric[index]
+          nm_var <- nm_numeric[i]
           
           el <- div(h3(nm_var))
           cat(as.character(el))
@@ -2292,7 +2292,7 @@ html_paged_target_categorical <- function(.data, target, full_width = TRUE,
         }        
       } else if (numeric_flag) {
         for (i in seq(NROW(tab_main))) {
-          nm_var <- nm_categorical[index]
+          nm_var <- nm_categorical[i]
           
           num_cat <- relate(tgt_by, all_of(nm_var))
           

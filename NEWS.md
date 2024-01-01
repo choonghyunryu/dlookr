@@ -32,6 +32,8 @@
 * Fixed an error that occurred when CRAN was submitted. (#109)  
     - Define an additional function print.transform()
 
+* Fixed an error that is "Errors with eda_paged_report". (#86)  
+
 
 
 # dlookr 0.6.2
