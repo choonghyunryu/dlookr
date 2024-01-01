@@ -252,7 +252,7 @@ html_paged_target_numerical(reportData, targetVariable, base_family = base_famil
 
 ## Target Variable and Categorical Variables
 
-```{r group-categorical, results='asis', dpi=400, fig.height=5, fig.width=7, out.width="80%"}
+```{r group-categorical, results='asis', dpi=400, fig.height=5, fig.width=7, out.width="75%"}
 html_paged_target_categorical(reportData, targetVariable, base_family = base_family)  
 ```
 

@@ -34,6 +34,8 @@
 
 * Fixed an error that is "Errors with eda_paged_report". (#86)  
 
+* Fixed blank pages in EDA paged reports. (#114)
+
 
 
 # dlookr 0.6.2
