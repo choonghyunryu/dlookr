@@ -2,14 +2,19 @@
 % Please edit documentation in R/transform.R
 \name{summary.transform}
 \alias{summary.transform}
+\alias{print.transform}
 \title{Summarizing transformation information}
 \usage{
 \method{summary}{transform}(object, ...)
+
+\method{print}{transform}(x, ...)
 }
 \arguments{
 \item{object}{an object of class "transform", usually, a result of a call to transform().}
 
 \item{...}{further arguments passed to or from other methods.}
+
+\item{x}{an object of class "transform",usually, a result of a call to transform().}
 }
 \description{
 print and summary method for "transform" class.

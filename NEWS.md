@@ -1,4 +1,4 @@
-# dlookr 0.6.3.9002
+# dlookr 0.6.3.9003
 
 ## NEW FEATURES
   
@@ -29,6 +29,10 @@
   
 * Reduce example execution time (#112)
   
+* Fixed an error that occurred when CRAN was submitted. (#109)  
+    - Define an additional function print.transform()
+
+
 
 # dlookr 0.6.2
 

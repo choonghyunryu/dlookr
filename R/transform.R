@@ -199,6 +199,15 @@ summary.transform <- function(object, ...) {
 }
 
 
+#' @param x an object of class "transform",usually, a result of a call to transform().
+#' @param ... further arguments passed to or from other methods.
+#' @rdname summary.transform
+#' @method print transform
+#' @export
+print.transform <- function(x, ...) {
+  print(as.numeric(x))
+}
+
 #' Visualize Information for an "transform" Object
 #'
 #' @description
