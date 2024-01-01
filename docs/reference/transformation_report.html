@@ -142,7 +142,32 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="co">#if (FALSE) {</span></span></span>
+<span class="r-in"><span><span class="co">#if (!require(prettydoc)) install.packages('prettydoc', repos = "http://cran.us.r-project.org")</span></span></span>
+<span class="r-in"><span><span class="co">#</span></span></span>
+<span class="r-in"><span><span class="co">## reporting the Binning information -------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## create pdf file. file name is Transformation_Report.pdf &amp; No target variable</span></span></span>
+<span class="r-in"><span><span class="co">#transformation_report(heartfailure)</span></span></span>
+<span class="r-in"><span><span class="co">#</span></span></span>
+<span class="r-in"><span><span class="co">## create pdf file. file name is Transformation_Report.pdf</span></span></span>
+<span class="r-in"><span><span class="co">#transformation_report(heartfailure, death_event)</span></span></span>
+<span class="r-in"><span><span class="co">#</span></span></span>
+<span class="r-in"><span><span class="co">## create pdf file. file name is Transformation_heartfailure.pdf</span></span></span>
+<span class="r-in"><span><span class="co">#transformation_report(heartfailure, "death_event", </span></span></span>
+<span class="r-in"><span><span class="co">#                      output_file = "Transformation_heartfailure.pdf")</span></span></span>
+<span class="r-in"><span><span class="co">#</span></span></span>
+<span class="r-in"><span><span class="co">## create html file. file name is Transformation_Report.html</span></span></span>
+<span class="r-in"><span><span class="co">#transformation_report(heartfailure, "death_event", output_format = "html")</span></span></span>
+<span class="r-in"><span><span class="co">#</span></span></span>
+<span class="r-in"><span><span class="co">## create html file. file name is Transformation_heartfailure.html</span></span></span>
+<span class="r-in"><span><span class="co">#transformation_report(heartfailure, death_event, output_format = "html", </span></span></span>
+<span class="r-in"><span><span class="co">#                      output_file = "Transformation_heartfailure.html")</span></span></span>
+<span class="r-in"><span><span class="co">#}</span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"></span>
+</code></pre></div>
     </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

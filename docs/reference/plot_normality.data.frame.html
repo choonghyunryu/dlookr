@@ -180,95 +180,69 @@ use it after loading the Google font with import_google_font().</p>
 <span class="r-plt img"><img src="plot_normality.data.frame-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Select the variable to plot</span></span></span>
-<span class="r-in"><span><span class="fu">plot_normality</span><span class="op">(</span><span class="va">heartfailure2</span>, <span class="va">platelets</span>, <span class="va">sodium</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-4.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-5.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu">plot_normality</span><span class="op">(</span><span class="va">heartfailure2</span>, <span class="op">-</span><span class="va">platelets</span>, <span class="op">-</span><span class="va">sodium</span>, col <span class="op">=</span> <span class="st">"gray"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-6.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu">plot_normality</span><span class="op">(</span><span class="va">heartfailure2</span>, <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-7.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="co"># plot_normality(heartfailure2, platelets, sodium)</span></span></span>
+<span class="r-in"><span><span class="co"># plot_normality(heartfailure2, -platelets, -sodium, col = "gray")</span></span></span>
+<span class="r-in"><span><span class="co"># plot_normality(heartfailure2, 1)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Change the method of transformation</span></span></span>
-<span class="r-in"><span><span class="fu">plot_normality</span><span class="op">(</span><span class="va">heartfailure2</span>, <span class="va">platelets</span>, right <span class="op">=</span> <span class="st">"1/x"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-8.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="co"># plot_normality(heartfailure2, platelets, right = "1/x")</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"forecast"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu">plot_normality</span><span class="op">(</span><span class="va">heartfailure2</span>, <span class="va">platelets</span>, left <span class="op">=</span> <span class="st">"Box-Cox"</span>, right <span class="op">=</span> <span class="st">"Yeo-Johnson"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"If you want to use this feature, you need to install the forecast package.\n"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Registered S3 method overwritten by 'quantmod':</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   method            from</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   as.zoo.data.frame zoo </span>
-<span class="r-plt img"><img src="plot_normality.data.frame-9.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="co"># if (requireNamespace("forecast", quietly = TRUE)) {</span></span></span>
+<span class="r-in"><span><span class="co">#   plot_normality(heartfailure2, platelets, left = "Box-Cox", right = "Yeo-Johnson")</span></span></span>
+<span class="r-in"><span><span class="co"># } else {</span></span></span>
+<span class="r-in"><span><span class="co">#   cat("If you want to use this feature, you need to install the forecast package.\n")</span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span><span class="co"># Non typographic elements</span></span></span>
 <span class="r-in"><span><span class="fu">plot_normality</span><span class="op">(</span><span class="va">heartfailure2</span>, <span class="va">platelets</span>, typographic <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-10.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_normality.data.frame-4.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Using dplyr::grouped_df</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">gdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">heartfailure2</span>, <span class="va">sex</span>, <span class="va">smoking</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">plot_normality</span><span class="op">(</span><span class="va">gdata</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-11.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-12.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-13.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-14.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-15.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-16.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-17.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-18.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-19.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-20.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-21.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-22.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="co"># plot_normality(gdata)</span></span></span>
 <span class="r-in"><span><span class="fu">plot_normality</span><span class="op">(</span><span class="va">gdata</span>, <span class="st">"creatinine"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-23.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-24.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-25.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-26.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_normality.data.frame-5.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_normality.data.frame-6.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_normality.data.frame-7.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_normality.data.frame-8.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Using pipes ---------------------------------</span></span></span>
 <span class="r-in"><span><span class="co"># Visualization of all numerical variables</span></span></span>
 <span class="r-in"><span><span class="va">heartfailure2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span> <span class="fu">plot_normality</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-27.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-28.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-29.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_normality.data.frame-9.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_normality.data.frame-10.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_normality.data.frame-11.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Positive values select variables</span></span></span>
-<span class="r-in"><span><span class="va">heartfailure2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu">plot_normality</span><span class="op">(</span><span class="va">platelets</span>, <span class="va">sodium</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-30.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-31.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="co"># heartfailure2 %&gt;%</span></span></span>
+<span class="r-in"><span><span class="co">#   plot_normality(platelets, sodium)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Positions values select variables</span></span></span>
-<span class="r-in"><span><span class="va">heartfailure2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu">plot_normality</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-32.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="co"># heartfailure2 %&gt;%</span></span></span>
+<span class="r-in"><span><span class="co">#   plot_normality(1)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Using pipes &amp; dplyr -------------------------</span></span></span>
 <span class="r-in"><span><span class="co"># Plot 'creatinine' variable by 'sex' and 'smoking'</span></span></span>
 <span class="r-in"><span><span class="va">heartfailure2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">smoking</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">plot_normality</span><span class="op">(</span><span class="va">creatinine</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-33.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-34.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-35.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-36.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_normality.data.frame-12.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_normality.data.frame-13.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_normality.data.frame-14.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_normality.data.frame-15.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># extract only those with 'sex' variable level is "Male",</span></span></span>
 <span class="r-in"><span><span class="co"># and plot 'platelets' by 'smoking'</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"forecast"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="va">heartfailure2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">sex</span> <span class="op">==</span> <span class="st">"Male"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">smoking</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>   <span class="fu">plot_normality</span><span class="op">(</span><span class="va">platelets</span>, right <span class="op">=</span> <span class="st">"Box-Cox"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"If you want to use this feature, you need to install the forecast package.\n"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-37.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_normality.data.frame-38.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="co"># if (requireNamespace("forecast", quietly = TRUE)) {</span></span></span>
+<span class="r-in"><span><span class="co">#   heartfailure2 %&gt;%</span></span></span>
+<span class="r-in"><span><span class="co">#    filter(sex == "Male") %&gt;%</span></span></span>
+<span class="r-in"><span><span class="co">#    group_by(smoking) %&gt;%</span></span></span>
+<span class="r-in"><span><span class="co">#    plot_normality(platelets, right = "Box-Cox")</span></span></span>
+<span class="r-in"><span><span class="co"># } else {</span></span></span>
+<span class="r-in"><span><span class="co">#   cat("If you want to use this feature, you need to install the forecast package.\n")</span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

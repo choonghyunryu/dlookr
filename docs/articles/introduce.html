@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.3</span>
       </span>
     </div>
 
@@ -76,9 +76,10 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduce dlookr</h1>
-                        <h4 data-toc-skip class="author">Choonghyun Ryu</h4>
+                        <h4 data-toc-skip class="author">Choonghyun
+Ryu</h4>
             
-            <h4 data-toc-skip class="date">2022-04-19</h4>
+            <h4 data-toc-skip class="date">2024-01-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/choonghyunryu/dlookr/blob/HEAD/vignettes/introduce.Rmd" class="external-link"><code>vignettes/introduce.Rmd</code></a></small>
       <div class="hidden name"><code>introduce.Rmd</code></div>
@@ -98,27 +99,35 @@
 <li>The data must be corrected or re-acquired.</li>
 </ul>
 </li>
-<li>Explore data to understand the data and find scenarios for performing the analysis.</li>
+<li>Explore data to understand the data and find scenarios for
+performing the analysis.</li>
 <li>Derive new variables or perform variable transformations.</li>
 </ul>
 <p>The dlookr package makes these steps fast and easy:</p>
 <ul>
-<li>Performs a data diagnosis or automatically generates a data diagnosis report.</li>
-<li>Discover data in a variety of ways, and automatically generate EDA(exploratory data analysis) report.</li>
-<li>Impute missing values and outliers, resolve skewed data, and binaries continuous variables into categorical variables. And generates an automated report to support it.</li>
+<li>Performs a data diagnosis or automatically generates a data
+diagnosis report.</li>
+<li>Discover data in various ways and automatically generate
+EDA(exploratory data analysis) reports.</li>
+<li>Impute missing values and outliers, resolve skewed data, and
+binaries continuous variables into categorical variables. And generates
+an automated report to support it.</li>
 </ul>
-<p>dlookr increases synergy with <code>dplyr</code>. Particularly in data exploration and data wrangle, it increases the efficiency of the <code>tidyverse</code> package group.</p>
+<p>dlookr increases synergy with <code>dplyr</code>. Particularly in
+data exploration and data wrangling, it increases the efficiency of the
+<code>tidyverse</code> package group.</p>
 </div>
 <div class="section level2">
 <h2 id="supported-data-structures">Supported data structures<a class="anchor" aria-label="anchor" href="#supported-data-structures"></a>
 </h2>
 <p>Data diagnosis supports the following data structures.</p>
 <ul>
-<li>data frame : data.frame class.</li>
-<li>data table : tbl_df class.</li>
-<li>table of DBMS : table of the DBMS through tbl_dbi.
+<li>data frame: data.frame class.</li>
+<li>data table: tbl_df class.</li>
+<li>table of DBMS: table of the DBMS through tbl_dbi
 <ul>
-<li>Use dplyr as the back-end interface for any DBI-compatible database.</li>
+<li>Use dplyr as the back-end interface for any DBI-compatible
+database.</li>
 </ul>
 </li>
 </ul>
@@ -148,7 +157,8 @@
 <tbody>
 <tr class="odd">
 <td align="left">describe overview of data</td>
-<td align="left">Inquire basic information to understand the data in general</td>
+<td align="left">Inquire basic information to understand the data in
+general</td>
 <td align="left"><code><a href="../reference/overview.html">overview()</a></code></td>
 <td align="center"></td>
 </tr>
@@ -166,7 +176,8 @@
 </tr>
 <tr class="even">
 <td align="left">diagnose data quality of variables</td>
-<td align="left">The scope of data quality diagnosis is information on missing values and unique value information</td>
+<td align="left">The scope of data quality diagnosis is information on
+missing values and unique value information</td>
 <td align="left"><code><a href="../reference/diagnose.data.frame.html">diagnose()</a></code></td>
 <td align="center">x</td>
 </tr>
@@ -178,31 +189,37 @@
 </tr>
 <tr class="even">
 <td align="left">diagnose data quality of numerical variables</td>
-<td align="left">descriptive statistics, number of zero, minus, outliers</td>
+<td align="left">descriptive statistics, number of zero, minus,
+outliers</td>
 <td align="left"><code><a href="../reference/diagnose_numeric.data.frame.html">diagnose_numeric()</a></code></td>
 <td align="center">x</td>
 </tr>
 <tr class="odd">
 <td align="left">diagnose data quality for outlier</td>
-<td align="left">number of outliers, ratio, mean of outliers, mean with outliers, mean without outliers</td>
+<td align="left">number of outliers, ratio, mean of outliers, mean with
+outliers, mean without outliers</td>
 <td align="left"><code><a href="../reference/diagnose_outlier.data.frame.html">diagnose_outlier()</a></code></td>
 <td align="center">x</td>
 </tr>
 <tr class="even">
 <td align="left">plot outliers information of numerical data</td>
-<td align="left">box plot and histogram whith outliers, without outliers</td>
+<td align="left">box plot and histogram whith outliers, without
+outliers</td>
 <td align="left"><code><a href="../reference/plot_outlier.data.frame.html">plot_outlier.data.frame()</a></code></td>
 <td align="center">x</td>
 </tr>
 <tr class="odd">
-<td align="left">plot outliers information of numerical data by target variable</td>
-<td align="left">box plot and density plot whith outliers, without outliers</td>
+<td align="left">plot outliers information of numerical data by target
+variable</td>
+<td align="left">box plot and density plot whith outliers, without
+outliers</td>
 <td align="left"><code><a href="../reference/plot_outlier.target_df.html">plot_outlier.target_df()</a></code></td>
 <td align="center">x</td>
 </tr>
 <tr class="even">
 <td align="left">diagnose combination of categorical variables</td>
-<td align="left">Check for sparse cases of level combinations of categorical variables</td>
+<td align="left">Check for sparse cases of level combinations of
+categorical variables</td>
 <td align="left"><code><a href="../reference/diagnose_sparese.data.frame.html">diagnose_sparese()</a></code></td>
 <td align="center"></td>
 </tr>
@@ -228,19 +245,23 @@
 <tbody>
 <tr class="odd">
 <td align="left">pareto chart for missing value</td>
-<td align="left">visualize pareto chart for variables with missing value.</td>
+<td align="left">visualize the Pareto chart for variables with a missing
+value.</td>
 <td align="left"><code><a href="../reference/plot_na_pareto.html">plot_na_pareto()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="even">
 <td align="left">combination chart for missing value</td>
-<td align="left">visualize distribution of missing value by combination of variables.</td>
+<td align="left">visualize the distribution of missing value by
+combining variables.</td>
 <td align="left"><code><a href="../reference/plot_na_hclust.html">plot_na_hclust()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="odd">
-<td align="left">plot the combination variables that is include missing value</td>
-<td align="left">visualize the combinations of missing value across cases..</td>
+<td align="left">plot the combination variables that is include missing
+value</td>
+<td align="left">visualize the combinations of missing value across
+cases</td>
 <td align="left"><code><a href="../reference/plot_na_intersect.html">plot_na_intersect()</a></code></td>
 <td align="center"></td>
 </tr>
@@ -265,26 +286,34 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">reporting the information of data diagnosis into pdf file</td>
-<td align="left">report the information for diagnosing the quality of the data.</td>
+<td align="left">report the information of data diagnosis into a PDF
+file</td>
+<td align="left">report the information for diagnosing the data
+quality</td>
 <td align="left"><code><a href="../reference/diagnose_report.data.frame.html">diagnose_report()</a></code></td>
 <td align="center">x</td>
 </tr>
 <tr class="even">
-<td align="left">reporting the information of data diagnosis into html file</td>
-<td align="left">report the information for diagnosing the quality of the data.</td>
+<td align="left">reporting the information of data diagnosis into HTML
+file</td>
+<td align="left">report the information for diagnosing the quality of
+the data</td>
 <td align="left"><code><a href="../reference/diagnose_report.data.frame.html">diagnose_report()</a></code></td>
 <td align="center">x</td>
 </tr>
 <tr class="odd">
-<td align="left">reporting the information of data diagnosis into html file</td>
-<td align="left">dynamic report the information for diagnosing the quality of the data.</td>
+<td align="left">reporting the information of data diagnosis into HTML
+file</td>
+<td align="left">dynamic report the information for diagnosing the
+quality of the data</td>
 <td align="left"><code><a href="../reference/diagnose_web_report.data.frame.html">diagnose_web_report()</a></code></td>
 <td align="center">x</td>
 </tr>
 <tr class="even">
-<td align="left">reporting the information of data diagnosis into pdf and html file</td>
-<td align="left">paged report the information for diagnosing the quality of the data.</td>
+<td align="left">reporting the information of data diagnosis into PDF
+and HTML files</td>
+<td align="left">paged report the information for diagnosing the quality
+of the data</td>
 <td align="left"><code><a href="../reference/diagnose_paged_report.data.frame.html">diagnose_paged_report()</a></code></td>
 <td align="center">x</td>
 </tr>
@@ -444,7 +473,8 @@
 <tr class="odd">
 <td align="left">numerical</td>
 <td align="left">summaries</td>
-<td align="left">correlation coefficient, linear model summaries with threshold</td>
+<td align="left">correlation coefficient, linear model summaries with
+threshold</td>
 <td align="left"><code><a href="../reference/summary.compare_numeric.html">summary.compare_numeric()</a></code></td>
 <td align="center"></td>
 </tr>
@@ -572,7 +602,8 @@
 <tr class="odd">
 <td align="left">categorical</td>
 <td align="left">numerical</td>
-<td align="left">descriptive statistic for each levels and total observation</td>
+<td align="left">descriptive statistic for each levels and total
+observation</td>
 <td align="left"><code><a href="../reference/relate.html">relate()</a></code></td>
 <td align="center">x</td>
 </tr>
@@ -660,26 +691,26 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">reporting the information of EDA into pdf file</td>
-<td align="left">reporting the information of EDA.</td>
+<td align="left">reporting the information of EDA into PDF file</td>
+<td align="left">reporting the information of EDA</td>
 <td align="left"><code><a href="../reference/eda_report.data.frame.html">eda_report()</a></code></td>
 <td align="center">x</td>
 </tr>
 <tr class="even">
-<td align="left">reporting the information of EDA into html file</td>
-<td align="left">reporting the information of EDA.</td>
+<td align="left">reporting the information of EDA into HTML file</td>
+<td align="left">reporting the information of EDA</td>
 <td align="left"><code><a href="../reference/eda_report.data.frame.html">eda_report()</a></code></td>
 <td align="center">x</td>
 </tr>
 <tr class="odd">
-<td align="left">reporting the information of EDA into pdf file</td>
-<td align="left">dynamic reporting the information of EDA.</td>
+<td align="left">reporting the information of EDA into PDF file</td>
+<td align="left">dynamic reporting the information of EDA</td>
 <td align="left"><code><a href="../reference/eda_web_report.data.frame.html">eda_web_report()</a></code></td>
 <td align="center">x</td>
 </tr>
 <tr class="even">
-<td align="left">reporting the information of EDA into html file</td>
-<td align="left">paged reporting the information of EDA.</td>
+<td align="left">reporting the information of EDA into HTML file</td>
+<td align="left">paged reporting the information of EDA</td>
 <td align="left"><code><a href="../reference/eda_paged_report.data.frame.html">eda_paged_report()</a></code></td>
 <td align="center">x</td>
 </tr>
@@ -709,19 +740,22 @@
 <tbody>
 <tr class="odd">
 <td align="left">missing values</td>
-<td align="left">find the variable that contains the missing value in the object that inherits the data.frame</td>
+<td align="left">find the variable that contains the missing value in
+the object that inherits the data.frame</td>
 <td align="left"><code><a href="../reference/find_na.html">find_na()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="even">
 <td align="left">outliers</td>
-<td align="left">find the numerical variable that contains outliers in the object that inherits the data.frame</td>
+<td align="left">find the numerical variable that contains outliers in
+the object that inherits the data.frame</td>
 <td align="left"><code><a href="../reference/find_outliers.html">find_outliers()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="odd">
 <td align="left">skewed variable</td>
-<td align="left">find the numerical variable that skewed variable that inherits the data.frame</td>
+<td align="left">find the numerical variable that is the skewed variable
+that inherits the data.frame</td>
 <td align="left"><code><a href="../reference/find_skewness.html">find_skewness()</a></code></td>
 <td align="center"></td>
 </tr>
@@ -747,25 +781,29 @@
 <tbody>
 <tr class="odd">
 <td align="left">missing values</td>
-<td align="left">missing values are imputed with some representative values and statistical methods.</td>
+<td align="left">missing values are imputed with some representative
+values and statistical methods.</td>
 <td align="left"><code><a href="../reference/imputate_na.html">imputate_na()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="even">
 <td align="left">outliers</td>
-<td align="left">outliers are imputed with some representative values and statistical methods.</td>
+<td align="left">outliers are imputed with some representative values
+and statistical methods.</td>
 <td align="left"><code><a href="../reference/imputate_outlier.html">imputate_outlier()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="odd">
 <td align="left">summaries</td>
-<td align="left">calculate descriptive statistics of the original and imputed values.</td>
+<td align="left">calculate descriptive statistics of the original and
+imputed values.</td>
 <td align="left"><code><a href="../reference/summary.imputation.html">summary.imputation()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="even">
 <td align="left">visualize</td>
-<td align="left">the imputation of a numerical variable is a density plot, and the imputation of a categorical variable is a bar plot.</td>
+<td align="left">the imputation of a numerical variable is a density
+plot, and the imputation of a categorical variable is a bar plot.</td>
 <td align="left"><code><a href="../reference/plot.imputation.html">plot.imputation()</a></code></td>
 <td align="center"></td>
 </tr>
@@ -791,73 +829,87 @@
 <tbody>
 <tr class="odd">
 <td align="left">binning</td>
-<td align="left">converts a numeric variable to a categorization variable</td>
+<td align="left">converts a numeric variable to a categorization
+variable</td>
 <td align="left"><code><a href="../reference/binning.html">binning()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="even">
 <td align="left">summaries</td>
-<td align="left">calculate frequency and relative frequency for each levels(bins)</td>
+<td align="left">calculate frequency and relative frequency for each
+levels(bins)</td>
 <td align="left"><code><a href="../reference/summary.bins.html">summary.bins()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="odd">
 <td align="left">visualize</td>
-<td align="left">visualize two plots on a single screen. The plot at the top is a histogram representing the frequency of the level. The plot at the bottom is a bar chart representing the frequency of the level.</td>
+<td align="left">visualize two plots on a single screen. The plot at the
+top is a histogram representing the frequency of the level. The plot at
+the bottom is a bar chart representing the frequency of the level.</td>
 <td align="left"><code><a href="../reference/plot.bins.html">plot.bins()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="even">
 <td align="left">optimal binning</td>
-<td align="left">categorizes a numeric characteristic into bins for ulterior usage in scoring modeling</td>
+<td align="left">categorizes a numeric characteristic into bins for
+ulterior usage in scoring modeling</td>
 <td align="left"><code><a href="../reference/binning_by.html">binning_by()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="odd">
 <td align="left">summaries</td>
-<td align="left">summary metrics to evaluate the performance of binomial classification model</td>
+<td align="left">summary metrics to evaluate the performance of binomial
+classification model</td>
 <td align="left"><code><a href="../reference/summary.optimal_bins.html">summary.optimal_bins()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="even">
 <td align="left">visualize</td>
-<td align="left">generates plots for understand distribution, bad rate, and weight of evidence after running binning_by()</td>
+<td align="left">generates plots for understand distribution, bad rate,
+and weight of evidence after running binning_by()</td>
 <td align="left"><code><a href="../reference/plot.optimal_bins.html">plot.optimal_bins()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="odd">
 <td align="left">infogain binning</td>
-<td align="left">categorizes a numeric characteristic into bins for multi-class variable using recursive information gain ratio maximization</td>
+<td align="left">categorizes a numeric characteristic into bins for
+multi-class variables using recursive information gain ratio
+maximization</td>
 <td align="left"><code><a href="../reference/binning_rgr.html">binning_rgr()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="even">
 <td align="left">visualize</td>
-<td align="left">generates plots for understand distribution and distribution by target variable after running binning_rgr()</td>
+<td align="left">generates plots for understanding distribution and
+distribution by target variable after running binning_rgr()</td>
 <td align="left"><code><a href="../reference/plot.infogain_bins.html">plot.infogain_bins()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="odd">
 <td align="left">evaluate</td>
-<td align="left">calculates metrics to evaluate the performance of binned variable for binomial classification model</td>
+<td align="left">calculates metrics to evaluate the performance of
+binned variable for binomial classification model</td>
 <td align="left"><code><a href="../reference/performance_bin.html">performance_bin()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="even">
 <td align="left">summaries</td>
-<td align="left">summary metrics to evaluate the performance of binomial classification model after performance_bin()</td>
+<td align="left">summary metrics to evaluate the performance of binomial
+classification model after performance_bin()</td>
 <td align="left"><code><a href="../reference/summary.performance_bin.html">summary.performance_bin()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="odd">
 <td align="left">visualize</td>
-<td align="left">It generates plots for understand frequency, WoE by bins using performance_bin after running binning_by()</td>
+<td align="left">It generates plots to understand frequency, WoE by bins
+using performance_bin after running binning_by()</td>
 <td align="left"><code><a href="../reference/plot.performance_bin.html">plot.performance_bin()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="even">
 <td align="left">visualize</td>
-<td align="left">extract bins from “bins” and “optimal_bins” objects</td>
+<td align="left">extract bins from “bins” and “optimal_bins”
+objects</td>
 <td align="left"><code><a href="../reference/extract.bins.html">extract.bins()</a></code></td>
 <td align="center"></td>
 </tr>
@@ -883,19 +935,23 @@
 <tbody>
 <tr class="odd">
 <td align="left">diagnosis</td>
-<td align="left">performs diagnose performance that calculates metrics to evaluate the performance of binned variable for binomial classification model.</td>
+<td align="left">performs diagnose performance that calculates metrics
+to evaluate the performance of binned variable for binomial
+classification model</td>
 <td align="left"><code><a href="../reference/performance_bin.html">performance_bin()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="even">
 <td align="left">summaries</td>
-<td align="left">summary method for “performance_bin”. summary metrics to evaluate the performance of binomial classification model.</td>
+<td align="left">summary method for “performance_bin”. summary metrics
+to evaluate the performance of the binomial classification model</td>
 <td align="left"><code><a href="../reference/summary.performance_bin.html">summary.performance_bin()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="odd">
 <td align="left">visualize</td>
-<td align="left">visualize for understand frequency, WoE by bins using performance_bin and something else.</td>
+<td align="left">visualize for understanding frequency, WoE by bins
+using performance_bin and something else</td>
 <td align="left"><code><a href="../reference/plot.performance_bin.html">plot.performance_bin()</a></code></td>
 <td align="center"></td>
 </tr>
@@ -921,19 +977,23 @@
 <tbody>
 <tr class="odd">
 <td align="left">transformation</td>
-<td align="left">performs variable transformation for standardization and resolving skewness of numerical variables.</td>
+<td align="left">performs variable transformation for standardization
+and resolving skewness of numerical variables</td>
 <td align="left"><code><a href="../reference/transform.html">transform()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="even">
 <td align="left">summaries</td>
-<td align="left">compares the distribution of data before and after data transformation</td>
+<td align="left">compares the distribution of data before and after data
+transformation</td>
 <td align="left"><code><a href="../reference/summary.transform.html">summary.transform()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="odd">
 <td align="left">visualize</td>
-<td align="left">visualize two kinds of plot by attribute of ‘transform’ class. The transformation of a numerical variable is a density plot.</td>
+<td align="left">visualize two kinds of a plot by attribute of the
+‘transform’ class. The transformation of a numerical variable is a
+density plot</td>
 <td align="left"><code><a href="../reference/plot.transform.html">plot.transform()</a></code></td>
 <td align="center"></td>
 </tr>
@@ -958,26 +1018,29 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">reporting the information of transformation into pdf</td>
-<td align="left">reporting the information of transformation.</td>
+<td align="left">reporting the information of transformation into
+PDF</td>
+<td align="left">reporting the information of transformation</td>
 <td align="left"><code><a href="../reference/transformation_report.html">transformation_report()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="even">
-<td align="left">reporting the information of transformation into html</td>
-<td align="left">reporting the information of transformation.</td>
+<td align="left">reporting the information of transformation into
+HTML</td>
+<td align="left">reporting the information of transformation</td>
 <td align="left"><code><a href="../reference/transformation_report.html">transformation_report()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="odd">
-<td align="left">reporting the information of transformation into pdf</td>
-<td align="left">dynamic reporting the information of transformation.</td>
+<td align="left">reporting the transformation information into PDF</td>
+<td align="left">dynamic reporting the transformation information</td>
 <td align="left"><code><a href="../reference/transformation_web_report.html">transformation_web_report()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="even">
-<td align="left">reporting the information of transformation into html</td>
-<td align="left">paged reporting the information of transformation.</td>
+<td align="left">reporting the information of transformation into
+HTML</td>
+<td align="left">paged reporting the information of transformation</td>
 <td align="left"><code><a href="../reference/transformation_paged_report.html">transformation_paged_report()</a></code></td>
 <td align="center"></td>
 </tr>
@@ -1007,55 +1070,61 @@
 <tbody>
 <tr class="odd">
 <td align="left">statistics</td>
-<td align="left">calculate the entropy.</td>
+<td align="left">calculate the entropy</td>
 <td align="left"><code><a href="../reference/entropy.html">entropy()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="even">
 <td align="left">statistics</td>
-<td align="left">calculate the skewness of the data.</td>
+<td align="left">calculate the skewness of the data</td>
 <td align="left"><code><a href="../reference/skewness.html">skewness()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="odd">
 <td align="left">statistics</td>
-<td align="left">calculate the kurtosis of the data.</td>
+<td align="left">calculate the kurtosis of the data</td>
 <td align="left"><code><a href="../reference/kurtosis.html">kurtosis()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="even">
 <td align="left">statistics</td>
-<td align="left">calculate the Jensen-Shannon divergence between two probability distributions.</td>
+<td align="left">calculate the Jensen-Shannon divergence between two
+probability distributions</td>
 <td align="left"><code><a href="../reference/jsd.html">jsd()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="odd">
 <td align="left">statistics</td>
-<td align="left">calculate the Kullback-Leibler divergence between two probability distributions.</td>
+<td align="left">calculate the Kullback-Leibler divergence between two
+probability distributions</td>
 <td align="left"><code><a href="../reference/kld.html">kld()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="even">
 <td align="left">statistics</td>
-<td align="left">calculate the Cramer’s V statistic between two categorical(discrete) variables.</td>
+<td align="left">calculate the Cramer’s V statistic between two
+categorical(discrete) variables</td>
 <td align="left"><code><a href="../reference/cramer.html">cramer()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="odd">
 <td align="left">statistics</td>
-<td align="left">calculate the Theil’s U statistic between two categorical(discrete) variables.</td>
+<td align="left">calculate the Theil’s U statistic between two
+categorical(discrete) variables</td>
 <td align="left"><code><a href="../reference/theil.html">theil()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="even">
 <td align="left">statistics</td>
-<td align="left">finding percentile of numerical variable.</td>
+<td align="left">finding percentile of a numerical variable.</td>
 <td align="left"><code><a href="../reference/get_percentile.html">get_percentile()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="odd">
 <td align="left">statistics</td>
-<td align="left">transform a numeric vector using several methods like “log”, “sqrt”, “log+1”, “log+a”, “1/x”, “x^2”, “x^3”, “Box-Cox”, “Yeo-Johnson”</td>
+<td align="left">transform a numeric vector using several methods like
+“log”, “sqrt”, “log+1”, “log+a”, “1/x”, “x^2”, “x^3”, “Box-Cox”,
+“Yeo-Johnson”</td>
 <td align="left"><code><a href="../reference/get_transform.html">get_transform()</a></code></td>
 <td align="center"></td>
 </tr>
@@ -1093,31 +1162,33 @@
 <tbody>
 <tr class="odd">
 <td align="left">programming</td>
-<td align="left">extracts variable information having a certain class from an object inheriting data.frame.</td>
+<td align="left">extracts variable information having a certain class
+from an object inheriting data.frame</td>
 <td align="left"><code><a href="../reference/find_class.html">find_class()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="even">
 <td align="left">programming</td>
-<td align="left">gets class of variables in data.frame or tbl_df.</td>
+<td align="left">gets class of variables in data.frame or tbl_df</td>
 <td align="left"><code><a href="../reference/get_class.html">get_class()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="odd">
 <td align="left">programming</td>
-<td align="left">retrieves the column information of the DBMS table through the tbl_bdi object of dplyr.</td>
+<td align="left">retrieves the column information of the DBMS table
+through the tbl_bdi object of dplyr</td>
 <td align="left"><code><a href="../reference/get_column_info.html">get_column_info()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="even">
 <td align="left">programming</td>
-<td align="left">finding Users Machine’s OS.</td>
+<td align="left">finding the user machine’s OS.</td>
 <td align="left"><code><a href="../reference/get_os.html">get_os()</a></code></td>
 <td align="center"></td>
 </tr>
 <tr class="odd">
 <td align="left">programming</td>
-<td align="left">import Google Fonts.</td>
+<td align="left">import Google fonts</td>
 <td align="left"><code><a href="../reference/import_google_font.html">import_google_font()</a></code></td>
 <td align="center"></td>
 </tr>
@@ -1145,7 +1216,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

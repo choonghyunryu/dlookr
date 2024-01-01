@@ -79,7 +79,7 @@
                         <h4 data-toc-skip class="author">Choonghyun
 Ryu</h4>
             
-            <h4 data-toc-skip class="date">2023-11-25</h4>
+            <h4 data-toc-skip class="date">2024-01-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/choonghyunryu/dlookr/blob/HEAD/vignettes/transformation.Rmd" class="external-link"><code>vignettes/transformation.Rmd</code></a></small>
       <div class="hidden name"><code>transformation.Rmd</code></div>
@@ -106,18 +106,18 @@ transformations.</strong></li>
 </ul>
 <p>The dlookr package makes these steps fast and easy:</p>
 <ul>
-<li>Performs an data diagnosis or automatically generates a data
+<li>Performs a data diagnosis or automatically generates a data
 diagnosis report.</li>
-<li>Discover data in a variety of ways, and automatically generate
-EDA(exploratory data analysis) report.</li>
+<li>Discover data in various ways and automatically generate
+EDA(exploratory data analysis) reports.</li>
 <li><strong>Impute missing values and outliers, resolve skewed data, and
 categorize continuous variables into categorical variables. And
 generates an automated report to support it.</strong></li>
 </ul>
 <p>This document introduces <strong>data transformation</strong> methods
-provided by the dlookr package. You will learn how to transform of
+provided by the dlookr package. You will learn how to transform
 <code>tbl_df</code> data that inherits from data.frame and
-<code>data.frame</code> with functions provided by dlookr.</p>
+<code>data.frame</code> with functions provided by dlookr</p>
 <p>dlookr increases synergy with <code>dplyr</code>. Particularly in
 data transformation and data wrangle, it increases the efficiency of the
 <code>tidyverse</code> package group.</p>
@@ -125,27 +125,24 @@ data transformation and data wrangle, it increases the efficiency of the
 <div class="section level2">
 <h2 id="datasets">datasets<a class="anchor" aria-label="anchor" href="#datasets"></a>
 </h2>
-<p>To illustrate the basic use of data transformation in the dlookr
+<p>To illustrate the primary use of data transformation in the dlookr
 package, I use a <code>Carseats</code> dataset. <code>Carseats</code> in
 the <code>ISLR</code> package is simulation dataset that sells
 children’s car seats at 400 stores. This data is a data.frame created
 for the purpose of predicting sales volume.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"ISLR"</span>)) <span class="fu">install.packages</span>(<span class="st">"ISLR"</span>, <span class="at">repos =</span> <span class="st">"http://cran.us.r-project.org"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>Loading required package<span class="sc">:</span> ISLR</span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">str</span>(ISLR<span class="sc">::</span>Carseats)</span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="st">'data.frame'</span><span class="sc">:</span>   <span class="dv">400</span> obs. of  <span class="dv">11</span> variables<span class="sc">:</span></span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a> <span class="er">$</span> Sales      <span class="sc">:</span> num  <span class="fl">9.5</span> <span class="fl">11.22</span> <span class="fl">10.06</span> <span class="fl">7.4</span> <span class="fl">4.15</span> ...</span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a> <span class="sc">$</span> CompPrice  <span class="sc">:</span> num  <span class="dv">138</span> <span class="dv">111</span> <span class="dv">113</span> <span class="dv">117</span> <span class="dv">141</span> <span class="dv">124</span> <span class="dv">115</span> <span class="dv">136</span> <span class="dv">132</span> <span class="dv">132</span> ...</span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a> <span class="sc">$</span> Income     <span class="sc">:</span> num  <span class="dv">73</span> <span class="dv">48</span> <span class="dv">35</span> <span class="dv">100</span> <span class="dv">64</span> <span class="dv">113</span> <span class="dv">105</span> <span class="dv">81</span> <span class="dv">110</span> <span class="dv">113</span> ...</span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a> <span class="sc">$</span> Advertising<span class="sc">:</span> num  <span class="dv">11</span> <span class="dv">16</span> <span class="dv">10</span> <span class="dv">4</span> <span class="dv">3</span> <span class="dv">13</span> <span class="dv">0</span> <span class="dv">15</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a> <span class="sc">$</span> Population <span class="sc">:</span> num  <span class="dv">276</span> <span class="dv">260</span> <span class="dv">269</span> <span class="dv">466</span> <span class="dv">340</span> <span class="dv">501</span> <span class="dv">45</span> <span class="dv">425</span> <span class="dv">108</span> <span class="dv">131</span> ...</span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a> <span class="sc">$</span> Price      <span class="sc">:</span> num  <span class="dv">120</span> <span class="dv">83</span> <span class="dv">80</span> <span class="dv">97</span> <span class="dv">128</span> <span class="dv">72</span> <span class="dv">108</span> <span class="dv">120</span> <span class="dv">124</span> <span class="dv">124</span> ...</span>
-<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a> <span class="sc">$</span> ShelveLoc  <span class="sc">:</span> Factor w<span class="sc">/</span> <span class="dv">3</span> levels <span class="st">"Bad"</span>,<span class="st">"Good"</span>,<span class="st">"Medium"</span><span class="sc">:</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">3</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">3</span> ...</span>
-<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a> <span class="sc">$</span> Age        <span class="sc">:</span> num  <span class="dv">42</span> <span class="dv">65</span> <span class="dv">59</span> <span class="dv">55</span> <span class="dv">38</span> <span class="dv">78</span> <span class="dv">71</span> <span class="dv">67</span> <span class="dv">76</span> <span class="dv">76</span> ...</span>
-<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a> <span class="sc">$</span> Education  <span class="sc">:</span> num  <span class="dv">17</span> <span class="dv">10</span> <span class="dv">12</span> <span class="dv">14</span> <span class="dv">13</span> <span class="dv">16</span> <span class="dv">15</span> <span class="dv">10</span> <span class="dv">10</span> <span class="dv">17</span> ...</span>
-<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a> <span class="sc">$</span> Urban      <span class="sc">:</span> Factor w<span class="sc">/</span> <span class="dv">2</span> levels <span class="st">"No"</span>,<span class="st">"Yes"</span><span class="sc">:</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">1</span> ...</span>
-<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a> <span class="sc">$</span> US         <span class="sc">:</span> Factor w<span class="sc">/</span> <span class="dv">2</span> levels <span class="st">"No"</span>,<span class="st">"Yes"</span><span class="sc">:</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">2</span> ...</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">str</span>(Carseats)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="st">'data.frame'</span><span class="sc">:</span>   <span class="dv">400</span> obs. of  <span class="dv">11</span> variables<span class="sc">:</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a> <span class="er">$</span> Sales      <span class="sc">:</span> num  <span class="fl">9.5</span> <span class="fl">11.22</span> <span class="fl">10.06</span> <span class="fl">7.4</span> <span class="fl">4.15</span> ...</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a> <span class="sc">$</span> CompPrice  <span class="sc">:</span> num  <span class="dv">138</span> <span class="dv">111</span> <span class="dv">113</span> <span class="dv">117</span> <span class="dv">141</span> <span class="dv">124</span> <span class="dv">115</span> <span class="dv">136</span> <span class="dv">132</span> <span class="dv">132</span> ...</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a> <span class="sc">$</span> Income     <span class="sc">:</span> num  <span class="dv">73</span> <span class="dv">48</span> <span class="dv">35</span> <span class="dv">100</span> <span class="dv">64</span> <span class="dv">113</span> <span class="dv">105</span> <span class="dv">81</span> <span class="dv">110</span> <span class="dv">113</span> ...</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a> <span class="sc">$</span> Advertising<span class="sc">:</span> num  <span class="dv">11</span> <span class="dv">16</span> <span class="dv">10</span> <span class="dv">4</span> <span class="dv">3</span> <span class="dv">13</span> <span class="dv">0</span> <span class="dv">15</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a> <span class="sc">$</span> Population <span class="sc">:</span> num  <span class="dv">276</span> <span class="dv">260</span> <span class="dv">269</span> <span class="dv">466</span> <span class="dv">340</span> <span class="dv">501</span> <span class="dv">45</span> <span class="dv">425</span> <span class="dv">108</span> <span class="dv">131</span> ...</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a> <span class="sc">$</span> Price      <span class="sc">:</span> num  <span class="dv">120</span> <span class="dv">83</span> <span class="dv">80</span> <span class="dv">97</span> <span class="dv">128</span> <span class="dv">72</span> <span class="dv">108</span> <span class="dv">120</span> <span class="dv">124</span> <span class="dv">124</span> ...</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a> <span class="sc">$</span> ShelveLoc  <span class="sc">:</span> Factor w<span class="sc">/</span> <span class="dv">3</span> levels <span class="st">"Bad"</span>,<span class="st">"Good"</span>,<span class="st">"Medium"</span><span class="sc">:</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">3</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">3</span> ...</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a> <span class="sc">$</span> Age        <span class="sc">:</span> num  <span class="dv">42</span> <span class="dv">65</span> <span class="dv">59</span> <span class="dv">55</span> <span class="dv">38</span> <span class="dv">78</span> <span class="dv">71</span> <span class="dv">67</span> <span class="dv">76</span> <span class="dv">76</span> ...</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a> <span class="sc">$</span> Education  <span class="sc">:</span> num  <span class="dv">17</span> <span class="dv">10</span> <span class="dv">12</span> <span class="dv">14</span> <span class="dv">13</span> <span class="dv">16</span> <span class="dv">15</span> <span class="dv">10</span> <span class="dv">10</span> <span class="dv">17</span> ...</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a> <span class="sc">$</span> Urban      <span class="sc">:</span> Factor w<span class="sc">/</span> <span class="dv">2</span> levels <span class="st">"No"</span>,<span class="st">"Yes"</span><span class="sc">:</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">1</span> ...</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a> <span class="sc">$</span> US         <span class="sc">:</span> Factor w<span class="sc">/</span> <span class="dv">2</span> levels <span class="st">"No"</span>,<span class="st">"Yes"</span><span class="sc">:</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">2</span> ...</span></code></pre></div>
 <p>The contents of individual variables are as follows. (Refer to
 ISLR::Carseats Man page)</p>
 <ul>
@@ -156,7 +153,7 @@ ISLR::Carseats Man page)</p>
 </li>
 <li>CompPrice
 <ul>
-<li>Price charged by competitor at each location</li>
+<li>Price charged by a competitor at each location</li>
 </ul>
 </li>
 <li>Income
@@ -212,9 +209,9 @@ the US or not</li>
 <p>When data analysis is performed, data containing missing values is
 often encountered. However, <code>Carseats</code> is complete data
 without missing. Therefore, the missing values are generated as follows.
-And I created a data.frame object named carseats.</p>
+And I created a data.frame object named carseat.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">carseats</span> <span class="op">&lt;-</span> <span class="fu">ISLR</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/ISLR/man/Carseats.html" class="external-link">Carseats</a></span></span>
+<code class="sourceCode R"><span><span class="va">carseats</span> <span class="op">&lt;-</span> <span class="va">Carseats</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">RNGversion</a></span><span class="op">(</span><span class="st">"3.5.0"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
@@ -245,8 +242,7 @@ outliers, and <code><a href="../reference/imputate_outlier.html">imputate_outlie
 provide information and visualization of the imputed variables.</li>
 <li>
 <code><a href="../reference/find_skewness.html">find_skewness()</a></code> finds the variables of the skewed data,
-and <code><a href="../reference/transform.html">transform()</a></code> performs the resolving of the skewed
-data.</li>
+and <code><a href="../reference/transform.html">transform()</a></code> resolves the skewed data.</li>
 <li>
 <code><a href="../reference/transform.html">transform()</a></code> also performs standardization of numeric
 variables.</li>
@@ -274,27 +270,26 @@ reports the result.</li>
 <h3 id="imputes-the-missing-value-with-imputate_na">imputes the missing value with <code>imputate_na()</code><a class="anchor" aria-label="anchor" href="#imputes-the-missing-value-with-imputate_na"></a>
 </h3>
 <p><code><a href="../reference/imputate_na.html">imputate_na()</a></code> imputes the missing value contained in the
-variable. The predictor with missing values support both numeric and
-categorical variables, and supports the following
-<code>method</code>.</p>
+variable. The predictor with missing values supports numeric and
+categorical variables and the following <code>method</code>.</p>
 <ul>
 <li>predictor is numerical variable
 <ul>
-<li>“mean” : arithmetic mean</li>
-<li>“median” : median</li>
-<li>“mode” : mode</li>
-<li>“knn” : K-nearest neighbors
+<li>“mean”: arithmetic mean</li>
+<li>“median”: median</li>
+<li>“mode”: mode</li>
+<li>“knn”: K-nearest neighbors
 <ul>
 <li>target variable must be specified</li>
 </ul>
 </li>
-<li>“rpart” : Recursive Partitioning and Regression Trees
+<li>“rpart”: Recursive Partitioning and Regression Trees
 <ul>
 <li>target variable must be specified<br>
 </li>
 </ul>
 </li>
-<li>“mice” : Multivariate Imputation by Chained Equations
+<li>“mice”: Multivariate Imputation by Chained Equations
 <ul>
 <li>target variable must be specified<br>
 </li>
@@ -305,14 +300,14 @@ categorical variables, and supports the following
 </li>
 <li>predictor is categorical variable
 <ul>
-<li>“mode” : mode</li>
-<li>“rpart” : Recursive Partitioning and Regression Trees
+<li>“mode”: mode</li>
+<li>“rpart”: Recursive Partitioning and Regression Trees
 <ul>
 <li>target variable must be specified<br>
 </li>
 </ul>
 </li>
-<li>“mice” : Multivariate Imputation by Chained Equations
+<li>“mice”: Multivariate Imputation by Chained Equations
 <ul>
 <li>target variable must be specified<br>
 </li>
@@ -327,125 +322,78 @@ missing value of <code>Income</code>, a numeric variable of carseats,
 using the “rpart” method. <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> summarizes missing
 value imputation information, and <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> visualizes missing
 information.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># if (!require("rpart")) install.packages("rpart", repos = "http://cran.us.r-project.org")</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">requireNamespace</span>(<span class="st">"rpart"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  income <span class="ot">&lt;-</span> <span class="fu">imputate_na</span>(carseats, Income, US, <span class="at">method =</span> <span class="st">"rpart"</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  <span class="co"># result of imputation</span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  income</span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>  <span class="co"># summary of imputation</span></span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>  <span class="fu">summary</span>(income)</span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>  <span class="co"># viz of imputation</span></span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>  <span class="fu">plot</span>(income)</span>
-<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"If you want to use this feature, you need to install the rpart package.</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a>}</span>
-<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="sc">*</span> Impute missing values based on Recursive Partitioning and Regression Trees</span>
-<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a> <span class="sc">-</span> method <span class="sc">:</span> rpart</span>
-<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a></span>
-<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="sc">*</span> Information of <span class="fu">Imputation</span> (before vs after)</span>
-<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a>                    Original     Imputation  </span>
-<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a>described_variables <span class="st">"value"</span>      <span class="st">"value"</span>     </span>
-<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a>n                   <span class="st">"380"</span>        <span class="st">"400"</span>       </span>
-<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a>na                  <span class="st">"20"</span>         <span class="st">" 0"</span>        </span>
-<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a>mean                <span class="st">"68.86053"</span>   <span class="st">"69.05073"</span>  </span>
-<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a>sd                  <span class="st">"28.09161"</span>   <span class="st">"27.57382"</span>  </span>
-<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a>se_mean             <span class="st">"1.441069"</span>   <span class="st">"1.378691"</span>  </span>
-<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a>IQR                 <span class="st">"48.25"</span>      <span class="st">"46.00"</span>     </span>
-<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a>skewness            <span class="st">"0.04490600"</span> <span class="st">"0.02935732"</span></span>
-<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a>kurtosis            <span class="st">"-1.089201"</span>  <span class="st">"-1.035086"</span> </span>
-<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a>p00                 <span class="st">"21"</span>         <span class="st">"21"</span>        </span>
-<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a>p01                 <span class="st">"21.79"</span>      <span class="st">"21.99"</span>     </span>
-<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a>p05                 <span class="st">"26"</span>         <span class="st">"26"</span>        </span>
-<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a>p10                 <span class="st">"30.0"</span>       <span class="st">"30.9"</span>      </span>
-<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a>p20                 <span class="st">"39"</span>         <span class="st">"40"</span>        </span>
-<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a>p25                 <span class="st">"42.75"</span>      <span class="st">"44.00"</span>     </span>
-<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a>p30                 <span class="st">"48.00000"</span>   <span class="st">"51.58333"</span>  </span>
-<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a>p40                 <span class="st">"62"</span>         <span class="st">"63"</span>        </span>
-<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a>p50                 <span class="st">"69"</span>         <span class="st">"69"</span>        </span>
-<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a>p60                 <span class="st">"78.0"</span>       <span class="st">"77.4"</span>      </span>
-<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a>p70                 <span class="st">"86.3"</span>       <span class="st">"84.3"</span>      </span>
-<span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a>p75                 <span class="st">"91"</span>         <span class="st">"90"</span>        </span>
-<span id="cb3-43"><a href="#cb3-43" tabindex="-1"></a>p80                 <span class="st">"96.2"</span>       <span class="st">"96.0"</span>      </span>
-<span id="cb3-44"><a href="#cb3-44" tabindex="-1"></a>p90                 <span class="st">"108.1"</span>      <span class="st">"106.1"</span>     </span>
-<span id="cb3-45"><a href="#cb3-45" tabindex="-1"></a>p95                 <span class="st">"115.05"</span>     <span class="st">"115.00"</span>    </span>
-<span id="cb3-46"><a href="#cb3-46" tabindex="-1"></a>p99                 <span class="st">"119.21"</span>     <span class="st">"119.01"</span>    </span>
-<span id="cb3-47"><a href="#cb3-47" tabindex="-1"></a>p100                <span class="st">"120"</span>        <span class="st">"120"</span>       </span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">requireNamespace</span>(<span class="st">"rpart"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  income <span class="ot">&lt;-</span> <span class="fu">imputate_na</span>(carseats, Income, US, <span class="at">method =</span> <span class="st">"rpart"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="co"># result of imputation</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  income</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  <span class="co"># summary of imputation</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  <span class="fu">summary</span>(income)</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>  <span class="co"># viz of imputation</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>  <span class="fu">plot</span>(income)</span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"If you want to use this feature, you need to install the rpart package.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>}</span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="sc">*</span> Impute missing values based on Recursive Partitioning and Regression Trees</span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a> <span class="sc">-</span> method <span class="sc">:</span> rpart</span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="sc">*</span> Information of <span class="fu">Imputation</span> (before vs after)</span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a>                    Original     Imputation  </span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a>described_variables <span class="st">"value"</span>      <span class="st">"value"</span>     </span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a>n                   <span class="st">"380"</span>        <span class="st">"400"</span>       </span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a>na                  <span class="st">"20"</span>         <span class="st">" 0"</span>        </span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a>mean                <span class="st">"68.86053"</span>   <span class="st">"69.05073"</span>  </span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a>sd                  <span class="st">"28.09161"</span>   <span class="st">"27.57382"</span>  </span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a>se_mean             <span class="st">"1.441069"</span>   <span class="st">"1.378691"</span>  </span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a>IQR                 <span class="st">"48.25"</span>      <span class="st">"46.00"</span>     </span>
+<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a>skewness            <span class="st">"0.04490600"</span> <span class="st">"0.02935732"</span></span>
+<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a>kurtosis            <span class="st">"-1.089201"</span>  <span class="st">"-1.035086"</span> </span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a>p00                 <span class="st">"21"</span>         <span class="st">"21"</span>        </span>
+<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a>p01                 <span class="st">"21.79"</span>      <span class="st">"21.99"</span>     </span>
+<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a>p05                 <span class="st">"26"</span>         <span class="st">"26"</span>        </span>
+<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a>p10                 <span class="st">"30.0"</span>       <span class="st">"30.9"</span>      </span>
+<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a>p20                 <span class="st">"39"</span>         <span class="st">"40"</span>        </span>
+<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a>p25                 <span class="st">"42.75"</span>      <span class="st">"44.00"</span>     </span>
+<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a>p30                 <span class="st">"48.00000"</span>   <span class="st">"51.58333"</span>  </span>
+<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a>p40                 <span class="st">"62"</span>         <span class="st">"63"</span>        </span>
+<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a>p50                 <span class="st">"69"</span>         <span class="st">"69"</span>        </span>
+<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a>p60                 <span class="st">"78.0"</span>       <span class="st">"77.4"</span>      </span>
+<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a>p70                 <span class="st">"86.3"</span>       <span class="st">"84.3"</span>      </span>
+<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a>p75                 <span class="st">"91"</span>         <span class="st">"90"</span>        </span>
+<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a>p80                 <span class="st">"96.2"</span>       <span class="st">"96.0"</span>      </span>
+<span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a>p90                 <span class="st">"108.1"</span>      <span class="st">"106.1"</span>     </span>
+<span id="cb3-43"><a href="#cb3-43" tabindex="-1"></a>p95                 <span class="st">"115.05"</span>     <span class="st">"115.00"</span>    </span>
+<span id="cb3-44"><a href="#cb3-44" tabindex="-1"></a>p99                 <span class="st">"119.21"</span>     <span class="st">"119.01"</span>    </span>
+<span id="cb3-45"><a href="#cb3-45" tabindex="-1"></a>p100                <span class="st">"120"</span>        <span class="st">"120"</span>       </span></code></pre></div>
 <p><img src="transformation_files/figure-html/imputate_na-1.png" width="600px" style="display: block; margin: auto;"></p>
 <p>The following imputes the categorical variable <code>urban</code> by
 the “mice” method.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">library</span>(mice)</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>Attaching package<span class="sc">:</span> <span class="st">'mice'</span></span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>The following object is masked from <span class="st">'package:stats'</span><span class="sc">:</span></span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>    filter</span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>The following objects are masked from <span class="st">'package:base'</span><span class="sc">:</span></span>
-<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>    cbind, rbind</span>
-<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">requireNamespace</span>(<span class="st">"ranger"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
-<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>  urban <span class="ot">&lt;-</span> <span class="fu">imputate_na</span>(carseats, Urban, US, <span class="at">method =</span> <span class="st">"mice"</span>)</span>
-<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>  </span>
-<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>  <span class="co"># result of imputation</span></span>
-<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>  urban</span>
-<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a>  </span>
-<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a>  <span class="co"># summary of imputation</span></span>
-<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a>  <span class="fu">summary</span>(urban)</span>
-<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a>  </span>
-<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a>  <span class="co"># viz of imputation</span></span>
-<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a>  <span class="fu">plot</span>(urban)</span>
-<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"If you want to use this feature, you need to install the 'ranger' package.</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a>}</span>
-<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a></span>
-<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a> iter imp variable</span>
-<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a>  <span class="dv">1</span>   <span class="dv">1</span>  Income  Urban</span>
-<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a>  <span class="dv">1</span>   <span class="dv">2</span>  Income  Urban</span>
-<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a>  <span class="dv">1</span>   <span class="dv">3</span>  Income  Urban</span>
-<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a>  <span class="dv">1</span>   <span class="dv">4</span>  Income  Urban</span>
-<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a>  <span class="dv">1</span>   <span class="dv">5</span>  Income  Urban</span>
-<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a>  <span class="dv">2</span>   <span class="dv">1</span>  Income  Urban</span>
-<span id="cb4-33"><a href="#cb4-33" tabindex="-1"></a>  <span class="dv">2</span>   <span class="dv">2</span>  Income  Urban</span>
-<span id="cb4-34"><a href="#cb4-34" tabindex="-1"></a>  <span class="dv">2</span>   <span class="dv">3</span>  Income  Urban</span>
-<span id="cb4-35"><a href="#cb4-35" tabindex="-1"></a>  <span class="dv">2</span>   <span class="dv">4</span>  Income  Urban</span>
-<span id="cb4-36"><a href="#cb4-36" tabindex="-1"></a>  <span class="dv">2</span>   <span class="dv">5</span>  Income  Urban</span>
-<span id="cb4-37"><a href="#cb4-37" tabindex="-1"></a>  <span class="dv">3</span>   <span class="dv">1</span>  Income  Urban</span>
-<span id="cb4-38"><a href="#cb4-38" tabindex="-1"></a>  <span class="dv">3</span>   <span class="dv">2</span>  Income  Urban</span>
-<span id="cb4-39"><a href="#cb4-39" tabindex="-1"></a>  <span class="dv">3</span>   <span class="dv">3</span>  Income  Urban</span>
-<span id="cb4-40"><a href="#cb4-40" tabindex="-1"></a>  <span class="dv">3</span>   <span class="dv">4</span>  Income  Urban</span>
-<span id="cb4-41"><a href="#cb4-41" tabindex="-1"></a>  <span class="dv">3</span>   <span class="dv">5</span>  Income  Urban</span>
-<span id="cb4-42"><a href="#cb4-42" tabindex="-1"></a>  <span class="dv">4</span>   <span class="dv">1</span>  Income  Urban</span>
-<span id="cb4-43"><a href="#cb4-43" tabindex="-1"></a>  <span class="dv">4</span>   <span class="dv">2</span>  Income  Urban</span>
-<span id="cb4-44"><a href="#cb4-44" tabindex="-1"></a>  <span class="dv">4</span>   <span class="dv">3</span>  Income  Urban</span>
-<span id="cb4-45"><a href="#cb4-45" tabindex="-1"></a>  <span class="dv">4</span>   <span class="dv">4</span>  Income  Urban</span>
-<span id="cb4-46"><a href="#cb4-46" tabindex="-1"></a>  <span class="dv">4</span>   <span class="dv">5</span>  Income  Urban</span>
-<span id="cb4-47"><a href="#cb4-47" tabindex="-1"></a>  <span class="dv">5</span>   <span class="dv">1</span>  Income  Urban</span>
-<span id="cb4-48"><a href="#cb4-48" tabindex="-1"></a>  <span class="dv">5</span>   <span class="dv">2</span>  Income  Urban</span>
-<span id="cb4-49"><a href="#cb4-49" tabindex="-1"></a>  <span class="dv">5</span>   <span class="dv">3</span>  Income  Urban</span>
-<span id="cb4-50"><a href="#cb4-50" tabindex="-1"></a>  <span class="dv">5</span>   <span class="dv">4</span>  Income  Urban</span>
-<span id="cb4-51"><a href="#cb4-51" tabindex="-1"></a>  <span class="dv">5</span>   <span class="dv">5</span>  Income  Urban</span>
-<span id="cb4-52"><a href="#cb4-52" tabindex="-1"></a><span class="sc">*</span> Impute missing values based on Multivariate Imputation by Chained Equations</span>
-<span id="cb4-53"><a href="#cb4-53" tabindex="-1"></a> <span class="sc">-</span> method <span class="sc">:</span> mice</span>
-<span id="cb4-54"><a href="#cb4-54" tabindex="-1"></a> <span class="sc">-</span> random seed <span class="sc">:</span> <span class="dv">24283</span></span>
-<span id="cb4-55"><a href="#cb4-55" tabindex="-1"></a></span>
-<span id="cb4-56"><a href="#cb4-56" tabindex="-1"></a><span class="sc">*</span> Information of <span class="fu">Imputation</span> (before vs after)</span>
-<span id="cb4-57"><a href="#cb4-57" tabindex="-1"></a>     original imputation original_percent imputation_percent</span>
-<span id="cb4-58"><a href="#cb4-58" tabindex="-1"></a>No        <span class="dv">115</span>        <span class="dv">120</span>            <span class="fl">28.75</span>                 <span class="dv">30</span></span>
-<span id="cb4-59"><a href="#cb4-59" tabindex="-1"></a>Yes       <span class="dv">275</span>        <span class="dv">280</span>            <span class="fl">68.75</span>                 <span class="dv">70</span></span>
-<span id="cb4-60"><a href="#cb4-60" tabindex="-1"></a><span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span>       <span class="dv">10</span>          <span class="dv">0</span>             <span class="fl">2.50</span>                  <span class="dv">0</span></span></code></pre></div>
-<p><img src="transformation_files/figure-html/imputate_na2-1.png" width="600px" style="display: block; margin: auto;"></p>
+<p>The “mice” method must require the <code>mice</code>,
+<code>ranger</code> package. If you want to use this feature, you need
+to install the <code>mice</code>, and <code>ranger</code> package.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/amices/mice" class="external-link">mice</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">urban</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/imputate_na.html">imputate_na</a></span><span class="op">(</span><span class="va">carseats</span>, <span class="va">Urban</span>, <span class="va">US</span>, method <span class="op">=</span> <span class="st">"mice"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># result of imputation</span></span>
+<span><span class="va">urban</span></span>
+<span></span>
+<span><span class="co"># summary of imputation</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">urban</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># viz of imputation</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">urban</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="collaboration-with-dplyr">Collaboration with dplyr<a class="anchor" aria-label="anchor" href="#collaboration-with-dplyr"></a>
 </h3>
 <p>The following example imputes the missing value of the
-<code>Income</code> variable, and then calculates the arithmetic mean
-for each level of <code>US</code>. In this case, <code>dplyr</code> is
-used, and it is easily interpreted logically using pipes.</p>
+<code>Income</code> variable and then calculates the arithmetic mean for
+each level of <code>US</code>. In this case, <code>dplyr</code> is used
+and is easily interpreted logically using pipes.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># The mean before and after the imputation of the Income variable</span></span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>carseats <span class="sc">%&gt;%</span></span>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Income_imp =</span> <span class="fu">imputate_na</span>(carseats, Income, US, <span class="at">method =</span> <span class="st">"knn"</span>)) <span class="sc">%&gt;%</span></span>
@@ -460,22 +408,22 @@ used, and it is easily interpreted logically using pipes.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="imputation-of-outliers">Imputation of outliers<a class="anchor" aria-label="anchor" href="#imputation-of-outliers"></a>
+<h2 id="impute-outliers">Impute outliers<a class="anchor" aria-label="anchor" href="#impute-outliers"></a>
 </h2>
 <div class="section level3">
-<h3 id="imputes-thr-outliers-with-imputate_outlier">imputes thr outliers with <code>imputate_outlier()</code><a class="anchor" aria-label="anchor" href="#imputes-thr-outliers-with-imputate_outlier"></a>
+<h3 id="imputes-the-outliers-with-imputate_outlier">imputes the outliers with <code>imputate_outlier()</code><a class="anchor" aria-label="anchor" href="#imputes-the-outliers-with-imputate_outlier"></a>
 </h3>
-<p><code><a href="../reference/imputate_outlier.html">imputate_outlier()</a></code> imputes the outliers value. The
+<p><code><a href="../reference/imputate_outlier.html">imputate_outlier()</a></code> imputes the outlier value. The
 predictor with outliers supports only numeric variables and supports the
 following methods.</p>
 <ul>
 <li>predictor is numerical variable
 <ul>
-<li>“mean” : arithmetic mean</li>
-<li>“median” : median</li>
-<li>“mode” : mode</li>
-<li>“capping” : Impute the upper outliers with 95 percentile, and Impute
-the bottom outliers with 5 percentile.</li>
+<li>“mean”: arithmetic mean</li>
+<li>“median”: median</li>
+<li>“mode”: mode</li>
+<li>“capping”: Impute the upper outliers with the 95 percentile and the
+bottom outliers with the fifth percentile.</li>
 </ul>
 </li>
 </ul>
@@ -585,9 +533,9 @@ variable <code>Price</code> as the “capping” method, as follows.
 <h3 id="collaboration-with-dplyr-1">Collaboration with dplyr<a class="anchor" aria-label="anchor" href="#collaboration-with-dplyr-1"></a>
 </h3>
 <p>The following example imputes the outliers of the <code>Price</code>
-variable, and then calculates the arithmetic mean for each level of
-<code>US</code>. In this case, <code>dplyr</code> is used, and it is
-easily interpreted logically using pipes.</p>
+variable and then calculates the arithmetic mean for each level of
+<code>US</code>. In this case, <code>dplyr</code> is used and is easily
+interpreted logically using pipes.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># The mean before and after the imputation of the Price variable</span></span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>carseats <span class="sc">%&gt;%</span></span>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Price_imp =</span> <span class="fu">imputate_outlier</span>(carseats, Price, <span class="at">method =</span> <span class="st">"capping"</span>)) <span class="sc">%&gt;%</span></span>
@@ -612,19 +560,19 @@ variables are supported, and the following methods are provided.</p>
 <ul>
 <li>Standardization
 <ul>
-<li>“zscore” : z-score transformation. (x - mu) / sigma</li>
-<li>“minmax” : minmax transformation. (x - min) / (max - min)</li>
+<li>“zscore”: z-score transformation. (x - mu) / sigma</li>
+<li>“minmax”: minmax transformation. (x - min) / (max - min)</li>
 </ul>
 </li>
 <li>Resolving Skewness
 <ul>
-<li>“log” : log transformation. log(x)</li>
-<li>“log+1” : log transformation. log(x + 1). Used for values that
+<li>“log”: log transformation. log(x)</li>
+<li>“log+1”: log transformation. log(x + 1). Used for values that
 contain 0.</li>
-<li>“sqrt” : square root transformation.</li>
-<li>“1/x” : 1 / x transformation</li>
-<li>“x^2” : x square transformation</li>
-<li>“x^3” : x^3 square transformation</li>
+<li>“sqrt”: square root transformation.</li>
+<li>“1/x”: 1 / x transformation</li>
+<li>“x^2”: x square transformation</li>
+<li>“x^3”: x^3 square transformation</li>
 </ul>
 </li>
 </ul>
@@ -634,10 +582,10 @@ contain 0.</li>
 </h3>
 <p>Use the methods “zscore” and “minmax” to perform standardization.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">carseats</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>Income_minmax <span class="op">=</span> <span class="fu"><a href="../reference/transform.html">transform</a></span><span class="op">(</span><span class="va">carseats</span><span class="op">$</span><span class="va">Income</span>, method <span class="op">=</span> <span class="st">"minmax"</span><span class="op">)</span>,</span>
-<span>    Sales_minmax <span class="op">=</span> <span class="fu"><a href="../reference/transform.html">transform</a></span><span class="op">(</span><span class="va">carseats</span><span class="op">$</span><span class="va">Sales</span>, method <span class="op">=</span> <span class="st">"minmax"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="va">Income_minmax</span>, <span class="va">Sales_minmax</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<code class="sourceCode R"><span><span class="va">carseats</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Income_minmax <span class="op">=</span> <span class="fu"><a href="../reference/transform.html">transform</a></span><span class="op">(</span><span class="va">carseats</span><span class="op">$</span><span class="va">Income</span>, method <span class="op">=</span> <span class="st">"minmax"</span><span class="op">)</span>,</span>
+<span>    Sales_minmax <span class="op">=</span> <span class="fu"><a href="../reference/transform.html">transform</a></span><span class="op">(</span><span class="va">carseats</span><span class="op">$</span><span class="va">Sales</span>, method <span class="op">=</span> <span class="st">"minmax"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Income_minmax</span>, <span class="va">Sales_minmax</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html" class="external-link">boxplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="transformation_files/figure-html/standardization-1.png" width="600px" style="display: block; margin: auto;"></p>
 </div>
@@ -668,10 +616,10 @@ skewness.</p>
 <span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a>      <span class="fl">0.185</span>       <span class="fl">0.637</span>      <span class="sc">-</span><span class="fl">0.125</span> </span></code></pre></div>
 <p>The skewness of <code>Advertising</code> is 0.637. This means that
 the distribution of data is somewhat inclined to the left. So, for
-normal distribution, use <code><a href="../reference/transform.html">transform()</a></code> to convert to “log”
-method as follows. <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> summarizes transformation
-information, and <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> visualizes transformation
-information.</p>
+normal distribution, use <code><a href="../reference/transform.html">transform()</a></code> to convert to the
+“log” method as follows. <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> summarizes
+transformation information, and <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> visualizes
+transformation information.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>Advertising_log <span class="ot">&lt;-</span> <span class="fu">transform</span>(carseats<span class="sc">$</span>Advertising, <span class="at">method =</span> <span class="st">"log"</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="co"># result of transformation</span></span>
@@ -711,7 +659,7 @@ information.</p>
 <span id="cb10-37"><a href="#cb10-37" tabindex="-1"></a><span class="co"># viz of transformation</span></span>
 <span id="cb10-38"><a href="#cb10-38" tabindex="-1"></a><span class="fu">plot</span>(Advertising_log)</span></code></pre></div>
 <p><img src="transformation_files/figure-html/resolving2-1.png" width="600px" style="display: block; margin: auto;"></p>
-<p>It seems that the raw data contains 0, as there is a -Inf in the log
+<p>The raw data seems to contain 0, as there is a -Inf in the log
 converted value. So this time, convert it to “log+1”.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>Advertising_log <span class="ot">&lt;-</span> <span class="fu">transform</span>(carseats<span class="sc">$</span>Advertising, <span class="at">method =</span> <span class="st">"log+1"</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a></span>
@@ -763,16 +711,16 @@ converted value. So this time, convert it to “log+1”.</p>
 categorical variable by binning it. The following types of binning are
 supported.</p>
 <ul>
-<li>“quantile” : categorize using quantile to include the same
+<li>“quantile”: categorize using quantile to include the same
 frequencies</li>
-<li>“equal” : categorize to have equal length segments</li>
-<li>“pretty” : categorized into moderately good segments</li>
-<li>“kmeans” : categorization using K-means clustering</li>
-<li>“bclust” : categorization using bagged clustering technique</li>
+<li>“equal”: categorize to have equal length segments</li>
+<li>“pretty”: categorized into moderately good segments</li>
+<li>“kmeans”: categorization using K-means clustering</li>
+<li>“bclust”: categorization using bagged clustering technique</li>
 </ul>
-<p>Here are some examples of how to bin <code>Income</code> using
-<code><a href="../reference/binning.html">binning()</a></code>.:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co"># Binning the carat variable. default type argument is "quantile"</span></span>
+<p>Here are some examples of bin <code>Income</code> using
+<code><a href="../reference/binning.html">binning()</a></code>.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co"># Binning the carat variable. the default type argument is "quantile"</span></span>
 <span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>bin <span class="ot">&lt;-</span> <span class="fu">binning</span>(carseats<span class="sc">$</span>Income)</span>
 <span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="co"># Print bins class object</span></span>
 <span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>bin</span>
@@ -829,13 +777,13 @@ frequencies</li>
 <span id="cb13-25"><a href="#cb13-25" tabindex="-1"></a>  <span class="fu">binning</span>(carseats<span class="sc">$</span>Income, <span class="at">nbins =</span> <span class="dv">5</span>, <span class="at">type =</span> <span class="st">"kmeans"</span>)</span>
 <span id="cb13-26"><a href="#cb13-26" tabindex="-1"></a>  <span class="fu">binning</span>(carseats<span class="sc">$</span>Income, <span class="at">nbins =</span> <span class="dv">5</span>, <span class="at">type =</span> <span class="st">"bclust"</span>)</span>
 <span id="cb13-27"><a href="#cb13-27" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb13-28"><a href="#cb13-28" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"If you want to use this feature, you need to install the 'classInt' package.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb13-28"><a href="#cb13-28" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"If you want to use this feature, you need to install the classInt package.</span><span class="sc">\n</span><span class="st">"</span>)</span>
 <span id="cb13-29"><a href="#cb13-29" tabindex="-1"></a>}</span>
 <span id="cb13-30"><a href="#cb13-30" tabindex="-1"></a>binned type<span class="sc">:</span> bclust</span>
 <span id="cb13-31"><a href="#cb13-31" tabindex="-1"></a>number of bins<span class="sc">:</span> <span class="dv">5</span></span>
 <span id="cb13-32"><a href="#cb13-32" tabindex="-1"></a>x</span>
-<span id="cb13-33"><a href="#cb13-33" tabindex="-1"></a>  [<span class="dv">21</span>,<span class="fl">31.5</span>] (<span class="fl">31.5</span>,<span class="fl">50.5</span>] (<span class="fl">50.5</span>,<span class="fl">78.5</span>] (<span class="fl">78.5</span>,<span class="fl">95.5</span>]  (<span class="fl">95.5</span>,<span class="dv">120</span>]        <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> </span>
-<span id="cb13-34"><a href="#cb13-34" tabindex="-1"></a>         <span class="dv">43</span>          <span class="dv">73</span>         <span class="dv">114</span>          <span class="dv">71</span>          <span class="dv">79</span>          <span class="dv">20</span> </span>
+<span id="cb13-33"><a href="#cb13-33" tabindex="-1"></a>     [<span class="dv">21</span>,<span class="dv">49</span>]    (<span class="dv">49</span>,<span class="fl">64.5</span>]  (<span class="fl">64.5</span>,<span class="fl">86.5</span>] (<span class="fl">86.5</span>,<span class="fl">107.5</span>]  (<span class="fl">107.5</span>,<span class="dv">120</span>]         <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> </span>
+<span id="cb13-34"><a href="#cb13-34" tabindex="-1"></a>         <span class="dv">115</span>           <span class="dv">52</span>           <span class="dv">99</span>           <span class="dv">75</span>           <span class="dv">39</span>           <span class="dv">20</span> </span>
 <span id="cb13-35"><a href="#cb13-35" tabindex="-1"></a></span>
 <span id="cb13-36"><a href="#cb13-36" tabindex="-1"></a><span class="co"># Extract the binned results</span></span>
 <span id="cb13-37"><a href="#cb13-37" tabindex="-1"></a><span class="fu">extract</span>(bin)</span>
@@ -901,65 +849,75 @@ developing a <code>scorecard model</code>.</p>
 <p>The following <code><a href="../reference/binning_by.html">binning_by()</a></code> example optimally binning
 <code>Advertising</code> considering the target variable <code>US</code>
 with a binary class.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="co">#if (!require("partykit")) install.packages("partykit", repos = "http://cran.us.r-project.org")</span></span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">requireNamespace</span>(<span class="st">"partykit"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>  <span class="fu">library</span>(dplyr)</span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>  </span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>  <span class="co"># optimal binning using character</span></span>
-<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>  bin <span class="ot">&lt;-</span> <span class="fu">binning_by</span>(carseats, <span class="st">"US"</span>, <span class="st">"Advertising"</span>)</span>
-<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>  </span>
-<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a>  <span class="co"># optimal binning using name</span></span>
-<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>  bin <span class="ot">&lt;-</span> <span class="fu">binning_by</span>(carseats, US, Advertising)</span>
-<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a>  bin</span>
-<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a>  </span>
-<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a>  <span class="co"># summary optimal_bins class</span></span>
-<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a>  <span class="fu">summary</span>(bin)</span>
-<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a>  </span>
-<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a>  <span class="co"># performance table</span></span>
-<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a>  <span class="fu">attr</span>(bin, <span class="st">"performance"</span>)</span>
-<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a>  </span>
-<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a>  <span class="co"># visualize optimal_bins class</span></span>
-<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a>  <span class="fu">plot</span>(bin)</span>
-<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a>  </span>
-<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a>  <span class="co"># extract binned results</span></span>
-<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a>  <span class="fu">extract</span>(bin) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a>    <span class="fu">head</span>(<span class="dv">20</span>)</span>
-<span id="cb14-24"><a href="#cb14-24" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb14-25"><a href="#cb14-25" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"If you want to use this feature, you need to install the 'partykit' package.</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb14-26"><a href="#cb14-26" tabindex="-1"></a>}</span>
-<span id="cb14-27"><a href="#cb14-27" tabindex="-1"></a>Warning <span class="cf">in</span> <span class="fu">binning_by</span>(carseats, <span class="st">"US"</span>, <span class="st">"Advertising"</span>)<span class="sc">:</span> The factor y has been changed to a numeric vector consisting of <span class="dv">0</span> and <span class="fl">1.</span></span>
-<span id="cb14-28"><a href="#cb14-28" tabindex="-1"></a><span class="st">'Yes'</span> changed to <span class="dv">1</span> (positive) and <span class="st">'No'</span> changed to <span class="dv">0</span> (negative).</span>
-<span id="cb14-29"><a href="#cb14-29" tabindex="-1"></a>Warning <span class="cf">in</span> <span class="fu">binning_by</span>(carseats, US, Advertising)<span class="sc">:</span> The factor y has been changed to a numeric vector consisting of <span class="dv">0</span> and <span class="fl">1.</span></span>
-<span id="cb14-30"><a href="#cb14-30" tabindex="-1"></a><span class="st">'Yes'</span> changed to <span class="dv">1</span> (positive) and <span class="st">'No'</span> changed to <span class="dv">0</span> (negative).</span>
-<span id="cb14-31"><a href="#cb14-31" tabindex="-1"></a>── Binning Table ──────────────────────── Several Metrics ── </span>
-<span id="cb14-32"><a href="#cb14-32" tabindex="-1"></a>     Bin CntRec CntPos CntNeg RatePos RateNeg    Odds      WoE      IV     JSD</span>
-<span id="cb14-33"><a href="#cb14-33" tabindex="-1"></a><span class="dv">1</span> [<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>]    <span class="dv">144</span>     <span class="dv">19</span>    <span class="dv">125</span> <span class="fl">0.07364</span> <span class="fl">0.88028</span>  <span class="fl">0.1520</span> <span class="sc">-</span><span class="fl">2.48101</span> <span class="fl">2.00128</span> <span class="fl">0.20093</span></span>
-<span id="cb14-34"><a href="#cb14-34" tabindex="-1"></a><span class="dv">2</span>  (<span class="dv">0</span>,<span class="dv">6</span>]     <span class="dv">69</span>     <span class="dv">54</span>     <span class="dv">15</span> <span class="fl">0.20930</span> <span class="fl">0.10563</span>  <span class="fl">3.6000</span>  <span class="fl">0.68380</span> <span class="fl">0.07089</span> <span class="fl">0.00869</span></span>
-<span id="cb14-35"><a href="#cb14-35" tabindex="-1"></a><span class="dv">3</span> (<span class="dv">6</span>,<span class="dv">29</span>]    <span class="dv">187</span>    <span class="dv">185</span>      <span class="dv">2</span> <span class="fl">0.71705</span> <span class="fl">0.01408</span> <span class="fl">92.5000</span>  <span class="fl">3.93008</span> <span class="fl">2.76272</span> <span class="fl">0.21861</span></span>
-<span id="cb14-36"><a href="#cb14-36" tabindex="-1"></a><span class="dv">4</span>  Total    <span class="dv">400</span>    <span class="dv">258</span>    <span class="dv">142</span> <span class="fl">1.00000</span> <span class="fl">1.00000</span>  <span class="fl">1.8169</span>       <span class="cn">NA</span> <span class="fl">4.83489</span> <span class="fl">0.42823</span></span>
-<span id="cb14-37"><a href="#cb14-37" tabindex="-1"></a>      AUC</span>
-<span id="cb14-38"><a href="#cb14-38" tabindex="-1"></a><span class="dv">1</span> <span class="fl">0.03241</span></span>
-<span id="cb14-39"><a href="#cb14-39" tabindex="-1"></a><span class="dv">2</span> <span class="fl">0.01883</span></span>
-<span id="cb14-40"><a href="#cb14-40" tabindex="-1"></a><span class="dv">3</span> <span class="fl">0.00903</span></span>
-<span id="cb14-41"><a href="#cb14-41" tabindex="-1"></a><span class="dv">4</span> <span class="fl">0.06028</span></span>
-<span id="cb14-42"><a href="#cb14-42" tabindex="-1"></a></span>
-<span id="cb14-43"><a href="#cb14-43" tabindex="-1"></a>── General Metrics ───────────────────────────────────────── </span>
-<span id="cb14-44"><a href="#cb14-44" tabindex="-1"></a>• Gini index                       <span class="sc">:</span>  <span class="sc">-</span><span class="fl">0.87944</span></span>
-<span id="cb14-45"><a href="#cb14-45" tabindex="-1"></a>• <span class="fu">IV</span> (Jeffrey)                     <span class="sc">:</span>  <span class="fl">4.83489</span></span>
-<span id="cb14-46"><a href="#cb14-46" tabindex="-1"></a>• <span class="fu">JS</span> (Jensen<span class="sc">-</span>Shannon) Divergence   <span class="sc">:</span>  <span class="fl">0.42823</span></span>
-<span id="cb14-47"><a href="#cb14-47" tabindex="-1"></a>• Kolmogorov<span class="sc">-</span>Smirnov Statistics    <span class="sc">:</span>  <span class="fl">0.80664</span></span>
-<span id="cb14-48"><a href="#cb14-48" tabindex="-1"></a>• <span class="fu">HHI</span> (Herfindahl<span class="sc">-</span>Hirschman Index) <span class="sc">:</span>  <span class="fl">0.37791</span></span>
-<span id="cb14-49"><a href="#cb14-49" tabindex="-1"></a>• <span class="fu">HHI</span> (normalized)                 <span class="sc">:</span>  <span class="fl">0.06687</span></span>
-<span id="cb14-50"><a href="#cb14-50" tabindex="-1"></a>• Cramer<span class="st">'s V                       :  0.81863 </span></span>
-<span id="cb14-51"><a href="#cb14-51" tabindex="-1"></a></span>
-<span id="cb14-52"><a href="#cb14-52" tabindex="-1"></a><span class="st">── Significance Tests ──────────────────── Chisquare Test ── </span></span>
-<span id="cb14-53"><a href="#cb14-53" tabindex="-1"></a><span class="st">   Bin A  Bin B statistics      p_value</span></span>
-<span id="cb14-54"><a href="#cb14-54" tabindex="-1"></a><span class="st">1 [-1,0]  (0,6]   87.67064 7.731349e-21</span></span>
-<span id="cb14-55"><a href="#cb14-55" tabindex="-1"></a><span class="st">2  (0,6] (6,29]   34.73349 3.780706e-09</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co"># optimal binning using character</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>bin <span class="ot">&lt;-</span> <span class="fu">binning_by</span>(carseats, <span class="st">"US"</span>, <span class="st">"Advertising"</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>Warning <span class="cf">in</span> <span class="fu">binning_by</span>(carseats, <span class="st">"US"</span>, <span class="st">"Advertising"</span>)<span class="sc">:</span> The factor y has been changed to a numeric vector consisting of <span class="dv">0</span> and <span class="fl">1.</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="st">'Yes'</span> changed to <span class="dv">1</span> (positive) and <span class="st">'No'</span> changed to <span class="dv">0</span> (negative).</span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co"># optimal binning using name</span></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>bin <span class="ot">&lt;-</span> <span class="fu">binning_by</span>(carseats, US, Advertising)</span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a>Warning <span class="cf">in</span> <span class="fu">binning_by</span>(carseats, US, Advertising)<span class="sc">:</span> The factor y has been changed to a numeric vector consisting of <span class="dv">0</span> and <span class="fl">1.</span></span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="st">'Yes'</span> changed to <span class="dv">1</span> (positive) and <span class="st">'No'</span> changed to <span class="dv">0</span> (negative).</span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a>bin</span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a>binned type<span class="sc">:</span> optimal</span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a>number of bins<span class="sc">:</span> <span class="dv">3</span></span>
+<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a>x</span>
+<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a>[<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>]  (<span class="dv">0</span>,<span class="dv">6</span>] (<span class="dv">6</span>,<span class="dv">29</span>] </span>
+<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a>   <span class="dv">144</span>     <span class="dv">69</span>    <span class="dv">187</span> </span>
+<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a></span>
+<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a><span class="co"># summary optimal_bins class</span></span>
+<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a><span class="fu">summary</span>(bin)</span>
+<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a>── Binning Table ──────────────────────── Several Metrics ── </span>
+<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a>     Bin CntRec CntPos CntNeg RatePos RateNeg    Odds      WoE      IV     JSD</span>
+<span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a><span class="dv">1</span> [<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>]    <span class="dv">144</span>     <span class="dv">19</span>    <span class="dv">125</span> <span class="fl">0.07364</span> <span class="fl">0.88028</span>  <span class="fl">0.1520</span> <span class="sc">-</span><span class="fl">2.48101</span> <span class="fl">2.00128</span> <span class="fl">0.20093</span></span>
+<span id="cb14-24"><a href="#cb14-24" tabindex="-1"></a><span class="dv">2</span>  (<span class="dv">0</span>,<span class="dv">6</span>]     <span class="dv">69</span>     <span class="dv">54</span>     <span class="dv">15</span> <span class="fl">0.20930</span> <span class="fl">0.10563</span>  <span class="fl">3.6000</span>  <span class="fl">0.68380</span> <span class="fl">0.07089</span> <span class="fl">0.00869</span></span>
+<span id="cb14-25"><a href="#cb14-25" tabindex="-1"></a><span class="dv">3</span> (<span class="dv">6</span>,<span class="dv">29</span>]    <span class="dv">187</span>    <span class="dv">185</span>      <span class="dv">2</span> <span class="fl">0.71705</span> <span class="fl">0.01408</span> <span class="fl">92.5000</span>  <span class="fl">3.93008</span> <span class="fl">2.76272</span> <span class="fl">0.21861</span></span>
+<span id="cb14-26"><a href="#cb14-26" tabindex="-1"></a><span class="dv">4</span>  Total    <span class="dv">400</span>    <span class="dv">258</span>    <span class="dv">142</span> <span class="fl">1.00000</span> <span class="fl">1.00000</span>  <span class="fl">1.8169</span>       <span class="cn">NA</span> <span class="fl">4.83489</span> <span class="fl">0.42823</span></span>
+<span id="cb14-27"><a href="#cb14-27" tabindex="-1"></a>      AUC</span>
+<span id="cb14-28"><a href="#cb14-28" tabindex="-1"></a><span class="dv">1</span> <span class="fl">0.03241</span></span>
+<span id="cb14-29"><a href="#cb14-29" tabindex="-1"></a><span class="dv">2</span> <span class="fl">0.01883</span></span>
+<span id="cb14-30"><a href="#cb14-30" tabindex="-1"></a><span class="dv">3</span> <span class="fl">0.00903</span></span>
+<span id="cb14-31"><a href="#cb14-31" tabindex="-1"></a><span class="dv">4</span> <span class="fl">0.06028</span></span>
+<span id="cb14-32"><a href="#cb14-32" tabindex="-1"></a></span>
+<span id="cb14-33"><a href="#cb14-33" tabindex="-1"></a>── General Metrics ───────────────────────────────────────── </span>
+<span id="cb14-34"><a href="#cb14-34" tabindex="-1"></a>• Gini index                       <span class="sc">:</span>  <span class="sc">-</span><span class="fl">0.87944</span></span>
+<span id="cb14-35"><a href="#cb14-35" tabindex="-1"></a>• <span class="fu">IV</span> (Jeffrey)                     <span class="sc">:</span>  <span class="fl">4.83489</span></span>
+<span id="cb14-36"><a href="#cb14-36" tabindex="-1"></a>• <span class="fu">JS</span> (Jensen<span class="sc">-</span>Shannon) Divergence   <span class="sc">:</span>  <span class="fl">0.42823</span></span>
+<span id="cb14-37"><a href="#cb14-37" tabindex="-1"></a>• Kolmogorov<span class="sc">-</span>Smirnov Statistics    <span class="sc">:</span>  <span class="fl">0.80664</span></span>
+<span id="cb14-38"><a href="#cb14-38" tabindex="-1"></a>• <span class="fu">HHI</span> (Herfindahl<span class="sc">-</span>Hirschman Index) <span class="sc">:</span>  <span class="fl">0.37791</span></span>
+<span id="cb14-39"><a href="#cb14-39" tabindex="-1"></a>• <span class="fu">HHI</span> (normalized)                 <span class="sc">:</span>  <span class="fl">0.06687</span></span>
+<span id="cb14-40"><a href="#cb14-40" tabindex="-1"></a>• Cramer<span class="st">'s V                       :  0.81863 </span></span>
+<span id="cb14-41"><a href="#cb14-41" tabindex="-1"></a></span>
+<span id="cb14-42"><a href="#cb14-42" tabindex="-1"></a><span class="st">── Significance Tests ──────────────────── Chisquare Test ── </span></span>
+<span id="cb14-43"><a href="#cb14-43" tabindex="-1"></a><span class="st">   Bin A  Bin B statistics      p_value</span></span>
+<span id="cb14-44"><a href="#cb14-44" tabindex="-1"></a><span class="st">1 [-1,0]  (0,6]   87.67064 7.731349e-21</span></span>
+<span id="cb14-45"><a href="#cb14-45" tabindex="-1"></a><span class="st">2  (0,6] (6,29]   34.73349 3.780706e-09</span></span>
+<span id="cb14-46"><a href="#cb14-46" tabindex="-1"></a></span>
+<span id="cb14-47"><a href="#cb14-47" tabindex="-1"></a><span class="st"># performance table</span></span>
+<span id="cb14-48"><a href="#cb14-48" tabindex="-1"></a><span class="st">attr(bin, "performance")</span></span>
+<span id="cb14-49"><a href="#cb14-49" tabindex="-1"></a><span class="st">     Bin CntRec CntPos CntNeg CntCumPos CntCumNeg RatePos RateNeg RateCumPos</span></span>
+<span id="cb14-50"><a href="#cb14-50" tabindex="-1"></a><span class="st">1 [-1,0]    144     19    125        19       125 0.07364 0.88028    0.07364</span></span>
+<span id="cb14-51"><a href="#cb14-51" tabindex="-1"></a><span class="st">2  (0,6]     69     54     15        73       140 0.20930 0.10563    0.28295</span></span>
+<span id="cb14-52"><a href="#cb14-52" tabindex="-1"></a><span class="st">3 (6,29]    187    185      2       258       142 0.71705 0.01408    1.00000</span></span>
+<span id="cb14-53"><a href="#cb14-53" tabindex="-1"></a><span class="st">4  Total    400    258    142        NA        NA 1.00000 1.00000         NA</span></span>
+<span id="cb14-54"><a href="#cb14-54" tabindex="-1"></a><span class="st">  RateCumNeg    Odds   LnOdds      WoE      IV     JSD     AUC</span></span>
+<span id="cb14-55"><a href="#cb14-55" tabindex="-1"></a><span class="st">1    0.88028  0.1520 -1.88387 -2.48101 2.00128 0.20093 0.03241</span></span>
+<span id="cb14-56"><a href="#cb14-56" tabindex="-1"></a><span class="st">2    0.98592  3.6000  1.28093  0.68380 0.07089 0.00869 0.01883</span></span>
+<span id="cb14-57"><a href="#cb14-57" tabindex="-1"></a><span class="st">3    1.00000 92.5000  4.52721  3.93008 2.76272 0.21861 0.00903</span></span>
+<span id="cb14-58"><a href="#cb14-58" tabindex="-1"></a><span class="st">4         NA  1.8169  0.59713       NA 4.83489 0.42823 0.06028</span></span>
+<span id="cb14-59"><a href="#cb14-59" tabindex="-1"></a></span>
+<span id="cb14-60"><a href="#cb14-60" tabindex="-1"></a><span class="st"># visualize optimal_bins class</span></span>
+<span id="cb14-61"><a href="#cb14-61" tabindex="-1"></a><span class="st">plot(bin)</span></span></code></pre></div>
 <p><img src="transformation_files/figure-html/binning_by-1.png" width="600px"></p>
-<pre><code> [1] (6,29] (6,29] (6,29] (0,6]  (0,6]  (6,29] [-1,0] (6,29] [-1,0] [-1,0]
-[11] (6,29] (0,6]  (0,6]  (6,29] (6,29] (0,6]  [-1,0] (6,29] [-1,0] (6,29]
-Levels: [-1,0] &lt; (0,6] &lt; (6,29]</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="co"># extract binned results</span></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="fu">extract</span>(bin) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">20</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a> [<span class="dv">1</span>] (<span class="dv">6</span>,<span class="dv">29</span>] (<span class="dv">6</span>,<span class="dv">29</span>] (<span class="dv">6</span>,<span class="dv">29</span>] (<span class="dv">0</span>,<span class="dv">6</span>]  (<span class="dv">0</span>,<span class="dv">6</span>]  (<span class="dv">6</span>,<span class="dv">29</span>] [<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>] (<span class="dv">6</span>,<span class="dv">29</span>] [<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>] [<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>]</span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>[<span class="dv">11</span>] (<span class="dv">6</span>,<span class="dv">29</span>] (<span class="dv">0</span>,<span class="dv">6</span>]  (<span class="dv">0</span>,<span class="dv">6</span>]  (<span class="dv">6</span>,<span class="dv">29</span>] (<span class="dv">6</span>,<span class="dv">29</span>] (<span class="dv">0</span>,<span class="dv">6</span>]  [<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>] (<span class="dv">6</span>,<span class="dv">29</span>] [<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>] (<span class="dv">6</span>,<span class="dv">29</span>]</span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>Levels<span class="sc">:</span> [<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>] <span class="sc">&lt;</span> (<span class="dv">0</span>,<span class="dv">6</span>] <span class="sc">&lt;</span> (<span class="dv">6</span>,<span class="dv">29</span>]</span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -976,8 +934,8 @@ as output of data analysis.</li>
 <h3 id="create-a-dynamic-report-using-transformation_web_report">Create a dynamic report using
 <code>transformation_web_report()</code><a class="anchor" aria-label="anchor" href="#create-a-dynamic-report-using-transformation_web_report"></a>
 </h3>
-<p><code><a href="../reference/transformation_web_report.html">transformation_web_report()</a></code> create dynamic report for
-object inherited from data.frame(<code>tbl_df</code>, <code>tbl</code>,
+<p><code><a href="../reference/transformation_web_report.html">transformation_web_report()</a></code> creates a dynamic report for
+objects inherited from data.frame(<code>tbl_df</code>, <code>tbl</code>,
 etc) or data.frame.</p>
 <div class="section level4">
 <h4 id="contents-of-dynamic-web-report">Contents of dynamic web report<a class="anchor" aria-label="anchor" href="#contents-of-dynamic-web-report"></a>
@@ -1015,27 +973,27 @@ following arguments.</p>
 </li>
 <li>output_file
 <ul>
-<li>name of generated file.</li>
+<li>name of the generated file.</li>
 </ul>
 </li>
 <li>output_dir
 <ul>
-<li>name of directory to generate report file.</li>
+<li>name of the directory to generate report file.</li>
 </ul>
 </li>
 <li>title
 <ul>
-<li>title of report.</li>
+<li>title of the report.</li>
 </ul>
 </li>
 <li>subtitle
 <ul>
-<li>subtitle of report.</li>
+<li>subtitle of the report.</li>
 </ul>
 </li>
 <li>author
 <ul>
-<li>author of report.</li>
+<li>author of the report.</li>
 </ul>
 </li>
 <li>title_color
@@ -1045,7 +1003,7 @@ following arguments.</p>
 </li>
 <li>logo_img
 <ul>
-<li>name of logo image file on top left.</li>
+<li>The name of the logo image file is on the top left.</li>
 </ul>
 </li>
 <li>create_date
@@ -1055,7 +1013,7 @@ following arguments.</p>
 </li>
 <li>theme
 <ul>
-<li>name of theme for report. support “orange” and “blue”.</li>
+<li>name of the theme for the report. Support “orange” and “blue”.</li>
 </ul>
 </li>
 <li>sample_percent
@@ -1067,7 +1025,7 @@ following arguments.</p>
 <p>The following script creates a data transformation report for the
 <code>tbl_df</code> class object, <code>heartfailure</code>.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">heartfailure</span> <span class="op">%&gt;%</span></span>
+<code class="sourceCode R"><span><span class="va">heartfailure</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/transformation_web_report.html">transformation_web_report</a></span><span class="op">(</span>target <span class="op">=</span> <span class="st">"death_event"</span>, subtitle <span class="op">=</span> <span class="st">"heartfailure"</span>,</span>
 <span>                            output_dir <span class="op">=</span> <span class="st">"./"</span>, output_file <span class="op">=</span> <span class="st">"transformation.html"</span>, </span>
 <span>                            theme <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></span></code></pre></div>
@@ -1076,7 +1034,7 @@ following arguments.</p>
 <h4 id="screenshot-of-dynamic-report">Screenshot of dynamic report<a class="anchor" aria-label="anchor" href="#screenshot-of-dynamic-report"></a>
 </h4>
 <ul>
-<li>The dynamic contents of the report is shown in the following
+<li>The dynamic contents of the report are shown in the following
 figure.:</li>
 </ul>
 <div class="figure" style="text-align: center">
@@ -1128,37 +1086,37 @@ following arguments.</p>
 </li>
 <li>output_format
 <ul>
-<li>report output type. Choose either “pdf” and “html”.</li>
+<li>report output type. Choose either “pdf” or “html”.</li>
 </ul>
 </li>
 <li>output_file
 <ul>
-<li>name of generated file.</li>
+<li>name of the generated file.</li>
 </ul>
 </li>
 <li>output_dir
 <ul>
-<li>name of directory to generate report file.</li>
+<li>name of the directory to generate the report file.</li>
 </ul>
 </li>
 <li>title
 <ul>
-<li>title of report.</li>
+<li>title of the report.</li>
 </ul>
 </li>
 <li>subtitle
 <ul>
-<li>subtitle of report.</li>
+<li>subtitle of the report.</li>
 </ul>
 </li>
 <li>abstract_title
 <ul>
-<li>abstract of report</li>
+<li>abstract of the report</li>
 </ul>
 </li>
 <li>author
 <ul>
-<li>author of report.</li>
+<li>author of the report.</li>
 </ul>
 </li>
 <li>title_color
@@ -1173,7 +1131,7 @@ following arguments.</p>
 </li>
 <li>logo_img
 <ul>
-<li>name of logo image file on top left.</li>
+<li>The name of the logo image file is on the top left.</li>
 </ul>
 </li>
 <li>cover_img
@@ -1188,19 +1146,19 @@ following arguments.</p>
 </li>
 <li>theme
 <ul>
-<li>name of theme for report. support “orange” and “blue”.</li>
+<li>name of the theme for the report. Support “orange” and “blue”.</li>
 </ul>
 </li>
 <li>sample_percent
 <ul>
-<li>Sample percent of data for performing data tansformation.</li>
+<li>Sample percent of data for performing data transformation.</li>
 </ul>
 </li>
 </ul>
 <p>The following script creates a data transformation report for the
 <code>data.frame</code> class object, <code>heartfailure</code>.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">heartfailure</span> <span class="op">%&gt;%</span></span>
+<code class="sourceCode R"><span><span class="va">heartfailure</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/transformation_paged_report.html">transformation_paged_report</a></span><span class="op">(</span>target <span class="op">=</span> <span class="st">"death_event"</span>, subtitle <span class="op">=</span> <span class="st">"heartfailure"</span>,</span>
 <span>                              output_dir <span class="op">=</span> <span class="st">"./"</span>, output_file <span class="op">=</span> <span class="st">"transformation.pdf"</span>, </span>
 <span>                              theme <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></span></code></pre></div>
@@ -1217,7 +1175,7 @@ The part of the report
 </p>
 </div>
 <ul>
-<li>The contents of the report is shown in the following figure.:</li>
+<li>The contents of the report are shown in the following figure.:</li>
 </ul>
 <div class="figure" style="text-align: center">
 <img src="img/transformation_paged_content.jpg" alt="The dynamic contents of the report" width="80%"><p class="caption">

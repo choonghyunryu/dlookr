@@ -13,12 +13,12 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Tools for Data Diagnosis, Exploration, Transformation">
 <meta property="og:description" content="A collection of tools that support data diagnosis, exploration, and transformation. 
-    Data diagnostics provides information and visualization of missing values and outliers and 
-    unique and negative values to help you understand the distribution and quality of your data. 
+    Data diagnostics provides information and visualization of missing values, outliers, and unique 
+    and negative values to help you understand the distribution and quality of your data. 
     Data exploration provides information and visualization of the descriptive statistics of 
-    univariate variables, normality tests and outliers, correlation of two variables, and 
-    relationship between target variable and predictor. Data transformation supports binning 
-    for categorizing continuous variables, imputates missing values and outliers, resolving skewness. 
+    univariate variables, normality tests and outliers, correlation of two variables, 
+    and the relationship between the target variable and predictor. Data transformation supports binning 
+    for categorizing continuous variables, imputes missing values and outliers, and resolves skewness. 
     And it creates automated reports that support these three tasks.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -93,10 +93,10 @@
 <p>Features:</p>
 <ul>
 <li>Diagnose data quality.</li>
-<li>Find appropriate scenarios to pursuit the follow-up analysis through data exploration and understanding.</li>
+<li>Find appropriate scenarios to pursue the follow-up analysis through data exploration and understanding.</li>
 <li>Derive new variables or perform variable transformations.</li>
 <li>Automatically generate reports for the above three tasks.</li>
-<li>Supports quality diagnosis and EDA of table of DBMS.
+<li>Supports quality diagnosis and EDA of the table of DBMS.
 <ul>
 <li>version (≥ 0.3.2)</li>
 </ul>
@@ -115,14 +115,14 @@
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"choonghyunryu/dlookr"</span><span class="op">)</span></span></code></pre></div>
 <p>Or you can get the development version with vignettes from GitHub:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"nycflights13"</span>, <span class="st">"ISLR"</span>, <span class="st">"DBI"</span>, <span class="st">"RSQLite"</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ISLR"</span>, <span class="st">"DBI"</span>, <span class="st">"RSQLite"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"choonghyunryu/dlookr"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
 <p>dlookr includes several vignette files, which we use throughout the documentation.</p>
-<p>Provided vignettes is as follows.</p>
+<p>Provided vignettes are as follows.</p>
 <ul>
 <li>Data quality diagnosis for data.frame, tbl_df, and table of DBMS</li>
 <li>Exploratory Data Analysis for data.frame, tbl_df, and table of DBMS</li>
@@ -135,30 +135,37 @@
 <h3 id="data-quality-diagnosis">Data quality diagnosis<a class="anchor" aria-label="anchor" href="#data-quality-diagnosis"></a>
 </h3>
 <div class="section level4">
-<h4 id="data-nycflights13">Data: nycflights13<a class="anchor" aria-label="anchor" href="#data-nycflights13"></a>
+<h4 id="data-flights">Data: flights<a class="anchor" aria-label="anchor" href="#data-flights"></a>
 </h4>
-<p>To illustrate basic use of the dlookr package, use the <code>flights</code> data from the <code>nycflights13</code> package. Once loading <code>nycflights13</code> library, the <code>flights</code> data frame is available. The <code>flights</code> data frame contains departure and arrival information on all flights departing from NYC(i.e. JFK, LGA or EWR) in 2013.</p>
+<p>To illustrate the primary use of the dlookr package, use the <code>flights</code> data in dlookr from the <code>nycflights13</code> package. The <code>flights</code> data frame contains departure and arrival information on all flights departing from NYC(i.e., JFK, LGA, or EWR) in 2013.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hadley/nycflights13" class="external-link">nycflights13</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/choonghyunryu/dlookr/" class="external-link">dlookr</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'dlookr'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     transform</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">flights</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">flights</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 336776     19</span></span>
+<span><span class="co">#&gt; [1] 3000   19</span></span>
 <span><span class="va">flights</span></span>
-<span><span class="co">#&gt; # A tibble: 336,776 × 19</span></span>
+<span><span class="co">#&gt; # A tibble: 3,000 × 19</span></span>
 <span><span class="co">#&gt;     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time</span></span>
 <span><span class="co">#&gt;    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;</span></span>
-<span><span class="co">#&gt;  1  2013     1     1      517            515         2      830            819</span></span>
-<span><span class="co">#&gt;  2  2013     1     1      533            529         4      850            830</span></span>
-<span><span class="co">#&gt;  3  2013     1     1      542            540         2      923            850</span></span>
-<span><span class="co">#&gt;  4  2013     1     1      544            545        -1     1004           1022</span></span>
-<span><span class="co">#&gt;  5  2013     1     1      554            600        -6      812            837</span></span>
-<span><span class="co">#&gt;  6  2013     1     1      554            558        -4      740            728</span></span>
-<span><span class="co">#&gt;  7  2013     1     1      555            600        -5      913            854</span></span>
-<span><span class="co">#&gt;  8  2013     1     1      557            600        -3      709            723</span></span>
-<span><span class="co">#&gt;  9  2013     1     1      557            600        -3      838            846</span></span>
-<span><span class="co">#&gt; 10  2013     1     1      558            600        -2      753            745</span></span>
-<span><span class="co">#&gt; # … with 336,766 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt;  1  2013     6    17     1033           1040        -7     1246           1309</span></span>
+<span><span class="co">#&gt;  2  2013    12    26     1343           1329        14     1658           1624</span></span>
+<span><span class="co">#&gt;  3  2013     8    26     1258           1218        40     1510           1516</span></span>
+<span><span class="co">#&gt;  4  2013     8    17     1558           1600        -2     1835           1849</span></span>
+<span><span class="co">#&gt;  5  2013     2    17       NA           1500        NA       NA           1653</span></span>
+<span><span class="co">#&gt;  6  2013     6    30      905            900         5     1200           1206</span></span>
+<span><span class="co">#&gt;  7  2013     9    15     1017           1025        -8     1245           1325</span></span>
+<span><span class="co">#&gt;  8  2013     5     7     1623           1627        -4     1819           1818</span></span>
+<span><span class="co">#&gt;  9  2013     3    14      703            645        18      854            846</span></span>
+<span><span class="co">#&gt; 10  2013     9     4      739            740        -1     1030           1055</span></span>
+<span><span class="co">#&gt; # ℹ 2,990 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="general-diagnosis-of-all-variables-with-diagnose">General diagnosis of all variables with <code>diagnose()</code>
@@ -168,17 +175,17 @@
 <p>The variables of the <code>tbl_df</code> object returned by <code><a href="reference/diagnose.data.frame.html">diagnose ()</a></code> are as follows.</p>
 <ul>
 <li>
-<code>variables</code> : variable names</li>
+<code>variables</code>: variable names</li>
 <li>
-<code>types</code> : the data type of the variables</li>
+<code>types</code>: the data type of the variables</li>
 <li>
-<code>missing_count</code> : number of missing values</li>
+<code>missing_count</code>: number of missing values</li>
 <li>
-<code>missing_percent</code> : percentage of missing values</li>
+<code>missing_percent</code>: percentage of missing values</li>
 <li>
-<code>unique_count</code> : number of unique values</li>
+<code>unique_count</code>: number of unique values</li>
 <li>
-<code>unique_rate</code> : rate of unique value. unique_count / number of observation</li>
+<code>unique_rate</code>: rate of unique value. unique_count / number of observation</li>
 </ul>
 <p>For example, we can diagnose all variables in <code>flights</code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -189,32 +196,32 @@
 <span><span class="co">#&gt; # A tibble: 19 × 6</span></span>
 <span><span class="co">#&gt;    variables      types   missing_count missing_percent unique_count unique_rate</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;          &lt;chr&gt;           &lt;int&gt;           &lt;dbl&gt;        &lt;int&gt;       &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 year           integer             0           0                1  0.00000297</span></span>
-<span><span class="co">#&gt;  2 month          integer             0           0               12  0.0000356 </span></span>
-<span><span class="co">#&gt;  3 day            integer             0           0               31  0.0000920 </span></span>
-<span><span class="co">#&gt;  4 dep_time       integer          8255           2.45          1319  0.00392   </span></span>
-<span><span class="co">#&gt;  5 sched_dep_time integer             0           0             1021  0.00303   </span></span>
-<span><span class="co">#&gt;  6 dep_delay      numeric          8255           2.45           528  0.00157   </span></span>
-<span><span class="co">#&gt;  7 arr_time       integer          8713           2.59          1412  0.00419   </span></span>
-<span><span class="co">#&gt;  8 sched_arr_time integer             0           0             1163  0.00345   </span></span>
-<span><span class="co">#&gt;  9 arr_delay      numeric          9430           2.80           578  0.00172   </span></span>
-<span><span class="co">#&gt; 10 carrier        charac…             0           0               16  0.0000475 </span></span>
-<span><span class="co">#&gt; 11 flight         integer             0           0             3844  0.0114    </span></span>
-<span><span class="co">#&gt; 12 tailnum        charac…          2512           0.746         4044  0.0120    </span></span>
-<span><span class="co">#&gt; 13 origin         charac…             0           0                3  0.00000891</span></span>
-<span><span class="co">#&gt; 14 dest           charac…             0           0              105  0.000312  </span></span>
-<span><span class="co">#&gt; 15 air_time       numeric          9430           2.80           510  0.00151   </span></span>
-<span><span class="co">#&gt; 16 distance       numeric             0           0              214  0.000635  </span></span>
-<span><span class="co">#&gt; 17 hour           numeric             0           0               20  0.0000594 </span></span>
-<span><span class="co">#&gt; 18 minute         numeric             0           0               60  0.000178  </span></span>
-<span><span class="co">#&gt; 19 time_hour      POSIXct             0           0             6936  0.0206</span></span></code></pre></div>
+<span><span class="co">#&gt;  1 year           integer             0           0                1    0.000333</span></span>
+<span><span class="co">#&gt;  2 month          integer             0           0               12    0.004   </span></span>
+<span><span class="co">#&gt;  3 day            integer             0           0               31    0.0103  </span></span>
+<span><span class="co">#&gt;  4 dep_time       integer            82           2.73           982    0.327   </span></span>
+<span><span class="co">#&gt;  5 sched_dep_time integer             0           0              588    0.196   </span></span>
+<span><span class="co">#&gt;  6 dep_delay      numeric            82           2.73           204    0.068   </span></span>
+<span><span class="co">#&gt;  7 arr_time       integer            87           2.9           1010    0.337   </span></span>
+<span><span class="co">#&gt;  8 sched_arr_time integer             0           0              920    0.307   </span></span>
+<span><span class="co">#&gt;  9 arr_delay      numeric            89           2.97           236    0.0787  </span></span>
+<span><span class="co">#&gt; 10 carrier        charac…             0           0               15    0.005   </span></span>
+<span><span class="co">#&gt; 11 flight         integer             0           0             1428    0.476   </span></span>
+<span><span class="co">#&gt; 12 tailnum        charac…            23           0.767         1704    0.568   </span></span>
+<span><span class="co">#&gt; 13 origin         charac…             0           0                3    0.001   </span></span>
+<span><span class="co">#&gt; 14 dest           charac…             0           0               93    0.031   </span></span>
+<span><span class="co">#&gt; 15 air_time       numeric            89           2.97           339    0.113   </span></span>
+<span><span class="co">#&gt; 16 distance       numeric             0           0              184    0.0613  </span></span>
+<span><span class="co">#&gt; 17 hour           numeric             0           0               19    0.00633 </span></span>
+<span><span class="co">#&gt; 18 minute         numeric             0           0               60    0.02    </span></span>
+<span><span class="co">#&gt; 19 time_hour      POSIXct             0           0             2391    0.797</span></span></code></pre></div>
 <ul>
 <li>
-<code>Missing Value(NA)</code> : Variables with many missing values, i.e. those with a <code>missing_percent</code> close to 100, should be excluded from the analysis.</li>
+<code>Missing Value(NA)</code>: Variables with many missing values, i.e., those with a <code>missing_percent</code> close to 100, should be excluded from the analysis.</li>
 <li>
-<code>Unique value</code> : Variables with a unique value (<code>unique_count</code> = 1) are considered to be excluded from data analysis. And if the data type is not numeric (integer, numeric) and the number of unique values is equal to the number of observations (unique_rate = 1), then the variable is likely to be an identifier. Therefore, this variable is also not suitable for the analysis model.</li>
+<code>Unique value</code>: Variables with a unique value (<code>unique_count</code> = 1) are considered to be excluded from data analysis. If the data type is not numeric (integer, numeric) and the number of unique values is equal to the number of observations (unique_rate = 1), Then, the variable is likely to be an identifier. Therefore, this variable is also not suitable for the analysis model.</li>
 </ul>
-<p><code>year</code> can be considered not to be used in the analysis model since <code>unique_count</code> is 1. However, you do not have to remove it if you configure <code>date</code> as a combination of <code>year</code>, <code>month</code>, and <code>day</code>.</p>
+<p><code>year</code> cannot be used in the analysis model since <code>unique_count</code> is 1. However, you do not have to remove it if you configure <code>date</code> as a combination of <code>year</code>, <code>month</code>, and <code>day</code>.</p>
 <p>For example, we can diagnose only a few selected variables:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Select columns by name</span></span>
@@ -222,39 +229,39 @@
 <span><span class="co">#&gt; # A tibble: 3 × 6</span></span>
 <span><span class="co">#&gt;   variables types   missing_count missing_percent unique_count unique_rate</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;           &lt;int&gt;           &lt;dbl&gt;        &lt;int&gt;       &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 year      integer             0               0            1  0.00000297</span></span>
-<span><span class="co">#&gt; 2 month     integer             0               0           12  0.0000356 </span></span>
-<span><span class="co">#&gt; 3 day       integer             0               0           31  0.0000920</span></span>
+<span><span class="co">#&gt; 1 year      integer             0               0            1    0.000333</span></span>
+<span><span class="co">#&gt; 2 month     integer             0               0           12    0.004   </span></span>
+<span><span class="co">#&gt; 3 day       integer             0               0           31    0.0103</span></span>
 <span><span class="co"># Select all columns between year and day (include)</span></span>
 <span><span class="fu"><a href="reference/diagnose.data.frame.html">diagnose</a></span><span class="op">(</span><span class="va">flights</span>, <span class="va">year</span><span class="op">:</span><span class="va">day</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 3 × 6</span></span>
 <span><span class="co">#&gt;   variables types   missing_count missing_percent unique_count unique_rate</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;           &lt;int&gt;           &lt;dbl&gt;        &lt;int&gt;       &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 year      integer             0               0            1  0.00000297</span></span>
-<span><span class="co">#&gt; 2 month     integer             0               0           12  0.0000356 </span></span>
-<span><span class="co">#&gt; 3 day       integer             0               0           31  0.0000920</span></span>
+<span><span class="co">#&gt; 1 year      integer             0               0            1    0.000333</span></span>
+<span><span class="co">#&gt; 2 month     integer             0               0           12    0.004   </span></span>
+<span><span class="co">#&gt; 3 day       integer             0               0           31    0.0103</span></span>
 <span><span class="co"># Select all columns except those from year to day (exclude)</span></span>
 <span><span class="fu"><a href="reference/diagnose.data.frame.html">diagnose</a></span><span class="op">(</span><span class="va">flights</span>, <span class="op">-</span><span class="op">(</span><span class="va">year</span><span class="op">:</span><span class="va">day</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 16 × 6</span></span>
 <span><span class="co">#&gt;    variables      types   missing_count missing_percent unique_count unique_rate</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;          &lt;chr&gt;           &lt;int&gt;           &lt;dbl&gt;        &lt;int&gt;       &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 dep_time       integer          8255           2.45          1319  0.00392   </span></span>
-<span><span class="co">#&gt;  2 sched_dep_time integer             0           0             1021  0.00303   </span></span>
-<span><span class="co">#&gt;  3 dep_delay      numeric          8255           2.45           528  0.00157   </span></span>
-<span><span class="co">#&gt;  4 arr_time       integer          8713           2.59          1412  0.00419   </span></span>
-<span><span class="co">#&gt;  5 sched_arr_time integer             0           0             1163  0.00345   </span></span>
-<span><span class="co">#&gt;  6 arr_delay      numeric          9430           2.80           578  0.00172   </span></span>
-<span><span class="co">#&gt;  7 carrier        charac…             0           0               16  0.0000475 </span></span>
-<span><span class="co">#&gt;  8 flight         integer             0           0             3844  0.0114    </span></span>
-<span><span class="co">#&gt;  9 tailnum        charac…          2512           0.746         4044  0.0120    </span></span>
-<span><span class="co">#&gt; 10 origin         charac…             0           0                3  0.00000891</span></span>
-<span><span class="co">#&gt; 11 dest           charac…             0           0              105  0.000312  </span></span>
-<span><span class="co">#&gt; 12 air_time       numeric          9430           2.80           510  0.00151   </span></span>
-<span><span class="co">#&gt; 13 distance       numeric             0           0              214  0.000635  </span></span>
-<span><span class="co">#&gt; 14 hour           numeric             0           0               20  0.0000594 </span></span>
-<span><span class="co">#&gt; 15 minute         numeric             0           0               60  0.000178  </span></span>
-<span><span class="co">#&gt; 16 time_hour      POSIXct             0           0             6936  0.0206</span></span></code></pre></div>
-<p>By using with dplyr, variables including missing values can be sorted by the weight of missing values.:</p>
+<span><span class="co">#&gt;  1 dep_time       integer            82           2.73           982     0.327  </span></span>
+<span><span class="co">#&gt;  2 sched_dep_time integer             0           0              588     0.196  </span></span>
+<span><span class="co">#&gt;  3 dep_delay      numeric            82           2.73           204     0.068  </span></span>
+<span><span class="co">#&gt;  4 arr_time       integer            87           2.9           1010     0.337  </span></span>
+<span><span class="co">#&gt;  5 sched_arr_time integer             0           0              920     0.307  </span></span>
+<span><span class="co">#&gt;  6 arr_delay      numeric            89           2.97           236     0.0787 </span></span>
+<span><span class="co">#&gt;  7 carrier        charac…             0           0               15     0.005  </span></span>
+<span><span class="co">#&gt;  8 flight         integer             0           0             1428     0.476  </span></span>
+<span><span class="co">#&gt;  9 tailnum        charac…            23           0.767         1704     0.568  </span></span>
+<span><span class="co">#&gt; 10 origin         charac…             0           0                3     0.001  </span></span>
+<span><span class="co">#&gt; 11 dest           charac…             0           0               93     0.031  </span></span>
+<span><span class="co">#&gt; 12 air_time       numeric            89           2.97           339     0.113  </span></span>
+<span><span class="co">#&gt; 13 distance       numeric             0           0              184     0.0613 </span></span>
+<span><span class="co">#&gt; 14 hour           numeric             0           0               19     0.00633</span></span>
+<span><span class="co">#&gt; 15 minute         numeric             0           0               60     0.02   </span></span>
+<span><span class="co">#&gt; 16 time_hour      POSIXct             0           0             2391     0.797</span></span></code></pre></div>
+<p>Using dplyr, variables, including missing values, can be sorted by the weight of missing values.:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">flights</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/diagnose.data.frame.html">diagnose</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -264,12 +271,12 @@
 <span><span class="co">#&gt; # A tibble: 6 × 4</span></span>
 <span><span class="co">#&gt;   variables types     missing_count missing_percent</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;             &lt;int&gt;           &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 arr_delay numeric            9430           2.80 </span></span>
-<span><span class="co">#&gt; 2 air_time  numeric            9430           2.80 </span></span>
-<span><span class="co">#&gt; 3 arr_time  integer            8713           2.59 </span></span>
-<span><span class="co">#&gt; 4 dep_time  integer            8255           2.45 </span></span>
-<span><span class="co">#&gt; 5 dep_delay numeric            8255           2.45 </span></span>
-<span><span class="co">#&gt; 6 tailnum   character          2512           0.746</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 arr_delay numeric              89           2.97 </span></span>
+<span><span class="co">#&gt; 2 air_time  numeric              89           2.97 </span></span>
+<span><span class="co">#&gt; 3 arr_time  integer              87           2.9  </span></span>
+<span><span class="co">#&gt; 4 dep_time  integer              82           2.73 </span></span>
+<span><span class="co">#&gt; 5 dep_delay numeric              82           2.73 </span></span>
+<span><span class="co">#&gt; 6 tailnum   character            23           0.767</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="diagnosis-of-numeric-variables-with-diagnose_numeric">Diagnosis of numeric variables with <code>diagnose_numeric()</code>
@@ -279,141 +286,131 @@
 <p>The variables of the <code>tbl_df</code> object returned by <code><a href="reference/diagnose_numeric.data.frame.html">diagnose_numeric()</a></code> are as follows.</p>
 <ul>
 <li>
-<code>min</code> : minimum value</li>
+<code>min</code>: minimum value</li>
 <li>
-<code>Q1</code> : 1/4 quartile, 25th percentile</li>
+<code>Q1</code>: 1/4 quartile, 25th percentile</li>
 <li>
-<code>mean</code> : arithmetic mean</li>
+<code>mean</code>: arithmetic mean</li>
 <li>
-<code>median</code> : median, 50th percentile</li>
+<code>median</code>: median, 50th percentile</li>
 <li>
-<code>Q3</code> : 3/4 quartile, 75th percentile</li>
+<code>Q3</code>: 3/4 quartile, 75th percentile</li>
 <li>
-<code>max</code> : maximum value</li>
+<code>max</code>: maximum value</li>
 <li>
-<code>zero</code> : number of observations with a value of 0</li>
+<code>zero</code>: number of observations with a value of 0</li>
 <li>
-<code>minus</code> : number of observations with negative numbers</li>
+<code>minus</code>: number of observations with negative numbers</li>
 <li>
-<code>outlier</code> : number of outliers</li>
+<code>outlier</code>: number of outliers</li>
 </ul>
-<p>The summary() function summarizes the distribution of individual variables in the data frame and outputs it to the console. The summary values of numeric variables are <code>min</code>, <code>Q1</code>, <code>mean</code>, <code>median</code>, <code>Q3</code> and <code>max</code>, which help to understand the distribution of data.</p>
+<p>The summary() function summarizes the distribution of individual variables in the data frame and outputs it to the console. The summary values of numeric variables are <code>min</code>, <code>Q1</code>, <code>mean</code>, <code>median</code>, <code>Q3</code>, and <code>max</code>, which help to understand the data distribution.</p>
 <p>However, the result displayed on the console has the disadvantage that the analyst has to look at it with the eyes. However, when the summary information is returned in a data frame structure such as tbl_df, the scope of utilization is expanded. <code><a href="reference/diagnose_numeric.data.frame.html">diagnose_numeric()</a></code> supports this.</p>
-<p><code>zero</code>, <code>minus</code>, and <code>outlier</code> are useful measures to diagnose data integrity. For example, numerical data in some cases cannot have zero or negative numbers. A numeric variable called <code>employee salary</code> cannot have negative numbers or zeros. Therefore, this variable should be checked for the inclusion of zero or negative numbers in the data diagnosis process.</p>
+<p><code>zero</code>, <code>minus</code>, and <code>outlier</code> are helpful measures to diagnose data integrity. For example, numerical data, in some cases, cannot have zero or negative numbers. A numeric variable, <code>employee salary</code>, cannot have negative numbers or zeros. Therefore, this variable should be checked for the inclusion of zero or negative numbers in the data diagnosis process.</p>
 <p><code><a href="reference/diagnose_numeric.data.frame.html">diagnose_numeric()</a></code> can diagnose all numeric variables of <code>flights</code> as follows.:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/diagnose_numeric.data.frame.html">diagnose_numeric</a></span><span class="op">(</span><span class="va">flights</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 14 × 10</span></span>
-<span><span class="co">#&gt;    variables        min    Q1    mean median    Q3   max  zero  minus outlier</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;  &lt;int&gt;   &lt;int&gt;</span></span>
-<span><span class="co">#&gt;  1 year            2013  2013 2013      2013  2013  2013     0      0       0</span></span>
-<span><span class="co">#&gt;  2 month              1     4    6.55      7    10    12     0      0       0</span></span>
-<span><span class="co">#&gt;  3 day                1     8   15.7      16    23    31     0      0       0</span></span>
-<span><span class="co">#&gt;  4 dep_time           1   907 1349.     1401  1744  2400     0      0       0</span></span>
-<span><span class="co">#&gt;  5 sched_dep_time   106   906 1344.     1359  1729  2359     0      0       0</span></span>
-<span><span class="co">#&gt;  6 dep_delay        -43    -5   12.6      -2    11  1301 16514 183575   43216</span></span>
-<span><span class="co">#&gt;  7 arr_time           1  1104 1502.     1535  1940  2400     0      0       0</span></span>
-<span><span class="co">#&gt;  8 sched_arr_time     1  1124 1536.     1556  1945  2359     0      0       0</span></span>
-<span><span class="co">#&gt;  9 arr_delay        -86   -17    6.90     -5    14  1272  5409 188933   27880</span></span>
-<span><span class="co">#&gt; 10 flight             1   553 1972.     1496  3465  8500     0      0       1</span></span>
-<span><span class="co">#&gt; 11 air_time          20    82  151.      129   192   695     0      0    5448</span></span>
-<span><span class="co">#&gt; 12 distance          17   502 1040.      872  1389  4983     0      0     715</span></span>
-<span><span class="co">#&gt; 13 hour               1     9   13.2      13    17    23     0      0       0</span></span>
-<span><span class="co">#&gt; 14 minute             0     8   26.2      29    44    59 60696      0       0</span></span></code></pre></div>
+<span><span class="co">#&gt;    variables        min      Q1    mean median      Q3   max  zero minus outlier</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;          &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt;   &lt;int&gt;</span></span>
+<span><span class="co">#&gt;  1 year            2013 2013    2013     2013  2013     2013     0     0       0</span></span>
+<span><span class="co">#&gt;  2 month              1    4       6.54     7     9.25    12     0     0       0</span></span>
+<span><span class="co">#&gt;  3 day                1    8      15.8     16    23       31     0     0       0</span></span>
+<span><span class="co">#&gt;  4 dep_time           1  905.   1354.    1417  1755     2359     0     0       0</span></span>
+<span><span class="co">#&gt;  5 sched_dep_time   500  910    1354.    1415  1740     2359     0     0       0</span></span>
+<span><span class="co">#&gt;  6 dep_delay        -22   -5      13.6     -1    12     1126   143  1618     401</span></span>
+<span><span class="co">#&gt;  7 arr_time           2 1106    1517.    1547  1956     2400     0     0       0</span></span>
+<span><span class="co">#&gt;  8 sched_arr_time     1 1125    1548.    1604. 1957     2359     0     0       0</span></span>
+<span><span class="co">#&gt;  9 arr_delay        -70  -17       7.13    -5    15     1109    43  1686     250</span></span>
+<span><span class="co">#&gt; 10 flight             1  529    1952.    1460  3434.    6177     0     0       0</span></span>
+<span><span class="co">#&gt; 11 air_time          24   79     149.     126   191      639     0     0      38</span></span>
+<span><span class="co">#&gt; 12 distance          94  488    1029.     820  1389     4983     0     0       3</span></span>
+<span><span class="co">#&gt; 13 hour               5    9      13.3     14    17       23     0     0       0</span></span>
+<span><span class="co">#&gt; 14 minute             0    9.75   26.4     29    44       59   527     0       0</span></span></code></pre></div>
 <p>If a numeric variable can not logically have a negative or zero value, it can be used with <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code> to easily find a variable that does not logically match:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/diagnose_numeric.data.frame.html">diagnose_numeric</a></span><span class="op">(</span><span class="va">flights</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">minus</span> <span class="op">&gt;</span> <span class="fl">0</span> <span class="op">|</span> <span class="va">zero</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> </span>
 <span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
-<span><span class="co">#&gt;   variables   min    Q1  mean median    Q3   max  zero  minus outlier</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;  &lt;int&gt;   &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1 dep_delay   -43    -5 12.6      -2    11  1301 16514 183575   43216</span></span>
-<span><span class="co">#&gt; 2 arr_delay   -86   -17  6.90     -5    14  1272  5409 188933   27880</span></span>
-<span><span class="co">#&gt; 3 minute        0     8 26.2      29    44    59 60696      0       0</span></span></code></pre></div>
+<span><span class="co">#&gt;   variables   min     Q1  mean median    Q3   max  zero minus outlier</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt;   &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1 dep_delay   -22  -5    13.6      -1    12  1126   143  1618     401</span></span>
+<span><span class="co">#&gt; 2 arr_delay   -70 -17     7.13     -5    15  1109    43  1686     250</span></span>
+<span><span class="co">#&gt; 3 minute        0   9.75 26.4      29    44    59   527     0       0</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="diagnosis-of-categorical-variables-with-diagnose_category">Diagnosis of categorical variables with <code>diagnose_category()</code>
 <a class="anchor" aria-label="anchor" href="#diagnosis-of-categorical-variables-with-diagnose_category"></a>
 </h4>
-<p><code><a href="reference/diagnose_category.data.frame.html">diagnose_category()</a></code> diagnoses the categorical(factor, ordered, character) variables of a data frame. The usage is similar to <code><a href="reference/diagnose.data.frame.html">diagnose()</a></code> but returns more diagnostic information. If you specify a non-categorical variable in the second and subsequent argument list, the variable is automatically ignored.</p>
-<p>The <code>top</code> argument specifies the number of levels to return for each variable. The default is 10, which returns the top 10 level. Of course, if the number of levels is less than 10, all levels are returned.</p>
+<p><code><a href="reference/diagnose_category.data.frame.html">diagnose_category()</a></code> diagnoses the categorical(factor, ordered, character) variables of a data frame. The usage is similar to <code><a href="reference/diagnose.data.frame.html">diagnose()</a></code> but returns more diagnostic information. The variable is automatically ignored if you specify a non-categorical variable in the second and subsequent argument list.</p>
+<p>The <code>top</code> argument specifies the number of levels to return for each variable. The default is 10, which returns the top 10 levels. Of course, if the number of levels is less than 10, all levels are returned.</p>
 <p>The variables of the <code>tbl_df</code> object returned by <code><a href="reference/diagnose_category.data.frame.html">diagnose_category()</a></code> are as follows.</p>
 <ul>
 <li>
-<code>variables</code> : variable names</li>
+<code>variables</code>: variable names</li>
 <li>
 <code>levels</code>: level names</li>
 <li>
-<code>N</code> : number of observation</li>
+<code>N</code>: number of observation</li>
 <li>
-<code>freq</code> : number of observation at the levels</li>
+<code>freq</code>: number of observation at the levels</li>
 <li>
-<code>ratio</code> : percentage of observation at the levels</li>
+<code>ratio</code>: percentage of observation at the levels</li>
 <li>
-<code>rank</code> : rank of occupancy ratio of levels</li>
+<code>rank</code>: rank of occupancy ratio of levels</li>
 </ul>
 <p>`<code><a href="reference/diagnose_category.data.frame.html">diagnose_category()</a></code> can diagnose all categorical variables of <code>flights</code> as follows.:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/diagnose_category.data.frame.html">diagnose_category</a></span><span class="op">(</span><span class="va">flights</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 43 × 6</span></span>
-<span><span class="co">#&gt;    variables levels      N  freq ratio  rank</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;     &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt;</span></span>
-<span><span class="co">#&gt;  1 carrier   UA     336776 58665 17.4      1</span></span>
-<span><span class="co">#&gt;  2 carrier   B6     336776 54635 16.2      2</span></span>
-<span><span class="co">#&gt;  3 carrier   EV     336776 54173 16.1      3</span></span>
-<span><span class="co">#&gt;  4 carrier   DL     336776 48110 14.3      4</span></span>
-<span><span class="co">#&gt;  5 carrier   AA     336776 32729  9.72     5</span></span>
-<span><span class="co">#&gt;  6 carrier   MQ     336776 26397  7.84     6</span></span>
-<span><span class="co">#&gt;  7 carrier   US     336776 20536  6.10     7</span></span>
-<span><span class="co">#&gt;  8 carrier   9E     336776 18460  5.48     8</span></span>
-<span><span class="co">#&gt;  9 carrier   WN     336776 12275  3.64     9</span></span>
-<span><span class="co">#&gt; 10 carrier   VX     336776  5162  1.53    10</span></span>
-<span><span class="co">#&gt; # … with 33 more rows</span></span></code></pre></div>
+<span><span class="co">#&gt;    variables levels     N  freq ratio  rank</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;     &lt;chr&gt;  &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt;</span></span>
+<span><span class="co">#&gt;  1 carrier   UA      3000   551 18.4      1</span></span>
+<span><span class="co">#&gt;  2 carrier   EV      3000   493 16.4      2</span></span>
+<span><span class="co">#&gt;  3 carrier   B6      3000   490 16.3      3</span></span>
+<span><span class="co">#&gt;  4 carrier   DL      3000   423 14.1      4</span></span>
+<span><span class="co">#&gt;  5 carrier   AA      3000   280  9.33     5</span></span>
+<span><span class="co">#&gt;  6 carrier   MQ      3000   214  7.13     6</span></span>
+<span><span class="co">#&gt;  7 carrier   US      3000   182  6.07     7</span></span>
+<span><span class="co">#&gt;  8 carrier   9E      3000   151  5.03     8</span></span>
+<span><span class="co">#&gt;  9 carrier   WN      3000   105  3.5      9</span></span>
+<span><span class="co">#&gt; 10 carrier   VX      3000    54  1.8     10</span></span>
+<span><span class="co">#&gt; # ℹ 33 more rows</span></span></code></pre></div>
 <p>In collaboration with <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code> in the <code>dplyr</code> package, we can see that the <code>tailnum</code> variable is ranked in top 1 with 2,512 missing values in the case where the missing value is included in the top 10:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/diagnose_category.data.frame.html">diagnose_category</a></span><span class="op">(</span><span class="va">flights</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">levels</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 1 × 6</span></span>
-<span><span class="co">#&gt;   variables levels      N  freq ratio  rank</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1 tailnum   &lt;NA&gt;   336776  2512 0.746     1</span></span></code></pre></div>
-<p>The following example returns a list where the level’s relative percentage is 0.01% or less. Note that the value of the <code>top</code> argument is set to a large value such as 500. If the default value of 10 was used, values below 0.01% would not be included in the list:</p>
+<span><span class="co">#&gt;   variables levels     N  freq ratio  rank</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;  &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1 tailnum   &lt;NA&gt;    3000    23 0.767     1</span></span></code></pre></div>
+<p>The following example returns a list where the level’s relative percentage is 0.01% or less. Note that the value of the <code>top</code> argument is set to a large value, such as 500. If the default value of 10 were used, values below 0.01% would not be included in the list:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">flights</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/diagnose_category.data.frame.html">diagnose_category</a></span><span class="op">(</span>top <span class="op">=</span> <span class="fl">500</span><span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">ratio</span> <span class="op">&lt;=</span> <span class="fl">0.01</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 10 × 6</span></span>
-<span><span class="co">#&gt;    variables levels      N  freq    ratio  rank</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;     &lt;chr&gt;   &lt;int&gt; &lt;int&gt;    &lt;dbl&gt; &lt;int&gt;</span></span>
-<span><span class="co">#&gt;  1 carrier   OO     336776    32 0.00950     16</span></span>
-<span><span class="co">#&gt;  2 dest      JAC    336776    25 0.00742     97</span></span>
-<span><span class="co">#&gt;  3 dest      PSP    336776    19 0.00564     98</span></span>
-<span><span class="co">#&gt;  4 dest      EYW    336776    17 0.00505     99</span></span>
-<span><span class="co">#&gt;  5 dest      HDN    336776    15 0.00445    100</span></span>
-<span><span class="co">#&gt;  6 dest      MTJ    336776    15 0.00445    100</span></span>
-<span><span class="co">#&gt;  7 dest      SBN    336776    10 0.00297    102</span></span>
-<span><span class="co">#&gt;  8 dest      ANC    336776     8 0.00238    103</span></span>
-<span><span class="co">#&gt;  9 dest      LEX    336776     1 0.000297   104</span></span>
-<span><span class="co">#&gt; 10 dest      LGA    336776     1 0.000297   104</span></span></code></pre></div>
-<p>In the analytics model, you can also consider removing levels where the relative frequency is very small in the observations or, if possible, combining them together.</p>
+<span><span class="co">#&gt; # A tibble: 0 × 6</span></span>
+<span><span class="co">#&gt; # ℹ 6 variables: variables &lt;chr&gt;, levels &lt;chr&gt;, N &lt;int&gt;, freq &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   ratio &lt;dbl&gt;, rank &lt;int&gt;</span></span></code></pre></div>
+<p>In the analytics model, you can also consider removing levels where the relative frequency is minimal in the observations or, if possible, combining them together.</p>
 </div>
 <div class="section level4">
 <h4 id="diagnosing-outliers-with-diagnose_outlier">Diagnosing outliers with <code>diagnose_outlier()</code>
 <a class="anchor" aria-label="anchor" href="#diagnosing-outliers-with-diagnose_outlier"></a>
 </h4>
-<p><code><a href="reference/diagnose_outlier.data.frame.html">diagnose_outlier()</a></code> diagnoses the outliers of the numeric (continuous and discrete) variables of the data frame. The usage is the same as <code><a href="reference/diagnose.data.frame.html">diagnose()</a></code>.</p>
+<p><code><a href="reference/diagnose_outlier.data.frame.html">diagnose_outlier()</a></code> diagnoses the outliers of the data frame’s numeric (continuous and discrete) variables. The usage is the same as <code><a href="reference/diagnose.data.frame.html">diagnose()</a></code>.</p>
 <p>The variables of the <code>tbl_df</code> object returned by <code><a href="reference/diagnose_outlier.data.frame.html">diagnose_outlier()</a></code> are as follows.</p>
 <ul>
 <li>
-<code>outliers_cnt</code> : number of outliers</li>
+<code>outliers_cnt</code>: number of outliers</li>
 <li>
-<code>outliers_ratio</code> : percent of outliers</li>
+<code>outliers_ratio</code>: percent of outliers</li>
 <li>
-<code>outliers_mean</code> : arithmetic average of outliers</li>
+<code>outliers_mean</code>: arithmetic average of outliers</li>
 <li>
-<code>with_mean</code> : arithmetic average of with outliers</li>
+<code>with_mean</code>: arithmetic average of with outliers</li>
 <li>
-<code>without_mean</code> : arithmetic average of without outliers</li>
+<code>without_mean</code>: arithmetic average of without outliers</li>
 </ul>
 <p><code><a href="reference/diagnose_outlier.data.frame.html">diagnose_outlier()</a></code> can diagnose outliers of all numerical variables on <code>flights</code> as follows:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
@@ -421,32 +418,31 @@
 <span><span class="co">#&gt; # A tibble: 14 × 6</span></span>
 <span><span class="co">#&gt;    variables    outliers_cnt outliers_ratio outliers_mean with_mean without_mean</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;               &lt;int&gt;          &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 year                    0       0                NaN     2013        2013    </span></span>
-<span><span class="co">#&gt;  2 month                   0       0                NaN        6.55        6.55 </span></span>
-<span><span class="co">#&gt;  3 day                     0       0                NaN       15.7        15.7  </span></span>
-<span><span class="co">#&gt;  4 dep_time                0       0                NaN     1349.       1349.   </span></span>
-<span><span class="co">#&gt;  5 sched_dep_t…            0       0                NaN     1344.       1344.   </span></span>
-<span><span class="co">#&gt;  6 dep_delay           43216      12.8               93.1     12.6         0.444</span></span>
-<span><span class="co">#&gt;  7 arr_time                0       0                NaN     1502.       1502.   </span></span>
-<span><span class="co">#&gt;  8 sched_arr_t…            0       0                NaN     1536.       1536.   </span></span>
-<span><span class="co">#&gt;  9 arr_delay           27880       8.28             121.       6.90       -3.69 </span></span>
-<span><span class="co">#&gt; 10 flight                  1       0.000297        8500     1972.       1972.   </span></span>
-<span><span class="co">#&gt; 11 air_time             5448       1.62             400.     151.        146.   </span></span>
-<span><span class="co">#&gt; 12 distance              715       0.212           4955.    1040.       1032.   </span></span>
-<span><span class="co">#&gt; 13 hour                    0       0                NaN       13.2        13.2  </span></span>
-<span><span class="co">#&gt; 14 minute                  0       0                NaN       26.2        26.2</span></span></code></pre></div>
+<span><span class="co">#&gt;  1 year                    0           0            NaN     2013        2013    </span></span>
+<span><span class="co">#&gt;  2 month                   0           0            NaN        6.54        6.54 </span></span>
+<span><span class="co">#&gt;  3 day                     0           0            NaN       15.8        15.8  </span></span>
+<span><span class="co">#&gt;  4 dep_time                0           0            NaN     1354.       1354.   </span></span>
+<span><span class="co">#&gt;  5 sched_dep_t…            0           0            NaN     1354.       1354.   </span></span>
+<span><span class="co">#&gt;  6 dep_delay             401          13.4           94.4     13.6         0.722</span></span>
+<span><span class="co">#&gt;  7 arr_time                0           0            NaN     1517.       1517.   </span></span>
+<span><span class="co">#&gt;  8 sched_arr_t…            0           0            NaN     1548.       1548.   </span></span>
+<span><span class="co">#&gt;  9 arr_delay             250           8.33         121.       7.13       -3.52 </span></span>
+<span><span class="co">#&gt; 10 flight                  0           0            NaN     1952.       1952.   </span></span>
+<span><span class="co">#&gt; 11 air_time               38           1.27         389.     149.        146.   </span></span>
+<span><span class="co">#&gt; 12 distance                3           0.1         4970.    1029.       1025.   </span></span>
+<span><span class="co">#&gt; 13 hour                    0           0            NaN       13.3        13.3  </span></span>
+<span><span class="co">#&gt; 14 minute                  0           0            NaN       26.4        26.4</span></span></code></pre></div>
 <p>Numeric variables that contained outliers are easily found with <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code>.:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/diagnose_outlier.data.frame.html">diagnose_outlier</a></span><span class="op">(</span><span class="va">flights</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">outliers_cnt</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> </span>
-<span><span class="co">#&gt; # A tibble: 5 × 6</span></span>
+<span><span class="co">#&gt; # A tibble: 4 × 6</span></span>
 <span><span class="co">#&gt;   variables outliers_cnt outliers_ratio outliers_mean with_mean without_mean</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;            &lt;int&gt;          &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 dep_delay        43216      12.8               93.1     12.6         0.444</span></span>
-<span><span class="co">#&gt; 2 arr_delay        27880       8.28             121.       6.90       -3.69 </span></span>
-<span><span class="co">#&gt; 3 flight               1       0.000297        8500     1972.       1972.   </span></span>
-<span><span class="co">#&gt; 4 air_time          5448       1.62             400.     151.        146.   </span></span>
-<span><span class="co">#&gt; 5 distance           715       0.212           4955.    1040.       1032.</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 dep_delay          401          13.4           94.4     13.6         0.722</span></span>
+<span><span class="co">#&gt; 2 arr_delay          250           8.33         121.       7.13       -3.52 </span></span>
+<span><span class="co">#&gt; 3 air_time            38           1.27         389.     149.        146.   </span></span>
+<span><span class="co">#&gt; 4 distance             3           0.1         4970.    1029.       1025.</span></span></code></pre></div>
 <p>The following example finds a numeric variable with an outlier ratio of 5% or more, and then returns the result of dividing mean of outliers by total mean in descending order:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/diagnose_outlier.data.frame.html">diagnose_outlier</a></span><span class="op">(</span><span class="va">flights</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
@@ -457,15 +453,15 @@
 <span><span class="co">#&gt; # A tibble: 2 × 6</span></span>
 <span><span class="co">#&gt;   variables outliers_ratio outliers_mean with_mean without_mean  rate</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 arr_delay           8.28         121.       6.90       -3.69  17.5 </span></span>
-<span><span class="co">#&gt; 2 dep_delay          12.8           93.1     12.6         0.444  7.37</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 arr_delay           8.33         121.       7.13       -3.52  16.9 </span></span>
+<span><span class="co">#&gt; 2 dep_delay          13.4           94.4     13.6         0.722  6.94</span></span></code></pre></div>
 <p>In cases where the mean of the outliers is large relative to the overall average, it may be desirable to impute or remove the outliers.</p>
 </div>
 <div class="section level4">
 <h4 id="visualization-of-outliers-using-plot_outlier">Visualization of outliers using <code>plot_outlier()</code>
 <a class="anchor" aria-label="anchor" href="#visualization-of-outliers-using-plot_outlier"></a>
 </h4>
-<p><code><a href="reference/plot_outlier.data.frame.html">plot_outlier()</a></code> visualizes outliers of numerical variables(continuous and discrete) of data.frame. Usage is the same <code><a href="reference/diagnose.data.frame.html">diagnose()</a></code>.</p>
+<p><code><a href="reference/plot_outlier.data.frame.html">plot_outlier()</a></code> visualizes outliers of numerical variables(continuous and discrete) of data.frame. Usage is the same as <code><a href="reference/diagnose.data.frame.html">diagnose()</a></code>.</p>
 <p>The plot derived from the numerical data diagnosis is as follows.</p>
 <ul>
 <li>With outliers box plot</li>
@@ -481,8 +477,8 @@
 <span>                 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">variables</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>                 <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="figures/README-plot_outlier_pipe-1.png"><!-- --><img src="figures/README-plot_outlier_pipe-2.png"><!-- --><img src="figures/README-plot_outlier_pipe-3.png"><!-- --></p>
-<p>Analysts should look at the results of the visualization to decide whether to remove or replace outliers. In some cases, you should consider removing variables with outliers from the data analysis model.</p>
-<p>Looking at the results of the visualization, <code>arr_delay</code> shows that the observed values without outliers are similar to the normal distribution. In the case of a linear model, we might consider removing or imputing outliers. And <code>air_time</code> has a similar shape before and after removing outliers.</p>
+<p>Analysts should look at the visualization results to decide whether to remove or replace outliers. Sometimes, you should consider eliminating variables with outliers from the data analysis model.</p>
+<p>Looking at the visualization results, <code>arr_delay</code> shows that the observed values without outliers are similar to the normal distribution. In the case of a linear model, we might consider removing or imputing outliers. And <code>air_time</code> has a similar shape before and after removing outliers.</p>
 </div>
 </div>
 <div class="section level3">
@@ -491,7 +487,7 @@
 <div class="section level4">
 <h4 id="datasets">datasets<a class="anchor" aria-label="anchor" href="#datasets"></a>
 </h4>
-<p>To illustrate the basic use of EDA in the dlookr package, I use a <code>Carseats</code> dataset. <code>Carseats</code> in the <code>ISLR</code> package is a simulated data set containing sales of child car seats at 400 different stores. This data is a data.frame created for the purpose of predicting sales volume.</p>
+<p>To illustrate the primary use of EDA in the dlookr package, I use a <code>Carseats</code> dataset. <code>Carseats</code> in the <code>ISLR</code> package is a simulated data set containing sales of child car seats at 400 stores. This data is a data.frame created to predict sales volume.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.statlearning.com" class="external-link">ISLR</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">Carseats</span><span class="op">)</span></span>
@@ -584,37 +580,37 @@
 <h5 id="calculating-descriptive-statistics-using-describe">Calculating descriptive statistics using <code>describe()</code>
 <a class="anchor" aria-label="anchor" href="#calculating-descriptive-statistics-using-describe"></a>
 </h5>
-<p><code><a href="reference/describe.data.frame.html">describe()</a></code> computes descriptive statistics for numerical data. The descriptive statistics help determine the distribution of numerical variables. Like function of dplyr, the first argument is the tibble (or data frame). The second and subsequent arguments refer to variables within that data frame.</p>
+<p><code><a href="reference/describe.data.frame.html">describe()</a></code> computes descriptive statistics for numerical data. Descriptive statistics help determine the distribution of numerical variables. Like the function of dplyr, the first argument is the tibble (or data frame). The second and subsequent arguments refer to variables within that data frame.</p>
 <p>The variables of the <code>tbl_df</code> object returned by <code><a href="reference/describe.data.frame.html">describe()</a></code> are as follows.</p>
 <ul>
 <li>
-<code>n</code> : number of observations excluding missing values</li>
+<code>n</code>: number of observations excluding missing values</li>
 <li>
-<code>na</code> : number of missing values</li>
+<code>na</code>: number of missing values</li>
 <li>
-<code>mean</code> : arithmetic average</li>
+<code>mean</code>: arithmetic average</li>
 <li>
-<code>sd</code> : standard deviation</li>
+<code>sd</code>: standard deviation</li>
 <li>
-<code>se_mean</code> : standard error mean. sd/sqrt(n)</li>
+<code>se_mean</code>: standard error mean. sd/sqrt(n)</li>
 <li>
-<code>IQR</code> : interquartile range (Q3-Q1)</li>
+<code>IQR</code>: interquartile range (Q3-Q1)</li>
 <li>
-<code>skewness</code> : skewness</li>
+<code>skewness</code>: skewness</li>
 <li>
-<code>kurtosis</code> : kurtosis</li>
+<code>kurtosis</code>: kurtosis</li>
 <li>
-<code>p25</code> : Q1. 25% percentile</li>
+<code>p25</code>: Q1. 25% percentile</li>
 <li>
-<code>p50</code> : median. 50% percentile</li>
+<code>p50</code>: median. 50% percentile</li>
 <li>
-<code>p75</code> : Q3. 75% percentile</li>
+<code>p75</code>: Q3. 75% percentile</li>
 <li>
-<code>p01</code>, <code>p05</code>, <code>p10</code>, <code>p20</code>, <code>p30</code> : 1%, 5%, 20%, 30% percentiles</li>
+<code>p01</code>, <code>p05</code>, <code>p10</code>, <code>p20</code>, <code>p30</code>: 1%, 5%, 20%, 30% percentiles</li>
 <li>
-<code>p40</code>, <code>p60</code>, <code>p70</code>, <code>p80</code> : 40%, 60%, 70%, 80% percentiles</li>
+<code>p40</code>, <code>p60</code>, <code>p70</code>, <code>p80</code>: 40%, 60%, 70%, 80% percentiles</li>
 <li>
-<code>p90</code>, <code>p95</code>, <code>p99</code>, <code>p100</code> : 90%, 95%, 99%, 100% percentiles</li>
+<code>p90</code>, <code>p95</code>, <code>p99</code>, <code>p100</code>: 90%, 95%, 99%, 100% percentiles</li>
 </ul>
 <p>For example, we can computes the statistics of all numerical variables in <code>carseats</code>:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
@@ -630,15 +626,14 @@
 <span><span class="co">#&gt; 6 Price                 400     0 116.    23.7    1.18   31     -0.125    0.452 </span></span>
 <span><span class="co">#&gt; 7 Age                   400     0  53.3   16.2    0.810  26.2   -0.0772  -1.13  </span></span>
 <span><span class="co">#&gt; 8 Education             400     0  13.9    2.62   0.131   4      0.0440  -1.30  </span></span>
-<span><span class="co">#&gt; # … with 17 more variables: p00 &lt;dbl&gt;, p01 &lt;dbl&gt;, p05 &lt;dbl&gt;, p10 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   p20 &lt;dbl&gt;, p25 &lt;dbl&gt;, p30 &lt;dbl&gt;, p40 &lt;dbl&gt;, p50 &lt;dbl&gt;, p60 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   p70 &lt;dbl&gt;, p75 &lt;dbl&gt;, p80 &lt;dbl&gt;, p90 &lt;dbl&gt;, p95 &lt;dbl&gt;, p99 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   p100 &lt;dbl&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; # ℹ 17 more variables: p00 &lt;dbl&gt;, p01 &lt;dbl&gt;, p05 &lt;dbl&gt;, p10 &lt;dbl&gt;, p20 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   p25 &lt;dbl&gt;, p30 &lt;dbl&gt;, p40 &lt;dbl&gt;, p50 &lt;dbl&gt;, p60 &lt;dbl&gt;, p70 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   p75 &lt;dbl&gt;, p80 &lt;dbl&gt;, p90 &lt;dbl&gt;, p95 &lt;dbl&gt;, p99 &lt;dbl&gt;, p100 &lt;dbl&gt;</span></span></code></pre></div>
 <ul>
 <li>
-<code>skewness</code> : The left-skewed distribution data that is the variables with large positive skewness should consider the log or sqrt transformations to follow the normal distribution. The variables <code>Advertising</code> seem to need to consider variable transformation.</li>
+<code>skewness</code>: The left-skewed distribution data, that is, the variables with significant positive skewness, should consider the log or sqrt transformations to follow the normal distribution. The variable <code>Advertising</code> seems to need to consider variable transformation.</li>
 <li>
-<code>mean</code> and <code>sd</code>, <code>se_mean</code> : The<code>Population</code> with a large <code>standard error of the mean</code>(se_mean) has low representativeness of the <code>arithmetic mean</code>(mean). The <code>standard deviation</code>(sd) is much larger than the arithmetic average.</li>
+<code>mean</code> and <code>sd</code>, <code>se_mean</code>: The<code>Population</code> with a large <code>standard error of the mean</code>(se_mean) has low representativeness of the <code>arithmetic mean</code>(mean). The <code>standard deviation</code>(sd) is much larger than the arithmetic average.</li>
 </ul>
 <p>The <code><a href="reference/describe.data.frame.html">describe()</a></code> function can be sorted by <code>left or right skewed size</code>(skewness) using <code>dplyr</code>.:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
@@ -664,53 +659,53 @@
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">US</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="reference/describe.data.frame.html">describe</a></span><span class="op">(</span><span class="va">Sales</span>, <span class="va">Income</span><span class="op">)</span> </span>
 <span><span class="co">#&gt; # A tibble: 4 × 27</span></span>
-<span><span class="co">#&gt;   described_varia… US        n    na  mean    sd se_mean   IQR skewness kurtosis</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;            &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 Income           No      130    12 65.8  28.2    2.48  50      0.100    -1.14 </span></span>
-<span><span class="co">#&gt; 2 Income           Yes     250     8 70.4  27.9    1.77  48      0.0199   -1.06 </span></span>
-<span><span class="co">#&gt; 3 Sales            No      142     0  6.82  2.60   0.218  3.44   0.323     0.808</span></span>
-<span><span class="co">#&gt; 4 Sales            Yes     258     0  7.87  2.88   0.179  4.23   0.0760   -0.326</span></span>
-<span><span class="co">#&gt; # … with 17 more variables: p00 &lt;dbl&gt;, p01 &lt;dbl&gt;, p05 &lt;dbl&gt;, p10 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   p20 &lt;dbl&gt;, p25 &lt;dbl&gt;, p30 &lt;dbl&gt;, p40 &lt;dbl&gt;, p50 &lt;dbl&gt;, p60 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   p70 &lt;dbl&gt;, p75 &lt;dbl&gt;, p80 &lt;dbl&gt;, p90 &lt;dbl&gt;, p95 &lt;dbl&gt;, p99 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   p100 &lt;dbl&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt;   described_variables US        n    na  mean    sd se_mean   IQR skewness</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;               &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 Income              No      130    12 65.8  28.2    2.48  50      0.100 </span></span>
+<span><span class="co">#&gt; 2 Income              Yes     250     8 70.4  27.9    1.77  48      0.0199</span></span>
+<span><span class="co">#&gt; 3 Sales               No      142     0  6.82  2.60   0.218  3.44   0.323 </span></span>
+<span><span class="co">#&gt; 4 Sales               Yes     258     0  7.87  2.88   0.179  4.23   0.0760</span></span>
+<span><span class="co">#&gt; # ℹ 18 more variables: kurtosis &lt;dbl&gt;, p00 &lt;dbl&gt;, p01 &lt;dbl&gt;, p05 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   p10 &lt;dbl&gt;, p20 &lt;dbl&gt;, p25 &lt;dbl&gt;, p30 &lt;dbl&gt;, p40 &lt;dbl&gt;, p50 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   p60 &lt;dbl&gt;, p70 &lt;dbl&gt;, p75 &lt;dbl&gt;, p80 &lt;dbl&gt;, p90 &lt;dbl&gt;, p95 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   p99 &lt;dbl&gt;, p100 &lt;dbl&gt;</span></span></code></pre></div>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">carseats</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">US</span>, <span class="va">Urban</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="reference/describe.data.frame.html">describe</a></span><span class="op">(</span><span class="va">Sales</span>, <span class="va">Income</span><span class="op">)</span> </span>
 <span><span class="co">#&gt; # A tibble: 12 × 28</span></span>
-<span><span class="co">#&gt;    described_variab… US    Urban     n    na  mean    sd se_mean    IQR skewness</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;             &lt;fct&gt; &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 Income            No    No       42     4 60.2  29.1    4.49  45.2    0.408  </span></span>
-<span><span class="co">#&gt;  2 Income            No    Yes      84     8 69.5  27.4    2.99  47     -0.0497 </span></span>
-<span><span class="co">#&gt;  3 Income            No    &lt;NA&gt;      4     0 48.2  24.7   12.3   40.8   -0.0496 </span></span>
-<span><span class="co">#&gt;  4 Income            Yes   No       65     4 70.5  29.9    3.70  48      0.0736 </span></span>
-<span><span class="co">#&gt;  5 Income            Yes   Yes     179     4 70.3  27.2    2.03  46.5    0.00490</span></span>
-<span><span class="co">#&gt;  6 Income            Yes   &lt;NA&gt;      6     0 75.3  34.3   14.0   47.2   -0.412  </span></span>
-<span><span class="co">#&gt;  7 Sales             No    No       46     0  6.46  2.72   0.402  3.15   0.0889 </span></span>
-<span><span class="co">#&gt;  8 Sales             No    Yes      92     0  7.00  2.58   0.269  3.49   0.492  </span></span>
-<span><span class="co">#&gt;  9 Sales             No    &lt;NA&gt;      4     0  6.99  1.28   0.639  0.827  1.69   </span></span>
-<span><span class="co">#&gt; 10 Sales             Yes   No       69     0  8.23  2.65   0.319  4.1   -0.0212 </span></span>
-<span><span class="co">#&gt; 11 Sales             Yes   Yes     183     0  7.74  2.97   0.219  4.11   0.123  </span></span>
-<span><span class="co">#&gt; 12 Sales             Yes   &lt;NA&gt;      6     0  7.61  2.61   1.06   3.25   0.489  </span></span>
-<span><span class="co">#&gt; # … with 18 more variables: kurtosis &lt;dbl&gt;, p00 &lt;dbl&gt;, p01 &lt;dbl&gt;, p05 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   p10 &lt;dbl&gt;, p20 &lt;dbl&gt;, p25 &lt;dbl&gt;, p30 &lt;dbl&gt;, p40 &lt;dbl&gt;, p50 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   p60 &lt;dbl&gt;, p70 &lt;dbl&gt;, p75 &lt;dbl&gt;, p80 &lt;dbl&gt;, p90 &lt;dbl&gt;, p95 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   p99 &lt;dbl&gt;, p100 &lt;dbl&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt;    described_variables US    Urban     n    na  mean    sd se_mean    IQR</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;               &lt;fct&gt; &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 Income              No    No       42     4 60.2  29.1    4.49  45.2  </span></span>
+<span><span class="co">#&gt;  2 Income              No    Yes      84     8 69.5  27.4    2.99  47    </span></span>
+<span><span class="co">#&gt;  3 Income              No    &lt;NA&gt;      4     0 48.2  24.7   12.3   40.8  </span></span>
+<span><span class="co">#&gt;  4 Income              Yes   No       65     4 70.5  29.9    3.70  48    </span></span>
+<span><span class="co">#&gt;  5 Income              Yes   Yes     179     4 70.3  27.2    2.03  46.5  </span></span>
+<span><span class="co">#&gt;  6 Income              Yes   &lt;NA&gt;      6     0 75.3  34.3   14.0   47.2  </span></span>
+<span><span class="co">#&gt;  7 Sales               No    No       46     0  6.46  2.72   0.402  3.15 </span></span>
+<span><span class="co">#&gt;  8 Sales               No    Yes      92     0  7.00  2.58   0.269  3.49 </span></span>
+<span><span class="co">#&gt;  9 Sales               No    &lt;NA&gt;      4     0  6.99  1.28   0.639  0.827</span></span>
+<span><span class="co">#&gt; 10 Sales               Yes   No       69     0  8.23  2.65   0.319  4.1  </span></span>
+<span><span class="co">#&gt; 11 Sales               Yes   Yes     183     0  7.74  2.97   0.219  4.11 </span></span>
+<span><span class="co">#&gt; 12 Sales               Yes   &lt;NA&gt;      6     0  7.61  2.61   1.06   3.25 </span></span>
+<span><span class="co">#&gt; # ℹ 19 more variables: skewness &lt;dbl&gt;, kurtosis &lt;dbl&gt;, p00 &lt;dbl&gt;, p01 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   p05 &lt;dbl&gt;, p10 &lt;dbl&gt;, p20 &lt;dbl&gt;, p25 &lt;dbl&gt;, p30 &lt;dbl&gt;, p40 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   p50 &lt;dbl&gt;, p60 &lt;dbl&gt;, p70 &lt;dbl&gt;, p75 &lt;dbl&gt;, p80 &lt;dbl&gt;, p90 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   p95 &lt;dbl&gt;, p99 &lt;dbl&gt;, p100 &lt;dbl&gt;</span></span></code></pre></div>
 </div>
 <div class="section level5">
 <h5 id="test-of-normality-on-numeric-variables-using-normality">Test of normality on numeric variables using <code>normality()</code>
 <a class="anchor" aria-label="anchor" href="#test-of-normality-on-numeric-variables-using-normality"></a>
 </h5>
-<p><code><a href="reference/normality.data.frame.html">normality()</a></code> performs a normality test on numerical data. <code>Shapiro-Wilk normality test</code> is performed. When the number of observations is greater than 5000, it is tested after extracting 5000 samples by random simple sampling.</p>
+<p><code><a href="reference/normality.data.frame.html">normality()</a></code> performs a normality test on numerical data. <code>Shapiro-Wilk normality test</code> is performed. When the number of observations exceeds 5000, it is tested after extracting 5000 samples by random simple sampling.</p>
 <p>The variables of <code>tbl_df</code> object returned by <code><a href="reference/normality.data.frame.html">normality()</a></code> are as follows.</p>
 <ul>
 <li>
-<code>statistic</code> : Statistics of the Shapiro-Wilk test</li>
+<code>statistic</code>: Statistics of the Shapiro-Wilk test</li>
 <li>
-<code>p_value</code> : p-value of the Shapiro-Wilk test</li>
+<code>p_value</code>: p-value of the Shapiro-Wilk test</li>
 <li>
-<code>sample</code> : Number of sample observations performed Shapiro-Wilk test</li>
+<code>sample</code>: Number of sample observations performed Shapiro-Wilk test</li>
 </ul>
 <p><code><a href="reference/normality.data.frame.html">normality()</a></code> performs the normality test for all numerical variables of <code>carseats</code> as follows.:</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
@@ -756,8 +751,8 @@
 <span><span class="co">#&gt; 4 Income   Good      Yes       0.955 0.0296       61</span></span>
 <span><span class="co">#&gt; 5 Income   Medium    No        0.947 0.00319      84</span></span>
 <span><span class="co">#&gt; 6 Income   Medium    Yes       0.961 0.000948    135</span></span></code></pre></div>
-<p>The <code>Income</code> variable does not follow the normal distribution. However, the case where <code>US</code> is <code>No</code> and <code>ShelveLoc</code> is <code>Good</code> and <code>Bad</code> at the significance level of 0.01, it follows the normal distribution.</p>
-<p>The following example performs <code>normality test of log(Income)</code> for each combination of <code>ShelveLoc</code> and <code>US</code> categorical variables to search for variables that follow the normal distribution.</p>
+<p>The <code>Income</code> variable does not follow the normal distribution. However, where <code>US</code> is <code>No</code> and <code>ShelveLoc</code> is <code>Good</code> and <code>Bad</code> at the significance level 0.01, it follows the normal distribution.</p>
+<p>The following example performs the <code>normality test of log(Income)</code> for each combination of <code>ShelveLoc</code> and <code>US</code> categorical variables to search for variables that follow the normal distribution.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">carseats</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>log_income <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">Income</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -782,7 +777,7 @@
 <li><code>histogram of log transformed data</code></li>
 <li><code>Histogram of square root transformed data</code></li>
 </ul>
-<p>In the data analysis process, it often encounters numerical data that follows the <code>power-law distribution</code>. Since the numerical data that follows the <code>power-law distribution</code> is converted into a normal distribution by performing the <code>log</code> or <code>sqrt</code> transformation, so draw a histogram of the <code>log</code> and <code>sqrt</code> transformed data.</p>
+<p>The data analysis process ten encounters numerical data that follows the <code>power-law distribution</code>. Since the numerical data that follows the <code>power-law distribution</code> is converted into a normal distribution by performing the <code>log</code> or <code>sqrt</code> transformation, draw a histogram of the <code>log</code> and <code>sqrt</code> transformed data.</p>
 <p><code><a href="reference/plot_normality.data.frame.html">plot_normality()</a></code> can also specify several variables like <code><a href="reference/normality.data.frame.html">normality()</a></code> function.</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Select columns by name</span></span>
@@ -819,7 +814,7 @@
 <span><span class="co">#&gt;  8 Sales       CompPrice    0.0641</span></span>
 <span><span class="co">#&gt;  9 Income      CompPrice   -0.0761</span></span>
 <span><span class="co">#&gt; 10 Advertising CompPrice   -0.0242</span></span>
-<span><span class="co">#&gt; # … with 46 more rows</span></span></code></pre></div>
+<span><span class="co">#&gt; # ℹ 46 more rows</span></span></code></pre></div>
 <p>The following example performs a normality test only on combinations that include several selected variables.</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Select columns by name</span></span>
@@ -837,7 +832,7 @@
 <span><span class="co">#&gt;  8 CompPrice Advertising   -0.0242</span></span>
 <span><span class="co">#&gt;  9 Income    Advertising    0.0435</span></span>
 <span><span class="co">#&gt; 10 Sales     Population     0.0505</span></span>
-<span><span class="co">#&gt; # … with 11 more rows</span></span></code></pre></div>
+<span><span class="co">#&gt; # ℹ 11 more rows</span></span></code></pre></div>
 <p><code><a href="reference/correlate.data.frame.html">correlate()</a></code> produces <code>two pairs of variables</code>. So the following example uses <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code> to get the correlation coefficient for <code>a pair of variable</code> combinations:</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">carseats</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -880,7 +875,7 @@
 <span>  <span class="fu"><a href="reference/correlate.data.frame.html">correlate</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="figures/README-plot_correlate-1.png" width="70%"></p>
-<p><code><a href="reference/plot.correlate.html">plot.correlate()</a></code> can also specify multiple variables with <code><a href="reference/correlate.data.frame.html">correlate()</a></code> function. The following is a visualization of the correlation matrix including several selected variables.</p>
+<p><code><a href="reference/plot.correlate.html">plot.correlate()</a></code> can also specify multiple variables with <code><a href="reference/correlate.data.frame.html">correlate()</a></code> function. The following visualize the correlation matrix, including several selected variables.</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Select columns by name</span></span>
 <span><span class="va">carseats</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
@@ -903,15 +898,15 @@
 <div class="section level5">
 <h5 id="definition-of-target-variable">Definition of target variable<a class="anchor" aria-label="anchor" href="#definition-of-target-variable"></a>
 </h5>
-<p>To perform EDA based on <code>target variable</code>, you need to create a <code>target_by</code> class object. <code><a href="reference/target_by.data.frame.html">target_by()</a></code> creates a <code>target_by</code> class with an object inheriting data.frame or data.frame. <code><a href="reference/target_by.data.frame.html">target_by()</a></code> is similar to <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code> in <code>dplyr</code> which creates <code>grouped_df</code>. The difference is that you specify only one variable.</p>
-<p>The following is an example of specifying <code>US</code> as target variable in <code>carseats</code> data.frame.:</p>
+<p>To perform EDA based on the <code>target variable,</code> you must create a <code>target_by</code> class object. <code><a href="reference/target_by.data.frame.html">target_by()</a></code> creates a <code>target_by</code> class with an object inheriting data.frame or data.frame. <code><a href="reference/target_by.data.frame.html">target_by()</a></code> is similar to <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code> in <code>dplyr</code> which creates <code>grouped_df</code>. The difference is that you specify only one variable.</p>
+<p>The following is an example of specifying <code>US</code> as the target variable in <code>carseats</code> data.frame.:</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">categ</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/target_by.data.frame.html">target_by</a></span><span class="op">(</span><span class="va">carseats</span>, <span class="va">US</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level5">
 <h5 id="eda-when-target-variable-is-categorical-variable">EDA when target variable is categorical variable<a class="anchor" aria-label="anchor" href="#eda-when-target-variable-is-categorical-variable"></a>
 </h5>
-<p>Let’s perform EDA when the target variable is a categorical variable. When the categorical variable <code>US</code> is the target variable, we examine the relationship between the target variable and the predictor.</p>
+<p>Let’s perform EDA when the target variable is categorical. When the categorical variable <code>US</code> is the target variable, we examine the relationship between the target variable and the predictor.</p>
 <p>Cases where predictors are numeric variable:</p>
 <p><code><a href="reference/relate.html">relate()</a></code> shows the relationship between the target variable and the predictor. The following example shows the relationship between <code>Sales</code> and the target variable <code>US</code>. The predictor <code>Sales</code> is a numeric variable. In this case, the descriptive statistics are shown for each level of the target variable.</p>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
@@ -919,15 +914,15 @@
 <span><span class="va">cat_num</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/relate.html">relate</a></span><span class="op">(</span><span class="va">categ</span>, <span class="va">Sales</span><span class="op">)</span></span>
 <span><span class="va">cat_num</span></span>
 <span><span class="co">#&gt; # A tibble: 3 × 27</span></span>
-<span><span class="co">#&gt;   described_varia… US        n    na  mean    sd se_mean   IQR skewness kurtosis</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;            &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 Sales            No      142     0  6.82  2.60   0.218  3.44   0.323    0.808 </span></span>
-<span><span class="co">#&gt; 2 Sales            Yes     258     0  7.87  2.88   0.179  4.23   0.0760  -0.326 </span></span>
-<span><span class="co">#&gt; 3 Sales            total   400     0  7.50  2.82   0.141  3.93   0.186   -0.0809</span></span>
-<span><span class="co">#&gt; # … with 17 more variables: p00 &lt;dbl&gt;, p01 &lt;dbl&gt;, p05 &lt;dbl&gt;, p10 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   p20 &lt;dbl&gt;, p25 &lt;dbl&gt;, p30 &lt;dbl&gt;, p40 &lt;dbl&gt;, p50 &lt;dbl&gt;, p60 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   p70 &lt;dbl&gt;, p75 &lt;dbl&gt;, p80 &lt;dbl&gt;, p90 &lt;dbl&gt;, p95 &lt;dbl&gt;, p99 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   p100 &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;   described_variables US        n    na  mean    sd se_mean   IQR skewness</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;               &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 Sales               No      142     0  6.82  2.60   0.218  3.44   0.323 </span></span>
+<span><span class="co">#&gt; 2 Sales               Yes     258     0  7.87  2.88   0.179  4.23   0.0760</span></span>
+<span><span class="co">#&gt; 3 Sales               total   400     0  7.50  2.82   0.141  3.93   0.186 </span></span>
+<span><span class="co">#&gt; # ℹ 18 more variables: kurtosis &lt;dbl&gt;, p00 &lt;dbl&gt;, p01 &lt;dbl&gt;, p05 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   p10 &lt;dbl&gt;, p20 &lt;dbl&gt;, p25 &lt;dbl&gt;, p30 &lt;dbl&gt;, p40 &lt;dbl&gt;, p50 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   p60 &lt;dbl&gt;, p70 &lt;dbl&gt;, p75 &lt;dbl&gt;, p80 &lt;dbl&gt;, p90 &lt;dbl&gt;, p95 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   p99 &lt;dbl&gt;, p100 &lt;dbl&gt;</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cat_num</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  described_variables     US          n               na         mean      </span></span>
 <span><span class="co">#&gt;  Length:3            No   :1   Min.   :142.0   Min.   :0   Min.   :6.823  </span></span>
@@ -978,12 +973,12 @@
 <span><span class="co">#&gt;  Mean   :13.86   Mean   :15.81  </span></span>
 <span><span class="co">#&gt;  3rd Qu.:13.97   3rd Qu.:16.27  </span></span>
 <span><span class="co">#&gt;  Max.   :14.03   Max.   :16.27</span></span></code></pre></div>
-<p><code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> visualizes the <code>relate</code> class object created by <code><a href="reference/relate.html">relate()</a></code> as the relationship between the target variable and the predictor variable. The relationship between <code>US</code> and <code>Sales</code> is visualized by density plot.</p>
+<p><code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> visualizes the <code>relate</code> class object created by <code><a href="reference/relate.html">relate()</a></code> as the relationship between the target and predictor variables. The relationship between <code>US</code> and <code>Sales</code> is visualized by a density plot.</p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cat_num</span><span class="op">)</span></span></code></pre></div>
 <p><img src="figures/README-target_by3-1.png"><!-- --></p>
 <p>Cases where predictors are categorical variable:</p>
-<p>The following example shows the relationship between <code>ShelveLoc</code> and the target variable <code>US</code>. The predictor variable <code>ShelveLoc</code> is a categorical variable. In this case, it shows the <code>contingency table</code> of two variables. The <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> function performs <code>independence test</code> on the contingency table.</p>
+<p>The following example shows the relationship between <code>ShelveLoc</code> and the target variable <code>US</code>. The predictor variable <code>ShelveLoc</code> is categorical. This case illustrates the <code>contingency table</code> of two variables. The <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> function performs an <code>independence test</code> on the contingency table.</p>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># If the variable of interest is a categorical variable</span></span>
 <span><span class="va">cat_cat</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/relate.html">relate</a></span><span class="op">(</span><span class="va">categ</span>, <span class="va">ShelveLoc</span><span class="op">)</span></span>
@@ -998,7 +993,7 @@
 <span><span class="co">#&gt; Number of factors: 2 </span></span>
 <span><span class="co">#&gt; Test for independence of all factors:</span></span>
 <span><span class="co">#&gt;  Chisq = 2.7397, df = 2, p-value = 0.2541</span></span></code></pre></div>
-<p><code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> visualizes the relationship between the target variable and the predictor. The relationship between <code>US</code> and <code>ShelveLoc</code> is represented by a <code>mosaics plot</code>.</p>
+<p><code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> visualizes the relationship between the target variable and the predictor. A <code>mosaics plot</code> represents the relationship between <code>US</code> and <code>ShelveLoc</code>.</p>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cat_cat</span><span class="op">)</span></span></code></pre></div>
 <p><img src="figures/README-target_by5-1.png"><!-- --></p>
@@ -1011,7 +1006,7 @@
 <code class="sourceCode R"><span><span class="co"># If the variable of interest is a numerical variable</span></span>
 <span><span class="va">num</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/target_by.data.frame.html">target_by</a></span><span class="op">(</span><span class="va">carseats</span>, <span class="va">Sales</span><span class="op">)</span></span></code></pre></div>
 <p>Cases where predictors are numeric variable:</p>
-<p>The following example shows the relationship between <code>Price</code> and the target variable <code>Sales</code>. The predictor variable <code>Price</code> is a numeric variable. In this case, it shows the result of a <code>simple linear model</code> of the <code>target ~ predictor</code> formula. The <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> function expresses the details of the model.</p>
+<p>The following example shows the relationship between <code>Price</code> and the target variable <code>Sales</code>. The predictor variable <code>Price</code> is numeric. In this case, it shows the result of a <code>simple linear model</code> of the <code>target ~ predictor</code> formula. The <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> function expresses the details of the model.</p>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># If the variable of interest is a numerical variable</span></span>
 <span><span class="va">num_num</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/relate.html">relate</a></span><span class="op">(</span><span class="va">num</span>, <span class="va">Price</span><span class="op">)</span></span>
@@ -1046,8 +1041,8 @@
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">num_num</span><span class="op">)</span></span></code></pre></div>
 <p><img src="figures/README-target_by8-1.png"><!-- --></p>
-<p>Cases where predictors are categorical variable:</p>
-<p>The following example shows the relationship between <code>ShelveLoc</code> and the target variable <code>Sales</code>. The predictor <code>ShelveLoc</code> is a categorical variable and shows the result of <code>one-way ANOVA</code> of <code>target ~ predictor</code> relationship. The results are expressed in terms of ANOVA. The <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> function shows the <code>regression coefficients</code> for each level of the predictor. In other words, it shows detailed information about <code>simple regression analysis</code> of <code>target ~ predictor</code> relationship.</p>
+<p>Cases where predictors are categorical variables:</p>
+<p>The following example shows the relationship between <code>ShelveLoc</code> and the target variable <code>Sales</code>. The predictor <code>ShelveLoc</code> is a categorical variable and displays the result of a <code>one-way ANOVA</code> of the <code>target ~ predictor</code> relationship. The results are expressed in terms of ANOVA. The <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> function shows the <code>regression coefficients</code> for each level of the predictor. In other words, it shows detailed information about the <code>simple regression analysis</code> of the <code>target ~ predictor</code> relationship.</p>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># If the variable of interest is a categorical variable</span></span>
 <span><span class="va">num_cat</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/relate.html">relate</a></span><span class="op">(</span><span class="va">num</span>, <span class="va">ShelveLoc</span><span class="op">)</span></span>
@@ -1080,7 +1075,7 @@
 <span><span class="co">#&gt; Residual standard error: 2.339 on 397 degrees of freedom</span></span>
 <span><span class="co">#&gt; Multiple R-squared:  0.3172, Adjusted R-squared:  0.3138 </span></span>
 <span><span class="co">#&gt; F-statistic: 92.23 on 2 and 397 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
-<p><code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> visualizes the relationship between the target variable and the predictor. The relationship between <code>Sales</code> and <code>ShelveLoc</code> is represented by a <code>box plot</code>.</p>
+<p><code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> visualizes the relationship between the target variable and the predictor. A <code>box plot</code> represents the relationship between <code>Sales</code> and <code>ShelveLoc</code>.</p>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">num_cat</span><span class="op">)</span></span></code></pre></div>
 <p><img src="figures/README-target_by10-1.png"><!-- --></p>
@@ -1121,25 +1116,25 @@
 <h5 id="imputes-the-missing-value-with-imputate_na">imputes the missing value with <code>imputate_na()</code>
 <a class="anchor" aria-label="anchor" href="#imputes-the-missing-value-with-imputate_na"></a>
 </h5>
-<p><code><a href="reference/imputate_na.html">imputate_na()</a></code> imputes the missing value contained in the variable. The predictor with missing values support both numeric and categorical variables, and supports the following <code>method</code>.</p>
+<p><code><a href="reference/imputate_na.html">imputate_na()</a></code> imputes the missing value contained in the variable. The predictor with missing values supports both numeric and categorical variables and supports the following <code>method</code>.</p>
 <ul>
 <li>predictor is numerical variable
 <ul>
-<li>“mean” : arithmetic mean</li>
-<li>“median” : median</li>
-<li>“mode” : mode</li>
-<li>“knn” : K-nearest neighbors
+<li>“mean”: arithmetic mean</li>
+<li>“median”: median</li>
+<li>“mode”: mode</li>
+<li>“knn”: K-nearest neighbors
 <ul>
 <li>target variable must be specified</li>
 </ul>
 </li>
-<li>“rpart” : Recursive Partitioning and Regression Trees
+<li>“rpart”: Recursive Partitioning and Regression Trees
 <ul>
 <li>target variable must be specified<br>
 </li>
 </ul>
 </li>
-<li>“mice” : Multivariate Imputation by Chained Equations
+<li>“mice”: Multivariate Imputation by Chained Equations
 <ul>
 <li>target variable must be specified<br>
 </li>
@@ -1150,14 +1145,14 @@
 </li>
 <li>predictor is categorical variable
 <ul>
-<li>“mode” : mode</li>
-<li>“rpart” : Recursive Partitioning and Regression Trees
+<li>“mode”: mode</li>
+<li>“rpart”: Recursive Partitioning and Regression Trees
 <ul>
 <li>target variable must be specified<br>
 </li>
 </ul>
 </li>
-<li>“mice” : Multivariate Imputation by Chained Equations
+<li>“mice”: Multivariate Imputation by Chained Equations
 <ul>
 <li>target variable must be specified<br>
 </li>
@@ -1328,13 +1323,13 @@
 <span><span class="co"># result of imputation</span></span>
 <span><span class="va">urban</span></span>
 <span><span class="co">#&gt;   [1] Yes Yes Yes Yes Yes No  Yes Yes No  No  No  Yes Yes Yes Yes No  Yes Yes</span></span>
-<span><span class="co">#&gt;  [19] No  Yes Yes No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes</span></span>
+<span><span class="co">#&gt;  [19] No  Yes Yes No  Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes Yes Yes No </span></span>
 <span><span class="co">#&gt;  [37] No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes</span></span>
 <span><span class="co">#&gt;  [55] No  Yes Yes Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes Yes Yes Yes No </span></span>
-<span><span class="co">#&gt;  [73] Yes No  No  No  Yes No  Yes Yes Yes Yes Yes No  No  No  Yes No  Yes No </span></span>
-<span><span class="co">#&gt;  [91] No  Yes Yes No  Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes</span></span>
-<span><span class="co">#&gt; [109] Yes No  Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes No </span></span>
-<span><span class="co">#&gt; [127] Yes Yes Yes No  Yes No  Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes</span></span>
+<span><span class="co">#&gt;  [73] Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes No  No  Yes No  Yes No </span></span>
+<span><span class="co">#&gt;  [91] No  Yes Yes Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes</span></span>
+<span><span class="co">#&gt; [109] Yes No  Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes No </span></span>
+<span><span class="co">#&gt; [127] Yes Yes Yes No  Yes Yes Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes</span></span>
 <span><span class="co">#&gt; [145] No  Yes Yes No  No  Yes No  No  No  No  No  Yes Yes No  No  No  No  No </span></span>
 <span><span class="co">#&gt; [163] Yes No  No  Yes Yes Yes Yes Yes Yes Yes Yes Yes No  Yes No  Yes No  Yes</span></span>
 <span><span class="co">#&gt; [181] Yes Yes Yes Yes No  Yes No  Yes Yes No  No  Yes No  Yes Yes Yes Yes Yes</span></span>
@@ -1343,7 +1338,7 @@
 <span><span class="co">#&gt; [235] No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes</span></span>
 <span><span class="co">#&gt; [253] Yes No  Yes Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes No  No  Yes Yes</span></span>
 <span><span class="co">#&gt; [271] Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes No  No  Yes No  Yes</span></span>
-<span><span class="co">#&gt; [289] No  Yes No  Yes Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes</span></span>
+<span><span class="co">#&gt; [289] No  Yes No  No  Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes</span></span>
 <span><span class="co">#&gt; [307] Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No  No  No  Yes Yes Yes Yes</span></span>
 <span><span class="co">#&gt; [325] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No </span></span>
 <span><span class="co">#&gt; [343] No  Yes No  Yes No  No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes</span></span>
@@ -1374,9 +1369,9 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; * Information of Imputation (before vs after)</span></span>
 <span><span class="co">#&gt;      original imputation original_percent imputation_percent</span></span>
-<span><span class="co">#&gt; No        115        121            28.75              30.25</span></span>
-<span><span class="co">#&gt; Yes       275        279            68.75              69.75</span></span>
-<span><span class="co">#&gt; &lt;NA&gt;       10          0             2.50               0.00</span></span>
+<span><span class="co">#&gt; No        115        120            28.75                 30</span></span>
+<span><span class="co">#&gt; Yes       275        280            68.75                 70</span></span>
+<span><span class="co">#&gt; &lt;NA&gt;       10          0             2.50                  0</span></span>
 <span></span>
 <span><span class="co"># viz of imputation</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">urban</span><span class="op">)</span></span></code></pre></div>
@@ -1385,7 +1380,7 @@
 <div class="section level5">
 <h5 id="collaboration-with-dplyr">Collaboration with dplyr<a class="anchor" aria-label="anchor" href="#collaboration-with-dplyr"></a>
 </h5>
-<p>The following example imputes the missing value of the <code>Income</code> variable, and then calculates the arithmetic mean for each level of <code>US</code>. In this case, <code>dplyr</code> is used, and it is easily interpreted logically using pipes.</p>
+<p>The following example imputes the missing value of the <code>Income</code> variable and then calculates the arithmetic mean for each level of <code>US</code>. In this case, <code>dplyr</code> is used and it is easily interpreted logically using pipes.</p>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># The mean before and after the imputation of the Income variable</span></span>
 <span><span class="va">carseats</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -1407,14 +1402,14 @@
 <h5 id="imputes-thr-outliers-with-imputate_outlier">imputes thr outliers with <code>imputate_outlier()</code>
 <a class="anchor" aria-label="anchor" href="#imputes-thr-outliers-with-imputate_outlier"></a>
 </h5>
-<p><code><a href="reference/imputate_outlier.html">imputate_outlier()</a></code> imputes the outliers value. The predictor with outliers supports only numeric variables and supports the following methods.</p>
+<p><code><a href="reference/imputate_outlier.html">imputate_outlier()</a></code> imputes the outlier value. The predictor with outliers supports only numeric variables and supports the following methods.</p>
 <ul>
 <li>predictor is numerical variable
 <ul>
-<li>“mean” : arithmetic mean</li>
-<li>“median” : median</li>
-<li>“mode” : mode</li>
-<li>“capping” : Imputate the upper outliers with 95 percentile, and Imputate the bottom outliers with 5 percentile.</li>
+<li>“mean”: arithmetic mean</li>
+<li>“median”: median</li>
+<li>“mode”: mode</li>
+<li>“capping”: Imputate the upper outliers with 95 percentile, and Imputate the bottom outliers with 5 percentile.</li>
 </ul>
 </li>
 </ul>
@@ -1490,7 +1485,7 @@
 <span><span class="co">#&gt; described_variables "value"      "value"     </span></span>
 <span><span class="co">#&gt; n                   "400"        "400"       </span></span>
 <span><span class="co">#&gt; na                  "0"          "0"         </span></span>
-<span><span class="co">#&gt; mean                "115.7950"   "115.8928"  </span></span>
+<span><span class="co">#&gt; mean                "115.7950"   "115.8927"  </span></span>
 <span><span class="co">#&gt; sd                  "23.67666"   "22.61092"  </span></span>
 <span><span class="co">#&gt; se_mean             "1.183833"   "1.130546"  </span></span>
 <span><span class="co">#&gt; IQR                 "31"         "31"        </span></span>
@@ -1521,7 +1516,7 @@
 <div class="section level5">
 <h5 id="collaboration-with-dplyr-1">Collaboration with dplyr<a class="anchor" aria-label="anchor" href="#collaboration-with-dplyr-1"></a>
 </h5>
-<p>The following example imputes the outliers of the <code>Price</code> variable, and then calculates the arithmetic mean for each level of <code>US</code>. In this case, <code>dplyr</code> is used, and it is easily interpreted logically using pipes.</p>
+<p>The following example imputes the outliers of the <code>Price</code> variable and then calculates the arithmetic mean for each level of <code>US</code>. In this case, <code>dplyr</code> is used, and it is easily interpreted logically using pipes.</p>
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># The mean before and after the imputation of the Price variable</span></span>
 <span><span class="va">carseats</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -1547,18 +1542,18 @@
 <ul>
 <li>Standardization
 <ul>
-<li>“zscore” : z-score transformation. (x - mu) / sigma</li>
-<li>“minmax” : minmax transformation. (x - min) / (max - min)</li>
+<li>“zscore”: z-score transformation. (x - mu) / sigma</li>
+<li>“minmax”: minmax transformation. (x - min) / (max - min)</li>
 </ul>
 </li>
 <li>Resolving Skewness
 <ul>
-<li>“log” : log transformation. log(x)</li>
-<li>“log+1” : log transformation. log(x + 1). Used for values that contain 0.</li>
-<li>“sqrt” : square root transformation.</li>
-<li>“1/x” : 1 / x transformation</li>
-<li>“x^2” : x square transformation</li>
-<li>“x^3” : x^3 square transformation</li>
+<li>“log”: log transformation. log(x)</li>
+<li>“log+1”: log transformation. log(x + 1). Used for values that contain 0.</li>
+<li>“sqrt”: square root transformation.</li>
+<li>“1/x”: 1 / x transformation</li>
+<li>“x^2”: x square transformation</li>
+<li>“x^3”: x^3 square transformation</li>
 </ul>
 </li>
 </ul>
@@ -1601,7 +1596,7 @@
 <span><span class="fu"><a href="reference/find_skewness.html">find_skewness</a></span><span class="op">(</span><span class="va">carseats</span>, value <span class="op">=</span> <span class="cn">TRUE</span>, thres <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span>
 <span><span class="co">#&gt;       Sales Advertising       Price </span></span>
 <span><span class="co">#&gt;       0.185       0.637      -0.125</span></span></code></pre></div>
-<p>The skewness of <code>Advertising</code> is 0.637. This means that the distribution of data is somewhat inclined to the left. So, for normal distribution, use <code><a href="reference/transform.html">transform()</a></code> to convert to “log” method as follows. <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> summarizes transformation information, and <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> visualizes transformation information.</p>
+<p>The skewness of <code>Advertising</code> is 0.637. This means that the distribution of data is somewhat inclined to the left. So, for normal distribution, use <code><a href="reference/transform.html">transform()</a></code> to convert to the “log” method as follows. <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> summarizes transformation information, and <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> visualizes transformation information.</p>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Advertising_log</span> <span class="op">=</span> <span class="fu"><a href="reference/transform.html">transform</a></span><span class="op">(</span><span class="va">carseats</span><span class="op">$</span><span class="va">Advertising</span>, method <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span></span>
 <span></span>
@@ -1642,7 +1637,7 @@
 <span><span class="co"># viz of transformation</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">Advertising_log</span><span class="op">)</span></span></code></pre></div>
 <p><img src="figures/README-resolving2-1.png"><!-- --></p>
-<p>It seems that the raw data contains 0, as there is a -Inf in the log converted value. So this time, convert it to “log+1”.</p>
+<p>The raw data seems to contain 0, as there is a -Inf in the log converted value. So this time, convert it to “log+1”.</p>
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Advertising_log</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/transform.html">transform</a></span><span class="op">(</span><span class="va">carseats</span><span class="op">$</span><span class="va">Advertising</span>, method <span class="op">=</span> <span class="st">"log+1"</span><span class="op">)</span></span>
 <span></span>
@@ -1694,11 +1689,11 @@
 </h5>
 <p><code><a href="reference/binning.html">binning()</a></code> transforms a numeric variable into a categorical variable by binning it. The following types of binning are supported.</p>
 <ul>
-<li>“quantile” : categorize using quantile to include the same frequencies</li>
-<li>“equal” : categorize to have equal length segments</li>
-<li>“pretty” : categorized into moderately good segments</li>
-<li>“kmeans” : categorization using K-means clustering</li>
-<li>“bclust” : categorization using bagged clustering technique</li>
+<li>“quantile”: categorize using quantile to include the same frequencies</li>
+<li>“equal”: categorize to have equal length segments</li>
+<li>“pretty”: categorized into moderately good segments</li>
+<li>“kmeans”: categorization using K-means clustering</li>
+<li>“bclust”: categorization using bagged clustering technique</li>
 </ul>
 <p>Here are some examples of how to bin <code>Income</code> using <code><a href="reference/binning.html">binning()</a></code>.:</p>
 <div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
@@ -1765,8 +1760,8 @@
 <span><span class="co">#&gt; binned type: bclust</span></span>
 <span><span class="co">#&gt; number of bins: 5</span></span>
 <span><span class="co">#&gt; x</span></span>
-<span><span class="co">#&gt;   [21,37.5] (37.5,55.5] (55.5,75.5] (75.5,94.5]  (94.5,120]        &lt;NA&gt; </span></span>
-<span><span class="co">#&gt;          70          58          91          81          80          20</span></span>
+<span><span class="co">#&gt;   [21,33.5]   (33.5,56]     (56,85]  (85,109.5] (109.5,120]        &lt;NA&gt; </span></span>
+<span><span class="co">#&gt;          55          76         133          79          37          20</span></span>
 <span></span>
 <span><span class="co"># Extract the binned results</span></span>
 <span><span class="fu"><a href="reference/extract.bins.html">extract</a></span><span class="op">(</span><span class="va">bin</span><span class="op">)</span></span>
@@ -1959,7 +1954,7 @@
 <h4 id="create-a-diagnostic-report-using-diagnose_web_report">Create a diagnostic report using <code>diagnose_web_report()</code>
 <a class="anchor" aria-label="anchor" href="#create-a-diagnostic-report-using-diagnose_web_report"></a>
 </h4>
-<p><code><a href="reference/diagnose_web_report.data.frame.html">diagnose_web_report()</a></code> create dynamic report for object inherited from data.frame(<code>tbl_df</code>, <code>tbl</code>, etc) or data.frame.</p>
+<p><code><a href="reference/diagnose_web_report.data.frame.html">diagnose_web_report()</a></code> creates a dynamic report for objects inherited from data.frame(<code>tbl_df</code>, <code>tbl</code>, etc) or data.frame.</p>
 <div class="section level5">
 <h5 id="contents-of-dynamic-web-report">Contents of dynamic web report<a class="anchor" aria-label="anchor" href="#contents-of-dynamic-web-report"></a>
 </h5>
@@ -2007,27 +2002,27 @@
 <ul>
 <li>output_file
 <ul>
-<li>name of generated file.</li>
+<li>name of the generated file. Support “pdf” and “html”.</li>
 </ul>
 </li>
 <li>output_dir
 <ul>
-<li>name of directory to generate report file.</li>
+<li>name of the directory to generate report file.</li>
 </ul>
 </li>
 <li>title
 <ul>
-<li>title of report.</li>
+<li>title of the report.</li>
 </ul>
 </li>
 <li>subtitle
 <ul>
-<li>subtitle of report.</li>
+<li>subtitle of the report.</li>
 </ul>
 </li>
 <li>author
 <ul>
-<li>author of report.</li>
+<li>author of the report.</li>
 </ul>
 </li>
 <li>title_color
@@ -2047,7 +2042,7 @@
 </li>
 <li>logo_img
 <ul>
-<li>name of logo image file on top left.</li>
+<li>name of the logo image file on the top left.</li>
 </ul>
 </li>
 <li>create_date
@@ -2057,7 +2052,7 @@
 </li>
 <li>theme
 <ul>
-<li>name of theme for report. support “orange” and “blue”.</li>
+<li>name of theme for report. Support “orange” and “blue”.</li>
 </ul>
 </li>
 <li>sample_percent
@@ -2078,18 +2073,26 @@
 <ul>
 <li>The part of the report is shown in the following figure.:</li>
 </ul>
-<p><img src="articles/img/diag_web_title.jpg" title="The part of the report" alt="The part of the report" width="60%" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="articles/img/diag_web_title.jpg" alt="The part of the report" width="60%"><p class="caption">
+The part of the report
+</p>
+</div>
 <ul>
-<li>The dynamic contents of the report is shown in the following figure.:</li>
+<li>The dynamic contents of the report are shown in the following figure.:</li>
 </ul>
-<p><img src="articles/img/diag_web_content.jpg" title="The dynamic contents of the report" alt="The dynamic contents of the report" width="60%" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="articles/img/diag_web_content.jpg" alt="The dynamic contents of the report" width="60%"><p class="caption">
+The dynamic contents of the report
+</p>
+</div>
 </div>
 </div>
 <div class="section level4">
 <h4 id="create-a-diagnostic-report-using-diagnose_paged_report">Create a diagnostic report using <code>diagnose_paged_report()</code>
 <a class="anchor" aria-label="anchor" href="#create-a-diagnostic-report-using-diagnose_paged_report"></a>
 </h4>
-<p><code><a href="reference/diagnose_paged_report.data.frame.html">diagnose_paged_report()</a></code> create static report for object inherited from data.frame(<code>tbl_df</code>, <code>tbl</code>, etc) or data.frame.</p>
+<p><code><a href="reference/diagnose_paged_report.data.frame.html">diagnose_paged_report()</a></code> creates a static report for an object inherited from data.frame(<code>tbl_df</code>, <code>tbl</code>, etc) or data.frame.</p>
 </div>
 <div class="section level4">
 <h4 id="contents-of-static-paged-report">Contents of static paged report<a class="anchor" aria-label="anchor" href="#contents-of-static-paged-report"></a>
@@ -2161,22 +2164,22 @@
 </li>
 <li>title
 <ul>
-<li>title of report.</li>
+<li>title of the report.</li>
 </ul>
 </li>
 <li>subtitle
 <ul>
-<li>subtitle of report.</li>
+<li>subtitle of the report.</li>
 </ul>
 </li>
 <li>abstract_title
 <ul>
-<li>abstract of report</li>
+<li>abstract of the report</li>
 </ul>
 </li>
 <li>author
 <ul>
-<li>author of report.</li>
+<li>author of the report.</li>
 </ul>
 </li>
 <li>title_color
@@ -2217,7 +2220,7 @@
 </li>
 <li>logo_img
 <ul>
-<li>name of logo image file on top left.</li>
+<li>name of the logo image file on the top left.</li>
 </ul>
 </li>
 <li>cover_img
@@ -2232,7 +2235,7 @@
 </li>
 <li>theme
 <ul>
-<li>name of theme for report. support “orange” and “blue”.</li>
+<li>name of the theme for the report. Support “orange” and “blue”.</li>
 </ul>
 </li>
 <li>sample_percent
@@ -2253,11 +2256,19 @@
 <ul>
 <li>The cover of the report is shown in the following figure.:</li>
 </ul>
-<p><img src="articles/img/diag_paged_cover.jpg" title="The part of the report" alt="The part of the report" width="60%" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="articles/img/diag_paged_cover.jpg" alt="The part of the report" width="60%"><p class="caption">
+The part of the report
+</p>
+</div>
 <ul>
-<li>The contents of the report is shown in the following figure.:</li>
+<li>The contents of the report are shown in the following figure.:</li>
 </ul>
-<p><img src="articles/img/diag_paged_content.jpg" title="The dynamic contents of the report" alt="The dynamic contents of the report" width="60%" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="articles/img/diag_paged_content.jpg" alt="The dynamic contents of the report" width="60%"><p class="caption">
+The dynamic contents of the report
+</p>
+</div>
 </div>
 </div>
 </div>
@@ -2267,7 +2278,7 @@
 <p>dlookr provides two automated EDA reports:</p>
 <ul>
 <li>Web page-based dynamic reports can perform in-depth analysis through visualization and statistical tables.</li>
-<li>Static reports generated as pdf files or html files can be archived as output of data analysis.</li>
+<li>Static reports generated as PDF files or HTML files can be archived as the output of data analysis.</li>
 </ul>
 <div class="section level4">
 <h4 id="create-a-dynamic-report-using-eda_web_report">Create a dynamic report using <code>eda_web_report()</code>
@@ -2378,7 +2389,7 @@
 </ul>
 </li>
 </ul>
-<p>The following script creates a EDA report for the <code>data.frame</code> class object, <code>heartfailure</code>.</p>
+<p>The following script creates an EDA report for the <code>data.frame</code> class object, <code>heartfailure</code>.</p>
 <div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">heartfailure</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/eda_web_report.data.frame.html">eda_web_report</a></span><span class="op">(</span>target <span class="op">=</span> <span class="st">"death_event"</span>, subtitle <span class="op">=</span> <span class="st">"heartfailure"</span>, </span>
@@ -2388,16 +2399,20 @@
 <h5 id="screenshot-of-dynamic-report-1">Screenshot of dynamic report<a class="anchor" aria-label="anchor" href="#screenshot-of-dynamic-report-1"></a>
 </h5>
 <ul>
-<li>The dynamic contents of the report is shown in the following figure.:</li>
+<li>The dynamic contents of the report are shown in the following figure.:</li>
 </ul>
-<p><img src="articles/img/eda_web_title.jpg" title="The part of the report" alt="The part of the report" width="60%" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="articles/img/eda_web_title.jpg" alt="The part of the report" width="60%"><p class="caption">
+The part of the report
+</p>
+</div>
 </div>
 </div>
 <div class="section level4">
 <h4 id="create-a-eda-report-using-eda_paged_report">Create a EDA report using <code>eda_paged_report()</code>
 <a class="anchor" aria-label="anchor" href="#create-a-eda-report-using-eda_paged_report"></a>
 </h4>
-<p><code><a href="reference/eda_paged_report.data.frame.html">eda_paged_report()</a></code> create static report for object inherited from data.frame(<code>tbl_df</code>, <code>tbl</code>, etc) or data.frame.</p>
+<p><code><a href="reference/eda_paged_report.data.frame.html">eda_paged_report()</a></code> creates a static report for an object inherited from data.frame(<code>tbl_df</code>, <code>tbl</code>, etc) or data.frame.</p>
 <div class="section level5">
 <h5 id="contents-of-static-paged-report-1">Contents of static paged report<a class="anchor" aria-label="anchor" href="#contents-of-static-paged-report-1"></a>
 </h5>
@@ -2527,7 +2542,7 @@
 </ul>
 </li>
 </ul>
-<p>The following script creates a EDA report for the <code>data.frame</code> class object, <code>heartfailure</code>.</p>
+<p>The following script creates an EDA report for the <code>data.frame</code> class object, <code>heartfailure</code>.</p>
 <div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">heartfailure</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/eda_paged_report.data.frame.html">eda_paged_report</a></span><span class="op">(</span>target <span class="op">=</span> <span class="st">"death_event"</span>, subtitle <span class="op">=</span> <span class="st">"heartfailure"</span>, </span>
@@ -2539,11 +2554,19 @@
 <ul>
 <li>The cover of the report is shown in the following figure.:</li>
 </ul>
-<p><img src="articles/img/eda_paged_cover.jpg" title="The part of the report" alt="The part of the report" width="60%" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="articles/img/eda_paged_cover.jpg" alt="The part of the report" width="60%"><p class="caption">
+The part of the report
+</p>
+</div>
 <ul>
-<li>The contents of the report is shown in the following figure.:</li>
+<li>The contents of the report are shown in the following figure.:</li>
 </ul>
-<p><img src="articles/img/eda_paged_content.jpg" title="The dynamic contents of the report" alt="The dynamic contents of the report" width="60%" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="articles/img/eda_paged_content.jpg" alt="The dynamic contents of the report" width="60%"><p class="caption">
+The dynamic contents of the report
+</p>
+</div>
 </div>
 </div>
 </div>
@@ -2553,7 +2576,7 @@
 <p>dlookr provides two automated data transformation reports:</p>
 <ul>
 <li>Web page-based dynamic reports can perform in-depth analysis through visualization and statistical tables.</li>
-<li>Static reports generated as pdf files or html files can be archived as output of data analysis.</li>
+<li>Static reports generated as PDF files or HTML files can be archived as the output of data analysis.</li>
 </ul>
 <div class="section level4">
 <h4 id="create-a-dynamic-report-using-transformation_web_report">Create a dynamic report using <code>transformation_web_report()</code>
@@ -2655,16 +2678,20 @@
 <h5 id="screenshot-of-dynamic-report-2">Screenshot of dynamic report<a class="anchor" aria-label="anchor" href="#screenshot-of-dynamic-report-2"></a>
 </h5>
 <ul>
-<li>The dynamic contents of the report is shown in the following figure.:</li>
+<li>The dynamic contents of the report are shown in the following figure.:</li>
 </ul>
-<p><img src="articles/img/transformation_web_title.jpg" title="The part of the report" alt="The part of the report" width="60%" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="articles/img/transformation_web_title.jpg" alt="The part of the report" width="60%"><p class="caption">
+The part of the report
+</p>
+</div>
 </div>
 </div>
 <div class="section level4">
 <h4 id="create-a-static-report-using-transformation_paged_report">Create a static report using <code>transformation_paged_report()</code>
 <a class="anchor" aria-label="anchor" href="#create-a-static-report-using-transformation_paged_report"></a>
 </h4>
-<p><code><a href="reference/transformation_paged_report.html">transformation_paged_report()</a></code> create static report for object inherited from data.frame(<code>tbl_df</code>, <code>tbl</code>, etc) or data.frame.</p>
+<p><code><a href="reference/transformation_paged_report.html">transformation_paged_report()</a></code> creates a static report for an object inherited from data.frame(<code>tbl_df</code>, <code>tbl</code>, etc) or data.frame.</p>
 <div class="section level5">
 <h5 id="contents-of-static-paged-report-2">Contents of static paged report<a class="anchor" aria-label="anchor" href="#contents-of-static-paged-report-2"></a>
 </h5>
@@ -2781,11 +2808,19 @@
 <ul>
 <li>The cover of the report is shown in the following figure.:</li>
 </ul>
-<p><img src="articles/img/transformation_paged_cover.jpg" title="The part of the report" alt="The part of the report" width="60%" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="articles/img/transformation_paged_cover.jpg" alt="The part of the report" width="60%"><p class="caption">
+The part of the report
+</p>
+</div>
 <ul>
-<li>The contents of the report is shown in the following figure.:</li>
+<li>The contents of the report are shown in the following figure.:</li>
 </ul>
-<p><img src="articles/img/transformation_paged_content.jpg" title="The dynamic contents of the report" alt="The dynamic contents of the report" width="60%" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="articles/img/transformation_paged_content.jpg" alt="The dynamic contents of the report" width="60%"><p class="caption">
+The dynamic contents of the report
+</p>
+</div>
 </div>
 </div>
 </div>
@@ -2796,8 +2831,8 @@
 <div class="section level3">
 <h3 id="functions-that-supports-tables-of-dbms">Functions that supports tables of DBMS<a class="anchor" aria-label="anchor" href="#functions-that-supports-tables-of-dbms"></a>
 </h3>
-<p>The DBMS table diagnostic/EDA function supports In-database mode that performs SQL operations on the DBMS side. If the size of the data is large, using In-database mode is faster.</p>
-<p>It is difficult to obtain anomaly or to implement the sampling-based algorithm in SQL of DBMS. So some functions do not yet support In-database mode. In this case, it is performed in In-memory mode in which table data is brought to R side and calculated. In this case, if the data size is large, the execution speed may be slow. It supports the collect_size argument, which allows you to import the specified number of samples of data into R.</p>
+<p>The DBMS table diagnostic/EDA function supports In-database mode that performs SQL operations on the DBMS side. If the data size is large, using In-database mode is faster.</p>
+<p>It isn’t easy to obtain anomalies or to implement the sampling-based algorithm in SQL of DBMS. So, some functions do not yet support In-database mode. In this case, it is performed in In-memory mode, where table data is brought to the R side and calculated. In this case, if the data size is large, the execution speed may be slow. It supports the collect_size argument, allowing you to import the specified number of data samples into R.</p>
 <ul>
 <li>In-database support functions
 <ul>
@@ -2859,7 +2894,7 @@
 <div class="section level3">
 <h3 id="preparing-table-data">Preparing table data<a class="anchor" aria-label="anchor" href="#preparing-table-data"></a>
 </h3>
-<p>Copy the <code>carseats</code> data frame to the SQLite DBMS and create it as a table named <code>TB_CARSEATS</code>. Mysql/MariaDB, PostgreSQL, Oracle DBMS, etc. are also available for your environment.</p>
+<p>Copy the <code>carseats</code> data frame to the SQLite DBMS and create it as a table named <code>TB_CARSEATS</code>. Mysql/MariaDB, PostgreSQL, Oracle DBMS, etc., are also available for your environment.</p>
 <div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://dbi.r-dbi.org" class="external-link">DBI</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'DBI'</span><span class="op">)</span></span>
 <span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://rsqlite.r-dbi.org" class="external-link">RSQLite</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'RSQLite'</span><span class="op">)</span></span>
@@ -2885,7 +2920,7 @@
 <div class="section level4">
 <h4 id="diagnose-data-quality-of-variables-in-the-dbms">Diagnose data quality of variables in the DBMS<a class="anchor" aria-label="anchor" href="#diagnose-data-quality-of-variables-in-the-dbms"></a>
 </h4>
-<p>Use <code><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">dplyr::tbl()</a></code> to create a tbl_dbi object, then use it as a data frame object. That is, the data argument of all diagnose function is specified as tbl_dbi object instead of data frame object.</p>
+<p>Use <code><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">dplyr::tbl()</a></code> to create a tbl_dbi object, then use it as a data frame object. The data argument of all diagnose functions is specified as a tbl_dbi object instead of a data frame object.</p>
 <div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Diagnosis of all columns</span></span>
 <span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
@@ -2903,7 +2938,7 @@
 <span><span class="co">#&gt;  7 ShelveLoc   character             0            0               3      0.0075</span></span>
 <span><span class="co">#&gt;  8 Age         double                0            0              56      0.14  </span></span>
 <span><span class="co">#&gt;  9 Education   double                0            0               9      0.0225</span></span>
-<span><span class="co">#&gt; 10 Urban       character             5            1.25            3      0.0075</span></span>
+<span><span class="co">#&gt; 10 Urban       character             5            1.25            2      0.005 </span></span>
 <span><span class="co">#&gt; 11 US          character             0            0               2      0.005</span></span>
 <span></span>
 <span><span class="co"># Positions values select columns, and In-memory mode</span></span>
@@ -2914,7 +2949,7 @@
 <span><span class="co">#&gt;   variables types   missing_count missing_percent unique_count unique_rate</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;           &lt;int&gt;           &lt;dbl&gt;        &lt;int&gt;       &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt; 1 Sales     numeric             0               0          336       0.84 </span></span>
-<span><span class="co">#&gt; 2 Income    numeric            20               5           98       0.245</span></span>
+<span><span class="co">#&gt; 2 Income    numeric            20               5           99       0.248</span></span>
 <span><span class="co">#&gt; 3 Age       numeric             0               0           56       0.14</span></span></code></pre></div>
 </div>
 <div class="section level4">
@@ -2945,7 +2980,7 @@
 <span><span class="co">#&gt;   &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt;   &lt;int&gt;</span></span>
 <span><span class="co">#&gt; 1 Sales           0   5.39   7.50   7.49   9.32  16.3     1     0       2</span></span>
 <span><span class="co">#&gt; 2 CompPrice      77 115    125.   125    135    175       0     0       2</span></span>
-<span><span class="co">#&gt; 3 Income         21  42     68.7   69     92    120       0     0       0</span></span>
+<span><span class="co">#&gt; 3 Income         21  43.8   68.7   69     91    120       0     0       0</span></span>
 <span><span class="co">#&gt; 4 Advertising     0   0      6.64   5     12     29     144     0       0</span></span>
 <span><span class="co">#&gt; 5 Population     10 139    265.   272    398.   509       0     0       0</span></span>
 <span><span class="co">#&gt; 6 Price          24 100    116.   117    131    191       0     0       5</span></span>
@@ -2984,8 +3019,8 @@
 <div class="section level4">
 <h4 id="reporting-the-information-of-data-diagnosis-for-table-of-thr-dbms">Reporting the information of data diagnosis for table of thr DBMS<a class="anchor" aria-label="anchor" href="#reporting-the-information-of-data-diagnosis-for-table-of-thr-dbms"></a>
 </h4>
-<p>The following shows several examples of creating an data diagnosis report for a DBMS table.</p>
-<p>Using the <code>collect_size</code> argument, you can perform data diagnosis with the corresponding number of sample data. If the number of data is very large, use <code>collect_size</code>.</p>
+<p>The following shows several examples of creating a data diagnosis report for a DBMS table.</p>
+<p>Using the <code>collect_size</code> argument, you can perform data diagnosis with the corresponding number of sample data. If the number of data is huge, use <code>collect_size</code>.</p>
 <div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create html file. </span></span>
 <span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
@@ -3004,7 +3039,7 @@
 <div class="section level4">
 <h4 id="calculating-descriptive-statistics-of-numerical-column-of-table-in-the-dbms">Calculating descriptive statistics of numerical column of table in the DBMS<a class="anchor" aria-label="anchor" href="#calculating-descriptive-statistics-of-numerical-column-of-table-in-the-dbms"></a>
 </h4>
-<p>Use <code><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">dplyr::tbl()</a></code> to create a tbl_dbi object, then use it as a data frame object. That is, the data argument of all EDA function is specified as tbl_dbi object instead of data frame object.</p>
+<p>Use <code><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">dplyr::tbl()</a></code> to create a tbl_dbi object, then use it as a data frame object. The data argument of all EDA functions is specified as a tbl_dbi object instead of a data frame object.</p>
 <div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># extract only those with 'Urban' variable level is "Yes",</span></span>
 <span><span class="co"># and find 'Sales' statistics by 'ShelveLoc' and 'US'</span></span>
@@ -3016,16 +3051,16 @@
 <span><span class="co">#&gt; # A tibble: 6 × 28</span></span>
 <span><span class="co">#&gt;   described_variables ShelveLoc US        n    na  mean    sd se_mean   IQR</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;               &lt;chr&gt;     &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 Sales               Bad       No       23     0  5.36  1.91   0.398  2.32</span></span>
-<span><span class="co">#&gt; 2 Sales               Bad       Yes      51     0  5.59  2.57   0.359  3.76</span></span>
+<span><span class="co">#&gt; 1 Sales               Bad       No       22     0  5.19  1.76   0.376  2.21</span></span>
+<span><span class="co">#&gt; 2 Sales               Bad       Yes      50     0  5.59  2.59   0.367  3.77</span></span>
 <span><span class="co">#&gt; 3 Sales               Good      No       18     0  9.21  2.97   0.700  3.71</span></span>
-<span><span class="co">#&gt; 4 Sales               Good      Yes      38     0 10.8   2.22   0.360  2.97</span></span>
-<span><span class="co">#&gt; 5 Sales               Medium    No       54     0  6.92  2.08   0.283  3.18</span></span>
-<span><span class="co">#&gt; 6 Sales               Medium    Yes      96     0  7.55  2.19   0.224  3.39</span></span>
-<span><span class="co">#&gt; # … with 19 more variables: skewness &lt;dbl&gt;, kurtosis &lt;dbl&gt;, p00 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   p01 &lt;dbl&gt;, p05 &lt;dbl&gt;, p10 &lt;dbl&gt;, p20 &lt;dbl&gt;, p25 &lt;dbl&gt;, p30 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   p40 &lt;dbl&gt;, p50 &lt;dbl&gt;, p60 &lt;dbl&gt;, p70 &lt;dbl&gt;, p75 &lt;dbl&gt;, p80 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   p90 &lt;dbl&gt;, p95 &lt;dbl&gt;, p99 &lt;dbl&gt;, p100 &lt;dbl&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; 4 Sales               Good      Yes      39     0 10.9   2.32   0.372  3.12</span></span>
+<span><span class="co">#&gt; 5 Sales               Medium    No       54     0  6.98  2.09   0.284  3.22</span></span>
+<span><span class="co">#&gt; 6 Sales               Medium    Yes      95     0  7.53  2.20   0.225  3.26</span></span>
+<span><span class="co">#&gt; # ℹ 19 more variables: skewness &lt;dbl&gt;, kurtosis &lt;dbl&gt;, p00 &lt;dbl&gt;, p01 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   p05 &lt;dbl&gt;, p10 &lt;dbl&gt;, p20 &lt;dbl&gt;, p25 &lt;dbl&gt;, p30 &lt;dbl&gt;, p40 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   p50 &lt;dbl&gt;, p60 &lt;dbl&gt;, p70 &lt;dbl&gt;, p75 &lt;dbl&gt;, p80 &lt;dbl&gt;, p90 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   p95 &lt;dbl&gt;, p99 &lt;dbl&gt;, p100 &lt;dbl&gt;</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="test-of-normality-on-numeric-columns-using-in-the-dbms">Test of normality on numeric columns using in the DBMS<a class="anchor" aria-label="anchor" href="#test-of-normality-on-numeric-columns-using-in-the-dbms"></a>
@@ -3046,7 +3081,7 @@
 <span><span class="co">#&gt; # A tibble: 1 × 6</span></span>
 <span><span class="co">#&gt;   variable   ShelveLoc US    statistic p_value sample</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 log_income Bad       No        0.945  0.0938     34</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 log_income Bad       No        0.946   0.121     34</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="normalization-visualization-of-numerical-column-in-the-dbms">Normalization visualization of numerical column in the DBMS<a class="anchor" aria-label="anchor" href="#normalization-visualization-of-numerical-column-in-the-dbms"></a>
@@ -3076,16 +3111,15 @@
 <span>  <span class="fu"><a href="reference/correlate.data.frame.html">correlate</a></span><span class="op">(</span><span class="va">Sales</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">coef_corr</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">coef_corr</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0.5</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 7 × 5</span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 5</span></span>
 <span><span class="co">#&gt;   Urban US    var1  var2       coef_corr</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt; &lt;fct&gt; &lt;fct&gt;          &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 No    No    Sales Income        -1    </span></span>
-<span><span class="co">#&gt; 2 No    No    Sales Population    -0.530</span></span>
-<span><span class="co">#&gt; 3 No    No    Sales Price         -0.838</span></span>
-<span><span class="co">#&gt; 4 No    Yes   Sales Price         -0.644</span></span>
-<span><span class="co">#&gt; 5 Yes   No    Sales Price         -0.833</span></span>
-<span><span class="co">#&gt; 6 Yes   No    Sales Age           -0.649</span></span>
-<span><span class="co">#&gt; 7 Yes   Yes   Sales Price         -0.559</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 No    No    Sales Population    -0.530</span></span>
+<span><span class="co">#&gt; 2 No    No    Sales Price         -0.838</span></span>
+<span><span class="co">#&gt; 3 No    Yes   Sales Price         -0.644</span></span>
+<span><span class="co">#&gt; 4 Yes   No    Sales Price         -0.833</span></span>
+<span><span class="co">#&gt; 5 Yes   No    Sales Age           -0.649</span></span>
+<span><span class="co">#&gt; 6 Yes   Yes   Sales Price         -0.604</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="visualize-correlation-plot-of-numerical-columns-in-the-dbms">Visualize correlation plot of numerical columns in the DBMS<a class="anchor" aria-label="anchor" href="#visualize-correlation-plot-of-numerical-columns-in-the-dbms"></a>
@@ -3100,12 +3134,12 @@
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Urban</span>, <span class="va">US</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/correlate.data.frame.html">correlate</a></span><span class="op">(</span><span class="va">Sales</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="figures/README-plot_correlation_dbi-1.png"><!-- --><img src="figures/README-plot_correlation_dbi-2.png"><!-- --><img src="figures/README-plot_correlation_dbi-3.png"><!-- --><img src="figures/README-plot_correlation_dbi-4.png"><!-- --><img src="figures/README-plot_correlation_dbi-5.png"><!-- --></p>
+<p><img src="figures/README-plot_correlation_dbi-1.png"><!-- --><img src="figures/README-plot_correlation_dbi-2.png"><!-- --><img src="figures/README-plot_correlation_dbi-3.png"><!-- --><img src="figures/README-plot_correlation_dbi-4.png"><!-- --></p>
 </div>
 <div class="section level4">
 <h4 id="eda-based-on-target-variable-1">EDA based on target variable<a class="anchor" aria-label="anchor" href="#eda-based-on-target-variable-1"></a>
 </h4>
-<p>The following is an EDA where the target column is character and the predictor column is a numeric type.</p>
+<p>The following is an EDA where the target column is a character, and the predictor column is a numeric type.</p>
 <div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># If the target variable is a categorical variable</span></span>
 <span><span class="va">categ</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/target_by.data.frame.html">target_by</a></span><span class="op">(</span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_CARSEATS"</span><span class="op">)</span> , <span class="va">US</span><span class="op">)</span></span>
@@ -3114,15 +3148,15 @@
 <span><span class="va">cat_num</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/relate.html">relate</a></span><span class="op">(</span><span class="va">categ</span>, <span class="va">Sales</span><span class="op">)</span></span>
 <span><span class="va">cat_num</span></span>
 <span><span class="co">#&gt; # A tibble: 3 × 27</span></span>
-<span><span class="co">#&gt;   described_varia… US        n    na  mean    sd se_mean   IQR skewness kurtosis</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;            &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 Sales            No      142     0  6.82  2.60   0.218  3.44   0.323    0.808 </span></span>
-<span><span class="co">#&gt; 2 Sales            Yes     258     0  7.87  2.88   0.179  4.23   0.0760  -0.326 </span></span>
-<span><span class="co">#&gt; 3 Sales            total   400     0  7.50  2.82   0.141  3.93   0.186   -0.0809</span></span>
-<span><span class="co">#&gt; # … with 17 more variables: p00 &lt;dbl&gt;, p01 &lt;dbl&gt;, p05 &lt;dbl&gt;, p10 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   p20 &lt;dbl&gt;, p25 &lt;dbl&gt;, p30 &lt;dbl&gt;, p40 &lt;dbl&gt;, p50 &lt;dbl&gt;, p60 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   p70 &lt;dbl&gt;, p75 &lt;dbl&gt;, p80 &lt;dbl&gt;, p90 &lt;dbl&gt;, p95 &lt;dbl&gt;, p99 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   p100 &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;   described_variables US        n    na  mean    sd se_mean   IQR skewness</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;               &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 Sales               No      142     0  6.82  2.60   0.218  3.44   0.323 </span></span>
+<span><span class="co">#&gt; 2 Sales               Yes     258     0  7.87  2.88   0.179  4.23   0.0760</span></span>
+<span><span class="co">#&gt; 3 Sales               total   400     0  7.50  2.82   0.141  3.93   0.186 </span></span>
+<span><span class="co">#&gt; # ℹ 18 more variables: kurtosis &lt;dbl&gt;, p00 &lt;dbl&gt;, p01 &lt;dbl&gt;, p05 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   p10 &lt;dbl&gt;, p20 &lt;dbl&gt;, p25 &lt;dbl&gt;, p30 &lt;dbl&gt;, p40 &lt;dbl&gt;, p50 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   p60 &lt;dbl&gt;, p70 &lt;dbl&gt;, p75 &lt;dbl&gt;, p80 &lt;dbl&gt;, p90 &lt;dbl&gt;, p95 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   p99 &lt;dbl&gt;, p100 &lt;dbl&gt;</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cat_num</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  described_variables     US          n               na         mean      </span></span>
 <span><span class="co">#&gt;  Length:3            No   :1   Min.   :142.0   Min.   :0   Min.   :6.823  </span></span>
@@ -3181,7 +3215,7 @@
 <h4 id="reporting-the-information-of-eda-for-table-of-the-dbms">Reporting the information of EDA for table of the DBMS<a class="anchor" aria-label="anchor" href="#reporting-the-information-of-eda-for-table-of-the-dbms"></a>
 </h4>
 <p>The following shows several examples of creating an EDA report for a DBMS table.</p>
-<p>Using the <code>collect_size</code> argument, you can perform EDA with the corresponding number of sample data. If the number of data is very large, use <code>collect_size</code>.</p>
+<p>Using the <code>collect_size</code> argument, you can perform EDA with the corresponding number of sample data. If the number of data is huge, use <code>collect_size</code>.</p>
 <div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create html file. file name is EDA_TB_CARSEATS.html</span></span>
 <span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
