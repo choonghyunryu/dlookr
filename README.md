@@ -44,7 +44,7 @@ devtools::install_github("choonghyunryu/dlookr")
 Or you can get the development version with vignettes from GitHub:
 
 ``` r
-install.packages(c("ISLR", "DBI", "RSQLite"))
+install.packages(c("DBI", "RSQLite"))
 devtools::install_github("choonghyunryu/dlookr", build_vignettes = TRUE)
 ```
 
@@ -1436,7 +1436,7 @@ urban
 #>  [37] No  Yes Yes No  No  Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes
 #>  [55] No  Yes Yes Yes Yes Yes Yes No  Yes Yes No  No  Yes Yes Yes Yes Yes No 
 #>  [73] Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes No  No  Yes No  Yes No 
-#>  [91] No  Yes Yes Yes Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes
+#>  [91] No  Yes Yes No  Yes Yes No  Yes No  No  No  Yes No  Yes Yes Yes No  Yes
 #> [109] Yes No  Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes No  Yes No 
 #> [127] Yes Yes Yes No  Yes Yes Yes Yes Yes No  No  Yes Yes No  Yes Yes Yes Yes
 #> [145] No  Yes Yes No  No  Yes No  No  No  No  No  Yes Yes No  No  No  No  No 
@@ -1447,7 +1447,7 @@ urban
 #> [235] No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes Yes Yes Yes Yes Yes
 #> [253] Yes No  Yes Yes Yes Yes No  No  Yes Yes Yes Yes Yes Yes No  No  Yes Yes
 #> [271] Yes Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No  Yes No  No  Yes No  Yes
-#> [289] No  Yes No  No  Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
+#> [289] No  Yes No  Yes Yes Yes Yes No  Yes Yes Yes No  Yes Yes Yes Yes Yes Yes
 #> [307] Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes No  No  No  Yes Yes Yes Yes
 #> [325] Yes Yes Yes Yes Yes Yes No  Yes Yes Yes Yes Yes Yes Yes No  Yes Yes No 
 #> [343] No  Yes No  Yes No  No  Yes No  No  No  Yes No  Yes Yes Yes Yes Yes Yes
@@ -1882,14 +1882,14 @@ binning(carseats$Income, nbins = 5, type = "kmeans")
 #> binned type: kmeans
 #> number of bins: 5
 #> x
-#>   [21,36.5] (36.5,55.5] (55.5,75.5] (75.5,97.5]  (97.5,120]        <NA> 
-#>          66          62          91          86          75          20
+#>      [21,49]    (49,71.5]  (71.5,89.5] (89.5,106.5]  (106.5,120]         <NA> 
+#>          115           88           75           62           40           20
 binning(carseats$Income, nbins = 5, type = "bclust")
 #> binned type: bclust
 #> number of bins: 5
 #> x
-#>   [21,33.5]   (33.5,56]     (56,85]  (85,109.5] (109.5,120]        <NA> 
-#>          55          76         133          79          37          20
+#>      [21,49]    (49,78.5]  (78.5,94.5] (94.5,108.5]  (108.5,120]         <NA> 
+#>          115          115           70           42           38           20
 
 # Extract the binned results
 extract(bin)
@@ -2770,7 +2770,7 @@ con_sqlite %>%
 #>   <chr>       <dbl>  <dbl>  <dbl>  <dbl>  <dbl> <dbl> <int> <int>   <int>
 #> 1 Sales           0   5.39   7.50   7.49   9.32  16.3     1     0       2
 #> 2 CompPrice      77 115    125.   125    135    175       0     0       2
-#> 3 Income         21  43.8   68.7   69     91    120       0     0       0
+#> 3 Income         21  42     68.5   69     91    120       0     0       0
 #> 4 Advertising     0   0      6.64   5     12     29     144     0       0
 #> 5 Population     10 139    265.   272    398.   509       0     0       0
 #> 6 Price          24 100    116.   117    131    191       0     0       5
@@ -2848,12 +2848,12 @@ con_sqlite %>%
 #> # A tibble: 6 × 28
 #>   described_variables ShelveLoc US        n    na  mean    sd se_mean   IQR
 #>   <chr>               <chr>     <chr> <int> <int> <dbl> <dbl>   <dbl> <dbl>
-#> 1 Sales               Bad       No       22     0  5.19  1.76   0.376  2.21
+#> 1 Sales               Bad       No       23     0  5.36  1.91   0.398  2.32
 #> 2 Sales               Bad       Yes      50     0  5.59  2.59   0.367  3.77
-#> 3 Sales               Good      No       18     0  9.21  2.97   0.700  3.71
+#> 3 Sales               Good      No       17     0  9.47  2.84   0.690  3.76
 #> 4 Sales               Good      Yes      39     0 10.9   2.32   0.372  3.12
-#> 5 Sales               Medium    No       54     0  6.98  2.09   0.284  3.22
-#> 6 Sales               Medium    Yes      95     0  7.53  2.20   0.225  3.26
+#> 5 Sales               Medium    No       54     0  6.93  2.08   0.283  3.18
+#> 6 Sales               Medium    Yes      94     0  7.63  2.16   0.222  3.24
 #> # ℹ 19 more variables: skewness <dbl>, kurtosis <dbl>, p00 <dbl>, p01 <dbl>,
 #> #   p05 <dbl>, p10 <dbl>, p20 <dbl>, p25 <dbl>, p30 <dbl>, p40 <dbl>,
 #> #   p50 <dbl>, p60 <dbl>, p70 <dbl>, p75 <dbl>, p80 <dbl>, p90 <dbl>,
@@ -2878,7 +2878,7 @@ con_sqlite %>%
 #> # A tibble: 1 × 6
 #>   variable   ShelveLoc US    statistic p_value sample
 #>   <chr>      <chr>     <chr>     <dbl>   <dbl>  <dbl>
-#> 1 log_income Bad       No        0.946   0.121     34
+#> 1 log_income Bad       No        0.945  0.0978     34
 ```
 
 #### Normalization visualization of numerical column in the DBMS
@@ -2915,8 +2915,8 @@ con_sqlite %>%
 #> 1 No    No    Sales Population    -0.530
 #> 2 No    No    Sales Price         -0.838
 #> 3 No    Yes   Sales Price         -0.644
-#> 4 Yes   No    Sales Price         -0.833
-#> 5 Yes   No    Sales Age           -0.649
+#> 4 Yes   No    Sales Price         -0.829
+#> 5 Yes   No    Sales Age           -0.592
 #> 6 Yes   Yes   Sales Price         -0.604
 ```
 
@@ -2934,7 +2934,7 @@ con_sqlite %>%
   plot()
 ```
 
-![](figures/README-plot_correlation_dbi-1.png)<!-- -->![](figures/README-plot_correlation_dbi-2.png)<!-- -->![](figures/README-plot_correlation_dbi-3.png)<!-- -->![](figures/README-plot_correlation_dbi-4.png)<!-- -->
+![](figures/README-plot_correlation_dbi-1.png)<!-- -->![](figures/README-plot_correlation_dbi-2.png)<!-- -->![](figures/README-plot_correlation_dbi-3.png)<!-- -->![](figures/README-plot_correlation_dbi-4.png)<!-- -->![](figures/README-plot_correlation_dbi-5.png)<!-- -->
 
 #### EDA based on target variable
 
