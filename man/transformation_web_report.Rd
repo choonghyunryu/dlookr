@@ -58,6 +58,9 @@ for the visualization. If not specified, the font defined in dlookr is applied. 
 
 \item{...}{arguments to be passed to methods.}
 }
+\value{
+No return value. This function only generates a report.
+}
 \description{
 The transformation_web_report() report the information of 
 transform numerical variables for object inheriting from data.frame.

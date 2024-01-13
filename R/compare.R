@@ -867,7 +867,7 @@ print.compare_numeric <- function(x, ...) {
 #'   \item 0 : always parallel to the axis [default],
 #'   \item 1 : always horizontal to the axis,
 #' }
-#'    
+#' @return NULL. This function just draws a plot.
 #' @seealso \code{\link{compare_category}}, \code{\link{print.compare_category}}, \code{\link{summary.compare_category}}.
 #' @examples
 #' \donttest{
@@ -1028,6 +1028,7 @@ plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE,
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
 #' However, it does not support.
+#' @return NULL. This function just draws a plot.
 #' @seealso \code{\link{compare_numeric}}, \code{\link{print.compare_numeric}}, \code{\link{summary.compare_numeric}}.
 #' @examples
 #' \donttest{

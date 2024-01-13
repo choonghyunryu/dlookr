@@ -85,6 +85,9 @@ Applies only if in_database = FALSE.}
 
 \item{...}{arguments to be passed to pagedown::chrome_print().}
 }
+\value{
+No return value. This function only generates a report.
+}
 \description{
 The eda_paged_report() paged report the information for EDA of the DBMS table through tbl_dbi
 }

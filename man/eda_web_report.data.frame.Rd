@@ -64,6 +64,9 @@ This is useful for data with a large number of observations.}
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
 }
+\value{
+No return value. This function only generates a report.
+}
 \description{
 The eda_web_report() report the information of exploratory 
 data analysis for object inheriting from data.frame.

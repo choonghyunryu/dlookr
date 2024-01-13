@@ -31,6 +31,9 @@ The default is 0 to not rotate the label.}
 
 \item{...}{further arguments to be passed from or to other methods.}
 }
+\value{
+An object of gtable class.
+}
 \description{
 It generates plots for understand distribution, frequency, bad rate, and weight of evidence using optimal_bins.
 

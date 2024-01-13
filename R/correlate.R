@@ -24,8 +24,10 @@ plot_correlate <- function(.data, ...) {
 #' This function is computed stats::cor() function by use = "pairwise.complete.obs" option for numerical variable.
 #' And support categorical variable with theil's U correlation coefficient and Cramer's V correlation coefficient.
 #'
-#' @section Correlation coefficient information:
-#' It returns data.frame with the following variables.:
+#' @return An object of correlate class.
+#' 
+#' @section correlate class:
+#' The correlate class inherits the tibble class and has the following variables.:
 #'
 #' \itemize{
 #' \item var1 : names of numerical variable
@@ -615,7 +617,7 @@ summary.correlate <- function(object, ...) {
 #' They support unquoting and splicing.
 #'
 #' See vignette("EDA") for an introduction to these concepts.
-#'
+#' @return a ggplot2 object.
 #' @seealso \code{\link{plot_correlate.tbl_dbi}}, \code{\link{plot_outlier.data.frame}}.
 #' @export
 #' @method plot_correlate data.frame
@@ -821,6 +823,7 @@ plot_correlate_group_impl <- function(df, vars, method, typographic, base_family
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
+#' @return No return value. This function is called for its side effect, which is to produce a plot on the current graphics device.
 #' @seealso \code{\link{correlate}}, \code{\link{summary.correlate}}.
 #' @examples
 #' \donttest{

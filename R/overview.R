@@ -327,6 +327,7 @@ summary.overview <- function(object, html = FALSE, ...)  {
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... further arguments to be passed from or to other methods.
+#' @return A ggplot2 object.
 #' @seealso \code{\link{overview}}, \code{\link{summary.overview}}.
 #' @examples
 #' \donttest{

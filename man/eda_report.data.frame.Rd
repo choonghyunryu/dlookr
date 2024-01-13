@@ -37,6 +37,9 @@ eda_report(.data, ...)
 
 \item{browse}{logical. choose whether to output the report results to the browser.}
 }
+\value{
+No return value. This function only generates a report.
+}
 \description{
 The eda_report() report the information of exploratory
 data analysis for object inheriting from data.frame.

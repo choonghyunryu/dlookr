@@ -1392,6 +1392,8 @@ diagnose_report <- function(.data, output_format, output_file, output_dir, ...) 
 #' @param browse logical. choose whether to output the report results to the browser.
 #' @param ... arguments to be passed to methods.
 #'
+#' @return No return value. This function only generates a report.
+#' 
 #' @examples
 #' \donttest{
 #' if (FALSE) {

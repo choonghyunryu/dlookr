@@ -34,6 +34,9 @@ However, it only support las parameter. las is numeric in 0, 1; the style of axi
   \item 1 : always horizontal to the axis,
 }}
 }
+\value{
+NULL. This function just draws a plot.
+}
 \description{
 Visualize mosaics plot by attribute of compare_category class.
 }

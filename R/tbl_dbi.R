@@ -1630,6 +1630,8 @@ target_by.tbl_dbi <- function(.data, target, in_database = FALSE, collect_size =
 #' @param font_family character. font family name for figure in pdf.
 #' @param ... arguments to be passed to methods.
 #' 
+#' @return No return value. This function only generates a report.
+#' 
 #' @seealso \code{\link{diagnose_report.data.frame}}.
 #' @examples
 #' \donttest{
@@ -1758,6 +1760,8 @@ diagnose_report.tbl_dbi <- function(.data, output_format = c("pdf", "html"),
 #' @param output_dir name of directory to generate report file. default is tempdir().
 #' @param font_family character. font family name for figure in pdf.
 #' @param ... arguments to be passed to methods.
+#' 
+#' @return No return value. This function only generates a report.
 #' 
 #' @seealso \code{\link{eda_report.data.frame}}.
 #' @examples

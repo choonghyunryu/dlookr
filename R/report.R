@@ -100,6 +100,8 @@ eda_paged_report <- function(.data, ...) {
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... arguments to be passed to methods.
 #'
+#' @return No return value. This function only generates a report.
+#' 
 #' @examples
 #' \donttest{
 #' if (FALSE) {
@@ -350,6 +352,8 @@ diagnose_web_report.data.frame <- function(.data, output_file = NULL, output_dir
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... arguments to be passed to pagedown::chrome_print().
+#' 
+#' @return No return value. This function only generates a report.
 #' 
 #' @seealso \code{\link{diagnose_paged_report.tbl_dbi}}.
 #' @examples
@@ -652,6 +656,8 @@ diagnose_paged_report.data.frame <- function(.data, output_format = c("pdf", "ht
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... arguments to be passed to methods.
 #'
+#' @return No return value. This function only generates a report.
+#' 
 #' @seealso \code{\link{eda_web_report.tbl_dbi}}.
 #' @examples
 #' \donttest{
@@ -907,6 +913,8 @@ eda_web_report.data.frame <- function(.data, target = NULL, output_file = NULL,
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details) 
 #' @param ... arguments to be passed to pagedown::chrome_print().
+#' 
+#' @return No return value. This function only generates a report.
 #' 
 #' @seealso \code{\link{eda_paged_report.tbl_dbi}}.
 #' @examples
@@ -1170,6 +1178,8 @@ eda_paged_report.data.frame <- function(.data, target = NULL, output_format = c(
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... arguments to be passed to methods.
 #'
+#' @return No return value. This function only generates a report.
+#' 
 #' @examples
 #' \donttest{
 #' if (FALSE) {
@@ -1388,6 +1398,8 @@ transformation_web_report <- function(.data, target = NULL, output_file = NULL,
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... arguments to be passed to pagedown::chrome_print().
+#' 
+#' @return No return value. This function only generates a report.
 #' 
 #' @examples
 #' \donttest{

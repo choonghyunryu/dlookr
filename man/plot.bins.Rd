@@ -17,6 +17,9 @@ for the visualization. If not specified, the font defined in dlookr is applied. 
 
 \item{...}{arguments to be passed to methods, such as graphical parameters (see par).}
 }
+\value{
+An object of gtable class.
+}
 \description{
 Visualize two plots on a single screen.
 The plot at the top is a histogram representing the frequency of the level.

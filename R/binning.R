@@ -301,6 +301,7 @@ print.bins <- function(x, ...) {
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
+#' @return An object of gtable class.
 #' @seealso \code{\link{binning}}, \code{\link{print.bins}}, \code{\link{summary.bins}}.
 #' @examples
 #' # Generate data for the example
@@ -682,6 +683,7 @@ summary.optimal_bins <- function(object, ...) {
 #' This is useful when the x-axis labels are long and overlap. 
 #' The default is 0 to not rotate the label.
 #' @param ... further arguments to be passed from or to other methods.
+#' @return An object of gtable class.
 #' @seealso \code{\link{binning_by}}, \code{\link{summary.optimal_bins}}
 #' @examples
 #' \donttest{
@@ -1303,6 +1305,7 @@ summary.performance_bin <- function(object, ...) {
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... further arguments to be passed from or to other methods.
+#' @return A ggplot2 object.
 #' @seealso \code{\link{performance_bin}}, \code{\link{summary.performance_bin}}, \code{\link{binning_by}}, 
 #' \code{\link{plot.optimal_bins}}.
 #' @examples
@@ -1553,6 +1556,7 @@ binning_rgr <- function(.data, y, x, min_perc_bins = 0.1, max_n_bins = 5, ordere
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... further arguments to be passed from or to other methods.
+#' @return An object of gtable class.
 #' @seealso \code{\link{binning_rgr}}, \code{\link{summary.bins}}
 #' @examples
 #' \donttest{

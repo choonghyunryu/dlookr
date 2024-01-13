@@ -21,6 +21,9 @@ for the visualization. If not specified, the font defined in dlookr is applied. 
 \item{...}{arguments to be passed to methods, such as graphical parameters (see par).
 However, it does not support.}
 }
+\value{
+NULL. This function just draws a plot.
+}
 \description{
 Visualize scatter plot included box plots by attribute of compare_numeric class.
 }

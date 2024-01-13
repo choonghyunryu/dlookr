@@ -4,6 +4,8 @@
 #' Import google font to be used when drawing charts.
 #' 
 #' @param family character. font family name
+#' 
+#' @return No return value. This function just loads Google Fonts.
 #'
 #' @details
 #' When attaching the dlookr package, use "Roboto Condensed" and 
