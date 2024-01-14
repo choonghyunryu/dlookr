@@ -12,7 +12,6 @@
 #' @seealso \code{\link{find_class}}.
 #' @export
 #' @examples
-#' \dontrun{
 #' # data.frame
 #' get_class(iris)
 #'
@@ -23,7 +22,6 @@
 #' ggplot2::diamonds %>%
 #'   get_class() %>% 
 #'   filter(class %in% c("integer", "numeric"))
-#' }
 #' @export
 get_class <- function(df) {
   vars <- sapply(names(df), function(.x.) class(pull(df, .x.))[1])
@@ -57,7 +55,6 @@ get_class <- function(df) {
 #' @seealso \code{\link{get_class}}.
 #' @export
 #' @examples
-#' \dontrun{
 #' # data.frame
 #' find_class(iris, "numerical")
 #' find_class(iris, "numerical", index = FALSE)
@@ -75,7 +72,6 @@ get_class <- function(df) {
 #'                     stringsAsFactors = FALSE)
 #' find_class(iris2, "categorical", index = FALSE)
 #' find_class(iris2, "categorical2", index = FALSE)
-#' }
 #' @importFrom methods is
 #' @export
 find_class <- function(df, type = c("numerical", "categorical", "categorical2",
@@ -123,7 +119,6 @@ find_class <- function(df, type = c("numerical", "categorical", "categorical2",
 #' @return Information on variables including missing values.
 #' @seealso \code{\link{imputate_na}}, \code{\link{find_outliers}}.
 #' @examples
-#' \dontrun{
 #' find_na(jobchange)
 #'
 #' find_na(jobchange, index = FALSE)
@@ -137,7 +132,6 @@ find_class <- function(df, type = c("numerical", "categorical", "categorical2",
 #' jobchange %>%
 #'   select(find_na(.)) %>%
 #'   diagnose()
-#' }
 #' @importFrom purrr map_lgl map_dbl
 #' @export
 #'
@@ -175,7 +169,6 @@ find_na <- function(.data, index = TRUE, rate = FALSE) {
 #' @return Information on variables including outliers.
 #' @seealso \code{\link{find_na}}, \code{\link{imputate_outlier}}.
 #' @examples
-#' \dontrun{
 #' find_outliers(heartfailure)
 #'
 #' find_outliers(heartfailure, index = FALSE)
@@ -189,7 +182,6 @@ find_na <- function(.data, index = TRUE, rate = FALSE) {
 #' heartfailure %>%
 #'   select(find_outliers(.)) %>%
 #'   diagnose()
-#' }
 #' @importFrom purrr map_lgl map_dbl
 #' @importFrom methods is
 #' @export
@@ -236,7 +228,6 @@ find_outliers <- function(.data, index = TRUE, rate = FALSE) {
 #' @return Information on variables including skewness.
 #' @seealso \code{\link{find_na}}, \code{\link{find_outliers}}.
 #' @examples
-#' \dontrun{
 #' find_skewness(heartfailure)
 #'
 #' find_skewness(heartfailure, index = FALSE)
@@ -254,7 +245,6 @@ find_outliers <- function(.data, index = TRUE, rate = FALSE) {
 #' heartfailure %>%
 #'   select(find_skewness(.)) %>%
 #'   diagnose()
-#' }
 #' @importFrom purrr map_lgl map_dbl
 #' @importFrom methods is
 #' @export
@@ -404,16 +394,14 @@ entropy <- function(x) {
 #' \item is_outlier : logical. Whether value is an outlier.
 #' }
 #' @examples
-#' \dontrun{
 #' carat <- ggplot2::diamonds$carat
 #' 
 #' quantile(carat)
 #' 
 #' get_percentile(carat, value = 0.5)
-#' get_percentile(carat, value = median(diamonds$carat))
+#' get_percentile(carat, value = median(carat))
 #' get_percentile(carat, value = 1)
 #' get_percentile(carat, value = 7)
-#' }
 #' @importFrom stats quantile
 #' @export
 get_percentile <- function(x, value, from = 0, to = 1, eps = 1e-06) {

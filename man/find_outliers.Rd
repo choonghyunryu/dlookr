@@ -24,7 +24,6 @@ Find the numerical variable that contains outliers in the object
 that inherits the data.frame or data.frame.
 }
 \examples{
-\dontrun{
 find_outliers(heartfailure)
 
 find_outliers(heartfailure, index = FALSE)
@@ -38,7 +37,6 @@ library(dplyr)
 heartfailure \%>\%
   select(find_outliers(.)) \%>\%
   diagnose()
-}
 }
 \seealso{
 \code{\link{find_na}}, \code{\link{imputate_outlier}}.

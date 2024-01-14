@@ -30,14 +30,12 @@ Components of list. is as follows.
 Find the percentile of the value specified in numeric vector.
 }
 \examples{
-\dontrun{
 carat <- ggplot2::diamonds$carat
 
 quantile(carat)
 
 get_percentile(carat, value = 0.5)
-get_percentile(carat, value = median(diamonds$carat))
+get_percentile(carat, value = median(carat))
 get_percentile(carat, value = 1)
 get_percentile(carat, value = 7)
-}
 }

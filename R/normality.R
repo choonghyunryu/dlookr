@@ -608,7 +608,6 @@ plot_normality_group_impl <- function(df, vars, left, right, col = "steelblue",
 #' @seealso \code{\link{plot_normality}}.
 #' @export
 #' @examples
-#' \dontrun{
 #' # log+a transform 
 #' get_transform(iris$Sepal.Length, "log+a")
 #'
@@ -620,7 +619,6 @@ plot_normality_group_impl <- function(df, vars, left, right, col = "steelblue",
 #'   get_transform(iris$Sepal.Length, "Yeo-Johnson")
 #' } else {
 #'   cat("If you want to use this feature, you need to install the forecast package.\n")
-#' }
 #' }
 #' 
 get_transform <- function(x, method = c("log", "sqrt", "log+1", "log+a", "1/x", 

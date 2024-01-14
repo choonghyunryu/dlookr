@@ -36,7 +36,6 @@ The supported transformation method is follow.:
 }
 }
 \examples{
-\dontrun{
 # log+a transform 
 get_transform(iris$Sepal.Length, "log+a")
 
@@ -48,7 +47,6 @@ if (requireNamespace("forecast", quietly = TRUE)) {
   get_transform(iris$Sepal.Length, "Yeo-Johnson")
 } else {
   cat("If you want to use this feature, you need to install the forecast package.\n")
-}
 }
 
 }

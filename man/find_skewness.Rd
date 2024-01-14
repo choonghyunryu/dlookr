@@ -28,7 +28,6 @@ Find the numerical variable that skewed variable
 that inherits the data.frame or data.frame.
 }
 \examples{
-\dontrun{
 find_skewness(heartfailure)
 
 find_skewness(heartfailure, index = FALSE)
@@ -46,7 +45,6 @@ library(dplyr)
 heartfailure \%>\%
   select(find_skewness(.)) \%>\%
   diagnose()
-}
 }
 \seealso{
 \code{\link{find_na}}, \code{\link{find_outliers}}.

@@ -19,19 +19,6 @@ print.relate() tries to be smart about formatting four kinds of relate.
 summary.relate() tries to be smart about formatting four kinds of relate.
 }
 \examples{
-\dontrun{
-# If the target variable is a categorical variable
-categ <- target_by(heartfailure, death_event)
-
-# If the variable of interest is a categorical variable
-cat_cat <- relate(categ, hblood_pressure)
-
-# Print bins class object
-cat_cat
-
-summary(cat_cat)
-}
-
 \donttest{
 # If the target variable is a categorical variable
 categ <- target_by(heartfailure, death_event)

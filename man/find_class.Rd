@@ -38,7 +38,6 @@ The find_class() extracts variable information having a
 certain class from an object inheriting data.frame.
 }
 \examples{
-\dontrun{
 # data.frame
 find_class(iris, "numerical")
 find_class(iris, "numerical", index = FALSE)
@@ -56,7 +55,6 @@ iris2 <- data.frame(iris, char = "chars",
                     stringsAsFactors = FALSE)
 find_class(iris2, "categorical", index = FALSE)
 find_class(iris2, "categorical2", index = FALSE)
-}
 }
 \seealso{
 \code{\link{get_class}}.
