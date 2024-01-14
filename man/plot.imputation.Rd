@@ -20,7 +20,7 @@ for the visualization. If not specified, the font defined in dlookr is applied. 
 only applies when the model argument is TRUE, and is used for ... of the plot.lm() function.}
 }
 \value{
-A ggplot object.
+A ggplot2 object.
 }
 \description{
 Visualize two kinds of plot by attribute of `imputation` class.

@@ -17,6 +17,9 @@ for the visualization. If not specified, the font defined in dlookr is applied. 
 
 \item{...}{arguments to be passed to methods, such as graphical parameters (see par).}
 }
+\value{
+A ggplot2 object.
+}
 \description{
 Visualize by attribute of `pps` class.
 The plot of a PPS(Predictive Power Score) is a bar plot or tile plot by PPS.

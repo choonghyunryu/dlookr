@@ -350,7 +350,8 @@ plot.transform <- function(x, typographic = TRUE, base_family = NULL, ...) {
 #' @param output_dir name of directory to generate report file. default is tempdir().
 #' @param font_family character. font family name for figure in pdf.
 #' @param browse logical. choose whether to output the report results to the browser.
-#'
+#' @return No return value. This function only generates a report.
+#' 
 #' @examples
 #' \donttest{
 #' #if (FALSE) {
