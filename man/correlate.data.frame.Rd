@@ -96,11 +96,6 @@ When method = "cramer", data.frame with the following variables is returned.
 tab_corr <- correlate(heartfailure)
 tab_corr
 
-mat_corr <- summary(tab_corr)
-mat_corr
-
-plot(tab_corr)
-
 # Select the variable to compute
 correlate(heartfailure, "creatinine", "sodium")
 
@@ -110,9 +105,6 @@ correlate(heartfailure, creatinine, method = "kendall")
 # theil's U correlation coefficient (Uncertainty Coefficient)
 tab_corr <- correlate(heartfailure, anaemia, hblood_pressure, method = "theil")
 tab_corr
-
-summary(tab_corr)   
-plot(tab_corr)
    
 # Using dplyr::grouped_dt
 library(dplyr)

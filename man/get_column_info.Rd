@@ -45,22 +45,24 @@ The get_column_info() retrieves the column information of the DBMS table through
 }
 
 \examples{
-\donttest{
 library(dplyr)
-## connect DBMS
-#if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
-#if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
-#con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-#
-## copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
-#copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
-#
-#con_sqlite \%>\% 
-#  tbl("TB_HEARTFAILURE") \%>\% 
-#  get_column_info
-#  
-## Disconnect DBMS   
-#DBI::dbDisconnect(con_sqlite)
+
+if (requireNamespace("DBI", quietly = TRUE) & requireNamespace("RSQLite", quietly = TRUE)) {
+  # connect DBMS
+  con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+
+  # copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+  copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
+
+  con_sqlite \%>\% 
+    tbl("TB_HEARTFAILURE") \%>\% 
+    get_column_info() \%>\%
+    print() 
+  
+  # Disconnect DBMS   
+  DBI::dbDisconnect(con_sqlite)
+} else {
+  cat("If you want to use this feature, you need to install the 'DBI' and 'RSQLite' package.\n")
 }
 
 }
