@@ -426,41 +426,20 @@ plot.bins <- function(x, typographic = TRUE, base_family = NULL, ...) {
 #' \item iv : numeric. information value.
 #' \item target : integer. binary response variable.
 #' }
-#' @seealso \code{\link{binning}}, \code{\link{plot.optimal_bins}}.
+#' @seealso \code{\link{binning}}, \code{\link{summary.optimal_bins}}, \code{\link{plot.optimal_bins}}.
 #' @examples
-#' \donttest{
 #' library(dplyr)
 #' 
 #' # Generate data for the example
-#' # heartfailure2 <- heartfailure
-#' # heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] <- NA
+#' heartfailure2 <- heartfailure
+#' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] <- NA
 #'
 #' # optimal binning using character
-#' # bin <- binning_by(heartfailure2, "death_event", "creatinine")
+#' bin <- binning_by(heartfailure2, "death_event", "creatinine")
 #' 
 #' # optimal binning using name
-#' # bin <- binning_by(heartfailure2, death_event, creatinine)
-#' # bin
-#' 
-#' # performance table
-#' # attr(bin, "performance")
-#' 
-#' # summary optimal_bins class
-#' # summary(bin)
-#' 
-#' # visualize all information for optimal_bins class
-#' # plot(bin)
-#' 
-#' # visualize WoE information for optimal_bins class
-#' # plot(bin, type = "WoE")
-#' 
-#' # visualize all information without typographic
-#' # plot(bin, typographic = FALSE)
-#' 
-#' # extract binned results
-#' # extract(bin) %>% 
-#' #   head(20)
-#' }
+#' bin <- binning_by(heartfailure2, death_event, creatinine)
+#' bin
 #' 
 #' @export
 #' @importFrom tibble is_tibble
@@ -614,36 +593,25 @@ binning_by <- function(.data, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
 #' @return NULL.
 #' @seealso \code{\link{binning_by}}, \code{\link{plot.optimal_bins}}
 #' @examples
-#' \donttest{
 #' library(dplyr)
 #' 
 #' # Generate data for the example
-#' # heartfailure2 <- heartfailure
-#' # heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] <- NA
+#' heartfailure2 <- heartfailure
+#' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] <- NA
 #'
 #' # optimal binning
-#' # bin <- binning_by(heartfailure2, "death_event", "creatinine")
-#' # bin
+#' bin <- binning_by(heartfailure2, "death_event", "creatinine")
+#' bin
 #'
 #' # summary optimal_bins class
-#' # summary(bin)
+#' summary(bin)
 #'
 #' # performance table
-#' # attr(bin, "performance")
-#'
-#' # visualize all information for optimal_bins class
-#' # plot(bin)
-#' 
-#' # visualize WoE information for optimal_bins class
-#' # plot(bin, type = "WoE")
-#' 
-#' # visualize all information without typographic
-#' # plot(bin, typographic = FALSE)
+#' attr(bin, "performance")
 #' 
 #' # extract binned results
-#' # extract(bin) %>% 
-#' #   head(20)
-#' }
+#' extract(bin) %>% 
+#'   head(20)
 #' 
 #' @method summary optimal_bins
 #' @export
@@ -678,30 +646,24 @@ summary.optimal_bins <- function(object, ...) {
 #' @return An object of gtable class.
 #' @seealso \code{\link{binning_by}}, \code{\link{summary.optimal_bins}}
 #' @examples
-#' \donttest{
 #' # Generate data for the example
-#' # heartfailure2 <- heartfailure
-#' # heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] <- NA
+#' heartfailure2 <- heartfailure
+#' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] <- NA
 #'
 #' # optimal binning using binning_by()
-#' # bin <- binning_by(heartfailure2, "death_event", "creatinine")
-#' # bin
-#' 
-#' # summary optimal_bins class.
-#' # summary(bin)
+#' bin <- binning_by(heartfailure2, "death_event", "creatinine")
 #'
 #' # visualize all information for optimal_bins class
-#' # plot(bin)
+#' plot(bin)
 #' 
 #' # rotate the x-axis labels by 45 degrees so that they do not overlap.
-#' # plot(bin, rotate_angle = 45)
+#' plot(bin, rotate_angle = 45)
 #' 
 #' # visualize WoE information for optimal_bins class
-#' # plot(bin, type = "WoE")
+#' plot(bin, type = "WoE")
 #' 
 #' # visualize all information with typographic
-#' # plot(bin)
-#' }
+#' plot(bin)
 #' 
 #' @import ggplot2
 #' @import hrbrthemes

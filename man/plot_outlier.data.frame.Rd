@@ -67,42 +67,15 @@ See vignette("diagonosis") for an introduction to these concepts.
 # Visualization of all numerical variables
 plot_outlier(heartfailure)
 
-# Select the variable to diagnose
-plot_outlier(heartfailure, cpk_enzyme, sodium)
-# plot_outlier(heartfailure, -cpk_enzyme, -sodium)
-# plot_outlier(heartfailure, "cpk_enzyme", "sodium")
-# plot_outlier(heartfailure, 7)
-
-# Using the col argument
-# plot_outlier(heartfailure, cpk_enzyme, col = "gray")
+# Select the variable to diagnose using the col argument
+plot_outlier(heartfailure, cpk_enzyme, sodium, col = "gray")
 
 # Not allow typographic argument
-# plot_outlier(heartfailure, cpk_enzyme, typographic = FALSE)
-
-# Using pipes ---------------------------------
-library(dplyr)
-
-# Visualization of all numerical variables
-heartfailure \%>\%
-  plot_outlier()
-
-# Positive values select variables
-heartfailure \%>\%
-  plot_outlier(cpk_enzyme, sodium)
-  
-# Negative values to drop variables
-# heartfailure \%>\%
-#   plot_outlier(-cpk_enzyme, -sodium)
-
-# Positions values select variables
-# heartfailure \%>\%
-#   plot_outlier(7)
-
-# Negative values to drop variables
-# heartfailure \%>\%
-#   plot_outlier(-1, -5)
+plot_outlier(heartfailure, cpk_enzyme, typographic = FALSE)
 
 # Using pipes & dplyr -------------------------
+library(dplyr)
+
 # Visualization of numerical variables with a ratio of
 # outliers greater than 5\%
 heartfailure \%>\%

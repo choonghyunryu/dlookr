@@ -40,36 +40,25 @@ summary.performance_bin() includes general metrics and result of significance te
 }
 }
 \examples{
-\donttest{
 library(dplyr)
 
 # Generate data for the example
-# heartfailure2 <- heartfailure
-# heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] <- NA
+heartfailure2 <- heartfailure
+heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] <- NA
 
 # optimal binning
-# bin <- binning_by(heartfailure2, "death_event", "creatinine")
-# bin
+bin <- binning_by(heartfailure2, "death_event", "creatinine")
+bin
 
 # summary optimal_bins class
-# summary(bin)
+summary(bin)
 
 # performance table
-# attr(bin, "performance")
-
-# visualize all information for optimal_bins class
-# plot(bin)
-
-# visualize WoE information for optimal_bins class
-# plot(bin, type = "WoE")
-
-# visualize all information without typographic
-# plot(bin, typographic = FALSE)
+attr(bin, "performance")
 
 # extract binned results
-# extract(bin) \%>\% 
-#   head(20)
-}
+extract(bin) \%>\% 
+  head(20)
 
 }
 \seealso{
