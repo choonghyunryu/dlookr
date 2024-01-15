@@ -56,6 +56,9 @@ table data is taken in R and operated in-memory. Not yet supported in_database =
 \item{collect_size}{a integer. The number of data samples from the DBMS to R. 
 Applies only if in_database = FALSE.}
 }
+\value{
+An object of correlate class.
+}
 \description{
 The correlate() compute the correlation coefficient for numerical or categorical data.
 }
@@ -66,9 +69,9 @@ rather than the whole observation, you can use \code{\link{grouped_df}} as the g
 This function is computed stats::cor() function by use = "pairwise.complete.obs" option for numerical variable.
 And support categorical variable with theil's U correlation coefficient and Cramer's V correlation coefficient.
 }
-\section{Correlation coefficient information}{
+\section{correlate class}{
 
-It returns data.frame with the following variables.:
+The correlate class inherits the tibble class and has the following variables.:
 
 \itemize{
 \item var1 : names of numerical variable
@@ -93,11 +96,6 @@ When method = "cramer", data.frame with the following variables is returned.
 tab_corr <- correlate(heartfailure)
 tab_corr
 
-mat_corr <- summary(tab_corr)
-mat_corr
-
-plot(tab_corr)
-
 # Select the variable to compute
 correlate(heartfailure, "creatinine", "sodium")
 
@@ -107,9 +105,6 @@ correlate(heartfailure, creatinine, method = "kendall")
 # theil's U correlation coefficient (Uncertainty Coefficient)
 tab_corr <- correlate(heartfailure, anaemia, hblood_pressure, method = "theil")
 tab_corr
-
-summary(tab_corr)   
-plot(tab_corr)
    
 # Using dplyr::grouped_dt
 library(dplyr)

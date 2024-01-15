@@ -65,12 +65,6 @@ bin <- binning(heartfailure2$platelets)
 # Print bins class object
 bin
 
-# Summarise bins class object
-summary(bin)
-
-# Plot bins class object
-plot(bin)
-
 # Using labels argument
 bin <- binning(heartfailure2$platelets, nbins = 4,
               labels = c("LQ1", "UQ1", "LQ3", "UQ3"))
@@ -83,10 +77,14 @@ bin <- binning(heartfailure2$platelets, nbins = 5, type = "pretty")
 bin
 # "kmeans" and "bclust" was implemented by classInt::classIntervals() function.
 # So, you must install classInt package.
-# bin <- binning(heartfailure2$platelets, nbins = 5, type = "kmeans")
-# bin
-# bin <- binning(heartfailure2$platelets, nbins = 5, type = "bclust")
-# bin
+if (requireNamespace("classInt", quietly = TRUE)) {
+  bin <- binning(heartfailure2$platelets, nbins = 5, type = "kmeans")
+  bin
+  bin <- binning(heartfailure2$platelets, nbins = 5, type = "bclust")
+  bin
+} else {
+  cat("If you want to use this feature, you need to install the 'classInt' package.\n")
+}
 
 x <- sample(1:1000, size = 50) * 12345679
 bin <- binning(x)
@@ -107,17 +105,9 @@ heartfailure2 \%>\%
   mutate(platelets_bin = binning(heartfailure2$platelets) \%>\% 
            extract()) \%>\%
   group_by(death_event, platelets_bin) \%>\%
-  summarise(freq = n()) \%>\%
+  summarise(freq = n(), .groups = "drop") \%>\%
   arrange(desc(freq)) \%>\%
   head(10)
- 
- # Compare binned frequency by death_event using Viz
- heartfailure2 \%>\%
-   mutate(platelets_bin = binning(heartfailure2$platelets) \%>\% 
-            extract()) \%>\%
-   target_by(death_event) \%>\% 
-   relate(platelets_bin) \%>\% 
-   plot()
 }
  
 }

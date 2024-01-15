@@ -44,12 +44,6 @@
 #' # Print bins class object
 #' bin
 #' 
-#' # Summarise bins class object
-#' summary(bin)
-#' 
-#' # Plot bins class object
-#' plot(bin)
-#' 
 #' # Using labels argument
 #' bin <- binning(heartfailure2$platelets, nbins = 4,
 #'               labels = c("LQ1", "UQ1", "LQ3", "UQ3"))
@@ -62,10 +56,14 @@
 #' bin
 #' # "kmeans" and "bclust" was implemented by classInt::classIntervals() function.
 #' # So, you must install classInt package.
-#' # bin <- binning(heartfailure2$platelets, nbins = 5, type = "kmeans")
-#' # bin
-#' # bin <- binning(heartfailure2$platelets, nbins = 5, type = "bclust")
-#' # bin
+#' if (requireNamespace("classInt", quietly = TRUE)) {
+#'   bin <- binning(heartfailure2$platelets, nbins = 5, type = "kmeans")
+#'   bin
+#'   bin <- binning(heartfailure2$platelets, nbins = 5, type = "bclust")
+#'   bin
+#' } else {
+#'   cat("If you want to use this feature, you need to install the 'classInt' package.\n")
+#' }
 #' 
 #' x <- sample(1:1000, size = 50) * 12345679
 #' bin <- binning(x)
@@ -86,17 +84,9 @@
 #'   mutate(platelets_bin = binning(heartfailure2$platelets) %>% 
 #'            extract()) %>%
 #'   group_by(death_event, platelets_bin) %>%
-#'   summarise(freq = n()) %>%
+#'   summarise(freq = n(), .groups = "drop") %>%
 #'   arrange(desc(freq)) %>%
 #'   head(10)
-#'  
-#'  # Compare binned frequency by death_event using Viz
-#'  heartfailure2 %>%
-#'    mutate(platelets_bin = binning(heartfailure2$platelets) %>% 
-#'             extract()) %>%
-#'    target_by(death_event) %>% 
-#'    relate(platelets_bin) %>% 
-#'    plot()
 #' }
 #'  
 #' @importFrom grDevices nclass.Sturges
@@ -301,6 +291,7 @@ print.bins <- function(x, ...) {
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
+#' @return An object of gtable class.
 #' @seealso \code{\link{binning}}, \code{\link{print.bins}}, \code{\link{summary.bins}}.
 #' @examples
 #' # Generate data for the example
@@ -321,11 +312,13 @@ print.bins <- function(x, ...) {
 #' 
 #' # "kmeans" and "bclust" was implemented by classInt::classIntervals() function.
 #' # So, you must install classInt package.
-#' # bin <- binning(heartfailure2$platelets, nbins = 5, type = "kmeans")
-#' # plot(bin)
+#' if (requireNamespace("classInt", quietly = TRUE)) {
+#'   bin <- binning(heartfailure2$platelets, nbins = 5, type = "kmeans")
+#'   plot(bin)
 #' 
-#' # bin <- binning(heartfailure2$platelets, nbins = 5, type = "bclust")
-#' # plot(bin)
+#'   bin <- binning(heartfailure2$platelets, nbins = 5, type = "bclust")
+#'   plot(bin)
+#' }    
 #' }
 #' 
 #' @export
@@ -682,6 +675,7 @@ summary.optimal_bins <- function(object, ...) {
 #' This is useful when the x-axis labels are long and overlap. 
 #' The default is 0 to not rotate the label.
 #' @param ... further arguments to be passed from or to other methods.
+#' @return An object of gtable class.
 #' @seealso \code{\link{binning_by}}, \code{\link{summary.optimal_bins}}
 #' @examples
 #' \donttest{
@@ -1303,6 +1297,7 @@ summary.performance_bin <- function(object, ...) {
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... further arguments to be passed from or to other methods.
+#' @return A ggplot2 object.
 #' @seealso \code{\link{performance_bin}}, \code{\link{summary.performance_bin}}, \code{\link{binning_by}}, 
 #' \code{\link{plot.optimal_bins}}.
 #' @examples
@@ -1553,6 +1548,7 @@ binning_rgr <- function(.data, y, x, min_perc_bins = 0.1, max_n_bins = 5, ordere
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... further arguments to be passed from or to other methods.
+#' @return An object of gtable class.
 #' @seealso \code{\link{binning_rgr}}, \code{\link{summary.bins}}
 #' @examples
 #' \donttest{

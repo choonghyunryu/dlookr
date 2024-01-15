@@ -102,6 +102,9 @@ Applies only if in_database = FALSE.}
 
 \item{...}{arguments to be passed to pagedown::chrome_print().}
 }
+\value{
+No return value. This function only generates a report.
+}
 \description{
 The diagnose_paged_report() paged report the information 
 for diagnosing the quality of the DBMS table through tbl_dbi.

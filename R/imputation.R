@@ -643,6 +643,7 @@ summary.imputation <- function(object, ...) {
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
 #' only applies when the model argument is TRUE, and is used for ... of the plot.lm() function.
+#' @return A ggplot2 object.
 #' @seealso \code{\link{imputate_na}}, \code{\link{imputate_outlier}}, \code{\link{summary.imputation}}.
 #' @examples
 #' \donttest{

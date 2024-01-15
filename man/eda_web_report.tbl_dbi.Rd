@@ -66,6 +66,9 @@ Applies only if in_database = FALSE.}
 
 \item{...}{arguments to be passed to methods.}
 }
+\value{
+No return value. This function only generates a report.
+}
 \description{
 The eda_web_report() report the information of exploratory 
 data analysis for the DBMS table through tbl_dbi

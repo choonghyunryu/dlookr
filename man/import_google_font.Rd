@@ -9,6 +9,9 @@ import_google_font(family)
 \arguments{
 \item{family}{character. font family name}
 }
+\value{
+No return value. This function just loads Google Fonts.
+}
 \description{
 Import google font to be used when drawing charts.
 }

@@ -37,6 +37,9 @@ The default is TRUE. if TRUE provides a base theme that focuses on typographic e
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
 }
+\value{
+an object of gtable class.
+}
 \description{
 Visualize the combinations of missing value across cases.
 }

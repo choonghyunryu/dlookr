@@ -19,6 +19,9 @@ for the visualization. If not specified, the font defined in dlookr is applied. 
 
 \item{...}{further arguments to be passed from or to other methods.}
 }
+\value{
+An object of gtable class.
+}
 \description{
 It generates plots for understand distribution and  distribution by target variable using infogain_bins.
 }

@@ -73,6 +73,8 @@
 #' @param as_factor logical. whether to convert to factor when importing a character type variable from DBMS table into R.
 #' @param ... arguments to be passed to methods.
 #' 
+#' @return No return value. This function only generates a report.
+#' 
 #' @seealso \code{\link{diagnose_web_report.data.frame}}.
 #' @examples
 #' \donttest{
@@ -238,6 +240,8 @@ diagnose_web_report.tbl_dbi <- function(.data, output_file = NULL, output_dir = 
 #' @param as_factor logical. whether to convert to factor when importing a character type variable from DBMS table into R.
 #' @param ... arguments to be passed to pagedown::chrome_print().
 #' 
+#' @return No return value. This function only generates a report.
+#' 
 #' @seealso \code{\link{diagnose_paged_report.data.frame}}.
 #' @examples
 #' \donttest{
@@ -395,6 +399,8 @@ diagnose_paged_report.tbl_dbi <- function(.data, output_format = c("pdf", "html"
 #' @param as_factor logical. whether to convert to factor when importing a character type variable from DBMS table into R.
 #' @param ... arguments to be passed to methods.
 #' 
+#' @return No return value. This function only generates a report.
+#' 
 #' @seealso \code{\link{eda_web_report.data.frame}}.
 #' @examples
 #' \donttest{
@@ -545,6 +551,8 @@ eda_web_report.tbl_dbi <- function(.data, target = NULL, output_file = NULL,
 #' This is useful for data with a large number of observations.
 #' @param as_factor logical. whether to convert to factor when importing a character type variable from DBMS table into R.
 #' @param ... arguments to be passed to pagedown::chrome_print().
+#' 
+#' @return No return value. This function only generates a report.
 #' 
 #' @seealso \code{\link{eda_paged_report.data.frame}}.
 #' @examples

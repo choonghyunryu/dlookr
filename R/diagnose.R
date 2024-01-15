@@ -244,10 +244,7 @@ diagnose_category <- function(.data, ...) {
 #' diagnose_category(jobchange)
 #' 
 #' # Select the variable to diagnose
-#' # diagnose_category(jobchange, education_level, company_type)
-#' # diagnose_category(jobchange, -education_level, -company_type)
-#' # diagnose_category(jobchange, "education_level", "company_type")
-#' # diagnose_category(jobchange, 7)
+#' diagnose_category(jobchange, education_level, company_type)
 #' 
 #' # Using pipes ---------------------------------
 #' library(dplyr)
@@ -263,14 +260,6 @@ diagnose_category <- function(.data, ...) {
 #' # Negative values to drop variables
 #' jobchange %>%
 #'   diagnose_category(-company_type, -job_chnge)
-#'   
-#' # Positions values select variables
-#' jobchange %>%
-#'   diagnose_category(7)
-#'   
-#' # Negative values to drop variables
-#' jobchange %>%
-#'   diagnose_category(-7)
 #'   
 #' # Top rank levels with top argument
 #' jobchange %>%
@@ -1392,6 +1381,8 @@ diagnose_report <- function(.data, output_format, output_file, output_dir, ...) 
 #' @param browse logical. choose whether to output the report results to the browser.
 #' @param ... arguments to be passed to methods.
 #'
+#' @return No return value. This function only generates a report.
+#' 
 #' @examples
 #' \donttest{
 #' if (FALSE) {

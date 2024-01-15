@@ -24,7 +24,6 @@ Find the variable that contains the missing value in the object
 that inherits the data.frame or data.frame.
 }
 \examples{
-\dontrun{
 find_na(jobchange)
 
 find_na(jobchange, index = FALSE)
@@ -38,7 +37,6 @@ library(dplyr)
 jobchange \%>\%
   select(find_na(.)) \%>\%
   diagnose()
-}
 }
 \seealso{
 \code{\link{imputate_na}}, \code{\link{find_outliers}}.

@@ -20,6 +20,7 @@
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
+#' @return a ggplot2 object.
 #' @examples
 #' \donttest{
 #' # Generate data for the example
@@ -152,6 +153,7 @@ plot_na_hclust <- function (x, main = NULL, col.left = "#009E73",
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
+#' @return a ggplot2 object.
 #' @examples
 #' \donttest{
 #' # Generate data for the example
@@ -326,6 +328,7 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
+#' @return an object of gtable class.
 #' @examples
 #' \donttest{
 #' # Generate data for the example

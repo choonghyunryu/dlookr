@@ -34,6 +34,9 @@ target variable is not a binary class.}
 
 \item{browse}{logical. choose whether to output the report results to the browser.}
 }
+\value{
+No return value. This function only generates a report.
+}
 \description{
 The transformation_report() report the information of transform
 numerical variables for object inheriting from data.frame.

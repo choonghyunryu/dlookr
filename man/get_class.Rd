@@ -21,7 +21,6 @@ Variables of data.frame is as follows.
 The get_class() gets class of variables in data.frame or tbl_df.
 }
 \examples{
-\dontrun{
 # data.frame
 get_class(iris)
 
@@ -32,7 +31,6 @@ library(dplyr)
 ggplot2::diamonds \%>\%
   get_class() \%>\% 
   filter(class \%in\% c("integer", "numeric"))
-}
 }
 \seealso{
 \code{\link{find_class}}.

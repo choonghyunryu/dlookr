@@ -25,6 +25,9 @@ for the visualization. If not specified, the font defined in dlookr is applied. 
 
 \item{...}{further arguments to be passed from or to other methods.}
 }
+\value{
+A ggplot2 object.
+}
 \description{
 Visualize a plot by attribute of `overview` class.
 Visualize the data type, number of observations, and number of missing values for each variable.

@@ -77,6 +77,9 @@ for the visualization. If not specified, the font defined in dlookr is applied. 
 
 \item{...}{arguments to be passed to pagedown::chrome_print().}
 }
+\value{
+No return value. This function only generates a report.
+}
 \description{
 The eda_paged_report() paged report the information for data transformatiom.
 }

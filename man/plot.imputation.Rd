@@ -19,6 +19,9 @@ for the visualization. If not specified, the font defined in dlookr is applied. 
 \item{...}{arguments to be passed to methods, such as graphical parameters (see par).
 only applies when the model argument is TRUE, and is used for ... of the plot.lm() function.}
 }
+\value{
+A ggplot2 object.
+}
 \description{
 Visualize two kinds of plot by attribute of `imputation` class.
 The imputation of a numerical variable is a density plot,

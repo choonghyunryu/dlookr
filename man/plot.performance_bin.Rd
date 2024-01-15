@@ -17,6 +17,9 @@ for the visualization. If not specified, the font defined in dlookr is applied. 
 
 \item{...}{further arguments to be passed from or to other methods.}
 }
+\value{
+A ggplot2 object.
+}
 \description{
 It generates plots for understand frequency, WoE by bins using performance_bin.
 }

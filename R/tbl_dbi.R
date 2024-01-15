@@ -30,26 +30,27 @@
 #' }
 #'
 #' @param df a tbl_dbi.
-#'
 #' @return An object of data.frame.
 #' @export
 #' @examples
-#' \donttest{
 #' library(dplyr)
-#' ## connect DBMS
-#' #if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
-#' #if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
-#' #con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-#' #
-#' ## copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
-#' #copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
-#' #
-#' #con_sqlite %>% 
-#' #  tbl("TB_HEARTFAILURE") %>% 
-#' #  get_column_info
-#' #  
-#' ## Disconnect DBMS   
-#' #DBI::dbDisconnect(con_sqlite)
+#' 
+#' if (requireNamespace("DBI", quietly = TRUE) & requireNamespace("RSQLite", quietly = TRUE)) {
+#'   # connect DBMS
+#'   con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+#' 
+#'   # copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+#'   copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
+#' 
+#'   con_sqlite %>% 
+#'     tbl("TB_HEARTFAILURE") %>% 
+#'     get_column_info() %>%
+#'     print() 
+#'   
+#'   # Disconnect DBMS   
+#'   DBI::dbDisconnect(con_sqlite)
+#' } else {
+#'   cat("If you want to use this feature, you need to install the 'DBI' and 'RSQLite' package.\n")
 #' }
 #' 
 get_column_info <- function(df) {
@@ -120,56 +121,47 @@ get_column_info <- function(df) {
 #' \donttest{
 #' library(dplyr)
 #'
-#' ## connect DBMS
-#' #if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
-#' #if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
-#' #con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-#' #
-#' ## copy jobchange to the DBMS with a table named TB_JOBCHANGE
-#' #copy_to(con_sqlite, jobchange, name = "TB_JOBCHANGE", overwrite = TRUE)
-#' #
-#' ## Using pipes ---------------------------------
-#' ## Diagnosis of all columns
-#' #con_sqlite %>% 
-#' #  tbl("TB_JOBCHANGE") %>% 
-#' #  diagnose()
-#' #  
-#' ## Positive values select columns
-#' #con_sqlite %>% 
-#' #  tbl("TB_JOBCHANGE") %>% 
-#' #  diagnose(gender, education_level, company_size)
-#' #  
-#' ## Negative values to drop columns
-#' #con_sqlite %>% 
-#' #  tbl("TB_JOBCHANGE") %>% 
-#' #  diagnose(-gender, -education_level, -company_size)
-#' #  
-#' ## Positions values select columns, and In-memory mode
-#' #con_sqlite %>% 
-#' #  tbl("TB_JOBCHANGE") %>% 
-#' #  diagnose(1, 3, 8, in_database = FALSE)
-#' #  
-#' ## Positions values select columns, and In-memory mode and collect size is 200
-#' #con_sqlite %>% 
-#' #  tbl("TB_JOBCHANGE") %>% 
-#' #  diagnose(-8, -9, -10, in_database = FALSE, collect_size = 200)
+#' if (requireNamespace("DBI", quietly = TRUE) & requireNamespace("RSQLite", quietly = TRUE)) {
+#'   # connect DBMS
+#'   con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+#' 
+#'   # copy jobchange to the DBMS with a table named TB_JOBCHANGE
+#'   copy_to(con_sqlite, jobchange, name = "TB_JOBCHANGE", overwrite = TRUE)
+#' 
+#'   # Using pipes ---------------------------------
+#'   # Diagnosis of all columns
+#'   con_sqlite %>% 
+#'     tbl("TB_JOBCHANGE") %>% 
+#'     diagnose() %>% 
+#'     print()
+#'   
+#'   # Positions values select columns, and In-memory mode and collect size is 200
+#'   con_sqlite %>% 
+#'     tbl("TB_JOBCHANGE") %>% 
+#'     diagnose(gender, education_level, company_size, in_database = FALSE, collect_size = 200) %>% 
+#'     print()
 #'
-#' ## Using pipes & dplyr -------------------------
-#' ## Diagnosis of missing variables
-#' #con_sqlite %>% 
-#' #  tbl("TB_JOBCHANGE") %>% 
-#' #  diagnose() %>%
-#' #  filter(missing_count > 0)
-#' #  
-#' ## Using pipes & dplyr -------------------------
-#' ## Diagnosis of missing variables
-#' #con_sqlite %>% 
-#' #  tbl("TB_JOBCHANGE") %>% 
-#' #  group_by(job_chnge) %>% 
-#' #  diagnose()
-#' #  
-#' ## Disconnect DBMS   
-#' #DBI::dbDisconnect(con_sqlite)
+#'   # Using pipes & dplyr -------------------------
+#'   # Diagnosis of missing variables
+#'   con_sqlite %>% 
+#'     tbl("TB_JOBCHANGE") %>% 
+#'     diagnose() %>%
+#'     filter(missing_count > 0) %>% 
+#'     print()
+#'   
+#'   # Using pipes & dplyr -------------------------
+#'   # Diagnosis of missing variables
+#'   con_sqlite %>% 
+#'     tbl("TB_JOBCHANGE") %>% 
+#'     group_by(job_chnge) %>% 
+#'     diagnose() %>% 
+#'     print()
+#'  
+#'   # Disconnect DBMS   
+#'   DBI::dbDisconnect(con_sqlite)
+#' } else {
+#'   cat("If you want to use this feature, you need to install the 'DBI' and 'RSQLite' package.\n")
+#' }
 #' }
 #'    
 diagnose.tbl_dbi <- function(.data, ..., in_database = TRUE, 
@@ -1630,6 +1622,8 @@ target_by.tbl_dbi <- function(.data, target, in_database = FALSE, collect_size =
 #' @param font_family character. font family name for figure in pdf.
 #' @param ... arguments to be passed to methods.
 #' 
+#' @return No return value. This function only generates a report.
+#' 
 #' @seealso \code{\link{diagnose_report.data.frame}}.
 #' @examples
 #' \donttest{
@@ -1758,6 +1752,8 @@ diagnose_report.tbl_dbi <- function(.data, output_format = c("pdf", "html"),
 #' @param output_dir name of directory to generate report file. default is tempdir().
 #' @param font_family character. font family name for figure in pdf.
 #' @param ... arguments to be passed to methods.
+#' 
+#' @return No return value. This function only generates a report.
 #' 
 #' @seealso \code{\link{eda_report.data.frame}}.
 #' @examples

@@ -34,6 +34,9 @@ diagnose_report(.data, output_format, output_file, output_dir, ...)
 
 \item{browse}{logical. choose whether to output the report results to the browser.}
 }
+\value{
+No return value. This function only generates a report.
+}
 \description{
 The diagnose_report() report the information for diagnosing
 the quality of the data.

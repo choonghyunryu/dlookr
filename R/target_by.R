@@ -395,20 +395,6 @@ relate_impl <- function(.data, predictor) {
 #'
 #' @seealso \code{\link{plot.relate}}.
 #' @examples
-#' \dontrun{
-#' # If the target variable is a categorical variable
-#' categ <- target_by(heartfailure, death_event)
-#'
-#' # If the variable of interest is a categorical variable
-#' cat_cat <- relate(categ, hblood_pressure)
-#' 
-#' # Print bins class object
-#' cat_cat
-#' 
-#' summary(cat_cat)
-#' }
-#'
-#' @examples
 #' \donttest{
 #' # If the target variable is a categorical variable
 #' categ <- target_by(heartfailure, death_event)

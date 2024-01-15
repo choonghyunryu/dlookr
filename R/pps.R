@@ -307,6 +307,7 @@ summary.pps <- function(object, ...) {
 #' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
+#' @return A ggplot2 object.
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
 #' @seealso \code{\link{pps}}, \code{\link{summary.pps}}.
 #' @examples

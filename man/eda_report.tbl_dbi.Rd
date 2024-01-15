@@ -40,6 +40,9 @@ Applies only if in_database = FALSE.}
 
 \item{...}{arguments to be passed to methods.}
 }
+\value{
+No return value. This function only generates a report.
+}
 \description{
 The eda_report() report the information of Exploratory
 data analysis for object inheriting from the DBMS table through tbl_dbi
