@@ -54,14 +54,10 @@ The number of observations supported by the stats::shapiro.test function is 3 to
 }
 
 \examples{
-\donttest{
 # Normality test of numerical variables
 normality(heartfailure)
 
 # Select the variable to describe
-normality(heartfailure, platelets, sodium)
-normality(heartfailure, -platelets, -sodium)
-normality(heartfailure, 1)
 normality(heartfailure, platelets, sodium, sample = 200)
 
 # death_eventing dplyr::grouped_dt
@@ -71,18 +67,9 @@ gdata <- group_by(heartfailure, smoking, death_event)
 normality(gdata, "platelets")
 normality(gdata, sample = 250)
 
-# death_eventing pipes ---------------------------------
-# Normality test of all numerical variables
-heartfailure \%>\%
-  normality()
-
-# # Positive values select variables
+# Positive values select variables
 heartfailure \%>\%
   normality(platelets, sodium)
-
-# Positions values select variables
-heartfailure \%>\%
-  normality(1)
 
 # death_eventing pipes & dplyr -------------------------
 # Test all numerical variables by 'smoking' and 'death_event',
@@ -106,7 +93,6 @@ heartfailure \%>\%
   group_by(smoking, death_event) \%>\%
   normality(platelets_income) \%>\%
   filter(p_value > 0.01)
-}
 
 }
 \seealso{
