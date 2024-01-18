@@ -75,7 +75,6 @@ use it after loading the Google font with import_google_font().
 }
 \examples{
 # Generate data for the example
-\donttest{
 heartfailure2 <- heartfailure
 heartfailure2[sample(seq(NROW(heartfailure2)), 20), "platelets"] <- NA
 heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
@@ -89,10 +88,11 @@ plot_bar_category(heartfailure2)
 
 # Select the variable to diagnose
 plot_bar_category(heartfailure2, "test", "smoking")
-# plot_bar_category(heartfailure2, -test, -smoking)
 
 # Visualize the each plots
-plot_bar_category(heartfailure2, each = TRUE)
+# Visualize just 7 levels of top frequency
+# Visualize only factor, not character 
+plot_bar_category(heartfailure2, each = TRUE, top = 7, add_character = FALSE)
 
 # Not allow typographic argument
 plot_bar_category(heartfailure2, typographic = FALSE)
@@ -100,26 +100,9 @@ plot_bar_category(heartfailure2, typographic = FALSE)
 # Using pipes ---------------------------------
 library(dplyr)
 
-# Plot of all categorical variables
-heartfailure2 \%>\%
-  plot_bar_category()
-
-# Visualize just 7 levels of top frequency
-# heartfailure2 \%>\%
-#   plot_bar_category(top = 7)
-  
-# Visualize only factor, not character
-# heartfailure2 \%>\%
-#   plot_bar_category(add_character = FALSE) 
-
 # Using groupd_df  ------------------------------
 heartfailure2 \%>\% 
   group_by(death_event) \%>\% 
   plot_bar_category(top = 5)
-  
-heartfailure2 \%>\% 
-  group_by(death_event) \%>\% 
-  plot_bar_category(each = TRUE, top = 5)  
-}
    
 }
