@@ -116,7 +116,7 @@ Reported from the EDA is as follows.
 }
 
 \examples{
-\donttest{
+# If you have the 'DBI' and 'RSQLite' packages installed, perform the code block:
 if (FALSE) {
 library(dplyr)
 
@@ -125,28 +125,25 @@ heartfailure2 <- heartfailure
 heartfailure2[sample(seq(NROW(heartfailure2)), 20), "platelets"] <- NA
 heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
 
-## connect DBMS
-#if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
-#if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
-#con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-#
-## copy heartfailure2 to the DBMS with a table named TB_HEARTFAILURE
-#copy_to(con_sqlite, heartfailure2, name = "TB_HEARTFAILURE", overwrite = TRUE)
+# connect DBMS
+con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 
-## reporting the diagnosis information -------------------------
-## create pdf file. file name is EDA_Report.html
-#con_sqlite \%>\% 
-#  tbl("TB_HEARTFAILURE") \%>\% 
-#  eda_web_report(target = "death_event")
-#  
-## create pdf file. file name is EDA.html, and collect size is 250
-#con_sqlite \%>\% 
-#  tbl("TB_HEARTFAILURE") \%>\% 
-#  eda_web_report(collect_size = 250, output_file = "EDA.html")
-#  
-## Disconnect DBMS   
-#DBI::dbDisconnect(con_sqlite)
-}
+# copy heartfailure2 to the DBMS with a table named TB_HEARTFAILURE
+copy_to(con_sqlite, heartfailure2, name = "TB_HEARTFAILURE", overwrite = TRUE)
+
+# reporting the diagnosis information -------------------------
+# create pdf file. file name is EDA_Report.html
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  eda_web_report(target = "death_event")
+  
+# create pdf file. file name is EDA.html, and collect size is 250
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  eda_web_report(collect_size = 250, output_file = "EDA.html")
+  
+# Disconnect DBMS   
+DBI::dbDisconnect(con_sqlite)
 }
 
 }
