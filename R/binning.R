@@ -610,8 +610,10 @@ binning_by <- function(.data, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
 #' attr(bin, "performance")
 #' 
 #' # extract binned results
-#' extract(bin) %>% 
-#'   head(20)
+#' if (!is.null(bin)) {
+#'   extract(bin) %>% 
+#'     head(20)
+#' }
 #' 
 #' @method summary optimal_bins
 #' @export
@@ -653,17 +655,19 @@ summary.optimal_bins <- function(object, ...) {
 #' # optimal binning using binning_by()
 #' bin <- binning_by(heartfailure2, "death_event", "creatinine")
 #'
-#' # visualize all information for optimal_bins class
-#' plot(bin)
+#' if (!is.null(bin)) {
+#'   # visualize all information for optimal_bins class
+#'   plot(bin)
 #' 
-#' # rotate the x-axis labels by 45 degrees so that they do not overlap.
-#' plot(bin, rotate_angle = 45)
+#'   # rotate the x-axis labels by 45 degrees so that they do not overlap.
+#'   plot(bin, rotate_angle = 45)
 #' 
-#' # visualize WoE information for optimal_bins class
-#' plot(bin, type = "WoE")
+#'   # visualize WoE information for optimal_bins class
+#'   plot(bin, type = "WoE")
 #' 
-#' # visualize all information with typographic
-#' plot(bin)
+#'   # visualize all information with typographic
+#'   plot(bin)
+#' }
 #' 
 #' @import ggplot2
 #' @import hrbrthemes
@@ -850,16 +854,18 @@ extract <- function(x) {
 #' library(dplyr)
 #' 
 #' # Generate data for the example
-#' # heartfailure2 <- heartfailure
-#' # heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] <- NA
+#' heartfailure2 <- heartfailure
+#' heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] <- NA
 #'
 #' # optimal binning using binning_by()
-#' # bin <- binning_by(heartfailure2, "death_event", "creatinine")
-#' # bin
+#' bin <- binning_by(heartfailure2, "death_event", "creatinine")
+#' bin
 #'
-#' # extract binning result
-#' # extract(bin) %>% 
-#' #   head(20)
+#' if (!is.null(bin)) {
+#'   # extract binning result
+#'   extract(bin) %>% 
+#'     head(20)
+#' }
 #' 
 #' @export
 #' @method extract bins

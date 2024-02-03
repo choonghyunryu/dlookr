@@ -1,4 +1,4 @@
-# dlookr 0.6.3.9003
+# dlookr 0.6.3.9004
 
 ## NEW FEATURES
   
@@ -15,6 +15,11 @@
     - What is affected:
         - When performing binning_by(), it checks if the partykit package is installed,
         - and if not, it prints a warning message and exits.  
+* Tasks for submitting to CRAN. (#117)  
+    - add \value tags for some man pages
+    - remove \dontrun tags for some man pages
+    - remove comments in example scripts for some man pages
+    - remove \donttest tags for some man pages
 
 ## BUG FIXES
 

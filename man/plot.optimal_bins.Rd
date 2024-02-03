@@ -52,17 +52,19 @@ heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] <- NA
 # optimal binning using binning_by()
 bin <- binning_by(heartfailure2, "death_event", "creatinine")
 
-# visualize all information for optimal_bins class
-plot(bin)
+if (!is.null(bin)) {
+  # visualize all information for optimal_bins class
+  plot(bin)
 
-# rotate the x-axis labels by 45 degrees so that they do not overlap.
-plot(bin, rotate_angle = 45)
+  # rotate the x-axis labels by 45 degrees so that they do not overlap.
+  plot(bin, rotate_angle = 45)
 
-# visualize WoE information for optimal_bins class
-plot(bin, type = "WoE")
+  # visualize WoE information for optimal_bins class
+  plot(bin, type = "WoE")
 
-# visualize all information with typographic
-plot(bin)
+  # visualize all information with typographic
+  plot(bin)
+}
 
 }
 \seealso{

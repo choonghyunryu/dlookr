@@ -57,8 +57,10 @@ summary(bin)
 attr(bin, "performance")
 
 # extract binned results
-extract(bin) \%>\% 
-  head(20)
+if (!is.null(bin)) {
+  extract(bin) \%>\% 
+    head(20)
+}
 
 }
 \seealso{

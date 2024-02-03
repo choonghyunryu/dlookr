@@ -161,25 +161,29 @@ carseats %>%
 ## ----binning_by, fig.width = 6, fig.height = 4--------------------------------
 library(dplyr)
 
-# optimal binning using character
-bin <- binning_by(carseats, "US", "Advertising")
-
-# optimal binning using name
-bin <- binning_by(carseats, US, Advertising)
-bin
-
-# summary optimal_bins class
-summary(bin)
-
-# performance table
-attr(bin, "performance")
-
-# visualize optimal_bins class
-plot(bin)
-
-# extract binned results
-extract(bin) %>% 
-  head(20)
+if (requireNamespace("partykit", quietly = TRUE)) {
+  # optimal binning using character
+  bin <- binning_by(carseats, "US", "Advertising")
+  
+  # optimal binning using name
+  bin <- binning_by(carseats, US, Advertising)
+  bin
+  
+  # summary optimal_bins class
+  summary(bin)
+  
+  # performance table
+  attr(bin, "performance")
+  
+  # visualize optimal_bins class
+  plot(bin)
+  
+  # extract binned results
+  extract(bin) %>% 
+    head(20)
+} else {
+  cat("If you want to use this feature, you need to install the partykit package.\n")
+}
 
 ## ----trans_web_report, eval=FALSE---------------------------------------------
 #  heartfailure %>%
