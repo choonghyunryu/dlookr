@@ -628,7 +628,6 @@ summary.imputation <- function(object, ...) {
 #' @return A ggplot2 object.
 #' @seealso \code{\link{imputate_na}}, \code{\link{imputate_outlier}}, \code{\link{summary.imputation}}.
 #' @examples
-#' \donttest{
 #' # Generate data for the example
 #' heartfailure2 <- heartfailure
 #' heartfailure2[sample(seq(NROW(heartfailure2)), 20), "platelets"] <- NA
@@ -636,30 +635,17 @@ summary.imputation <- function(object, ...) {
 #'
 #' # Impute missing values -----------------------------
 #' # If the variable of interest is a numerical variables
-#' # Require rpart package
-#' # platelets <- imputate_na(heartfailure2, platelets, death_event, method = "rpart")
-#' # platelets
-#' # summary(platelets)
-#' 
-#' # plot(platelets)
+#' platelets <- imputate_na(heartfailure2, platelets, yvar = death_event, method = "rpart")
+#' plot(platelets)
 #'
 #' # If the variable of interest is a categorical variables
-#' # The "mice" method must require the `mice`, `ranger` package. 
-#' # If you want to use this feature, you need to install the `mice` and `ranger` package.
-#' # smoking <- imputate_na(heartfailure2, smoking, death_event, method = "mice")
-#' # smoking
-#' # summary(smoking)
-#' 
-#' # plot(smoking)
+#' smoking <- imputate_na(heartfailure2, smoking, yvar = death_event, method = "rpart")
+#' plot(smoking)
 #'
 #' # Impute outliers ----------------------------------
 #' # If the variable of interest is a numerical variable
 #' platelets <- imputate_outlier(heartfailure2, platelets, method = "capping")
-#' platelets
-#' summary(platelets)
-#' 
 #' plot(platelets)
-#' }
 #' @method plot imputation
 #' @import ggplot2
 #' @import hrbrthemes

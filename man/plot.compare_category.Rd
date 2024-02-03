@@ -46,43 +46,27 @@ The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 use it after loading the Google font with import_google_font().
 }
 \examples{
-\donttest{
 # Generate data for the example
-heartfailure2 <- heartfailure
+heartfailure2 <- heartfailure[, c("hblood_pressure", "smoking", "death_event")]
 heartfailure2[sample(seq(NROW(heartfailure2)), 5), "smoking"] <- NA
-
-library(dplyr)
 
 # Compare the all categorical variables
 all_var <- compare_category(heartfailure2)
 
-# Print compare_numeric class objects
-all_var
+# plot all pair of variables
+plot(all_var)
 
 # Compare the two categorical variables
 two_var <- compare_category(heartfailure2, smoking, death_event)
 
-# Print compare_category class objects
-two_var
-
-# plot all pair of variables
-# plot(all_var)
-
 # plot a pair of variables
 plot(two_var)
-
-# plot all pair of variables by prompt
-plot(all_var, prompt = TRUE)
   
 # plot a pair of variables without NA
 plot(two_var, na.rm = TRUE)
 
-# plot a pair of variables
-plot(two_var, las = 1)
-
 # plot a pair of variables not focuses on typographic elements
 plot(two_var, typographic = FALSE)
-}
 
 }
 \seealso{
