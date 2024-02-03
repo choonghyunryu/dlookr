@@ -56,65 +56,64 @@ The number of observations supported by the stats::shapiro.test function is 3 to
 }
 
 \examples{
-\donttest{
+# If you have the 'DBI' and 'RSQLite' packages installed, perform the code block:
+if (FALSE) {
 library(dplyr)
 
-## connect DBMS
-#if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
-#if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
-#con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-#
-## copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
-#copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
+# connect DBMS
+con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 
-## Using pipes ---------------------------------
-## Normality test of all numerical variables
-#con_sqlite \%>\% 
-#  tbl("TB_HEARTFAILURE") \%>\% 
-#  normality()
+# copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
 
-## Positive values select variables, and In-memory mode and collect size is 200
-#con_sqlite \%>\% 
-#  tbl("TB_HEARTFAILURE") \%>\% 
-#  normality(platelets, sodium, collect_size  = 200)
+# Using pipes ---------------------------------
+# Normality test of all numerical variables
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  normality()
 
-## Positions values select variables
-#con_sqlite \%>\% 
-#  tbl("TB_HEARTFAILURE") \%>\% 
-#  normality(1)
+# Positive values select variables, and In-memory mode and collect size is 200
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  normality(platelets, sodium, collect_size  = 200)
 
-## Using pipes & dplyr -------------------------
-## Test all numerical variables by 'smoking' and 'death_event',
-## and extract only those with 'smoking' variable level is "Yes".
-#con_sqlite \%>\% 
-#  tbl("TB_HEARTFAILURE") \%>\% 
-#  group_by(smoking, death_event) \%>\%
-#  normality() \%>\%
-#  filter(smoking == "Yes")
+# Positions values select variables
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  normality(1)
 
-## extract only those with 'sex' variable level is "Male",
-## and test 'sodium' by 'smoking' and 'death_event'
-#con_sqlite \%>\% 
-#  tbl("TB_HEARTFAILURE") \%>\% 
-#  filter(sex == "Male") \%>\%
-#  group_by(smoking, death_event) \%>\%
-#  normality(sodium)
+# Using pipes & dplyr -------------------------
+# Test all numerical variables by 'smoking' and 'death_event',
+# and extract only those with 'smoking' variable level is "Yes".
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  group_by(smoking, death_event) \%>\%
+  normality() \%>\%
+  filter(smoking == "Yes")
 
-## Test log(sodium) variables by 'smoking' and 'death_event',
-## and extract only p.value greater than 0.01.
-#
-## SQLite extension functions for log
-#RSQLite::initExtension(con_sqlite)
-#
-#con_sqlite \%>\% 
-#  tbl("TB_HEARTFAILURE") \%>\% 
-#  mutate(log_sodium = log(sodium)) \%>\%
-#  group_by(smoking, death_event) \%>\%
-#  normality(log_sodium) \%>\%
-#  filter(p_value > 0.01)
-# 
-## Disconnect DBMS   
-#DBI::dbDisconnect(con_sqlite)
+# extract only those with 'sex' variable level is "Male",
+# and test 'sodium' by 'smoking' and 'death_event'
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  filter(sex == "Male") \%>\%
+  group_by(smoking, death_event) \%>\%
+  normality(sodium)
+
+# Test log(sodium) variables by 'smoking' and 'death_event',
+# and extract only p.value greater than 0.01.
+
+# SQLite extension functions for log
+RSQLite::initExtension(con_sqlite)
+
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  mutate(log_sodium = log(sodium)) \%>\%
+  group_by(smoking, death_event) \%>\%
+  normality(log_sodium) \%>\%
+  filter(p_value > 0.01)
+ 
+# Disconnect DBMS   
+DBI::dbDisconnect(con_sqlite)
 }
 
 }

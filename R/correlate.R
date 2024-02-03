@@ -446,28 +446,27 @@ correlate_group_impl_cat <- function(df, vars, method) {
 #' mat <- summary(corr_tab)
 #' mat
 #' 
-#' ## connect DBMS
-#' #if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
-#' #if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
-#' #con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-#' #
-#' ## copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
-#' #copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
-#'
-#' ## Using pipes ---------------------------------
-#' ## Correlation coefficients of all numerical variables
-#' #corr_tab <- con_sqlite %>% 
-#' #  tbl("TB_HEARTFAILURE") %>% 
-#' #  correlate()
-#'
-#' ## summary correlate class 
-#' #mat <- summary(corr_tab)
-#' #mat
-#'
-#' ## Disconnect DBMS   
-#' #DBI::dbDisconnect(con_sqlite)
-#' }
+#' if (FALSE) {
+#' # connect DBMS
+#' con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 #' 
+#' # copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+#' copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
+#'
+#' # Using pipes ---------------------------------
+#' # Correlation coefficients of all numerical variables
+#' corr_tab <- con_sqlite %>% 
+#'   tbl("TB_HEARTFAILURE") %>% 
+#'   correlate()
+#'
+#' # summary correlate class 
+#' mat <- summary(corr_tab)
+#' mat
+#'
+#' # Disconnect DBMS   
+#' DBI::dbDisconnect(con_sqlite)
+#' }
+#' }
 #' @method summary correlate
 #' @import dplyr
 #' @importFrom tidyr pivot_wider

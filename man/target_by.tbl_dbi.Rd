@@ -45,52 +45,51 @@ Data analysis proceeds with the purpose of predicting target variables that
 See vignette("EDA") for an introduction to these concepts.
 }
 \examples{
-\donttest{
+# If you have the 'DBI' and 'RSQLite' packages installed, perform the code block:
+if (FALSE) {
 library(dplyr)
 
-## connect DBMS
-#if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
-#if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
-#con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-#
-## copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
-#copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
+# connect DBMS
+con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 
-## If the target variable is a categorical variable
-#categ <- target_by(con_sqlite \%>\% tbl("TB_HEARTFAILURE") , death_event)
+# copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
 
-## If the variable of interest is a numerical variable
-#cat_num <- relate(categ, sodium)
-#cat_num
-#summary(cat_num)
-#plot(cat_num)
+# If the target variable is a categorical variable
+categ <- target_by(con_sqlite \%>\% tbl("TB_HEARTFAILURE") , death_event)
 
-## If the variable of interest is a categorical column
-#cat_cat <- relate(categ, hblood_pressure)
-#cat_cat
-#summary(cat_cat)
-#plot(cat_cat)
+# If the variable of interest is a numerical variable
+cat_num <- relate(categ, sodium)
+cat_num
+summary(cat_num)
+plot(cat_num)
 
-###---------------------------------------------------
-## If the target variable is a categorical column, 
-## and In-memory mode and collect size is 200
-#num <- target_by(con_sqlite \%>\% tbl("TB_HEARTFAILURE"), death_event, collect_size = 250)
+# If the variable of interest is a categorical column
+cat_cat <- relate(categ, hblood_pressure)
+cat_cat
+summary(cat_cat)
+plot(cat_cat)
 
-## If the variable of interest is a numerical column
-#num_num <- relate(num, creatinine)
-#num_num
-#summary(num_num)
-#plot(num_num)
-#plot(num_num, hex_thres = 200)
+##---------------------------------------------------
+# If the target variable is a categorical column, 
+# and In-memory mode and collect size is 200
+num <- target_by(con_sqlite \%>\% tbl("TB_HEARTFAILURE"), death_event, collect_size = 250)
 
-## If the variable of interest is a categorical column
-#num_cat <- relate(num, smoking)
-#num_cat
-#summary(num_cat)
-#plot(num_cat)
-#
-## Disconnect DBMS   
-#DBI::dbDisconnect(con_sqlite)
+# If the variable of interest is a numerical column
+num_num <- relate(num, creatinine)
+num_num
+summary(num_num)
+plot(num_num)
+plot(num_num, hex_thres = 200)
+
+# If the variable of interest is a categorical column
+num_cat <- relate(num, smoking)
+num_cat
+summary(num_cat)
+plot(num_cat)
+
+# Disconnect DBMS   
+DBI::dbDisconnect(con_sqlite)
 }
 
 }

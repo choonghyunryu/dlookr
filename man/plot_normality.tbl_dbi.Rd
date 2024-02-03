@@ -110,11 +110,6 @@ if (requireNamespace("DBI", quietly = TRUE) & requireNamespace("RSQLite", quietl
   con_sqlite \%>\% 
     tbl("TB_HEARTFAILURE") \%>\% 
   plot_normality(platelets, sodium, collect_size = 200)
-
-  # Not allow the typographic elements
-  con_sqlite \%>\% 
-    tbl("TB_HEARTFAILURE") \%>\% 
-    plot_normality(1, typographic = FALSE)
     
   # Using pipes & dplyr -------------------------
   # Plot 'sodium' variable by 'smoking' and 'death_event'
@@ -127,7 +122,7 @@ if (requireNamespace("DBI", quietly = TRUE) & requireNamespace("RSQLite", quietl
   con_sqlite \%>\% 
     tbl("TB_HEARTFAILURE") \%>\% 
     group_by(smoking, death_event) \%>\%
-    plot_normality(sodium, left = "Box-Cox", right = "log")
+    plot_normality(sodium, left = "sqrt", right = "log")
 
   # extract only those with 'smoking' variable level is "Yes",
   # and plot 'sodium' by 'death_event'

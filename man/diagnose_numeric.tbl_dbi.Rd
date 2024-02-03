@@ -63,58 +63,57 @@ See vignette("diagonosis") for an introduction to these concepts.
 }
 
 \examples{
-\donttest{
+# If you have the 'DBI' and 'RSQLite' packages installed, perform the code block:
+if (FALSE) {
 library(dplyr)
 
-## connect DBMS
-#if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
-#if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
-#con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-#
-## copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
-#copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
+# connect DBMS
+con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 
-## Using pipes ---------------------------------
-## Diagnosis of all numerical variables
-#con_sqlite \%>\% 
-#  tbl("TB_HEARTFAILURE") \%>\% 
-#  diagnose_numeric()
-#  
-## Positive values select variables, and In-memory mode and collect size is 200
-#con_sqlite \%>\% 
-#  tbl("TB_HEARTFAILURE") \%>\% 
-#  diagnose_numeric(age, sodium, collect_size = 200)
-#  
-## Negative values to drop variables
-#con_sqlite \%>\% 
-#  tbl("TB_HEARTFAILURE") \%>\% 
-#  diagnose_numeric(-age, -sodium)
-#  
-## Positions values select variables
-#con_sqlite \%>\% 
-#  tbl("TB_HEARTFAILURE") \%>\% 
-#  diagnose_numeric(5)
-#  
-## Negative values to drop variables
-#con_sqlite \%>\% 
-#  tbl("TB_HEARTFAILURE") \%>\% 
-#  diagnose_numeric(-1, -5)
+# copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
 
-## Using pipes & dplyr -------------------------
-## List of variables containing outliers
-#con_sqlite \%>\% 
-#  tbl("TB_HEARTFAILURE") \%>\% 
-#  diagnose_numeric()  \%>\%
-#  filter(outlier > 0)
+# Using pipes ---------------------------------
+# Diagnosis of all numerical variables
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  diagnose_numeric()
+  
+# Positive values select variables, and In-memory mode and collect size is 200
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  diagnose_numeric(age, sodium, collect_size = 200)
+  
+# Negative values to drop variables
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  diagnose_numeric(-age, -sodium)
+  
+# Positions values select variables
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  diagnose_numeric(5)
+  
+# Negative values to drop variables
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  diagnose_numeric(-1, -5)
 
-## Using group_by() ---------------------------- 
-#con_sqlite \%>\% 
-#  tbl("TB_HEARTFAILURE") \%>\% 
-#  group_by(death_event) \%>\% 
-#  diagnose_numeric() 
-#  
-## Disconnect DBMS   
-#DBI::dbDisconnect(con_sqlite)
+# Using pipes & dplyr -------------------------
+# List of variables containing outliers
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  diagnose_numeric()  \%>\%
+  filter(outlier > 0)
+
+# Using group_by() ---------------------------- 
+con_sqlite \%>\% 
+  tbl("TB_HEARTFAILURE") \%>\% 
+  group_by(death_event) \%>\% 
+  diagnose_numeric() 
+  
+# Disconnect DBMS   
+DBI::dbDisconnect(con_sqlite)
 }
 
 }
