@@ -34,31 +34,3 @@
 #' "Heart Failure Prediction" in Kaggle <https://www.kaggle.com/andrewmvd/heart-failure-clinical-data>, License : CC BY 4.0
 #' }
 NULL
-
-# library(dplyr)
-# heartfailure <- read.csv("pkg_data/heart_failure_clinical_records_dataset.csv")
-# as_yn <- function(x) {
-#   as.factor(ifelse(x == 1 , "Yes", "No"))
-# }
-# 
-# heartfailure <- heartfailure %>% 
-#   rename_all(tolower) %>% 
-#   mutate(age = as.integer(age),
-#          anaemia = as_yn(anaemia),
-#          creatinine_phosphokinase = as.numeric(creatinine_phosphokinase),
-#          diabetes = as_yn(diabetes),
-#          ejection_fraction = as.numeric(ejection_fraction),
-#          high_blood_pressure = as_yn(high_blood_pressure),
-#          platelets = as.numeric(platelets),
-#          serum_creatinine = as.numeric(serum_creatinine),
-#          serum_sodium = as.numeric(serum_sodium),
-#          sex = as.factor(ifelse(sex == 1 , "Male", "Female")),
-#          smoking = as_yn(smoking),
-#          time = as.integer(time),
-#          death_event = as_yn(death_event)) %>% 
-#   rename(cpk_enzyme = creatinine_phosphokinase,
-#          hblood_pressure = high_blood_pressure,
-#          creatinine = serum_creatinine,
-#          sodium = serum_sodium) 
-
-# save(heartfailure, file = "data/heartfailure.rda")

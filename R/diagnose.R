@@ -1115,7 +1115,6 @@ plot_outlier_raw <- function(x, main = NULL, col = "steelblue",
 #' @seealso \code{\link{plot_outlier.data.frame}}.
 #' @export
 #' @examples
-#' \donttest{
 #' # the target variable is a categorical variable
 #' categ <- target_by(heartfailure, death_event)
 #' 
@@ -1129,18 +1128,21 @@ plot_outlier_raw <- function(x, main = NULL, col = "steelblue",
 #'   plot_outlier(sodium, cpk_enzyme)
 #' 
 #' ## death_eventing DBMS tables ----------------------------------
-#' ## connect DBMS
-#' #if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
-#' #if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
-#' #con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-#' #
-#' ## copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
-#' #copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
-#' #
-#' ## If the target variable is a categorical variable
-#' #categ <- target_by(con_sqlite %>% tbl("TB_HEARTFAILURE") , death_event)
-#' #
-#' #plot_outlier(categ, sodium)
+#' # If you have the 'DBI' and 'RSQLite' packages installed, perform the code block:
+#' if (FALSE) {
+#' # connect DBMS
+#' con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+#' 
+#' # copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+#' copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
+#' 
+#' # If the target variable is a categorical variable
+#' categ <- target_by(con_sqlite %>% tbl("TB_HEARTFAILURE") , death_event)
+#' 
+#' plot_outlier(categ, sodium)
+#' 
+#' # Disconnect DBMS   
+#' DBI::dbDisconnect(con_sqlite)
 #' }
 #' 
 #' @method plot_outlier target_df
@@ -1357,27 +1359,23 @@ diagnose_report <- function(.data, output_format, output_file, output_dir, ...) 
 #' @return No return value. This function only generates a report.
 #' 
 #' @examples
-#' \donttest{
 #' if (FALSE) {
-#' #if (!require(prettydoc)) install.packages('prettydoc', repos = "http://cran.us.r-project.org")
-#' #
-#' ## reporting the diagnosis information -------------------------
-#' ## create pdf file. file name is DataDiagnosis_Report.pdf
-#' #diagnose_report(heartfailure)
-#' #
-#' ## create pdf file. file name is Diagn.pdf
-#' #diagnose_report(heartfailure, output_file = "Diagn.pdf")
-#' #
-#' ## create pdf file. file name is ./Diagn.pdf and not browse
-#' #diagnose_report(heartfailure, output_dir = ".", output_file = "Diagn.pdf", 
-#' #  browse = FALSE)
-#' #
-#' ## create html file. file name is Diagnosis_Report.html
-#' #diagnose_report(heartfailure, output_format = "html")
-#' #
-#' ## create html file. file name is Diagn.html
-#' #diagnose_report(heartfailure, output_format = "html", output_file = "Diagn.html")
-#' }
+#' # reporting the diagnosis information -------------------------
+#' # create pdf file. file name is DataDiagnosis_Report.pdf
+#' diagnose_report(heartfailure)
+#' 
+#' # create pdf file. file name is Diagn.pdf
+#' diagnose_report(heartfailure, output_file = "Diagn.pdf")
+#' 
+#' # create pdf file. file name is ./Diagn.pdf and not browse
+#' diagnose_report(heartfailure, output_dir = ".", output_file = "Diagn.pdf", 
+#'   browse = FALSE)
+#' 
+#' # create html file. file name is Diagnosis_Report.html
+#' diagnose_report(heartfailure, output_format = "html")
+#' 
+#' # create html file. file name is Diagn.html
+#' diagnose_report(heartfailure, output_format = "html", output_file = "Diagn.html")
 #' }
 #' 
 #' @importFrom knitr knit2pdf

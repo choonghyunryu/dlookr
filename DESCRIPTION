@@ -14,7 +14,7 @@ Description: A collection of tools that support data diagnosis, exploration, and
     and the relationship between the target variable and predictor. Data transformation supports binning 
     for categorizing continuous variables, imputes missing values and outliers, and resolves skewness. 
     And it creates automated reports that support these three tasks.
-License: GPL-2 | file LICENSE
+License: GPL-2
 URL: https://github.com/choonghyunryu/dlookr/,
    https://choonghyunryu.github.io/dlookr/
 Encoding: UTF-8

@@ -50,7 +50,6 @@ The plot derived from the numerical data diagnosis is as follows.
 }
 
 \examples{
-\donttest{
 # the target variable is a categorical variable
 categ <- target_by(heartfailure, death_event)
 
@@ -64,18 +63,21 @@ heartfailure \%>\%
   plot_outlier(sodium, cpk_enzyme)
 
 ## death_eventing DBMS tables ----------------------------------
-## connect DBMS
-#if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")
-#if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")
-#con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-#
-## copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
-#copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
-#
-## If the target variable is a categorical variable
-#categ <- target_by(con_sqlite \%>\% tbl("TB_HEARTFAILURE") , death_event)
-#
-#plot_outlier(categ, sodium)
+# If you have the 'DBI' and 'RSQLite' packages installed, perform the code block:
+if (FALSE) {
+# connect DBMS
+con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+
+# copy heartfailure to the DBMS with a table named TB_HEARTFAILURE
+copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)
+
+# If the target variable is a categorical variable
+categ <- target_by(con_sqlite \%>\% tbl("TB_HEARTFAILURE") , death_event)
+
+plot_outlier(categ, sodium)
+
+# Disconnect DBMS   
+DBI::dbDisconnect(con_sqlite)
 }
 
 }

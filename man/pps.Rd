@@ -102,13 +102,6 @@ pps_cat <- iris \%>\%
 
 pps_cat
 
-# Using parallel process
-# pps_cat <- iris \%>\% 
-#   target_by(Species) \%>\% 
-#   pps(do_parallel = TRUE)
-# 
-# pps_cat
-
 # summary pps class 
 tab <- summary(pps_cat)
 tab
