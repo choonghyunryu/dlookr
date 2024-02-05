@@ -18,16 +18,22 @@ print and summary method for "pps" class.
 summary.pps compares the PPS by variables.
 }
 \examples{
-\donttest{
 library(dplyr)
+
+# If you want to use this feature, you need to install the 'ppsr' package.
+if (!requireNamespace("ppsr", quietly = TRUE)) {
+  cat("If you want to use this feature, you need to install the 'ppsr' package.\n")
+}
 
 # pps type is generic ======================================
 pps_generic <- pps(iris)
 pps_generic
 
-# summary pps class 
-mat <- summary(pps_generic)
-mat
+if (!is.null(pps_generic)) {
+  # summary pps class 
+  mat <- summary(pps_generic)
+  mat
+}
 
 # pps type is target_by =====================================
 ##-----------------------------------------------------------
@@ -39,9 +45,11 @@ pps_cat <- iris \%>\%
 
 pps_cat
 
-# summary pps class 
-tab <- summary(pps_cat)
-tab
+if (!is.null(pps_cat)) {
+  # summary pps class 
+  tab <- summary(pps_cat)
+  tab
+}
 
 ##-----------------------------------------------------------
 # If the target variable is a numerical variable
@@ -50,9 +58,10 @@ num <- target_by(iris, Petal.Length)
 pps_num <- pps(num)
 pps_num
 
-# summary pps class 
-tab <- summary(pps_num)
-tab
+if (!is.null(pps_num)) {
+  # summary pps class 
+  tab <- summary(pps_num)
+  tab
 }
 
 }

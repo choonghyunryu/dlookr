@@ -30,15 +30,21 @@ The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 use it after loading the Google font with import_google_font().
 }
 \examples{
-\donttest{
 library(dplyr)
+
+# If you want to use this feature, you need to install the 'ppsr' package.
+if (!requireNamespace("ppsr", quietly = TRUE)) {
+  cat("If you want to use this feature, you need to install the 'ppsr' package.\n")
+}
 
 # pps type is generic ======================================
 pps_generic <- pps(iris)
 pps_generic
 
-# visualize pps class 
-plot(pps_generic)
+if (!is.null(pps_generic)) {
+  # visualize pps class 
+  plot(pps_generic)
+}
 
 # pps type is target_by =====================================
 ##-----------------------------------------------------------
@@ -48,8 +54,10 @@ pps_cat <- iris \%>\%
   target_by(Species) \%>\% 
   pps()
 
-# plot pps class
-plot(pps_cat)
+if (!is.null(pps_cat)) {
+  # plot pps class
+  plot(pps_cat)
+}
 
 ##---------------------------------------------------
 # If the target variable is a numerical variable
@@ -58,8 +66,9 @@ pps_num <- iris \%>\%
   target_by(Petal.Length) \%>\% 
   pps()
 
-# plot pps class
-plot(pps_num)
+if (!is.null(pps_num)) {
+  # plot pps class
+  plot(pps_num)
 }
 
 }

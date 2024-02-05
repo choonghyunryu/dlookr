@@ -67,20 +67,16 @@ The information of PPS is as follows.
 }
 
 \examples{
-\donttest{
 library(dplyr)
+
+# If you want to use this feature, you need to install the 'ppsr' package.
+if (!requireNamespace("ppsr", quietly = TRUE)) {
+  cat("If you want to use this feature, you need to install the 'ppsr' package.\n")
+}
 
 # pps type is generic =======================================
 pps_generic <- pps(iris)
 pps_generic
-
-# summary pps class 
-mat <- summary(pps_generic)
-mat
-
-# visualize pps class 
-plot(pps_generic)
-
 
 # pps type is target_by =====================================
 ##-----------------------------------------------------------
@@ -102,27 +98,12 @@ pps_cat <- iris \%>\%
 
 pps_cat
 
-# summary pps class 
-tab <- summary(pps_cat)
-tab
-
-# visualize pps class
-plot(pps_cat)
-
 ##-----------------------------------------------------------
 # If the target variable is a numerical variable
 num <- target_by(iris, Petal.Length)
 
 pps_num <- pps(num)
 pps_num
-
-# summary pps class 
-tab <- summary(pps_num)
-tab
-
-# plot pps class
-plot(pps_num)
-}
 
 }
 \references{
