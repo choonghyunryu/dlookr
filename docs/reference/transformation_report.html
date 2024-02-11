@@ -110,6 +110,12 @@ target variable is not a binary class.</p></dd>
 <dd><p>logical. choose whether to output the report results to the browser.</p></dd>
 
 </dl></div>
+    <div id="value">
+    <h2>Value</h2>
+    
+
+<p>No return value. This function only generates a report.</p>
+    </div>
     <div id="details">
     <h2>Details</h2>
     <p>Generate transformation reports automatically.
@@ -142,31 +148,26 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="co">#if (FALSE) {</span></span></span>
-<span class="r-in"><span><span class="co">#if (!require(prettydoc)) install.packages('prettydoc', repos = "http://cran.us.r-project.org")</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## reporting the Binning information -------------------------</span></span></span>
-<span class="r-in"><span><span class="co">## create pdf file. file name is Transformation_Report.pdf &amp; No target variable</span></span></span>
-<span class="r-in"><span><span class="co">#transformation_report(heartfailure)</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## create pdf file. file name is Transformation_Report.pdf</span></span></span>
-<span class="r-in"><span><span class="co">#transformation_report(heartfailure, death_event)</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## create pdf file. file name is Transformation_heartfailure.pdf</span></span></span>
-<span class="r-in"><span><span class="co">#transformation_report(heartfailure, "death_event", </span></span></span>
-<span class="r-in"><span><span class="co">#                      output_file = "Transformation_heartfailure.pdf")</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## create html file. file name is Transformation_Report.html</span></span></span>
-<span class="r-in"><span><span class="co">#transformation_report(heartfailure, "death_event", output_format = "html")</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## create html file. file name is Transformation_heartfailure.html</span></span></span>
-<span class="r-in"><span><span class="co">#transformation_report(heartfailure, death_event, output_format = "html", </span></span></span>
-<span class="r-in"><span><span class="co">#                      output_file = "Transformation_heartfailure.html")</span></span></span>
-<span class="r-in"><span><span class="co">#}</span></span></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># reporting the Binning information -------------------------</span></span></span>
+<span class="r-in"><span><span class="co"># create pdf file. file name is Transformation_Report.pdf &amp; No target variable</span></span></span>
+<span class="r-in"><span><span class="fu">transformation_report</span><span class="op">(</span><span class="va">heartfailure</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"></span>
+<span class="r-in"><span><span class="co"># create pdf file. file name is Transformation_Report.pdf</span></span></span>
+<span class="r-in"><span><span class="fu">transformation_report</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="va">death_event</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create pdf file. file name is Transformation_heartfailure.pdf</span></span></span>
+<span class="r-in"><span><span class="fu">transformation_report</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="st">"death_event"</span>, </span></span>
+<span class="r-in"><span>                      output_file <span class="op">=</span> <span class="st">"Transformation_heartfailure.pdf"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create html file. file name is Transformation_Report.html</span></span></span>
+<span class="r-in"><span><span class="fu">transformation_report</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="st">"death_event"</span>, output_format <span class="op">=</span> <span class="st">"html"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create html file. file name is Transformation_heartfailure.html</span></span></span>
+<span class="r-in"><span><span class="fu">transformation_report</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="va">death_event</span>, output_format <span class="op">=</span> <span class="st">"html"</span>, </span></span>
+<span class="r-in"><span>                      output_file <span class="op">=</span> <span class="st">"Transformation_heartfailure.html"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>

@@ -88,80 +88,62 @@ imputate_outlier().</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="co"># Generate data for the example</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Generate data for the example</span></span></span>
 <span class="r-in"><span><span class="va">heartfailure2</span> <span class="op">&lt;-</span> <span class="va">heartfailure</span></span></span>
 <span class="r-in"><span><span class="va">heartfailure2</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NROW</a></span><span class="op">(</span><span class="va">heartfailure2</span><span class="op">)</span><span class="op">)</span>, <span class="fl">20</span><span class="op">)</span>, <span class="st">"platelets"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span></span>
 <span class="r-in"><span><span class="va">heartfailure2</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NROW</a></span><span class="op">(</span><span class="va">heartfailure2</span><span class="op">)</span><span class="op">)</span>, <span class="fl">5</span><span class="op">)</span>, <span class="st">"smoking"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Impute missing values -----------------------------</span></span></span>
 <span class="r-in"><span><span class="co"># If the variable of interest is a numerical variables</span></span></span>
-<span class="r-in"><span><span class="co"># Require rpart package</span></span></span>
-<span class="r-in"><span><span class="co"># platelets &lt;- imputate_na(heartfailure2, platelets, death_event, method = "rpart")</span></span></span>
-<span class="r-in"><span><span class="co"># platelets</span></span></span>
-<span class="r-in"><span><span class="co"># summary(platelets)</span></span></span>
-<span class="r-in"><span><span class="co"># plot(platelets)</span></span></span>
+<span class="r-in"><span><span class="va">platelets</span> <span class="op">&lt;-</span> <span class="fu"><a href="imputate_na.html">imputate_na</a></span><span class="op">(</span><span class="va">heartfailure2</span>, <span class="va">platelets</span>, yvar <span class="op">=</span> <span class="va">death_event</span>, method <span class="op">=</span> <span class="st">"rpart"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">platelets</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * Impute missing values based on Recursive Partitioning and Regression Trees</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - method : rpart</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * Information of Imputation (before vs after)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     Original   Imputation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> described_variables "value"    "value"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> n                   "279"      "299"     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> na                  "20"       " 0"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mean                "264440.4" "266370.0"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sd                  "98550.94" "97192.63"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> se_mean             "5900.090" "5620.795"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IQR                 "93000"    "92500"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> skewness            "1.535869" "1.465506"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> kurtosis            "6.317502" "6.113675"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p00                 "47000"    "47000"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p01                 "68240"    "69840"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p05                 "132900"   "133000"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p10                 "153000"   "159000"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p20                 "195200"   "197200"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p25                 "211500"   "212500"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p30                 "221000"   "221000"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p40                 "237000"   "241200"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p50                 "263000"   "263358"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p60                 "266000"   "270000"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p70                 "289600"   "299200"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p75                 "304500"   "305000"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p80                 "322200"   "325800"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p90                 "378000"   "385600"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p95                 "422500"   "418400"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p99                 "560160"   "544560"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p100                "850000"   "850000"  </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># If the variable of interest is a categorical variables</span></span></span>
-<span class="r-in"><span><span class="co"># The "mice" method must require the `mice`, `ranger` package. </span></span></span>
-<span class="r-in"><span><span class="co"># If you want to use this feature, you need to install the `mice` and `ranger` package.</span></span></span>
-<span class="r-in"><span><span class="co"># smoking &lt;- imputate_na(heartfailure2, smoking, death_event, method = "mice")</span></span></span>
-<span class="r-in"><span><span class="co"># smoking</span></span></span>
-<span class="r-in"><span><span class="co"># summary(smoking)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># plot(smoking)</span></span></span>
+<span class="r-in"><span><span class="va">smoking</span> <span class="op">&lt;-</span> <span class="fu"><a href="imputate_na.html">imputate_na</a></span><span class="op">(</span><span class="va">heartfailure2</span>, <span class="va">smoking</span>, yvar <span class="op">=</span> <span class="va">death_event</span>, method <span class="op">=</span> <span class="st">"rpart"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">smoking</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * Impute missing values based on Recursive Partitioning and Regression Trees</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - method : rpart</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * Information of Imputation (before vs after)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      original imputation original_percent imputation_percent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> No        201        203            67.22              67.89</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Yes        93         96            31.10              32.11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;NA&gt;        5          0             1.67               0.00</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Impute outliers ----------------------------------</span></span></span>
 <span class="r-in"><span><span class="co"># If the variable of interest is a numerical variable</span></span></span>
 <span class="r-in"><span><span class="va">platelets</span> <span class="op">&lt;-</span> <span class="fu"><a href="imputate_outlier.html">imputate_outlier</a></span><span class="op">(</span><span class="va">heartfailure2</span>, <span class="va">platelets</span>, method <span class="op">=</span> <span class="st">"capping"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">platelets</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 265000 263358 162000     NA 327000 204000 127000 418400 263358 388000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [11] 368000 253000 136000 276000 427000 131800 262000 166000 237000  87000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [21] 276000 297000 289000 368000     NA 149000 196000 284000 153000 200000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [31] 263358 360000 319000 302000 188000 228000 226000 321000 305000 329000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [41] 263358 153000 185000 218000     NA 310000 271000 418400 140000 395000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [51] 166000 418000 263358 351000     NA 418400     NA 216000 319000 254000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [61] 390000 216000 254000 385000 263358     NA 213000 274000 244000 418400</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [71] 374000 122000 243000 149000 266000 204000 317000 237000 283000 324000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [81] 293000 263358 196000 172000     NA 406000 173000 304000 235000 181000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [91] 249000 297000 263358 210000 327000 219000 254000 255000 318000 221000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [101] 298000 263358 149000 226000 286000 418400 263000 226000 304000 418400</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [111] 306000 228000 252000 351000 328000 164000     NA 418400 203000 263358</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [121] 210000 162000 228000 127000 217000 237000 271000 300000 267000 227000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [131] 249000 250000 263358 295000 231000     NA 172000 305000 221000 211000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [141] 263358 348000 329000 229000     NA     NA 218000     NA 225000 228000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [151] 235000 244000 184000 263358 235000 194000 277000 262000     NA 362000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [161]     NA 174000     NA 131800 334000 192000 220000 131800 270000     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [171] 263358 325000 176000 189000 281000 337000 105000 132000 267000 279000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [181] 303000 221000 265000 224000 219000 389000 153000 365000 201000 275000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [191] 350000 309000 260000 160000 126000 223000 263358 259000 279000 263358</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [201] 131800 377000 220000 212000 277000 362000 226000 186000 283000 268000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [211] 389000 147000 418400 244000 290000 203000     NA 151000 271000 371000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [221] 263358     NA 365000 130000     NA 265000 189000 141000 237000 274000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [231] 131800 185000 255000 330000 305000 406000 248000     NA 257000 263358</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [241] 418400 249000 255000 220000 264000 282000 314000 246000 301000 223000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [251] 404000 231000 274000 236000 263358 334000 294000 253000 233000 308000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [261] 203000 283000 198000 208000 147000 362000 263358 133000 302000 222000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [271] 263358 221000 215000 189000 150000 422000 327000 131800 232000 418400</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [281] 241000 131800 215000 263358 279000 336000 279000 418400 263358 390000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [291] 222000 133000 382000 179000 155000 270000 418400 140000 395000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"method")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "capping"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"var_type")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "numerical"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"outlier_pos")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]   8  16  48  56  70 106 110 118 164 168 201 213 231 241 278 280 282 288 297</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"outliers")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 454000  47000 451000 461000 497000 621000 850000 507000  75000  70000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11]  73000 481000  62000 533000  25100 451000  51000 543000 742000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"type")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "outliers"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"message")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "complete imputation"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"success")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "imputation" "numeric"   </span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">platelets</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Impute outliers with capping</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -170,33 +152,29 @@ imputate_outlier().</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> described_variables "value"      "value"     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> n                   "279"        "279"       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> na                  "20"         "20"        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mean                "262861.4"   "259095.5"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sd                  "98473.80"   "76874.03"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> se_mean             "5895.472"   "4602.328"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> IQR                 "91000"      "91000"     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> skewness            "1.4874340"  "0.2861264" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> kurtosis            " 6.4464673" "-0.3621554"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> p00                 "25100"      "87000"     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> p01                 " 59580"     "125120"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> p05                 "131800"     "131980"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> p10                 "152600"     "152600"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> p20                 "196000"     "196000"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> p25                 "212500"     "212500"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mean                "264440.4"   "259799.2"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sd                  "98550.94"   "78415.65"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> se_mean             "5900.090"   "4694.622"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IQR                 "93000"      "93000"     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> skewness            "1.5358685"  "0.2549886" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> kurtosis            " 6.3175020" "-0.2755936"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p00                 "47000"      "73000"     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p01                 " 68240"     "101040"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p05                 "132900"     "132990"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p10                 "153000"     "153000"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p20                 "195200"     "195200"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p25                 "211500"     "211500"    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> p30                 "221000"     "221000"    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> p40                 "237000"     "237000"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> p50                 "262000"     "262000"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> p60                 "265000"     "265000"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> p70                 "285200"     "285200"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> p75                 "303500"     "303500"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> p80                 "319800"     "319800"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> p90                 "374600"     "374600"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> p95                 "418400"     "418040"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> p99                 "560160"     "418400"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p50                 "263000"     "263000"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p60                 "266000"     "266000"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p70                 "289600"     "289600"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p75                 "304500"     "304500"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p80                 "322200"     "322200"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p90                 "378000"     "378000"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p95                 "422500"     "422050"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p99                 "560160"     "422500"    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> p100                "850000"     "427000"    </span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">platelets</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="summary.imputation-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </div>

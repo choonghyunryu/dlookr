@@ -119,53 +119,52 @@ Attributes of target_df class is as follows.</p><ul><li><p>type_y : the data typ
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># If you have the 'DBI' and 'RSQLite' packages installed, perform the code block:</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## connect DBMS</span></span></span>
-<span class="r-in"><span><span class="co">#if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")</span></span></span>
-<span class="r-in"><span><span class="co">#if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")</span></span></span>
-<span class="r-in"><span><span class="co">#con_sqlite &lt;- DBI::dbConnect(RSQLite::SQLite(), ":memory:")</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## copy heartfailure to the DBMS with a table named TB_HEARTFAILURE</span></span></span>
-<span class="r-in"><span><span class="co">#copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)</span></span></span>
+<span class="r-in"><span><span class="co"># connect DBMS</span></span></span>
+<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op">&lt;-</span> <span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html" class="external-link">dbConnect</a></span><span class="op">(</span><span class="fu">RSQLite</span><span class="fu">::</span><span class="fu"><a href="https://rsqlite.r-dbi.org/reference/SQLite.html" class="external-link">SQLite</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">":memory:"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## If the target variable is a categorical variable</span></span></span>
-<span class="r-in"><span><span class="co">#categ &lt;- target_by(con_sqlite %&gt;% tbl("TB_HEARTFAILURE") , death_event)</span></span></span>
+<span class="r-in"><span><span class="co"># copy heartfailure to the DBMS with a table named TB_HEARTFAILURE</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/copy_to.html" class="external-link">copy_to</a></span><span class="op">(</span><span class="va">con_sqlite</span>, <span class="va">heartfailure</span>, name <span class="op">=</span> <span class="st">"TB_HEARTFAILURE"</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## If the variable of interest is a numerical variable</span></span></span>
-<span class="r-in"><span><span class="co">#cat_num &lt;- relate(categ, sodium)</span></span></span>
-<span class="r-in"><span><span class="co">#cat_num</span></span></span>
-<span class="r-in"><span><span class="co">#summary(cat_num)</span></span></span>
-<span class="r-in"><span><span class="co">#plot(cat_num)</span></span></span>
+<span class="r-in"><span><span class="co"># If the target variable is a categorical variable</span></span></span>
+<span class="r-in"><span><span class="va">categ</span> <span class="op">&lt;-</span> <span class="fu"><a href="target_by.data.frame.html">target_by</a></span><span class="op">(</span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_HEARTFAILURE"</span><span class="op">)</span> , <span class="va">death_event</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## If the variable of interest is a categorical column</span></span></span>
-<span class="r-in"><span><span class="co">#cat_cat &lt;- relate(categ, hblood_pressure)</span></span></span>
-<span class="r-in"><span><span class="co">#cat_cat</span></span></span>
-<span class="r-in"><span><span class="co">#summary(cat_cat)</span></span></span>
-<span class="r-in"><span><span class="co">#plot(cat_cat)</span></span></span>
+<span class="r-in"><span><span class="co"># If the variable of interest is a numerical variable</span></span></span>
+<span class="r-in"><span><span class="va">cat_num</span> <span class="op">&lt;-</span> <span class="fu"><a href="relate.html">relate</a></span><span class="op">(</span><span class="va">categ</span>, <span class="va">sodium</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">cat_num</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cat_num</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cat_num</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">###---------------------------------------------------</span></span></span>
-<span class="r-in"><span><span class="co">## If the target variable is a categorical column, </span></span></span>
-<span class="r-in"><span><span class="co">## and In-memory mode and collect size is 200</span></span></span>
-<span class="r-in"><span><span class="co">#num &lt;- target_by(con_sqlite %&gt;% tbl("TB_HEARTFAILURE"), death_event, collect_size = 250)</span></span></span>
+<span class="r-in"><span><span class="co"># If the variable of interest is a categorical column</span></span></span>
+<span class="r-in"><span><span class="va">cat_cat</span> <span class="op">&lt;-</span> <span class="fu"><a href="relate.html">relate</a></span><span class="op">(</span><span class="va">categ</span>, <span class="va">hblood_pressure</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">cat_cat</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cat_cat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cat_cat</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## If the variable of interest is a numerical column</span></span></span>
-<span class="r-in"><span><span class="co">#num_num &lt;- relate(num, creatinine)</span></span></span>
-<span class="r-in"><span><span class="co">#num_num</span></span></span>
-<span class="r-in"><span><span class="co">#summary(num_num)</span></span></span>
-<span class="r-in"><span><span class="co">#plot(num_num)</span></span></span>
-<span class="r-in"><span><span class="co">#plot(num_num, hex_thres = 200)</span></span></span>
+<span class="r-in"><span><span class="co">##---------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co"># If the target variable is a categorical column, </span></span></span>
+<span class="r-in"><span><span class="co"># and In-memory mode and collect size is 200</span></span></span>
+<span class="r-in"><span><span class="va">num</span> <span class="op">&lt;-</span> <span class="fu"><a href="target_by.data.frame.html">target_by</a></span><span class="op">(</span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_HEARTFAILURE"</span><span class="op">)</span>, <span class="va">death_event</span>, collect_size <span class="op">=</span> <span class="fl">250</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## If the variable of interest is a categorical column</span></span></span>
-<span class="r-in"><span><span class="co">#num_cat &lt;- relate(num, smoking)</span></span></span>
-<span class="r-in"><span><span class="co">#num_cat</span></span></span>
-<span class="r-in"><span><span class="co">#summary(num_cat)</span></span></span>
-<span class="r-in"><span><span class="co">#plot(num_cat)</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## Disconnect DBMS   </span></span></span>
-<span class="r-in"><span><span class="co">#DBI::dbDisconnect(con_sqlite)</span></span></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="co"># If the variable of interest is a numerical column</span></span></span>
+<span class="r-in"><span><span class="va">num_num</span> <span class="op">&lt;-</span> <span class="fu"><a href="relate.html">relate</a></span><span class="op">(</span><span class="va">num</span>, <span class="va">creatinine</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">num_num</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">num_num</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">num_num</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">num_num</span>, hex_thres <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># If the variable of interest is a categorical column</span></span></span>
+<span class="r-in"><span><span class="va">num_cat</span> <span class="op">&lt;-</span> <span class="fu"><a href="relate.html">relate</a></span><span class="op">(</span><span class="va">num</span>, <span class="va">smoking</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">num_cat</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">num_cat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">num_cat</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Disconnect DBMS   </span></span></span>
+<span class="r-in"><span><span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbDisconnect.html" class="external-link">dbDisconnect</a></span><span class="op">(</span><span class="va">con_sqlite</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

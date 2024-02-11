@@ -143,31 +143,12 @@ function of the dplyr package.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> binned type: quantile</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> number of bins: 10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    [25100,153000]   (153000,198400]   (198400,222000] (222000,237266.7] </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                29                27                29                27 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (237266.7,263000]   (263000,266000] (266000,289866.7] (289866.7,324800] </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                28                28                27                28 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   (324800,376200]   (376200,850000]              &lt;NA&gt; </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                28                28                20 </span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Summarise bins class object</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">bin</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               levels freq       rate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     [25100,153000]   29 0.09698997</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    (153000,198400]   27 0.09030100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    (198400,222000]   29 0.09698997</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  (222000,237266.7]   27 0.09030100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  (237266.7,263000]   28 0.09364548</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    (263000,266000]   28 0.09364548</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  (266000,289866.7]   27 0.09030100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  (289866.7,324800]   28 0.09364548</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9    (324800,376200]   28 0.09364548</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10   (376200,850000]   28 0.09364548</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11              &lt;NA&gt;   20 0.06688963</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Plot bins class object</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">bin</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="binning-1.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [25100,151533.3] (151533.3,194000]   (194000,220000]   (220000,235000] </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                28                29                28                28 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   (235000,255000]   (255000,263358] (263358,281866.7] (281866.7,319000] </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                27                 5                50                29 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   (319000,370200]   (370200,850000]              &lt;NA&gt; </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                27                28                20 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Using labels argument</span></span></span>
 <span class="r-in"><span><span class="va">bin</span> <span class="op">&lt;-</span> <span class="fu">binning</span><span class="op">(</span><span class="va">heartfailure2</span><span class="op">$</span><span class="va">platelets</span>, nbins <span class="op">=</span> <span class="fl">4</span>,</span></span>
@@ -177,7 +158,7 @@ function of the dplyr package.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> number of bins: 4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  LQ1  UQ1  LQ3  UQ3 &lt;NA&gt; </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   70   70   69   70   20 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   70   70   70   69   20 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Using another type argument</span></span></span>
 <span class="r-in"><span><span class="va">bin</span> <span class="op">&lt;-</span> <span class="fu">binning</span><span class="op">(</span><span class="va">heartfailure2</span><span class="op">$</span><span class="va">platelets</span>, nbins <span class="op">=</span> <span class="fl">5</span>, type <span class="op">=</span> <span class="st">"equal"</span><span class="op">)</span></span></span>
@@ -186,7 +167,7 @@ function of the dplyr package.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> number of bins: 5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [25100,190080] (190080,355060] (355060,520040] (520040,685020] (685020,850000] </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              51             189              35               2               2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              53             189              32               3               2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            &lt;NA&gt; </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              20 </span>
 <span class="r-in"><span><span class="va">bin</span> <span class="op">&lt;-</span> <span class="fu">binning</span><span class="op">(</span><span class="va">heartfailure2</span><span class="op">$</span><span class="va">platelets</span>, nbins <span class="op">=</span> <span class="fl">5</span>, type <span class="op">=</span> <span class="st">"pretty"</span><span class="op">)</span></span></span>
@@ -195,15 +176,26 @@ function of the dplyr package.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> number of bins: 5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     [0,2e+05] (2e+05,4e+05] (4e+05,6e+05] (6e+05,8e+05] (8e+05,1e+06] </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            57           204            15             2             1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            60           202            14             2             1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;NA&gt; </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            20 </span>
 <span class="r-in"><span><span class="co"># "kmeans" and "bclust" was implemented by classInt::classIntervals() function.</span></span></span>
 <span class="r-in"><span><span class="co"># So, you must install classInt package.</span></span></span>
-<span class="r-in"><span><span class="co"># bin &lt;- binning(heartfailure2$platelets, nbins = 5, type = "kmeans")</span></span></span>
-<span class="r-in"><span><span class="co"># bin</span></span></span>
-<span class="r-in"><span><span class="co"># bin &lt;- binning(heartfailure2$platelets, nbins = 5, type = "bclust")</span></span></span>
-<span class="r-in"><span><span class="co"># bin</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"classInt"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">bin</span> <span class="op">&lt;-</span> <span class="fu">binning</span><span class="op">(</span><span class="va">heartfailure2</span><span class="op">$</span><span class="va">platelets</span>, nbins <span class="op">=</span> <span class="fl">5</span>, type <span class="op">=</span> <span class="st">"kmeans"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">bin</span></span></span>
+<span class="r-in"><span>  <span class="va">bin</span> <span class="op">&lt;-</span> <span class="fu">binning</span><span class="op">(</span><span class="va">heartfailure2</span><span class="op">$</span><span class="va">platelets</span>, nbins <span class="op">=</span> <span class="fl">5</span>, type <span class="op">=</span> <span class="st">"bclust"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">bin</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"If you want to use this feature, you need to install the 'classInt' package.\n"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> binned type: bclust</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of bins: 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [25100,113500] (113500,350500] (350500,582000] (582000,796000] (796000,850000] </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               9             231              36               2               1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            &lt;NA&gt; </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              20 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">1000</span>, size <span class="op">=</span> <span class="fl">50</span><span class="op">)</span> <span class="op">*</span> <span class="fl">12345679</span></span></span>
 <span class="r-in"><span><span class="va">bin</span> <span class="op">&lt;-</span> <span class="fu">binning</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
@@ -211,93 +203,89 @@ function of the dplyr package.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> binned type: quantile</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> number of bins: 7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2.592593e+08,1.375073e+09] (1.375073e+09,2.329806e+09] </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1.234568e+07,1.86067e+09]  (1.86067e+09,3.483245e+09] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                           7                           7 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (2.329806e+09,4.804821e+09] (4.804821e+09,6.346855e+09] </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (3.483245e+09,4.769547e+09] (4.769547e+09,5.930629e+09] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                           7                           8 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (6.346855e+09,9.599647e+09] (9.599647e+09,1.100823e+10] </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (5.930629e+09,8.728395e+09] (8.728395e+09,1.052675e+10] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                           7                           7 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (1.100823e+10,1.228395e+10] </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (1.052675e+10,1.217284e+10] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                           7 </span>
 <span class="r-in"><span><span class="va">bin</span> <span class="op">&lt;-</span> <span class="fu">binning</span><span class="op">(</span><span class="va">x</span>, approxy.lab <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">bin</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> binned type: quantile</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> number of bins: 7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    [259259259,1375073485]   (1375073485,2329805994]   (2329805994,4804820689] </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     [12345679,1860670192]   (1860670192,3483245146]   (3483245146,4769547320] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                         7                         7                         7 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   (4804820689,6346854785]   (6346854785,9599647257]  (9599647257,11008230442] </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   (4769547320,5930629036]   (5930629036,8728395053]  (8728395053,10526748961] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                         8                         7                         7 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (11008230442,12283950605] </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (10526748961,12172839494] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                         7 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># extract binned results</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="extract.bins.html">extract</a></span><span class="op">(</span><span class="va">bin</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] (11008230442,12283950605] (11008230442,12283950605]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3] (1375073485,2329805994]   (9599647257,11008230442] </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] [259259259,1375073485]    (11008230442,12283950605]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] (6346854785,9599647257]   (4804820689,6346854785]  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] (9599647257,11008230442]  (6346854785,9599647257]  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11] (2329805994,4804820689]   (4804820689,6346854785]  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13] (2329805994,4804820689]   (4804820689,6346854785]  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [15] (2329805994,4804820689]   (2329805994,4804820689]  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [17] (4804820689,6346854785]   (6346854785,9599647257]  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [19] (6346854785,9599647257]   (11008230442,12283950605]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [21] (1375073485,2329805994]   (4804820689,6346854785]  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [23] (9599647257,11008230442]  (11008230442,12283950605]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [25] (6346854785,9599647257]   (9599647257,11008230442] </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [27] [259259259,1375073485]    (4804820689,6346854785]  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [29] [259259259,1375073485]    (11008230442,12283950605]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [31] [259259259,1375073485]    (1375073485,2329805994]  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [33] (2329805994,4804820689]   (1375073485,2329805994]  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [35] (11008230442,12283950605] (1375073485,2329805994]  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [37] (2329805994,4804820689]   (9599647257,11008230442] </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [39] [259259259,1375073485]    (1375073485,2329805994]  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [41] (9599647257,11008230442]  (4804820689,6346854785]  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [43] [259259259,1375073485]    (1375073485,2329805994]  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [45] (6346854785,9599647257]   (2329805994,4804820689]  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [47] [259259259,1375073485]    (9599647257,11008230442] </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [49] (4804820689,6346854785]   (6346854785,9599647257]  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7 Levels: [259259259,1375073485] &lt; ... &lt; (11008230442,12283950605]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] (1860670192,3483245146]   [12345679,1860670192]    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3] (10526748961,12172839494] (4769547320,5930629036]  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] (4769547320,5930629036]   (3483245146,4769547320]  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] (1860670192,3483245146]   (1860670192,3483245146]  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] [12345679,1860670192]     [12345679,1860670192]    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [11] (10526748961,12172839494] [12345679,1860670192]    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] (4769547320,5930629036]   (4769547320,5930629036]  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] (3483245146,4769547320]   (3483245146,4769547320]  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [17] (1860670192,3483245146]   (3483245146,4769547320]  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [19] (10526748961,12172839494] (5930629036,8728395053]  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [21] [12345679,1860670192]     (10526748961,12172839494]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [23] (3483245146,4769547320]   (10526748961,12172839494]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25] (8728395053,10526748961]  (10526748961,12172839494]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [27] (4769547320,5930629036]   (8728395053,10526748961] </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [29] (1860670192,3483245146]   (1860670192,3483245146]  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [31] (8728395053,10526748961]  (4769547320,5930629036]  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [33] (4769547320,5930629036]   (5930629036,8728395053]  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [35] (8728395053,10526748961]  (8728395053,10526748961] </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [37] (5930629036,8728395053]   (5930629036,8728395053]  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [39] (5930629036,8728395053]   (5930629036,8728395053]  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [41] [12345679,1860670192]     (1860670192,3483245146]  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [43] [12345679,1860670192]     (10526748961,12172839494]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [45] (3483245146,4769547320]   (8728395053,10526748961] </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [47] (4769547320,5930629036]   (3483245146,4769547320]  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [49] (5930629036,8728395053]   (8728395053,10526748961] </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7 Levels: [12345679,1860670192] &lt; ... &lt; (10526748961,12172839494]</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># -------------------------</span></span></span>
 <span class="r-in"><span><span class="co"># Using pipes &amp; dplyr</span></span></span>
 <span class="r-in"><span><span class="co"># -------------------------</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘dplyr’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:stats’:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     filter, lag</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:base’:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     intersect, setdiff, setequal, union</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Compare binned frequency by death_event</span></span></span>
 <span class="r-in"><span><span class="va">heartfailure2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>platelets_bin <span class="op">=</span> <span class="fu">binning</span><span class="op">(</span><span class="va">heartfailure2</span><span class="op">$</span><span class="va">platelets</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
 <span class="r-in"><span>           <span class="fu"><a href="extract.bins.html">extract</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">death_event</span>, <span class="va">platelets_bin</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>freq <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>freq <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">freq</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> `summarise()` has grouped output by 'death_event'. You can override using the</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> `.groups` argument.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   death_event [1]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    death_event platelets_bin      freq</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;ord&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> No          (198400,222000]      21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> No          (237266.7,263000]    21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> No          (266000,289866.7]    21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> No          (222000,237266.7]    20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> No          (289866.7,324800]    20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> No          (324800,376200]      19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> No          (153000,198400]      18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> No          (376200,850000]      18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> No          (263000,266000]      17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> No          [25100,153000]       16</span>
-<span class="r-in"><span> </span></span>
-<span class="r-in"><span> <span class="co"># Compare binned frequency by death_event using Viz</span></span></span>
-<span class="r-in"><span> <span class="va">heartfailure2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>platelets_bin <span class="op">=</span> <span class="fu">binning</span><span class="op">(</span><span class="va">heartfailure2</span><span class="op">$</span><span class="va">platelets</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
-<span class="r-in"><span>            <span class="fu"><a href="extract.bins.html">extract</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>   <span class="fu"><a href="target_by.data.frame.html">target_by</a></span><span class="op">(</span><span class="va">death_event</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
-<span class="r-in"><span>   <span class="fu"><a href="relate.html">relate</a></span><span class="op">(</span><span class="va">platelets_bin</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
-<span class="r-in"><span>   <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="binning-2.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> No          (263358,281866.7]    35</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> No          (220000,235000]      21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> No          (235000,255000]      20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> No          (281866.7,319000]    20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> No          (151533.3,194000]    19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> No          (370200,850000]      19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> No          [25100,151533.3]     17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> No          (194000,220000]      17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> No          (319000,370200]      17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Yes         (263358,281866.7]    15</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span> </span></span>
 </code></pre></div>

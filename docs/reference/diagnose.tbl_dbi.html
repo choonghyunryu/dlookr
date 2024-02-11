@@ -134,56 +134,96 @@ or to select a variable to be corrected or removed through data diagnosis.</p><u
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## connect DBMS</span></span></span>
-<span class="r-in"><span><span class="co">#if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")</span></span></span>
-<span class="r-in"><span><span class="co">#if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")</span></span></span>
-<span class="r-in"><span><span class="co">#con_sqlite &lt;- DBI::dbConnect(RSQLite::SQLite(), ":memory:")</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## copy jobchange to the DBMS with a table named TB_JOBCHANGE</span></span></span>
-<span class="r-in"><span><span class="co">#copy_to(con_sqlite, jobchange, name = "TB_JOBCHANGE", overwrite = TRUE)</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## Using pipes ---------------------------------</span></span></span>
-<span class="r-in"><span><span class="co">## Diagnosis of all columns</span></span></span>
-<span class="r-in"><span><span class="co">#con_sqlite %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  tbl("TB_JOBCHANGE") %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  diagnose()</span></span></span>
-<span class="r-in"><span><span class="co">#  </span></span></span>
-<span class="r-in"><span><span class="co">## Positive values select columns</span></span></span>
-<span class="r-in"><span><span class="co">#con_sqlite %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  tbl("TB_JOBCHANGE") %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  diagnose(gender, education_level, company_size)</span></span></span>
-<span class="r-in"><span><span class="co">#  </span></span></span>
-<span class="r-in"><span><span class="co">## Negative values to drop columns</span></span></span>
-<span class="r-in"><span><span class="co">#con_sqlite %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  tbl("TB_JOBCHANGE") %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  diagnose(-gender, -education_level, -company_size)</span></span></span>
-<span class="r-in"><span><span class="co">#  </span></span></span>
-<span class="r-in"><span><span class="co">## Positions values select columns, and In-memory mode</span></span></span>
-<span class="r-in"><span><span class="co">#con_sqlite %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  tbl("TB_JOBCHANGE") %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  diagnose(1, 3, 8, in_database = FALSE)</span></span></span>
-<span class="r-in"><span><span class="co">#  </span></span></span>
-<span class="r-in"><span><span class="co">## Positions values select columns, and In-memory mode and collect size is 200</span></span></span>
-<span class="r-in"><span><span class="co">#con_sqlite %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  tbl("TB_JOBCHANGE") %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  diagnose(-8, -9, -10, in_database = FALSE, collect_size = 200)</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"DBI"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"RSQLite"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="co"># connect DBMS</span></span></span>
+<span class="r-in"><span>  <span class="va">con_sqlite</span> <span class="op">&lt;-</span> <span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html" class="external-link">dbConnect</a></span><span class="op">(</span><span class="fu">RSQLite</span><span class="fu">::</span><span class="fu"><a href="https://rsqlite.r-dbi.org/reference/SQLite.html" class="external-link">SQLite</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">":memory:"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## Using pipes &amp; dplyr -------------------------</span></span></span>
-<span class="r-in"><span><span class="co">## Diagnosis of missing variables</span></span></span>
-<span class="r-in"><span><span class="co">#con_sqlite %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  tbl("TB_JOBCHANGE") %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  diagnose() %&gt;%</span></span></span>
-<span class="r-in"><span><span class="co">#  filter(missing_count &gt; 0)</span></span></span>
-<span class="r-in"><span><span class="co">#  </span></span></span>
-<span class="r-in"><span><span class="co">## Using pipes &amp; dplyr -------------------------</span></span></span>
-<span class="r-in"><span><span class="co">## Diagnosis of missing variables</span></span></span>
-<span class="r-in"><span><span class="co">#con_sqlite %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  tbl("TB_JOBCHANGE") %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  group_by(job_chnge) %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  diagnose()</span></span></span>
-<span class="r-in"><span><span class="co">#  </span></span></span>
-<span class="r-in"><span><span class="co">## Disconnect DBMS   </span></span></span>
-<span class="r-in"><span><span class="co">#DBI::dbDisconnect(con_sqlite)</span></span></span>
+<span class="r-in"><span>  <span class="co"># copy jobchange to the DBMS with a table named TB_JOBCHANGE</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/copy_to.html" class="external-link">copy_to</a></span><span class="op">(</span><span class="va">con_sqlite</span>, <span class="va">jobchange</span>, name <span class="op">=</span> <span class="st">"TB_JOBCHANGE"</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># Using pipes ---------------------------------</span></span></span>
+<span class="r-in"><span>  <span class="co"># Diagnosis of all columns</span></span></span>
+<span class="r-in"><span>  <span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_JOBCHANGE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>    <span class="fu"><a href="diagnose.data.frame.html">diagnose</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span>  <span class="co"># Positions values select columns, and In-memory mode and collect size is 200</span></span></span>
+<span class="r-in"><span>  <span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_JOBCHANGE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>    <span class="fu"><a href="diagnose.data.frame.html">diagnose</a></span><span class="op">(</span><span class="va">gender</span>, <span class="va">education_level</span>, <span class="va">company_size</span>, in_database <span class="op">=</span> <span class="cn">FALSE</span>, collect_size <span class="op">=</span> <span class="fl">200</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># Using pipes &amp; dplyr -------------------------</span></span></span>
+<span class="r-in"><span>  <span class="co"># Diagnosis of missing variables</span></span></span>
+<span class="r-in"><span>  <span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_JOBCHANGE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>    <span class="fu"><a href="diagnose.data.frame.html">diagnose</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">missing_count</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span>  <span class="co"># Using pipes &amp; dplyr -------------------------</span></span></span>
+<span class="r-in"><span>  <span class="co"># Diagnosis of missing variables</span></span></span>
+<span class="r-in"><span>  <span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_JOBCHANGE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">job_chnge</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>    <span class="fu"><a href="diagnose.data.frame.html">diagnose</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span> </span></span>
+<span class="r-in"><span>  <span class="co"># Disconnect DBMS   </span></span></span>
+<span class="r-in"><span>  <span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbDisconnect.html" class="external-link">dbDisconnect</a></span><span class="op">(</span><span class="va">con_sqlite</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"If you want to use this feature, you need to install the 'DBI' and 'RSQLite' package.\n"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 14 × 6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    variables        types missing_count missing_percent unique_count unique_rate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> enrollee_id      char…             0           0            <span style="text-decoration: underline;">19</span>158    1       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> city             char…             0           0              123    0.006<span style="text-decoration: underline;">42</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> city_dev_index   doub…             0           0               93    0.004<span style="text-decoration: underline;">85</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> gender           char…          <span style="text-decoration: underline;">4</span>508          23.5              3    0.000<span style="text-decoration: underline;">157</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> relevent_experi… char…             0           0                2    0.000<span style="text-decoration: underline;">104</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> enrolled_univer… char…           386           2.01             3    0.000<span style="text-decoration: underline;">157</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> education_level  char…           460           2.40             5    0.000<span style="text-decoration: underline;">261</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> major_discipline char…          <span style="text-decoration: underline;">2</span>813          14.7              6    0.000<span style="text-decoration: underline;">313</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> experience       char…            65           0.339           22    0.001<span style="text-decoration: underline;">15</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> company_size     char…          <span style="text-decoration: underline;">5</span>938          31.0              8    0.000<span style="text-decoration: underline;">418</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> company_type     char…          <span style="text-decoration: underline;">6</span>140          32.0              6    0.000<span style="text-decoration: underline;">313</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> last_new_job     char…           423           2.21             6    0.000<span style="text-decoration: underline;">313</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> training_hours   inte…             0           0              241    0.012<span style="text-decoration: underline;">6</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> job_chnge        char…             0           0                2    0.000<span style="text-decoration: underline;">104</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   variables       types   missing_count missing_percent unique_count unique_rate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> gender          charac…            48            24              4       0.02 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> education_level charac…             6             3              5       0.025</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> company_size    charac…            57            28.5            9       0.045</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 8 × 6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   variables         types missing_count missing_percent unique_count unique_rate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> gender            char…          <span style="text-decoration: underline;">4</span>508          23.5              3    0.000<span style="text-decoration: underline;">157</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> enrolled_univers… char…           386           2.01             3    0.000<span style="text-decoration: underline;">157</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> education_level   char…           460           2.40             5    0.000<span style="text-decoration: underline;">261</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> major_discipline  char…          <span style="text-decoration: underline;">2</span>813          14.7              6    0.000<span style="text-decoration: underline;">313</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> experience        char…            65           0.339           22    0.001<span style="text-decoration: underline;">15</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> company_size      char…          <span style="text-decoration: underline;">5</span>938          31.0              8    0.000<span style="text-decoration: underline;">418</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> company_type      char…          <span style="text-decoration: underline;">6</span>140          32.0              6    0.000<span style="text-decoration: underline;">313</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> last_new_job      char…           423           2.21             6    0.000<span style="text-decoration: underline;">313</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 28 × 8</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    variables           types  job_chnge data_count missing_count missing_percent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> enrollee_id         chara… No             <span style="text-decoration: underline;">14</span>381             0             0  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> enrollee_id         chara… Yes             <span style="text-decoration: underline;">4</span>777             0             0  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> city                chara… No             <span style="text-decoration: underline;">14</span>381             0             0  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> city                chara… Yes             <span style="text-decoration: underline;">4</span>777             0             0  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> city_dev_index      double No             <span style="text-decoration: underline;">14</span>381             0             0  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> city_dev_index      double Yes             <span style="text-decoration: underline;">4</span>777             0             0  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> gender              chara… No             <span style="text-decoration: underline;">14</span>381          <span style="text-decoration: underline;">3</span>119            21.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> gender              chara… Yes             <span style="text-decoration: underline;">4</span>777          <span style="text-decoration: underline;">1</span>389            29.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> relevent_experience chara… No             <span style="text-decoration: underline;">14</span>381             0             0  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> relevent_experience chara… Yes             <span style="text-decoration: underline;">4</span>777             0             0  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 18 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 2 more variables: unique_count &lt;int&gt;, unique_rate &lt;dbl&gt;</span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span>   </span></span>
 </code></pre></div>

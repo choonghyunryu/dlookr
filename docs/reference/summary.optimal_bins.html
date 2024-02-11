@@ -106,36 +106,78 @@ summary.performance_bin() includes general metrics and result of significance te
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Generate data for the example</span></span></span>
-<span class="r-in"><span><span class="co"># heartfailure2 &lt;- heartfailure</span></span></span>
-<span class="r-in"><span><span class="co"># heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] &lt;- NA</span></span></span>
+<span class="r-in"><span><span class="va">heartfailure2</span> <span class="op">&lt;-</span> <span class="va">heartfailure</span></span></span>
+<span class="r-in"><span><span class="va">heartfailure2</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NROW</a></span><span class="op">(</span><span class="va">heartfailure2</span><span class="op">)</span><span class="op">)</span>, <span class="fl">5</span><span class="op">)</span>, <span class="st">"creatinine"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># optimal binning</span></span></span>
-<span class="r-in"><span><span class="co"># bin &lt;- binning_by(heartfailure2, "death_event", "creatinine")</span></span></span>
-<span class="r-in"><span><span class="co"># bin</span></span></span>
+<span class="r-in"><span><span class="va">bin</span> <span class="op">&lt;-</span> <span class="fu"><a href="binning_by.html">binning_by</a></span><span class="op">(</span><span class="va">heartfailure2</span>, <span class="st">"death_event"</span>, <span class="st">"creatinine"</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The factor y has been changed to a numeric vector consisting of 0 and 1.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> 'Yes' changed to 1 (positive) and 'No' changed to 0 (negative).</span>
+<span class="r-in"><span><span class="va">bin</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> binned type: optimal</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of bins: 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [0.5,0.9] (0.9,1.8] (1.8,9.4]      &lt;NA&gt; </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        78       169        47         5 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># summary optimal_bins class</span></span></span>
-<span class="r-in"><span><span class="co"># summary(bin)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">bin</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── Binning Table ──────────────────────── Several Metrics ── </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         Bin CntRec CntPos CntNeg RatePos RateNeg    Odds      WoE      IV</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 [0.5,0.9]     78      9     69 0.09375 0.33990 0.13043 -1.28802 0.31705</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 (0.9,1.8]    169     52    117 0.54167 0.57635 0.44444 -0.06207 0.00215</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 (1.8,9.4]     47     35     12 0.36458 0.05911 2.91667  1.81930 0.55574</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      &lt;NA&gt;      5      0      5 0.00000 0.02463 0.00000       NA      NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     Total    299     96    203 1.00000 1.00000 0.47291       NA      NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       JSD     AUC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.03710 0.01593</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.00027 0.21013</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.06124 0.04834</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      NA 0.02463</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      NA 0.29903</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── General Metrics ───────────────────────────────────────── </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> • Gini index                       :  -0.40194</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> • IV (Jeffrey)                     :  NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> • JS (Jensen-Shannon) Divergence   :  NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> • Kolmogorov-Smirnov Statistics    :  0.28084</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> • HHI (Herfindahl-Hirschman Index) :  0.41251</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> • HHI (normalized)                 :  0.21668</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> • Cramer's V                       :  0.42641 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── Significance Tests ──────────────────── Chisquare Test ── </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       Bin A     Bin B statistics      p_value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 [0.5,0.9] (0.9,1.8]   10.61277 1.123093e-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 (0.9,1.8] (1.8,9.4]   29.19238 6.553656e-08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># performance table</span></span></span>
-<span class="r-in"><span><span class="co"># attr(bin, "performance")</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># visualize all information for optimal_bins class</span></span></span>
-<span class="r-in"><span><span class="co"># plot(bin)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># visualize WoE information for optimal_bins class</span></span></span>
-<span class="r-in"><span><span class="co"># plot(bin, type = "WoE")</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># visualize all information without typographic</span></span></span>
-<span class="r-in"><span><span class="co"># plot(bin, typographic = FALSE)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">bin</span>, <span class="st">"performance"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         Bin CntRec CntPos CntNeg CntCumPos CntCumNeg RatePos RateNeg RateCumPos</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 [0.5,0.9]     78      9     69         9        69 0.09375 0.33990    0.09375</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 (0.9,1.8]    169     52    117        61       186 0.54167 0.57635    0.63542</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 (1.8,9.4]     47     35     12        96       198 0.36458 0.05911    1.00000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      &lt;NA&gt;      5      0      5        96       203 0.00000 0.02463    1.00000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     Total    299     96    203        NA        NA 1.00000 1.00000         NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   RateCumNeg    Odds   LnOdds      WoE      IV     JSD     AUC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    0.33990 0.13043 -2.03688 -1.28802 0.31705 0.03710 0.01593</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    0.91626 0.44444 -0.81093 -0.06207 0.00215 0.00027 0.21013</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    0.97537 2.91667  1.07044  1.81930 0.55574 0.06124 0.04834</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    1.00000 0.00000     -Inf       NA      NA      NA 0.02463</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5         NA 0.47291 -0.74886       NA      NA      NA 0.29903</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># extract binned results</span></span></span>
-<span class="r-in"><span><span class="co"># extract(bin) %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#   head(20)</span></span></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">bin</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="extract.bins.html">extract</a></span><span class="op">(</span><span class="va">bin</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] (1.8,9.4] (0.9,1.8] (0.9,1.8] (1.8,9.4] (1.8,9.4] (1.8,9.4] (0.9,1.8]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] (0.9,1.8] (0.9,1.8] (1.8,9.4] (1.8,9.4] [0.5,0.9] (0.9,1.8] (0.9,1.8]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] (0.9,1.8] (0.9,1.8] [0.5,0.9] [0.5,0.9] (0.9,1.8] (1.8,9.4]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Levels: [0.5,0.9] &lt; (0.9,1.8] &lt; (1.8,9.4]</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

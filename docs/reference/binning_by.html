@@ -134,44 +134,32 @@ smbinning() function of smbinning package.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="binning.html">binning</a></code>, <code><a href="plot.optimal_bins.html">plot.optimal_bins</a></code>.</p></div>
+    <div class="dont-index"><p><code><a href="binning.html">binning</a></code>, <code><a href="summary.optimal_bins.html">summary.optimal_bins</a></code>, <code><a href="plot.optimal_bins.html">plot.optimal_bins</a></code>.</p></div>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Generate data for the example</span></span></span>
-<span class="r-in"><span><span class="co"># heartfailure2 &lt;- heartfailure</span></span></span>
-<span class="r-in"><span><span class="co"># heartfailure2[sample(seq(NROW(heartfailure2)), 5), "creatinine"] &lt;- NA</span></span></span>
+<span class="r-in"><span><span class="va">heartfailure2</span> <span class="op">&lt;-</span> <span class="va">heartfailure</span></span></span>
+<span class="r-in"><span><span class="va">heartfailure2</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NROW</a></span><span class="op">(</span><span class="va">heartfailure2</span><span class="op">)</span><span class="op">)</span>, <span class="fl">5</span><span class="op">)</span>, <span class="st">"creatinine"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># optimal binning using character</span></span></span>
-<span class="r-in"><span><span class="co"># bin &lt;- binning_by(heartfailure2, "death_event", "creatinine")</span></span></span>
+<span class="r-in"><span><span class="va">bin</span> <span class="op">&lt;-</span> <span class="fu">binning_by</span><span class="op">(</span><span class="va">heartfailure2</span>, <span class="st">"death_event"</span>, <span class="st">"creatinine"</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The factor y has been changed to a numeric vector consisting of 0 and 1.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> 'Yes' changed to 1 (positive) and 'No' changed to 0 (negative).</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># optimal binning using name</span></span></span>
-<span class="r-in"><span><span class="co"># bin &lt;- binning_by(heartfailure2, death_event, creatinine)</span></span></span>
-<span class="r-in"><span><span class="co"># bin</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># performance table</span></span></span>
-<span class="r-in"><span><span class="co"># attr(bin, "performance")</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># summary optimal_bins class</span></span></span>
-<span class="r-in"><span><span class="co"># summary(bin)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># visualize all information for optimal_bins class</span></span></span>
-<span class="r-in"><span><span class="co"># plot(bin)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># visualize WoE information for optimal_bins class</span></span></span>
-<span class="r-in"><span><span class="co"># plot(bin, type = "WoE")</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># visualize all information without typographic</span></span></span>
-<span class="r-in"><span><span class="co"># plot(bin, typographic = FALSE)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># extract binned results</span></span></span>
-<span class="r-in"><span><span class="co"># extract(bin) %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#   head(20)</span></span></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="va">bin</span> <span class="op">&lt;-</span> <span class="fu">binning_by</span><span class="op">(</span><span class="va">heartfailure2</span>, <span class="va">death_event</span>, <span class="va">creatinine</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The factor y has been changed to a numeric vector consisting of 0 and 1.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> 'Yes' changed to 1 (positive) and 'No' changed to 0 (negative).</span>
+<span class="r-in"><span><span class="va">bin</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> binned type: optimal</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of bins: 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [0.5,0.9] (0.9,1.8] (1.8,9.4]      &lt;NA&gt; </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        78       168        48         5 </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

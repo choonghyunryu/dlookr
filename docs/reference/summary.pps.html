@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.3</span>
       </span>
     </div>
 
@@ -62,16 +62,19 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for pps</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for pps</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>object</dt>
 <dd><p>an object of class "pps", usually, a result of a call to pps().</p></dd>
+
+
 <dt>...</dt>
 <dd><p>further arguments passed to or from other methods.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -84,12 +87,16 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># pps type is generic ======================================</span></span>
-<span class="r-in"><span class="va">pps_generic</span> <span class="op">&lt;-</span> <span class="fu"><a href="pps.html">pps</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pps_generic</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># If you want to use this feature, you need to install the 'ppsr' package.</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"ppsr"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"If you want to use this feature, you need to install the 'ppsr' package.\n"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># pps type is generic ======================================</span></span></span>
+<span class="r-in"><span><span class="va">pps_generic</span> <span class="op">&lt;-</span> <span class="fu"><a href="pps.html">pps</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pps_generic</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               x            y                       result_type        pps</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  Sepal.Length Sepal.Length predictor and target are the same 1.00000000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2   Sepal.Width Sepal.Length            predictive power score 0.04632352</span>
@@ -168,9 +175,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 23 classification</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 24 classification</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 25           &lt;NA&gt;</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># summary pps class </span></span>
-<span class="r-in"><span class="va">mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pps_generic</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">pps_generic</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="co"># summary pps class </span></span></span>
+<span class="r-in"><span>  <span class="va">mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pps_generic</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">mat</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * PPS type : generic </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Matrix of Predictive Power Score</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - Columns : target</span>
@@ -181,23 +191,22 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Length   0.61608360  0.24263851    1.0000000   0.7917512 0.7904907</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Width    0.48735314  0.20124105    0.7437845   1.0000000 0.7561113</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Species        0.55918638  0.31344008    0.9167580   0.9398532 1.0000000</span>
-<span class="r-in"><span class="va">mat</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              Sepal.Length Sepal.Width Petal.Length Petal.Width   Species</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Sepal.Length   1.00000000  0.04632352    0.5491398   0.4127668 0.4075487</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Sepal.Width    0.06790301  1.00000000    0.2376991   0.2174659 0.2012876</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Length   0.61608360  0.24263851    1.0000000   0.7917512 0.7904907</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Width    0.48735314  0.20124105    0.7437845   1.0000000 0.7561113</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Species        0.55918638  0.31344008    0.9167580   0.9398532 1.0000000</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># pps type is target_by =====================================</span></span>
-<span class="r-in"><span class="co">##-----------------------------------------------------------</span></span>
-<span class="r-in"><span class="co"># If the target variable is a categorical variable</span></span>
-<span class="r-in"><span class="co"># Using dplyr</span></span>
-<span class="r-in"><span class="va">pps_cat</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="target_by.data.frame.html">target_by</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="pps.html">pps</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">pps_cat</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># pps type is target_by =====================================</span></span></span>
+<span class="r-in"><span><span class="co">##-----------------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co"># If the target variable is a categorical variable</span></span></span>
+<span class="r-in"><span><span class="co"># Using dplyr</span></span></span>
+<span class="r-in"><span><span class="va">pps_cat</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="target_by.data.frame.html">target_by</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="pps.html">pps</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">pps_cat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              x       y                       result_type       pps      metric</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 Sepal.Length Species            predictive power score 0.5591864 F1_weighted</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2  Sepal.Width Species            predictive power score 0.3134401 F1_weighted</span>
@@ -210,9 +219,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3      0.3176487   0.9404972        5    1      tree classification</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4      0.3176487   0.9599148        5    1      tree classification</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5             NA          NA       NA   NA      &lt;NA&gt;           &lt;NA&gt;</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># summary pps class </span></span>
-<span class="r-in"><span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pps_cat</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">pps_cat</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="co"># summary pps class </span></span></span>
+<span class="r-in"><span>  <span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pps_cat</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">tab</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * PPS type : target_by </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Target variable : Species </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Model type : classification </span>
@@ -223,20 +235,19 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3 Petal.Length Species 0.9167580</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 Sepal.Length Species 0.5591864</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5  Sepal.Width Species 0.3134401</span>
-<span class="r-in"><span class="va">tab</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     predictors  target       pps</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      Species Species 1.0000000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2  Petal.Width Species 0.9398532</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3 Petal.Length Species 0.9167580</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 Sepal.Length Species 0.5591864</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5  Sepal.Width Species 0.3134401</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">##-----------------------------------------------------------</span></span>
-<span class="r-in"><span class="co"># If the target variable is a numerical variable</span></span>
-<span class="r-in"><span class="va">num</span> <span class="op">&lt;-</span> <span class="fu"><a href="target_by.data.frame.html">target_by</a></span><span class="op">(</span><span class="va">iris</span>, <span class="va">Petal.Length</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">pps_num</span> <span class="op">&lt;-</span> <span class="fu"><a href="pps.html">pps</a></span><span class="op">(</span><span class="va">num</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pps_num</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">##-----------------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co"># If the target variable is a numerical variable</span></span></span>
+<span class="r-in"><span><span class="va">num</span> <span class="op">&lt;-</span> <span class="fu"><a href="target_by.data.frame.html">target_by</a></span><span class="op">(</span><span class="va">iris</span>, <span class="va">Petal.Length</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">pps_num</span> <span class="op">&lt;-</span> <span class="fu"><a href="pps.html">pps</a></span><span class="op">(</span><span class="va">num</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pps_num</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              x            y                       result_type       pps metric</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 Sepal.Length Petal.Length            predictive power score 0.6160836    MAE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2  Sepal.Width Petal.Length            predictive power score 0.2426385    MAE</span>
@@ -249,9 +260,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3             NA          NA       NA   NA      &lt;NA&gt;       &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4       1.571967   0.3265152        5    1      tree regression</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5       1.571967   0.3280552        5    1      tree regression</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># summary pps class </span></span>
-<span class="r-in"><span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pps_num</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">pps_num</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="co"># summary pps class </span></span></span>
+<span class="r-in"><span>  <span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pps_num</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">tab</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * PPS type : target_by </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Target variable : Petal.Length </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Model type : regression </span>
@@ -262,15 +276,13 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3      Species Petal.Length 0.7904907</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 Sepal.Length Petal.Length 0.6160836</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5  Sepal.Width Petal.Length 0.2426385</span>
-<span class="r-in"><span class="va">tab</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     predictors       target       pps</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 Petal.Length Petal.Length 1.0000000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2  Petal.Width Petal.Length 0.7917512</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3      Species Petal.Length 0.7904907</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 Sepal.Length Petal.Length 0.6160836</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5  Sepal.Width Petal.Length 0.2426385</span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -285,7 +297,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

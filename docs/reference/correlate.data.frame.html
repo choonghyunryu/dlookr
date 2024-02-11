@@ -125,6 +125,12 @@ table data is taken in R and operated in-memory. Not yet supported in_database =
 Applies only if in_database = FALSE.</p></dd>
 
 </dl></div>
+    <div id="value">
+    <h2>Value</h2>
+    
+
+<p>An object of correlate class.</p>
+    </div>
     <div id="details">
     <h2>Details</h2>
     <p>This function is useful when used with the group_by() function of the dplyr package.
@@ -133,11 +139,11 @@ rather than the whole observation, you can use <code><a href="https://dplyr.tidy
 This function is computed stats::cor() function by use = "pairwise.complete.obs" option for numerical variable.
 And support categorical variable with theil's U correlation coefficient and Cramer's V correlation coefficient.</p>
     </div>
-    <div id="correlation-coefficient-information">
-    <h2>Correlation coefficient information</h2>
+    <div id="correlate-class">
+    <h2>correlate class</h2>
     
 
-<p>It returns data.frame with the following variables.:</p>
+<p>The correlate class inherits the tibble class and has the following variables.:</p>
 <ul><li><p>var1 : names of numerical variable</p></li>
 <li><p>var2 : name of the corresponding numeric variable</p></li>
 <li><p>coef_corr : Correlation coefficient</p></li>
@@ -173,49 +179,6 @@ And support categorical variable with theil's U correlation coefficient and Cram
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> platelets         cpk_enzyme    0.024<span style="text-decoration: underline;">5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> creatinine        cpk_enzyme   -<span style="color: #BB0000;">0.016</span><span style="color: #BB0000; text-decoration: underline;">4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 32 more rows</span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">mat_corr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">tab_corr</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * correlation type   : generic </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * variable type      : numeric </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * correlation method : pearson </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * Matrix of Correlation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                           age   cpk_enzyme ejection_fraction   platelets</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age                1.00000000 -0.081406394        0.06019547 -0.05247529</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cpk_enzyme        -0.08140639  1.000000000       -0.04407955  0.02446339</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ejection_fraction  0.06019547 -0.044079554        1.00000000  0.07217747</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> platelets         -0.05247529  0.024463389        0.07217747  1.00000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> creatinine         0.15923697 -0.016408480       -0.01130247 -0.04119808</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sodium            -0.04591178  0.059550156        0.17590228  0.06212462</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> time              -0.22426485 -0.009345653        0.04172924  0.01051391</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                    creatinine      sodium         time</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age                0.15923697 -0.04591178 -0.224264849</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cpk_enzyme        -0.01640848  0.05955016 -0.009345653</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ejection_fraction -0.01130247  0.17590228  0.041729235</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> platelets         -0.04119808  0.06212462  0.010513909</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> creatinine         1.00000000 -0.18909521 -0.149315418</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sodium            -0.18909521  1.00000000  0.087640000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> time              -0.14931542  0.08764000  1.000000000</span>
-<span class="r-in"><span><span class="va">mat_corr</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                           age   cpk_enzyme ejection_fraction   platelets</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age                1.00000000 -0.081406394        0.06019547 -0.05247529</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cpk_enzyme        -0.08140639  1.000000000       -0.04407955  0.02446339</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ejection_fraction  0.06019547 -0.044079554        1.00000000  0.07217747</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> platelets         -0.05247529  0.024463389        0.07217747  1.00000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> creatinine         0.15923697 -0.016408480       -0.01130247 -0.04119808</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sodium            -0.04591178  0.059550156        0.17590228  0.06212462</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> time              -0.22426485 -0.009345653        0.04172924  0.01051391</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                    creatinine      sodium         time</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age                0.15923697 -0.04591178 -0.224264849</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cpk_enzyme        -0.01640848  0.05955016 -0.009345653</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ejection_fraction -0.01130247  0.17590228  0.041729235</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> platelets         -0.04119808  0.06212462  0.010513909</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> creatinine         1.00000000 -0.18909521 -0.149315418</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sodium            -0.18909521  1.00000000  0.087640000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> time              -0.14931542  0.08764000  1.000000000</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tab_corr</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="correlate.data.frame-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Select the variable to compute</span></span></span>
 <span class="r-in"><span><span class="fu">correlate</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="st">"creatinine"</span>, <span class="st">"sodium"</span><span class="op">)</span></span></span>
@@ -261,32 +224,9 @@ And support categorical variable with theil's U correlation coefficient and Cram
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8  hblood_pressure         smoking 0.0024572165</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9          anaemia     death_event 0.0033373058</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 hblood_pressure     death_event 0.0048836271</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">tab_corr</span><span class="op">)</span>   </span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * correlation type   : generic </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * variable type      : categorical </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * correlation method : theil </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * Matrix of Correlation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     anaemia     diabetes hblood_pressure         sex</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> anaemia         1.000000000 0.0001188941     0.001092576 0.006721119</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> hblood_pressure 0.001092576 0.0001222019     1.000000000 0.008355827</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     smoking death_event</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> anaemia         0.008874759 0.003337306</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> hblood_pressure 0.002457216 0.004883627</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tab_corr</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="correlate.data.frame-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span>   </span></span>
 <span class="r-in"><span><span class="co"># Using dplyr::grouped_dt</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘dplyr’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:stats’:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     filter, lag</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:base’:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     intersect, setdiff, setequal, union</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">gdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">heartfailure</span>, <span class="va">smoking</span>, <span class="va">death_event</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">correlate</span><span class="op">(</span><span class="va">gdata</span><span class="op">)</span></span></span>
@@ -399,34 +339,32 @@ And support categorical variable with theil's U correlation coefficient and Cram
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Yes             Yes         creatinine sodium    -<span style="color: #BB0000;">0.561</span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="co"># If you have the 'DBI' and 'RSQLite' packages installed, perform the code block:</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># connect DBMS</span></span></span>
+<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op">&lt;-</span> <span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html" class="external-link">dbConnect</a></span><span class="op">(</span><span class="fu">RSQLite</span><span class="fu">::</span><span class="fu"><a href="https://rsqlite.r-dbi.org/reference/SQLite.html" class="external-link">SQLite</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">":memory:"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## connect DBMS</span></span></span>
-<span class="r-in"><span><span class="co">#if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")</span></span></span>
-<span class="r-in"><span><span class="co">#if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")</span></span></span>
-<span class="r-in"><span><span class="co">#con_sqlite &lt;- DBI::dbConnect(RSQLite::SQLite(), ":memory:")</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## copy heartfailure to the DBMS with a table named TB_HEARTFAILURE</span></span></span>
-<span class="r-in"><span><span class="co">#copy_to(con_sqlite, heartfailure, name = "TB_HEARTFAILURE", overwrite = TRUE)</span></span></span>
+<span class="r-in"><span><span class="co"># copy heartfailure to the DBMS with a table named TB_HEARTFAILURE</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/copy_to.html" class="external-link">copy_to</a></span><span class="op">(</span><span class="va">con_sqlite</span>, <span class="va">heartfailure</span>, name <span class="op">=</span> <span class="st">"TB_HEARTFAILURE"</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## Using pipes ---------------------------------</span></span></span>
-<span class="r-in"><span><span class="co">## Correlation coefficients of all numerical variables</span></span></span>
-<span class="r-in"><span><span class="co">#con_sqlite %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  tbl("TB_HEARTFAILURE") %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  correlate()</span></span></span>
+<span class="r-in"><span><span class="co"># Using pipes ---------------------------------</span></span></span>
+<span class="r-in"><span><span class="co"># Correlation coefficients of all numerical variables</span></span></span>
+<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_HEARTFAILURE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu">correlate</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## Using pipes &amp; dplyr -------------------------</span></span></span>
-<span class="r-in"><span><span class="co">## Compute the correlation coefficient of creatinine variable by 'hblood_pressure'</span></span></span>
-<span class="r-in"><span><span class="co">## and 'death_event' variables.</span></span></span>
-<span class="r-in"><span><span class="co">#con_sqlite %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  tbl("TB_HEARTFAILURE") %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  group_by(hblood_pressure, death_event) %&gt;%</span></span></span>
-<span class="r-in"><span><span class="co">#  correlate(creatinine) </span></span></span>
+<span class="r-in"><span><span class="co"># Using pipes &amp; dplyr -------------------------</span></span></span>
+<span class="r-in"><span><span class="co"># Compute the correlation coefficient of creatinine variable by 'hblood_pressure'</span></span></span>
+<span class="r-in"><span><span class="co"># and 'death_event' variables.</span></span></span>
+<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_HEARTFAILURE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">hblood_pressure</span>, <span class="va">death_event</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">correlate</span><span class="op">(</span><span class="va">creatinine</span><span class="op">)</span> </span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## Disconnect DBMS   </span></span></span>
-<span class="r-in"><span><span class="co">#DBI::dbDisconnect(con_sqlite)</span></span></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="co"># Disconnect DBMS   </span></span></span>
+<span class="r-in"><span><span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbDisconnect.html" class="external-link">dbDisconnect</a></span><span class="op">(</span><span class="va">con_sqlite</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span>  </span></span>
 </code></pre></div>
     </div>

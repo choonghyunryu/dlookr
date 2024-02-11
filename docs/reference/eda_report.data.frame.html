@@ -115,6 +115,12 @@ data analysis for object inheriting from data.frame.</p>
 <dd><p>logical. choose whether to output the report results to the browser.</p></dd>
 
 </dl></div>
+    <div id="value">
+    <h2>Value</h2>
+    
+
+<p>No return value. This function only generates a report.</p>
+    </div>
     <div id="details">
     <h2>Details</h2>
     <p>Generate generalized EDA report automatically.
@@ -151,58 +157,54 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">#if (!require(prettydoc)) install.packages('prettydoc', repos = "http://cran.us.r-project.org")</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">### target variable is categorical variable ----------------------------------</span></span></span>
-<span class="r-in"><span><span class="co">## reporting the EDA information</span></span></span>
-<span class="r-in"><span><span class="co">## create pdf file. file name is EDA_Report.pdf</span></span></span>
-<span class="r-in"><span><span class="co">#eda_report(heartfailure, death_event)</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## create pdf file. file name is EDA_heartfailure.pdf</span></span></span>
-<span class="r-in"><span><span class="co">#eda_report(heartfailure, "death_event", output_file = "EDA_heartfailure.pdf")</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## create pdf file. file name is EDA_heartfailure.pdf and not browse</span></span></span>
-<span class="r-in"><span><span class="co">#eda_report(heartfailure, "death_event", output_dir = ".", </span></span></span>
-<span class="r-in"><span><span class="co">#  output_file = "EDA_heartfailure.pdf", browse = FALSE)</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## create html file. file name is EDA_Report.html</span></span></span>
-<span class="r-in"><span><span class="co">#eda_report(heartfailure, "death_event", output_format = "html")</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## create html file. file name is EDA_heartfailure.html</span></span></span>
-<span class="r-in"><span><span class="co">#eda_report(heartfailure, death_event, output_format = "html", </span></span></span>
-<span class="r-in"><span><span class="co">#  output_file = "EDA_heartfailure.html")</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">### target variable is numerical variable ------------------------------------</span></span></span>
-<span class="r-in"><span><span class="co">## reporting the EDA information</span></span></span>
-<span class="r-in"><span><span class="co">#eda_report(heartfailure, sodium)</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## create pdf file. file name is EDA2.pdf</span></span></span>
-<span class="r-in"><span><span class="co">#eda_report(heartfailure, "sodium", output_file = "EDA2.pdf")</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## create html file. file name is EDA_Report.html</span></span></span>
-<span class="r-in"><span><span class="co">#eda_report(heartfailure, "sodium", output_format = "html")</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## create html file. file name is EDA2.html</span></span></span>
-<span class="r-in"><span><span class="co">#eda_report(heartfailure, sodium, output_format = "html", output_file = "EDA2.html")</span></span></span>
+<span class="r-in"><span><span class="co">## target variable is categorical variable ----------------------------------</span></span></span>
+<span class="r-in"><span><span class="co"># reporting the EDA information</span></span></span>
+<span class="r-in"><span><span class="co"># create pdf file. file name is EDA_Report.pdf</span></span></span>
+<span class="r-in"><span><span class="fu">eda_report</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="va">death_event</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">### target variable is null</span></span></span>
-<span class="r-in"><span><span class="co">## reporting the EDA information</span></span></span>
-<span class="r-in"><span><span class="co">#eda_report(heartfailure)</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## create pdf file. file name is EDA2.pdf</span></span></span>
-<span class="r-in"><span><span class="co">#eda_report(heartfailure, output_file = "EDA2.pdf")</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## create html file. file name is EDA_Report.html</span></span></span>
-<span class="r-in"><span><span class="co">#eda_report(heartfailure, output_format = "html")</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## create html file. file name is EDA2.html</span></span></span>
-<span class="r-in"><span><span class="co">#eda_report(heartfailure, output_format = "html", output_file = "EDA2.html")</span></span></span>
+<span class="r-in"><span><span class="co"># create pdf file. file name is EDA_heartfailure.pdf</span></span></span>
+<span class="r-in"><span><span class="fu">eda_report</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="st">"death_event"</span>, output_file <span class="op">=</span> <span class="st">"EDA_heartfailure.pdf"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create pdf file. file name is EDA_heartfailure.pdf and not browse</span></span></span>
+<span class="r-in"><span><span class="fu">eda_report</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="st">"death_event"</span>, output_dir <span class="op">=</span> <span class="st">"."</span>, </span></span>
+<span class="r-in"><span>  output_file <span class="op">=</span> <span class="st">"EDA_heartfailure.pdf"</span>, browse <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create html file. file name is EDA_Report.html</span></span></span>
+<span class="r-in"><span><span class="fu">eda_report</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="st">"death_event"</span>, output_format <span class="op">=</span> <span class="st">"html"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create html file. file name is EDA_heartfailure.html</span></span></span>
+<span class="r-in"><span><span class="fu">eda_report</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="va">death_event</span>, output_format <span class="op">=</span> <span class="st">"html"</span>, </span></span>
+<span class="r-in"><span>  output_file <span class="op">=</span> <span class="st">"EDA_heartfailure.html"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## target variable is numerical variable ------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co"># reporting the EDA information</span></span></span>
+<span class="r-in"><span><span class="fu">eda_report</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="va">sodium</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create pdf file. file name is EDA2.pdf</span></span></span>
+<span class="r-in"><span><span class="fu">eda_report</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="st">"sodium"</span>, output_file <span class="op">=</span> <span class="st">"EDA2.pdf"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create html file. file name is EDA_Report.html</span></span></span>
+<span class="r-in"><span><span class="fu">eda_report</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="st">"sodium"</span>, output_format <span class="op">=</span> <span class="st">"html"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create html file. file name is EDA2.html</span></span></span>
+<span class="r-in"><span><span class="fu">eda_report</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="va">sodium</span>, output_format <span class="op">=</span> <span class="st">"html"</span>, output_file <span class="op">=</span> <span class="st">"EDA2.html"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## target variable is null</span></span></span>
+<span class="r-in"><span><span class="co"># reporting the EDA information</span></span></span>
+<span class="r-in"><span><span class="fu">eda_report</span><span class="op">(</span><span class="va">heartfailure</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create pdf file. file name is EDA2.pdf</span></span></span>
+<span class="r-in"><span><span class="fu">eda_report</span><span class="op">(</span><span class="va">heartfailure</span>, output_file <span class="op">=</span> <span class="st">"EDA2.pdf"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create html file. file name is EDA_Report.html</span></span></span>
+<span class="r-in"><span><span class="fu">eda_report</span><span class="op">(</span><span class="va">heartfailure</span>, output_format <span class="op">=</span> <span class="st">"html"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create html file. file name is EDA2.html</span></span></span>
+<span class="r-in"><span><span class="fu">eda_report</span><span class="op">(</span><span class="va">heartfailure</span>, output_format <span class="op">=</span> <span class="st">"html"</span>, output_file <span class="op">=</span> <span class="st">"EDA2.html"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </div>

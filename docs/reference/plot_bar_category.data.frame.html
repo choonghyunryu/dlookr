@@ -151,7 +151,6 @@ use it after loading the Google font with import_google_font().</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Generate data for the example</span></span></span>
-<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="va">heartfailure2</span> <span class="op">&lt;-</span> <span class="va">heartfailure</span></span></span>
 <span class="r-in"><span><span class="va">heartfailure2</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NROW</a></span><span class="op">(</span><span class="va">heartfailure2</span><span class="op">)</span><span class="op">)</span>, <span class="fl">20</span><span class="op">)</span>, <span class="st">"platelets"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span></span>
 <span class="r-in"><span><span class="va">heartfailure2</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NROW</a></span><span class="op">(</span><span class="va">heartfailure2</span><span class="op">)</span><span class="op">)</span>, <span class="fl">5</span><span class="op">)</span>, <span class="st">"smoking"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span></span>
@@ -167,54 +166,30 @@ use it after loading the Google font with import_google_font().</p>
 <span class="r-in"><span><span class="co"># Select the variable to diagnose</span></span></span>
 <span class="r-in"><span><span class="fu">plot_bar_category</span><span class="op">(</span><span class="va">heartfailure2</span>, <span class="st">"test"</span>, <span class="st">"smoking"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_bar_category.data.frame-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="co"># plot_bar_category(heartfailure2, -test, -smoking)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Visualize the each plots</span></span></span>
-<span class="r-in"><span><span class="fu">plot_bar_category</span><span class="op">(</span><span class="va">heartfailure2</span>, each <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Visualize just 7 levels of top frequency</span></span></span>
+<span class="r-in"><span><span class="co"># Visualize only factor, not character </span></span></span>
+<span class="r-in"><span><span class="fu">plot_bar_category</span><span class="op">(</span><span class="va">heartfailure2</span>, each <span class="op">=</span> <span class="cn">TRUE</span>, top <span class="op">=</span> <span class="fl">7</span>, add_character <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_bar_category.data.frame-3.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="plot_bar_category.data.frame-4.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="plot_bar_category.data.frame-5.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="plot_bar_category.data.frame-6.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="plot_bar_category.data.frame-7.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="plot_bar_category.data.frame-8.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_bar_category.data.frame-9.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Not allow typographic argument</span></span></span>
 <span class="r-in"><span><span class="fu">plot_bar_category</span><span class="op">(</span><span class="va">heartfailure2</span>, typographic <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_bar_category.data.frame-10.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_bar_category.data.frame-9.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Using pipes ---------------------------------</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Plot of all categorical variables</span></span></span>
-<span class="r-in"><span><span class="va">heartfailure2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu">plot_bar_category</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_bar_category.data.frame-11.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Visualize just 7 levels of top frequency</span></span></span>
-<span class="r-in"><span><span class="co"># heartfailure2 %&gt;%</span></span></span>
-<span class="r-in"><span><span class="co">#   plot_bar_category(top = 7)</span></span></span>
-<span class="r-in"><span>  </span></span>
-<span class="r-in"><span><span class="co"># Visualize only factor, not character</span></span></span>
-<span class="r-in"><span><span class="co"># heartfailure2 %&gt;%</span></span></span>
-<span class="r-in"><span><span class="co">#   plot_bar_category(add_character = FALSE) </span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Using groupd_df  ------------------------------</span></span></span>
 <span class="r-in"><span><span class="va">heartfailure2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">death_event</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
 <span class="r-in"><span>  <span class="fu">plot_bar_category</span><span class="op">(</span>top <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_bar_category.data.frame-12.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span>  </span></span>
-<span class="r-in"><span><span class="va">heartfailure2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">death_event</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
-<span class="r-in"><span>  <span class="fu">plot_bar_category</span><span class="op">(</span>each <span class="op">=</span> <span class="cn">TRUE</span>, top <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>  </span></span>
-<span class="r-plt img"><img src="plot_bar_category.data.frame-13.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_bar_category.data.frame-14.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_bar_category.data.frame-15.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_bar_category.data.frame-16.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_bar_category.data.frame-17.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="plot_bar_category.data.frame-18.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-plt img"><img src="plot_bar_category.data.frame-10.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span>   </span></span>
 </code></pre></div>
     </div>

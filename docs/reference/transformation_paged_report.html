@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.3</span>
       </span>
     </div>
 
@@ -62,82 +62,127 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">transformation_paged_report</span><span class="op">(</span>
-  <span class="va">.data</span>,
-  target <span class="op">=</span> <span class="cn">NULL</span>,
-  output_format <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pdf"</span>, <span class="st">"html"</span><span class="op">)</span>,
-  output_file <span class="op">=</span> <span class="cn">NULL</span>,
-  output_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,
-  browse <span class="op">=</span> <span class="cn">TRUE</span>,
-  title <span class="op">=</span> <span class="st">"Transformation Report"</span>,
-  subtitle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/deparse.html" class="external-link">deparse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html" class="external-link">substitute</a></span><span class="op">(</span><span class="va">.data</span><span class="op">)</span><span class="op">)</span>,
-  author <span class="op">=</span> <span class="st">"dlookr"</span>,
-  abstract_title <span class="op">=</span> <span class="st">"Report Overview"</span>,
-  abstract <span class="op">=</span> <span class="cn">NULL</span>,
-  title_color <span class="op">=</span> <span class="st">"white"</span>,
-  subtitle_color <span class="op">=</span> <span class="st">"tomato1"</span>,
-  cover_img <span class="op">=</span> <span class="cn">NULL</span>,
-  create_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span>,
-  logo_img <span class="op">=</span> <span class="cn">NULL</span>,
-  theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"orange"</span>, <span class="st">"blue"</span><span class="op">)</span>,
-  sample_percent <span class="op">=</span> <span class="fl">100</span>,
-  base_family <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">transformation_paged_report</span><span class="op">(</span></span>
+<span>  <span class="va">.data</span>,</span>
+<span>  target <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  output_format <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pdf"</span>, <span class="st">"html"</span><span class="op">)</span>,</span>
+<span>  output_file <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  output_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  browse <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  title <span class="op">=</span> <span class="st">"Transformation Report"</span>,</span>
+<span>  subtitle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/deparse.html" class="external-link">deparse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html" class="external-link">substitute</a></span><span class="op">(</span><span class="va">.data</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  author <span class="op">=</span> <span class="st">"dlookr"</span>,</span>
+<span>  abstract_title <span class="op">=</span> <span class="st">"Report Overview"</span>,</span>
+<span>  abstract <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  title_color <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>  subtitle_color <span class="op">=</span> <span class="st">"tomato1"</span>,</span>
+<span>  cover_img <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  create_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  logo_img <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"orange"</span>, <span class="st">"blue"</span><span class="op">)</span>,</span>
+<span>  sample_percent <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  base_family <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>.data</dt>
 <dd><p>a data.frame or a <code><a href="https://dplyr.tidyverse.org/reference/tbl_df.html" class="external-link">tbl_df</a></code>.</p></dd>
+
+
 <dt>target</dt>
 <dd><p>character. target variable.</p></dd>
+
+
 <dt>output_format</dt>
 <dd><p>report output type. Choose either "pdf" and "html".
 "pdf" create pdf file by rmarkdown::render() and pagedown::chrome_print(). so, 
 you needed Chrome web browser on computer.  
 "html" create html file by rmarkdown::render().</p></dd>
+
+
 <dt>output_file</dt>
 <dd><p>name of generated file. default is NULL.</p></dd>
+
+
 <dt>output_dir</dt>
 <dd><p>name of directory to generate report file. default is tempdir().</p></dd>
+
+
 <dt>browse</dt>
 <dd><p>logical. choose whether to output the report results to the browser.</p></dd>
+
+
 <dt>title</dt>
 <dd><p>character. title of report. default is "Data Diagnosis Report".</p></dd>
+
+
 <dt>subtitle</dt>
 <dd><p>character. subtitle of report. default is name of data.</p></dd>
+
+
 <dt>author</dt>
 <dd><p>character. author of report. default is "dlookr".</p></dd>
+
+
 <dt>abstract_title</dt>
 <dd><p>character. abstract title of report. default is 
 "Report Overview".</p></dd>
+
+
 <dt>abstract</dt>
 <dd><p>character. abstract of report.</p></dd>
+
+
 <dt>title_color</dt>
 <dd><p>character. color of title. default is "white".</p></dd>
+
+
 <dt>subtitle_color</dt>
 <dd><p>character. color of subtitle. default is "tomato1".</p></dd>
+
+
 <dt>cover_img</dt>
 <dd><p>character. name of cover image.</p></dd>
+
+
 <dt>create_date</dt>
 <dd><p>Date or POSIXct, character. The date on which the report is generated. 
 The default value is the result of Sys.time().</p></dd>
+
+
 <dt>logo_img</dt>
 <dd><p>character. name of logo image file on top right.</p></dd>
+
+
 <dt>theme</dt>
 <dd><p>character. name of theme for report. support "orange" and "blue". 
 default is "orange".</p></dd>
+
+
 <dt>sample_percent</dt>
 <dd><p>numeric. Sample percent of data for performing Diagnosis. 
 It has a value between (0, 100]. 100 means all data, and 5 means 5% of sample data.
 This is useful for data with a large number of observations.</p></dd>
+
+
 <dt>base_family</dt>
 <dd><p>character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)</p></dd>
+
+
 <dt>...</dt>
 <dd><p>arguments to be passed to pagedown::chrome_print().</p></dd>
+
 </dl></div>
+    <div id="value">
+    <h2>Value</h2>
+    
+
+<p>No return value. This function only generates a report.</p>
+    </div>
     <div id="details">
     <h2>Details</h2>
     <p>Generate transformation reports automatically. 
@@ -169,26 +214,26 @@ use it after loading the Google font with import_google_font().</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># create pdf file. file name is Transformation_Paged_Report.pdf</span></span>
-<span class="r-in"><span class="fu">transformation_paged_report</span><span class="op">(</span><span class="va">heartfailure</span>, sample_percent <span class="op">=</span> <span class="fl">80</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># create pdf file. file name is Transformation_heartfailure. and change cover image</span></span>
-<span class="r-in"><span class="va">cover</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"dlookr"</span><span class="op">)</span>, <span class="st">"report"</span>, <span class="st">"cover2.jpg"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">transformation_paged_report</span><span class="op">(</span><span class="va">heartfailure</span>, cover_img <span class="op">=</span> <span class="va">cover</span>, title_color <span class="op">=</span> <span class="st">"gray"</span>,</span>
-<span class="r-in">  output_file <span class="op">=</span> <span class="st">"Transformation_heartfailure"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># create pdf file. file name is ./Transformation.pdf and not browse</span></span>
-<span class="r-in"><span class="va">cover</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"dlookr"</span><span class="op">)</span>, <span class="st">"report"</span>, <span class="st">"cover1.jpg"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">transformation_paged_report</span><span class="op">(</span><span class="va">heartfailure</span>, output_dir <span class="op">=</span> <span class="st">"."</span>, cover_img <span class="op">=</span> <span class="va">cover</span>, </span>
-<span class="r-in">  flag_content_missing <span class="op">=</span> <span class="cn">FALSE</span>, output_file <span class="op">=</span> <span class="st">"Transformation.pdf"</span>, browse <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># create pdf file. file name is Transformation_Paged_Report.html</span></span>
-<span class="r-in"><span class="fu">transformation_paged_report</span><span class="op">(</span><span class="va">heartfailure</span>, target <span class="op">=</span> <span class="st">"death_event"</span>, output_format <span class="op">=</span> <span class="st">"html"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># create pdf file. file name is Transformation_Paged_Report.pdf</span></span></span>
+<span class="r-in"><span><span class="fu">transformation_paged_report</span><span class="op">(</span><span class="va">heartfailure</span>, sample_percent <span class="op">=</span> <span class="fl">80</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create pdf file. file name is Transformation_heartfailure. and change cover image</span></span></span>
+<span class="r-in"><span><span class="va">cover</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"dlookr"</span><span class="op">)</span>, <span class="st">"report"</span>, <span class="st">"cover2.jpg"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">transformation_paged_report</span><span class="op">(</span><span class="va">heartfailure</span>, cover_img <span class="op">=</span> <span class="va">cover</span>, title_color <span class="op">=</span> <span class="st">"gray"</span>,</span></span>
+<span class="r-in"><span>  output_file <span class="op">=</span> <span class="st">"Transformation_heartfailure"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create pdf file. file name is ./Transformation.pdf and not browse</span></span></span>
+<span class="r-in"><span><span class="va">cover</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"dlookr"</span><span class="op">)</span>, <span class="st">"report"</span>, <span class="st">"cover1.jpg"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">transformation_paged_report</span><span class="op">(</span><span class="va">heartfailure</span>, output_dir <span class="op">=</span> <span class="st">"."</span>, cover_img <span class="op">=</span> <span class="va">cover</span>, </span></span>
+<span class="r-in"><span>  flag_content_missing <span class="op">=</span> <span class="cn">FALSE</span>, output_file <span class="op">=</span> <span class="st">"Transformation.pdf"</span>, browse <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create pdf file. file name is Transformation_Paged_Report.html</span></span></span>
+<span class="r-in"><span><span class="fu">transformation_paged_report</span><span class="op">(</span><span class="va">heartfailure</span>, target <span class="op">=</span> <span class="st">"death_event"</span>, output_format <span class="op">=</span> <span class="st">"html"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -203,8 +248,7 @@ use it after loading the Google font with import_google_font().</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

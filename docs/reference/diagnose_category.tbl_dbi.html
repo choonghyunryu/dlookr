@@ -157,92 +157,91 @@ You can use grouped_df as the group_by() function.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># If you have the 'DBI' and 'RSQLite' packages installed, perform the code block:</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## connect DBMS</span></span></span>
-<span class="r-in"><span><span class="co">#if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")</span></span></span>
-<span class="r-in"><span><span class="co">#if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")</span></span></span>
-<span class="r-in"><span><span class="co">#con_sqlite &lt;- DBI::dbConnect(RSQLite::SQLite(), ":memory:")</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## copy jobchange to the DBMS with a table named TB_JOBCHANGE</span></span></span>
-<span class="r-in"><span><span class="co">#copy_to(con_sqlite, jobchange, name = "TB_JOBCHANGE", overwrite = TRUE)</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## Using pipes ---------------------------------</span></span></span>
-<span class="r-in"><span><span class="co">## Diagnosis of all categorical variables</span></span></span>
-<span class="r-in"><span><span class="co">#con_sqlite %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  tbl("TB_JOBCHANGE") %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  diagnose_category()</span></span></span>
-<span class="r-in"><span><span class="co">#  </span></span></span>
-<span class="r-in"><span><span class="co">## Positive values select variables</span></span></span>
-<span class="r-in"><span><span class="co">#con_sqlite %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  tbl("TB_JOBCHANGE") %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  diagnose_category(company_type, job_chnge)</span></span></span>
-<span class="r-in"><span><span class="co">#  </span></span></span>
-<span class="r-in"><span><span class="co">## Negative values to drop variables, and In-memory mode</span></span></span>
-<span class="r-in"><span><span class="co">#con_sqlite %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  tbl("TB_JOBCHANGE") %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  diagnose_category(-company_type, -job_chnge, in_database = FALSE)</span></span></span>
-<span class="r-in"><span><span class="co">#  </span></span></span>
-<span class="r-in"><span><span class="co">## Positions values select variables, and In-memory mode and collect size is 200</span></span></span>
-<span class="r-in"><span><span class="co">#con_sqlite %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  tbl("TB_JOBCHANGE") %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  diagnose_category(7, in_database = FALSE, collect_size = 200) </span></span></span>
-<span class="r-in"><span><span class="co">#  </span></span></span>
-<span class="r-in"><span><span class="co">## Negative values to drop variables</span></span></span>
-<span class="r-in"><span><span class="co">#con_sqlite %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  tbl("TB_JOBCHANGE") %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  diagnose_category(-7)</span></span></span>
-<span class="r-in"><span><span class="co">#  </span></span></span>
-<span class="r-in"><span><span class="co">## Top rank levels with top argument</span></span></span>
-<span class="r-in"><span><span class="co">#con_sqlite %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  tbl("TB_JOBCHANGE") %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  diagnose_category(top = 2)</span></span></span>
+<span class="r-in"><span><span class="co"># connect DBMS</span></span></span>
+<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op">&lt;-</span> <span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html" class="external-link">dbConnect</a></span><span class="op">(</span><span class="fu">RSQLite</span><span class="fu">::</span><span class="fu"><a href="https://rsqlite.r-dbi.org/reference/SQLite.html" class="external-link">SQLite</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">":memory:"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## Using pipes &amp; dplyr -------------------------</span></span></span>
-<span class="r-in"><span><span class="co">## Extraction of level that is more than 60% of categorical data</span></span></span>
-<span class="r-in"><span><span class="co">#con_sqlite %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  tbl("TB_JOBCHANGE") %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  diagnose_category()  %&gt;%</span></span></span>
-<span class="r-in"><span><span class="co">#  filter(ratio &gt;= 60)</span></span></span>
-<span class="r-in"><span><span class="co">#  </span></span></span>
-<span class="r-in"><span><span class="co">## Using group_by() ---------------------------- </span></span></span>
-<span class="r-in"><span><span class="co">#con_sqlite %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  tbl("TB_JOBCHANGE") %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  group_by(job_chnge) %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  diagnose_category(company_type) </span></span></span>
-<span class="r-in"><span><span class="co">#  </span></span></span>
-<span class="r-in"><span><span class="co">## Using type argument -------------------------</span></span></span>
-<span class="r-in"><span><span class="co"># dfm &lt;- data.frame(alpabet = c(rep(letters[1:5], times = 5), "c")) </span></span></span>
-<span class="r-in"><span><span class="co"># </span></span></span>
-<span class="r-in"><span><span class="co">## copy dfm to the DBMS with a table named TB_EXAMPLE</span></span></span>
-<span class="r-in"><span><span class="co">#copy_to(con_sqlite, dfm, name = "TB_EXAMPLE", overwrite = TRUE)  </span></span></span>
-<span class="r-in"><span><span class="co"># </span></span></span>
-<span class="r-in"><span><span class="co">## extract rows that less than equal rank 10</span></span></span>
-<span class="r-in"><span><span class="co">## default of top argument is 10</span></span></span>
-<span class="r-in"><span><span class="co">#con_sqlite %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  tbl("TB_EXAMPLE") %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  diagnose_category()</span></span></span>
-<span class="r-in"><span><span class="co">#   </span></span></span>
-<span class="r-in"><span><span class="co">## extract rows that less than equal rank 2</span></span></span>
-<span class="r-in"><span><span class="co">#con_sqlite %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  tbl("TB_EXAMPLE") %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  diagnose_category(top = 2, type = "rank")</span></span></span>
-<span class="r-in"><span><span class="co">#   </span></span></span>
-<span class="r-in"><span><span class="co">## extract rows that less than equal rank 2</span></span></span>
-<span class="r-in"><span><span class="co">## default of type argument is "rank"</span></span></span>
-<span class="r-in"><span><span class="co">#con_sqlite %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  tbl("TB_EXAMPLE") %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  diagnose_category(top = 2)</span></span></span>
-<span class="r-in"><span><span class="co"># </span></span></span>
-<span class="r-in"><span><span class="co">## extract only 2 rows</span></span></span>
-<span class="r-in"><span><span class="co">#con_sqlite %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  tbl("TB_EXAMPLE") %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#  diagnose_category(top = 2, type = "n")</span></span></span>
+<span class="r-in"><span><span class="co"># copy jobchange to the DBMS with a table named TB_JOBCHANGE</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/copy_to.html" class="external-link">copy_to</a></span><span class="op">(</span><span class="va">con_sqlite</span>, <span class="va">jobchange</span>, name <span class="op">=</span> <span class="st">"TB_JOBCHANGE"</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## Disconnect DBMS   </span></span></span>
-<span class="r-in"><span><span class="co">#DBI::dbDisconnect(con_sqlite)</span></span></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="co"># Using pipes ---------------------------------</span></span></span>
+<span class="r-in"><span><span class="co"># Diagnosis of all categorical variables</span></span></span>
+<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_JOBCHANGE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="diagnose_category.data.frame.html">diagnose_category</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span><span class="co"># Positive values select variables</span></span></span>
+<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_JOBCHANGE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="diagnose_category.data.frame.html">diagnose_category</a></span><span class="op">(</span><span class="va">company_type</span>, <span class="va">job_chnge</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span><span class="co"># Negative values to drop variables, and In-memory mode</span></span></span>
+<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_JOBCHANGE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="diagnose_category.data.frame.html">diagnose_category</a></span><span class="op">(</span><span class="op">-</span><span class="va">company_type</span>, <span class="op">-</span><span class="va">job_chnge</span>, in_database <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span><span class="co"># Positions values select variables, and In-memory mode and collect size is 200</span></span></span>
+<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_JOBCHANGE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="diagnose_category.data.frame.html">diagnose_category</a></span><span class="op">(</span><span class="fl">7</span>, in_database <span class="op">=</span> <span class="cn">FALSE</span>, collect_size <span class="op">=</span> <span class="fl">200</span><span class="op">)</span> </span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span><span class="co"># Negative values to drop variables</span></span></span>
+<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_JOBCHANGE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="diagnose_category.data.frame.html">diagnose_category</a></span><span class="op">(</span><span class="op">-</span><span class="fl">7</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span><span class="co"># Top rank levels with top argument</span></span></span>
+<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_JOBCHANGE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="diagnose_category.data.frame.html">diagnose_category</a></span><span class="op">(</span>top <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Using pipes &amp; dplyr -------------------------</span></span></span>
+<span class="r-in"><span><span class="co"># Extraction of level that is more than 60% of categorical data</span></span></span>
+<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_JOBCHANGE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="diagnose_category.data.frame.html">diagnose_category</a></span><span class="op">(</span><span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">ratio</span> <span class="op">&gt;=</span> <span class="fl">60</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span><span class="co"># Using group_by() ---------------------------- </span></span></span>
+<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_JOBCHANGE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">job_chnge</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="diagnose_category.data.frame.html">diagnose_category</a></span><span class="op">(</span><span class="va">company_type</span><span class="op">)</span> </span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span><span class="co"># Using type argument -------------------------</span></span></span>
+<span class="r-in"><span> <span class="va">dfm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>alpabet <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, times <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, <span class="st">"c"</span><span class="op">)</span><span class="op">)</span> </span></span>
+<span class="r-in"><span> </span></span>
+<span class="r-in"><span><span class="co"># copy dfm to the DBMS with a table named TB_EXAMPLE</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/copy_to.html" class="external-link">copy_to</a></span><span class="op">(</span><span class="va">con_sqlite</span>, <span class="va">dfm</span>, name <span class="op">=</span> <span class="st">"TB_EXAMPLE"</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>  </span></span>
+<span class="r-in"><span> </span></span>
+<span class="r-in"><span><span class="co"># extract rows that less than equal rank 10</span></span></span>
+<span class="r-in"><span><span class="co"># default of top argument is 10</span></span></span>
+<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_EXAMPLE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="diagnose_category.data.frame.html">diagnose_category</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>   </span></span>
+<span class="r-in"><span><span class="co"># extract rows that less than equal rank 2</span></span></span>
+<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_EXAMPLE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="diagnose_category.data.frame.html">diagnose_category</a></span><span class="op">(</span>top <span class="op">=</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"rank"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>   </span></span>
+<span class="r-in"><span><span class="co"># extract rows that less than equal rank 2</span></span></span>
+<span class="r-in"><span><span class="co"># default of type argument is "rank"</span></span></span>
+<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_EXAMPLE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="diagnose_category.data.frame.html">diagnose_category</a></span><span class="op">(</span>top <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span> </span></span>
+<span class="r-in"><span><span class="co"># extract only 2 rows</span></span></span>
+<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_EXAMPLE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="diagnose_category.data.frame.html">diagnose_category</a></span><span class="op">(</span>top <span class="op">=</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"n"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Disconnect DBMS   </span></span></span>
+<span class="r-in"><span><span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbDisconnect.html" class="external-link">dbDisconnect</a></span><span class="op">(</span><span class="va">con_sqlite</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

@@ -88,6 +88,12 @@ for the visualization. If not specified, the font defined in dlookr is applied. 
 <dd><p>arguments to be passed to methods, such as graphical parameters (see par).</p></dd>
 
 </dl></div>
+    <div id="value">
+    <h2>Value</h2>
+    
+
+<p>No return value. This function is called for its side effect, which is to produce a plot on the current graphics device.</p>
+    </div>
     <div id="details">
     <h2>Details</h2>
     <p>The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
@@ -207,23 +213,24 @@ use it after loading the Google font with import_google_font().</p>
 <span class="r-plt img"><img src="plot.correlate-5.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## S3 method for correlate class by 'tbl_dbi' ================</span></span></span>
-<span class="r-in"><span><span class="co">#if (!require(DBI)) install.packages('DBI', repos = "http://cran.us.r-project.org")</span></span></span>
-<span class="r-in"><span><span class="co">#if (!require(RSQLite)) install.packages('RSQLite', repos = "http://cran.us.r-project.org")</span></span></span>
-<span class="r-in"><span><span class="co">## connect DBMS</span></span></span>
-<span class="r-in"><span><span class="co">#con_sqlite &lt;- DBI::dbConnect(RSQLite::SQLite(), ":memory:")</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## copy iris to the DBMS with a table named TB_IRIS</span></span></span>
-<span class="r-in"><span><span class="co">#copy_to(con_sqlite, iris, name = "TB_IRIS", overwrite = TRUE)</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## correlation coefficients of all numerical variables</span></span></span>
-<span class="r-in"><span><span class="co">#tab_corr &lt;- con_sqlite %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#   tbl("TB_IRIS") %&gt;% </span></span></span>
-<span class="r-in"><span><span class="co">#   correlate()</span></span></span>
-<span class="r-in"><span><span class="co">#   </span></span></span>
-<span class="r-in"><span><span class="co">#plot(tab_corr)   </span></span></span>
-<span class="r-in"><span><span class="co">#   </span></span></span>
-<span class="r-in"><span><span class="co">## Disconnect DBMS   </span></span></span>
-<span class="r-in"><span><span class="co">#DBI::dbDisconnect(con_sqlite)</span></span></span>
+<span class="r-in"><span><span class="co"># If you have the 'DBI' and 'RSQLite' packages installed, perform the code block:</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># connect DBMS</span></span></span>
+<span class="r-in"><span><span class="va">con_sqlite</span> <span class="op">&lt;-</span> <span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html" class="external-link">dbConnect</a></span><span class="op">(</span><span class="fu">RSQLite</span><span class="fu">::</span><span class="fu"><a href="https://rsqlite.r-dbi.org/reference/SQLite.html" class="external-link">SQLite</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">":memory:"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># copy iris to the DBMS with a table named TB_IRIS</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/copy_to.html" class="external-link">copy_to</a></span><span class="op">(</span><span class="va">con_sqlite</span>, <span class="va">iris</span>, name <span class="op">=</span> <span class="st">"TB_IRIS"</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># correlation coefficients of all numerical variables</span></span></span>
+<span class="r-in"><span><span class="va">tab_corr</span> <span class="op">&lt;-</span> <span class="va">con_sqlite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="st">"TB_IRIS"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>   <span class="fu"><a href="correlate.data.frame.html">correlate</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>   </span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tab_corr</span><span class="op">)</span>   </span></span>
+<span class="r-in"><span>   </span></span>
+<span class="r-in"><span><span class="co"># Disconnect DBMS   </span></span></span>
+<span class="r-in"><span><span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbDisconnect.html" class="external-link">dbDisconnect</a></span><span class="op">(</span><span class="va">con_sqlite</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

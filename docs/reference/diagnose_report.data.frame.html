@@ -110,6 +110,12 @@ the quality of the data.</p>
 <dd><p>logical. choose whether to output the report results to the browser.</p></dd>
 
 </dl></div>
+    <div id="value">
+    <h2>Value</h2>
+    
+
+<p>No return value. This function only generates a report.</p>
+    </div>
     <div id="details">
     <h2>Details</h2>
     <p>Generate generalized data diagnostic reports automatically.
@@ -143,28 +149,24 @@ For pdf output, Korean Gothic font must be installed in Korean operating system.
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="co">#if (!require(prettydoc)) install.packages('prettydoc', repos = "http://cran.us.r-project.org")</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## reporting the diagnosis information -------------------------</span></span></span>
-<span class="r-in"><span><span class="co">## create pdf file. file name is DataDiagnosis_Report.pdf</span></span></span>
-<span class="r-in"><span><span class="co">#diagnose_report(heartfailure)</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## create pdf file. file name is Diagn.pdf</span></span></span>
-<span class="r-in"><span><span class="co">#diagnose_report(heartfailure, output_file = "Diagn.pdf")</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## create pdf file. file name is ./Diagn.pdf and not browse</span></span></span>
-<span class="r-in"><span><span class="co">#diagnose_report(heartfailure, output_dir = ".", output_file = "Diagn.pdf", </span></span></span>
-<span class="r-in"><span><span class="co">#  browse = FALSE)</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## create html file. file name is Diagnosis_Report.html</span></span></span>
-<span class="r-in"><span><span class="co">#diagnose_report(heartfailure, output_format = "html")</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co">## create html file. file name is Diagn.html</span></span></span>
-<span class="r-in"><span><span class="co">#diagnose_report(heartfailure, output_format = "html", output_file = "Diagn.html")</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># reporting the diagnosis information -------------------------</span></span></span>
+<span class="r-in"><span><span class="co"># create pdf file. file name is DataDiagnosis_Report.pdf</span></span></span>
+<span class="r-in"><span><span class="fu">diagnose_report</span><span class="op">(</span><span class="va">heartfailure</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create pdf file. file name is Diagn.pdf</span></span></span>
+<span class="r-in"><span><span class="fu">diagnose_report</span><span class="op">(</span><span class="va">heartfailure</span>, output_file <span class="op">=</span> <span class="st">"Diagn.pdf"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create pdf file. file name is ./Diagn.pdf and not browse</span></span></span>
+<span class="r-in"><span><span class="fu">diagnose_report</span><span class="op">(</span><span class="va">heartfailure</span>, output_dir <span class="op">=</span> <span class="st">"."</span>, output_file <span class="op">=</span> <span class="st">"Diagn.pdf"</span>, </span></span>
+<span class="r-in"><span>  browse <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create html file. file name is Diagnosis_Report.html</span></span></span>
+<span class="r-in"><span><span class="fu">diagnose_report</span><span class="op">(</span><span class="va">heartfailure</span>, output_format <span class="op">=</span> <span class="st">"html"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create html file. file name is Diagn.html</span></span></span>
+<span class="r-in"><span><span class="fu">diagnose_report</span><span class="op">(</span><span class="va">heartfailure</span>, output_format <span class="op">=</span> <span class="st">"html"</span>, output_file <span class="op">=</span> <span class="st">"Diagn.html"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

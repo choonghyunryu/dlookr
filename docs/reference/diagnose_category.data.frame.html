@@ -18,7 +18,7 @@ diagnosing the quality of the variables of data.frame or tbl_df."><!-- mathjax -
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.3.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.3</span>
       </span>
     </div>
 
@@ -247,10 +247,21 @@ variable is likely to be an identifier.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 78           job_chnge                     Yes 19158  4777 24.934753106    2</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Select the variable to diagnose</span></span></span>
-<span class="r-in"><span><span class="co"># diagnose_category(jobchange, education_level, company_type)</span></span></span>
-<span class="r-in"><span><span class="co"># diagnose_category(jobchange, -education_level, -company_type)</span></span></span>
-<span class="r-in"><span><span class="co"># diagnose_category(jobchange, "education_level", "company_type")</span></span></span>
-<span class="r-in"><span><span class="co"># diagnose_category(jobchange, 7)</span></span></span>
+<span class="r-in"><span><span class="fu">diagnose_category</span><span class="op">(</span><span class="va">jobchange</span>, <span class="va">education_level</span>, <span class="va">company_type</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          variables              levels     N  freq      ratio rank</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  education_level            Graduate 19158 11598 60.5386784    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  education_level             Masters 19158  4361 22.7633365    2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  education_level         High School 19158  2017 10.5282389    3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  education_level                &lt;NA&gt; 19158   460  2.4010857    4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  education_level                 Phd 19158   414  2.1609771    5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  education_level      Primary School 19158   308  1.6076835    6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     company_type             Pvt Ltd 19158  9817 51.2423009    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8     company_type                &lt;NA&gt; 19158  6140 32.0492745    2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     company_type      Funded Startup 19158  1001  5.2249713    3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    company_type       Public Sector 19158   955  4.9848627    4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11    company_type Early Stage Startup 19158   603  3.1475102    5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12    company_type                 NGO 19158   521  2.7194906    6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13    company_type               Other 19158   121  0.6315899    7</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Using pipes ---------------------------------</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
@@ -425,96 +436,6 @@ variable is likely to be an identifier.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 67        last_new_job                       4 19158  1029  5.371124334    5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 68        last_new_job                       3 19158  1024  5.345025577    6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 69        last_new_job                    &lt;NA&gt; 19158   423  2.207954901    7</span>
-<span class="r-in"><span>  </span></span>
-<span class="r-in"><span><span class="co"># Positions values select variables</span></span></span>
-<span class="r-in"><span><span class="va">jobchange</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu">diagnose_category</span><span class="op">(</span><span class="fl">7</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variables       levels             N  freq ratio  rank</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> education_level Graduate       <span style="text-decoration: underline;">19</span>158 <span style="text-decoration: underline;">11</span>598 60.5      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> education_level Masters        <span style="text-decoration: underline;">19</span>158  <span style="text-decoration: underline;">4</span>361 22.8      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> education_level High School    <span style="text-decoration: underline;">19</span>158  <span style="text-decoration: underline;">2</span>017 10.5      3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> education_level <span style="color: #BB0000;">NA</span>             <span style="text-decoration: underline;">19</span>158   460  2.40     4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> education_level Phd            <span style="text-decoration: underline;">19</span>158   414  2.16     5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> education_level Primary School <span style="text-decoration: underline;">19</span>158   308  1.61     6</span>
-<span class="r-in"><span>  </span></span>
-<span class="r-in"><span><span class="co"># Negative values to drop variables</span></span></span>
-<span class="r-in"><span><span class="va">jobchange</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu">diagnose_category</span><span class="op">(</span><span class="op">-</span><span class="fl">7</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              variables                  levels     N  freq        ratio rank</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1          enrollee_id                       1 19158     1  0.005219752    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2          enrollee_id                      10 19158     1  0.005219752    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3          enrollee_id                   10000 19158     1  0.005219752    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4          enrollee_id                   10001 19158     1  0.005219752    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5          enrollee_id                   10002 19158     1  0.005219752    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6          enrollee_id                   10003 19158     1  0.005219752    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7          enrollee_id                   10004 19158     1  0.005219752    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8          enrollee_id                   10005 19158     1  0.005219752    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9          enrollee_id                   10006 19158     1  0.005219752    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10         enrollee_id                   10008 19158     1  0.005219752    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11                city                city_103 19158  4355 22.732017956    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12                city                 city_21 19158  2702 14.103768661    2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13                city                 city_16 19158  1533  8.001879111    3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14                city                city_114 19158  1336  6.973588057    4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15                city                city_160 19158   845  4.410690051    5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16                city                city_136 19158   586  3.058774402    6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17                city                 city_67 19158   431  2.249712914    7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18                city                 city_75 19158   305  1.592024220    8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19                city                city_102 19158   304  1.586804468    9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20                city                city_104 19158   301  1.571145213   10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21              gender                    Male 19158 13221 69.010335108    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22              gender                    &lt;NA&gt; 19158  4508 23.530639942    2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23              gender                  Female 19158  1238  6.462052406    3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24              gender                   Other 19158   191  0.996972544    4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25 relevent_experience Has relevent experience 19158 13792 71.990813237    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26 relevent_experience  No relevent experience 19158  5366 28.009186763    2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27 enrolled_university           no_enrollment 19158 13817 72.121307026    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28 enrolled_university        Full time course 19158  3757 19.610606535    2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29 enrolled_university        Part time course 19158  1198  6.253262345    3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30 enrolled_university                    &lt;NA&gt; 19158   386  2.014824094    4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31    major_discipline                    STEM 19158 14492 75.644639315    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32    major_discipline                    &lt;NA&gt; 19158  2813 14.683161082    2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33    major_discipline              Humanities 19158   669  3.492013780    3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34    major_discipline                   Other 19158   381  1.988725337    4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35    major_discipline         Business Degree 19158   327  1.706858754    5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36    major_discipline                    Arts 19158   253  1.320597140    6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37    major_discipline                No Major 19158   223  1.164004593    7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38          experience                     &gt;20 19158  3286 17.152103560    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39          experience                       5 19158  1430  7.464244702    2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40          experience                       4 19158  1403  7.323311410    3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41          experience                       3 19158  1354  7.067543585    4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42          experience                       6 19158  1216  6.347217872    5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43          experience                       2 19158  1127  5.882659985    6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44          experience                       7 19158  1028  5.365904583    7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45          experience                      10 19158   985  5.141455267    8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46          experience                       9 19158   980  5.115356509    9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47          experience                       8 19158   802  4.186240735   10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48        company_size                    &lt;NA&gt; 19158  5938 30.994884643    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49        company_size                   50-99 19158  3083 16.092493997    2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50        company_size                 100-499 19158  2571 13.419981209    3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51        company_size                  10000+ 19158  2019 10.538678359    4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52        company_size                   10-49 19158  1471  7.678254515    5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53        company_size               1000-4999 19158  1328  6.931830045    6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54        company_size                     &lt;10 19158  1308  6.827435014    7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55        company_size                 500-999 19158   877  4.577722100    8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 56        company_size               5000-9999 19158   563  2.938720117    9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 57        company_type                 Pvt Ltd 19158  9817 51.242300866    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 58        company_type                    &lt;NA&gt; 19158  6140 32.049274455    2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59        company_type          Funded Startup 19158  1001  5.224971291    3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 60        company_type           Public Sector 19158   955  4.984862721    4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 61        company_type     Early Stage Startup 19158   603  3.147510179    5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 62        company_type                     NGO 19158   521  2.719490552    6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 63        company_type                   Other 19158   121  0.631589936    7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 64        last_new_job                       1 19158  8040 41.966802380    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 65        last_new_job                      &gt;4 19158  3290 17.172982566    2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 66        last_new_job                       2 19158  2900 15.137279465    3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 67        last_new_job                   never 19158  2452 12.798830776    4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 68        last_new_job                       4 19158  1029  5.371124334    5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 69        last_new_job                       3 19158  1024  5.345025577    6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 70        last_new_job                    &lt;NA&gt; 19158   423  2.207954901    7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 71           job_chnge                      No 19158 14381 75.065246894    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 72           job_chnge                     Yes 19158  4777 24.934753106    2</span>
 <span class="r-in"><span>  </span></span>
 <span class="r-in"><span><span class="co"># Top rank levels with top argument</span></span></span>
 <span class="r-in"><span><span class="va">jobchange</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
