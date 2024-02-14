@@ -13,3 +13,4 @@
 ^pkgdown$
 ^pkg_data$
 ^figures$
+^.Rhistory$

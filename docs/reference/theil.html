@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.3.9005</span>
       </span>
     </div>
 
@@ -62,21 +62,28 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">theil</span><span class="op">(</span><span class="va">dfm</span>, <span class="va">x</span>, <span class="va">y</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">theil</span><span class="op">(</span><span class="va">dfm</span>, <span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>dfm</dt>
 <dd><p>data.frame. probability distributions.</p></dd>
+
+
 <dt>x</dt>
 <dd><p>character. name of categorical or discrete variable.</p></dd>
+
+
 <dt>y</dt>
 <dd><p>character. name of another categorical or discrete variable.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>data.frame. It has the following variables.:</p><ul><li><p>var1 : character. first variable name.</p></li>
+    
+
+<p>data.frame. It has the following variables.:</p><ul><li><p>var1 : character. first variable name.</p></li>
 <li><p>var2 : character. second variable name.</p></li>
 <li><p>coef_corr : numeric. Theil's U statistic.</p></li>
 </ul></div>
@@ -87,10 +94,10 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">theil</span><span class="op">(</span><span class="va">mtcars</span>, <span class="st">"gear"</span>, <span class="st">"carb"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">theil</span><span class="op">(</span><span class="va">mtcars</span>, <span class="st">"gear"</span>, <span class="st">"carb"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   var1 var2 coef_corr</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 gear carb 0.1891886</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -105,7 +112,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

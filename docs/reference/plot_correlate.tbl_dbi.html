@@ -19,7 +19,7 @@ the DBMS table through tbl_dbi."><!-- mathjax --><script src="https://cdnjs.clou
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.3.9005</span>
       </span>
     </div>
 
@@ -66,22 +66,24 @@ the DBMS table through tbl_dbi.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for tbl_dbi</span>
-<span class="fu"><a href="dlookr-deprecated.html">plot_correlate</a></span><span class="op">(</span>
-  <span class="va">.data</span>,
-  <span class="va">...</span>,
-  in_database <span class="op">=</span> <span class="cn">FALSE</span>,
-  collect_size <span class="op">=</span> <span class="cn">Inf</span>,
-  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pearson"</span>, <span class="st">"kendall"</span>, <span class="st">"spearman"</span><span class="op">)</span>,
-  typographic <span class="op">=</span> <span class="cn">TRUE</span>,
-  base_family <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for tbl_dbi</span></span>
+<span><span class="fu"><a href="dlookr-deprecated.html">plot_correlate</a></span><span class="op">(</span></span>
+<span>  <span class="va">.data</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  in_database <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  collect_size <span class="op">=</span> <span class="cn">Inf</span>,</span>
+<span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pearson"</span>, <span class="st">"kendall"</span>, <span class="st">"spearman"</span><span class="op">)</span>,</span>
+<span>  typographic <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  base_family <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>.data</dt>
 <dd><p>a tbl_dbi.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
@@ -90,23 +92,34 @@ If the first expression is negative, plot_correlate() will automatically start w
 These arguments are automatically quoted and evaluated in a context where column names
 represent column positions.
 They support unquoting and splicing.</p></dd>
+
+
 <dt>in_database</dt>
 <dd><p>Specifies whether to perform in-database operations. 
 If TRUE, most operations are performed in the DBMS. if FALSE, 
 table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.</p></dd>
+
+
 <dt>collect_size</dt>
 <dd><p>a integer. The number of data samples from the DBMS to R. 
 Applies only if in_database = FALSE.</p></dd>
+
+
 <dt>method</dt>
 <dd><p>a character string indicating which correlation coefficient (or covariance) is 
 to be computed. One of "pearson" (default), "kendall", or "spearman": can be abbreviated.</p>
 <p>See vignette("EDA") for an introduction to these concepts.</p></dd>
+
+
 <dt>typographic</dt>
 <dd><p>logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.</p></dd>
+
+
 <dt>base_family</dt>
 <dd><p>character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -136,7 +149,7 @@ use it after loading the Google font with import_google_font().</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

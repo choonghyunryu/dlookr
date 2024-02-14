@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.3.9005</span>
       </span>
     </div>
 
@@ -62,28 +62,39 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">imputate_outlier</span><span class="op">(</span><span class="va">.data</span>, <span class="va">xvar</span>, <span class="va">method</span>, <span class="va">no_attrs</span>, <span class="va">cap_ntiles</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">imputate_outlier</span><span class="op">(</span><span class="va">.data</span>, <span class="va">xvar</span>, <span class="va">method</span>, <span class="va">no_attrs</span>, <span class="va">cap_ntiles</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>.data</dt>
 <dd><p>a data.frame or a <code><a href="https://dplyr.tidyverse.org/reference/tbl_df.html" class="external-link">tbl_df</a></code>.</p></dd>
+
+
 <dt>xvar</dt>
 <dd><p>variable name to replace missing value.</p></dd>
+
+
 <dt>method</dt>
 <dd><p>method of missing values imputation.</p></dd>
+
+
 <dt>no_attrs</dt>
 <dd><p>logical. If TRUE, return numerical variable or categorical variable. 
 else If FALSE, imputation class.</p></dd>
+
+
 <dt>cap_ntiles</dt>
 <dd><p>numeric. Only used when method is "capping".
 Specifies the value of percentiles replaced by the values of lower outliers 
 and upper outliers. The default is c(0.05, 0.95).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of imputation class. or numerical variable. 
+    
+
+<p>An object of imputation class. or numerical variable. 
 if no_attrs is FALSE then return imputation class, else no_attrs is TRUE then return
 numerical vector.
 Attributes of imputation class is as follows.</p><ul><li><p>method : method of missing value imputation.</p><ul><li><p>predictor is numerical variable</p><ul><li><p>"mean" : arithmetic mean</p></li>
@@ -114,9 +125,9 @@ to help determine whether the imputed value is used in the analysis.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="co"># Replace the outliers of the sodium variable with median.</span></span>
-<span class="r-in"><span class="fu">imputate_outlier</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="va">sodium</span>, method <span class="op">=</span> <span class="st">"median"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="co"># Replace the outliers of the sodium variable with median.</span></span></span>
+<span class="r-in"><span><span class="fu">imputate_outlier</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="va">sodium</span>, method <span class="op">=</span> <span class="st">"median"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 130 136 129 137 137 132 137 131 138 133 131 140 137 137 138 136 140 127</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [19] 140 137 137 136 140 135 134 144 138 136 134 132 134 132 128 138 140 134</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [37] 134 145 137 142 134 136 139 134 142 135 130 138 133 140 138 139 146 134</span>
@@ -150,9 +161,9 @@ to help determine whether the imputed value is used in the analysis.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "imputation" "numeric"   </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Replace the outliers of the sodium variable with capping.</span></span>
-<span class="r-in"><span class="fu">imputate_outlier</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="va">sodium</span>, method <span class="op">=</span> <span class="st">"capping"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Replace the outliers of the sodium variable with capping.</span></span></span>
+<span class="r-in"><span><span class="fu">imputate_outlier</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="va">sodium</span>, method <span class="op">=</span> <span class="st">"capping"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 130 136 129 137 130 132 137 131 138 133 131 140 137 137 138 136 140 127</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [19] 140 130 137 136 140 135 134 144 138 136 134 132 134 132 128 138 140 134</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [37] 134 145 137 142 134 136 139 134 142 135 130 138 133 140 138 139 146 134</span>
@@ -186,8 +197,8 @@ to help determine whether the imputed value is used in the analysis.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "imputation" "numeric"   </span>
-<span class="r-in"><span class="fu">imputate_outlier</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="va">sodium</span>, method <span class="op">=</span> <span class="st">"capping"</span>, </span>
-<span class="r-in">                 cap_ntiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.9</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">imputate_outlier</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="va">sodium</span>, method <span class="op">=</span> <span class="st">"capping"</span>, </span></span>
+<span class="r-in"><span>                 cap_ntiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.9</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 130 136 129 137 132 132 137 131 138 133 131 140 137 137 138 136 140 127</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [19] 140 132 137 136 140 135 134 144 138 136 134 132 134 132 128 138 140 134</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [37] 134 145 137 142 134 136 139 134 142 135 130 138 133 140 138 139 146 134</span>
@@ -221,26 +232,26 @@ to help determine whether the imputed value is used in the analysis.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "imputation" "numeric"   </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## using dplyr -------------------------------------</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The mean before and after the imputation of the sodium variable</span></span>
-<span class="r-in"><span class="va">heartfailure</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>sodium_imp <span class="op">=</span> <span class="fu">imputate_outlier</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="va">sodium</span>, </span>
-<span class="r-in">                                      method <span class="op">=</span> <span class="st">"capping"</span>, no_attrs <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">death_event</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>orig <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">sodium</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span class="r-in">            imputation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">sodium_imp</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## using dplyr -------------------------------------</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># The mean before and after the imputation of the sodium variable</span></span></span>
+<span class="r-in"><span><span class="va">heartfailure</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>sodium_imp <span class="op">=</span> <span class="fu">imputate_outlier</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="va">sodium</span>, </span></span>
+<span class="r-in"><span>                                      method <span class="op">=</span> <span class="st">"capping"</span>, no_attrs <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">death_event</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>orig <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">sodium</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>            imputation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">sodium_imp</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   death_event  orig imputation</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> No           137.       137.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Yes          135.       136.</span>
-<span class="r-in">            </span>
-<span class="r-in"><span class="co"># If the variable of interest is a numerical variables</span></span>
-<span class="r-in"><span class="va">sodium</span> <span class="op">&lt;-</span> <span class="fu">imputate_outlier</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="va">sodium</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">sodium</span></span>
+<span class="r-in"><span>            </span></span>
+<span class="r-in"><span><span class="co"># If the variable of interest is a numerical variables</span></span></span>
+<span class="r-in"><span><span class="va">sodium</span> <span class="op">&lt;-</span> <span class="fu">imputate_outlier</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="va">sodium</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sodium</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 130 136 129 137 130 132 137 131 138 133 131 140 137 137 138 136 140 127</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [19] 140 130 137 136 140 135 134 144 138 136 134 132 134 132 128 138 140 134</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [37] 134 145 137 142 134 136 139 134 142 135 130 138 133 140 138 139 146 134</span>
@@ -274,7 +285,7 @@ to help determine whether the imputed value is used in the analysis.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "imputation" "numeric"   </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">sodium</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">sodium</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Impute outliers with capping</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Information of Imputation (before vs after)</span>
@@ -305,11 +316,11 @@ to help determine whether the imputed value is used in the analysis.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> p95                 "144"        "144"       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> p99                 "145"        "145"       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> p100                "148"        "148"       </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sodium</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sodium</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="imputate_outlier-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -324,8 +335,7 @@ to help determine whether the imputed value is used in the analysis.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
