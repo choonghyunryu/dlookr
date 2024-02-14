@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# dlookr <img src="figures/detective_2.png" align="right" height="120" width="103.6"/>
+# dlookr <img src="man/figures/detective_2.png" align="right" height="120" width="103.6"/>
 
 <!-- badges: start -->
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/dlookr)](https://cran.r-project.org/package=dlookr)
