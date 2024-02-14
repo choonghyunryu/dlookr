@@ -1,4 +1,4 @@
-# dlookr 0.6.3.9004
+# dlookr 0.6.3.9005
 
 ## NEW FEATURES
   
@@ -40,6 +40,9 @@
 * Fixed an error that is "Errors with eda_paged_report". (#86)  
 
 * Fixed blank pages in EDA paged reports. (#114)
+
+* Fixed CRAN submit for suggests packages. (#118)
+
 
 
 
