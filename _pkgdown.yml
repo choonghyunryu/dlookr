@@ -1,0 +1,131 @@
+pandoc: '2.8'
+pkgdown: 1.5.1
+pkgdown_sha: ~
+
+title: dlookr
+
+template:
+  params:
+    bootswatch: united
+  
+#articles:
+#- title: Support your data analytics
+#  navbar: ~
+#  contents:
+#  - diagonosis
+#  - EDA
+#  - transformation
+  
+reference:
+- title: Tools for Data Diagnosis, Exploration, Transformation
+  desc:  dlookr provides data diagnosis, data exploration and transformation of variables during data analysis.
+  contents:
+  - dlookr-package
+- subtitle: Data quality diagnosis
+  contents:
+  - ends_with("overview")
+  - starts_with("diagnose")
+  - starts_with("plot_na")  
+  - starts_with("plot_outlier")
+- subtitle: Exploratory Data Analysis
+  contents:
+  - starts_with("describe")
+  - starts_with("normality")  
+  - starts_with("plot_bar_category")
+  - starts_with("plot_qq_numeric")
+  - starts_with("plot_box_numeric")    
+  - starts_with("plot_hist_numeric")      
+  - plot_normality
+  - plot_normality.tbl_dbi
+  - starts_with("correlate")  
+  - plot_correlate
+  - plot_correlate.tbl_dbi
+  - plot.correlate
+  - summary.correlate
+  - starts_with("target_by")    
+  - relate
+  - print.relate
+  - plot.relate
+  - starts_with("compare")  
+  - summary.compare_category
+  - summary.compare_numeric  
+  - plot.compare_category
+  - plot.compare_numeric  
+  - starts_with("univar_")  
+  - summary.univar_category
+  - summary.univar_numeric 
+  - plot.univar_category
+  - plot.univar_numeric
+  - eda_report
+  - eda_report.tbl_dbi
+  - eda_web_report
+  - eda_web_report.tbl_dbi
+  - eda_paged_report
+  - eda_paged_report.tbl_dbi  
+  - pps
+  - summary.pps
+  - plot.pps  
+- subtitle: Data Transformation
+  contents:
+  - find_na
+  - find_outliers
+  - find_skewness
+  - starts_with("imputate_")  
+  - summary.imputation
+  - plot.imputation
+  - transform
+  - summary.transform
+  - plot.transform
+  - starts_with("binning")
+  - summary.bins
+  - plot.bins
+  - plot.optimal_bins
+  - summary.optimal_bins
+  - plot.infogain_bins
+  - extract.bins
+  - performance_bin  
+  - summary.performance_bin
+  - plot.performance_bin
+  - transformation_report
+  - transformation_paged_report
+  - transformation_web_report
+- subtitle: Miscellaneous
+  contents:
+  - entropy
+  - skewness
+  - kurtosis
+  - kld
+  - jsd  
+  - cramer
+  - theil 
+  - find_class
+  - starts_with("get_")  
+  - import_google_font
+  - dlookr_orange_paged
+  - dlookr_templ_html
+- subtitle: Datas
+  contents:
+  - Carseats
+  - flights
+  - heartfailure
+  - jobchange
+  
+navbar:
+  title: dlookr
+  type: default
+  left:
+  - text: Introduce dlookr
+    href: articles/introduce.html  
+  - text: Data Diagnosis
+    href: articles/diagonosis.html
+  - text: EDA
+    href: articles/EDA.html
+  - text: Data Transformation
+    href: articles/transformation.html
+  right:
+  - text: Function reference
+    href: reference/index.html
+  - icon: fa-github fa-lg
+    href: https://github.com/choonghyunryu/dlookr/ 
+last_built: 2020-08-02T11:20Z
+

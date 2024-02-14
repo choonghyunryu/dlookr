@@ -26,11 +26,7 @@ doc
 *.utf8.md
 *.knit.md
 .Rproj.user
-dlookr.Rproj
 .DS_Store
-README.Rmd
-.gitignore
-_pkgdown.yml
 *.csv
 *.bak
 /doc/
