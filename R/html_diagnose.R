@@ -60,7 +60,7 @@ html_toprank <- function(.data, variable = NULL, drop_variable = FALSE) {
     summarise(top_freq = sum(freq), .groups = "drop") %>% 
     mutate(other_freq = N - top_freq) %>% 
     filter(other_freq > 0) %>% 
-    mutate(levels = "Other levles",
+    mutate(levels = "Other levels",
            N = N,
            freq = other_freq,
            ratio = freq / N,
@@ -85,7 +85,7 @@ html_toprank <- function(.data, variable = NULL, drop_variable = FALSE) {
   # Render a bar chart in the background of the cell
   bar_style <- function(width = 1, fill = "#e6e6e666", levels = NULL) {
     fill <- ifelse(levels %in% "Missing", "#cdcdcd99", fill)
-    fill <- ifelse(levels %in% "Other levles", "#0072bc66", fill)
+    fill <- ifelse(levels %in% "Other levels", "#0072bc66", fill)
     
     position <- paste0(width * 100, "%")
     image <- sprintf("linear-gradient(90deg, %1$s %2$s, transparent %2$s)", 
@@ -152,7 +152,7 @@ html_paged_toprank <- function(.data, top = 10, type = "n", variable = NULL,
     summarise(top_freq = sum(freq), .groups = "drop") %>% 
     mutate(other_freq = N - top_freq) %>% 
     filter(other_freq > 0) %>% 
-    mutate(levels = "Other levles",
+    mutate(levels = "Other levels",
            N = N,
            freq = other_freq,
            ratio = freq / N,
@@ -540,7 +540,7 @@ html_missing <- function(tab, grade = c("Good" = 0.05, "OK" = 0.1,
       diagn_missing,
       defaultColDef = colDef(style = "font-size: 14px;color: hsl(0, 0%, 40%);"),
       columns = list(
-        variables = colDef(name = "Variables"),  
+        variables = colDef(name = "Variable"),  
         missing_count = colDef(name = "Missing",
                                width = 120,
                                format = colFormat(separators = TRUE)),    
@@ -560,7 +560,7 @@ html_missing <- function(tab, grade = c("Good" = 0.05, "OK" = 0.1,
                           tagList(badge, value)
                         }),
         recommend = colDef(
-          name = "Recommend"
+          name = "Recommendation"
         )
       )
     )
@@ -730,7 +730,7 @@ html_outlier <- function(.data, theme = c("orange", "blue")[1],
         height = 400, device = grDevices::png)
         
         shiny::tabsetPanel(
-          shiny::tabPanel("Distirubution", p_outlier,
+          shiny::tabPanel("Distribution", p_outlier,
                           hr(style = "border-top: 1px solid black;"),
                           style = "padding-top:5px; padding-bottom:25px;"),          
           shiny::tabPanel("Statistics", outlier_df,

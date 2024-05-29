@@ -112,7 +112,7 @@ knitr::kables(format = "html",
   cat()
 ```
 
-## Job Informations
+## Job Information
 
 ```{r overview-job, results='asis'}
 division <- c("dataset" ,"dataset" ,"dataset", "job", "job", "job")

@@ -17,7 +17,7 @@
 #'     \itemize{
 #'       \item Data Structures
 #'       \item Data Types
-#'       \item Job Informations
+#'       \item Job Information
 #'     }
 #'     \item Warnings
 #'     \item Variables
@@ -161,7 +161,7 @@ diagnose_web_report.tbl_dbi <- function(.data, output_file = NULL, output_dir = 
 #'   \item Overview
 #'   \itemize{
 #'     \item Data Structures 
-#'     \item Job Informations
+#'     \item Job Information
 #'     \item Warnings
 #'     \item Variables
 #'   } 
@@ -340,7 +340,7 @@ diagnose_paged_report.tbl_dbi <- function(.data, output_format = c("pdf", "html"
 #'   \itemize{
 #'     \item Data Structures 
 #'     \item Data Types
-#'     \item Job Informations
+#'     \item Job Information
 #'   }
 #'   \item Univariate Analysis
 #'   \itemize{
@@ -477,7 +477,7 @@ eda_web_report.tbl_dbi <- function(.data, target = NULL, output_file = NULL,
 #'   \item Overview
 #'   \itemize{
 #'     \item Data Structures 
-#'     \item Job Informations
+#'     \item Job Information
 #'   } 
 #'   \item Univariate Analysis
 #'   \itemize{

@@ -457,7 +457,7 @@ The contents of the report are as follows.:
 * Overview
     + Data Structures
     + Data Types
-    + Job Informations
+    + Job Information
 * Univariate Analysis
     + Descriptive Statistics
     + Normality Test
@@ -524,7 +524,7 @@ The contents of the report are as follows.:
 
 * Overview
     + Data Structures
-    + Job Informations
+    + Job Information
 * Univariate Analysis
     + Descriptive Statistics
         + Numerical Variables

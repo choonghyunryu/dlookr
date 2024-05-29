@@ -79,7 +79,7 @@ The transformation process will report the following information:
   \itemize{
     \item Data Structures 
     \item Data Types
-    \item Job Informations
+    \item Job Information
   }
   \item Imputation
   \itemize{
