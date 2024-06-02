@@ -2067,7 +2067,7 @@ The contents of the report are as follows.:
   - Data Structures
     - Data Structures
     - Data Types
-    - Job Informations
+    - Job Information
   - Warnings
   - Variables
 - Missing Values
@@ -2156,7 +2156,7 @@ The contents of the report are as follows.:
 
 - Overview
   - Data Structures
-  - Job Informations
+  - Job Information
   - Warnings
   - Variables
 - Missing Values
@@ -2273,7 +2273,7 @@ The contents of the report are as follows.:
 - Overview
   - Data Structures
   - Data Types
-  - Job Informations
+  - Job Information
 - Univariate Analysis
   - Descriptive Statistics
   - Normality Test
@@ -2349,7 +2349,7 @@ The contents of the report are as follows.:
 
 - Overview
   - Data Structures
-  - Job Informations
+  - Job Information
 - Univariate Analysis
   - Descriptive Statistics
     - Numerical Variables
@@ -2457,7 +2457,7 @@ The contents of the report are as follows.:
 - Overview
   - Data Structures
   - Data Types
-  - Job Informations
+  - Job Information
 - Imputation
   - Missing Values
   - Outliers
@@ -2527,7 +2527,7 @@ The contents of the report are as follows.:
 
 - Overview
   - Data Structures
-  - Job Informations
+  - Job Information
 - Imputation
   - Missing Values
   - Outliers

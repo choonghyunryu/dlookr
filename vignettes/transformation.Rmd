@@ -390,7 +390,7 @@ The contents of the report are as follows.:
 * Overview
     + Data Structures
     + Data Types
-    + Job Informations
+    + Job Information
 * Imputation
     + Missing Values
     + Outliers
@@ -450,7 +450,7 @@ The contents of the report are as follows.:
 
 * Overview
     + Data Structures
-    + Job Informations
+    + Job Information
 * Imputation
     + Missing Values
     + Outliers

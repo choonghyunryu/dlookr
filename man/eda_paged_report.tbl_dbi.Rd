@@ -109,7 +109,7 @@ The EDA process will report the following information:
   \item Overview
   \itemize{
     \item Data Structures 
-    \item Job Informations
+    \item Job Information
   } 
   \item Univariate Analysis
   \itemize{

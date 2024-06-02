@@ -86,7 +86,7 @@ Reported from the EDA is as follows.
   \itemize{
     \item Data Structures 
     \item Data Types
-    \item Job Informations
+    \item Job Information
   }
   \item Univariate Analysis
   \itemize{

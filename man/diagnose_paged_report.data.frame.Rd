@@ -125,7 +125,7 @@ Reported from the data diagnosis is as follows.
   \item Overview
   \itemize{
     \item Data Structures 
-    \item Job Informations
+    \item Job Information
     \item Warnings
     \item Variables
   } 

@@ -92,7 +92,7 @@ Reported from the data diagnosis is as follows.
     \itemize{
       \item Data Structures
       \item Data Types
-      \item Job Informations
+      \item Job Information
     }
     \item Warnings
     \item Variables
