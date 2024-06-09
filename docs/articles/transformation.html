@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dlookr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.3.9005</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.3</span>
       </span>
     </div>
 
@@ -79,11 +79,7 @@
                         <h4 data-toc-skip class="author">Choonghyun
 Ryu</h4>
             
-<<<<<<< HEAD
-            <h4 data-toc-skip class="date">2024-02-15</h4>
-=======
-            <h4 data-toc-skip class="date">2024-02-11</h4>
->>>>>>> 2455413f029244b566a37aeed1916eea79ac483b
+            <h4 data-toc-skip class="date">2024-06-09</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/choonghyunryu/dlookr/blob/HEAD/vignettes/transformation.Rmd" class="external-link"><code>vignettes/transformation.Rmd</code></a></small>
       <div class="hidden name"><code>transformation.Rmd</code></div>
@@ -404,11 +400,11 @@ and is easily interpreted logically using pipes.</p>
 <span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  <span class="fu">group_by</span>(US) <span class="sc">%&gt;%</span></span>
 <span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">orig =</span> <span class="fu">mean</span>(Income, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>            <span class="at">imputation =</span> <span class="fu">mean</span>(Income_imp))</span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 2 × 3 [39m</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="co"># A tibble: 2 × 3 [39m</span></span>
 <span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>  US     orig imputation</span>
-<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>fct<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m       [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m</span>
-<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m1 [39m No     <span class="fl">65.8</span>       <span class="fl">66.1</span></span>
-<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m2 [39m Yes    <span class="fl">70.4</span>       <span class="fl">70.5</span></span></code></pre></div>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>   [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>fct<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m  [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m       [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m1 [<span class="dv">39</span>m No     <span class="fl">65.8</span>       <span class="fl">66.1</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m2 [<span class="dv">39</span>m Yes    <span class="fl">70.4</span>       <span class="fl">70.5</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -546,11 +542,11 @@ interpreted logically using pipes.</p>
 <span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>  <span class="fu">group_by</span>(US) <span class="sc">%&gt;%</span></span>
 <span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">orig =</span> <span class="fu">mean</span>(Price, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>    <span class="at">imputation =</span> <span class="fu">mean</span>(Price_imp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 2 × 3 [39m</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="co"># A tibble: 2 × 3 [39m</span></span>
 <span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>  US     orig imputation</span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>fct<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m       [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m</span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m1 [39m No     <span class="fl">114.</span>       <span class="fl">114.</span></span>
-<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m2 [39m Yes    <span class="fl">117.</span>       <span class="fl">117.</span></span></code></pre></div>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>   [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>fct<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m  [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m       [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m1 [<span class="dv">39</span>m No     <span class="fl">114.</span>       <span class="fl">114.</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m2 [<span class="dv">39</span>m Yes    <span class="fl">117.</span>       <span class="fl">117.</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -586,10 +582,10 @@ contain 0.</li>
 </h3>
 <p>Use the methods “zscore” and “minmax” to perform standardization.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">carseats</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>Income_minmax <span class="op">=</span> <span class="fu"><a href="../reference/transform.html">transform</a></span><span class="op">(</span><span class="va">carseats</span><span class="op">$</span><span class="va">Income</span>, method <span class="op">=</span> <span class="st">"minmax"</span><span class="op">)</span>,</span>
-<span>    Sales_minmax <span class="op">=</span> <span class="fu"><a href="../reference/transform.html">transform</a></span><span class="op">(</span><span class="va">carseats</span><span class="op">$</span><span class="va">Sales</span>, method <span class="op">=</span> <span class="st">"minmax"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="va">Income_minmax</span>, <span class="va">Sales_minmax</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<code class="sourceCode R"><span><span class="va">carseats</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Income_minmax <span class="op">=</span> <span class="fu"><a href="../reference/transform.html">transform</a></span><span class="op">(</span><span class="va">carseats</span><span class="op">$</span><span class="va">Income</span>, method <span class="op">=</span> <span class="st">"minmax"</span><span class="op">)</span>,</span>
+<span>    Sales_minmax <span class="op">=</span> <span class="fu"><a href="../reference/transform.html">transform</a></span><span class="op">(</span><span class="va">carseats</span><span class="op">$</span><span class="va">Sales</span>, method <span class="op">=</span> <span class="st">"minmax"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Income_minmax</span>, <span class="va">Sales_minmax</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html" class="external-link">boxplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="transformation_files/figure-html/standardization-1.png" width="600px" style="display: block; margin: auto;"></p>
 </div>
@@ -832,17 +828,17 @@ frequencies</li>
 <span id="cb13-76"><a href="#cb13-76" tabindex="-1"></a> <span class="fu">summarise</span>(<span class="at">freq =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
 <span id="cb13-77"><a href="#cb13-77" tabindex="-1"></a> <span class="fu">arrange</span>(<span class="fu">desc</span>(freq)) <span class="sc">%&gt;%</span></span>
 <span id="cb13-78"><a href="#cb13-78" tabindex="-1"></a> <span class="fu">head</span>(<span class="dv">10</span>)</span>
-<span id="cb13-79"><a href="#cb13-79" tabindex="-1"></a> [1m [22m<span class="st">`</span><span class="at">summarise()</span><span class="st">`</span> has grouped output by <span class="st">'ShelveLoc'</span>. You can override using the</span>
+<span id="cb13-79"><a href="#cb13-79" tabindex="-1"></a> [<span class="dv">1</span>m [<span class="dv">22</span>m<span class="st">`</span><span class="at">summarise()</span><span class="st">`</span> has grouped output by <span class="st">'ShelveLoc'</span>. You can override using the</span>
 <span id="cb13-80"><a href="#cb13-80" tabindex="-1"></a><span class="st">`</span><span class="at">.groups</span><span class="st">`</span> argument.</span>
-<span id="cb13-81"><a href="#cb13-81" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 10 × 3 [39m</span></span>
-<span id="cb13-82"><a href="#cb13-82" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># Groups:   ShelveLoc [1] [39m</span></span>
+<span id="cb13-81"><a href="#cb13-81" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="co"># A tibble: 10 × 3 [39m</span></span>
+<span id="cb13-82"><a href="#cb13-82" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="co"># Groups:   ShelveLoc [1] [39m</span></span>
 <span id="cb13-83"><a href="#cb13-83" tabindex="-1"></a>  ShelveLoc Income_bin  freq</span>
-<span id="cb13-84"><a href="#cb13-84" tabindex="-1"></a>   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>fct<span class="sc">&gt;</span> [39m [23m      [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>ord<span class="sc">&gt;</span> [39m [23m       [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m</span>
-<span id="cb13-85"><a href="#cb13-85" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m1 [39m Medium    [<span class="dv">21</span>,<span class="dv">30</span>]       <span class="dv">25</span></span>
-<span id="cb13-86"><a href="#cb13-86" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m2 [39m <span class="fu">Medium</span>    (<span class="dv">62</span>,<span class="dv">69</span>]       <span class="dv">24</span></span>
-<span id="cb13-87"><a href="#cb13-87" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m3 [39m <span class="fu">Medium</span>    (<span class="dv">48</span>,<span class="dv">62</span>]       <span class="dv">23</span></span>
-<span id="cb13-88"><a href="#cb13-88" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m4 [39m <span class="fu">Medium</span>    (<span class="dv">39</span>,<span class="dv">48</span>]       <span class="dv">21</span></span>
-<span id="cb13-89"><a href="#cb13-89" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># ℹ 6 more rows [39m</span></span></code></pre></div>
+<span id="cb13-84"><a href="#cb13-84" tabindex="-1"></a>   [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>fct<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m      [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>ord<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m       [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m</span>
+<span id="cb13-85"><a href="#cb13-85" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m1 [<span class="dv">39</span>m Medium    [<span class="dv">21</span>,<span class="dv">30</span>]       <span class="dv">25</span></span>
+<span id="cb13-86"><a href="#cb13-86" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m2 [<span class="dv">39</span>m <span class="fu">Medium</span>    (<span class="dv">62</span>,<span class="dv">69</span>]       <span class="dv">24</span></span>
+<span id="cb13-87"><a href="#cb13-87" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m3 [<span class="dv">39</span>m <span class="fu">Medium</span>    (<span class="dv">48</span>,<span class="dv">62</span>]       <span class="dv">23</span></span>
+<span id="cb13-88"><a href="#cb13-88" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m4 [<span class="dv">39</span>m <span class="fu">Medium</span>    (<span class="dv">39</span>,<span class="dv">48</span>]       <span class="dv">21</span></span>
+<span id="cb13-89"><a href="#cb13-89" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="co"># ℹ 6 more rows [39m</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="optimal-binning-with-binning_by">Optimal Binning with <code>binning_by()</code><a class="anchor" aria-label="anchor" href="#optimal-binning-with-binning_by"></a>
@@ -939,7 +935,7 @@ etc) or data.frame.</p>
 <ul>
 <li>Data Structures</li>
 <li>Data Types</li>
-<li>Job Informations</li>
+<li>Job Information</li>
 </ul>
 </li>
 <li>Imputation
@@ -1018,7 +1014,7 @@ following arguments.</p>
 <p>The following script creates a data transformation report for the
 <code>tbl_df</code> class object, <code>heartfailure</code>.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">heartfailure</span> <span class="op">%&gt;%</span></span>
+<code class="sourceCode R"><span><span class="va">heartfailure</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/transformation_web_report.html">transformation_web_report</a></span><span class="op">(</span>target <span class="op">=</span> <span class="st">"death_event"</span>, subtitle <span class="op">=</span> <span class="st">"heartfailure"</span>,</span>
 <span>                            output_dir <span class="op">=</span> <span class="st">"./"</span>, output_file <span class="op">=</span> <span class="st">"transformation.html"</span>, </span>
 <span>                            theme <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></span></code></pre></div>
@@ -1052,7 +1048,7 @@ etc) or data.frame.</p>
 <li>Overview
 <ul>
 <li>Data Structures</li>
-<li>Job Informations</li>
+<li>Job Information</li>
 </ul>
 </li>
 <li>Imputation
@@ -1151,7 +1147,7 @@ following arguments.</p>
 <p>The following script creates a data transformation report for the
 <code>data.frame</code> class object, <code>heartfailure</code>.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">heartfailure</span> <span class="op">%&gt;%</span></span>
+<code class="sourceCode R"><span><span class="va">heartfailure</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/transformation_paged_report.html">transformation_paged_report</a></span><span class="op">(</span>target <span class="op">=</span> <span class="st">"death_event"</span>, subtitle <span class="op">=</span> <span class="st">"heartfailure"</span>,</span>
 <span>                              output_dir <span class="op">=</span> <span class="st">"./"</span>, output_file <span class="op">=</span> <span class="st">"transformation.pdf"</span>, </span>
 <span>                              theme <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></span></code></pre></div>
