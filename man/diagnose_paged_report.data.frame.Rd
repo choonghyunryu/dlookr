@@ -36,7 +36,7 @@ diagnose_paged_report(.data, ...)
 )
 }
 \arguments{
-\item{.data}{a data.frame or a \code{\link{tbl_df}}.}
+\item{.data}{a data.frame or a \code{\link[tibble]{tbl_df}}.}
 
 \item{...}{arguments to be passed to pagedown::chrome_print().}
 

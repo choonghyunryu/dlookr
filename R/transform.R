@@ -338,7 +338,7 @@ plot.transform <- function(x, typographic = TRUE, base_family = NULL, ...) {
 #'
 #' See vignette("transformation") for an introduction to these concepts.
 #'
-#' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param target target variable. If the target variable is not specified,
 #' the method of using the target variable information is not performed when
 #' the missing value is imputed. and Optimal binning is not performed if the

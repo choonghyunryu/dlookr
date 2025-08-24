@@ -10,7 +10,7 @@ compare_numeric(.data, ...)
 \method{compare_numeric}{data.frame}(.data, ...)
 }
 \arguments{
-\item{.data}{a data.frame or a \code{\link{tbl_df}}.}
+\item{.data}{a data.frame or a \code{\link[tibble]{tbl_df}}.}
 
 \item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
@@ -59,7 +59,7 @@ and return compare_numeric class that based list object.
 
 Attributes of compare_numeric class is as follows.
 \itemize{
-\item raw : a data.frame or a \code{\link{tbl_df}}. Data containing variables to be compared. Save it for visualization with plot.compare_numeric().
+\item raw : a data.frame or a \code{\link[tibble]{tbl_df}}. Data containing variables to be compared. Save it for visualization with plot.compare_numeric().
 \item variables : character. List of variables selected for comparison. 
 \item combination : matrix. It consists of pairs of variables to compare.
 }

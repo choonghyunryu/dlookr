@@ -10,7 +10,7 @@ describe <- function(.data, ...) {
 #' @description The describe() compute descriptive statistic of numeric
 #' variable for exploratory data analysis.
 #'
-#' @details This function is useful when used with the \code{\link{group_by}} function
+#' @details This function is useful when used with the \code{\link[dplyr]{group_by}} function
 #' of the dplyr package.
 #' If you want to calculate the statistic by level of the categorical data
 #' you are interested in, rather than the whole statistic, you can use
@@ -43,7 +43,7 @@ describe <- function(.data, ...) {
 #'
 #' }
 #'
-#' @param .data a data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.
+#' @param .data a data.frame or a \code{\link[tibble]{tbl_df}} or a \code{\link[dplyr]{grouped_df}}.
 #' @param statistics character. the name of the descriptive statistic to calculate. The defaults is c("mean", "sd", "se_mean", "IQR", "skewness", "kurtosis", "quantiles")
 #' @param quantiles numeric. list of quantiles to calculate. The values of elements must be between 0 and 1. and to calculate quantiles, you must include "quantiles" in the statistics argument value. The default is c(0, .01, .05, 0.1, 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.9, 0.95, 0.99, 1).
 #' @param all.combinations logical. When used with group_by(), 

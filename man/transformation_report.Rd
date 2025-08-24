@@ -15,7 +15,7 @@ transformation_report(
 )
 }
 \arguments{
-\item{.data}{a data.frame or a \code{\link{tbl_df}}.}
+\item{.data}{a data.frame or a \code{\link[tibble]{tbl_df}}.}
 
 \item{target}{target variable. If the target variable is not specified,
 the method of using the target variable information is not performed when

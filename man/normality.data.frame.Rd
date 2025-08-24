@@ -13,7 +13,7 @@ normality(.data, ...)
 \method{normality}{grouped_df}(.data, ..., sample = 5000)
 }
 \arguments{
-\item{.data}{a data.frame or a \code{\link{tbl_df}}.}
+\item{.data}{a data.frame or a \code{\link[tibble]{tbl_df}}.}
 
 \item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
@@ -34,7 +34,7 @@ An object of the same class as .data.
 The normality() performs Shapiro-Wilk test of normality of numerical values.
 }
 \details{
-This function is useful when used with the \code{\link{group_by}}
+This function is useful when used with the \code{\link[dplyr]{group_by}}
 function of the dplyr package. If you want to test by level of the categorical
 data you are interested in, rather than the whole observation,
 you can use group_tf as the group_by function.

@@ -18,7 +18,7 @@ diagnose_report(.data, output_format, output_file, output_dir, ...)
 )
 }
 \arguments{
-\item{.data}{a data.frame or a \code{\link{tbl_df}}.}
+\item{.data}{a data.frame or a \code{\link[tibble]{tbl_df}}.}
 
 \item{output_format}{report output type. Choose either "pdf" and "html".
 "pdf" create pdf file by knitr::knit().

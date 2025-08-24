@@ -39,7 +39,7 @@ Data analysis proceeds with the purpose of predicting target variables that
  between the target variable and its corresponding variable.
  Based on the derived relationships, analysts create scenarios for data analysis.
 
- target_by() inherits the \code{\link{grouped_df}} class and returns a target_df
+ target_by() inherits the \code{\link[dplyr]{grouped_df}} class and returns a target_df
  class containing information about the target variable and the variable.
 
 See vignette("EDA") for an introduction to these concepts.

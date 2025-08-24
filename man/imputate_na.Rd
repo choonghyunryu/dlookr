@@ -7,7 +7,7 @@
 imputate_na(.data, xvar, yvar, method, seed, print_flag, no_attrs)
 }
 \arguments{
-\item{.data}{a data.frame or a \code{\link{tbl_df}}.}
+\item{.data}{a data.frame or a \code{\link[tibble]{tbl_df}}.}
 
 \item{xvar}{variable name to replace missing value.}
 

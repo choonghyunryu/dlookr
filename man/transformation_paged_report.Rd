@@ -28,7 +28,7 @@ transformation_paged_report(
 )
 }
 \arguments{
-\item{.data}{a data.frame or a \code{\link{tbl_df}}.}
+\item{.data}{a data.frame or a \code{\link[tibble]{tbl_df}}.}
 
 \item{target}{character. target variable.}
 

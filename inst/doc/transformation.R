@@ -1,6 +1,6 @@
 ## ----environment, echo = FALSE, message = FALSE, warning=FALSE----------------
-knitr::opts_chunk$set(collapse = TRUE, comment = "", out.width = "600px", dpi = 70)
-options(tibble.print_min = 4L, tibble.print_max = 4L)
+knitr::opts_chunk$set(collapse = TRUE, comment = "", out.width = "600px", dpi = 70, collapse = TRUE)
+options(tibble.print_min = 4L, tibble.print_max = 4L, crayon.enabed = FALSE)
 
 library(dlookr)
 library(dplyr)
@@ -37,18 +37,18 @@ if (requireNamespace("rpart", quietly = TRUE)) {
 }
 
 ## ----imputate_na2, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE----
-#  library(mice)
-#  
-#  urban <- imputate_na(carseats, Urban, US, method = "mice")
-#  
-#  # result of imputation
-#  urban
-#  
-#  # summary of imputation
-#  summary(urban)
-#  
-#  # viz of imputation
-#  plot(urban)
+# library(mice)
+# 
+# urban <- imputate_na(carseats, Urban, US, method = "mice")
+# 
+# # result of imputation
+# urban
+# 
+# # summary of imputation
+# summary(urban)
+# 
+# # viz of imputation
+# plot(urban)
 
 ## ----imputate_na3-------------------------------------------------------------
 # The mean before and after the imputation of the Income variable
@@ -186,19 +186,19 @@ if (requireNamespace("partykit", quietly = TRUE)) {
 }
 
 ## ----trans_web_report, eval=FALSE---------------------------------------------
-#  heartfailure %>%
-#    transformation_web_report(target = "death_event", subtitle = "heartfailure",
-#                              output_dir = "./", output_file = "transformation.html",
-#                              theme = "blue")
+# heartfailure %>%
+#   transformation_web_report(target = "death_event", subtitle = "heartfailure",
+#                             output_dir = "./", output_file = "transformation.html",
+#                             theme = "blue")
 
 ## ----trans_web_title, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The part of the report"----
 knitr::include_graphics('img/transformation_web_title.jpg')
 
 ## ----trans_paged_report, eval=FALSE-------------------------------------------
-#  heartfailure %>%
-#    transformation_paged_report(target = "death_event", subtitle = "heartfailure",
-#                                output_dir = "./", output_file = "transformation.pdf",
-#                                theme = "blue")
+# heartfailure %>%
+#   transformation_paged_report(target = "death_event", subtitle = "heartfailure",
+#                               output_dir = "./", output_file = "transformation.pdf",
+#                               theme = "blue")
 
 ## ----trans_paged_cover, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The part of the report"----
 knitr::include_graphics('img/transformation_paged_cover.jpg')

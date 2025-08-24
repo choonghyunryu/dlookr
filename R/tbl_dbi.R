@@ -889,7 +889,7 @@ plot_outlier.tbl_dbi <- function(.data, ..., col = "steelblue",
 #' @description The normality() performs Shapiro-Wilk test of normality 
 #' of numerical(INTEGER, NUMBER, etc.) column of the DBMS table through tbl_dbi.
 #'
-#' @details This function is useful when used with the \code{\link{group_by}}
+#' @details This function is useful when used with the \code{\link[dplyr]{group_by}}
 #' function of the dplyr package. If you want to test by level of the categorical
 #' data you are interested in, rather than the whole observation,
 #' you can use group_tf as the group_by function.
@@ -1300,7 +1300,7 @@ plot_correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
 #' @description The describe() compute descriptive statistic of numerical(INTEGER, NUMBER, etc.) 
 #' column of the DBMS table through tbl_dbi for exploratory data analysis.
 #'
-#' @details This function is useful when used with the \code{\link{group_by}} function
+#' @details This function is useful when used with the \code{\link[dplyr]{group_by}} function
 #' of the dplyr package.
 #' If you want to calculate the statistic by level of the categorical data
 #' you are interested in, rather than the whole statistic, you can use
@@ -1459,7 +1459,7 @@ describe.tbl_dbi <- function(.data, ..., statistics = NULL, quantiles = NULL,
 #'  between the target variable and its corresponding variable.
 #'  Based on the derived relationships, analysts create scenarios for data analysis.
 #'
-#'  target_by() inherits the \code{\link{grouped_df}} class and returns a target_df
+#'  target_by() inherits the \code{\link[dplyr]{grouped_df}} class and returns a target_df
 #'  class containing information about the target variable and the variable.
 #'
 #' See vignette("EDA") for an introduction to these concepts.

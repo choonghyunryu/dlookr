@@ -18,7 +18,7 @@ plot_bar_category <- function(.data, ...) {
 #' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font().
 #' 
-#' @param .data a data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.
+#' @param .data a data.frame or a \code{\link[tibble]{tbl_df}} or a \code{\link[dplyr]{grouped_df}}.
 #' @param \dots one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
 #' Positive values select variables; negative values to drop variables.
@@ -442,7 +442,7 @@ plot_qq_numeric <- function(.data, ...) {
 #' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font().
 #'  
-#' @param .data data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.
+#' @param .data data.frame or a \code{\link[tibble]{tbl_df}} or a \code{\link[dplyr]{grouped_df}}.
 #' @param \dots one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
 #' Positive values select variables; negative values to drop variables.
@@ -718,7 +718,7 @@ plot_box_numeric <- function(.data, ...) {
 #' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font().
 #'
-#' @param .data data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.
+#' @param .data data.frame or a \code{\link[tibble]{tbl_df}} or a \code{\link[dplyr]{grouped_df}}.
 #' @param \dots one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
 #' Positive values select variables; negative values to drop variables.
@@ -1004,7 +1004,7 @@ plot_hist_numeric <- function(.data, ...) {
 #' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font().
 #' 
-#' @param .data data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.
+#' @param .data data.frame or a \code{\link[tibble]{tbl_df}} or a \code{\link[dplyr]{grouped_df}}.
 #' @param \dots one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
 #' Positive values select variables; negative values to drop variables.

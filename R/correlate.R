@@ -20,7 +20,7 @@ plot_correlate <- function(.data, ...) {
 #'
 #' @details This function is useful when used with the group_by() function of the dplyr package.
 #' If you want to compute by level of the categorical data you are interested in,
-#' rather than the whole observation, you can use \code{\link{grouped_df}} as the group_by() function.
+#' rather than the whole observation, you can use \code{\link[dplyr]{grouped_df}} as the group_by() function.
 #' This function is computed stats::cor() function by use = "pairwise.complete.obs" option for numerical variable.
 #' And support categorical variable with theil's U correlation coefficient and Cramer's V correlation coefficient.
 #'
@@ -46,7 +46,7 @@ plot_correlate <- function(.data, ...) {
 #' }
 #' 
 #'
-#' @param .data a data.frame or a \code{\link{grouped_df}} or a tbl_dbi.
+#' @param .data a data.frame or a \code{\link[dplyr]{grouped_df}} or a tbl_dbi.
 #' @param method a character string indicating which correlation coefficient (or covariance) is 
 #' to be computed. One of "pearson" (default), "kendall", or "spearman": can be abbreviated.
 #' For numerical variables, one of "pearson" (default), "kendall", or 
@@ -592,7 +592,7 @@ summary.correlate <- function(object, ...) {
 #' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font().
 #' 
-#' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param method a character string indicating which correlation coefficient (or covariance) is 
 #' to be computed. One of "pearson" (default), "kendall", or "spearman": can be abbreviated.
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 

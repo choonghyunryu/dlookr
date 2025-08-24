@@ -8,7 +8,7 @@
 #' The `overview` class includes general information such as the size of the data, the degree of missing values, 
 #' and the data types of variables.
 #'
-#' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @return An object of overview class. 
 #' The overview class contains data.frame and two attributes. data.frame has the following 3 variables.:
 #' data.frame is as follow.:

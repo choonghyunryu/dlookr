@@ -16,7 +16,7 @@ plot_normality <- function(.data, ...) {
 #'
 #' @description The normality() performs Shapiro-Wilk test of normality of numerical values.
 #'
-#' @details This function is useful when used with the \code{\link{group_by}}
+#' @details This function is useful when used with the \code{\link[dplyr]{group_by}}
 #' function of the dplyr package. If you want to test by level of the categorical
 #' data you are interested in, rather than the whole observation,
 #' you can use group_tf as the group_by function.
@@ -33,7 +33,7 @@ plot_normality <- function(.data, ...) {
 #' The number of observations supported by the stats::shapiro.test function is 3 to 5000.
 #' }
 #'
-#' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
 #' Positive values select variables; negative values to drop variables.
@@ -232,7 +232,7 @@ normality_group_impl <- function(df, vars, sample) {
 #' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font(). 
 #'
-#' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
 #' Positive values select variables; negative values to drop variables.

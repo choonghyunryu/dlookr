@@ -37,7 +37,7 @@ univar_numeric <- function(.data, ...) {
 #' \item variables : character. List of variables selected for calculate frequency.
 #' }
 #' 
-#' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
 #' Positive values select variables; negative values to drop variables.
@@ -165,11 +165,11 @@ univar_category_impl <- function(df, vars) {
 #' @section Attributes of return object:
 #' Attributes of compare_category class is as follows.
 #' \itemize{
-#' \item raw : a data.frame or a \code{\link{tbl_df}}. Data containing variables to be compared. Save it for visualization with plot.univar_numeric().
+#' \item raw : a data.frame or a \code{\link[tibble]{tbl_df}}. Data containing variables to be compared. Save it for visualization with plot.univar_numeric().
 #' \item variables : character. List of variables selected for calculate statistics.
 #' }
 #' 
-#' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
 #' Positive values select variables; negative values to drop variables.
