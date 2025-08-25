@@ -17,7 +17,7 @@ diagnose_sparese <- function(.data, ...) {
 #' \item N : number of observation. (optional)
 #' }
 #'
-#' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
 #' Positive values select variables; negative values to drop variables.

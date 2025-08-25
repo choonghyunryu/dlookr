@@ -13,7 +13,7 @@
 #'
 #' See vignette("transformation") for an introduction to these concepts.
 #'
-#' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param xvar variable name to replace missing value.
 #' @param yvar target variable.
 #' @param method method of missing values imputation.
@@ -312,7 +312,7 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL,
 #'
 #' See vignette("transformation") for an introduction to these concepts.
 #'
-#' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param xvar variable name to replace missing value.
 #' @param method method of missing values imputation.
 #' @param cap_ntiles numeric. Only used when method is "capping".

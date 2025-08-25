@@ -45,7 +45,7 @@ eda_paged_report <- function(.data, ...) {
 #'     \itemize{
 #'       \item Data Structures
 #'       \item Data Types
-#'       \item Job Informations
+#'       \item Job Information
 #'     }
 #'     \item Warnings
 #'     \item Variables
@@ -75,7 +75,7 @@ eda_paged_report <- function(.data, ...) {
 #' 
 #' @seealso \code{\link{diagnose_web_report.tbl_dbi}}.
 #'
-#' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param output_file name of generated file. default is NULL.
 #' @param output_dir name of directory to generate report file. default is tempdir().
 #' @param browse logical. choose whether to output the report results to the browser.
@@ -276,7 +276,7 @@ diagnose_web_report.data.frame <- function(.data, output_file = NULL, output_dir
 #'   \item Overview
 #'   \itemize{
 #'     \item Data Structures 
-#'     \item Job Informations
+#'     \item Job Information
 #'     \item Warnings
 #'     \item Variables
 #'   } 
@@ -313,7 +313,7 @@ diagnose_web_report.data.frame <- function(.data, output_file = NULL, output_dir
 #' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font(). 
 #'
-#' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param output_format report output type. Choose either "pdf" and "html".
 #' "pdf" create pdf file by rmarkdown::render() and pagedown::chrome_print(). so, 
 #' you needed Chrome web browser on computer.  
@@ -602,7 +602,7 @@ diagnose_paged_report.data.frame <- function(.data, output_format = c("pdf", "ht
 #'   \itemize{
 #'     \item Data Structures 
 #'     \item Data Types
-#'     \item Job Informations
+#'     \item Job Information
 #'   }
 #'   \item Univariate Analysis
 #'   \itemize{
@@ -634,7 +634,7 @@ diagnose_paged_report.data.frame <- function(.data, output_format = c("pdf", "ht
 #' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font().
 #' 
-#' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param target character. target variable.
 #' @param output_file name of generated file. default is NULL.
 #' @param output_dir name of directory to generate report file. default is tempdir().
@@ -847,7 +847,7 @@ eda_web_report.data.frame <- function(.data, target = NULL, output_file = NULL,
 #'   \item Overview
 #'   \itemize{
 #'     \item Data Structures 
-#'     \item Job Informations
+#'     \item Job Information
 #'   } 
 #'   \item Univariate Analysis
 #'   \itemize{
@@ -883,7 +883,7 @@ eda_web_report.data.frame <- function(.data, target = NULL, output_file = NULL,
 #' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font().
 #' 
-#' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param target character. target variable.
 #' @param output_format report output type. Choose either "pdf" and "html".
 #' "pdf" create pdf file by rmarkdown::render() and pagedown::chrome_print(). so, 
@@ -1141,7 +1141,7 @@ eda_paged_report.data.frame <- function(.data, target = NULL, output_format = c(
 #'   \itemize{
 #'     \item Data Structures 
 #'     \item Data Types
-#'     \item Job Informations
+#'     \item Job Information
 #'   }
 #'   \item Imputation
 #'   \itemize{
@@ -1157,7 +1157,7 @@ eda_paged_report.data.frame <- function(.data, target = NULL, output_format = c(
 #' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font().
 #'
-#' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param target character. target variable.
 #' @param output_file name of generated file. default is NULL.
 #' @param output_dir name of directory to generate report file. default is tempdir().
@@ -1353,7 +1353,7 @@ transformation_web_report <- function(.data, target = NULL, output_file = NULL,
 #'   \item Overview
 #'   \itemize{
 #'     \item Data Structures 
-#'     \item Job Informations
+#'     \item Job Information
 #'   } 
 #'   \item Imputation
 #'   \itemize{
@@ -1369,7 +1369,7 @@ transformation_web_report <- function(.data, target = NULL, output_file = NULL,
 #' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font().
 #' 
-#' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param target character. target variable.
 #' @param output_format report output type. Choose either "pdf" and "html".
 #' "pdf" create pdf file by rmarkdown::render() and pagedown::chrome_print(). so, 

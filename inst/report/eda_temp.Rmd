@@ -238,7 +238,7 @@ knitr::kable(tab_right, digits = 2, caption = cap, format = "html",
              table.attr = "style=\"color: hsl(0, 0%, 40%);margin-right:30px !important;\"") %>% 
   kable_styling(full_width = FALSE, font_size = 14, position = "float_left") 
 
-cap <- "Job Informations"
+cap <- "Job Information"
 knitr::kable(overview, caption = cap, format = "html",
              table.attr = "style=\"color: hsl(0, 0%, 40%);\"") %>% 
   kable_styling(full_width = FALSE, font_size = 14, position = "left") 

@@ -110,7 +110,7 @@ find_class <- function(df, type = c("numerical", "categorical", "categorical2",
 #' Find the variable that contains the missing value in the object
 #' that inherits the data.frame or data.frame.
 #'
-#' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param index logical. When representing the information of a variable including
 #' missing values, specify whether or not the variable is represented by an index.
 #' Returns an index if TRUE or a variable names if FALSE.
@@ -160,7 +160,7 @@ find_na <- function(.data, index = TRUE, rate = FALSE) {
 #' Find the numerical variable that contains outliers in the object
 #' that inherits the data.frame or data.frame.
 #'
-#' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param index logical. When representing the information of a variable including
 #' outliers, specify whether or not the variable is represented by an index.
 #' Returns an index if TRUE or a variable names if FALSE.
@@ -216,7 +216,7 @@ find_outliers <- function(.data, index = TRUE, rate = FALSE) {
 #' Find the numerical variable that skewed variable
 #' that inherits the data.frame or data.frame.
 #'
-#' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param index logical. When representing the information of a skewed variable,
 #' specify whether or not the variable is represented by an index.
 #' Returns an index if TRUE or a variable names if FALSE.

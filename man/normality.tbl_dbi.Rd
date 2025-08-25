@@ -36,7 +36,7 @@ The normality() performs Shapiro-Wilk test of normality
 of numerical(INTEGER, NUMBER, etc.) column of the DBMS table through tbl_dbi.
 }
 \details{
-This function is useful when used with the \code{\link{group_by}}
+This function is useful when used with the \code{\link[dplyr]{group_by}}
 function of the dplyr package. If you want to test by level of the categorical
 data you are interested in, rather than the whole observation,
 you can use group_tf as the group_by function.

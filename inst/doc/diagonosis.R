@@ -1,6 +1,6 @@
 ## ----environment, echo = FALSE, message = FALSE, warning=FALSE----------------
-knitr::opts_chunk$set(collapse = TRUE, comment = "", out.width = "600px", dpi = 70)
-options(tibble.print_min = 4L, tibble.print_max = 4L)
+knitr::opts_chunk$set(collapse = TRUE, comment = "", out.width = "600px", dpi = 70, collapse = TRUE)
+options(tibble.print_min = 4L, tibble.print_max = 4L, crayon.enabed = FALSE)
 
 library(dlookr)
 library(dplyr)
@@ -66,26 +66,26 @@ flights %>%
   plot_outlier(arr_delay) 
 
 ## ----plot_outlier_pipe, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE----
-#  flights %>%
-#    plot_outlier(diagnose_outlier(flights) %>%
-#                   filter(outliers_ratio >= 5) %>%
-#                   select(variables) %>%
-#                   unlist())
+# flights %>%
+#   plot_outlier(diagnose_outlier(flights) %>%
+#                  filter(outliers_ratio >= 5) %>%
+#                  select(variables) %>%
+#                  unlist())
 
 ## ----plot_na_pareto1, fig.align='center', fig.width = 6, fig.height = 4-------
 mice::boys %>% 
   plot_na_pareto(col = "blue")
 
 ## ----plot_na_pareto2, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE----
-#  mice::boys %>%
-#    plot_na_pareto(only_na = TRUE, main = "Pareto Chart for mice::boys")
+# mice::boys %>%
+#   plot_na_pareto(only_na = TRUE, main = "Pareto Chart for mice::boys")
 
 ## ----plot_na_pareto3, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE----
-#  mice::boys %>%
-#    plot_na_pareto(grade = list(High = 0.1, Middle = 0.6, Low = 1), relative = TRUE)
+# mice::boys %>%
+#   plot_na_pareto(grade = list(High = 0.1, Middle = 0.6, Low = 1), relative = TRUE)
 
 ## ----plot_na_pareto4, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE----
-#  plot_na_pareto(mice::boys, only_na = TRUE, plot = FALSE)
+# plot_na_pareto(mice::boys, only_na = TRUE, plot = FALSE)
 
 ## ----plot_na_hclust, fig.align='center', fig.width = 6, fig.height = 4--------
 mice::boys %>% 
@@ -96,17 +96,17 @@ mice::boys %>%
   plot_na_intersect()
 
 ## ----plot_na_hclust3, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE----
-#  mice::boys %>%
-#    plot_na_intersect(n_vars = 5)
+# mice::boys %>%
+#   plot_na_intersect(n_vars = 5)
 
 ## ----plot_na_hclust4, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE----
-#  mice::boys %>%
-#    plot_na_intersect(only_na = FALSE, n_intersacts = 7)
+# mice::boys %>%
+#   plot_na_intersect(only_na = FALSE, n_intersacts = 7)
 
 ## ----diagnose_web_report, eval=FALSE------------------------------------------
-#  flights %>%
-#    diagnose_web_report(subtitle = "flights", output_dir = "./",
-#                        output_file = "Diagn.html", theme = "blue")
+# flights %>%
+#   diagnose_web_report(subtitle = "flights", output_dir = "./",
+#                       output_file = "Diagn.html", theme = "blue")
 
 ## ----diag_web_title, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The part of the report"----
 knitr::include_graphics('img/diag_web_title.jpg')
@@ -115,9 +115,9 @@ knitr::include_graphics('img/diag_web_title.jpg')
 knitr::include_graphics('img/diag_web_content.jpg')
 
 ## ----diagnose_paged_report, eval=FALSE----------------------------------------
-#  flights %>%
-#    diagnose_paged_report(subtitle = "flights", output_dir = "./",
-#                          output_file = "Diagn.pdf", theme = "blue")
+# flights %>%
+#   diagnose_paged_report(subtitle = "flights", output_dir = "./",
+#                         output_file = "Diagn.pdf", theme = "blue")
 
 ## ----diag_paged_cover, echo=FALSE, out.width='80%', fig.align='center', fig.pos="!h", fig.cap="The part of the report"----
 knitr::include_graphics('img/diag_paged_cover.jpg')
@@ -126,83 +126,83 @@ knitr::include_graphics('img/diag_paged_cover.jpg')
 knitr::include_graphics('img/diag_paged_content.jpg')
 
 ## ----dbi_table, warning=FALSE, message=FALSE, eval=FALSE----------------------
-#  library(dplyr)
-#  
-#  carseats <- Carseats
-#  carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
-#  carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
-#  
-#  # connect DBMS
-#  con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-#  
-#  # copy carseats to the DBMS with a table named TB_CARSEATS
-#  copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
+# library(dplyr)
+# 
+# carseats <- Carseats
+# carseats[sample(seq(NROW(carseats)), 20), "Income"] <- NA
+# carseats[sample(seq(NROW(carseats)), 5), "Urban"] <- NA
+# 
+# # connect DBMS
+# con_sqlite <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+# 
+# # copy carseats to the DBMS with a table named TB_CARSEATS
+# copy_to(con_sqlite, carseats, name = "TB_CARSEATS", overwrite = TRUE)
 
 ## ----dbi_diag, eval=FALSE-----------------------------------------------------
-#  # Diagnosis of all columns
-#  con_sqlite %>%
-#    tbl("TB_CARSEATS") %>%
-#    diagnose()
-#  
-#  # Positions values select columns, and In-memory mode
-#  con_sqlite %>%
-#    tbl("TB_CARSEATS") %>%
-#    diagnose(1, 3, 8, in_database = FALSE)
-#  
-#  # Positions values select columns, and In-memory mode and collect size is 200
-#  con_sqlite %>%
-#    tbl("TB_CARSEATS") %>%
-#    diagnose(-8, -9, -10, in_database = FALSE, collect_size = 200)
+# # Diagnosis of all columns
+# con_sqlite %>%
+#   tbl("TB_CARSEATS") %>%
+#   diagnose()
+# 
+# # Positions values select columns, and In-memory mode
+# con_sqlite %>%
+#   tbl("TB_CARSEATS") %>%
+#   diagnose(1, 3, 8, in_database = FALSE)
+# 
+# # Positions values select columns, and In-memory mode and collect size is 200
+# con_sqlite %>%
+#   tbl("TB_CARSEATS") %>%
+#   diagnose(-8, -9, -10, in_database = FALSE, collect_size = 200)
 
 ## ----dbi_category, eval=FALSE-------------------------------------------------
-#  # Positions values select variables, and In-memory mode and collect size is 200
-#  con_sqlite %>%
-#    tbl("TB_CARSEATS") %>%
-#    diagnose_category(7, in_database = FALSE, collect_size = 200)
-#  
-#  # Positions values select variables
-#  con_sqlite %>%
-#    tbl("TB_CARSEATS") %>%
-#    diagnose_category(-7)
+# # Positions values select variables, and In-memory mode and collect size is 200
+# con_sqlite %>%
+#   tbl("TB_CARSEATS") %>%
+#   diagnose_category(7, in_database = FALSE, collect_size = 200)
+# 
+# # Positions values select variables
+# con_sqlite %>%
+#   tbl("TB_CARSEATS") %>%
+#   diagnose_category(-7)
 
 ## ----dbi_numeric, eval=FALSE--------------------------------------------------
-#  # Diagnosis of all numerical variables
-#  con_sqlite %>%
-#    tbl("TB_CARSEATS") %>%
-#    diagnose_numeric()
-#  
-#  # Positive values select variables, and In-memory mode and collect size is 200
-#  con_sqlite %>%
-#    tbl("TB_CARSEATS") %>%
-#    diagnose_numeric(Sales, Income, collect_size = 200)
+# # Diagnosis of all numerical variables
+# con_sqlite %>%
+#   tbl("TB_CARSEATS") %>%
+#   diagnose_numeric()
+# 
+# # Positive values select variables, and In-memory mode and collect size is 200
+# con_sqlite %>%
+#   tbl("TB_CARSEATS") %>%
+#   diagnose_numeric(Sales, Income, collect_size = 200)
 
 ## ----dbi_outlier, eval=FALSE--------------------------------------------------
-#  con_sqlite %>%
-#    tbl("TB_CARSEATS") %>%
-#    diagnose_outlier()  %>%
-#    filter(outliers_ratio > 1)
+# con_sqlite %>%
+#   tbl("TB_CARSEATS") %>%
+#   diagnose_outlier()  %>%
+#   filter(outliers_ratio > 1)
 
 ## ----plot_outlier_dbi, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE, eval=FALSE----
-#  # Visualization of numerical variables with a ratio of
-#  # outliers greater than 1%
-#  # the result is same as a data.frame, but not display here. reference above in document.
-#  con_sqlite %>%
-#    tbl("TB_CARSEATS") %>%
-#    plot_outlier(con_sqlite %>%
-#                   tbl("TB_CARSEATS") %>%
-#                   diagnose_outlier() %>%
-#                   filter(outliers_ratio > 1) %>%
-#                   select(variables) %>%
-#                   pull())
+# # Visualization of numerical variables with a ratio of
+# # outliers greater than 1%
+# # the result is same as a data.frame, but not display here. reference above in document.
+# con_sqlite %>%
+#   tbl("TB_CARSEATS") %>%
+#   plot_outlier(con_sqlite %>%
+#                  tbl("TB_CARSEATS") %>%
+#                  diagnose_outlier() %>%
+#                  filter(outliers_ratio > 1) %>%
+#                  select(variables) %>%
+#                  pull())
 
 ## ----dbi_diag_report, eval=FALSE----------------------------------------------
-#  # create web report file.
-#  con_sqlite %>%
-#    tbl("TB_CARSEATS") %>%
-#    diagnose_web_report()
-#  
-#  # create pdf file. file name is Diagn.pdf, and collect size is 350
-#  con_sqlite %>%
-#    tbl("TB_CARSEATS") %>%
-#    diagnose_paged_report(collect_size = 350, output_file = "Diagn.pdf")
+# # create web report file.
+# con_sqlite %>%
+#   tbl("TB_CARSEATS") %>%
+#   diagnose_web_report()
+# 
+# # create pdf file. file name is Diagn.pdf, and collect size is 350
+# con_sqlite %>%
+#   tbl("TB_CARSEATS") %>%
+#   diagnose_paged_report(collect_size = 350, output_file = "Diagn.pdf")
 

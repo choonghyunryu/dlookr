@@ -1,4 +1,50 @@
-# dlookr 0.6.3.9005
+# dlookr 0.6.4
+
+## MINOR CHANGES
+
+* fixed Rd file(s) with Rd \link{} targets missing package.  (#124)
+    - compare_category.data.frame.Rd: tbl_df
+    - compare_numeric.data.frame.Rd: tbl_df
+    - correlate.data.frame.Rd: grouped_df
+    - describe.data.frame.Rd: tbl_df, grouped_df, group_by
+    - describe.tbl_dbi.Rd: group_by
+    - diagnose.data.frame.Rd: tbl_df, grouped_df
+    - diagnose_category.data.frame.Rd: tbl_df, grouped_df
+    - diagnose_numeric.data.frame.Rd: tbl_df, grouped_df
+    - diagnose_outlier.data.frame.Rd: tbl_df, grouped_df
+    - diagnose_paged_report.data.frame.Rd: tbl_df
+    - diagnose_report.data.frame.Rd: tbl_df
+    - diagnose_sparese.data.frame.Rd: tbl_df
+    - diagnose_web_report.data.frame.Rd: tbl_df
+    - eda_paged_report.data.frame.Rd: tbl_df
+    - eda_report.data.frame.Rd: tbl_df
+    - eda_web_report.data.frame.Rd: tbl_df
+    - find_na.Rd: tbl_df
+    - find_outliers.Rd: tbl_df
+    - find_skewness.Rd: tbl_df
+    - imputate_na.Rd: tbl_df
+    - imputate_outlier.Rd: tbl_df
+    - normality.data.frame.Rd: tbl_df, group_by
+    - normality.tbl_dbi.Rd: group_by
+    - overview.Rd: tbl_df
+    - plot_bar_category.data.frame.Rd: tbl_df, grouped_df
+    - plot_box_numeric.data.frame.Rd: tbl_df, grouped_df
+    - plot_correlate.data.frame.Rd: tbl_df
+    - plot_hist_numeric.data.frame.Rd: tbl_df, grouped_df
+    - plot_normality.data.frame.Rd: tbl_df
+    - plot_outlier.data.frame.Rd: tbl_df
+    - plot_qq_numeric.data.frame.Rd: tbl_df, grouped_df
+    - target_by.data.frame.Rd: tbl_df, grouped_df
+    - target_by.tbl_dbi.Rd: grouped_df
+    - transformation_paged_report.Rd: tbl_df
+    - transformation_report.Rd: tbl_df
+    - transformation_web_report.Rd: tbl_df
+    - univar_category.data.frame.Rd: tbl_df
+    - univar_numeric.data.frame.Rd: tbl_df  
+  
+  
+  
+# dlookr 0.6.3
 
 ## NEW FEATURES
   

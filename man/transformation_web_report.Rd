@@ -23,7 +23,7 @@ transformation_web_report(
 )
 }
 \arguments{
-\item{.data}{a data.frame or a \code{\link{tbl_df}}.}
+\item{.data}{a data.frame or a \code{\link[tibble]{tbl_df}}.}
 
 \item{target}{character. target variable.}
 
@@ -79,7 +79,7 @@ The transformation process will report the following information:
   \itemize{
     \item Data Structures 
     \item Data Types
-    \item Job Informations
+    \item Job Information
   }
   \item Imputation
   \itemize{

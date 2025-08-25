@@ -33,7 +33,7 @@ diagnose <- function(.data, ...) {
 #'
 #' See vignette("diagonosis") for an introduction to these concepts.
 #'
-#' @param .data a data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.
+#' @param .data a data.frame or a \code{\link[tibble]{tbl_df}} or a \code{\link[dplyr]{grouped_df}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
 #' Positive values select variables; negative values to drop variables.
@@ -212,7 +212,7 @@ diagnose_category <- function(.data, ...) {
 #'
 #' See vignette("diagonosis") for an introduction to these concepts.
 #'
-#' @param .data a data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.
+#' @param .data a data.frame or a \code{\link[tibble]{tbl_df}} or a \code{\link[dplyr]{grouped_df}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
 #' Positive values select variables; negative values to drop variables.
@@ -489,7 +489,7 @@ diagnose_numeric <- function(.data, ...) {
 #'
 #' See vignette("diagonosis") for an introduction to these concepts.
 #'
-#' @param .data a data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.
+#' @param .data a data.frame or a \code{\link[tibble]{tbl_df}} or a \code{\link[dplyr]{grouped_df}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
 #' Positive values select variables; negative values to drop variables.
@@ -696,7 +696,7 @@ diagnose_outlier <- function(.data, ...) {
 #'
 #' See vignette("diagonosis") for an introduction to these concepts.
 #'
-#' @param .data a data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.
+#' @param .data a data.frame or a \code{\link[tibble]{tbl_df}} or a \code{\link[dplyr]{grouped_df}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
 #' Positive values select variables; negative values to drop variables.
@@ -902,7 +902,7 @@ plot_outlier <- function(.data, ...) {
 #'
 #' See vignette("diagonosis") for an introduction to these concepts.
 #'
-#' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
 #' Positive values select variables; negative values to drop variables.
@@ -1346,7 +1346,7 @@ diagnose_report <- function(.data, output_format, output_file, output_dir, ...) 
 #'
 #' See vignette("diagonosis") for an introduction to these concepts.
 #'
-#' @param .data a data.frame or a \code{\link{tbl_df}}.
+#' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param output_format report output type. Choose either "pdf" and "html".
 #' "pdf" create pdf file by knitr::knit().
 #' "html" create html file by rmarkdown::render().

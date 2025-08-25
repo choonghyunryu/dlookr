@@ -7,7 +7,7 @@
 find_na(.data, index = TRUE, rate = FALSE)
 }
 \arguments{
-\item{.data}{a data.frame or a \code{\link{tbl_df}}.}
+\item{.data}{a data.frame or a \code{\link[tibble]{tbl_df}}.}
 
 \item{index}{logical. When representing the information of a variable including
 missing values, specify whether or not the variable is represented by an index.

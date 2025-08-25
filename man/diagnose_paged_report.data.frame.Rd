@@ -36,7 +36,7 @@ diagnose_paged_report(.data, ...)
 )
 }
 \arguments{
-\item{.data}{a data.frame or a \code{\link{tbl_df}}.}
+\item{.data}{a data.frame or a \code{\link[tibble]{tbl_df}}.}
 
 \item{...}{arguments to be passed to pagedown::chrome_print().}
 
@@ -125,7 +125,7 @@ Reported from the data diagnosis is as follows.
   \item Overview
   \itemize{
     \item Data Structures 
-    \item Job Informations
+    \item Job Information
     \item Warnings
     \item Variables
   } 

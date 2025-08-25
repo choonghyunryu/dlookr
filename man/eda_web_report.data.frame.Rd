@@ -27,7 +27,7 @@ eda_web_report(.data, ...)
 )
 }
 \arguments{
-\item{.data}{a data.frame or a \code{\link{tbl_df}}.}
+\item{.data}{a data.frame or a \code{\link[tibble]{tbl_df}}.}
 
 \item{...}{arguments to be passed to methods.}
 
@@ -84,7 +84,7 @@ Reported from the EDA is as follows.
   \itemize{
     \item Data Structures 
     \item Data Types
-    \item Job Informations
+    \item Job Information
   }
   \item Univariate Analysis
   \itemize{

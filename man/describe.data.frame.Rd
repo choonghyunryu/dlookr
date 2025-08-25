@@ -19,7 +19,7 @@ describe(.data, ...)
 )
 }
 \arguments{
-\item{.data}{a data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.}
+\item{.data}{a data.frame or a \code{\link[tibble]{tbl_df}} or a \code{\link[dplyr]{grouped_df}}.}
 
 \item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
@@ -48,7 +48,7 @@ The describe() compute descriptive statistic of numeric
 variable for exploratory data analysis.
 }
 \details{
-This function is useful when used with the \code{\link{group_by}} function
+This function is useful when used with the \code{\link[dplyr]{group_by}} function
 of the dplyr package.
 If you want to calculate the statistic by level of the categorical data
 you are interested in, rather than the whole statistic, you can use

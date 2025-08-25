@@ -51,7 +51,7 @@ The describe() compute descriptive statistic of numerical(INTEGER, NUMBER, etc.)
 column of the DBMS table through tbl_dbi for exploratory data analysis.
 }
 \details{
-This function is useful when used with the \code{\link{group_by}} function
+This function is useful when used with the \code{\link[dplyr]{group_by}} function
 of the dplyr package.
 If you want to calculate the statistic by level of the categorical data
 you are interested in, rather than the whole statistic, you can use

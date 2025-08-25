@@ -31,7 +31,7 @@ plot_bar_category(.data, ...)
 )
 }
 \arguments{
-\item{.data}{a data.frame or a \code{\link{tbl_df}} or a \code{\link{grouped_df}}.}
+\item{.data}{a data.frame or a \code{\link[tibble]{tbl_df}} or a \code{\link[dplyr]{grouped_df}}.}
 
 \item{\dots}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.

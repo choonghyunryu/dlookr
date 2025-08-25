@@ -30,7 +30,7 @@ correlate(.data, ...)
 )
 }
 \arguments{
-\item{.data}{a data.frame or a \code{\link{grouped_df}} or a tbl_dbi.}
+\item{.data}{a data.frame or a \code{\link[dplyr]{grouped_df}} or a tbl_dbi.}
 
 \item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
@@ -65,7 +65,7 @@ The correlate() compute the correlation coefficient for numerical or categorical
 \details{
 This function is useful when used with the group_by() function of the dplyr package.
 If you want to compute by level of the categorical data you are interested in,
-rather than the whole observation, you can use \code{\link{grouped_df}} as the group_by() function.
+rather than the whole observation, you can use \code{\link[dplyr]{grouped_df}} as the group_by() function.
 This function is computed stats::cor() function by use = "pairwise.complete.obs" option for numerical variable.
 And support categorical variable with theil's U correlation coefficient and Cramer's V correlation coefficient.
 }
