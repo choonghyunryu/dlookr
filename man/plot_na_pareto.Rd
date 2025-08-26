@@ -36,7 +36,7 @@ The default values are Good: [0, 0.05], OK: (0.05, 0.1], NotBad: (0.1, 0.2], Bad
 \item{plot}{logical. If this value is TRUE then visualize plot. else if FALSE, return aggregate information about missing values.}
 
 \item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
+The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.}
 
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}

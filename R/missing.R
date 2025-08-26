@@ -17,7 +17,7 @@
 #' @param col.left character. The color of left legend that is frequency of NA. default is "#009E73".
 #' @param col.right character. The color of right legend that is percentage of NA. default is "#56B4E9".
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @return a ggplot2 object.
@@ -39,7 +39,6 @@
 #' 
 #' @importFrom stats hclust dist order.dendrogram as.dendrogram reorder
 #' @import ggplot2
-#' @import hrbrthemes
 #' @export
 #' 
 plot_na_hclust <- function (x, main = NULL, col.left = "#009E73", 
@@ -150,7 +149,7 @@ plot_na_hclust <- function (x, main = NULL, col.left = "#009E73",
 #' @param col character. The color of line for display the cumulative percentage.
 #' @param plot logical. If this value is TRUE then visualize plot. else if FALSE, return aggregate information about missing values.
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @return a ggplot2 object.
@@ -325,7 +324,7 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
 #' all variables containing missing values are visualized. Variables containing many missing values are chosen first.
 #' @param main character. Main title.
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @return an object of gtable class.
@@ -366,7 +365,6 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
 #' @importFrom gridExtra grid.arrange
 #' @importFrom utils head
 #' @import ggplot2
-#' @import hrbrthemes
 #' @import dplyr
 #' @export
 plot_na_intersect <- function (x, only_na = TRUE, n_intersacts = NULL, 

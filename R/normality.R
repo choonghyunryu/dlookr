@@ -249,7 +249,7 @@ normality_group_impl <- function(df, vars, sample) {
 #' lower right corner. The default is "sqrt".
 #' @param col a color to be used to fill the bars. The default is "steelblue".
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' 
@@ -345,7 +345,6 @@ plot_normality_impl <- function(df, vars, left, right, col = "steelblue",
 
 #' @import dplyr
 #' @import ggplot2
-#' @import hrbrthemes
 #' @importFrom gridExtra grid.arrange
 #' @importFrom grid textGrob gpar
 plot_normality_raw <- function(x, 

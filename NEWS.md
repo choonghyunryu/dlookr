@@ -1,3 +1,11 @@
+# dlookr 0.6.5
+
+## MAJOR CHANGES
+
+* Remove unhcrthemes package in dlookr package (#125)
+
+
+
 # dlookr 0.6.4
 
 ## MINOR CHANGES

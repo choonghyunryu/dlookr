@@ -287,7 +287,7 @@ print.bins <- function(x, ...) {
 #' 
 #' @param x an object of class "bins", usually, a result of a call to binning().
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
@@ -324,7 +324,6 @@ print.bins <- function(x, ...) {
 #' @export
 #' @method plot bins
 #' @importFrom gridExtra grid.arrange
-#' @import hrbrthemes
 #' @import ggplot2
 plot.bins <- function(x, typographic = TRUE, base_family = NULL, ...) {
   brks <- attr(x, "breaks")
@@ -638,7 +637,7 @@ summary.optimal_bins <- function(object, ...) {
 #' @param type character. options for visualization. Distribution ("dist"), Relateive Frequency ("freq"),
 #' Positive Rate ("posrate"), and Weight of Evidence ("WoE"). and default "all" draw all plot.
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param rotate_angle integer. specifies the rotation angle of the x-axis label. 
@@ -670,7 +669,6 @@ summary.optimal_bins <- function(object, ...) {
 #' }
 #' 
 #' @import ggplot2
-#' @import hrbrthemes
 #' @importFrom gridExtra grid.arrange
 #' @export
 #' @method plot optimal_bins
@@ -1261,7 +1259,7 @@ summary.performance_bin <- function(object, ...) {
 #' 
 #' @param x an object of class "performance_bin", usually, a result of a call to performance_bin().
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... further arguments to be passed from or to other methods.
@@ -1300,7 +1298,6 @@ summary.performance_bin <- function(object, ...) {
 #' }
 #' 
 #' @import ggplot2
-#' @import hrbrthemes
 #' @import dplyr
 #' @export
 #' @method plot performance_bin
@@ -1512,7 +1509,7 @@ binning_rgr <- function(.data, y, x, min_perc_bins = 0.1, max_n_bins = 5, ordere
 #' @param x an object of class "infogain_bins", usually, a result of a call to binning_rgr().
 #' @param type character. options for visualization. Distribution("bar"), Relative Frequency by target ("cross").
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... further arguments to be passed from or to other methods.
@@ -1541,7 +1538,6 @@ binning_rgr <- function(.data, y, x, min_perc_bins = 0.1, max_n_bins = 5, ordere
 #' }
 #' 
 #' @import ggplot2
-#' @import hrbrthemes
 #' @importFrom gridExtra grid.arrange
 #' @export
 #' @method plot infogain_bins

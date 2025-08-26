@@ -55,7 +55,7 @@ lower right corner. The default is "sqrt".}
 \item{col}{a color to be used to fill the bars. The default is "steelblue".}
 
 \item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
+The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.}
 
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}

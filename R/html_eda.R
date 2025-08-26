@@ -557,7 +557,6 @@ html_normality <- function(.data, theme = c("orange", "blue")[1],
 
 #' @importFrom shiny icon tabsetPanel tabPanel
 #' @importFrom purrr map_int
-#' @importFrom hrbrthemes theme_ipsum scale_fill_ipsum
 #' @import reactable
 #' @import dplyr
 #' @import htmltools
@@ -622,8 +621,8 @@ html_compare_category <- function(.data, n_cells = 20, n_levels = 10,
     })
     
       p <- p +
-        hrbrthemes::theme_ipsum(base_family = base_family) +
-        hrbrthemes::scale_fill_ipsum(na.value = "grey80") +
+        theme_ipsum(base_family = base_family) +
+        scale_fill_ipsum(na.value = "grey80") +
         theme(legend.position = "none",
               panel.grid.major.x = element_blank(),
               axis.text.x = element_blank(),
@@ -775,7 +774,6 @@ html_compare_category <- function(.data, n_cells = 20, n_levels = 10,
 
 #' @importFrom shiny icon tabsetPanel tabPanel
 #' @importFrom purrr map_int
-#' @importFrom hrbrthemes theme_ipsum
 #' @import reactable
 #' @import dplyr
 html_compare_numerical <- function(.data, base_family = NULL) {
@@ -1888,8 +1886,8 @@ html_paged_compare_categorical <- function(.data, n_rows = 25, add_row = 3,
     })
     
     p <- p +
-      hrbrthemes::theme_ipsum(base_family = base_family) +
-      hrbrthemes::scale_fill_ipsum(na.value = "grey80") +
+      theme_ipsum(base_family = base_family) +
+      scale_fill_ipsum(na.value = "grey80") +
       theme(legend.position = "none",
             panel.grid.major.x = element_blank(),
             axis.text.x = element_blank(),

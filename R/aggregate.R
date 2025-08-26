@@ -35,7 +35,7 @@ plot_bar_category <- function(.data, ...) {
 #' @param each logical. Specifies whether to draw multiple plots on one screen. 
 #' The default is FALSE, which draws multiple plots on one screen.
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' 
@@ -88,7 +88,6 @@ plot_bar_category.data.frame <- function(.data, ..., top = 10, add_character = T
 }
 
 #' @import ggplot2
-#' @import hrbrthemes
 #' @import dplyr
 #' @importFrom purrr map
 #' @importFrom gridExtra arrangeGrob grid.arrange
@@ -458,7 +457,7 @@ plot_qq_numeric <- function(.data, ...) {
 #' @param each logical. Specifies whether to draw multiple plots on one screen. 
 #' The default is FALSE, which draws multiple plots on one screen.
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @examples
@@ -492,7 +491,6 @@ plot_qq_numeric <- function(.data, ...) {
 #' 
 #' @method plot_qq_numeric data.frame
 #' @import ggplot2
-#' @import hrbrthemes
 #' @import dplyr
 #' @importFrom purrr map
 #' @importFrom gridExtra grid.arrange
@@ -604,7 +602,6 @@ plot_qq_numeric.grouped_df <- function(.data, ..., col_point = "steelblue", col_
 }
 
 #' @import ggplot2
-#' @import hrbrthemes
 #' @import dplyr
 #' @importFrom purrr map
 #' @importFrom gridExtra grid.arrange
@@ -732,7 +729,7 @@ plot_box_numeric <- function(.data, ...) {
 #' @param each logical. Specifies whether to draw multiple plots on one screen. 
 #' The default is FALSE, which draws multiple plots on one screen.
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @examples
@@ -769,7 +766,6 @@ plot_box_numeric <- function(.data, ...) {
 #'    
 #' @method plot_box_numeric data.frame
 #' @import ggplot2
-#' @import hrbrthemes
 #' @import dplyr
 #' @importFrom purrr map
 #' @importFrom gridExtra grid.arrange arrangeGrob
@@ -1018,7 +1014,7 @@ plot_hist_numeric <- function(.data, ...) {
 #' @param each logical. Specifies whether to draw multiple plots on one screen. 
 #' The default is FALSE, which draws multiple plots on one screen.
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @examples
@@ -1055,7 +1051,6 @@ plot_hist_numeric <- function(.data, ...) {
 #'    
 #' @method plot_hist_numeric data.frame
 #' @import ggplot2
-#' @import hrbrthemes
 #' @import dplyr
 #' @importFrom purrr map
 #' @importFrom gridExtra grid.arrange arrangeGrob

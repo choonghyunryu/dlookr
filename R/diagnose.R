@@ -915,7 +915,7 @@ plot_outlier <- function(.data, ...) {
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
 #' @seealso \code{\link{plot_outlier.tbl_dbi}}, \code{\link{diagnose_outlier.data.frame}}.
 #' @export
 #' @examples
@@ -989,7 +989,6 @@ plot_outlier_impl <- function(df, vars, col = "steelblue", typographic = TRUE,
 }
 
 #' @import ggplot2
-#' @import hrbrthemes
 #' @importFrom gridExtra grid.arrange
 #' @importFrom grid textGrob gpar
 plot_outlier_raw <- function(x, main = NULL, col = "steelblue", 
@@ -1111,7 +1110,7 @@ plot_outlier_raw <- function(x, main = NULL, col = "steelblue",
 #' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.
+#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
 #' @seealso \code{\link{plot_outlier.data.frame}}.
 #' @export
 #' @examples

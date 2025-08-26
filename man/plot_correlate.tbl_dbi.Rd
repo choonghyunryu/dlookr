@@ -38,7 +38,7 @@ to be computed. One of "pearson" (default), "kendall", or "spearman": can be abb
 See vignette("EDA") for an introduction to these concepts.}
 
 \item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using hrbrthemes package.}
+The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.}
 
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}

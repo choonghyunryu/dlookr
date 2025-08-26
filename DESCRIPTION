@@ -1,8 +1,8 @@
 Package: dlookr
 Type: Package
 Title: Tools for Data Diagnosis, Exploration, Transformation
-Version: 0.6.4
-Date: 2025-08-24
+Version: 0.6.5
+Date: 2025-08-26
 Authors@R: c(
   person("Choonghyun", "Ryu",, "choonghyun.ryu@gmail.com", role = c("aut", "cre"))
   )
@@ -28,7 +28,6 @@ Imports:
     ggplot2 (>= 3.0.0),
     grid,
     gridExtra,
-    hrbrthemes (>= 0.8.0),
     htmltools,
     kableExtra,
     knitr (>= 1.22),
