@@ -91,6 +91,18 @@ scale_fill_ipsum <- function (...)
   ggplot2::discrete_scale("fill", "ipsum", ipsum_pal(), ...)
 }
 
+#' @importFrom ggplot2 discrete_scale
+scale_color_ipsum <- function (...) 
+{
+  if (compareVersion(as.character(packageVersion("ggplot2")), "3.5.0") >= 0) {
+    ggplot2::discrete_scale(aesthetics = "colour", palette = ipsum_pal(), 
+                   ...)
+  }
+  else {
+    ggplot2::discrete_scale("colour", "ipsum", ipsum_pal(), ...)
+  }
+}
+
 
 #' @importFrom ggplot2 theme_minimal theme element_blank element_line element_text margin
 theme_ipsum_rc <- function (base_family = "Roboto Condensed", base_size = 11.5, 
