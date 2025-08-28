@@ -127,7 +127,7 @@ Here is a list of the data conversion functions and functions provided by dlookr
     
 In the following example, `imputate_na()` imputes the missing value of `Income`, a numeric variable of carseats, using the "rpart" method. `summary()` summarizes missing value imputation information, and `plot()` visualizes missing information.
 
-```{r imputate_na, fig.align='center', fig.width = 6, fig.height = 4}
+```{r imputate_na, fig.align='center', fig.width = 6, fig.height = 4, fig.alt='Visualization of missing value imputation'}
 if (requireNamespace("rpart", quietly = TRUE)) {
   income <- imputate_na(carseats, Income, US, method = "rpart")
 
@@ -148,7 +148,7 @@ The following imputes the categorical variable `urban` by the "mice" method.
 
 The "mice" method must require the `mice`, `ranger` package. If you want to use this feature, you need to install the `mice`, and `ranger` package.
 
-```{r imputate_na2, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE}
+```{r imputate_na2, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE, fig.alt='Visualization of missing value imputation'}
 library(mice)
 
 urban <- imputate_na(carseats, Urban, US, method = "mice")
@@ -189,7 +189,7 @@ carseats %>%
 
 `imputate_outlier()` imputes the outliers with the numeric variable `Price` as the "capping" method, as follows. `summary()` summarizes outliers imputation information, and `plot()` visualizes imputation information.
 
-```{r imputate_outlier, fig.align='center', fig.width = 6, fig.height = 4}
+```{r imputate_outlier, fig.align='center', fig.width = 6, fig.height = 4, fig.alt='Visualization of outlier imputation'}
 price <- imputate_outlier(carseats, Price, method = "capping")
 
 # result of imputation
@@ -233,7 +233,7 @@ carseats %>%
 ### Standardization with `transform()`
 Use the methods "zscore" and "minmax" to perform standardization.
 
-```{r standardization, fig.align='center', fig.width = 6, fig.height = 4}
+```{r standardization, fig.align='center', fig.width = 6, fig.height = 4, fig.alt='Boxplot of standardized data'}
 carseats %>% 
   mutate(Income_minmax = transform(carseats$Income, method = "minmax"),
     Sales_minmax = transform(carseats$Sales, method = "minmax")) %>% 
@@ -261,7 +261,7 @@ find_skewness(carseats, value = TRUE, thres = 0.1)
 The skewness of `Advertising` is 0.637. This means that the distribution of data is somewhat inclined to the left. So, for normal distribution, use `transform()` to convert to the "log" method as follows.
 `summary()` summarizes transformation information, and `plot()` visualizes transformation information.
 
-```{r resolving2, fig.align='center', fig.width = 6, fig.height = 4}
+```{r resolving2, fig.align='center', fig.width = 6, fig.height = 4, fig.alt='Visualization of log transformation'}
 Advertising_log <- transform(carseats$Advertising, method = "log")
 
 # result of transformation
@@ -298,7 +298,7 @@ summary(Advertising_log)
 
 Here are some examples of bin `Income` using `binning()`.
 
-```{r binning, fig.width = 6, fig.height = 4}
+```{r binning, fig.width = 6, fig.height = 4, fig.align='center', fig.alt='Visualization of binning'}
 # Binning the carat variable. the default type argument is "quantile"
 bin <- binning(carseats$Income)
 # Print bins class object
@@ -345,7 +345,7 @@ carseats %>%
 
 The following `binning_by()` example optimally binning `Advertising` considering the target variable `US` with a binary class.
 
-```{r binning_by, fig.width = 6, fig.height = 4}
+```{r binning_by, fig.width = 6, fig.height = 4, fig.align='center', fig.alt='Visualization of optimal binning'}
 library(dplyr)
 
 if (requireNamespace("partykit", quietly = TRUE)) {

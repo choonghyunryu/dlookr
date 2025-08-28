@@ -247,14 +247,14 @@ The data analysis often encounters numerical data that follows the `power-law di
 
 `plot_normality()` can also specify several variables like `normality()` function.
 
-```{r plot_normality, fig.align='center', fig.width = 6, fig.height = 4}
+```{r plot_normality, fig.align='center', fig.width = 6, fig.height = 4, fig.alt='Visualization result of normaltity information'}
 # Select columns by name
 plot_normality(carseats, Sales, CompPrice)
 ```
 
 The `plot_normality()` function also supports the `group_by()` function syntax in the `dplyr` package.
 
-```{r plot_normality2, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE}
+```{r plot_normality2, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE, fig.alt='Visualization result of normaltity information by group'}
 carseats %>%
   filter(ShelveLoc == "Good") %>%
   group_by(US) %>%
@@ -309,7 +309,7 @@ tab_corr
 ### Visualization of the correlation matrix using `plot.correlate()`
 `plot.correlate()` visualizes the correlation matrix with correlate class.
 
-```{r plot_correlate, fig.align='center', fig.width = 6, fig.height = 4}
+```{r plot_correlate, fig.align='center', fig.width = 6, fig.height = 4, fig.alt='Visualization result of correlation matrix'}
 carseats %>% 
   correlate() %>% 
   plot()
@@ -318,7 +318,7 @@ carseats %>%
 `plot.correlate()` can also specify multiple variables, like the `correlate()` function.
 The following visualize the correlation matrix, including several selected variables.
 
-```{r plot_correlate2, fig.align='center', fig.width = 6, fig.height = 4, eval=TRUE}
+```{r plot_correlate2, fig.align='center', fig.width = 6, fig.height = 4, eval=TRUE, fig.alt='Visualization result of correlation matrix including several selected variables'}
 # Select columns by name
 correlate(carseats, Sales, Price) %>% 
   plot()
@@ -326,7 +326,7 @@ correlate(carseats, Sales, Price) %>%
 
 The `plot.correlate()` function also supports the `group_by()` function syntax in the `dplyr` package.
 
-```{r plot_correlate3, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE, eval=TRUE}
+```{r plot_correlate3, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE, eval=TRUE, fig.alt='Visualization result of correlation matrix by group'}
 carseats %>%
   filter(ShelveLoc == "Good") %>%
   group_by(Urban) %>%
@@ -362,7 +362,7 @@ summary(cat_num)
 
 `plot()` visualizes the `relate` class object created by `relate()` as the relationship between the target and predictor variables. The relationship between `US` and `Sales` is visualized by a density plot.
 
-```{r target_by3, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE}
+```{r target_by3, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE, fig.alt='Visualization result of relationship between target variable and predictor'}
 plot(cat_num)
 ```
 
@@ -379,7 +379,7 @@ summary(cat_cat)
 
 `plot()` visualizes the relationship between the target variable and the predictor. A `mosaics plot` represents the relationship between `US` and `ShelveLoc`.
 
-```{r target_by5, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE}
+```{r target_by5, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE, fig.alt='Visualization result of relationship between target variable and predictor'}
 plot(cat_cat)
 ```
 
@@ -406,7 +406,7 @@ summary(num_num)
 The figure on the left shows the scatter plot of `Sales` and `Price` and the confidence interval of the regression line and regression line. 
 The figure on the right shows the relationship between the original data and the predicted values of the linear model as a scatter plot. If there is a linear relationship between the two variables, the scatter plot of the observations converges on the red diagonal line.
 
-```{r target_by8, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE}
+```{r target_by8, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE, fig.alt='Visualization result of relationship between target variable and predictor'}
 plot(num_num)
 ```
 
@@ -417,7 +417,7 @@ In `plot()`, the `hex_thres` argument provides a basis for drawing `hexabin plot
 
 The following example visualizes the `hexabin plot` rather than the scatter plot by specifying 350 for the `hex_thres` argument. This is because the number of observations is 400.
 
-```{r target_by8_2, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE}
+```{r target_by8_2, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE, fig.alt='Visualization result of relationship between target variable and predictor'}
 plot(num_num, hex_thres = 350)
 ```
 
@@ -436,7 +436,7 @@ summary(num_cat)
 
 `plot()` visualizes the relationship between the target variable and the predictor. A `box plot` represents the relationship between `Sales` and `ShelveLoc`.
 
-```{r target_by10, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE}
+```{r target_by10, fig.align='center', fig.width = 6, fig.height = 4, warning=FALSE, fig.alt='Visualization result of relationship between target variable and predictor'}
 plot(num_cat)
 ```
 

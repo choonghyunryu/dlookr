@@ -140,10 +140,10 @@ The number of observations supported by the stats::shapiro.test function is 3 to
 <span class="r-in"><span><span class="co"># Select the variable to describe</span></span></span>
 <span class="r-in"><span><span class="fu">normality</span><span class="op">(</span><span class="va">heartfailure</span>, <span class="va">platelets</span>, <span class="va">sodium</span>, sample <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   vars      statistic  p_value sample</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> platelets     0.902 3.21<span style="color: #949494;">e</span><span style="color: #BB0000;">-10</span>    200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> sodium        0.970 2.65<span style="color: #949494;">e</span><span style="color: #BB0000;">- 4</span>    200</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   vars      statistic      p_value sample</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> platelets     0.929 0.000<span style="text-decoration: underline;">000</span>025<span style="text-decoration: underline;">8</span>    200</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> sodium        0.946 0.000<span style="text-decoration: underline;">000</span>730     200</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># death_eventing dplyr::grouped_dt</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>

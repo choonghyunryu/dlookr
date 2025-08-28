@@ -87,8 +87,6 @@ Ryu</h4>
 
     
     
-<pre><code><span><span class="co">## Error in get(paste0(generic, ".", class), envir = get_method_env()) : </span></span>
-<span><span class="co">##   object 'type_sum.accel' not found</span></span></code></pre>
 <div class="section level2">
 <h2 id="preface">Preface<a class="anchor" aria-label="anchor" href="#preface"></a>
 </h2>
@@ -131,19 +129,19 @@ package, I use a <code>Carseats</code> dataset. <code>Carseats</code> in
 the <code>ISLR</code> package is simulation dataset that sells
 children’s car seats at 400 stores. This data is a data.frame created
 for the purpose of predicting sales volume.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">str</span>(Carseats)</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="st">'data.frame'</span><span class="sc">:</span>   <span class="dv">400</span> obs. of  <span class="dv">11</span> variables<span class="sc">:</span></span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a> <span class="er">$</span> Sales      <span class="sc">:</span> num  <span class="fl">9.5</span> <span class="fl">11.22</span> <span class="fl">10.06</span> <span class="fl">7.4</span> <span class="fl">4.15</span> ...</span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a> <span class="sc">$</span> CompPrice  <span class="sc">:</span> num  <span class="dv">138</span> <span class="dv">111</span> <span class="dv">113</span> <span class="dv">117</span> <span class="dv">141</span> <span class="dv">124</span> <span class="dv">115</span> <span class="dv">136</span> <span class="dv">132</span> <span class="dv">132</span> ...</span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a> <span class="sc">$</span> Income     <span class="sc">:</span> num  <span class="dv">73</span> <span class="dv">48</span> <span class="dv">35</span> <span class="dv">100</span> <span class="dv">64</span> <span class="dv">113</span> <span class="dv">105</span> <span class="dv">81</span> <span class="dv">110</span> <span class="dv">113</span> ...</span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a> <span class="sc">$</span> Advertising<span class="sc">:</span> num  <span class="dv">11</span> <span class="dv">16</span> <span class="dv">10</span> <span class="dv">4</span> <span class="dv">3</span> <span class="dv">13</span> <span class="dv">0</span> <span class="dv">15</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a> <span class="sc">$</span> Population <span class="sc">:</span> num  <span class="dv">276</span> <span class="dv">260</span> <span class="dv">269</span> <span class="dv">466</span> <span class="dv">340</span> <span class="dv">501</span> <span class="dv">45</span> <span class="dv">425</span> <span class="dv">108</span> <span class="dv">131</span> ...</span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a> <span class="sc">$</span> Price      <span class="sc">:</span> num  <span class="dv">120</span> <span class="dv">83</span> <span class="dv">80</span> <span class="dv">97</span> <span class="dv">128</span> <span class="dv">72</span> <span class="dv">108</span> <span class="dv">120</span> <span class="dv">124</span> <span class="dv">124</span> ...</span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a> <span class="sc">$</span> ShelveLoc  <span class="sc">:</span> Factor w<span class="sc">/</span> <span class="dv">3</span> levels <span class="st">"Bad"</span>,<span class="st">"Good"</span>,<span class="st">"Medium"</span><span class="sc">:</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">3</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">3</span> ...</span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a> <span class="sc">$</span> Age        <span class="sc">:</span> num  <span class="dv">42</span> <span class="dv">65</span> <span class="dv">59</span> <span class="dv">55</span> <span class="dv">38</span> <span class="dv">78</span> <span class="dv">71</span> <span class="dv">67</span> <span class="dv">76</span> <span class="dv">76</span> ...</span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a> <span class="sc">$</span> Education  <span class="sc">:</span> num  <span class="dv">17</span> <span class="dv">10</span> <span class="dv">12</span> <span class="dv">14</span> <span class="dv">13</span> <span class="dv">16</span> <span class="dv">15</span> <span class="dv">10</span> <span class="dv">10</span> <span class="dv">17</span> ...</span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a> <span class="sc">$</span> Urban      <span class="sc">:</span> Factor w<span class="sc">/</span> <span class="dv">2</span> levels <span class="st">"No"</span>,<span class="st">"Yes"</span><span class="sc">:</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">1</span> ...</span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a> <span class="sc">$</span> US         <span class="sc">:</span> Factor w<span class="sc">/</span> <span class="dv">2</span> levels <span class="st">"No"</span>,<span class="st">"Yes"</span><span class="sc">:</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">2</span> ...</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">str</span>(Carseats)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="st">'data.frame'</span><span class="sc">:</span>   <span class="dv">400</span> obs. of  <span class="dv">11</span> variables<span class="sc">:</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a> <span class="er">$</span> Sales      <span class="sc">:</span> num  <span class="fl">9.5</span> <span class="fl">11.22</span> <span class="fl">10.06</span> <span class="fl">7.4</span> <span class="fl">4.15</span> ...</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a> <span class="sc">$</span> CompPrice  <span class="sc">:</span> num  <span class="dv">138</span> <span class="dv">111</span> <span class="dv">113</span> <span class="dv">117</span> <span class="dv">141</span> <span class="dv">124</span> <span class="dv">115</span> <span class="dv">136</span> <span class="dv">132</span> <span class="dv">132</span> ...</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a> <span class="sc">$</span> Income     <span class="sc">:</span> num  <span class="dv">73</span> <span class="dv">48</span> <span class="dv">35</span> <span class="dv">100</span> <span class="dv">64</span> <span class="dv">113</span> <span class="dv">105</span> <span class="dv">81</span> <span class="dv">110</span> <span class="dv">113</span> ...</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a> <span class="sc">$</span> Advertising<span class="sc">:</span> num  <span class="dv">11</span> <span class="dv">16</span> <span class="dv">10</span> <span class="dv">4</span> <span class="dv">3</span> <span class="dv">13</span> <span class="dv">0</span> <span class="dv">15</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a> <span class="sc">$</span> Population <span class="sc">:</span> num  <span class="dv">276</span> <span class="dv">260</span> <span class="dv">269</span> <span class="dv">466</span> <span class="dv">340</span> <span class="dv">501</span> <span class="dv">45</span> <span class="dv">425</span> <span class="dv">108</span> <span class="dv">131</span> ...</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a> <span class="sc">$</span> Price      <span class="sc">:</span> num  <span class="dv">120</span> <span class="dv">83</span> <span class="dv">80</span> <span class="dv">97</span> <span class="dv">128</span> <span class="dv">72</span> <span class="dv">108</span> <span class="dv">120</span> <span class="dv">124</span> <span class="dv">124</span> ...</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a> <span class="sc">$</span> ShelveLoc  <span class="sc">:</span> Factor w<span class="sc">/</span> <span class="dv">3</span> levels <span class="st">"Bad"</span>,<span class="st">"Good"</span>,<span class="st">"Medium"</span><span class="sc">:</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">3</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">3</span> ...</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a> <span class="sc">$</span> Age        <span class="sc">:</span> num  <span class="dv">42</span> <span class="dv">65</span> <span class="dv">59</span> <span class="dv">55</span> <span class="dv">38</span> <span class="dv">78</span> <span class="dv">71</span> <span class="dv">67</span> <span class="dv">76</span> <span class="dv">76</span> ...</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a> <span class="sc">$</span> Education  <span class="sc">:</span> num  <span class="dv">17</span> <span class="dv">10</span> <span class="dv">12</span> <span class="dv">14</span> <span class="dv">13</span> <span class="dv">16</span> <span class="dv">15</span> <span class="dv">10</span> <span class="dv">10</span> <span class="dv">17</span> ...</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a> <span class="sc">$</span> Urban      <span class="sc">:</span> Factor w<span class="sc">/</span> <span class="dv">2</span> levels <span class="st">"No"</span>,<span class="st">"Yes"</span><span class="sc">:</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">1</span> ...</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a> <span class="sc">$</span> US         <span class="sc">:</span> Factor w<span class="sc">/</span> <span class="dv">2</span> levels <span class="st">"No"</span>,<span class="st">"Yes"</span><span class="sc">:</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">2</span> ...</span></code></pre></div>
 <p>The contents of individual variables are as follows. (Refer to
 ISLR::Carseats Man page)</p>
 <ul>
@@ -211,7 +209,7 @@ the US or not</li>
 often encountered. However, <code>Carseats</code> is complete data
 without missing. Therefore, the missing values are generated as follows.
 And I created a data.frame object named carseat.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">carseats</span> <span class="op">&lt;-</span> <span class="va">Carseats</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">RNGversion</a></span><span class="op">(</span><span class="st">"3.5.0"</span><span class="op">)</span><span class="op">)</span></span>
@@ -323,58 +321,58 @@ missing value of <code>Income</code>, a numeric variable of carseats,
 using the “rpart” method. <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> summarizes missing
 value imputation information, and <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> visualizes missing
 information.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">requireNamespace</span>(<span class="st">"rpart"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  income <span class="ot">&lt;-</span> <span class="fu">imputate_na</span>(carseats, Income, US, <span class="at">method =</span> <span class="st">"rpart"</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  <span class="co"># result of imputation</span></span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  income</span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  <span class="co"># summary of imputation</span></span>
-<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>  <span class="fu">summary</span>(income)</span>
-<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>  <span class="co"># viz of imputation</span></span>
-<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>  <span class="fu">plot</span>(income)</span>
-<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"If you want to use this feature, you need to install the rpart package.</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>}</span>
-<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="sc">*</span> Impute missing values based on Recursive Partitioning and Regression Trees</span>
-<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a> <span class="sc">-</span> method <span class="sc">:</span> rpart</span>
-<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a></span>
-<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="sc">*</span> Information of <span class="fu">Imputation</span> (before vs after)</span>
-<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a>                    Original     Imputation  </span>
-<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a>described_variables <span class="st">"value"</span>      <span class="st">"value"</span>     </span>
-<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a>n                   <span class="st">"380"</span>        <span class="st">"400"</span>       </span>
-<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a>na                  <span class="st">"20"</span>         <span class="st">" 0"</span>        </span>
-<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a>mean                <span class="st">"68.86053"</span>   <span class="st">"69.05073"</span>  </span>
-<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a>sd                  <span class="st">"28.09161"</span>   <span class="st">"27.57382"</span>  </span>
-<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a>se_mean             <span class="st">"1.441069"</span>   <span class="st">"1.378691"</span>  </span>
-<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a>IQR                 <span class="st">"48.25"</span>      <span class="st">"46.00"</span>     </span>
-<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a>skewness            <span class="st">"0.04490600"</span> <span class="st">"0.02935732"</span></span>
-<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a>kurtosis            <span class="st">"-1.089201"</span>  <span class="st">"-1.035086"</span> </span>
-<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a>p00                 <span class="st">"21"</span>         <span class="st">"21"</span>        </span>
-<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a>p01                 <span class="st">"21.79"</span>      <span class="st">"21.99"</span>     </span>
-<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a>p05                 <span class="st">"26"</span>         <span class="st">"26"</span>        </span>
-<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a>p10                 <span class="st">"30.0"</span>       <span class="st">"30.9"</span>      </span>
-<span id="cb4-33"><a href="#cb4-33" tabindex="-1"></a>p20                 <span class="st">"39"</span>         <span class="st">"40"</span>        </span>
-<span id="cb4-34"><a href="#cb4-34" tabindex="-1"></a>p25                 <span class="st">"42.75"</span>      <span class="st">"44.00"</span>     </span>
-<span id="cb4-35"><a href="#cb4-35" tabindex="-1"></a>p30                 <span class="st">"48.00000"</span>   <span class="st">"51.58333"</span>  </span>
-<span id="cb4-36"><a href="#cb4-36" tabindex="-1"></a>p40                 <span class="st">"62"</span>         <span class="st">"63"</span>        </span>
-<span id="cb4-37"><a href="#cb4-37" tabindex="-1"></a>p50                 <span class="st">"69"</span>         <span class="st">"69"</span>        </span>
-<span id="cb4-38"><a href="#cb4-38" tabindex="-1"></a>p60                 <span class="st">"78.0"</span>       <span class="st">"77.4"</span>      </span>
-<span id="cb4-39"><a href="#cb4-39" tabindex="-1"></a>p70                 <span class="st">"86.3"</span>       <span class="st">"84.3"</span>      </span>
-<span id="cb4-40"><a href="#cb4-40" tabindex="-1"></a>p75                 <span class="st">"91"</span>         <span class="st">"90"</span>        </span>
-<span id="cb4-41"><a href="#cb4-41" tabindex="-1"></a>p80                 <span class="st">"96.2"</span>       <span class="st">"96.0"</span>      </span>
-<span id="cb4-42"><a href="#cb4-42" tabindex="-1"></a>p90                 <span class="st">"108.1"</span>      <span class="st">"106.1"</span>     </span>
-<span id="cb4-43"><a href="#cb4-43" tabindex="-1"></a>p95                 <span class="st">"115.05"</span>     <span class="st">"115.00"</span>    </span>
-<span id="cb4-44"><a href="#cb4-44" tabindex="-1"></a>p99                 <span class="st">"119.21"</span>     <span class="st">"119.01"</span>    </span>
-<span id="cb4-45"><a href="#cb4-45" tabindex="-1"></a>p100                <span class="st">"120"</span>        <span class="st">"120"</span>       </span></code></pre></div>
-<p><img src="transformation_files/figure-html/imputate_na-1.png" width="600px" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">requireNamespace</span>(<span class="st">"rpart"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  income <span class="ot">&lt;-</span> <span class="fu">imputate_na</span>(carseats, Income, US, <span class="at">method =</span> <span class="st">"rpart"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="co"># result of imputation</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  income</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  <span class="co"># summary of imputation</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  <span class="fu">summary</span>(income)</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>  <span class="co"># viz of imputation</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>  <span class="fu">plot</span>(income)</span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"If you want to use this feature, you need to install the rpart package.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>}</span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="sc">*</span> Impute missing values based on Recursive Partitioning and Regression Trees</span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a> <span class="sc">-</span> method <span class="sc">:</span> rpart</span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="sc">*</span> Information of <span class="fu">Imputation</span> (before vs after)</span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a>                    Original     Imputation  </span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a>described_variables <span class="st">"value"</span>      <span class="st">"value"</span>     </span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a>n                   <span class="st">"380"</span>        <span class="st">"400"</span>       </span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a>na                  <span class="st">"20"</span>         <span class="st">" 0"</span>        </span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a>mean                <span class="st">"68.86053"</span>   <span class="st">"69.05073"</span>  </span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a>sd                  <span class="st">"28.09161"</span>   <span class="st">"27.57382"</span>  </span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a>se_mean             <span class="st">"1.441069"</span>   <span class="st">"1.378691"</span>  </span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a>IQR                 <span class="st">"48.25"</span>      <span class="st">"46.00"</span>     </span>
+<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a>skewness            <span class="st">"0.04490600"</span> <span class="st">"0.02935732"</span></span>
+<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a>kurtosis            <span class="st">"-1.089201"</span>  <span class="st">"-1.035086"</span> </span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a>p00                 <span class="st">"21"</span>         <span class="st">"21"</span>        </span>
+<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a>p01                 <span class="st">"21.79"</span>      <span class="st">"21.99"</span>     </span>
+<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a>p05                 <span class="st">"26"</span>         <span class="st">"26"</span>        </span>
+<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a>p10                 <span class="st">"30.0"</span>       <span class="st">"30.9"</span>      </span>
+<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a>p20                 <span class="st">"39"</span>         <span class="st">"40"</span>        </span>
+<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a>p25                 <span class="st">"42.75"</span>      <span class="st">"44.00"</span>     </span>
+<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a>p30                 <span class="st">"48.00000"</span>   <span class="st">"51.58333"</span>  </span>
+<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a>p40                 <span class="st">"62"</span>         <span class="st">"63"</span>        </span>
+<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a>p50                 <span class="st">"69"</span>         <span class="st">"69"</span>        </span>
+<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a>p60                 <span class="st">"78.0"</span>       <span class="st">"77.4"</span>      </span>
+<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a>p70                 <span class="st">"86.3"</span>       <span class="st">"84.3"</span>      </span>
+<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a>p75                 <span class="st">"91"</span>         <span class="st">"90"</span>        </span>
+<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a>p80                 <span class="st">"96.2"</span>       <span class="st">"96.0"</span>      </span>
+<span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a>p90                 <span class="st">"108.1"</span>      <span class="st">"106.1"</span>     </span>
+<span id="cb3-43"><a href="#cb3-43" tabindex="-1"></a>p95                 <span class="st">"115.05"</span>     <span class="st">"115.00"</span>    </span>
+<span id="cb3-44"><a href="#cb3-44" tabindex="-1"></a>p99                 <span class="st">"119.21"</span>     <span class="st">"119.01"</span>    </span>
+<span id="cb3-45"><a href="#cb3-45" tabindex="-1"></a>p100                <span class="st">"120"</span>        <span class="st">"120"</span>       </span></code></pre></div>
+<p><img src="transformation_files/figure-html/imputate_na-1.png" alt="Visualization of missing value imputation" width="600px" style="display: block; margin: auto;"></p>
 <p>The following imputes the categorical variable <code>urban</code> by
 the “mice” method.</p>
 <p>The “mice” method must require the <code>mice</code>,
 <code>ranger</code> package. If you want to use this feature, you need
 to install the <code>mice</code>, and <code>ranger</code> package.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/amices/mice" class="external-link">mice</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">urban</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/imputate_na.html">imputate_na</a></span><span class="op">(</span><span class="va">carseats</span>, <span class="va">Urban</span>, <span class="va">US</span>, method <span class="op">=</span> <span class="st">"mice"</span><span class="op">)</span></span>
@@ -395,17 +393,17 @@ to install the <code>mice</code>, and <code>ranger</code> package.</p>
 <code>Income</code> variable and then calculates the arithmetic mean for
 each level of <code>US</code>. In this case, <code>dplyr</code> is used
 and is easily interpreted logically using pipes.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># The mean before and after the imputation of the Income variable</span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>carseats <span class="sc">%&gt;%</span></span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Income_imp =</span> <span class="fu">imputate_na</span>(carseats, Income, US, <span class="at">method =</span> <span class="st">"knn"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  <span class="fu">group_by</span>(US) <span class="sc">%&gt;%</span></span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">orig =</span> <span class="fu">mean</span>(Income, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>            <span class="at">imputation =</span> <span class="fu">mean</span>(Income_imp))</span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="co"># A tibble: 2 × 3 [39m</span></span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>  US     orig imputation</span>
-<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>   [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>fct<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m  [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m       [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m</span>
-<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m1 [<span class="dv">39</span>m No     <span class="fl">65.8</span>       <span class="fl">66.1</span></span>
-<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m2 [<span class="dv">39</span>m Yes    <span class="fl">70.4</span>       <span class="fl">70.5</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># The mean before and after the imputation of the Income variable</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>carseats <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Income_imp =</span> <span class="fu">imputate_na</span>(carseats, Income, US, <span class="at">method =</span> <span class="st">"knn"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  <span class="fu">group_by</span>(US) <span class="sc">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">orig =</span> <span class="fu">mean</span>(Income, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>            <span class="at">imputation =</span> <span class="fu">mean</span>(Income_imp))</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="co"># A tibble: 2 × 3 [39m</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>  US     orig imputation</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>   [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>fct<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m  [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m       [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m1 [<span class="dv">39</span>m No     <span class="fl">65.8</span>       <span class="fl">66.1</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m2 [<span class="dv">39</span>m Yes    <span class="fl">70.4</span>       <span class="fl">70.5</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -432,103 +430,103 @@ bottom outliers with the fifth percentile.</li>
 variable <code>Price</code> as the “capping” method, as follows.
 <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> summarizes outliers imputation information, and
 <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> visualizes imputation information.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>price <span class="ot">&lt;-</span> <span class="fu">imputate_outlier</span>(carseats, Price, <span class="at">method =</span> <span class="st">"capping"</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co"># result of imputation</span></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>price</span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  [<span class="dv">1</span>] <span class="fl">120.00</span>  <span class="fl">83.00</span>  <span class="fl">80.00</span>  <span class="fl">97.00</span> <span class="fl">128.00</span>  <span class="fl">72.00</span> <span class="fl">108.00</span> <span class="fl">120.00</span> <span class="fl">124.00</span> <span class="fl">124.00</span></span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a> [<span class="dv">11</span>] <span class="fl">100.00</span>  <span class="fl">94.00</span> <span class="fl">136.00</span>  <span class="fl">86.00</span> <span class="fl">118.00</span> <span class="fl">144.00</span> <span class="fl">110.00</span> <span class="fl">131.00</span>  <span class="fl">68.00</span> <span class="fl">121.00</span></span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a> [<span class="dv">21</span>] <span class="fl">131.00</span> <span class="fl">109.00</span> <span class="fl">138.00</span> <span class="fl">109.00</span> <span class="fl">113.00</span>  <span class="fl">82.00</span> <span class="fl">131.00</span> <span class="fl">107.00</span>  <span class="fl">97.00</span> <span class="fl">102.00</span></span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a> [<span class="dv">31</span>]  <span class="fl">89.00</span> <span class="fl">131.00</span> <span class="fl">137.00</span> <span class="fl">128.00</span> <span class="fl">128.00</span>  <span class="fl">96.00</span> <span class="fl">100.00</span> <span class="fl">110.00</span> <span class="fl">102.00</span> <span class="fl">138.00</span></span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a> [<span class="dv">41</span>] <span class="fl">126.00</span> <span class="fl">124.00</span>  <span class="fl">77.00</span> <span class="fl">134.00</span>  <span class="fl">95.00</span> <span class="fl">135.00</span>  <span class="fl">70.00</span> <span class="fl">108.00</span>  <span class="fl">98.00</span> <span class="fl">149.00</span></span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a> [<span class="dv">51</span>] <span class="fl">108.00</span> <span class="fl">108.00</span> <span class="fl">129.00</span> <span class="fl">119.00</span> <span class="fl">144.00</span> <span class="fl">154.00</span>  <span class="fl">84.00</span> <span class="fl">117.00</span> <span class="fl">103.00</span> <span class="fl">114.00</span></span>
-<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a> [<span class="dv">61</span>] <span class="fl">123.00</span> <span class="fl">107.00</span> <span class="fl">133.00</span> <span class="fl">101.00</span> <span class="fl">104.00</span> <span class="fl">128.00</span>  <span class="fl">91.00</span> <span class="fl">115.00</span> <span class="fl">134.00</span>  <span class="fl">99.00</span></span>
-<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a> [<span class="dv">71</span>]  <span class="fl">99.00</span> <span class="fl">150.00</span> <span class="fl">116.00</span> <span class="fl">104.00</span> <span class="fl">136.00</span>  <span class="fl">92.00</span>  <span class="fl">70.00</span>  <span class="fl">89.00</span> <span class="fl">145.00</span>  <span class="fl">90.00</span></span>
-<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a> [<span class="dv">81</span>]  <span class="fl">79.00</span> <span class="fl">128.00</span> <span class="fl">139.00</span>  <span class="fl">94.00</span> <span class="fl">121.00</span> <span class="fl">112.00</span> <span class="fl">134.00</span> <span class="fl">126.00</span> <span class="fl">111.00</span> <span class="fl">119.00</span></span>
-<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a> [<span class="dv">91</span>] <span class="fl">103.00</span> <span class="fl">107.00</span> <span class="fl">125.00</span> <span class="fl">104.00</span>  <span class="fl">84.00</span> <span class="fl">148.00</span> <span class="fl">132.00</span> <span class="fl">129.00</span> <span class="fl">127.00</span> <span class="fl">107.00</span></span>
-<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>[<span class="dv">101</span>] <span class="fl">106.00</span> <span class="fl">118.00</span>  <span class="fl">97.00</span>  <span class="fl">96.00</span> <span class="fl">138.00</span>  <span class="fl">97.00</span> <span class="fl">139.00</span> <span class="fl">108.00</span> <span class="fl">103.00</span>  <span class="fl">90.00</span></span>
-<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a>[<span class="dv">111</span>] <span class="fl">116.00</span> <span class="fl">151.00</span> <span class="fl">125.00</span> <span class="fl">127.00</span> <span class="fl">106.00</span> <span class="fl">129.00</span> <span class="fl">128.00</span> <span class="fl">119.00</span>  <span class="fl">99.00</span> <span class="fl">128.00</span></span>
-<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a>[<span class="dv">121</span>] <span class="fl">131.00</span>  <span class="fl">87.00</span> <span class="fl">108.00</span> <span class="fl">155.00</span> <span class="fl">120.00</span>  <span class="fl">77.00</span> <span class="fl">133.00</span> <span class="fl">116.00</span> <span class="fl">126.00</span> <span class="fl">147.00</span></span>
-<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a>[<span class="dv">131</span>]  <span class="fl">77.00</span>  <span class="fl">94.00</span> <span class="fl">136.00</span>  <span class="fl">97.00</span> <span class="fl">131.00</span> <span class="fl">120.00</span> <span class="fl">120.00</span> <span class="fl">118.00</span> <span class="fl">109.00</span>  <span class="fl">94.00</span></span>
-<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a>[<span class="dv">141</span>] <span class="fl">129.00</span> <span class="fl">131.00</span> <span class="fl">104.00</span> <span class="fl">159.00</span> <span class="fl">123.00</span> <span class="fl">117.00</span> <span class="fl">131.00</span> <span class="fl">119.00</span>  <span class="fl">97.00</span>  <span class="fl">87.00</span></span>
-<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a>[<span class="dv">151</span>] <span class="fl">114.00</span> <span class="fl">103.00</span> <span class="fl">128.00</span> <span class="fl">150.00</span> <span class="fl">110.00</span>  <span class="fl">69.00</span> <span class="fl">157.00</span>  <span class="fl">90.00</span> <span class="fl">112.00</span>  <span class="fl">70.00</span></span>
-<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a>[<span class="dv">161</span>] <span class="fl">111.00</span> <span class="fl">160.00</span> <span class="fl">149.00</span> <span class="fl">106.00</span> <span class="fl">141.00</span> <span class="fl">155.05</span> <span class="fl">137.00</span>  <span class="fl">93.00</span> <span class="fl">117.00</span>  <span class="fl">77.00</span></span>
-<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a>[<span class="dv">171</span>] <span class="fl">118.00</span>  <span class="fl">55.00</span> <span class="fl">110.00</span> <span class="fl">128.00</span> <span class="fl">155.05</span> <span class="fl">122.00</span> <span class="fl">154.00</span>  <span class="fl">94.00</span>  <span class="fl">81.00</span> <span class="fl">116.00</span></span>
-<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a>[<span class="dv">181</span>] <span class="fl">149.00</span>  <span class="fl">91.00</span> <span class="fl">140.00</span> <span class="fl">102.00</span>  <span class="fl">97.00</span> <span class="fl">107.00</span>  <span class="fl">86.00</span>  <span class="fl">96.00</span>  <span class="fl">90.00</span> <span class="fl">104.00</span></span>
-<span id="cb7-24"><a href="#cb7-24" tabindex="-1"></a>[<span class="dv">191</span>] <span class="fl">101.00</span> <span class="fl">173.00</span>  <span class="fl">93.00</span>  <span class="fl">96.00</span> <span class="fl">128.00</span> <span class="fl">112.00</span> <span class="fl">133.00</span> <span class="fl">138.00</span> <span class="fl">128.00</span> <span class="fl">126.00</span></span>
-<span id="cb7-25"><a href="#cb7-25" tabindex="-1"></a>[<span class="dv">201</span>] <span class="fl">146.00</span> <span class="fl">134.00</span> <span class="fl">130.00</span> <span class="fl">157.00</span> <span class="fl">124.00</span> <span class="fl">132.00</span> <span class="fl">160.00</span>  <span class="fl">97.00</span>  <span class="fl">64.00</span>  <span class="fl">90.00</span></span>
-<span id="cb7-26"><a href="#cb7-26" tabindex="-1"></a>[<span class="dv">211</span>] <span class="fl">123.00</span> <span class="fl">120.00</span> <span class="fl">105.00</span> <span class="fl">139.00</span> <span class="fl">107.00</span> <span class="fl">144.00</span> <span class="fl">144.00</span> <span class="fl">111.00</span> <span class="fl">120.00</span> <span class="fl">116.00</span></span>
-<span id="cb7-27"><a href="#cb7-27" tabindex="-1"></a>[<span class="dv">221</span>] <span class="fl">124.00</span> <span class="fl">107.00</span> <span class="fl">145.00</span> <span class="fl">125.00</span> <span class="fl">141.00</span>  <span class="fl">82.00</span> <span class="fl">122.00</span> <span class="fl">101.00</span> <span class="fl">163.00</span>  <span class="fl">72.00</span></span>
-<span id="cb7-28"><a href="#cb7-28" tabindex="-1"></a>[<span class="dv">231</span>] <span class="fl">114.00</span> <span class="fl">122.00</span> <span class="fl">105.00</span> <span class="fl">120.00</span> <span class="fl">129.00</span> <span class="fl">132.00</span> <span class="fl">108.00</span> <span class="fl">135.00</span> <span class="fl">133.00</span> <span class="fl">118.00</span></span>
-<span id="cb7-29"><a href="#cb7-29" tabindex="-1"></a>[<span class="dv">241</span>] <span class="fl">121.00</span>  <span class="fl">94.00</span> <span class="fl">135.00</span> <span class="fl">110.00</span> <span class="fl">100.00</span>  <span class="fl">88.00</span>  <span class="fl">90.00</span> <span class="fl">151.00</span> <span class="fl">101.00</span> <span class="fl">117.00</span></span>
-<span id="cb7-30"><a href="#cb7-30" tabindex="-1"></a>[<span class="dv">251</span>] <span class="fl">156.00</span> <span class="fl">132.00</span> <span class="fl">117.00</span> <span class="fl">122.00</span> <span class="fl">129.00</span>  <span class="fl">81.00</span> <span class="fl">144.00</span> <span class="fl">112.00</span>  <span class="fl">81.00</span> <span class="fl">100.00</span></span>
-<span id="cb7-31"><a href="#cb7-31" tabindex="-1"></a>[<span class="dv">261</span>] <span class="fl">101.00</span> <span class="fl">118.00</span> <span class="fl">132.00</span> <span class="fl">115.00</span> <span class="fl">159.00</span> <span class="fl">129.00</span> <span class="fl">112.00</span> <span class="fl">112.00</span> <span class="fl">105.00</span> <span class="fl">166.00</span></span>
-<span id="cb7-32"><a href="#cb7-32" tabindex="-1"></a>[<span class="dv">271</span>]  <span class="fl">89.00</span> <span class="fl">110.00</span>  <span class="fl">63.00</span>  <span class="fl">86.00</span> <span class="fl">119.00</span> <span class="fl">132.00</span> <span class="fl">130.00</span> <span class="fl">125.00</span> <span class="fl">151.00</span> <span class="fl">158.00</span></span>
-<span id="cb7-33"><a href="#cb7-33" tabindex="-1"></a>[<span class="dv">281</span>] <span class="fl">145.00</span> <span class="fl">105.00</span> <span class="fl">154.00</span> <span class="fl">117.00</span>  <span class="fl">96.00</span> <span class="fl">131.00</span> <span class="fl">113.00</span>  <span class="fl">72.00</span>  <span class="fl">97.00</span> <span class="fl">156.00</span></span>
-<span id="cb7-34"><a href="#cb7-34" tabindex="-1"></a>[<span class="dv">291</span>] <span class="fl">103.00</span>  <span class="fl">89.00</span>  <span class="fl">74.00</span>  <span class="fl">89.00</span>  <span class="fl">99.00</span> <span class="fl">137.00</span> <span class="fl">123.00</span> <span class="fl">104.00</span> <span class="fl">130.00</span>  <span class="fl">96.00</span></span>
-<span id="cb7-35"><a href="#cb7-35" tabindex="-1"></a>[<span class="dv">301</span>]  <span class="fl">99.00</span>  <span class="fl">87.00</span> <span class="fl">110.00</span>  <span class="fl">99.00</span> <span class="fl">134.00</span> <span class="fl">132.00</span> <span class="fl">133.00</span> <span class="fl">120.00</span> <span class="fl">126.00</span>  <span class="fl">80.00</span></span>
-<span id="cb7-36"><a href="#cb7-36" tabindex="-1"></a>[<span class="dv">311</span>] <span class="fl">166.00</span> <span class="fl">132.00</span> <span class="fl">135.00</span>  <span class="fl">54.00</span> <span class="fl">129.00</span> <span class="fl">171.00</span>  <span class="fl">72.00</span> <span class="fl">136.00</span> <span class="fl">130.00</span> <span class="fl">129.00</span></span>
-<span id="cb7-37"><a href="#cb7-37" tabindex="-1"></a>[<span class="dv">321</span>] <span class="fl">152.00</span>  <span class="fl">98.00</span> <span class="fl">139.00</span> <span class="fl">103.00</span> <span class="fl">150.00</span> <span class="fl">104.00</span> <span class="fl">122.00</span> <span class="fl">104.00</span> <span class="fl">111.00</span>  <span class="fl">89.00</span></span>
-<span id="cb7-38"><a href="#cb7-38" tabindex="-1"></a>[<span class="dv">331</span>] <span class="fl">112.00</span> <span class="fl">134.00</span> <span class="fl">104.00</span> <span class="fl">147.00</span>  <span class="fl">83.00</span> <span class="fl">110.00</span> <span class="fl">143.00</span> <span class="fl">102.00</span> <span class="fl">101.00</span> <span class="fl">126.00</span></span>
-<span id="cb7-39"><a href="#cb7-39" tabindex="-1"></a>[<span class="dv">341</span>]  <span class="fl">91.00</span>  <span class="fl">93.00</span> <span class="fl">118.00</span> <span class="fl">121.00</span> <span class="fl">126.00</span> <span class="fl">149.00</span> <span class="fl">125.00</span> <span class="fl">112.00</span> <span class="fl">107.00</span>  <span class="fl">96.00</span></span>
-<span id="cb7-40"><a href="#cb7-40" tabindex="-1"></a>[<span class="dv">351</span>]  <span class="fl">91.00</span> <span class="fl">105.00</span> <span class="fl">122.00</span>  <span class="fl">92.00</span> <span class="fl">145.00</span> <span class="fl">146.00</span> <span class="fl">164.00</span>  <span class="fl">72.00</span> <span class="fl">118.00</span> <span class="fl">130.00</span></span>
-<span id="cb7-41"><a href="#cb7-41" tabindex="-1"></a>[<span class="dv">361</span>] <span class="fl">114.00</span> <span class="fl">104.00</span> <span class="fl">110.00</span> <span class="fl">108.00</span> <span class="fl">131.00</span> <span class="fl">162.00</span> <span class="fl">134.00</span>  <span class="fl">77.00</span>  <span class="fl">79.00</span> <span class="fl">122.00</span></span>
-<span id="cb7-42"><a href="#cb7-42" tabindex="-1"></a>[<span class="dv">371</span>] <span class="fl">119.00</span> <span class="fl">126.00</span>  <span class="fl">98.00</span> <span class="fl">116.00</span> <span class="fl">118.00</span> <span class="fl">124.00</span>  <span class="fl">92.00</span> <span class="fl">125.00</span> <span class="fl">119.00</span> <span class="fl">107.00</span></span>
-<span id="cb7-43"><a href="#cb7-43" tabindex="-1"></a>[<span class="dv">381</span>]  <span class="fl">89.00</span> <span class="fl">151.00</span> <span class="fl">121.00</span>  <span class="fl">68.00</span> <span class="fl">112.00</span> <span class="fl">132.00</span> <span class="fl">160.00</span> <span class="fl">115.00</span>  <span class="fl">78.00</span> <span class="fl">107.00</span></span>
-<span id="cb7-44"><a href="#cb7-44" tabindex="-1"></a>[<span class="dv">391</span>] <span class="fl">111.00</span> <span class="fl">124.00</span> <span class="fl">130.00</span> <span class="fl">120.00</span> <span class="fl">139.00</span> <span class="fl">128.00</span> <span class="fl">120.00</span> <span class="fl">159.00</span>  <span class="fl">95.00</span> <span class="fl">120.00</span></span>
-<span id="cb7-45"><a href="#cb7-45" tabindex="-1"></a><span class="fu">attr</span>(,<span class="st">"method"</span>)</span>
-<span id="cb7-46"><a href="#cb7-46" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"capping"</span></span>
-<span id="cb7-47"><a href="#cb7-47" tabindex="-1"></a><span class="fu">attr</span>(,<span class="st">"var_type"</span>)</span>
-<span id="cb7-48"><a href="#cb7-48" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"numerical"</span></span>
-<span id="cb7-49"><a href="#cb7-49" tabindex="-1"></a><span class="fu">attr</span>(,<span class="st">"outlier_pos"</span>)</span>
-<span id="cb7-50"><a href="#cb7-50" tabindex="-1"></a>[<span class="dv">1</span>]  <span class="dv">43</span> <span class="dv">126</span> <span class="dv">166</span> <span class="dv">175</span> <span class="dv">368</span></span>
-<span id="cb7-51"><a href="#cb7-51" tabindex="-1"></a><span class="fu">attr</span>(,<span class="st">"outliers"</span>)</span>
-<span id="cb7-52"><a href="#cb7-52" tabindex="-1"></a>[<span class="dv">1</span>]  <span class="dv">24</span>  <span class="dv">49</span> <span class="dv">191</span> <span class="dv">185</span>  <span class="dv">53</span></span>
-<span id="cb7-53"><a href="#cb7-53" tabindex="-1"></a><span class="fu">attr</span>(,<span class="st">"type"</span>)</span>
-<span id="cb7-54"><a href="#cb7-54" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"outliers"</span></span>
-<span id="cb7-55"><a href="#cb7-55" tabindex="-1"></a><span class="fu">attr</span>(,<span class="st">"message"</span>)</span>
-<span id="cb7-56"><a href="#cb7-56" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"complete imputation"</span></span>
-<span id="cb7-57"><a href="#cb7-57" tabindex="-1"></a><span class="fu">attr</span>(,<span class="st">"success"</span>)</span>
-<span id="cb7-58"><a href="#cb7-58" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">TRUE</span></span>
-<span id="cb7-59"><a href="#cb7-59" tabindex="-1"></a><span class="fu">attr</span>(,<span class="st">"class"</span>)</span>
-<span id="cb7-60"><a href="#cb7-60" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"imputation"</span> <span class="st">"numeric"</span>   </span>
-<span id="cb7-61"><a href="#cb7-61" tabindex="-1"></a></span>
-<span id="cb7-62"><a href="#cb7-62" tabindex="-1"></a><span class="co"># summary of imputation</span></span>
-<span id="cb7-63"><a href="#cb7-63" tabindex="-1"></a><span class="fu">summary</span>(price)</span>
-<span id="cb7-64"><a href="#cb7-64" tabindex="-1"></a>Impute outliers with capping</span>
-<span id="cb7-65"><a href="#cb7-65" tabindex="-1"></a></span>
-<span id="cb7-66"><a href="#cb7-66" tabindex="-1"></a><span class="sc">*</span> Information of <span class="fu">Imputation</span> (before vs after)</span>
-<span id="cb7-67"><a href="#cb7-67" tabindex="-1"></a>                    Original     Imputation  </span>
-<span id="cb7-68"><a href="#cb7-68" tabindex="-1"></a>described_variables <span class="st">"value"</span>      <span class="st">"value"</span>     </span>
-<span id="cb7-69"><a href="#cb7-69" tabindex="-1"></a>n                   <span class="st">"400"</span>        <span class="st">"400"</span>       </span>
-<span id="cb7-70"><a href="#cb7-70" tabindex="-1"></a>na                  <span class="st">"0"</span>          <span class="st">"0"</span>         </span>
-<span id="cb7-71"><a href="#cb7-71" tabindex="-1"></a>mean                <span class="st">"115.7950"</span>   <span class="st">"115.8927"</span>  </span>
-<span id="cb7-72"><a href="#cb7-72" tabindex="-1"></a>sd                  <span class="st">"23.67666"</span>   <span class="st">"22.61092"</span>  </span>
-<span id="cb7-73"><a href="#cb7-73" tabindex="-1"></a>se_mean             <span class="st">"1.183833"</span>   <span class="st">"1.130546"</span>  </span>
-<span id="cb7-74"><a href="#cb7-74" tabindex="-1"></a>IQR                 <span class="st">"31"</span>         <span class="st">"31"</span>        </span>
-<span id="cb7-75"><a href="#cb7-75" tabindex="-1"></a>skewness            <span class="st">"-0.1252862"</span> <span class="st">"-0.0461621"</span></span>
-<span id="cb7-76"><a href="#cb7-76" tabindex="-1"></a>kurtosis            <span class="st">" 0.4518850"</span> <span class="st">"-0.3030578"</span></span>
-<span id="cb7-77"><a href="#cb7-77" tabindex="-1"></a>p00                 <span class="st">"24"</span>         <span class="st">"54"</span>        </span>
-<span id="cb7-78"><a href="#cb7-78" tabindex="-1"></a>p01                 <span class="st">"54.99"</span>      <span class="st">"67.96"</span>     </span>
-<span id="cb7-79"><a href="#cb7-79" tabindex="-1"></a>p05                 <span class="st">"77"</span>         <span class="st">"77"</span>        </span>
-<span id="cb7-80"><a href="#cb7-80" tabindex="-1"></a>p10                 <span class="st">"87"</span>         <span class="st">"87"</span>        </span>
-<span id="cb7-81"><a href="#cb7-81" tabindex="-1"></a>p20                 <span class="st">"96.8"</span>       <span class="st">"96.8"</span>      </span>
-<span id="cb7-82"><a href="#cb7-82" tabindex="-1"></a>p25                 <span class="st">"100"</span>        <span class="st">"100"</span>       </span>
-<span id="cb7-83"><a href="#cb7-83" tabindex="-1"></a>p30                 <span class="st">"104"</span>        <span class="st">"104"</span>       </span>
-<span id="cb7-84"><a href="#cb7-84" tabindex="-1"></a>p40                 <span class="st">"110"</span>        <span class="st">"110"</span>       </span>
-<span id="cb7-85"><a href="#cb7-85" tabindex="-1"></a>p50                 <span class="st">"117"</span>        <span class="st">"117"</span>       </span>
-<span id="cb7-86"><a href="#cb7-86" tabindex="-1"></a>p60                 <span class="st">"122"</span>        <span class="st">"122"</span>       </span>
-<span id="cb7-87"><a href="#cb7-87" tabindex="-1"></a>p70                 <span class="st">"128.3"</span>      <span class="st">"128.3"</span>     </span>
-<span id="cb7-88"><a href="#cb7-88" tabindex="-1"></a>p75                 <span class="st">"131"</span>        <span class="st">"131"</span>       </span>
-<span id="cb7-89"><a href="#cb7-89" tabindex="-1"></a>p80                 <span class="st">"134"</span>        <span class="st">"134"</span>       </span>
-<span id="cb7-90"><a href="#cb7-90" tabindex="-1"></a>p90                 <span class="st">"146"</span>        <span class="st">"146"</span>       </span>
-<span id="cb7-91"><a href="#cb7-91" tabindex="-1"></a>p95                 <span class="st">"155.0500"</span>   <span class="st">"155.0025"</span>  </span>
-<span id="cb7-92"><a href="#cb7-92" tabindex="-1"></a>p99                 <span class="st">"166.05"</span>     <span class="st">"164.02"</span>    </span>
-<span id="cb7-93"><a href="#cb7-93" tabindex="-1"></a>p100                <span class="st">"191"</span>        <span class="st">"173"</span>       </span>
-<span id="cb7-94"><a href="#cb7-94" tabindex="-1"></a></span>
-<span id="cb7-95"><a href="#cb7-95" tabindex="-1"></a><span class="co"># viz of imputation</span></span>
-<span id="cb7-96"><a href="#cb7-96" tabindex="-1"></a><span class="fu">plot</span>(price)</span></code></pre></div>
-<p><img src="transformation_files/figure-html/imputate_outlier-1.png" width="600px" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>price <span class="ot">&lt;-</span> <span class="fu">imputate_outlier</span>(carseats, Price, <span class="at">method =</span> <span class="st">"capping"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co"># result of imputation</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>price</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>  [<span class="dv">1</span>] <span class="fl">120.00</span>  <span class="fl">83.00</span>  <span class="fl">80.00</span>  <span class="fl">97.00</span> <span class="fl">128.00</span>  <span class="fl">72.00</span> <span class="fl">108.00</span> <span class="fl">120.00</span> <span class="fl">124.00</span> <span class="fl">124.00</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a> [<span class="dv">11</span>] <span class="fl">100.00</span>  <span class="fl">94.00</span> <span class="fl">136.00</span>  <span class="fl">86.00</span> <span class="fl">118.00</span> <span class="fl">144.00</span> <span class="fl">110.00</span> <span class="fl">131.00</span>  <span class="fl">68.00</span> <span class="fl">121.00</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a> [<span class="dv">21</span>] <span class="fl">131.00</span> <span class="fl">109.00</span> <span class="fl">138.00</span> <span class="fl">109.00</span> <span class="fl">113.00</span>  <span class="fl">82.00</span> <span class="fl">131.00</span> <span class="fl">107.00</span>  <span class="fl">97.00</span> <span class="fl">102.00</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a> [<span class="dv">31</span>]  <span class="fl">89.00</span> <span class="fl">131.00</span> <span class="fl">137.00</span> <span class="fl">128.00</span> <span class="fl">128.00</span>  <span class="fl">96.00</span> <span class="fl">100.00</span> <span class="fl">110.00</span> <span class="fl">102.00</span> <span class="fl">138.00</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a> [<span class="dv">41</span>] <span class="fl">126.00</span> <span class="fl">124.00</span>  <span class="fl">77.00</span> <span class="fl">134.00</span>  <span class="fl">95.00</span> <span class="fl">135.00</span>  <span class="fl">70.00</span> <span class="fl">108.00</span>  <span class="fl">98.00</span> <span class="fl">149.00</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a> [<span class="dv">51</span>] <span class="fl">108.00</span> <span class="fl">108.00</span> <span class="fl">129.00</span> <span class="fl">119.00</span> <span class="fl">144.00</span> <span class="fl">154.00</span>  <span class="fl">84.00</span> <span class="fl">117.00</span> <span class="fl">103.00</span> <span class="fl">114.00</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a> [<span class="dv">61</span>] <span class="fl">123.00</span> <span class="fl">107.00</span> <span class="fl">133.00</span> <span class="fl">101.00</span> <span class="fl">104.00</span> <span class="fl">128.00</span>  <span class="fl">91.00</span> <span class="fl">115.00</span> <span class="fl">134.00</span>  <span class="fl">99.00</span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a> [<span class="dv">71</span>]  <span class="fl">99.00</span> <span class="fl">150.00</span> <span class="fl">116.00</span> <span class="fl">104.00</span> <span class="fl">136.00</span>  <span class="fl">92.00</span>  <span class="fl">70.00</span>  <span class="fl">89.00</span> <span class="fl">145.00</span>  <span class="fl">90.00</span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a> [<span class="dv">81</span>]  <span class="fl">79.00</span> <span class="fl">128.00</span> <span class="fl">139.00</span>  <span class="fl">94.00</span> <span class="fl">121.00</span> <span class="fl">112.00</span> <span class="fl">134.00</span> <span class="fl">126.00</span> <span class="fl">111.00</span> <span class="fl">119.00</span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a> [<span class="dv">91</span>] <span class="fl">103.00</span> <span class="fl">107.00</span> <span class="fl">125.00</span> <span class="fl">104.00</span>  <span class="fl">84.00</span> <span class="fl">148.00</span> <span class="fl">132.00</span> <span class="fl">129.00</span> <span class="fl">127.00</span> <span class="fl">107.00</span></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a>[<span class="dv">101</span>] <span class="fl">106.00</span> <span class="fl">118.00</span>  <span class="fl">97.00</span>  <span class="fl">96.00</span> <span class="fl">138.00</span>  <span class="fl">97.00</span> <span class="fl">139.00</span> <span class="fl">108.00</span> <span class="fl">103.00</span>  <span class="fl">90.00</span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a>[<span class="dv">111</span>] <span class="fl">116.00</span> <span class="fl">151.00</span> <span class="fl">125.00</span> <span class="fl">127.00</span> <span class="fl">106.00</span> <span class="fl">129.00</span> <span class="fl">128.00</span> <span class="fl">119.00</span>  <span class="fl">99.00</span> <span class="fl">128.00</span></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a>[<span class="dv">121</span>] <span class="fl">131.00</span>  <span class="fl">87.00</span> <span class="fl">108.00</span> <span class="fl">155.00</span> <span class="fl">120.00</span>  <span class="fl">77.00</span> <span class="fl">133.00</span> <span class="fl">116.00</span> <span class="fl">126.00</span> <span class="fl">147.00</span></span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a>[<span class="dv">131</span>]  <span class="fl">77.00</span>  <span class="fl">94.00</span> <span class="fl">136.00</span>  <span class="fl">97.00</span> <span class="fl">131.00</span> <span class="fl">120.00</span> <span class="fl">120.00</span> <span class="fl">118.00</span> <span class="fl">109.00</span>  <span class="fl">94.00</span></span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a>[<span class="dv">141</span>] <span class="fl">129.00</span> <span class="fl">131.00</span> <span class="fl">104.00</span> <span class="fl">159.00</span> <span class="fl">123.00</span> <span class="fl">117.00</span> <span class="fl">131.00</span> <span class="fl">119.00</span>  <span class="fl">97.00</span>  <span class="fl">87.00</span></span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a>[<span class="dv">151</span>] <span class="fl">114.00</span> <span class="fl">103.00</span> <span class="fl">128.00</span> <span class="fl">150.00</span> <span class="fl">110.00</span>  <span class="fl">69.00</span> <span class="fl">157.00</span>  <span class="fl">90.00</span> <span class="fl">112.00</span>  <span class="fl">70.00</span></span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a>[<span class="dv">161</span>] <span class="fl">111.00</span> <span class="fl">160.00</span> <span class="fl">149.00</span> <span class="fl">106.00</span> <span class="fl">141.00</span> <span class="fl">155.05</span> <span class="fl">137.00</span>  <span class="fl">93.00</span> <span class="fl">117.00</span>  <span class="fl">77.00</span></span>
+<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a>[<span class="dv">171</span>] <span class="fl">118.00</span>  <span class="fl">55.00</span> <span class="fl">110.00</span> <span class="fl">128.00</span> <span class="fl">155.05</span> <span class="fl">122.00</span> <span class="fl">154.00</span>  <span class="fl">94.00</span>  <span class="fl">81.00</span> <span class="fl">116.00</span></span>
+<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a>[<span class="dv">181</span>] <span class="fl">149.00</span>  <span class="fl">91.00</span> <span class="fl">140.00</span> <span class="fl">102.00</span>  <span class="fl">97.00</span> <span class="fl">107.00</span>  <span class="fl">86.00</span>  <span class="fl">96.00</span>  <span class="fl">90.00</span> <span class="fl">104.00</span></span>
+<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a>[<span class="dv">191</span>] <span class="fl">101.00</span> <span class="fl">173.00</span>  <span class="fl">93.00</span>  <span class="fl">96.00</span> <span class="fl">128.00</span> <span class="fl">112.00</span> <span class="fl">133.00</span> <span class="fl">138.00</span> <span class="fl">128.00</span> <span class="fl">126.00</span></span>
+<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a>[<span class="dv">201</span>] <span class="fl">146.00</span> <span class="fl">134.00</span> <span class="fl">130.00</span> <span class="fl">157.00</span> <span class="fl">124.00</span> <span class="fl">132.00</span> <span class="fl">160.00</span>  <span class="fl">97.00</span>  <span class="fl">64.00</span>  <span class="fl">90.00</span></span>
+<span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a>[<span class="dv">211</span>] <span class="fl">123.00</span> <span class="fl">120.00</span> <span class="fl">105.00</span> <span class="fl">139.00</span> <span class="fl">107.00</span> <span class="fl">144.00</span> <span class="fl">144.00</span> <span class="fl">111.00</span> <span class="fl">120.00</span> <span class="fl">116.00</span></span>
+<span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a>[<span class="dv">221</span>] <span class="fl">124.00</span> <span class="fl">107.00</span> <span class="fl">145.00</span> <span class="fl">125.00</span> <span class="fl">141.00</span>  <span class="fl">82.00</span> <span class="fl">122.00</span> <span class="fl">101.00</span> <span class="fl">163.00</span>  <span class="fl">72.00</span></span>
+<span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a>[<span class="dv">231</span>] <span class="fl">114.00</span> <span class="fl">122.00</span> <span class="fl">105.00</span> <span class="fl">120.00</span> <span class="fl">129.00</span> <span class="fl">132.00</span> <span class="fl">108.00</span> <span class="fl">135.00</span> <span class="fl">133.00</span> <span class="fl">118.00</span></span>
+<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a>[<span class="dv">241</span>] <span class="fl">121.00</span>  <span class="fl">94.00</span> <span class="fl">135.00</span> <span class="fl">110.00</span> <span class="fl">100.00</span>  <span class="fl">88.00</span>  <span class="fl">90.00</span> <span class="fl">151.00</span> <span class="fl">101.00</span> <span class="fl">117.00</span></span>
+<span id="cb6-30"><a href="#cb6-30" tabindex="-1"></a>[<span class="dv">251</span>] <span class="fl">156.00</span> <span class="fl">132.00</span> <span class="fl">117.00</span> <span class="fl">122.00</span> <span class="fl">129.00</span>  <span class="fl">81.00</span> <span class="fl">144.00</span> <span class="fl">112.00</span>  <span class="fl">81.00</span> <span class="fl">100.00</span></span>
+<span id="cb6-31"><a href="#cb6-31" tabindex="-1"></a>[<span class="dv">261</span>] <span class="fl">101.00</span> <span class="fl">118.00</span> <span class="fl">132.00</span> <span class="fl">115.00</span> <span class="fl">159.00</span> <span class="fl">129.00</span> <span class="fl">112.00</span> <span class="fl">112.00</span> <span class="fl">105.00</span> <span class="fl">166.00</span></span>
+<span id="cb6-32"><a href="#cb6-32" tabindex="-1"></a>[<span class="dv">271</span>]  <span class="fl">89.00</span> <span class="fl">110.00</span>  <span class="fl">63.00</span>  <span class="fl">86.00</span> <span class="fl">119.00</span> <span class="fl">132.00</span> <span class="fl">130.00</span> <span class="fl">125.00</span> <span class="fl">151.00</span> <span class="fl">158.00</span></span>
+<span id="cb6-33"><a href="#cb6-33" tabindex="-1"></a>[<span class="dv">281</span>] <span class="fl">145.00</span> <span class="fl">105.00</span> <span class="fl">154.00</span> <span class="fl">117.00</span>  <span class="fl">96.00</span> <span class="fl">131.00</span> <span class="fl">113.00</span>  <span class="fl">72.00</span>  <span class="fl">97.00</span> <span class="fl">156.00</span></span>
+<span id="cb6-34"><a href="#cb6-34" tabindex="-1"></a>[<span class="dv">291</span>] <span class="fl">103.00</span>  <span class="fl">89.00</span>  <span class="fl">74.00</span>  <span class="fl">89.00</span>  <span class="fl">99.00</span> <span class="fl">137.00</span> <span class="fl">123.00</span> <span class="fl">104.00</span> <span class="fl">130.00</span>  <span class="fl">96.00</span></span>
+<span id="cb6-35"><a href="#cb6-35" tabindex="-1"></a>[<span class="dv">301</span>]  <span class="fl">99.00</span>  <span class="fl">87.00</span> <span class="fl">110.00</span>  <span class="fl">99.00</span> <span class="fl">134.00</span> <span class="fl">132.00</span> <span class="fl">133.00</span> <span class="fl">120.00</span> <span class="fl">126.00</span>  <span class="fl">80.00</span></span>
+<span id="cb6-36"><a href="#cb6-36" tabindex="-1"></a>[<span class="dv">311</span>] <span class="fl">166.00</span> <span class="fl">132.00</span> <span class="fl">135.00</span>  <span class="fl">54.00</span> <span class="fl">129.00</span> <span class="fl">171.00</span>  <span class="fl">72.00</span> <span class="fl">136.00</span> <span class="fl">130.00</span> <span class="fl">129.00</span></span>
+<span id="cb6-37"><a href="#cb6-37" tabindex="-1"></a>[<span class="dv">321</span>] <span class="fl">152.00</span>  <span class="fl">98.00</span> <span class="fl">139.00</span> <span class="fl">103.00</span> <span class="fl">150.00</span> <span class="fl">104.00</span> <span class="fl">122.00</span> <span class="fl">104.00</span> <span class="fl">111.00</span>  <span class="fl">89.00</span></span>
+<span id="cb6-38"><a href="#cb6-38" tabindex="-1"></a>[<span class="dv">331</span>] <span class="fl">112.00</span> <span class="fl">134.00</span> <span class="fl">104.00</span> <span class="fl">147.00</span>  <span class="fl">83.00</span> <span class="fl">110.00</span> <span class="fl">143.00</span> <span class="fl">102.00</span> <span class="fl">101.00</span> <span class="fl">126.00</span></span>
+<span id="cb6-39"><a href="#cb6-39" tabindex="-1"></a>[<span class="dv">341</span>]  <span class="fl">91.00</span>  <span class="fl">93.00</span> <span class="fl">118.00</span> <span class="fl">121.00</span> <span class="fl">126.00</span> <span class="fl">149.00</span> <span class="fl">125.00</span> <span class="fl">112.00</span> <span class="fl">107.00</span>  <span class="fl">96.00</span></span>
+<span id="cb6-40"><a href="#cb6-40" tabindex="-1"></a>[<span class="dv">351</span>]  <span class="fl">91.00</span> <span class="fl">105.00</span> <span class="fl">122.00</span>  <span class="fl">92.00</span> <span class="fl">145.00</span> <span class="fl">146.00</span> <span class="fl">164.00</span>  <span class="fl">72.00</span> <span class="fl">118.00</span> <span class="fl">130.00</span></span>
+<span id="cb6-41"><a href="#cb6-41" tabindex="-1"></a>[<span class="dv">361</span>] <span class="fl">114.00</span> <span class="fl">104.00</span> <span class="fl">110.00</span> <span class="fl">108.00</span> <span class="fl">131.00</span> <span class="fl">162.00</span> <span class="fl">134.00</span>  <span class="fl">77.00</span>  <span class="fl">79.00</span> <span class="fl">122.00</span></span>
+<span id="cb6-42"><a href="#cb6-42" tabindex="-1"></a>[<span class="dv">371</span>] <span class="fl">119.00</span> <span class="fl">126.00</span>  <span class="fl">98.00</span> <span class="fl">116.00</span> <span class="fl">118.00</span> <span class="fl">124.00</span>  <span class="fl">92.00</span> <span class="fl">125.00</span> <span class="fl">119.00</span> <span class="fl">107.00</span></span>
+<span id="cb6-43"><a href="#cb6-43" tabindex="-1"></a>[<span class="dv">381</span>]  <span class="fl">89.00</span> <span class="fl">151.00</span> <span class="fl">121.00</span>  <span class="fl">68.00</span> <span class="fl">112.00</span> <span class="fl">132.00</span> <span class="fl">160.00</span> <span class="fl">115.00</span>  <span class="fl">78.00</span> <span class="fl">107.00</span></span>
+<span id="cb6-44"><a href="#cb6-44" tabindex="-1"></a>[<span class="dv">391</span>] <span class="fl">111.00</span> <span class="fl">124.00</span> <span class="fl">130.00</span> <span class="fl">120.00</span> <span class="fl">139.00</span> <span class="fl">128.00</span> <span class="fl">120.00</span> <span class="fl">159.00</span>  <span class="fl">95.00</span> <span class="fl">120.00</span></span>
+<span id="cb6-45"><a href="#cb6-45" tabindex="-1"></a><span class="fu">attr</span>(,<span class="st">"method"</span>)</span>
+<span id="cb6-46"><a href="#cb6-46" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"capping"</span></span>
+<span id="cb6-47"><a href="#cb6-47" tabindex="-1"></a><span class="fu">attr</span>(,<span class="st">"var_type"</span>)</span>
+<span id="cb6-48"><a href="#cb6-48" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"numerical"</span></span>
+<span id="cb6-49"><a href="#cb6-49" tabindex="-1"></a><span class="fu">attr</span>(,<span class="st">"outlier_pos"</span>)</span>
+<span id="cb6-50"><a href="#cb6-50" tabindex="-1"></a>[<span class="dv">1</span>]  <span class="dv">43</span> <span class="dv">126</span> <span class="dv">166</span> <span class="dv">175</span> <span class="dv">368</span></span>
+<span id="cb6-51"><a href="#cb6-51" tabindex="-1"></a><span class="fu">attr</span>(,<span class="st">"outliers"</span>)</span>
+<span id="cb6-52"><a href="#cb6-52" tabindex="-1"></a>[<span class="dv">1</span>]  <span class="dv">24</span>  <span class="dv">49</span> <span class="dv">191</span> <span class="dv">185</span>  <span class="dv">53</span></span>
+<span id="cb6-53"><a href="#cb6-53" tabindex="-1"></a><span class="fu">attr</span>(,<span class="st">"type"</span>)</span>
+<span id="cb6-54"><a href="#cb6-54" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"outliers"</span></span>
+<span id="cb6-55"><a href="#cb6-55" tabindex="-1"></a><span class="fu">attr</span>(,<span class="st">"message"</span>)</span>
+<span id="cb6-56"><a href="#cb6-56" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"complete imputation"</span></span>
+<span id="cb6-57"><a href="#cb6-57" tabindex="-1"></a><span class="fu">attr</span>(,<span class="st">"success"</span>)</span>
+<span id="cb6-58"><a href="#cb6-58" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">TRUE</span></span>
+<span id="cb6-59"><a href="#cb6-59" tabindex="-1"></a><span class="fu">attr</span>(,<span class="st">"class"</span>)</span>
+<span id="cb6-60"><a href="#cb6-60" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"imputation"</span> <span class="st">"numeric"</span>   </span>
+<span id="cb6-61"><a href="#cb6-61" tabindex="-1"></a></span>
+<span id="cb6-62"><a href="#cb6-62" tabindex="-1"></a><span class="co"># summary of imputation</span></span>
+<span id="cb6-63"><a href="#cb6-63" tabindex="-1"></a><span class="fu">summary</span>(price)</span>
+<span id="cb6-64"><a href="#cb6-64" tabindex="-1"></a>Impute outliers with capping</span>
+<span id="cb6-65"><a href="#cb6-65" tabindex="-1"></a></span>
+<span id="cb6-66"><a href="#cb6-66" tabindex="-1"></a><span class="sc">*</span> Information of <span class="fu">Imputation</span> (before vs after)</span>
+<span id="cb6-67"><a href="#cb6-67" tabindex="-1"></a>                    Original     Imputation  </span>
+<span id="cb6-68"><a href="#cb6-68" tabindex="-1"></a>described_variables <span class="st">"value"</span>      <span class="st">"value"</span>     </span>
+<span id="cb6-69"><a href="#cb6-69" tabindex="-1"></a>n                   <span class="st">"400"</span>        <span class="st">"400"</span>       </span>
+<span id="cb6-70"><a href="#cb6-70" tabindex="-1"></a>na                  <span class="st">"0"</span>          <span class="st">"0"</span>         </span>
+<span id="cb6-71"><a href="#cb6-71" tabindex="-1"></a>mean                <span class="st">"115.7950"</span>   <span class="st">"115.8927"</span>  </span>
+<span id="cb6-72"><a href="#cb6-72" tabindex="-1"></a>sd                  <span class="st">"23.67666"</span>   <span class="st">"22.61092"</span>  </span>
+<span id="cb6-73"><a href="#cb6-73" tabindex="-1"></a>se_mean             <span class="st">"1.183833"</span>   <span class="st">"1.130546"</span>  </span>
+<span id="cb6-74"><a href="#cb6-74" tabindex="-1"></a>IQR                 <span class="st">"31"</span>         <span class="st">"31"</span>        </span>
+<span id="cb6-75"><a href="#cb6-75" tabindex="-1"></a>skewness            <span class="st">"-0.1252862"</span> <span class="st">"-0.0461621"</span></span>
+<span id="cb6-76"><a href="#cb6-76" tabindex="-1"></a>kurtosis            <span class="st">" 0.4518850"</span> <span class="st">"-0.3030578"</span></span>
+<span id="cb6-77"><a href="#cb6-77" tabindex="-1"></a>p00                 <span class="st">"24"</span>         <span class="st">"54"</span>        </span>
+<span id="cb6-78"><a href="#cb6-78" tabindex="-1"></a>p01                 <span class="st">"54.99"</span>      <span class="st">"67.96"</span>     </span>
+<span id="cb6-79"><a href="#cb6-79" tabindex="-1"></a>p05                 <span class="st">"77"</span>         <span class="st">"77"</span>        </span>
+<span id="cb6-80"><a href="#cb6-80" tabindex="-1"></a>p10                 <span class="st">"87"</span>         <span class="st">"87"</span>        </span>
+<span id="cb6-81"><a href="#cb6-81" tabindex="-1"></a>p20                 <span class="st">"96.8"</span>       <span class="st">"96.8"</span>      </span>
+<span id="cb6-82"><a href="#cb6-82" tabindex="-1"></a>p25                 <span class="st">"100"</span>        <span class="st">"100"</span>       </span>
+<span id="cb6-83"><a href="#cb6-83" tabindex="-1"></a>p30                 <span class="st">"104"</span>        <span class="st">"104"</span>       </span>
+<span id="cb6-84"><a href="#cb6-84" tabindex="-1"></a>p40                 <span class="st">"110"</span>        <span class="st">"110"</span>       </span>
+<span id="cb6-85"><a href="#cb6-85" tabindex="-1"></a>p50                 <span class="st">"117"</span>        <span class="st">"117"</span>       </span>
+<span id="cb6-86"><a href="#cb6-86" tabindex="-1"></a>p60                 <span class="st">"122"</span>        <span class="st">"122"</span>       </span>
+<span id="cb6-87"><a href="#cb6-87" tabindex="-1"></a>p70                 <span class="st">"128.3"</span>      <span class="st">"128.3"</span>     </span>
+<span id="cb6-88"><a href="#cb6-88" tabindex="-1"></a>p75                 <span class="st">"131"</span>        <span class="st">"131"</span>       </span>
+<span id="cb6-89"><a href="#cb6-89" tabindex="-1"></a>p80                 <span class="st">"134"</span>        <span class="st">"134"</span>       </span>
+<span id="cb6-90"><a href="#cb6-90" tabindex="-1"></a>p90                 <span class="st">"146"</span>        <span class="st">"146"</span>       </span>
+<span id="cb6-91"><a href="#cb6-91" tabindex="-1"></a>p95                 <span class="st">"155.0500"</span>   <span class="st">"155.0025"</span>  </span>
+<span id="cb6-92"><a href="#cb6-92" tabindex="-1"></a>p99                 <span class="st">"166.05"</span>     <span class="st">"164.02"</span>    </span>
+<span id="cb6-93"><a href="#cb6-93" tabindex="-1"></a>p100                <span class="st">"191"</span>        <span class="st">"173"</span>       </span>
+<span id="cb6-94"><a href="#cb6-94" tabindex="-1"></a></span>
+<span id="cb6-95"><a href="#cb6-95" tabindex="-1"></a><span class="co"># viz of imputation</span></span>
+<span id="cb6-96"><a href="#cb6-96" tabindex="-1"></a><span class="fu">plot</span>(price)</span></code></pre></div>
+<p><img src="transformation_files/figure-html/imputate_outlier-1.png" alt="Visualization of outlier imputation" width="600px" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="collaboration-with-dplyr-1">Collaboration with dplyr<a class="anchor" aria-label="anchor" href="#collaboration-with-dplyr-1"></a>
@@ -537,17 +535,17 @@ variable <code>Price</code> as the “capping” method, as follows.
 variable and then calculates the arithmetic mean for each level of
 <code>US</code>. In this case, <code>dplyr</code> is used and is easily
 interpreted logically using pipes.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># The mean before and after the imputation of the Price variable</span></span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>carseats <span class="sc">%&gt;%</span></span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Price_imp =</span> <span class="fu">imputate_outlier</span>(carseats, Price, <span class="at">method =</span> <span class="st">"capping"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  <span class="fu">group_by</span>(US) <span class="sc">%&gt;%</span></span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">orig =</span> <span class="fu">mean</span>(Price, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>    <span class="at">imputation =</span> <span class="fu">mean</span>(Price_imp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="co"># A tibble: 2 × 3 [39m</span></span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>  US     orig imputation</span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>   [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>fct<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m  [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m       [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m</span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m1 [<span class="dv">39</span>m No     <span class="fl">114.</span>       <span class="fl">114.</span></span>
-<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m2 [<span class="dv">39</span>m Yes    <span class="fl">117.</span>       <span class="fl">117.</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># The mean before and after the imputation of the Price variable</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>carseats <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Price_imp =</span> <span class="fu">imputate_outlier</span>(carseats, Price, <span class="at">method =</span> <span class="st">"capping"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>  <span class="fu">group_by</span>(US) <span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">orig =</span> <span class="fu">mean</span>(Price, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>    <span class="at">imputation =</span> <span class="fu">mean</span>(Price_imp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="co"># A tibble: 2 × 3 [39m</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>  US     orig imputation</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>   [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>fct<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m  [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m       [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m1 [<span class="dv">39</span>m No     <span class="fl">114.</span>       <span class="fl">114.</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m2 [<span class="dv">39</span>m Yes    <span class="fl">117.</span>       <span class="fl">117.</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -582,13 +580,13 @@ contain 0.</li>
 <h3 id="standardization-with-transform">Standardization with <code>transform()</code><a class="anchor" aria-label="anchor" href="#standardization-with-transform"></a>
 </h3>
 <p>Use the methods “zscore” and “minmax” to perform standardization.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">carseats</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Income_minmax <span class="op">=</span> <span class="fu"><a href="../reference/transform.html">transform</a></span><span class="op">(</span><span class="va">carseats</span><span class="op">$</span><span class="va">Income</span>, method <span class="op">=</span> <span class="st">"minmax"</span><span class="op">)</span>,</span>
 <span>    Sales_minmax <span class="op">=</span> <span class="fu"><a href="../reference/transform.html">transform</a></span><span class="op">(</span><span class="va">carseats</span><span class="op">$</span><span class="va">Sales</span>, method <span class="op">=</span> <span class="st">"minmax"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Income_minmax</span>, <span class="va">Sales_minmax</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html" class="external-link">boxplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="transformation_files/figure-html/standardization-1.png" width="600px" style="display: block; margin: auto;"></p>
+<p><img src="transformation_files/figure-html/standardization-1.png" alt="Boxplot of standardized data" width="600px" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="resolving-skewness-data-with-transform">Resolving Skewness data with <code>transform()</code><a class="anchor" aria-label="anchor" href="#resolving-skewness-data-with-transform"></a>
@@ -596,110 +594,110 @@ contain 0.</li>
 <p><code><a href="../reference/find_skewness.html">find_skewness()</a></code> searches for variables with skewed data.
 This function finds data skewed by search conditions and calculates
 skewness.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co"># find index of skewed variables</span></span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="fu">find_skewness</span>(carseats)</span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">4</span></span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co"># find names of skewed variables</span></span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="fu">find_skewness</span>(carseats, <span class="at">index =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"Advertising"</span></span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co"># compute the skewness</span></span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="fu">find_skewness</span>(carseats, <span class="at">value =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>      Sales   CompPrice      Income Advertising  Population       Price </span>
-<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a>      <span class="fl">0.185</span>      <span class="sc">-</span><span class="fl">0.043</span>       <span class="fl">0.045</span>       <span class="fl">0.637</span>      <span class="sc">-</span><span class="fl">0.051</span>      <span class="sc">-</span><span class="fl">0.125</span> </span>
-<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a>        Age   Education </span>
-<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a>     <span class="sc">-</span><span class="fl">0.077</span>       <span class="fl">0.044</span> </span>
-<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a></span>
-<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="co"># compute the skewness &amp; filtering with threshold</span></span>
-<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a><span class="fu">find_skewness</span>(carseats, <span class="at">value =</span> <span class="cn">TRUE</span>, <span class="at">thres =</span> <span class="fl">0.1</span>)</span>
-<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a>      Sales Advertising       Price </span>
-<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a>      <span class="fl">0.185</span>       <span class="fl">0.637</span>      <span class="sc">-</span><span class="fl">0.125</span> </span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># find index of skewed variables</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="fu">find_skewness</span>(carseats)</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">4</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co"># find names of skewed variables</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="fu">find_skewness</span>(carseats, <span class="at">index =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"Advertising"</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co"># compute the skewness</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="fu">find_skewness</span>(carseats, <span class="at">value =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>      Sales   CompPrice      Income Advertising  Population       Price </span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a>      <span class="fl">0.185</span>      <span class="sc">-</span><span class="fl">0.043</span>       <span class="fl">0.045</span>       <span class="fl">0.637</span>      <span class="sc">-</span><span class="fl">0.051</span>      <span class="sc">-</span><span class="fl">0.125</span> </span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a>        Age   Education </span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>     <span class="sc">-</span><span class="fl">0.077</span>       <span class="fl">0.044</span> </span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="co"># compute the skewness &amp; filtering with threshold</span></span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a><span class="fu">find_skewness</span>(carseats, <span class="at">value =</span> <span class="cn">TRUE</span>, <span class="at">thres =</span> <span class="fl">0.1</span>)</span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a>      Sales Advertising       Price </span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a>      <span class="fl">0.185</span>       <span class="fl">0.637</span>      <span class="sc">-</span><span class="fl">0.125</span> </span></code></pre></div>
 <p>The skewness of <code>Advertising</code> is 0.637. This means that
 the distribution of data is somewhat inclined to the left. So, for
 normal distribution, use <code><a href="../reference/transform.html">transform()</a></code> to convert to the
 “log” method as follows. <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> summarizes
 transformation information, and <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> visualizes
 transformation information.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>Advertising_log <span class="ot">&lt;-</span> <span class="fu">transform</span>(carseats<span class="sc">$</span>Advertising, <span class="at">method =</span> <span class="st">"log"</span>)</span>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>Advertising_log <span class="ot">&lt;-</span> <span class="fu">transform</span>(carseats<span class="sc">$</span>Advertising, <span class="at">method =</span> <span class="st">"log"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="co"># result of transformation</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="fu">head</span>(Advertising_log)</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">2.397895</span> <span class="fl">2.772589</span> <span class="fl">2.302585</span> <span class="fl">1.386294</span> <span class="fl">1.098612</span> <span class="fl">2.564949</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co"># summary of transformation</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="fu">summary</span>(Advertising_log)</span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="sc">*</span> Resolving Skewness with log</span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="sc">*</span> Information of <span class="fu">Transformation</span> (before vs after)</span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>            Original Transformation</span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a>n        <span class="fl">400.0000000</span>    <span class="fl">400.0000000</span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a>na         <span class="fl">0.0000000</span>      <span class="fl">0.0000000</span></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a>mean       <span class="fl">6.6350000</span>           <span class="sc">-</span><span class="cn">Inf</span></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a>sd         <span class="fl">6.6503642</span>            <span class="cn">NaN</span></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a>se_mean    <span class="fl">0.3325182</span>            <span class="cn">NaN</span></span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a>IQR       <span class="fl">12.0000000</span>            <span class="cn">Inf</span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a>skewness   <span class="fl">0.6395858</span>            <span class="cn">NaN</span></span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a>kurtosis  <span class="sc">-</span><span class="fl">0.5451178</span>            <span class="cn">NaN</span></span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a>p00        <span class="fl">0.0000000</span>           <span class="sc">-</span><span class="cn">Inf</span></span>
+<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a>p01        <span class="fl">0.0000000</span>           <span class="sc">-</span><span class="cn">Inf</span></span>
+<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a>p05        <span class="fl">0.0000000</span>           <span class="sc">-</span><span class="cn">Inf</span></span>
+<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a>p10        <span class="fl">0.0000000</span>           <span class="sc">-</span><span class="cn">Inf</span></span>
+<span id="cb10-24"><a href="#cb10-24" tabindex="-1"></a>p20        <span class="fl">0.0000000</span>           <span class="sc">-</span><span class="cn">Inf</span></span>
+<span id="cb10-25"><a href="#cb10-25" tabindex="-1"></a>p25        <span class="fl">0.0000000</span>           <span class="sc">-</span><span class="cn">Inf</span></span>
+<span id="cb10-26"><a href="#cb10-26" tabindex="-1"></a>p30        <span class="fl">0.0000000</span>           <span class="sc">-</span><span class="cn">Inf</span></span>
+<span id="cb10-27"><a href="#cb10-27" tabindex="-1"></a>p40        <span class="fl">2.0000000</span>      <span class="fl">0.6931472</span></span>
+<span id="cb10-28"><a href="#cb10-28" tabindex="-1"></a>p50        <span class="fl">5.0000000</span>      <span class="fl">1.6094379</span></span>
+<span id="cb10-29"><a href="#cb10-29" tabindex="-1"></a>p60        <span class="fl">8.4000000</span>      <span class="fl">2.1265548</span></span>
+<span id="cb10-30"><a href="#cb10-30" tabindex="-1"></a>p70       <span class="fl">11.0000000</span>      <span class="fl">2.3978953</span></span>
+<span id="cb10-31"><a href="#cb10-31" tabindex="-1"></a>p75       <span class="fl">12.0000000</span>      <span class="fl">2.4849066</span></span>
+<span id="cb10-32"><a href="#cb10-32" tabindex="-1"></a>p80       <span class="fl">13.0000000</span>      <span class="fl">2.5649494</span></span>
+<span id="cb10-33"><a href="#cb10-33" tabindex="-1"></a>p90       <span class="fl">16.0000000</span>      <span class="fl">2.7725887</span></span>
+<span id="cb10-34"><a href="#cb10-34" tabindex="-1"></a>p95       <span class="fl">19.0000000</span>      <span class="fl">2.9444390</span></span>
+<span id="cb10-35"><a href="#cb10-35" tabindex="-1"></a>p99       <span class="fl">23.0100000</span>      <span class="fl">3.1359198</span></span>
+<span id="cb10-36"><a href="#cb10-36" tabindex="-1"></a>p100      <span class="fl">29.0000000</span>      <span class="fl">3.3672958</span></span>
+<span id="cb10-37"><a href="#cb10-37" tabindex="-1"></a><span class="co"># viz of transformation</span></span>
+<span id="cb10-38"><a href="#cb10-38" tabindex="-1"></a><span class="fu">plot</span>(Advertising_log)</span></code></pre></div>
+<p><img src="transformation_files/figure-html/resolving2-1.png" alt="Visualization of log transformation" width="600px" style="display: block; margin: auto;"></p>
+<p>The raw data seems to contain 0, as there is a -Inf in the log
+converted value. So this time, convert it to “log+1”.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>Advertising_log <span class="ot">&lt;-</span> <span class="fu">transform</span>(carseats<span class="sc">$</span>Advertising, <span class="at">method =</span> <span class="st">"log+1"</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="co"># result of transformation</span></span>
 <span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="fu">head</span>(Advertising_log)</span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">2.397895</span> <span class="fl">2.772589</span> <span class="fl">2.302585</span> <span class="fl">1.386294</span> <span class="fl">1.098612</span> <span class="fl">2.564949</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">2.484907</span> <span class="fl">2.833213</span> <span class="fl">2.397895</span> <span class="fl">1.609438</span> <span class="fl">1.386294</span> <span class="fl">2.639057</span></span>
 <span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="co"># summary of transformation</span></span>
 <span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="fu">summary</span>(Advertising_log)</span>
-<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a><span class="sc">*</span> Resolving Skewness with log</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a><span class="sc">*</span> Resolving Skewness with log<span class="sc">+</span><span class="dv">1</span></span>
 <span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a></span>
 <span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="sc">*</span> Information of <span class="fu">Transformation</span> (before vs after)</span>
 <span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a>            Original Transformation</span>
-<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>n        <span class="fl">400.0000000</span>    <span class="fl">400.0000000</span></span>
-<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a>na         <span class="fl">0.0000000</span>      <span class="fl">0.0000000</span></span>
-<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a>mean       <span class="fl">6.6350000</span>           <span class="sc">-</span><span class="cn">Inf</span></span>
-<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a>sd         <span class="fl">6.6503642</span>            <span class="cn">NaN</span></span>
-<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a>se_mean    <span class="fl">0.3325182</span>            <span class="cn">NaN</span></span>
-<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a>IQR       <span class="fl">12.0000000</span>            <span class="cn">Inf</span></span>
-<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a>skewness   <span class="fl">0.6395858</span>            <span class="cn">NaN</span></span>
-<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a>kurtosis  <span class="sc">-</span><span class="fl">0.5451178</span>            <span class="cn">NaN</span></span>
-<span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a>p00        <span class="fl">0.0000000</span>           <span class="sc">-</span><span class="cn">Inf</span></span>
-<span id="cb11-21"><a href="#cb11-21" tabindex="-1"></a>p01        <span class="fl">0.0000000</span>           <span class="sc">-</span><span class="cn">Inf</span></span>
-<span id="cb11-22"><a href="#cb11-22" tabindex="-1"></a>p05        <span class="fl">0.0000000</span>           <span class="sc">-</span><span class="cn">Inf</span></span>
-<span id="cb11-23"><a href="#cb11-23" tabindex="-1"></a>p10        <span class="fl">0.0000000</span>           <span class="sc">-</span><span class="cn">Inf</span></span>
-<span id="cb11-24"><a href="#cb11-24" tabindex="-1"></a>p20        <span class="fl">0.0000000</span>           <span class="sc">-</span><span class="cn">Inf</span></span>
-<span id="cb11-25"><a href="#cb11-25" tabindex="-1"></a>p25        <span class="fl">0.0000000</span>           <span class="sc">-</span><span class="cn">Inf</span></span>
-<span id="cb11-26"><a href="#cb11-26" tabindex="-1"></a>p30        <span class="fl">0.0000000</span>           <span class="sc">-</span><span class="cn">Inf</span></span>
-<span id="cb11-27"><a href="#cb11-27" tabindex="-1"></a>p40        <span class="fl">2.0000000</span>      <span class="fl">0.6931472</span></span>
-<span id="cb11-28"><a href="#cb11-28" tabindex="-1"></a>p50        <span class="fl">5.0000000</span>      <span class="fl">1.6094379</span></span>
-<span id="cb11-29"><a href="#cb11-29" tabindex="-1"></a>p60        <span class="fl">8.4000000</span>      <span class="fl">2.1265548</span></span>
-<span id="cb11-30"><a href="#cb11-30" tabindex="-1"></a>p70       <span class="fl">11.0000000</span>      <span class="fl">2.3978953</span></span>
-<span id="cb11-31"><a href="#cb11-31" tabindex="-1"></a>p75       <span class="fl">12.0000000</span>      <span class="fl">2.4849066</span></span>
-<span id="cb11-32"><a href="#cb11-32" tabindex="-1"></a>p80       <span class="fl">13.0000000</span>      <span class="fl">2.5649494</span></span>
-<span id="cb11-33"><a href="#cb11-33" tabindex="-1"></a>p90       <span class="fl">16.0000000</span>      <span class="fl">2.7725887</span></span>
-<span id="cb11-34"><a href="#cb11-34" tabindex="-1"></a>p95       <span class="fl">19.0000000</span>      <span class="fl">2.9444390</span></span>
-<span id="cb11-35"><a href="#cb11-35" tabindex="-1"></a>p99       <span class="fl">23.0100000</span>      <span class="fl">3.1359198</span></span>
-<span id="cb11-36"><a href="#cb11-36" tabindex="-1"></a>p100      <span class="fl">29.0000000</span>      <span class="fl">3.3672958</span></span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>n        <span class="fl">400.0000000</span>   <span class="fl">400.00000000</span></span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a>na         <span class="fl">0.0000000</span>     <span class="fl">0.00000000</span></span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a>mean       <span class="fl">6.6350000</span>     <span class="fl">1.46247709</span></span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a>sd         <span class="fl">6.6503642</span>     <span class="fl">1.19436323</span></span>
+<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a>se_mean    <span class="fl">0.3325182</span>     <span class="fl">0.05971816</span></span>
+<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a>IQR       <span class="fl">12.0000000</span>     <span class="fl">2.56494936</span></span>
+<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a>skewness   <span class="fl">0.6395858</span>    <span class="sc">-</span><span class="fl">0.19852549</span></span>
+<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a>kurtosis  <span class="sc">-</span><span class="fl">0.5451178</span>    <span class="sc">-</span><span class="fl">1.66342876</span></span>
+<span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a>p00        <span class="fl">0.0000000</span>     <span class="fl">0.00000000</span></span>
+<span id="cb11-21"><a href="#cb11-21" tabindex="-1"></a>p01        <span class="fl">0.0000000</span>     <span class="fl">0.00000000</span></span>
+<span id="cb11-22"><a href="#cb11-22" tabindex="-1"></a>p05        <span class="fl">0.0000000</span>     <span class="fl">0.00000000</span></span>
+<span id="cb11-23"><a href="#cb11-23" tabindex="-1"></a>p10        <span class="fl">0.0000000</span>     <span class="fl">0.00000000</span></span>
+<span id="cb11-24"><a href="#cb11-24" tabindex="-1"></a>p20        <span class="fl">0.0000000</span>     <span class="fl">0.00000000</span></span>
+<span id="cb11-25"><a href="#cb11-25" tabindex="-1"></a>p25        <span class="fl">0.0000000</span>     <span class="fl">0.00000000</span></span>
+<span id="cb11-26"><a href="#cb11-26" tabindex="-1"></a>p30        <span class="fl">0.0000000</span>     <span class="fl">0.00000000</span></span>
+<span id="cb11-27"><a href="#cb11-27" tabindex="-1"></a>p40        <span class="fl">2.0000000</span>     <span class="fl">1.09861229</span></span>
+<span id="cb11-28"><a href="#cb11-28" tabindex="-1"></a>p50        <span class="fl">5.0000000</span>     <span class="fl">1.79175947</span></span>
+<span id="cb11-29"><a href="#cb11-29" tabindex="-1"></a>p60        <span class="fl">8.4000000</span>     <span class="fl">2.23936878</span></span>
+<span id="cb11-30"><a href="#cb11-30" tabindex="-1"></a>p70       <span class="fl">11.0000000</span>     <span class="fl">2.48490665</span></span>
+<span id="cb11-31"><a href="#cb11-31" tabindex="-1"></a>p75       <span class="fl">12.0000000</span>     <span class="fl">2.56494936</span></span>
+<span id="cb11-32"><a href="#cb11-32" tabindex="-1"></a>p80       <span class="fl">13.0000000</span>     <span class="fl">2.63905733</span></span>
+<span id="cb11-33"><a href="#cb11-33" tabindex="-1"></a>p90       <span class="fl">16.0000000</span>     <span class="fl">2.83321334</span></span>
+<span id="cb11-34"><a href="#cb11-34" tabindex="-1"></a>p95       <span class="fl">19.0000000</span>     <span class="fl">2.99573227</span></span>
+<span id="cb11-35"><a href="#cb11-35" tabindex="-1"></a>p99       <span class="fl">23.0100000</span>     <span class="fl">3.17846205</span></span>
+<span id="cb11-36"><a href="#cb11-36" tabindex="-1"></a>p100      <span class="fl">29.0000000</span>     <span class="fl">3.40119738</span></span>
 <span id="cb11-37"><a href="#cb11-37" tabindex="-1"></a><span class="co"># viz of transformation</span></span>
-<span id="cb11-38"><a href="#cb11-38" tabindex="-1"></a><span class="fu">plot</span>(Advertising_log)</span></code></pre></div>
-<p><img src="transformation_files/figure-html/resolving2-1.png" width="600px" style="display: block; margin: auto;"></p>
-<p>The raw data seems to contain 0, as there is a -Inf in the log
-converted value. So this time, convert it to “log+1”.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>Advertising_log <span class="ot">&lt;-</span> <span class="fu">transform</span>(carseats<span class="sc">$</span>Advertising, <span class="at">method =</span> <span class="st">"log+1"</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="co"># result of transformation</span></span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="fu">head</span>(Advertising_log)</span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">2.484907</span> <span class="fl">2.833213</span> <span class="fl">2.397895</span> <span class="fl">1.609438</span> <span class="fl">1.386294</span> <span class="fl">2.639057</span></span>
-<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="co"># summary of transformation</span></span>
-<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="fu">summary</span>(Advertising_log)</span>
-<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="sc">*</span> Resolving Skewness with log<span class="sc">+</span><span class="dv">1</span></span>
-<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a></span>
-<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="sc">*</span> Information of <span class="fu">Transformation</span> (before vs after)</span>
-<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a>            Original Transformation</span>
-<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a>n        <span class="fl">400.0000000</span>   <span class="fl">400.00000000</span></span>
-<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a>na         <span class="fl">0.0000000</span>     <span class="fl">0.00000000</span></span>
-<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a>mean       <span class="fl">6.6350000</span>     <span class="fl">1.46247709</span></span>
-<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a>sd         <span class="fl">6.6503642</span>     <span class="fl">1.19436323</span></span>
-<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a>se_mean    <span class="fl">0.3325182</span>     <span class="fl">0.05971816</span></span>
-<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a>IQR       <span class="fl">12.0000000</span>     <span class="fl">2.56494936</span></span>
-<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a>skewness   <span class="fl">0.6395858</span>    <span class="sc">-</span><span class="fl">0.19852549</span></span>
-<span id="cb12-19"><a href="#cb12-19" tabindex="-1"></a>kurtosis  <span class="sc">-</span><span class="fl">0.5451178</span>    <span class="sc">-</span><span class="fl">1.66342876</span></span>
-<span id="cb12-20"><a href="#cb12-20" tabindex="-1"></a>p00        <span class="fl">0.0000000</span>     <span class="fl">0.00000000</span></span>
-<span id="cb12-21"><a href="#cb12-21" tabindex="-1"></a>p01        <span class="fl">0.0000000</span>     <span class="fl">0.00000000</span></span>
-<span id="cb12-22"><a href="#cb12-22" tabindex="-1"></a>p05        <span class="fl">0.0000000</span>     <span class="fl">0.00000000</span></span>
-<span id="cb12-23"><a href="#cb12-23" tabindex="-1"></a>p10        <span class="fl">0.0000000</span>     <span class="fl">0.00000000</span></span>
-<span id="cb12-24"><a href="#cb12-24" tabindex="-1"></a>p20        <span class="fl">0.0000000</span>     <span class="fl">0.00000000</span></span>
-<span id="cb12-25"><a href="#cb12-25" tabindex="-1"></a>p25        <span class="fl">0.0000000</span>     <span class="fl">0.00000000</span></span>
-<span id="cb12-26"><a href="#cb12-26" tabindex="-1"></a>p30        <span class="fl">0.0000000</span>     <span class="fl">0.00000000</span></span>
-<span id="cb12-27"><a href="#cb12-27" tabindex="-1"></a>p40        <span class="fl">2.0000000</span>     <span class="fl">1.09861229</span></span>
-<span id="cb12-28"><a href="#cb12-28" tabindex="-1"></a>p50        <span class="fl">5.0000000</span>     <span class="fl">1.79175947</span></span>
-<span id="cb12-29"><a href="#cb12-29" tabindex="-1"></a>p60        <span class="fl">8.4000000</span>     <span class="fl">2.23936878</span></span>
-<span id="cb12-30"><a href="#cb12-30" tabindex="-1"></a>p70       <span class="fl">11.0000000</span>     <span class="fl">2.48490665</span></span>
-<span id="cb12-31"><a href="#cb12-31" tabindex="-1"></a>p75       <span class="fl">12.0000000</span>     <span class="fl">2.56494936</span></span>
-<span id="cb12-32"><a href="#cb12-32" tabindex="-1"></a>p80       <span class="fl">13.0000000</span>     <span class="fl">2.63905733</span></span>
-<span id="cb12-33"><a href="#cb12-33" tabindex="-1"></a>p90       <span class="fl">16.0000000</span>     <span class="fl">2.83321334</span></span>
-<span id="cb12-34"><a href="#cb12-34" tabindex="-1"></a>p95       <span class="fl">19.0000000</span>     <span class="fl">2.99573227</span></span>
-<span id="cb12-35"><a href="#cb12-35" tabindex="-1"></a>p99       <span class="fl">23.0100000</span>     <span class="fl">3.17846205</span></span>
-<span id="cb12-36"><a href="#cb12-36" tabindex="-1"></a>p100      <span class="fl">29.0000000</span>     <span class="fl">3.40119738</span></span>
-<span id="cb12-37"><a href="#cb12-37" tabindex="-1"></a><span class="co"># viz of transformation</span></span>
-<span id="cb12-38"><a href="#cb12-38" tabindex="-1"></a><span class="co"># plot(Advertising_log)</span></span></code></pre></div>
+<span id="cb11-38"><a href="#cb11-38" tabindex="-1"></a><span class="co"># plot(Advertising_log)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -721,127 +719,127 @@ frequencies</li>
 </ul>
 <p>Here are some examples of bin <code>Income</code> using
 <code><a href="../reference/binning.html">binning()</a></code>.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># Binning the carat variable. the default type argument is "quantile"</span></span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>bin <span class="ot">&lt;-</span> <span class="fu">binning</span>(carseats<span class="sc">$</span>Income)</span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="co"># Print bins class object</span></span>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co"># Binning the carat variable. the default type argument is "quantile"</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>bin <span class="ot">&lt;-</span> <span class="fu">binning</span>(carseats<span class="sc">$</span>Income)</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="co"># Print bins class object</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>bin</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>binned type<span class="sc">:</span> quantile</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>number of bins<span class="sc">:</span> <span class="dv">10</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>x</span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>        [<span class="dv">21</span>,<span class="dv">30</span>]         (<span class="dv">30</span>,<span class="dv">39</span>]         (<span class="dv">39</span>,<span class="dv">48</span>]         (<span class="dv">48</span>,<span class="dv">62</span>]         (<span class="dv">62</span>,<span class="dv">69</span>] </span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>             <span class="dv">40</span>              <span class="dv">37</span>              <span class="dv">38</span>              <span class="dv">40</span>              <span class="dv">42</span> </span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a>        (<span class="dv">69</span>,<span class="dv">78</span>]   (<span class="dv">78</span>,<span class="fl">86.56667</span>] (<span class="fl">86.56667</span>,<span class="fl">96.6</span>] (<span class="fl">96.6</span>,<span class="fl">108.6333</span>]  (<span class="fl">108.6333</span>,<span class="dv">120</span>] </span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a>             <span class="dv">33</span>              <span class="dv">36</span>              <span class="dv">38</span>              <span class="dv">38</span>              <span class="dv">38</span> </span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a>           <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> </span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a>             <span class="dv">20</span> </span>
+<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a><span class="co"># Summarize bins class object</span></span>
+<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a><span class="fu">summary</span>(bin)</span>
+<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a>            levels freq   rate</span>
+<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a><span class="dv">1</span>          [<span class="dv">21</span>,<span class="dv">30</span>]   <span class="dv">40</span> <span class="fl">0.1000</span></span>
+<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a><span class="dv">2</span>          (<span class="dv">30</span>,<span class="dv">39</span>]   <span class="dv">37</span> <span class="fl">0.0925</span></span>
+<span id="cb12-19"><a href="#cb12-19" tabindex="-1"></a><span class="dv">3</span>          (<span class="dv">39</span>,<span class="dv">48</span>]   <span class="dv">38</span> <span class="fl">0.0950</span></span>
+<span id="cb12-20"><a href="#cb12-20" tabindex="-1"></a><span class="dv">4</span>          (<span class="dv">48</span>,<span class="dv">62</span>]   <span class="dv">40</span> <span class="fl">0.1000</span></span>
+<span id="cb12-21"><a href="#cb12-21" tabindex="-1"></a><span class="dv">5</span>          (<span class="dv">62</span>,<span class="dv">69</span>]   <span class="dv">42</span> <span class="fl">0.1050</span></span>
+<span id="cb12-22"><a href="#cb12-22" tabindex="-1"></a><span class="dv">6</span>          (<span class="dv">69</span>,<span class="dv">78</span>]   <span class="dv">33</span> <span class="fl">0.0825</span></span>
+<span id="cb12-23"><a href="#cb12-23" tabindex="-1"></a><span class="dv">7</span>    (<span class="dv">78</span>,<span class="fl">86.56667</span>]   <span class="dv">36</span> <span class="fl">0.0900</span></span>
+<span id="cb12-24"><a href="#cb12-24" tabindex="-1"></a><span class="dv">8</span>  (<span class="fl">86.56667</span>,<span class="fl">96.6</span>]   <span class="dv">38</span> <span class="fl">0.0950</span></span>
+<span id="cb12-25"><a href="#cb12-25" tabindex="-1"></a><span class="dv">9</span>  (<span class="fl">96.6</span>,<span class="fl">108.6333</span>]   <span class="dv">38</span> <span class="fl">0.0950</span></span>
+<span id="cb12-26"><a href="#cb12-26" tabindex="-1"></a><span class="dv">10</span>  (<span class="fl">108.6333</span>,<span class="dv">120</span>]   <span class="dv">38</span> <span class="fl">0.0950</span></span>
+<span id="cb12-27"><a href="#cb12-27" tabindex="-1"></a><span class="dv">11</span>            <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span>   <span class="dv">20</span> <span class="fl">0.0500</span></span>
+<span id="cb12-28"><a href="#cb12-28" tabindex="-1"></a><span class="co"># Plot bins class object</span></span>
+<span id="cb12-29"><a href="#cb12-29" tabindex="-1"></a><span class="fu">plot</span>(bin)</span>
+<span id="cb12-30"><a href="#cb12-30" tabindex="-1"></a> [<span class="dv">1</span>m [<span class="dv">22</span>mDon<span class="st">'t know how to automatically pick scale for object of type  [34m&lt;table&gt; [39m.</span></span>
+<span id="cb12-31"><a href="#cb12-31" tabindex="-1"></a><span class="st">Defaulting to continuous.</span></span></code></pre></div>
+<p><img src="transformation_files/figure-html/binning-1.png" alt="Visualization of binning" width="600px" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># Using labels argument</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>bin <span class="ot">&lt;-</span> <span class="fu">binning</span>(carseats<span class="sc">$</span>Income, <span class="at">nbins =</span> <span class="dv">4</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>              <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"LQ1"</span>, <span class="st">"UQ1"</span>, <span class="st">"LQ3"</span>, <span class="st">"UQ3"</span>))</span>
 <span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>bin</span>
 <span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>binned type<span class="sc">:</span> quantile</span>
-<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>number of bins<span class="sc">:</span> <span class="dv">10</span></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>number of bins<span class="sc">:</span> <span class="dv">4</span></span>
 <span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>x</span>
-<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a>        [<span class="dv">21</span>,<span class="dv">30</span>]         (<span class="dv">30</span>,<span class="dv">39</span>]         (<span class="dv">39</span>,<span class="dv">48</span>]         (<span class="dv">48</span>,<span class="dv">62</span>]         (<span class="dv">62</span>,<span class="dv">69</span>] </span>
-<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a>             <span class="dv">40</span>              <span class="dv">37</span>              <span class="dv">38</span>              <span class="dv">40</span>              <span class="dv">42</span> </span>
-<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a>        (<span class="dv">69</span>,<span class="dv">78</span>]   (<span class="dv">78</span>,<span class="fl">86.56667</span>] (<span class="fl">86.56667</span>,<span class="fl">96.6</span>] (<span class="fl">96.6</span>,<span class="fl">108.6333</span>]  (<span class="fl">108.6333</span>,<span class="dv">120</span>] </span>
-<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a>             <span class="dv">33</span>              <span class="dv">36</span>              <span class="dv">38</span>              <span class="dv">38</span>              <span class="dv">38</span> </span>
-<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a>           <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> </span>
-<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a>             <span class="dv">20</span> </span>
-<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a><span class="co"># Summarize bins class object</span></span>
-<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a><span class="fu">summary</span>(bin)</span>
-<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a>            levels freq   rate</span>
-<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a><span class="dv">1</span>          [<span class="dv">21</span>,<span class="dv">30</span>]   <span class="dv">40</span> <span class="fl">0.1000</span></span>
-<span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a><span class="dv">2</span>          (<span class="dv">30</span>,<span class="dv">39</span>]   <span class="dv">37</span> <span class="fl">0.0925</span></span>
-<span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a><span class="dv">3</span>          (<span class="dv">39</span>,<span class="dv">48</span>]   <span class="dv">38</span> <span class="fl">0.0950</span></span>
-<span id="cb13-20"><a href="#cb13-20" tabindex="-1"></a><span class="dv">4</span>          (<span class="dv">48</span>,<span class="dv">62</span>]   <span class="dv">40</span> <span class="fl">0.1000</span></span>
-<span id="cb13-21"><a href="#cb13-21" tabindex="-1"></a><span class="dv">5</span>          (<span class="dv">62</span>,<span class="dv">69</span>]   <span class="dv">42</span> <span class="fl">0.1050</span></span>
-<span id="cb13-22"><a href="#cb13-22" tabindex="-1"></a><span class="dv">6</span>          (<span class="dv">69</span>,<span class="dv">78</span>]   <span class="dv">33</span> <span class="fl">0.0825</span></span>
-<span id="cb13-23"><a href="#cb13-23" tabindex="-1"></a><span class="dv">7</span>    (<span class="dv">78</span>,<span class="fl">86.56667</span>]   <span class="dv">36</span> <span class="fl">0.0900</span></span>
-<span id="cb13-24"><a href="#cb13-24" tabindex="-1"></a><span class="dv">8</span>  (<span class="fl">86.56667</span>,<span class="fl">96.6</span>]   <span class="dv">38</span> <span class="fl">0.0950</span></span>
-<span id="cb13-25"><a href="#cb13-25" tabindex="-1"></a><span class="dv">9</span>  (<span class="fl">96.6</span>,<span class="fl">108.6333</span>]   <span class="dv">38</span> <span class="fl">0.0950</span></span>
-<span id="cb13-26"><a href="#cb13-26" tabindex="-1"></a><span class="dv">10</span>  (<span class="fl">108.6333</span>,<span class="dv">120</span>]   <span class="dv">38</span> <span class="fl">0.0950</span></span>
-<span id="cb13-27"><a href="#cb13-27" tabindex="-1"></a><span class="dv">11</span>            <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span>   <span class="dv">20</span> <span class="fl">0.0500</span></span>
-<span id="cb13-28"><a href="#cb13-28" tabindex="-1"></a><span class="co"># Plot bins class object</span></span>
-<span id="cb13-29"><a href="#cb13-29" tabindex="-1"></a><span class="fu">plot</span>(bin)</span>
-<span id="cb13-30"><a href="#cb13-30" tabindex="-1"></a> [<span class="dv">1</span>m [<span class="dv">22</span>mDon<span class="st">'t know how to automatically pick scale for object of type  [34m&lt;table&gt; [39m.</span></span>
-<span id="cb13-31"><a href="#cb13-31" tabindex="-1"></a><span class="st">Defaulting to continuous.</span></span></code></pre></div>
-<p><img src="transformation_files/figure-html/binning-1.png" width="600px"></p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="co"># Using labels argument</span></span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>bin <span class="ot">&lt;-</span> <span class="fu">binning</span>(carseats<span class="sc">$</span>Income, <span class="at">nbins =</span> <span class="dv">4</span>,</span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>              <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"LQ1"</span>, <span class="st">"UQ1"</span>, <span class="st">"LQ3"</span>, <span class="st">"UQ3"</span>))</span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>bin</span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>binned type<span class="sc">:</span> quantile</span>
-<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>number of bins<span class="sc">:</span> <span class="dv">4</span></span>
-<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>x</span>
-<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a> LQ1  UQ1  LQ3  UQ3 <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> </span>
-<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>  <span class="dv">95</span>  <span class="dv">102</span>   <span class="dv">89</span>   <span class="dv">94</span>   <span class="dv">20</span> </span>
-<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="co"># Using another type argument</span></span>
-<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="fu">binning</span>(carseats<span class="sc">$</span>Income, <span class="at">nbins =</span> <span class="dv">5</span>, <span class="at">type =</span> <span class="st">"equal"</span>)</span>
-<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a>binned type<span class="sc">:</span> equal</span>
-<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a>number of bins<span class="sc">:</span> <span class="dv">5</span></span>
-<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a>x</span>
-<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a>   [<span class="dv">21</span>,<span class="fl">40.8</span>]  (<span class="fl">40.8</span>,<span class="fl">60.6</span>]  (<span class="fl">60.6</span>,<span class="fl">80.4</span>] (<span class="fl">80.4</span>,<span class="fl">100.2</span>]  (<span class="fl">100.2</span>,<span class="dv">120</span>]         <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> </span>
-<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a>          <span class="dv">81</span>           <span class="dv">65</span>           <span class="dv">94</span>           <span class="dv">80</span>           <span class="dv">60</span>           <span class="dv">20</span> </span>
-<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a><span class="fu">binning</span>(carseats<span class="sc">$</span>Income, <span class="at">nbins =</span> <span class="dv">5</span>, <span class="at">type =</span> <span class="st">"pretty"</span>)</span>
-<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a>binned type<span class="sc">:</span> pretty</span>
-<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a>number of bins<span class="sc">:</span> <span class="dv">5</span></span>
-<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a>x</span>
-<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a>  [<span class="dv">20</span>,<span class="dv">40</span>]   (<span class="dv">40</span>,<span class="dv">60</span>]   (<span class="dv">60</span>,<span class="dv">80</span>]  (<span class="dv">80</span>,<span class="dv">100</span>] (<span class="dv">100</span>,<span class="dv">120</span>]      <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> </span>
-<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a>       <span class="dv">81</span>        <span class="dv">65</span>        <span class="dv">94</span>        <span class="dv">80</span>        <span class="dv">60</span>        <span class="dv">20</span> </span>
-<span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a></span>
-<span id="cb14-24"><a href="#cb14-24" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">requireNamespace</span>(<span class="st">"classInt"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
-<span id="cb14-25"><a href="#cb14-25" tabindex="-1"></a>  <span class="fu">binning</span>(carseats<span class="sc">$</span>Income, <span class="at">nbins =</span> <span class="dv">5</span>, <span class="at">type =</span> <span class="st">"kmeans"</span>)</span>
-<span id="cb14-26"><a href="#cb14-26" tabindex="-1"></a>  <span class="fu">binning</span>(carseats<span class="sc">$</span>Income, <span class="at">nbins =</span> <span class="dv">5</span>, <span class="at">type =</span> <span class="st">"bclust"</span>)</span>
-<span id="cb14-27"><a href="#cb14-27" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb14-28"><a href="#cb14-28" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"If you want to use this feature, you need to install the classInt package.</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb14-29"><a href="#cb14-29" tabindex="-1"></a>}</span>
-<span id="cb14-30"><a href="#cb14-30" tabindex="-1"></a>binned type<span class="sc">:</span> bclust</span>
-<span id="cb14-31"><a href="#cb14-31" tabindex="-1"></a>number of bins<span class="sc">:</span> <span class="dv">5</span></span>
-<span id="cb14-32"><a href="#cb14-32" tabindex="-1"></a>x</span>
-<span id="cb14-33"><a href="#cb14-33" tabindex="-1"></a>     [<span class="dv">21</span>,<span class="dv">49</span>]    (<span class="dv">49</span>,<span class="fl">64.5</span>]  (<span class="fl">64.5</span>,<span class="fl">86.5</span>] (<span class="fl">86.5</span>,<span class="fl">107.5</span>]  (<span class="fl">107.5</span>,<span class="dv">120</span>]         <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> </span>
-<span id="cb14-34"><a href="#cb14-34" tabindex="-1"></a>         <span class="dv">115</span>           <span class="dv">52</span>           <span class="dv">99</span>           <span class="dv">75</span>           <span class="dv">39</span>           <span class="dv">20</span> </span>
-<span id="cb14-35"><a href="#cb14-35" tabindex="-1"></a></span>
-<span id="cb14-36"><a href="#cb14-36" tabindex="-1"></a><span class="co"># Extract the binned results</span></span>
-<span id="cb14-37"><a href="#cb14-37" tabindex="-1"></a><span class="fu">extract</span>(bin)</span>
-<span id="cb14-38"><a href="#cb14-38" tabindex="-1"></a>  [<span class="dv">1</span>] LQ3  UQ1  LQ1  UQ3  UQ1  UQ3  UQ3  LQ3  UQ3  UQ3  LQ3  UQ3  LQ1  LQ1  UQ3 </span>
-<span id="cb14-39"><a href="#cb14-39" tabindex="-1"></a> [<span class="dv">16</span>] UQ3  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> <span class="er">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> UQ3  LQ3  LQ3  LQ1  UQ1  LQ1  UQ3  LQ1  UQ3  UQ3  LQ3  UQ3 </span>
-<span id="cb14-40"><a href="#cb14-40" tabindex="-1"></a> [<span class="dv">31</span>] UQ3  UQ1  LQ1  LQ1  UQ1  LQ3  LQ3  LQ1  LQ3  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> UQ3  UQ1  UQ1  LQ1  LQ3 </span>
-<span id="cb14-41"><a href="#cb14-41" tabindex="-1"></a> [<span class="dv">46</span>] UQ1  LQ3  UQ3  UQ1  UQ3  LQ1  LQ3  LQ1  UQ1  UQ3  LQ3  LQ3  LQ3  UQ3  LQ3 </span>
-<span id="cb14-42"><a href="#cb14-42" tabindex="-1"></a> [<span class="dv">61</span>] UQ3  LQ1  UQ1  LQ3  UQ1  LQ1  UQ3  UQ1  UQ1  UQ1  LQ3  UQ1  UQ1  LQ3  UQ1 </span>
-<span id="cb14-43"><a href="#cb14-43" tabindex="-1"></a> [<span class="dv">76</span>] UQ3  LQ3  LQ3  UQ1  UQ1  UQ3  LQ3  LQ3  LQ1  LQ1  UQ3  LQ3  UQ1  LQ1  UQ1 </span>
-<span id="cb14-44"><a href="#cb14-44" tabindex="-1"></a> [<span class="dv">91</span>] LQ1  UQ1  UQ3  LQ1  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> LQ1  LQ1  LQ3  LQ3  UQ1  UQ1  UQ3  LQ1  LQ3  UQ3 </span>
-<span id="cb14-45"><a href="#cb14-45" tabindex="-1"></a>[<span class="dv">106</span>] UQ3  LQ1  UQ3  LQ3  UQ1  UQ1  UQ3  UQ3  LQ1  LQ3  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> LQ3  UQ1  LQ3  UQ3 </span>
-<span id="cb14-46"><a href="#cb14-46" tabindex="-1"></a>[<span class="dv">121</span>] UQ3  LQ3  UQ3  UQ3  UQ3  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> UQ1  UQ1  UQ3  UQ3  LQ3  UQ1  LQ3  UQ3  LQ1 </span>
-<span id="cb14-47"><a href="#cb14-47" tabindex="-1"></a>[<span class="dv">136</span>] UQ3  LQ3  LQ1  UQ3  UQ1  UQ1  LQ1  LQ3  LQ3  UQ1  UQ1  LQ3  UQ1  UQ3  UQ3 </span>
-<span id="cb14-48"><a href="#cb14-48" tabindex="-1"></a>[<span class="dv">151</span>] LQ3  UQ1  LQ3  LQ1  UQ1  LQ3  LQ1  UQ1  LQ3  UQ1  LQ1  LQ1  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> UQ1  UQ1 </span>
-<span id="cb14-49"><a href="#cb14-49" tabindex="-1"></a>[<span class="dv">166</span>] UQ1  UQ1  LQ3  LQ3  LQ1  LQ1  UQ3  UQ3  LQ3  LQ1  LQ3  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> LQ3  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> LQ1 </span>
-<span id="cb14-50"><a href="#cb14-50" tabindex="-1"></a>[<span class="dv">181</span>] UQ3  LQ3  UQ1  LQ3  LQ1  UQ3  UQ1  LQ1  LQ1  UQ3  LQ1  LQ1  LQ1  LQ3  UQ3 </span>
-<span id="cb14-51"><a href="#cb14-51" tabindex="-1"></a>[<span class="dv">196</span>] UQ3  LQ1  UQ1  LQ3  LQ3  UQ3  LQ3  LQ3  LQ3  LQ3  LQ1  UQ1  UQ3  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> LQ1 </span>
-<span id="cb14-52"><a href="#cb14-52" tabindex="-1"></a>[<span class="dv">211</span>] LQ1  UQ3  UQ1  LQ3  UQ3  LQ3  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> UQ1  UQ1  LQ3  UQ3  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> UQ3  UQ1  LQ3 </span>
-<span id="cb14-53"><a href="#cb14-53" tabindex="-1"></a>[<span class="dv">226</span>] LQ1  LQ1  UQ1  LQ3  UQ3  UQ1  UQ1  LQ3  LQ3  UQ1  LQ1  LQ1  LQ1  LQ1  UQ3 </span>
-<span id="cb14-54"><a href="#cb14-54" tabindex="-1"></a>[<span class="dv">241</span>] LQ3  UQ1  UQ1  LQ1  LQ1  UQ1  UQ1  UQ3  UQ1  UQ1  UQ3  UQ3  UQ3  LQ1  UQ3 </span>
-<span id="cb14-55"><a href="#cb14-55" tabindex="-1"></a>[<span class="dv">256</span>] LQ3  LQ1  UQ1  LQ1  LQ1  UQ3  LQ1  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> LQ1  LQ1  LQ1  UQ3  LQ3  UQ1  UQ1 </span>
-<span id="cb14-56"><a href="#cb14-56" tabindex="-1"></a>[<span class="dv">271</span>] LQ1  UQ1  LQ1  UQ3  UQ3  UQ3  UQ1  UQ1  UQ3  UQ1  LQ3  UQ1  UQ3  UQ3  UQ1 </span>
-<span id="cb14-57"><a href="#cb14-57" tabindex="-1"></a>[<span class="dv">286</span>] LQ1  UQ3  UQ1  LQ1  LQ3  UQ3  LQ3  UQ1  LQ3  LQ3  LQ1  UQ1  LQ3  UQ1  LQ1 </span>
-<span id="cb14-58"><a href="#cb14-58" tabindex="-1"></a>[<span class="dv">301</span>] LQ3  UQ3  LQ3  UQ1  UQ3  LQ1  LQ1  UQ3  LQ3  UQ3  UQ1  UQ1  UQ3  LQ3  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span></span>
-<span id="cb14-59"><a href="#cb14-59" tabindex="-1"></a>[<span class="dv">316</span>] LQ1  LQ1  LQ1  LQ3  UQ1  LQ3  LQ1  UQ1  UQ3  UQ1  UQ1  LQ1  LQ1  UQ1  UQ1 </span>
-<span id="cb14-60"><a href="#cb14-60" tabindex="-1"></a>[<span class="dv">331</span>] UQ1  UQ1  LQ1  UQ1  UQ3  LQ3  LQ1  LQ1  LQ1  UQ1  LQ1  UQ3  UQ3  LQ1  LQ3 </span>
-<span id="cb14-61"><a href="#cb14-61" tabindex="-1"></a>[<span class="dv">346</span>] UQ1  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> LQ1  UQ3  LQ1  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> UQ3  UQ3  UQ1  LQ1  UQ3  UQ3  LQ3  UQ3  UQ1 </span>
-<span id="cb14-62"><a href="#cb14-62" tabindex="-1"></a>[<span class="dv">361</span>] LQ3  LQ1  UQ1  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> LQ1  LQ1  UQ1  UQ3  LQ1  UQ3  LQ1  LQ3  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> <span class="er">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> UQ1 </span>
-<span id="cb14-63"><a href="#cb14-63" tabindex="-1"></a>[<span class="dv">376</span>] UQ1  UQ1  UQ1  LQ3  UQ3  UQ1  UQ1  LQ1  UQ3  LQ1  LQ3  UQ3  LQ3  LQ3  LQ1 </span>
-<span id="cb14-64"><a href="#cb14-64" tabindex="-1"></a>[<span class="dv">391</span>] LQ3  UQ1  LQ1  UQ1  UQ1  UQ3  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> LQ1  LQ3  LQ1 </span>
-<span id="cb14-65"><a href="#cb14-65" tabindex="-1"></a>Levels<span class="sc">:</span> LQ1 <span class="sc">&lt;</span> UQ1 <span class="sc">&lt;</span> LQ3 <span class="sc">&lt;</span> UQ3</span>
-<span id="cb14-66"><a href="#cb14-66" tabindex="-1"></a></span>
-<span id="cb14-67"><a href="#cb14-67" tabindex="-1"></a><span class="co"># -------------------------</span></span>
-<span id="cb14-68"><a href="#cb14-68" tabindex="-1"></a><span class="co"># Using pipes &amp; dplyr</span></span>
-<span id="cb14-69"><a href="#cb14-69" tabindex="-1"></a><span class="co"># -------------------------</span></span>
-<span id="cb14-70"><a href="#cb14-70" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb14-71"><a href="#cb14-71" tabindex="-1"></a></span>
-<span id="cb14-72"><a href="#cb14-72" tabindex="-1"></a>carseats <span class="sc">%&gt;%</span></span>
-<span id="cb14-73"><a href="#cb14-73" tabindex="-1"></a> <span class="fu">mutate</span>(<span class="at">Income_bin =</span> <span class="fu">binning</span>(carseats<span class="sc">$</span>Income) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-74"><a href="#cb14-74" tabindex="-1"></a>                     <span class="fu">extract</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb14-75"><a href="#cb14-75" tabindex="-1"></a> <span class="fu">group_by</span>(ShelveLoc, Income_bin) <span class="sc">%&gt;%</span></span>
-<span id="cb14-76"><a href="#cb14-76" tabindex="-1"></a> <span class="fu">summarise</span>(<span class="at">freq =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb14-77"><a href="#cb14-77" tabindex="-1"></a> <span class="fu">arrange</span>(<span class="fu">desc</span>(freq)) <span class="sc">%&gt;%</span></span>
-<span id="cb14-78"><a href="#cb14-78" tabindex="-1"></a> <span class="fu">head</span>(<span class="dv">10</span>)</span>
-<span id="cb14-79"><a href="#cb14-79" tabindex="-1"></a> [<span class="dv">1</span>m [<span class="dv">22</span>m<span class="st">`</span><span class="at">summarise()</span><span class="st">`</span> has grouped output by <span class="st">'ShelveLoc'</span>. You can override using the</span>
-<span id="cb14-80"><a href="#cb14-80" tabindex="-1"></a><span class="st">`</span><span class="at">.groups</span><span class="st">`</span> argument.</span>
-<span id="cb14-81"><a href="#cb14-81" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="co"># A tibble: 10 × 3 [39m</span></span>
-<span id="cb14-82"><a href="#cb14-82" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="co"># Groups:   ShelveLoc [1] [39m</span></span>
-<span id="cb14-83"><a href="#cb14-83" tabindex="-1"></a>  ShelveLoc Income_bin  freq</span>
-<span id="cb14-84"><a href="#cb14-84" tabindex="-1"></a>   [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>fct<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m      [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>ord<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m       [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m</span>
-<span id="cb14-85"><a href="#cb14-85" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m1 [<span class="dv">39</span>m Medium    [<span class="dv">21</span>,<span class="dv">30</span>]       <span class="dv">25</span></span>
-<span id="cb14-86"><a href="#cb14-86" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m2 [<span class="dv">39</span>m <span class="fu">Medium</span>    (<span class="dv">62</span>,<span class="dv">69</span>]       <span class="dv">24</span></span>
-<span id="cb14-87"><a href="#cb14-87" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m3 [<span class="dv">39</span>m <span class="fu">Medium</span>    (<span class="dv">48</span>,<span class="dv">62</span>]       <span class="dv">23</span></span>
-<span id="cb14-88"><a href="#cb14-88" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m4 [<span class="dv">39</span>m <span class="fu">Medium</span>    (<span class="dv">39</span>,<span class="dv">48</span>]       <span class="dv">21</span></span>
-<span id="cb14-89"><a href="#cb14-89" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="co"># ℹ 6 more rows [39m</span></span></code></pre></div>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a> LQ1  UQ1  LQ3  UQ3 <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> </span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a>  <span class="dv">95</span>  <span class="dv">102</span>   <span class="dv">89</span>   <span class="dv">94</span>   <span class="dv">20</span> </span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a><span class="co"># Using another type argument</span></span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="fu">binning</span>(carseats<span class="sc">$</span>Income, <span class="at">nbins =</span> <span class="dv">5</span>, <span class="at">type =</span> <span class="st">"equal"</span>)</span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a>binned type<span class="sc">:</span> equal</span>
+<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a>number of bins<span class="sc">:</span> <span class="dv">5</span></span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a>x</span>
+<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a>   [<span class="dv">21</span>,<span class="fl">40.8</span>]  (<span class="fl">40.8</span>,<span class="fl">60.6</span>]  (<span class="fl">60.6</span>,<span class="fl">80.4</span>] (<span class="fl">80.4</span>,<span class="fl">100.2</span>]  (<span class="fl">100.2</span>,<span class="dv">120</span>]         <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> </span>
+<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a>          <span class="dv">81</span>           <span class="dv">65</span>           <span class="dv">94</span>           <span class="dv">80</span>           <span class="dv">60</span>           <span class="dv">20</span> </span>
+<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a><span class="fu">binning</span>(carseats<span class="sc">$</span>Income, <span class="at">nbins =</span> <span class="dv">5</span>, <span class="at">type =</span> <span class="st">"pretty"</span>)</span>
+<span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a>binned type<span class="sc">:</span> pretty</span>
+<span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a>number of bins<span class="sc">:</span> <span class="dv">5</span></span>
+<span id="cb13-20"><a href="#cb13-20" tabindex="-1"></a>x</span>
+<span id="cb13-21"><a href="#cb13-21" tabindex="-1"></a>  [<span class="dv">20</span>,<span class="dv">40</span>]   (<span class="dv">40</span>,<span class="dv">60</span>]   (<span class="dv">60</span>,<span class="dv">80</span>]  (<span class="dv">80</span>,<span class="dv">100</span>] (<span class="dv">100</span>,<span class="dv">120</span>]      <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> </span>
+<span id="cb13-22"><a href="#cb13-22" tabindex="-1"></a>       <span class="dv">81</span>        <span class="dv">65</span>        <span class="dv">94</span>        <span class="dv">80</span>        <span class="dv">60</span>        <span class="dv">20</span> </span>
+<span id="cb13-23"><a href="#cb13-23" tabindex="-1"></a></span>
+<span id="cb13-24"><a href="#cb13-24" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">requireNamespace</span>(<span class="st">"classInt"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb13-25"><a href="#cb13-25" tabindex="-1"></a>  <span class="fu">binning</span>(carseats<span class="sc">$</span>Income, <span class="at">nbins =</span> <span class="dv">5</span>, <span class="at">type =</span> <span class="st">"kmeans"</span>)</span>
+<span id="cb13-26"><a href="#cb13-26" tabindex="-1"></a>  <span class="fu">binning</span>(carseats<span class="sc">$</span>Income, <span class="at">nbins =</span> <span class="dv">5</span>, <span class="at">type =</span> <span class="st">"bclust"</span>)</span>
+<span id="cb13-27"><a href="#cb13-27" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb13-28"><a href="#cb13-28" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"If you want to use this feature, you need to install the classInt package.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb13-29"><a href="#cb13-29" tabindex="-1"></a>}</span>
+<span id="cb13-30"><a href="#cb13-30" tabindex="-1"></a>binned type<span class="sc">:</span> bclust</span>
+<span id="cb13-31"><a href="#cb13-31" tabindex="-1"></a>number of bins<span class="sc">:</span> <span class="dv">5</span></span>
+<span id="cb13-32"><a href="#cb13-32" tabindex="-1"></a>x</span>
+<span id="cb13-33"><a href="#cb13-33" tabindex="-1"></a>     [<span class="dv">21</span>,<span class="dv">49</span>]    (<span class="dv">49</span>,<span class="fl">64.5</span>]  (<span class="fl">64.5</span>,<span class="fl">86.5</span>] (<span class="fl">86.5</span>,<span class="fl">107.5</span>]  (<span class="fl">107.5</span>,<span class="dv">120</span>]         <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> </span>
+<span id="cb13-34"><a href="#cb13-34" tabindex="-1"></a>         <span class="dv">115</span>           <span class="dv">52</span>           <span class="dv">99</span>           <span class="dv">75</span>           <span class="dv">39</span>           <span class="dv">20</span> </span>
+<span id="cb13-35"><a href="#cb13-35" tabindex="-1"></a></span>
+<span id="cb13-36"><a href="#cb13-36" tabindex="-1"></a><span class="co"># Extract the binned results</span></span>
+<span id="cb13-37"><a href="#cb13-37" tabindex="-1"></a><span class="fu">extract</span>(bin)</span>
+<span id="cb13-38"><a href="#cb13-38" tabindex="-1"></a>  [<span class="dv">1</span>] LQ3  UQ1  LQ1  UQ3  UQ1  UQ3  UQ3  LQ3  UQ3  UQ3  LQ3  UQ3  LQ1  LQ1  UQ3 </span>
+<span id="cb13-39"><a href="#cb13-39" tabindex="-1"></a> [<span class="dv">16</span>] UQ3  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> <span class="er">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> UQ3  LQ3  LQ3  LQ1  UQ1  LQ1  UQ3  LQ1  UQ3  UQ3  LQ3  UQ3 </span>
+<span id="cb13-40"><a href="#cb13-40" tabindex="-1"></a> [<span class="dv">31</span>] UQ3  UQ1  LQ1  LQ1  UQ1  LQ3  LQ3  LQ1  LQ3  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> UQ3  UQ1  UQ1  LQ1  LQ3 </span>
+<span id="cb13-41"><a href="#cb13-41" tabindex="-1"></a> [<span class="dv">46</span>] UQ1  LQ3  UQ3  UQ1  UQ3  LQ1  LQ3  LQ1  UQ1  UQ3  LQ3  LQ3  LQ3  UQ3  LQ3 </span>
+<span id="cb13-42"><a href="#cb13-42" tabindex="-1"></a> [<span class="dv">61</span>] UQ3  LQ1  UQ1  LQ3  UQ1  LQ1  UQ3  UQ1  UQ1  UQ1  LQ3  UQ1  UQ1  LQ3  UQ1 </span>
+<span id="cb13-43"><a href="#cb13-43" tabindex="-1"></a> [<span class="dv">76</span>] UQ3  LQ3  LQ3  UQ1  UQ1  UQ3  LQ3  LQ3  LQ1  LQ1  UQ3  LQ3  UQ1  LQ1  UQ1 </span>
+<span id="cb13-44"><a href="#cb13-44" tabindex="-1"></a> [<span class="dv">91</span>] LQ1  UQ1  UQ3  LQ1  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> LQ1  LQ1  LQ3  LQ3  UQ1  UQ1  UQ3  LQ1  LQ3  UQ3 </span>
+<span id="cb13-45"><a href="#cb13-45" tabindex="-1"></a>[<span class="dv">106</span>] UQ3  LQ1  UQ3  LQ3  UQ1  UQ1  UQ3  UQ3  LQ1  LQ3  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> LQ3  UQ1  LQ3  UQ3 </span>
+<span id="cb13-46"><a href="#cb13-46" tabindex="-1"></a>[<span class="dv">121</span>] UQ3  LQ3  UQ3  UQ3  UQ3  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> UQ1  UQ1  UQ3  UQ3  LQ3  UQ1  LQ3  UQ3  LQ1 </span>
+<span id="cb13-47"><a href="#cb13-47" tabindex="-1"></a>[<span class="dv">136</span>] UQ3  LQ3  LQ1  UQ3  UQ1  UQ1  LQ1  LQ3  LQ3  UQ1  UQ1  LQ3  UQ1  UQ3  UQ3 </span>
+<span id="cb13-48"><a href="#cb13-48" tabindex="-1"></a>[<span class="dv">151</span>] LQ3  UQ1  LQ3  LQ1  UQ1  LQ3  LQ1  UQ1  LQ3  UQ1  LQ1  LQ1  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> UQ1  UQ1 </span>
+<span id="cb13-49"><a href="#cb13-49" tabindex="-1"></a>[<span class="dv">166</span>] UQ1  UQ1  LQ3  LQ3  LQ1  LQ1  UQ3  UQ3  LQ3  LQ1  LQ3  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> LQ3  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> LQ1 </span>
+<span id="cb13-50"><a href="#cb13-50" tabindex="-1"></a>[<span class="dv">181</span>] UQ3  LQ3  UQ1  LQ3  LQ1  UQ3  UQ1  LQ1  LQ1  UQ3  LQ1  LQ1  LQ1  LQ3  UQ3 </span>
+<span id="cb13-51"><a href="#cb13-51" tabindex="-1"></a>[<span class="dv">196</span>] UQ3  LQ1  UQ1  LQ3  LQ3  UQ3  LQ3  LQ3  LQ3  LQ3  LQ1  UQ1  UQ3  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> LQ1 </span>
+<span id="cb13-52"><a href="#cb13-52" tabindex="-1"></a>[<span class="dv">211</span>] LQ1  UQ3  UQ1  LQ3  UQ3  LQ3  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> UQ1  UQ1  LQ3  UQ3  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> UQ3  UQ1  LQ3 </span>
+<span id="cb13-53"><a href="#cb13-53" tabindex="-1"></a>[<span class="dv">226</span>] LQ1  LQ1  UQ1  LQ3  UQ3  UQ1  UQ1  LQ3  LQ3  UQ1  LQ1  LQ1  LQ1  LQ1  UQ3 </span>
+<span id="cb13-54"><a href="#cb13-54" tabindex="-1"></a>[<span class="dv">241</span>] LQ3  UQ1  UQ1  LQ1  LQ1  UQ1  UQ1  UQ3  UQ1  UQ1  UQ3  UQ3  UQ3  LQ1  UQ3 </span>
+<span id="cb13-55"><a href="#cb13-55" tabindex="-1"></a>[<span class="dv">256</span>] LQ3  LQ1  UQ1  LQ1  LQ1  UQ3  LQ1  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> LQ1  LQ1  LQ1  UQ3  LQ3  UQ1  UQ1 </span>
+<span id="cb13-56"><a href="#cb13-56" tabindex="-1"></a>[<span class="dv">271</span>] LQ1  UQ1  LQ1  UQ3  UQ3  UQ3  UQ1  UQ1  UQ3  UQ1  LQ3  UQ1  UQ3  UQ3  UQ1 </span>
+<span id="cb13-57"><a href="#cb13-57" tabindex="-1"></a>[<span class="dv">286</span>] LQ1  UQ3  UQ1  LQ1  LQ3  UQ3  LQ3  UQ1  LQ3  LQ3  LQ1  UQ1  LQ3  UQ1  LQ1 </span>
+<span id="cb13-58"><a href="#cb13-58" tabindex="-1"></a>[<span class="dv">301</span>] LQ3  UQ3  LQ3  UQ1  UQ3  LQ1  LQ1  UQ3  LQ3  UQ3  UQ1  UQ1  UQ3  LQ3  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span></span>
+<span id="cb13-59"><a href="#cb13-59" tabindex="-1"></a>[<span class="dv">316</span>] LQ1  LQ1  LQ1  LQ3  UQ1  LQ3  LQ1  UQ1  UQ3  UQ1  UQ1  LQ1  LQ1  UQ1  UQ1 </span>
+<span id="cb13-60"><a href="#cb13-60" tabindex="-1"></a>[<span class="dv">331</span>] UQ1  UQ1  LQ1  UQ1  UQ3  LQ3  LQ1  LQ1  LQ1  UQ1  LQ1  UQ3  UQ3  LQ1  LQ3 </span>
+<span id="cb13-61"><a href="#cb13-61" tabindex="-1"></a>[<span class="dv">346</span>] UQ1  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> LQ1  UQ3  LQ1  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> UQ3  UQ3  UQ1  LQ1  UQ3  UQ3  LQ3  UQ3  UQ1 </span>
+<span id="cb13-62"><a href="#cb13-62" tabindex="-1"></a>[<span class="dv">361</span>] LQ3  LQ1  UQ1  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> LQ1  LQ1  UQ1  UQ3  LQ1  UQ3  LQ1  LQ3  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> <span class="er">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> UQ1 </span>
+<span id="cb13-63"><a href="#cb13-63" tabindex="-1"></a>[<span class="dv">376</span>] UQ1  UQ1  UQ1  LQ3  UQ3  UQ1  UQ1  LQ1  UQ3  LQ1  LQ3  UQ3  LQ3  LQ3  LQ1 </span>
+<span id="cb13-64"><a href="#cb13-64" tabindex="-1"></a>[<span class="dv">391</span>] LQ3  UQ1  LQ1  UQ1  UQ1  UQ3  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> LQ1  LQ3  LQ1 </span>
+<span id="cb13-65"><a href="#cb13-65" tabindex="-1"></a>Levels<span class="sc">:</span> LQ1 <span class="sc">&lt;</span> UQ1 <span class="sc">&lt;</span> LQ3 <span class="sc">&lt;</span> UQ3</span>
+<span id="cb13-66"><a href="#cb13-66" tabindex="-1"></a></span>
+<span id="cb13-67"><a href="#cb13-67" tabindex="-1"></a><span class="co"># -------------------------</span></span>
+<span id="cb13-68"><a href="#cb13-68" tabindex="-1"></a><span class="co"># Using pipes &amp; dplyr</span></span>
+<span id="cb13-69"><a href="#cb13-69" tabindex="-1"></a><span class="co"># -------------------------</span></span>
+<span id="cb13-70"><a href="#cb13-70" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb13-71"><a href="#cb13-71" tabindex="-1"></a></span>
+<span id="cb13-72"><a href="#cb13-72" tabindex="-1"></a>carseats <span class="sc">%&gt;%</span></span>
+<span id="cb13-73"><a href="#cb13-73" tabindex="-1"></a> <span class="fu">mutate</span>(<span class="at">Income_bin =</span> <span class="fu">binning</span>(carseats<span class="sc">$</span>Income) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-74"><a href="#cb13-74" tabindex="-1"></a>                     <span class="fu">extract</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb13-75"><a href="#cb13-75" tabindex="-1"></a> <span class="fu">group_by</span>(ShelveLoc, Income_bin) <span class="sc">%&gt;%</span></span>
+<span id="cb13-76"><a href="#cb13-76" tabindex="-1"></a> <span class="fu">summarise</span>(<span class="at">freq =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb13-77"><a href="#cb13-77" tabindex="-1"></a> <span class="fu">arrange</span>(<span class="fu">desc</span>(freq)) <span class="sc">%&gt;%</span></span>
+<span id="cb13-78"><a href="#cb13-78" tabindex="-1"></a> <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb13-79"><a href="#cb13-79" tabindex="-1"></a> [<span class="dv">1</span>m [<span class="dv">22</span>m<span class="st">`</span><span class="at">summarise()</span><span class="st">`</span> has grouped output by <span class="st">'ShelveLoc'</span>. You can override using the</span>
+<span id="cb13-80"><a href="#cb13-80" tabindex="-1"></a><span class="st">`</span><span class="at">.groups</span><span class="st">`</span> argument.</span>
+<span id="cb13-81"><a href="#cb13-81" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="co"># A tibble: 10 × 3 [39m</span></span>
+<span id="cb13-82"><a href="#cb13-82" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="co"># Groups:   ShelveLoc [1] [39m</span></span>
+<span id="cb13-83"><a href="#cb13-83" tabindex="-1"></a>  ShelveLoc Income_bin  freq</span>
+<span id="cb13-84"><a href="#cb13-84" tabindex="-1"></a>   [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>fct<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m      [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>ord<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m       [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m</span>
+<span id="cb13-85"><a href="#cb13-85" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m1 [<span class="dv">39</span>m Medium    [<span class="dv">21</span>,<span class="dv">30</span>]       <span class="dv">25</span></span>
+<span id="cb13-86"><a href="#cb13-86" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m2 [<span class="dv">39</span>m <span class="fu">Medium</span>    (<span class="dv">62</span>,<span class="dv">69</span>]       <span class="dv">24</span></span>
+<span id="cb13-87"><a href="#cb13-87" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m3 [<span class="dv">39</span>m <span class="fu">Medium</span>    (<span class="dv">48</span>,<span class="dv">62</span>]       <span class="dv">23</span></span>
+<span id="cb13-88"><a href="#cb13-88" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m4 [<span class="dv">39</span>m <span class="fu">Medium</span>    (<span class="dv">39</span>,<span class="dv">48</span>]       <span class="dv">21</span></span>
+<span id="cb13-89"><a href="#cb13-89" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="co"># ℹ 6 more rows [39m</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="optimal-binning-with-binning_by">Optimal Binning with <code>binning_by()</code><a class="anchor" aria-label="anchor" href="#optimal-binning-with-binning_by"></a>
@@ -852,61 +850,61 @@ developing a <code>scorecard model</code>.</p>
 <p>The following <code><a href="../reference/binning_by.html">binning_by()</a></code> example optimally binning
 <code>Advertising</code> considering the target variable <code>US</code>
 with a binary class.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">requireNamespace</span>(<span class="st">"partykit"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>  <span class="co"># optimal binning using character</span></span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>  bin <span class="ot">&lt;-</span> <span class="fu">binning_by</span>(carseats, <span class="st">"US"</span>, <span class="st">"Advertising"</span>)</span>
-<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>  </span>
-<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>  <span class="co"># optimal binning using name</span></span>
-<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a>  bin <span class="ot">&lt;-</span> <span class="fu">binning_by</span>(carseats, US, Advertising)</span>
-<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a>  bin</span>
-<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a>  </span>
-<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a>  <span class="co"># summary optimal_bins class</span></span>
-<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a>  <span class="fu">summary</span>(bin)</span>
-<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a>  </span>
-<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a>  <span class="co"># performance table</span></span>
-<span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a>  <span class="fu">attr</span>(bin, <span class="st">"performance"</span>)</span>
-<span id="cb15-16"><a href="#cb15-16" tabindex="-1"></a>  </span>
-<span id="cb15-17"><a href="#cb15-17" tabindex="-1"></a>  <span class="co"># visualize optimal_bins class</span></span>
-<span id="cb15-18"><a href="#cb15-18" tabindex="-1"></a>  <span class="fu">plot</span>(bin)</span>
-<span id="cb15-19"><a href="#cb15-19" tabindex="-1"></a>  </span>
-<span id="cb15-20"><a href="#cb15-20" tabindex="-1"></a>  <span class="co"># extract binned results</span></span>
-<span id="cb15-21"><a href="#cb15-21" tabindex="-1"></a>  <span class="fu">extract</span>(bin) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-22"><a href="#cb15-22" tabindex="-1"></a>    <span class="fu">head</span>(<span class="dv">20</span>)</span>
-<span id="cb15-23"><a href="#cb15-23" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb15-24"><a href="#cb15-24" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"If you want to use this feature, you need to install the partykit package.</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb15-25"><a href="#cb15-25" tabindex="-1"></a>}</span>
-<span id="cb15-26"><a href="#cb15-26" tabindex="-1"></a>Warning <span class="cf">in</span> <span class="fu">binning_by</span>(carseats, <span class="st">"US"</span>, <span class="st">"Advertising"</span>)<span class="sc">:</span> The factor y has been changed to a numeric vector consisting of <span class="dv">0</span> and <span class="fl">1.</span></span>
-<span id="cb15-27"><a href="#cb15-27" tabindex="-1"></a><span class="st">'Yes'</span> changed to <span class="dv">1</span> (positive) and <span class="st">'No'</span> changed to <span class="dv">0</span> (negative).</span>
-<span id="cb15-28"><a href="#cb15-28" tabindex="-1"></a>Warning <span class="cf">in</span> <span class="fu">binning_by</span>(carseats, US, Advertising)<span class="sc">:</span> The factor y has been changed to a numeric vector consisting of <span class="dv">0</span> and <span class="fl">1.</span></span>
-<span id="cb15-29"><a href="#cb15-29" tabindex="-1"></a><span class="st">'Yes'</span> changed to <span class="dv">1</span> (positive) and <span class="st">'No'</span> changed to <span class="dv">0</span> (negative).</span>
-<span id="cb15-30"><a href="#cb15-30" tabindex="-1"></a>── Binning Table ──────────────────────── Several Metrics ── </span>
-<span id="cb15-31"><a href="#cb15-31" tabindex="-1"></a>     Bin CntRec CntPos CntNeg RatePos RateNeg    Odds      WoE      IV     JSD</span>
-<span id="cb15-32"><a href="#cb15-32" tabindex="-1"></a><span class="dv">1</span> [<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>]    <span class="dv">144</span>     <span class="dv">19</span>    <span class="dv">125</span> <span class="fl">0.07364</span> <span class="fl">0.88028</span>  <span class="fl">0.1520</span> <span class="sc">-</span><span class="fl">2.48101</span> <span class="fl">2.00128</span> <span class="fl">0.20093</span></span>
-<span id="cb15-33"><a href="#cb15-33" tabindex="-1"></a><span class="dv">2</span>  (<span class="dv">0</span>,<span class="dv">6</span>]     <span class="dv">69</span>     <span class="dv">54</span>     <span class="dv">15</span> <span class="fl">0.20930</span> <span class="fl">0.10563</span>  <span class="fl">3.6000</span>  <span class="fl">0.68380</span> <span class="fl">0.07089</span> <span class="fl">0.00869</span></span>
-<span id="cb15-34"><a href="#cb15-34" tabindex="-1"></a><span class="dv">3</span> (<span class="dv">6</span>,<span class="dv">29</span>]    <span class="dv">187</span>    <span class="dv">185</span>      <span class="dv">2</span> <span class="fl">0.71705</span> <span class="fl">0.01408</span> <span class="fl">92.5000</span>  <span class="fl">3.93008</span> <span class="fl">2.76272</span> <span class="fl">0.21861</span></span>
-<span id="cb15-35"><a href="#cb15-35" tabindex="-1"></a><span class="dv">4</span>  Total    <span class="dv">400</span>    <span class="dv">258</span>    <span class="dv">142</span> <span class="fl">1.00000</span> <span class="fl">1.00000</span>  <span class="fl">1.8169</span>       <span class="cn">NA</span> <span class="fl">4.83489</span> <span class="fl">0.42823</span></span>
-<span id="cb15-36"><a href="#cb15-36" tabindex="-1"></a>      AUC</span>
-<span id="cb15-37"><a href="#cb15-37" tabindex="-1"></a><span class="dv">1</span> <span class="fl">0.03241</span></span>
-<span id="cb15-38"><a href="#cb15-38" tabindex="-1"></a><span class="dv">2</span> <span class="fl">0.01883</span></span>
-<span id="cb15-39"><a href="#cb15-39" tabindex="-1"></a><span class="dv">3</span> <span class="fl">0.00903</span></span>
-<span id="cb15-40"><a href="#cb15-40" tabindex="-1"></a><span class="dv">4</span> <span class="fl">0.06028</span></span>
-<span id="cb15-41"><a href="#cb15-41" tabindex="-1"></a></span>
-<span id="cb15-42"><a href="#cb15-42" tabindex="-1"></a>── General Metrics ───────────────────────────────────────── </span>
-<span id="cb15-43"><a href="#cb15-43" tabindex="-1"></a>• Gini index                       <span class="sc">:</span>  <span class="sc">-</span><span class="fl">0.87944</span></span>
-<span id="cb15-44"><a href="#cb15-44" tabindex="-1"></a>• <span class="fu">IV</span> (Jeffrey)                     <span class="sc">:</span>  <span class="fl">4.83489</span></span>
-<span id="cb15-45"><a href="#cb15-45" tabindex="-1"></a>• <span class="fu">JS</span> (Jensen<span class="sc">-</span>Shannon) Divergence   <span class="sc">:</span>  <span class="fl">0.42823</span></span>
-<span id="cb15-46"><a href="#cb15-46" tabindex="-1"></a>• Kolmogorov<span class="sc">-</span>Smirnov Statistics    <span class="sc">:</span>  <span class="fl">0.80664</span></span>
-<span id="cb15-47"><a href="#cb15-47" tabindex="-1"></a>• <span class="fu">HHI</span> (Herfindahl<span class="sc">-</span>Hirschman Index) <span class="sc">:</span>  <span class="fl">0.37791</span></span>
-<span id="cb15-48"><a href="#cb15-48" tabindex="-1"></a>• <span class="fu">HHI</span> (normalized)                 <span class="sc">:</span>  <span class="fl">0.06687</span></span>
-<span id="cb15-49"><a href="#cb15-49" tabindex="-1"></a>• Cramer<span class="st">'s V                       :  0.81863 </span></span>
-<span id="cb15-50"><a href="#cb15-50" tabindex="-1"></a></span>
-<span id="cb15-51"><a href="#cb15-51" tabindex="-1"></a><span class="st">── Significance Tests ──────────────────── Chisquare Test ── </span></span>
-<span id="cb15-52"><a href="#cb15-52" tabindex="-1"></a><span class="st">   Bin A  Bin B statistics      p_value</span></span>
-<span id="cb15-53"><a href="#cb15-53" tabindex="-1"></a><span class="st">1 [-1,0]  (0,6]   87.67064 7.731349e-21</span></span>
-<span id="cb15-54"><a href="#cb15-54" tabindex="-1"></a><span class="st">2  (0,6] (6,29]   34.73349 3.780706e-09</span></span></code></pre></div>
-<p><img src="transformation_files/figure-html/binning_by-1.png" width="600px"></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">requireNamespace</span>(<span class="st">"partykit"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>  <span class="co"># optimal binning using character</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>  bin <span class="ot">&lt;-</span> <span class="fu">binning_by</span>(carseats, <span class="st">"US"</span>, <span class="st">"Advertising"</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>  </span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>  <span class="co"># optimal binning using name</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a>  bin <span class="ot">&lt;-</span> <span class="fu">binning_by</span>(carseats, US, Advertising)</span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>  bin</span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a>  </span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a>  <span class="co"># summary optimal_bins class</span></span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a>  <span class="fu">summary</span>(bin)</span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a>  </span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a>  <span class="co"># performance table</span></span>
+<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a>  <span class="fu">attr</span>(bin, <span class="st">"performance"</span>)</span>
+<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a>  </span>
+<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a>  <span class="co"># visualize optimal_bins class</span></span>
+<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a>  <span class="fu">plot</span>(bin)</span>
+<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a>  </span>
+<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a>  <span class="co"># extract binned results</span></span>
+<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a>  <span class="fu">extract</span>(bin) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a>    <span class="fu">head</span>(<span class="dv">20</span>)</span>
+<span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb14-24"><a href="#cb14-24" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"If you want to use this feature, you need to install the partykit package.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb14-25"><a href="#cb14-25" tabindex="-1"></a>}</span>
+<span id="cb14-26"><a href="#cb14-26" tabindex="-1"></a>Warning <span class="cf">in</span> <span class="fu">binning_by</span>(carseats, <span class="st">"US"</span>, <span class="st">"Advertising"</span>)<span class="sc">:</span> The factor y has been changed to a numeric vector consisting of <span class="dv">0</span> and <span class="fl">1.</span></span>
+<span id="cb14-27"><a href="#cb14-27" tabindex="-1"></a><span class="st">'Yes'</span> changed to <span class="dv">1</span> (positive) and <span class="st">'No'</span> changed to <span class="dv">0</span> (negative).</span>
+<span id="cb14-28"><a href="#cb14-28" tabindex="-1"></a>Warning <span class="cf">in</span> <span class="fu">binning_by</span>(carseats, US, Advertising)<span class="sc">:</span> The factor y has been changed to a numeric vector consisting of <span class="dv">0</span> and <span class="fl">1.</span></span>
+<span id="cb14-29"><a href="#cb14-29" tabindex="-1"></a><span class="st">'Yes'</span> changed to <span class="dv">1</span> (positive) and <span class="st">'No'</span> changed to <span class="dv">0</span> (negative).</span>
+<span id="cb14-30"><a href="#cb14-30" tabindex="-1"></a>── Binning Table ──────────────────────── Several Metrics ── </span>
+<span id="cb14-31"><a href="#cb14-31" tabindex="-1"></a>     Bin CntRec CntPos CntNeg RatePos RateNeg    Odds      WoE      IV     JSD</span>
+<span id="cb14-32"><a href="#cb14-32" tabindex="-1"></a><span class="dv">1</span> [<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>]    <span class="dv">144</span>     <span class="dv">19</span>    <span class="dv">125</span> <span class="fl">0.07364</span> <span class="fl">0.88028</span>  <span class="fl">0.1520</span> <span class="sc">-</span><span class="fl">2.48101</span> <span class="fl">2.00128</span> <span class="fl">0.20093</span></span>
+<span id="cb14-33"><a href="#cb14-33" tabindex="-1"></a><span class="dv">2</span>  (<span class="dv">0</span>,<span class="dv">6</span>]     <span class="dv">69</span>     <span class="dv">54</span>     <span class="dv">15</span> <span class="fl">0.20930</span> <span class="fl">0.10563</span>  <span class="fl">3.6000</span>  <span class="fl">0.68380</span> <span class="fl">0.07089</span> <span class="fl">0.00869</span></span>
+<span id="cb14-34"><a href="#cb14-34" tabindex="-1"></a><span class="dv">3</span> (<span class="dv">6</span>,<span class="dv">29</span>]    <span class="dv">187</span>    <span class="dv">185</span>      <span class="dv">2</span> <span class="fl">0.71705</span> <span class="fl">0.01408</span> <span class="fl">92.5000</span>  <span class="fl">3.93008</span> <span class="fl">2.76272</span> <span class="fl">0.21861</span></span>
+<span id="cb14-35"><a href="#cb14-35" tabindex="-1"></a><span class="dv">4</span>  Total    <span class="dv">400</span>    <span class="dv">258</span>    <span class="dv">142</span> <span class="fl">1.00000</span> <span class="fl">1.00000</span>  <span class="fl">1.8169</span>       <span class="cn">NA</span> <span class="fl">4.83489</span> <span class="fl">0.42823</span></span>
+<span id="cb14-36"><a href="#cb14-36" tabindex="-1"></a>      AUC</span>
+<span id="cb14-37"><a href="#cb14-37" tabindex="-1"></a><span class="dv">1</span> <span class="fl">0.03241</span></span>
+<span id="cb14-38"><a href="#cb14-38" tabindex="-1"></a><span class="dv">2</span> <span class="fl">0.01883</span></span>
+<span id="cb14-39"><a href="#cb14-39" tabindex="-1"></a><span class="dv">3</span> <span class="fl">0.00903</span></span>
+<span id="cb14-40"><a href="#cb14-40" tabindex="-1"></a><span class="dv">4</span> <span class="fl">0.06028</span></span>
+<span id="cb14-41"><a href="#cb14-41" tabindex="-1"></a></span>
+<span id="cb14-42"><a href="#cb14-42" tabindex="-1"></a>── General Metrics ───────────────────────────────────────── </span>
+<span id="cb14-43"><a href="#cb14-43" tabindex="-1"></a>• Gini index                       <span class="sc">:</span>  <span class="sc">-</span><span class="fl">0.87944</span></span>
+<span id="cb14-44"><a href="#cb14-44" tabindex="-1"></a>• <span class="fu">IV</span> (Jeffrey)                     <span class="sc">:</span>  <span class="fl">4.83489</span></span>
+<span id="cb14-45"><a href="#cb14-45" tabindex="-1"></a>• <span class="fu">JS</span> (Jensen<span class="sc">-</span>Shannon) Divergence   <span class="sc">:</span>  <span class="fl">0.42823</span></span>
+<span id="cb14-46"><a href="#cb14-46" tabindex="-1"></a>• Kolmogorov<span class="sc">-</span>Smirnov Statistics    <span class="sc">:</span>  <span class="fl">0.80664</span></span>
+<span id="cb14-47"><a href="#cb14-47" tabindex="-1"></a>• <span class="fu">HHI</span> (Herfindahl<span class="sc">-</span>Hirschman Index) <span class="sc">:</span>  <span class="fl">0.37791</span></span>
+<span id="cb14-48"><a href="#cb14-48" tabindex="-1"></a>• <span class="fu">HHI</span> (normalized)                 <span class="sc">:</span>  <span class="fl">0.06687</span></span>
+<span id="cb14-49"><a href="#cb14-49" tabindex="-1"></a>• Cramer<span class="st">'s V                       :  0.81863 </span></span>
+<span id="cb14-50"><a href="#cb14-50" tabindex="-1"></a></span>
+<span id="cb14-51"><a href="#cb14-51" tabindex="-1"></a><span class="st">── Significance Tests ──────────────────── Chisquare Test ── </span></span>
+<span id="cb14-52"><a href="#cb14-52" tabindex="-1"></a><span class="st">   Bin A  Bin B statistics      p_value</span></span>
+<span id="cb14-53"><a href="#cb14-53" tabindex="-1"></a><span class="st">1 [-1,0]  (0,6]   87.67064 7.731349e-21</span></span>
+<span id="cb14-54"><a href="#cb14-54" tabindex="-1"></a><span class="st">2  (0,6] (6,29]   34.73349 3.780706e-09</span></span></code></pre></div>
+<p><img src="transformation_files/figure-html/binning_by-1.png" alt="Visualization of optimal binning" width="600px" style="display: block; margin: auto;"></p>
 <pre><code> [1] (6,29] (6,29] (6,29] (0,6]  (0,6]  (6,29] [-1,0] (6,29] [-1,0] [-1,0]
 [11] (6,29] (0,6]  (0,6]  (6,29] (6,29] (0,6]  [-1,0] (6,29] [-1,0] (6,29]
 Levels: [-1,0] &lt; (0,6] &lt; (6,29]</code></pre>
@@ -1016,7 +1014,7 @@ following arguments.</p>
 </ul>
 <p>The following script creates a data transformation report for the
 <code>tbl_df</code> class object, <code>heartfailure</code>.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">heartfailure</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/transformation_web_report.html">transformation_web_report</a></span><span class="op">(</span>target <span class="op">=</span> <span class="st">"death_event"</span>, subtitle <span class="op">=</span> <span class="st">"heartfailure"</span>,</span>
 <span>                            output_dir <span class="op">=</span> <span class="st">"./"</span>, output_file <span class="op">=</span> <span class="st">"transformation.html"</span>, </span>
@@ -1030,7 +1028,7 @@ following arguments.</p>
 figure.:</li>
 </ul>
 <div class="figure" style="text-align: center">
-<img src="img%2Ftransformation_web_title.jpg" alt="The part of the report" width="80%"><p class="caption">
+<img src="img/transformation_web_title.jpg" alt="The part of the report" width="80%"><p class="caption">
 The part of the report
 </p>
 </div>
@@ -1149,7 +1147,7 @@ following arguments.</p>
 </ul>
 <p>The following script creates a data transformation report for the
 <code>data.frame</code> class object, <code>heartfailure</code>.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">heartfailure</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/transformation_paged_report.html">transformation_paged_report</a></span><span class="op">(</span>target <span class="op">=</span> <span class="st">"death_event"</span>, subtitle <span class="op">=</span> <span class="st">"heartfailure"</span>,</span>
 <span>                              output_dir <span class="op">=</span> <span class="st">"./"</span>, output_file <span class="op">=</span> <span class="st">"transformation.pdf"</span>, </span>
@@ -1162,7 +1160,7 @@ following arguments.</p>
 <li>The cover of the report is shown in the following figure.:</li>
 </ul>
 <div class="figure" style="text-align: center">
-<img src="img%2Ftransformation_paged_cover.jpg" alt="The part of the report" width="80%"><p class="caption">
+<img src="img/transformation_paged_cover.jpg" alt="The part of the report" width="80%"><p class="caption">
 The part of the report
 </p>
 </div>
@@ -1170,7 +1168,7 @@ The part of the report
 <li>The contents of the report are shown in the following figure.:</li>
 </ul>
 <div class="figure" style="text-align: center">
-<img src="img%2Ftransformation_paged_content.jpg" alt="The dynamic contents of the report" width="80%"><p class="caption">
+<img src="img/transformation_paged_content.jpg" alt="The dynamic contents of the report" width="80%"><p class="caption">
 The dynamic contents of the report
 </p>
 </div>
@@ -1194,7 +1192,7 @@ The dynamic contents of the report
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
       </footer>

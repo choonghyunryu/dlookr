@@ -124,14 +124,6 @@ and return compare_category class that based list object.</p>
 <span class="r-in"><span><span class="va">heartfailure2</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NROW</a></span><span class="op">(</span><span class="va">heartfailure2</span><span class="op">)</span><span class="op">)</span>, <span class="fl">5</span><span class="op">)</span>, <span class="st">"smoking"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘dplyr’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:stats’:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     filter, lag</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:base’:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     intersect, setdiff, setequal, union</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Compare the all categorical variables</span></span></span>
 <span class="r-in"><span><span class="va">all_var</span> <span class="op">&lt;-</span> <span class="fu">compare_category</span><span class="op">(</span><span class="va">heartfailure2</span><span class="op">)</span></span></span>
@@ -169,12 +161,12 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   anaemia smoking     n    rate var1_rate var2_rate</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> No      No        106 0.355      0.624      0.53 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> No      No        107 0.358      0.629      0.535</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> No      Yes        61 0.204      0.359      0.649</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> No      <span style="color: #BB0000;">NA</span>          3 0.010<span style="text-decoration: underline;">0</span>     0.017<span style="text-decoration: underline;">6</span>     0.6  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Yes     No         94 0.314      0.729      0.47 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> No      <span style="color: #BB0000;">NA</span>          2 0.006<span style="text-decoration: underline;">69</span>    0.011<span style="text-decoration: underline;">8</span>     0.4  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Yes     No         93 0.311      0.721      0.465</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Yes     Yes        33 0.110      0.256      0.351</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> Yes     <span style="color: #BB0000;">NA</span>          2 0.006<span style="text-decoration: underline;">69</span>    0.015<span style="text-decoration: underline;">5</span>     0.4  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> Yes     <span style="color: #BB0000;">NA</span>          3 0.010<span style="text-decoration: underline;">0</span>     0.023<span style="text-decoration: underline;">3</span>     0.6  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`anaemia vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 6</span></span>
@@ -207,12 +199,12 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   diabetes smoking     n    rate var1_rate var2_rate</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> No       No        106 0.355      0.609      0.53 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> No       Yes        64 0.214      0.368      0.681</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> No       <span style="color: #BB0000;">NA</span>          4 0.013<span style="text-decoration: underline;">4</span>     0.023<span style="text-decoration: underline;">0</span>     0.8  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Yes      No         94 0.314      0.752      0.47 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Yes      Yes        30 0.100      0.24       0.319</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> Yes      <span style="color: #BB0000;">NA</span>          1 0.003<span style="text-decoration: underline;">34</span>    0.008      0.2  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> No       No        108 0.361     0.621       0.54 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> No       Yes        65 0.217     0.374       0.691</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> No       <span style="color: #BB0000;">NA</span>          1 0.003<span style="text-decoration: underline;">34</span>   0.005<span style="text-decoration: underline;">75</span>     0.2  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Yes      No         92 0.308     0.736       0.46 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Yes      Yes        29 0.097<span style="text-decoration: underline;">0</span>    0.232       0.309</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> Yes      <span style="color: #BB0000;">NA</span>          4 0.013<span style="text-decoration: underline;">4</span>    0.032       0.8  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`diabetes vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 6</span></span>
@@ -237,11 +229,11 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   hblood_pressure smoking     n    rate var1_rate var2_rate</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> No              No        127 0.425      0.655      0.635</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> No              Yes        65 0.217      0.335      0.691</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> No              <span style="color: #BB0000;">NA</span>          2 0.006<span style="text-decoration: underline;">69</span>    0.010<span style="text-decoration: underline;">3</span>     0.4  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> No              Yes        64 0.214      0.330      0.681</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> No              <span style="color: #BB0000;">NA</span>          3 0.010<span style="text-decoration: underline;">0</span>     0.015<span style="text-decoration: underline;">5</span>     0.6  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Yes             No         73 0.244      0.695      0.365</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Yes             Yes        29 0.097<span style="text-decoration: underline;">0</span>     0.276      0.309</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> Yes             <span style="color: #BB0000;">NA</span>          3 0.010<span style="text-decoration: underline;">0</span>     0.028<span style="text-decoration: underline;">6</span>     0.6  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Yes             Yes        30 0.100      0.286      0.319</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> Yes             <span style="color: #BB0000;">NA</span>          2 0.006<span style="text-decoration: underline;">69</span>    0.019<span style="text-decoration: underline;">0</span>     0.4  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`hblood_pressure vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 6</span></span>
@@ -256,12 +248,12 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   sex    smoking     n    rate var1_rate var2_rate</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Female No        100 0.334     0.952      0.5   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Female Yes         4 0.013<span style="text-decoration: underline;">4</span>    0.038<span style="text-decoration: underline;">1</span>     0.042<span style="text-decoration: underline;">6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Female <span style="color: #BB0000;">NA</span>          1 0.003<span style="text-decoration: underline;">34</span>   0.009<span style="text-decoration: underline;">52</span>    0.2   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Male   No        100 0.334     0.515      0.5   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Male   Yes        90 0.301     0.464      0.957 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> Male   <span style="color: #BB0000;">NA</span>          4 0.013<span style="text-decoration: underline;">4</span>    0.020<span style="text-decoration: underline;">6</span>     0.8   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Female No         98 0.328      0.933     0.49  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Female Yes         4 0.013<span style="text-decoration: underline;">4</span>     0.038<span style="text-decoration: underline;">1</span>    0.042<span style="text-decoration: underline;">6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Female <span style="color: #BB0000;">NA</span>          3 0.010<span style="text-decoration: underline;">0</span>     0.028<span style="text-decoration: underline;">6</span>    0.6   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Male   No        102 0.341      0.526     0.51  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Male   Yes        90 0.301      0.464     0.957 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> Male   <span style="color: #BB0000;">NA</span>          2 0.006<span style="text-decoration: underline;">69</span>    0.010<span style="text-decoration: underline;">3</span>    0.4   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`sex vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 6</span></span>
@@ -276,12 +268,12 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   smoking death_event     n    rate var1_rate var2_rate</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> No      No            135 0.452       0.675    0.665 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> No      Yes            65 0.217       0.325    0.677 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Yes     No             64 0.214       0.681    0.315 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Yes     Yes            30 0.100       0.319    0.312 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> <span style="color: #BB0000;">NA</span>      No              4 0.013<span style="text-decoration: underline;">4</span>      0.8      0.019<span style="text-decoration: underline;">7</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> <span style="color: #BB0000;">NA</span>      Yes             1 0.003<span style="text-decoration: underline;">34</span>     0.2      0.010<span style="text-decoration: underline;">4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> No      No            136 0.455       0.68    0.670  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> No      Yes            64 0.214       0.32    0.667  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Yes     No             65 0.217       0.691   0.320  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Yes     Yes            29 0.097<span style="text-decoration: underline;">0</span>      0.309   0.302  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> <span style="color: #BB0000;">NA</span>      No              2 0.006<span style="text-decoration: underline;">69</span>     0.4     0.009<span style="text-decoration: underline;">85</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> <span style="color: #BB0000;">NA</span>      Yes             3 0.010<span style="text-decoration: underline;">0</span>      0.6     0.031<span style="text-decoration: underline;">2</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Compare the categorical variables that case of joint the death_event variable</span></span></span>
@@ -327,12 +319,12 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   smoking death_event     n    rate var1_rate var2_rate</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> No      No            135 0.452       0.675    0.665 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> No      Yes            65 0.217       0.325    0.677 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Yes     No             64 0.214       0.681    0.315 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Yes     Yes            30 0.100       0.319    0.312 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> <span style="color: #BB0000;">NA</span>      No              4 0.013<span style="text-decoration: underline;">4</span>      0.8      0.019<span style="text-decoration: underline;">7</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> <span style="color: #BB0000;">NA</span>      Yes             1 0.003<span style="text-decoration: underline;">34</span>     0.2      0.010<span style="text-decoration: underline;">4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> No      No            136 0.455       0.68    0.670  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> No      Yes            64 0.214       0.32    0.667  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Yes     No             65 0.217       0.691   0.320  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Yes     Yes            29 0.097<span style="text-decoration: underline;">0</span>      0.309   0.302  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> <span style="color: #BB0000;">NA</span>      No              2 0.006<span style="text-decoration: underline;">69</span>     0.4     0.009<span style="text-decoration: underline;">85</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> <span style="color: #BB0000;">NA</span>      Yes             3 0.010<span style="text-decoration: underline;">0</span>      0.6     0.031<span style="text-decoration: underline;">2</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Compare the two categorical variables</span></span></span>
@@ -344,12 +336,12 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   smoking death_event     n    rate var1_rate var2_rate</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> No      No            135 0.452       0.675    0.665 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> No      Yes            65 0.217       0.325    0.677 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Yes     No             64 0.214       0.681    0.315 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Yes     Yes            30 0.100       0.319    0.312 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> <span style="color: #BB0000;">NA</span>      No              4 0.013<span style="text-decoration: underline;">4</span>      0.8      0.019<span style="text-decoration: underline;">7</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> <span style="color: #BB0000;">NA</span>      Yes             1 0.003<span style="text-decoration: underline;">34</span>     0.2      0.010<span style="text-decoration: underline;">4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> No      No            136 0.455       0.68    0.670  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> No      Yes            64 0.214       0.32    0.667  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Yes     No             65 0.217       0.691   0.320  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Yes     Yes            29 0.097<span style="text-decoration: underline;">0</span>      0.309   0.302  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> <span style="color: #BB0000;">NA</span>      No              2 0.006<span style="text-decoration: underline;">69</span>     0.4     0.009<span style="text-decoration: underline;">85</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> <span style="color: #BB0000;">NA</span>      Yes             3 0.010<span style="text-decoration: underline;">0</span>      0.6     0.031<span style="text-decoration: underline;">2</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Filtering the case of smoking included NA </span></span></span>
@@ -357,12 +349,12 @@ and return compare_category class that based list object.</p>
 <span class="r-in"><span>  <span class="st">"[["</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">smoking</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   smoking death_event     n  rate var1_rate var2_rate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> No      No            135 0.452     0.675     0.665</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> No      Yes            65 0.217     0.325     0.677</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Yes     No             64 0.214     0.681     0.315</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Yes     Yes            30 0.100     0.319     0.312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   smoking death_event     n   rate var1_rate var2_rate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> No      No            136 0.455      0.68      0.670</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> No      Yes            64 0.214      0.32      0.667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Yes     No             65 0.217      0.691     0.320</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Yes     Yes            29 0.097<span style="text-decoration: underline;">0</span>     0.309     0.302</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Summary the all case : Return a invisible copy of an object.</span></span></span>
 <span class="r-in"><span><span class="va">stat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">all_var</span><span class="op">)</span></span></span>
@@ -388,8 +380,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`anaemia vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> anaemia  No Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     No  106  61</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes  94  33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     No  107  61</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes  93  33</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`anaemia vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        death_event</span>
@@ -412,8 +404,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`diabetes vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> diabetes  No Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      No  106  64</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Yes  94  30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      No  108  65</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Yes  92  29</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`diabetes vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         death_event</span>
@@ -430,8 +422,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`hblood_pressure vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> hblood_pressure  No Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             No  127  65</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Yes  73  29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             No  127  64</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Yes  73  30</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`hblood_pressure vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                death_event</span>
@@ -442,8 +434,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`sex vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sex       No Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Female 100   4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Male   100  90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Female  98   4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Male   102  90</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`sex vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         death_event</span>
@@ -454,8 +446,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`smoking vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        death_event</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> smoking  No Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     No  135  65</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes  64  30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     No  136  64</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes  65  29</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">── Relative contingency tables ─────────────────── Number of table is 15 ──</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`anaemia vs diabetes`</span>
@@ -479,8 +471,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`anaemia vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> anaemia        No       Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     No  0.3605442 0.2074830</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes 0.3197279 0.1122449</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     No  0.3639456 0.2074830</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes 0.3163265 0.1122449</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`anaemia vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        death_event</span>
@@ -502,9 +494,9 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`diabetes vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         smoking</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> diabetes        No       Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      No  0.3605442 0.2176871</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Yes 0.3197279 0.1020408</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> diabetes         No        Yes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      No  0.36734694 0.22108844</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Yes 0.31292517 0.09863946</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`diabetes vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         death_event</span>
@@ -520,9 +512,9 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`hblood_pressure vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                smoking</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> hblood_pressure         No        Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             No  0.43197279 0.22108844</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Yes 0.24829932 0.09863946</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hblood_pressure        No       Yes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             No  0.4319728 0.2176871</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Yes 0.2482993 0.1020408</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`hblood_pressure vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                death_event</span>
@@ -533,8 +525,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`sex vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sex              No        Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Female 0.34013605 0.01360544</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Male   0.34013605 0.30612245</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Female 0.33333333 0.01360544</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Male   0.34693878 0.30612245</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`sex vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         death_event</span>
@@ -544,27 +536,27 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`smoking vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        death_event</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> smoking        No       Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     No  0.4591837 0.2210884</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes 0.2176871 0.1020408</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> smoking         No        Yes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     No  0.46258503 0.21768707</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes 0.22108844 0.09863946</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">── Chi-squared contingency table tests ─────────── Number of table is 15 ──</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         variable_1      variable_2    statistic      p.value df</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1          anaemia        diabetes 1.035093e-02 9.189634e-01  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2          anaemia hblood_pressure 2.893564e-01 5.906333e-01  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3          anaemia             sex 2.299464e+00 1.294186e-01  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4          anaemia         smoking 3.217705e+00 7.284571e-02  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4          anaemia         smoking 2.940326e+00 8.639331e-02  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5          anaemia     death_event 1.042175e+00 3.073161e-01  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6         diabetes hblood_pressure 9.476710e-03 9.224497e-01  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7         diabetes             sex 6.783853e+00 9.198613e-03  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8         diabetes         smoking 5.364145e+00 2.055487e-02  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8         diabetes         smoking 5.450134e+00 1.956683e-02  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9         diabetes     death_event 2.161684e-30 1.000000e+00  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 hblood_pressure             sex 2.829289e+00 9.255934e-02  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 hblood_pressure         smoking 6.685444e-01 4.135595e-01  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 hblood_pressure         smoking 4.063787e-01 5.238133e-01  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12 hblood_pressure     death_event 1.543461e+00 2.141034e-01  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13             sex         smoking 5.654892e+01 5.481762e-14  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13             sex         smoking 5.454737e+01 1.517458e-13  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 14             sex     death_event 0.000000e+00 1.000000e+00  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15         smoking     death_event 0.000000e+00 1.000000e+00  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15         smoking     death_event 3.982985e-03 9.496782e-01  1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Summary by returned objects</span></span></span>
 <span class="r-in"><span><span class="va">stat</span></span></span>
@@ -590,8 +582,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $table$`anaemia vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> anaemia  No Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     No  106  61</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes  94  33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     No  107  61</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes  93  33</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $table$`anaemia vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        death_event</span>
@@ -614,8 +606,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $table$`diabetes vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> diabetes  No Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      No  106  64</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Yes  94  30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      No  108  65</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Yes  92  29</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $table$`diabetes vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         death_event</span>
@@ -632,8 +624,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $table$`hblood_pressure vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> hblood_pressure  No Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             No  127  65</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Yes  73  29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             No  127  64</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Yes  73  30</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $table$`hblood_pressure vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                death_event</span>
@@ -644,8 +636,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $table$`sex vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sex       No Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Female 100   4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Male   100  90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Female  98   4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Male   102  90</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $table$`sex vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         death_event</span>
@@ -656,8 +648,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $table$`smoking vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        death_event</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> smoking  No Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     No  135  65</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes  64  30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     No  136  64</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes  65  29</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $relative</span>
@@ -682,8 +674,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $relative$`anaemia vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> anaemia        No       Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     No  0.3605442 0.2074830</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes 0.3197279 0.1122449</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     No  0.3639456 0.2074830</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes 0.3163265 0.1122449</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $relative$`anaemia vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        death_event</span>
@@ -705,9 +697,9 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $relative$`diabetes vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         smoking</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> diabetes        No       Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      No  0.3605442 0.2176871</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Yes 0.3197279 0.1020408</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> diabetes         No        Yes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      No  0.36734694 0.22108844</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Yes 0.31292517 0.09863946</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $relative$`diabetes vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         death_event</span>
@@ -723,9 +715,9 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $relative$`hblood_pressure vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                smoking</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> hblood_pressure         No        Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             No  0.43197279 0.22108844</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Yes 0.24829932 0.09863946</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hblood_pressure        No       Yes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             No  0.4319728 0.2176871</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Yes 0.2482993 0.1020408</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $relative$`hblood_pressure vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                death_event</span>
@@ -736,8 +728,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $relative$`sex vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sex              No        Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Female 0.34013605 0.01360544</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Male   0.34013605 0.30612245</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Female 0.33333333 0.01360544</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Male   0.34693878 0.30612245</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $relative$`sex vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         death_event</span>
@@ -747,9 +739,9 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $relative$`smoking vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        death_event</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> smoking        No       Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     No  0.4591837 0.2210884</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes 0.2176871 0.1020408</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> smoking         No        Yes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     No  0.46258503 0.21768707</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes 0.22108844 0.09863946</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $chisq</span>
@@ -757,18 +749,18 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1          anaemia        diabetes 1.035093e-02 9.189634e-01  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2          anaemia hblood_pressure 2.893564e-01 5.906333e-01  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3          anaemia             sex 2.299464e+00 1.294186e-01  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4          anaemia         smoking 3.217705e+00 7.284571e-02  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4          anaemia         smoking 2.940326e+00 8.639331e-02  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5          anaemia     death_event 1.042175e+00 3.073161e-01  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6         diabetes hblood_pressure 9.476710e-03 9.224497e-01  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7         diabetes             sex 6.783853e+00 9.198613e-03  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8         diabetes         smoking 5.364145e+00 2.055487e-02  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8         diabetes         smoking 5.450134e+00 1.956683e-02  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9         diabetes     death_event 2.161684e-30 1.000000e+00  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 hblood_pressure             sex 2.829289e+00 9.255934e-02  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 hblood_pressure         smoking 6.685444e-01 4.135595e-01  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 hblood_pressure         smoking 4.063787e-01 5.238133e-01  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12 hblood_pressure     death_event 1.543461e+00 2.141034e-01  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13             sex         smoking 5.654892e+01 5.481762e-14  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13             sex         smoking 5.454737e+01 1.517458e-13  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 14             sex     death_event 0.000000e+00 1.000000e+00  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15         smoking     death_event 0.000000e+00 1.000000e+00  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15         smoking     death_event 3.982985e-03 9.496782e-01  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># component of table </span></span></span>
@@ -794,8 +786,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`anaemia vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> anaemia  No Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     No  106  61</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes  94  33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     No  107  61</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes  93  33</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`anaemia vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        death_event</span>
@@ -818,8 +810,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`diabetes vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> diabetes  No Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      No  106  64</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Yes  94  30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      No  108  65</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Yes  92  29</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`diabetes vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         death_event</span>
@@ -836,8 +828,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`hblood_pressure vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> hblood_pressure  No Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             No  127  65</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Yes  73  29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             No  127  64</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Yes  73  30</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`hblood_pressure vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                death_event</span>
@@ -848,8 +840,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`sex vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sex       No Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Female 100   4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Male   100  90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Female  98   4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Male   102  90</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`sex vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         death_event</span>
@@ -860,8 +852,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`smoking vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        death_event</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> smoking  No Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     No  135  65</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes  64  30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     No  136  64</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes  65  29</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># component of chi-square test </span></span></span>
@@ -870,18 +862,18 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1          anaemia        diabetes 1.035093e-02 9.189634e-01  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2          anaemia hblood_pressure 2.893564e-01 5.906333e-01  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3          anaemia             sex 2.299464e+00 1.294186e-01  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4          anaemia         smoking 3.217705e+00 7.284571e-02  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4          anaemia         smoking 2.940326e+00 8.639331e-02  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5          anaemia     death_event 1.042175e+00 3.073161e-01  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6         diabetes hblood_pressure 9.476710e-03 9.224497e-01  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7         diabetes             sex 6.783853e+00 9.198613e-03  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8         diabetes         smoking 5.364145e+00 2.055487e-02  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8         diabetes         smoking 5.450134e+00 1.956683e-02  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9         diabetes     death_event 2.161684e-30 1.000000e+00  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 hblood_pressure             sex 2.829289e+00 9.255934e-02  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 hblood_pressure         smoking 6.685444e-01 4.135595e-01  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 hblood_pressure         smoking 4.063787e-01 5.238133e-01  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12 hblood_pressure     death_event 1.543461e+00 2.141034e-01  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13             sex         smoking 5.654892e+01 5.481762e-14  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13             sex         smoking 5.454737e+01 1.517458e-13  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 14             sex     death_event 0.000000e+00 1.000000e+00  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15         smoking     death_event 0.000000e+00 1.000000e+00  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15         smoking     death_event 3.982985e-03 9.496782e-01  1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># component of chi-square test </span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">all_var</span>, <span class="st">"chisq"</span><span class="op">)</span></span></span>
@@ -890,18 +882,18 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1          anaemia        diabetes 1.035093e-02 9.189634e-01  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2          anaemia hblood_pressure 2.893564e-01 5.906333e-01  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3          anaemia             sex 2.299464e+00 1.294186e-01  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4          anaemia         smoking 3.217705e+00 7.284571e-02  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4          anaemia         smoking 2.940326e+00 8.639331e-02  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5          anaemia     death_event 1.042175e+00 3.073161e-01  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6         diabetes hblood_pressure 9.476710e-03 9.224497e-01  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7         diabetes             sex 6.783853e+00 9.198613e-03  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8         diabetes         smoking 5.364145e+00 2.055487e-02  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8         diabetes         smoking 5.450134e+00 1.956683e-02  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9         diabetes     death_event 2.161684e-30 1.000000e+00  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 hblood_pressure             sex 2.829289e+00 9.255934e-02  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 hblood_pressure         smoking 6.685444e-01 4.135595e-01  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 hblood_pressure         smoking 4.063787e-01 5.238133e-01  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12 hblood_pressure     death_event 1.543461e+00 2.141034e-01  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13             sex         smoking 5.654892e+01 5.481762e-14  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13             sex         smoking 5.454737e+01 1.517458e-13  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 14             sex     death_event 0.000000e+00 1.000000e+00  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15         smoking     death_event 0.000000e+00 1.000000e+00  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15         smoking     death_event 3.982985e-03 9.496782e-01  1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># component of chi-square test (first, third case)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">all_var</span>, <span class="st">"chisq"</span>, pos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
@@ -934,8 +926,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`anaemia vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> anaemia        No       Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     No  0.3605442 0.2074830</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes 0.3197279 0.1122449</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     No  0.3639456 0.2074830</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes 0.3163265 0.1122449</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`anaemia vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        death_event</span>
@@ -957,9 +949,9 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`diabetes vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         smoking</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> diabetes        No       Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      No  0.3605442 0.2176871</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Yes 0.3197279 0.1020408</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> diabetes         No        Yes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      No  0.36734694 0.22108844</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Yes 0.31292517 0.09863946</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`diabetes vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         death_event</span>
@@ -975,9 +967,9 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`hblood_pressure vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                smoking</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> hblood_pressure         No        Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             No  0.43197279 0.22108844</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Yes 0.24829932 0.09863946</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hblood_pressure        No       Yes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             No  0.4319728 0.2176871</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Yes 0.2482993 0.1020408</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`hblood_pressure vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                death_event</span>
@@ -988,8 +980,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`sex vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sex              No        Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Female 0.34013605 0.01360544</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Male   0.34013605 0.30612245</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Female 0.33333333 0.01360544</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Male   0.34693878 0.30612245</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`sex vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         death_event</span>
@@ -999,9 +991,9 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`smoking vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        death_event</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> smoking        No       Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     No  0.4591837 0.2210884</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes 0.2176871 0.1020408</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> smoking         No        Yes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     No  0.46258503 0.21768707</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes 0.22108844 0.09863946</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># component of table without missing values </span></span></span>
@@ -1028,8 +1020,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`anaemia vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> anaemia  No Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     No  106  61</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes  94  33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     No  107  61</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes  93  33</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`anaemia vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        death_event</span>
@@ -1052,8 +1044,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`diabetes vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> diabetes  No Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      No  106  64</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Yes  94  30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      No  108  65</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Yes  92  29</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`diabetes vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         death_event</span>
@@ -1070,8 +1062,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`hblood_pressure vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> hblood_pressure  No Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             No  127  65</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Yes  73  29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             No  127  64</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Yes  73  30</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`hblood_pressure vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                death_event</span>
@@ -1082,8 +1074,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`sex vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sex       No Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Female 100   4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Male   100  90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Female  98   4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Male   102  90</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`sex vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         death_event</span>
@@ -1094,8 +1086,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`smoking vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        death_event</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> smoking  No Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     No  135  65</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes  64  30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     No  136  64</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes  65  29</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># component of table include marginal value </span></span></span>
@@ -1125,8 +1117,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`anaemia vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> anaemia    No Yes &lt;Total&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   No      106  61     167</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Yes      94  33     127</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   No      107  61     168</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Yes      93  33     126</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;Total&gt; 200  94     294</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`anaemia vs death_event`</span>
@@ -1153,8 +1145,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`diabetes vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> diabetes   No Yes &lt;Total&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   No      106  64     170</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Yes      94  30     124</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   No      108  65     173</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Yes      92  29     121</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;Total&gt; 200  94     294</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`diabetes vs death_event`</span>
@@ -1174,8 +1166,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`hblood_pressure vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> hblood_pressure  No Yes &lt;Total&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         No      127  65     192</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         Yes      73  29     102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         No      127  64     191</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         Yes      73  30     103</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;Total&gt; 200  94     294</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`hblood_pressure vs death_event`</span>
@@ -1188,8 +1180,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`sex vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sex        No Yes &lt;Total&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Female  100   4     104</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Male    100  90     190</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Female   98   4     102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Male    102  90     192</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;Total&gt; 200  94     294</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`sex vs death_event`</span>
@@ -1202,9 +1194,9 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`smoking vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          death_event</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> smoking    No Yes &lt;Total&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   No      135  65     200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Yes      64  30      94</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;Total&gt; 199  95     294</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   No      136  64     200</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Yes      65  29      94</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;Total&gt; 201  93     294</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="va">margin</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`anaemia vs diabetes`</span>
@@ -1231,8 +1223,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`anaemia vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> anaemia    No Yes &lt;Total&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   No      106  61     167</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Yes      94  33     127</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   No      107  61     168</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Yes      93  33     126</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;Total&gt; 200  94     294</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`anaemia vs death_event`</span>
@@ -1259,8 +1251,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`diabetes vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> diabetes   No Yes &lt;Total&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   No      106  64     170</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Yes      94  30     124</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   No      108  65     173</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Yes      92  29     121</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;Total&gt; 200  94     294</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`diabetes vs death_event`</span>
@@ -1280,8 +1272,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`hblood_pressure vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> hblood_pressure  No Yes &lt;Total&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         No      127  65     192</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         Yes      73  29     102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         No      127  64     191</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         Yes      73  30     103</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;Total&gt; 200  94     294</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`hblood_pressure vs death_event`</span>
@@ -1294,8 +1286,8 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`sex vs smoking`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          smoking</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sex        No Yes &lt;Total&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Female  100   4     104</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Male    100  90     190</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Female   98   4     102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Male    102  90     192</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;Total&gt; 200  94     294</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`sex vs death_event`</span>
@@ -1308,16 +1300,16 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`smoking vs death_event`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          death_event</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> smoking    No Yes &lt;Total&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   No      135  65     200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Yes      64  30      94</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;Total&gt; 199  95     294</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   No      136  64     200</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Yes      65  29      94</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;Total&gt; 201  93     294</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># component of chi-square test </span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">two_var</span>, method <span class="op">=</span> <span class="st">"chisq"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">── Chi-squared contingency table tests ──────────── Number of table is 1 ──</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variable_1  variable_2 statistic p.value df</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    smoking death_event         0       1  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   variable_1  variable_2   statistic   p.value df</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    smoking death_event 0.003982985 0.9496782  1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># verbose is FALSE </span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">all_var</span>, <span class="st">"chisq"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
@@ -1325,18 +1317,18 @@ and return compare_category class that based list object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1          anaemia        diabetes 1.035093e-02 9.189634e-01  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2          anaemia hblood_pressure 2.893564e-01 5.906333e-01  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3          anaemia             sex 2.299464e+00 1.294186e-01  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4          anaemia         smoking 3.217705e+00 7.284571e-02  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4          anaemia         smoking 2.940326e+00 8.639331e-02  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5          anaemia     death_event 1.042175e+00 3.073161e-01  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6         diabetes hblood_pressure 9.476710e-03 9.224497e-01  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7         diabetes             sex 6.783853e+00 9.198613e-03  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8         diabetes         smoking 5.364145e+00 2.055487e-02  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8         diabetes         smoking 5.450134e+00 1.956683e-02  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9         diabetes     death_event 2.161684e-30 1.000000e+00  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 hblood_pressure             sex 2.829289e+00 9.255934e-02  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 hblood_pressure         smoking 6.685444e-01 4.135595e-01  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 hblood_pressure         smoking 4.063787e-01 5.238133e-01  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12 hblood_pressure     death_event 1.543461e+00 2.141034e-01  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13             sex         smoking 5.654892e+01 5.481762e-14  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13             sex         smoking 5.454737e+01 1.517458e-13  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 14             sex     death_event 0.000000e+00 1.000000e+00  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15         smoking     death_event 0.000000e+00 1.000000e+00  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15         smoking     death_event 3.982985e-03 9.496782e-01  1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#' # Using pipes &amp; dplyr -------------------------</span></span></span>
 <span class="r-in"><span><span class="co"># If you want to use dplyr, set verbose to FALSE</span></span></span>
@@ -1344,12 +1336,12 @@ and return compare_category class that based list object.</p>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">p.value</span> <span class="op">&lt;</span> <span class="fl">0.26</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        variable_1  variable_2 statistic      p.value df</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1         anaemia         sex  2.299464 1.294186e-01  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2         anaemia     smoking  3.217705 7.284571e-02  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2         anaemia     smoking  2.940326 8.639331e-02  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3        diabetes         sex  6.783853 9.198613e-03  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4        diabetes     smoking  5.364145 2.055487e-02  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4        diabetes     smoking  5.450134 1.956683e-02  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5 hblood_pressure         sex  2.829289 9.255934e-02  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6 hblood_pressure death_event  1.543461 2.141034e-01  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7             sex     smoking 56.548915 5.481762e-14  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7             sex     smoking 54.547368 1.517458e-13  1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Extract component from list by index</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">all_var</span>, <span class="st">"table"</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
@@ -1364,8 +1356,8 @@ and return compare_category class that based list object.</p>
 <span class="r-in"><span>  <span class="st">"[["</span><span class="op">(</span><span class="st">"smoking vs death_event"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        death_event</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> smoking  No Yes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     No  135  65</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes  64  30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     No  136  64</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Yes  65  29</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># plot all pair of variables</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">all_var</span><span class="op">)</span></span></span>
