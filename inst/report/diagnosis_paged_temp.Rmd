@@ -467,7 +467,7 @@ diagn_missing <- diagn_na_unique %>%
 
 if (NROW(diagn_missing) > 1) {
   break_line_asis(1)
-  plot_na_intersect(reportData, base_family = base_family)
+  plot_na_intersect(reportData, base_family = base_family, typographic = FALSE)
 } else if (NROW(diagn_missing) == 1) {
   html_cat("Supported only when the number of variables including missing values is 2 or more.")
   break_line_asis(1)

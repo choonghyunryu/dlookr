@@ -569,7 +569,7 @@ if (NROW(diagn_missing) > 1) {
   html_cat(cap)
 
   break_line_asis(1)
-  plot_na_intersect(reportData, base_family = base_family)
+  plot_na_intersect(reportData, base_family = base_family, typographic = FALSE)
 } else if (NROW(diagn_missing) == 1) {
   html_cat("upported only when the number of variables including missing values is 2 or more")
   break_line_asis(1)

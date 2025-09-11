@@ -1,3 +1,14 @@
+# dlookr 0.6.6
+
+## MINOR CHANGES
+
+* Correct the asymmetry visualization of the combinations of 
+  missing values across cases on the data diagnosis report. (#126)
+    - diagnose_paged_report()
+    - diagnose_web_report()
+
+
+
 # dlookr 0.6.5
 
 ## MAJOR CHANGES
