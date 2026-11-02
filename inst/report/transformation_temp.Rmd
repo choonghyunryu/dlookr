@@ -21,14 +21,14 @@ knitr::opts_chunk$set(fig.width = 12, fig.height = 9)
 options(warn = -1)
 
 if (!requireNamespace("mice", quietly = TRUE)) {
-  stop("Package 'mice' needed for this function to work. Please install it.", 
+  stop("Package 'mice' is needed for this function to work. Please install it.", 
        call. = FALSE)
 } else {
   library(mice)
 }
 
 if (!requireNamespace("rpart", quietly = TRUE)) {
-  stop("Package 'rpart' needed for this function to work. Please install it.", 
+  stop("Package 'rpart' is needed for this function to work. Please install it.", 
        call. = FALSE)
 }
 
@@ -180,7 +180,7 @@ metrics <- c("dataset" ,"dataset type", "target", "samples",
 
 value <- c("$dataset$", 
            class(reportData)[1], 
-           ifelse(is.null(targetVariable), "not defied", targetVariable),
+           ifelse(is.null(targetVariable), "not defined", targetVariable),
            paste0(format(N_sample, big.mark = ","), " / ", 
                   format(N, big.mark = ","), " (", sample_percent, "%)"),
            "$date$",

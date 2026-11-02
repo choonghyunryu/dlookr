@@ -24,7 +24,7 @@ library(kableExtra)
 
 # Diagnose Data
 ## Overview of Diagnosis
-### List of all variables quality
+### List of all variables' quality
 
 ```{r overview, echo=FALSE, warning=FALSE, message=FALSE}
 edaData <- get("edaData", .dlookrEnv)
@@ -65,7 +65,7 @@ if (NROW(diagn_missing) > 0) {
 ```
 
 
-### Diagnosis of unique data(Text and Category)
+### Diagnosis of unique data (Text and Category)
 ```{r unique_date_category, echo=FALSE, warning=FALSE, message=FALSE, comment=""}
 diagn_uniq_cat <- diagn_overview %>%
   filter(type %in% c("character", "factor", "ordered")) %>%
@@ -79,12 +79,12 @@ if (NROW(diagn_uniq_cat) > 0) {
                format.args = list(big.mark = ",")) %>% 
     kable_styling(full_width = FALSE, font_size = 15, position = "left") 
 } else {
-  cat("No variable with a high proportion greater than 0.5")
+  cat("No variables with a unique data proportion greater than 0.5")
 }
 ```
 
 
-### Diagnosis of unique data(Numerical)
+### Diagnosis of unique data (Numerical)
 ```{r unique_data_numeric, echo=FALSE, warning=FALSE, message=FALSE, comment=""}
 diagn_uniq_num <- diagn_overview %>%
   filter(type %in% c("numeric", "integer")) %>%
@@ -98,7 +98,7 @@ if (NROW(diagn_uniq_num) > 0) {
                format.args = list(big.mark = ",")) %>% 
     kable_styling(full_width = FALSE, font_size = 15, position = "left") 
 } else {
-  cat("No variable with unique data proportion less than 0.1")
+  cat("No variables with a unique data proportion less than 0.1")
 }
 ```
 
@@ -117,7 +117,7 @@ if (NROW(diagn_category) > 0) {
                format.args = list(big.mark = ",")) %>% 
     kable_styling(full_width = FALSE, font_size = 15, position = "left") 
 } else {
-  cat("No categorical variable")
+  cat("No categorical variables")
 }
 ```
 
@@ -133,7 +133,7 @@ if (NROW(diagn_numeric) > 0) {
                format.args = list(big.mark = ",")) %>% 
     kable_styling(full_width = FALSE, font_size = 15, position = "left") 
 } else {
-  cat("No numerical variable")
+  cat("No numerical variables")
 }
 ```
 
@@ -154,15 +154,15 @@ if (NROW(diagn_numeric) > 0) {
                  format.args = list(big.mark = ",")) %>% 
       kable_styling(full_width = FALSE, font_size = 15, position = "left") 
   } else {
-    cat("No numeric variable with zero value")
+    cat("No numeric variables with zero values")
   }
 } else {
-  cat("No numerical variable")
+  cat("No numerical variables")
 }
 ```
 
 
-### List of numerical diagnosis (minus)
+### List of numerical diagnosis (negative)
 ```{r numeric_minus, echo=FALSE, warning=FALSE, message=FALSE, comment=""}
 if (NROW(diagn_numeric) > 0) {
   diagn_minus <- diagn_numeric %>%
@@ -172,16 +172,16 @@ if (NROW(diagn_numeric) > 0) {
     arrange(desc(minus))
 
   if (NROW(diagn_minus) > 0) {
-    cap <- "List of numerical diagnosis (minus)"
+    cap <- "List of numerical diagnosis (negative)"
   
     knitr::kable(diagn_minus, digits = 2, caption = cap, format = "html",
                  format.args = list(big.mark = ",")) %>% 
       kable_styling(full_width = FALSE, font_size = 15, position = "left") 
   } else {
-    cat("No numeric variable with negative value")
+    cat("No numeric variables with negative values")
   }
 } else {
-  cat("No numerical variable")
+  cat("No numerical variables")
 }
 ```
 
@@ -206,18 +206,18 @@ if (NROW(diagn_numeric) > 0) {
     cat("No numeric variables including outliers")
   }
 } else {
-  cat("No numerical variable")
+  cat("No numerical variables")
 }
 ```
 
 
-## Detailed outliers diagnosis
+## Detailed outlier diagnosis
 ```{r detail_outliers, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=4, fig.width=6, results='asis'}
 if (NROW(diagn_numeric) > 0) {
   diagn_outlier2 <- edaData %>%
     diagnose_outlier(diagn_outlier$variables)
 
-  cols <- c("Outliers count", "Outliers ratio (%)", "Mean of outliers",
+  cols <- c("Outlier count", "Outlier ratio (%)", "Mean of outliers",
             "Mean with outliers", "Mean without outliers")
 
   if (NROW(diagn_outlier2) > 0) {
@@ -229,7 +229,7 @@ if (NROW(diagn_numeric) > 0) {
       cap <- sprintf("%s", variables[i])
 
       cat(sprintf("variable : %s", cap))
-      cap_table <- paste("Outliers information of", cap)
+      cap_table <- paste("Outlier information of", cap)
 
       outlier_df <- data.frame(Measures = cols,
                                Values = as.vector(t(diagn_outlier2[i, -1])))
@@ -247,7 +247,7 @@ if (NROW(diagn_numeric) > 0) {
     cat("No numeric variables including outliers")
   }
 } else {
-  cat("No numerical variable")
+  cat("No numerical variables")
 }
 ```
 

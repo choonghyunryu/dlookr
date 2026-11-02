@@ -26,12 +26,12 @@ library(knitr)
 library(kableExtra)
 
 if (!requireNamespace("mice", quietly = TRUE)) {
-  stop("Package 'mice' needed for this function to work. Please install it.", 
+  stop("Package 'mice' is needed for this function to work. Please install it.", 
        call. = FALSE)
 }
 
 if (!requireNamespace("rpart", quietly = TRUE)) {
-  stop("Package 'rpart' needed for this function to work. Please install it.", 
+  stop("Package 'rpart' is needed for this function to work. Please install it.", 
        call. = FALSE)
 }
 ```

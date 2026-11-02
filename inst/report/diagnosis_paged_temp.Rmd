@@ -11,9 +11,9 @@ output:
     toc: true
     # Change to true to add number in front of chapters
     number_sections: false
-    # Change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
+    # Change to true for a self-contained document, but it'll be a little slower for Pandoc to render
     self_contained: true
-# Set  toc title, default none
+# Set toc title, default none
 toc-title: Contents
 #knit: pagedown::chrome_print
 ---
@@ -175,7 +175,7 @@ if (nrow(warn_identifier) > 0) {
   tab_warning$indicator[idx]  <- warn_identifier$unique_count
   tab_warning$ratio[idx]      <- warn_identifier$unique_rate 
   tab_warning$warnings[idx]   <- sprintf(
-    "%s has high(%.2f) cardinality, Maybe identifier",
+    "%s has high (%.2f) cardinality, maybe an identifier",
     warn_identifier$variables, warn_identifier$unique_rate)
   tab_warning$recommend[idx]  <- "check"  
 } else {
@@ -198,7 +198,7 @@ if (nrow(warn_constant) > 0) {
   tab_warning$indicator[idx]  <- warn_constant$unique_count
   tab_warning$ratio[idx]      <- warn_constant$unique_rate 
   tab_warning$warnings[idx]   <- sprintf(
-    "%s has constant value \"%s\"",
+    "%s has a constant value \"%s\"",
     warn_constant$variables, 
     reportData[1, warn_constant$variables %>% as.character()] %>% 
       t() %>% 
@@ -398,7 +398,7 @@ value <- c("$dataset$",
 
 info_job <- data.frame(division = division, metrics = metrics, value = value)
 
-cap <- "Job informations"
+cap <- "Job information"
 
 print_tab(info_job, caption = cap)
 ```
@@ -481,13 +481,13 @@ break_page_asis()
 $content_missing$
 
 # Unique Values
-## Categorical Vaiables
+## Categorical Variables
 
 ```{r unique-date-category, results='asis'}
 html_paged_unique_cat(diagn_na_unique, thres_uniq_cat, n_rows = 25, add_row = 4)  
 ```
 
-## Numerical Vaiables
+## Numerical Variables
 
 ```{r unique-data-numeric, results='asis'}
 html_paged_unique_num(diagn_na_unique, thres_uniq_num, n_rows = 24, add_row = 5)  
@@ -508,7 +508,7 @@ if (in_category) {
   
   print_tab(diagn_category, caption = cap, n_rows = 25, add_row = 4)
 } else {
-  html_cat("No categorical variable")
+  html_cat("No categorical variables")
   break_page_asis()
 }
 ```
@@ -524,7 +524,7 @@ if (NROW(diagn_numeric) > 0) {
   
   print_tab(diagn_numeric, caption = cap, font_size = 13, n_rows = 25, add_row = 4)
 } else {
-  html_cat("No numerical variable")
+  html_cat("No numerical variables")
   break_page_asis()  
 }
 ```
@@ -545,11 +545,11 @@ if (NROW(diagn_numeric) > 0) {
   
     print_tab(diagn_zero, caption = cap, n_rows = 25, add_row = 4)
   } else {
-    html_cat("No numeric variable with zero value")
+    html_cat("No numeric variables with zero values")
     break_page_asis()      
   }
 } else {
-  html_cat("No numerical variable")
+  html_cat("No numerical variables")
   break_page_asis()    
 }
 ```
@@ -568,15 +568,15 @@ if (NROW(diagn_numeric) > 0) {
     arrange(desc(minus))
 
   if (NROW(diagn_minus) > 0) {
-    cap <- "List of numerical diagnosis (minus)"
+    cap <- "List of numerical diagnosis (negative)"
   
     print_tab(diagn_minus, caption = cap, n_rows = 25, add_row = 4)
   } else {
-    html_cat("No numeric variable with negative value")
+    html_cat("No numeric variables with negative values")
     break_page_asis()   
   }
 } else {
-  html_cat("No numerical variable")
+  html_cat("No numerical variables")
   break_page_asis()     
 }
 ```
@@ -602,7 +602,7 @@ if (NROW(diagn_numeric) > 0) {
     break_page_asis() 
   }
 } else {
-  html_cat("No numerical variable")
+  html_cat("No numerical variables")
   break_page_asis() 
 }
 ```
@@ -614,7 +614,7 @@ if (NROW(diagn_numeric) > 0) {
   diagn_outlier2 <- reportData %>%
     diagnose_outlier(diagn_outlier$variables)
 
-  cols <- c("Outliers count", "Outliers ratio (%)", "Mean of outliers",
+  cols <- c("Outlier count", "Outlier ratio (%)", "Mean of outliers",
             "Mean with outliers", "Mean without outliers")
 
   if (NROW(diagn_outlier2) > 0) {
@@ -663,7 +663,7 @@ if (NROW(diagn_numeric) > 0) {
     html_cat("No numeric variables including outliers")
   }
 } else {
-  html_cat("No numerical variable")
+  html_cat("No numerical variables")
 }
 ```
 

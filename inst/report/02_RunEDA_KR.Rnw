@@ -106,7 +106,7 @@ knitr::kable(vars, caption = cap, booktabs = TRUE, longtable = TRUE) %>%
 
 target_nm <- if (is.null(targetVariable)) "NULL" else targetVariable
 target_type <- if (is.null(targetVariable))
-  "NULL(You did not specify a target variable)" else
+  "NULL (You did not specify a target variable)" else
   class(pull(edaData, targetVariable))[1]
 @
 

@@ -4,14 +4,14 @@
 options(warn = -1)
 
 if (!requireNamespace("mice", quietly = TRUE)) {
-  stop("Package 'mice' needed for this function to work. Please install it.", 
+  stop("Package 'mice' is needed for this function to work. Please install it.", 
        call. = FALSE)
 } else {
   library(mice)
 }
 
 if (!requireNamespace("rpart", quietly = TRUE)) {
-  stop("Package 'rpart' needed for this function to work. Please install it.", 
+  stop("Package 'rpart' is needed for this function to work. Please install it.", 
        call. = FALSE)
 }
 
@@ -132,7 +132,7 @@ imputae_summary <- function(object) {
       met <- "Multivariate Imputation by Chained Equations"
       met <- sprintf("%s\n\\\\ - random seed : %s", met, seed)
     }
-    cat(sprintf("* Imputate %s based on %s\n\n", type, met))
+    cat(sprintf("* Impute %s based on %s\n\n", type, met))
   }
 
   invisible(smmry)

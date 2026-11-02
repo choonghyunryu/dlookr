@@ -254,7 +254,7 @@ html_descriptive <- function(.data, base_family = NULL) {
           diagn_outlier <- .data %>%
             diagnose_outlier(variable)
           
-          cols <- c("Outliers count", "Outliers ratio (%)", "Mean of outliers",
+          cols <- c("Outlier count", "Outlier ratio (%)", "Mean of outliers",
                     "Mean with outliers", "Mean without outliers")
           outlier_df <- data.frame(Measures = cols,
                                    Values = as.vector(t(diagn_outlier[, -1]))) 
@@ -928,7 +928,7 @@ html_target_numerical <- function(.data, target, base_family = NULL) {
   }
   
   if (is.null(target)) {
-    html_cat("The target variable is not defied.")   
+    html_cat("The target variable is not defined.")   
     return()
   }
   
@@ -1122,7 +1122,7 @@ html_target_categorical <- function(.data, target, base_family = NULL) {
   }
   
   if (is.null(target)) {
-    stop("The target variable is not defied.")    
+    stop("The target variable is not defined.")    
   }
   
   if (!target %in% names(.data)) {
@@ -1341,7 +1341,7 @@ html_target_correlation <- function(.data, target, base_family = NULL) {
   }
   
   if (is.null(target)) {
-    stop("The target variable is not defied.")    
+    stop("The target variable is not defined.")    
   }
   
   if (!target %in% names(.data)) {
@@ -1827,7 +1827,7 @@ html_paged_compare_numerical <- function(.data, n_rows = 25, add_row = 3,
 #' @importFrom kableExtra kable_styling
 #' @importFrom htmltools div h3
 html_paged_compare_categorical <- function(.data, n_rows = 25, add_row = 3, 
-                                           caption = "Chisqure-Test", 
+                                           caption = "Chi-square Test", 
                                            full_width = TRUE, digits = 5, 
                                            font_size = 13, thres_cells = 20, 
                                            thres_levels = 10, base_family = NULL) {
@@ -2064,7 +2064,7 @@ html_paged_target_numerical <- function(.data, target, full_width = TRUE,
   }
   
   if (is.null(target)) {
-    html_cat("The target variable is not defied.")    
+    html_cat("The target variable is not defined.")    
   } else if (!target %in% names(.data)) {
     html_cat("The data does not contain the variable specified for target.")    
   } else {
@@ -2222,7 +2222,7 @@ html_paged_target_categorical <- function(.data, target, full_width = TRUE,
   }
   
   if (is.null(target)) {
-    html_cat("The target variable is not defied.")    
+    html_cat("The target variable is not defined.")    
     break_page_asis()
   } else if (!target %in% names(.data)) {
     html_cat("The data does not contain the variable specified for target.")  
@@ -2380,7 +2380,7 @@ html_paged_target_correlation <- function(.data, target, full_width = TRUE,
   }
   
   if (is.null(target)) {
-    html_cat("The target variable is not defied.")    
+    html_cat("The target variable is not defined.")    
     break_page_asis()
   } else if (!target %in% names(.data)) {
     html_cat("The data does not contain the variable specified for target.")    

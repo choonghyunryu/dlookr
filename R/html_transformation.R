@@ -595,7 +595,7 @@ html_resolve_skewness <- function(.data, base_family = NULL) {
         }
       )
   } else {
-    html_cat("There are no variables including skewed.")
+    html_cat("There are no skewed variables.")
   }
 }  
 
@@ -746,7 +746,7 @@ html_optimal_binning <- function(.data, target, base_family = NULL) {
   numlist <- find_class(.data, "numerical", index = FALSE)
   
   if (is.null(target)) {
-    html_cat("The target variable is not defied.")    
+    html_cat("The target variable is not defined.")    
   } else if (!target %in% names(.data)) {
     html_cat(paste0("The target variable ", target, " is not in the data."))
   } else if (length(numlist) == 0) {
@@ -1247,7 +1247,7 @@ html_paged_resolve_skewness <- function(.data, full_width = TRUE, font_size = 13
       }
     }  
   } else {
-    html_cat("There are no variables including skewed.")
+    html_cat("There are no skewed variables.")
     break_page_asis()
   }
 }  
@@ -1358,7 +1358,7 @@ html_paged_optimal_binning <- function(.data, target, full_width = TRUE,
   numlist <- find_class(.data, "numerical", index = FALSE)
   
   if (is.null(target)) {
-    html_cat("The target variable is not defied.")    
+    html_cat("The target variable is not defined.")    
     break_page_asis()
   } else if (!target %in% names(.data)) {
     html_cat(paste0("The target variable ", target, " is not in the data."))

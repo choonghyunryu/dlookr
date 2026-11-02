@@ -96,15 +96,15 @@ idx.numeric <- idx.numeric[apply(as.data.frame(edaData[, idx.numeric]), 2,
 
 
 # Introduction
-The EDA Report provides exploratory data analysis information on objects that inherit data.frame and data.frame.
+The EDA Report provides exploratory data analysis information on objects that inherit from data.frame, and on data.frame objects.
 
 
 ## Information of Dataset
-The dataset that generated the EDA Report is an **'`r class(edaData)[1]`'** object. It consists of **`r format(NROW(edaData), big.mark = ",")` observations** and **`r NCOL(edaData)` variables**.
+The dataset used to generate the EDA Report is a **'`r class(edaData)[1]`'** object. It consists of **`r format(NROW(edaData), big.mark = ",")` observations** and **`r NCOL(edaData)` variables**.
 
 
 ## Information of Variables
-The variable information of the data set that generated the EDA Report is shown in the following table.:
+The variable information of the dataset used to generate the EDA Report is shown in the following table:
 ```{r info_variables, echo=FALSE, warning=FALSE, message=FALSE, comment="", results='asis'}
 cap <- "Information of Variables"
 
@@ -120,7 +120,7 @@ knitr::kable(vars, caption = cap, format = "html") %>%
 
 target_nm <- if (is.null(targetVariable)) "NULL" else targetVariable
 target_type <- if (is.null(targetVariable)) 
-  "NULL(You did not specify a target variable)" else 
+  "NULL (You did not specify a target variable)" else 
   class(pull(edaData, targetVariable))[1]
 ```
 
@@ -128,7 +128,7 @@ The target variable of the data is **'`r target_nm`'**, and the data type of the
 
 
 ## About EDA Report
-EDA reports provide information and visualization results that support the EDA process. In particular, it provides a variety of information to understand the relationship between the target variable and the rest of the variables of interest.
+EDA reports provide information and visualization results that support the EDA process. In particular, they provide a variety of information to understand the relationship between the target variable and the rest of the variables of interest.
 
 
 # Univariate Analysis
@@ -267,7 +267,7 @@ if (length(idx.numeric) > 2) {
     cat("No correlation coefficient is greater than 0.5.\n\n")
   }
 } else {
-  cat("Number of numerical variables is less than 2.\n\n")
+  cat("The number of numerical variables is less than 2.\n\n")
 }
 ```
 
@@ -279,12 +279,12 @@ if (length(idx.numeric) > 2) {
     correlate() %>% 
     plot()
 } else {
-  cat("Number of numerical variables is less than 2.\n\n")
+  cat("The number of numerical variables is less than 2.\n\n")
 }  
 ```
 
 
-# Target based Analysis
+# Target-based Analysis
 ## Grouped Descriptive Statistics
 ### Grouped Numerical Variables
 
@@ -298,7 +298,7 @@ if (!is.null(targetVariable)) {
 if (!is.null(targetVariable)) {
   if (factor_flag) {
     if (length(idx.numeric) == 0) {
-      cat("There is no numeric variable.\n\n")
+      cat("There are no numeric variables.\n\n")
     } else {
       for (i in idx.numeric) {
         cat("<b><font size='3' face='verdana'>[", names(edaData)[i], "]</font></b>", "\n")
@@ -329,7 +329,7 @@ if (!is.null(targetVariable)) {
     }  
   } else if (numeric_flag) {
     if (length(idx.numeric) == 0) {
-        cat("There is no numeric variable.\n\n")
+        cat("There are no numeric variables.\n\n")
     } else {
       targetby <- target_by(edaData, targetVariable)
       for (i in idx.numeric) {
@@ -383,7 +383,7 @@ if (!is.null(targetVariable)) {
 if (!is.null(targetVariable)) {
   if (factor_flag) {
     if (length(idx.factor) == 0) {
-      cat("There is no categorical variable.\n\n")
+      cat("There are no categorical variables.\n\n")
     } else {
       for (i in idx.factor) {
         if (sum(!is.na(edaData[, i])) == 0) next
@@ -447,7 +447,7 @@ if (!is.null(targetVariable)) {
     }  
   } else if (numeric_flag) {
     if (length(idx.factor) == 0) {
-        cat("There is no categorical variable.\n\n")
+        cat("There are no categorical variables.\n\n")
     } else {
       targetby <- target_by(edaData, targetVariable)
       for (i in idx.factor) {
@@ -538,7 +538,7 @@ if (!is.null(targetVariable)) {
         cat("No correlation coefficient is greater than 0.5.\n\n")
       }
     } else {
-      cat("Number of numerical variables is less than 2.\n\n")
+      cat("The number of numerical variables is less than 2.\n\n")
     }
   } else if (numeric_flag) {
     cat("Numerical target variables are not supported.\n\n")
@@ -565,7 +565,7 @@ if (!is.null(targetVariable)) {
           plot()
       }
     } else {
-      cat("Number of numerical variables is less than 2.\n\n")
+      cat("The number of numerical variables is less than 2.\n\n")
     }
   } else if (numeric_flag) {
     cat("Numerical target variables are not supported.\n\n")

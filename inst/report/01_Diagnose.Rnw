@@ -26,7 +26,7 @@ N <- nrow(edaData)
 
 \chapter{Diagnose Data}
 \section{Overview of Diagnosis}
-\subsection{List of all variables quality}
+\subsection{List of all variables' quality}
 <<overview, echo=FALSE, results='asis'>>=
 diagn_overview <- diagnose(edaData)
 
@@ -69,7 +69,7 @@ if (NROW(diagn_missing) > 0) {
 
 %\clearpage
 
-\subsection{Diagnosis of unique data(Text and Category)}
+\subsection{Diagnosis of unique data (Text and Category)}
 <<unique_date_category, echo=FALSE, results='asis'>>=
 
 diagn_uniq_cat <- diagn_overview %>%
@@ -95,7 +95,7 @@ if (NROW(diagn_uniq_cat) > 0) {
 
 %\clearpage
 
-\subsection{Diagnosis of unique data(Numerical)}
+\subsection{Diagnosis of unique data (Numerical)}
 <<unique_data_numeric, echo=FALSE, results='asis'>>=
 
 diagn_uniq_num <- diagn_overview %>%
@@ -196,7 +196,7 @@ if (NROW(diagn_numeric) > 0) {
 
 %\clearpage
 
-\subsection{List of numerical diagnosis (minus)}
+\subsection{List of numerical diagnosis (negative)}
 <<numeric_minus, echo=FALSE, results='asis'>>=
 if (NROW(diagn_numeric) > 0) {
   diagn_minus <- diagn_numeric %>%
@@ -206,7 +206,7 @@ if (NROW(diagn_numeric) > 0) {
     arrange(desc(minus))
       
   if (NROW(diagn_minus) > 0) {
-    cap <- "List of numerical diagnosis (minus)"
+    cap <- "List of numerical diagnosis (negative)"
 
     kable(diagn_minus, booktabs = TRUE,
           caption = cap, digits = digit, longtable = TRUE,
@@ -256,13 +256,13 @@ if (NROW(diagn_numeric) > 0) {
 
 \clearpage
 
-\section{Detailed outliers diagnosis}
+\section{Detailed outlier diagnosis}
 <<detail_outliers, tidy=TRUE, tidy.opts=list(width.cutoff=65), size="small", echo=FALSE, results='asis'>>=
 if (NROW(diagn_numeric) > 0) {
   diagn_outlier2 <- edaData %>%
     diagnose_outlier(diagn_outlier$variables)
 
-  cols <- c("Outliers count", "Outliers ratio (%)", "Mean of outliers",
+  cols <- c("Outlier count", "Outlier ratio (%)", "Mean of outliers",
             "Mean with outliers", "Mean without outliers")
 
   if (NROW(diagn_outlier2) > 0) {
@@ -272,7 +272,7 @@ if (NROW(diagn_numeric) > 0) {
 
     for (i in seq(variables)) {
       cap <- change_under(variables[i])
-      cap_table <- paste("Outliers information of", cap)
+      cap_table <- paste("Outlier information of", cap)
 
       cat(sprintf("\\subsubsection{variable : %s}\n", cap))
 

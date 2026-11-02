@@ -199,7 +199,7 @@ if (nrow(warn_identifier) > 0) {
   tab_warning$indicator[idx]  <- warn_identifier$unique_count
   tab_warning$ratio[idx]      <- warn_identifier$unique_rate 
   tab_warning$warnings[idx]   <- sprintf(
-    "%s has high(%.2f) cardinality, Maybe identifier",
+    "%s has high (%.2f) cardinality, maybe an identifier",
     warn_identifier$variables, warn_identifier$unique_rate)
   tab_warning$recommend[idx]  <- "check"  
 } else {
@@ -222,7 +222,7 @@ if (nrow(warn_constant) > 0) {
   tab_warning$indicator[idx]  <- warn_constant$unique_count
   tab_warning$ratio[idx]      <- warn_constant$unique_rate 
   tab_warning$warnings[idx]   <- sprintf(
-    "%s has constant value \"%s\"",
+    "%s has a constant value \"%s\"",
     warn_constant$variables, 
     reportData[1, warn_constant$variables %>% as.character()] %>% 
       t() %>% 
@@ -571,7 +571,7 @@ if (NROW(diagn_missing) > 1) {
   break_line_asis(1)
   plot_na_intersect(reportData, base_family = base_family, typographic = FALSE)
 } else if (NROW(diagn_missing) == 1) {
-  html_cat("upported only when the number of variables including missing values is 2 or more")
+  html_cat("Supported only when the number of variables including missing values is 2 or more")
   break_line_asis(1)
 } else {
   html_cat("No variables including missing values")
@@ -625,7 +625,7 @@ if (NROW(diagn_numeric) > 0) {
     break_line_asis(1)
   }
 } else {
-  html_cat("No numerical variable")
+  html_cat("No numerical variables")
   break_line_asis(1)
 }
 

@@ -26,12 +26,12 @@ library(knitr)
 library(kableExtra)
 
 if (!requireNamespace("mice", quietly = TRUE)) {
-  stop("Package 'mice' needed for this function to work. Please install it.", 
+  stop("Package 'mice' is needed for this function to work. Please install it.", 
        call. = FALSE)
 }
 
 if (!requireNamespace("rpart", quietly = TRUE)) {
-  stop("Package 'rpart' needed for this function to work. Please install it.", 
+  stop("Package 'rpart' is needed for this function to work. Please install it.", 
        call. = FALSE)
 }
 ```
@@ -59,8 +59,8 @@ setUnder <- function(x) {
 
 # Imputation
 ## Missing Values
-### Missing values imputation information
-The variables for imputate missing values are as follows.
+### Missing value imputation information
+The variables for missing value imputation are as follows.
 ```{r nalist, echo=FALSE, warning=FALSE, message=FALSE, comment=""}
 nalist <- find_na(edaData, index = FALSE)
 
@@ -140,7 +140,7 @@ imputae_summary <- function(object) {
       met <- "Multivariate Imputation by Chained Equations"
       met <- sprintf("%s\n - random seed : %s", met, seed)
     }
-    cat(sprintf("* Imputate %s based on %s\n\n", type, met))
+    cat(sprintf("* Impute %s based on %s\n\n", type, met))
   }
 
   cat("* Information of Imputation (before vs after)\n")
@@ -169,7 +169,7 @@ if (length(nalist) > 0) {
     
     for (j in 1:length(method)) {
       cat("\n")
-      cat("#### Imputate missing values with '", method[j], "'\n")
+      cat("#### Impute missing values with '", method[j], "'\n")
       
       impu <- imputate_na(edaData, nalist[i], targetVariable, method = method[j], print_flag = FALSE)
       
@@ -197,8 +197,8 @@ if (length(nalist) > 0) {
 ```
 
 ## Outliers
-### Outliers imputation information
-The numerical variables for imputate outliers are as follows.
+### Outlier imputation information
+The numerical variables for outlier imputation are as follows.
 
 ```{r outlist, echo=FALSE, warning=FALSE, message=FALSE, comment=""}
 outlist <- find_outliers(edaData, index = FALSE)
@@ -221,7 +221,7 @@ if (length(outlist) > 0) {
     
     for (j in 1:length(method)) {
       cat("\n")
-      cat("#### Imputate outliers with '", method[j], "'\n")
+      cat("#### Impute outliers with '", method[j], "'\n")
       
       impu <- imputate_outlier(edaData, outlist[i], method = method[j])
       tab <- imputae_summary(impu)
@@ -243,7 +243,7 @@ if (length(outlist) > 0) {
 ```
 
 # Resolving Skewness
-## Skewed variables information
+## Skewed variable information
 The numerical variables for resolving skewness are as follows.
 ```{r, echo=FALSE}
 summary_transform <- function(object, ...) {
@@ -273,7 +273,7 @@ if (length(skewlist) > 0) {
   cat(paste(skewlist, collapse = ", "))
   skew <- skew[skewlist]
 } else {
-  cat("There are no variables including skewed.")
+  cat("There are no skewed variables.")
 }
 ```
 
@@ -372,7 +372,7 @@ if (length(var_numeric) > 0) {
 ```
 
 ## Optimal Binning
-For the scoring modeling, optimal binning is performed considering the characteristics of numerical data.
+For scoring modeling, optimal binning is performed considering the characteristics of numerical data.
 This work uses the recursive partitioning technique known as supervised discretization when categorizing numeric data as categorical data.
 
 ```{r optimal, echo=FALSE, warning=FALSE, message=FALSE, comment="", fig.height=6, fig.width=7, results='asis'}

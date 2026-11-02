@@ -694,7 +694,7 @@ html_outlier <- function(.data, theme = c("orange", "blue")[1],
         diagn_outlier <- .data %>%
           diagnose_outlier(variable)
         
-        cols <- c("Outliers count", "Outliers ratio (%)", "Mean of outliers",
+        cols <- c("Outlier count", "Outlier ratio (%)", "Mean of outliers",
                   "Mean with outliers", "Mean without outliers")
         outlier_df <- data.frame(Measures = cols,
                                  Values = as.vector(t(diagn_outlier[, -1]))) 

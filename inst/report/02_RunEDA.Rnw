@@ -85,10 +85,10 @@ N <- NROW(edaData)
 @
 
 \chapter{Introduction}
-The EDA Report provides exploratory data analysis information on objects that inherit data.frame and data.frame.
+The EDA Report provides exploratory data analysis information on objects that inherit from data.frame, and on data.frame objects.
 
 \section{Information of Dataset}
-The dataset that generated the EDA Report is an `\Sexpr{class(edaData)[1]}' object. It consists of \Sexpr{format(N, big.mark = ",")} observations and \Sexpr{NCOL(edaData)} variables.
+The dataset used to generate the EDA Report is a `\Sexpr{class(edaData)[1]}' object. It consists of \Sexpr{format(N, big.mark = ",")} observations and \Sexpr{NCOL(edaData)} variables.
 
 \section{Information of Variables}
 <<info_variables, echo=FALSE, results='asis'>>=
@@ -106,14 +106,14 @@ knitr::kable(vars, caption = cap, booktabs = TRUE, longtable = TRUE) %>%
 
 target_nm <- if (is.null(targetVariable)) "NULL" else targetVariable
 target_type <- if (is.null(targetVariable))
-  "NULL(You did not specify a target variable)" else
+  "NULL (You did not specify a target variable)" else
   class(pull(edaData, targetVariable))[1]
 @
 
 The target variable of the data is '\Sexpr{change_under(target_nm)}', and the data type of the variable is \Sexpr{target_type}.
 
 \section{About EDA Report}
-EDA reports provide information and visualization results that support the EDA process. In particular, it provides a variety of information to understand the relationship between the target variable and the rest of the variables of interest.
+EDA reports provide information and visualization results that support the EDA process. In particular, they provide a variety of information to understand the relationship between the target variable and the rest of the variables of interest.
 
 \chapter{Univariate Analysis}
 \section{Descriptive Statistics}
@@ -306,11 +306,11 @@ if (length(idx.numeric) > 2) {
   cat(sprintf("\\caption{%s}\n", cap))
   cat("\\end{figure}\n")  
 } else {
-  cat("Number of numerical variables is less than 2.\n\n")
+  cat("The number of numerical variables is less than 2.\n\n")
 } 
 @
 
-\chapter{Target based Analysis}
+\chapter{Target-based Analysis}
 \section{Grouped Descriptive Statistics}
 \subsection{Grouped Numerical Variables}
 
@@ -324,7 +324,7 @@ if (!is.null(targetVariable)) {
 if (!is.null(targetVariable)) {
   if (factor_flag) {
     if (length(idx.numeric) == 0) {
-      cat("There is no numeric variable.\n\n")
+      cat("There are no numeric variables.\n\n")
     } else {
       for (i in idx.numeric) {
         cat("\n")
@@ -374,7 +374,7 @@ if (!is.null(targetVariable)) {
     }
   } else if (numeric_flag) {
     if (length(idx.numeric) == 0) {
-        cat("There is no numeric variable.\n\n")
+        cat("There are no numeric variables.\n\n")
     } else {
       targetby <- target_by(edaData, targetVariable)
       for (i in idx.numeric) {
@@ -444,7 +444,7 @@ if (!is.null(targetVariable)) {
 if (!is.null(targetVariable)) {
   if (factor_flag) {
     if (length(idx.factor) == 0) {
-      cat("There is no categorical variable.\n\n")
+      cat("There are no categorical variables.\n\n")
     } else {
       for (i in idx.factor) {
         if (sum(!is.na(edaData[, i])) == 0) next
@@ -510,7 +510,7 @@ if (!is.null(targetVariable)) {
     }
   } else if (numeric_flag) {
     if (length(idx.factor) == 0) {
-        cat("There is no categorical variable.\n\n")
+        cat("There are no categorical variables.\n\n")
     } else {
       targetby <- target_by(edaData, targetVariable)
       for (i in idx.factor) {
@@ -639,7 +639,7 @@ if (!is.null(targetVariable)) {
         cat("No correlation coefficient is greater than 0.5.\n\n")
       }
     } else {
-      cat("Number of numerical variables is less than 2.\n\n")
+      cat("The number of numerical variables is less than 2.\n\n")
     }
   } else if (numeric_flag) {
     cat("Numerical target variables are not supported.\n\n")
@@ -678,7 +678,7 @@ if (!is.null(targetVariable)) {
         cat("\\end{figure}")
       }
     } else {
-      cat("Number of numerical variables is less than 2.\n\n")
+      cat("The number of numerical variables is less than 2.\n\n")
     }
   } else if (numeric_flag) {
     cat("Numerical target variables are not supported.\n\n")
