@@ -1,3 +1,15 @@
+# dlookr 0.6.7
+
+## MINOR CHANGES
+
+* Improvement of English grammar in package documents. (#128)
+    - README
+    - Vignettes
+    - Man pages
+    - Report pages
+
+
+
 # dlookr 0.6.6
 
 ## MINOR CHANGES
