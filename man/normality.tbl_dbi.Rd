@@ -11,7 +11,7 @@
 
 \item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
-Positive values select variables; negative values to drop variables.
+Positive values select variables; negative values drop variables.
 If the first expression is negative, normality() will automatically start with all variables.
 These arguments are automatically quoted and evaluated in a context where column names
 represent column positions.
@@ -20,10 +20,10 @@ They support unquoting and splicing.}
 \item{sample}{the number of samples to perform the test.}
 
 \item{in_database}{Specifies whether to perform in-database operations. 
-If TRUE, most operations are performed in the DBMS. if FALSE, 
-table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.}
+If TRUE, most operations are performed in the DBMS. If FALSE,
+table data is taken into R and operated on in memory. in_database = TRUE is not yet supported.}
 
-\item{collect_size}{a integer. The number of data samples from the DBMS to R. 
+\item{collect_size}{an integer. The number of data samples from the DBMS to R.
 Applies only if in_database = FALSE.
 
 See vignette("EDA") for an introduction to these concepts.}
@@ -32,15 +32,15 @@ See vignette("EDA") for an introduction to these concepts.}
 An object of the same class as .data.
 }
 \description{
-The normality() performs Shapiro-Wilk test of normality 
-of numerical(INTEGER, NUMBER, etc.) column of the DBMS table through tbl_dbi.
+The normality() performs the Shapiro-Wilk test of normality
+of numerical (INTEGER, NUMBER, etc.) columns of the DBMS table through tbl_dbi.
 }
 \details{
 This function is useful when used with the \code{\link[dplyr]{group_by}}
 function of the dplyr package. If you want to test by level of the categorical
 data you are interested in, rather than the whole observation,
-you can use group_tf as the group_by function.
-This function is computed \code{\link{shapiro.test}} function.
+you can use grouped_df as the group_by function.
+This function is computed with the \code{\link{shapiro.test}} function.
 }
 \section{Normality test information}{
 
@@ -48,9 +48,9 @@ The information derived from the numerical data test is as follows.
 
 \itemize{
 \item statistic : the value of the Shapiro-Wilk statistic.
-\item p_value : an approximate p-value for the test. This is said in
-Roystion(1995) to be adequate for p_value < 0.1.
-\item sample : the numer of samples to perform the test.
+\item p_value : an approximate p-value for the test. This is said by
+Royston (1995) to be adequate for p_value < 0.1.
+\item sample : the number of samples to perform the test.
 The number of observations supported by the stats::shapiro.test function is 3 to 5000.
 }
 }

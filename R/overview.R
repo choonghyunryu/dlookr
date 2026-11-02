@@ -1,7 +1,7 @@
 #' Describe overview of data
 #'
 #' @description
-#' Inquire basic information to understand the data in general.
+#' Inquire about basic information to understand the data in general.
 #'
 #' @details
 #' overview() creates an overview class.
@@ -10,15 +10,15 @@
 #'
 #' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @return An object of overview class. 
-#' The overview class contains data.frame and two attributes. data.frame has the following 3 variables.:
-#' data.frame is as follow.:
+#' The overview class contains a data.frame and two attributes. The data.frame has the following 3 variables:
+#' The data.frame is as follows:
 #' \itemize{
 #'   \item division : division of information.
 #'   \itemize{
-#'     \item size : indicators of related to data capacity 
-#'     \item duplicated : indicators of related to duplicated value 
-#'     \item missing : indicators of related to missing value 
-#'     \item data_type : indicators of related to data type 
+#'     \item size : indicators related to data capacity
+#'     \item duplicated : indicators related to duplicated values
+#'     \item missing : indicators related to missing values
+#'     \item data_type : indicators related to data types
 #'   }
 #'   \item metrics : name of metrics.
 #'   \itemize{
@@ -26,29 +26,29 @@
 #'     \item variables : number of variables (number of columns)
 #'     \item values : number of values (number of cells. rows * columns)
 #'     \item memory size : an estimate of the memory that is being used to store an R object.
-#'     \item duplicate observation: number of duplicate cases(observations).
-#'     \item complete observation : number of complete cases(observations). i.e., have no missing values.
-#'     \item missing observation : number of observations that has missing values.
-#'     \item missing variables : number of variables that has missing values.
-#'     \item missing values : number of values(cells) that has missing values.
-#'     \item numerics : number of variables that is data type is numeric.
-#'     \item integers : number of variables that is data type is integer.
-#'     \item factors : number of variables that is data type is factor.
-#'     \item characters : number of variables that is data type is character.
-#'     \item Dates : number of variables that is data type is Date.
-#'     \item POSIXcts : number of variables that is data type is POSIXct.
-#'     \item others : number of variables that is not above.
+#'     \item duplicate observation: number of duplicate cases (observations).
+#'     \item complete observation : number of complete cases (observations), i.e., those that have no missing values.
+#'     \item missing observation : number of observations that have missing values.
+#'     \item missing variables : number of variables that have missing values.
+#'     \item missing values : number of values (cells) that are missing.
+#'     \item numerics : number of variables whose data type is numeric.
+#'     \item integers : number of variables whose data type is integer.
+#'     \item factors : number of variables whose data type is factor.
+#'     \item characters : number of variables whose data type is character.
+#'     \item Dates : number of variables whose data type is Date.
+#'     \item POSIXcts : number of variables whose data type is POSIXct.
+#'     \item others : number of variables whose data type is none of the above.
 #'   }
 #'   \item value : value of metrics.
 #' }
 #' 
-#' Attributes of overview class is as follows.:
+#' Attributes of the overview class are as follows:
 #' \itemize{
 #'   \item duplicated : the index of duplicated observations.
 #'   \item na_col : the data type of predictor to replace missing value.
 #'   \item info_class : data.frame. variable name and class name that describe the data type of variables.
 #'   \itemize{
-#'     \item data.frame has a two variables.
+#'     \item The data.frame has two variables.
 #'     \itemize{
 #'       \item variable : variable names
 #'       \item class : data type
@@ -130,7 +130,7 @@ overview <- function(.data) {
 #' which prints to the R console.
 #' @param ... further arguments passed to or from other methods.
 #' @details
-#' summary.overview() tries to be smart about formatting 14 information of overview.
+#' summary.overview() tries to be smart about formatting the 14 pieces of overview information.
 #' @seealso \code{\link{overview}}, \code{\link{plot.overview}}.
 #' @examples
 #' \donttest{
@@ -313,7 +313,7 @@ summary.overview <- function(object, html = FALSE, ...)  {
 #' Visualize Information for an "overview" Object
 #'
 #' @description
-#' Visualize a plot by attribute of `overview` class.
+#' Visualize a plot by attribute of the `overview` class.
 #' Visualize the data type, number of observations, and number of missing values for each variable.
 #'
 #' @details The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
@@ -321,9 +321,9 @@ summary.overview <- function(object, html = FALSE, ...)  {
 #' use it after loading the Google font with import_google_font().
 #' 
 #' @param x an object of class "overview", usually, a result of a call to overview().
-#' @param order_type character. method of order of bars(variables).
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
+#' @param order_type character. method of ordering the bars (variables).
+#' @param typographic logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+#' The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... further arguments to be passed from or to other methods.

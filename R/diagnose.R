@@ -8,15 +8,15 @@ diagnose <- function(.data, ...) {
 #' Diagnose data quality of variables
 #'
 #' @description The diagnose() produces information for diagnosing
-#' the quality of the variables of data.frame or tbl_df.
+#' the quality of the variables of a data.frame or tbl_df.
 #'
-#' @details The scope of data quality diagnosis is information on missing values
+#' @details The scope of the data quality diagnosis is information on missing values
 #' and unique value information. Data quality diagnosis can determine variables
 #' that require missing value processing. Also, the unique value information can
-#' determine the variable to be removed from the data analysis.
+#' determine the variables to be removed from the data analysis.
 #'
 #' @section Diagnostic information:
-#' The information derived from the data diagnosis is as follows.:
+#' The information derived from the data diagnosis is as follows:
 #'
 #' \itemize{
 #' \item variables : variable names
@@ -28,7 +28,7 @@ diagnose <- function(.data, ...) {
 #' \item missing_count : number of missing values
 #' \item missing_percent : percentage of missing values
 #' \item unique_count : number of unique values
-#' \item unique_rate : ratio of unique values. unique_count / number of observation
+#' \item unique_rate : ratio of unique values. unique_count / number of observations
 #' }
 #'
 #' See vignette("diagonosis") for an introduction to these concepts.
@@ -36,7 +36,7 @@ diagnose <- function(.data, ...) {
 #' @param .data a data.frame or a \code{\link[tibble]{tbl_df}} or a \code{\link[dplyr]{grouped_df}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' If the first expression is negative, diagnose() will automatically start with all variables.
 #' These arguments are automatically quoted and evaluated in a context where column names
 #' represent column positions.
@@ -190,11 +190,11 @@ diagnose_category <- function(.data, ...) {
 #' Diagnose data quality of categorical variables
 #'
 #' @description The diagnose_category() produces information for
-#' diagnosing the quality of the variables of data.frame or tbl_df.
+#' diagnosing the quality of the variables of a data.frame or tbl_df.
 #'
 #' @details The scope of the diagnosis is the occupancy status of the levels
 #' in categorical data. If a certain level of occupancy is close to 100%,
-#' then the removal of this variable in the forecast model will have to be
+#' then the removal of this variable from the forecast model will have to be
 #' considered. Also, if the occupancy of all levels is close to 0%, this
 #' variable is likely to be an identifier.
 #'
@@ -204,9 +204,9 @@ diagnose_category <- function(.data, ...) {
 #' \itemize{
 #' \item variables : variable names
 #' \item levels: level names
-#' \item N : number of observation
-#' \item freq : number of observation at the levels
-#' \item ratio : percentage of observation at the levels
+#' \item N : number of observations
+#' \item freq : number of observations at the levels
+#' \item ratio : percentage of observations at the levels
 #' \item rank : rank of occupancy ratio of levels
 #' }
 #'
@@ -215,7 +215,7 @@ diagnose_category <- function(.data, ...) {
 #' @param .data a data.frame or a \code{\link[tibble]{tbl_df}} or a \code{\link[dplyr]{grouped_df}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' If the first expression is negative, diagnose_category() will automatically
 #' start with all variables.
 #' These arguments are automatically quoted and evaluated in a context where
@@ -224,16 +224,16 @@ diagnose_category <- function(.data, ...) {
 #'
 #' @param top an integer. Specifies the upper top rows or rank to extract.
 #' Default is 10.
-#' @param type a character string specifying how result are extracted.
-#' "rank" that extract top n ranks by decreasing frequency. 
+#' @param type a character string specifying how results are extracted.
+#' "rank" extracts the top n ranks by decreasing frequency.
 #' In this case, if there are ties in rank, more rows than the number specified 
 #' by the top argument are returned.
-#' Default is "n" extract only top n rows by decreasing frequency. 
+#' The default is "n", which extracts only the top n rows by decreasing frequency.
 #' If there are too many rows to be returned because there are too many ties, 
 #' you can adjust the returned rows appropriately by using "n".
 #' @param add_character logical. Decide whether to include text variables in the
 #' diagnosis of categorical data. The default value is TRUE, which also includes character variables.
-#' @param add_date ogical. Decide whether to include Date and POSIXct variables in the
+#' @param add_date logical. Decide whether to include Date and POSIXct variables in the
 #' diagnosis of categorical data. The default value is TRUE, which also includes character variables.
 #' @return an object of tbl_df.
 #' @seealso \code{\link{diagnose_category.tbl_dbi}}, \code{\link{diagnose.data.frame}}, \code{\link{diagnose_numeric.data.frame}}, \code{\link{diagnose_outlier.data.frame}}.
@@ -464,11 +464,11 @@ diagnose_numeric <- function(.data, ...) {
 #' @description The diagnose_numeric() produces information
 #' for diagnosing the quality of the numerical data.
 #'
-#' @details The scope of the diagnosis is the calculate a statistic that can be
+#' @details The scope of the diagnosis is to calculate statistics that can be
 #' used to understand the distribution of numerical data.
 #' min, Q1, mean, median, Q3, max can be used to estimate the distribution
-#' of data. If the number of zero or minus is large, it is necessary to suspect
-#' the error of the data. If the number of outliers is large, a strategy of
+#' of data. If the number of zeros or negative values is large, it is necessary to suspect
+#' errors in the data. If the number of outliers is large, a strategy of
 #' eliminating or replacing outliers is needed.
 #'
 #' @section Numerical diagnostic information:
@@ -477,13 +477,13 @@ diagnose_numeric <- function(.data, ...) {
 #' \itemize{
 #' \item variables : variable names
 #' \item min : minimum
-#' \item Q1 : 25 percentile
+#' \item Q1 : 25th percentile
 #' \item mean : arithmetic average
-#' \item median : median. 50 percentile
-#' \item Q3 : 75 percentile
+#' \item median : median. 50th percentile
+#' \item Q3 : 75th percentile
 #' \item max : maximum
 #' \item zero : count of zero values
-#' \item minus : count of minus values
+#' \item minus : count of negative values
 #' \item outlier : count of outliers
 #' }
 #'
@@ -492,7 +492,7 @@ diagnose_numeric <- function(.data, ...) {
 #' @param .data a data.frame or a \code{\link[tibble]{tbl_df}} or a \code{\link[dplyr]{grouped_df}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' If the first expression is negative, diagnose_numeric() will automatically
 #' start with all variables.
 #' These arguments are automatically quoted and evaluated in a context where column names
@@ -672,12 +672,12 @@ diagnose_outlier <- function(.data, ...) {
 }
 
 
-#' Diagnose outlier of numerical variables
+#' Diagnose outliers of numerical variables
 #'
 #' @description The diagnose_outlier() produces outlier information
 #' for diagnosing the quality of the numerical data.
 #'
-#' @details The scope of the diagnosis is the provide a outlier information.
+#' @details The scope of the diagnosis is to provide outlier information.
 #' If the number of outliers is small and the difference between the averages
 #' including outliers and the averages not including them is large,
 #' it is necessary to eliminate or replace the outliers.
@@ -690,8 +690,8 @@ diagnose_outlier <- function(.data, ...) {
 #' \item outliers_cnt : number of outliers
 #' \item outliers_ratio : percent of outliers
 #' \item outliers_mean : arithmetic average of outliers
-#' \item with_mean : arithmetic average of with outliers
-#' \item without_mean : arithmetic average of without outliers
+#' \item with_mean : arithmetic average including outliers
+#' \item without_mean : arithmetic average excluding outliers
 #' }
 #'
 #' See vignette("diagonosis") for an introduction to these concepts.
@@ -699,7 +699,7 @@ diagnose_outlier <- function(.data, ...) {
 #' @param .data a data.frame or a \code{\link[tibble]{tbl_df}} or a \code{\link[dplyr]{grouped_df}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' If the first expression is negative, diagnose_outlier() will automatically
 #' start with all variables.
 #' These arguments are automatically quoted and evaluated in a context
@@ -879,19 +879,19 @@ plot_outlier <- function(.data, ...) {
 
 #' Plot outlier information of numerical data diagnosis
 #'
-#' @description The plot_outlier() visualize outlier information
+#' @description The plot_outlier() visualizes outlier information
 #' for diagnosing the quality of the numerical data.
 #'
-#' @details The scope of the diagnosis is the provide a outlier information.
+#' @details The scope of the diagnosis is to provide outlier information.
 #' Since the plot is drawn for each variable, if you specify more than
-#' one variable in the ... argument, the specified number of plots are drawn.
+#' one variable in the ... argument, the specified number of plots is drawn.
 #'
 #' The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 #' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font().
 #' 
 #' @section Outlier diagnostic information:
-#' The plot derived from the numerical data diagnosis is as follows.
+#' The plots derived from the numerical data diagnosis are as follows.
 #'
 #' \itemize{
 #' \item With outliers box plot
@@ -905,17 +905,17 @@ plot_outlier <- function(.data, ...) {
 #' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' If the first expression is negative, plot_outlier() will automatically start
 #' with all variables.
 #' These arguments are automatically quoted and evaluated in a context
 #' where column names represent column positions.
 #' They support unquoting and splicing.
 #' @param col a color to be used to fill the bars. The default is "steelblue".
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+#' @param typographic logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
+#' The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.
 #' @seealso \code{\link{plot_outlier.tbl_dbi}}, \code{\link{diagnose_outlier.data.frame}}.
 #' @export
 #' @examples
@@ -1077,19 +1077,19 @@ plot_outlier_raw <- function(x, main = NULL, col = "steelblue",
 
 #' Plot outlier information of target_df 
 #'
-#' @description The plot_outlier() visualize outlier information
+#' @description The plot_outlier() visualizes outlier information
 #' for diagnosing the quality of the numerical data with target_df class.
 #'
-#' @details The scope of the diagnosis is the provide a outlier information.
+#' @details The scope of the diagnosis is to provide outlier information.
 #' Since the plot is drawn for each variable, if you specify more than
-#' one variable in the ... argument, the specified number of plots are drawn.
+#' one variable in the ... argument, the specified number of plots is drawn.
 #'
 #' The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 #' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font().
 #' 
 #' @section Outlier diagnostic information:
-#' The plot derived from the numerical data diagnosis is as follows.
+#' The plots derived from the numerical data diagnosis are as follows.
 #'
 #' \itemize{
 #' \item With outliers box plot by target variable
@@ -1098,19 +1098,19 @@ plot_outlier_raw <- function(x, main = NULL, col = "steelblue",
 #' \item Without outliers density plot by target variable
 #' }
 #'
-#' @param .data a target_df. reference \code{\link{target_by}}.
+#' @param .data a target_df. See \code{\link{target_by}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' If the first expression is negative, plot_outlier() will automatically start
 #' with all variables.
 #' These arguments are automatically quoted and evaluated in a context
 #' where column names represent column positions.
 #' They support unquoting and splicing.
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+#' @param typographic logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
+#' The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.
 #' @seealso \code{\link{plot_outlier.data.frame}}.
 #' @export
 #' @examples
@@ -1303,34 +1303,34 @@ diagnose_report <- function(.data, output_format, output_file, output_dir, ...) 
 
 #' Reporting the information of data diagnosis
 #'
-#' @description The diagnose_report() report the information for diagnosing
+#' @description The diagnose_report() reports the information for diagnosing
 #' the quality of the data.
 #'
-#' @details Generate generalized data diagnostic reports automatically.
-#' You can choose to output to pdf and html files.
-#' This is useful for diagnosing a data frame with a large number of variables
+#' @details Generates generalized data diagnostic reports automatically.
+#' You can choose to output the report as a pdf or html file.
+#' This is more useful for diagnosing a data frame with a large number of variables
 #' than data with a small number of variables.
-#' For pdf output, Korean Gothic font must be installed in Korean operating system.
+#' For pdf output, the Korean Gothic font must be installed on a Korean operating system.
 #'
 #' @section Reported information:
-#' Reported from the data diagnosis is as follows.
+#' The information reported from the data diagnosis is as follows.
 #'
 #' \itemize{
 #'   \item Diagnose Data
 #'   \itemize{
 #'     \item Overview of Diagnosis
 #'     \itemize{
-#'       \item List of all variables quality
+#'       \item List of all variables' quality
 #'       \item Diagnosis of missing data
-#'       \item Diagnosis of unique data(Text and Category)
-#'       \item Diagnosis of unique data(Numerical)
+#'       \item Diagnosis of unique data (Text and Category)
+#'       \item Diagnosis of unique data (Numerical)
 #'     }
 #'     \item Detailed data diagnosis
 #'     \itemize{
 #'       \item Diagnosis of categorical variables
 #'       \item Diagnosis of numerical variables
 #'       \item List of numerical diagnosis (zero)
-#'       \item List of numerical diagnosis (minus)
+#'       \item List of numerical diagnosis (negative)
 #'     }
 #'   }
 #'   \item Diagnose Outliers
@@ -1346,12 +1346,12 @@ diagnose_report <- function(.data, output_format, output_file, output_dir, ...) 
 #' See vignette("diagonosis") for an introduction to these concepts.
 #'
 #' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
-#' @param output_format report output type. Choose either "pdf" and "html".
-#' "pdf" create pdf file by knitr::knit().
-#' "html" create html file by rmarkdown::render().
-#' @param output_file name of generated file. default is NULL.
-#' @param output_dir name of directory to generate report file. default is tempdir().
-#' @param font_family character. font family name for figure in pdf.
+#' @param output_format report output type. Choose either "pdf" or "html".
+#' "pdf" creates a pdf file by knitr::knit().
+#' "html" creates an html file by rmarkdown::render().
+#' @param output_file name of the generated file. default is NULL.
+#' @param output_dir name of the directory in which to generate the report file. default is tempdir().
+#' @param font_family character. font family name for figures in the pdf.
 #' @param browse logical. choose whether to output the report results to the browser.
 #' @param ... arguments to be passed to methods.
 #'

@@ -11,14 +11,14 @@ get_class(df)
 }
 \value{
 a data.frame
-Variables of data.frame is as follows.
+Variables of the data.frame are as follows.
 \itemize{
-\item variable : variables name
+\item variable : variable name
 \item class : class of variables
 }
 }
 \description{
-The get_class() gets class of variables in data.frame or tbl_df.
+The get_class() gets the class of variables in a data.frame or tbl_df.
 }
 \examples{
 # data.frame

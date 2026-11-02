@@ -18,7 +18,7 @@ which prints to the R console.}
 print and summary method for "overview" class.
 }
 \details{
-summary.overview() tries to be smart about formatting 14 information of overview.
+summary.overview() tries to be smart about formatting the 14 pieces of overview information.
 }
 \examples{
 \donttest{

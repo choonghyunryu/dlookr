@@ -1,6 +1,6 @@
 #' Binning the Numeric Data
 #'
-#' @description The binning() converts a numeric variable to a categorization variable.
+#' @description The binning() converts a numeric variable to a categorical variable.
 #'
 #' @details This function is useful when used with the mutate/transmute
 #' function of the dplyr package.
@@ -8,7 +8,7 @@
 #' See vignette("transformation") for an introduction to these concepts.
 #'
 #' @param x numeric. numeric vector for binning.
-#' @param nbins integer. number of intervals(bins). required. if missing, nclass.Sturges is used.
+#' @param nbins integer. number of intervals (bins). required. If missing, nclass.Sturges is used.
 #' @param type character. binning method. Choose from "quantile", "equal", "pretty", "kmeans" and "bclust".
 #' The "quantile" sets breaks with quantiles of the same interval.
 #' The "equal" sets breaks at the same interval.
@@ -16,13 +16,13 @@
 #' to nbins using base::pretty function.
 #' The "kmeans" uses stats::kmeans function to generate the breaks.
 #' The "bclust" uses e1071::bclust function to generate the breaks using bagged clustering.
-#' "kmeans" and "bclust" was implemented by classInt::classIntervals() function.
+#' "kmeans" and "bclust" were implemented by the classInt::classIntervals() function.
 #' @param ordered logical. whether to build an ordered factor or not.
 #' @param labels character. the label names to use for each of the bins.
 #' @param approxy.lab logical. If TRUE, large number breaks are approximated to pretty numbers. 
 #' If FALSE, the original breaks obtained by type are used.
 #' @return An object of bins class.
-#' Attributes of bins class is as follows.
+#' Attributes of the bins class are as follows.
 #' \itemize{
 #' \item class : "bins"
 #' \item type : binning type, "quantile", "equal", "pretty", "kmeans", "bclust".
@@ -219,23 +219,23 @@ binning <- function(x, nbins,
 #' Summarizing Binned Variable
 #'
 #' @description summary method for "bins" and "optimal_bins".
-#' @param object an object of "bins" and "optimal_bins",
+#' @param object an object of "bins" or "optimal_bins",
 #' usually, a result of a call to binning().
 #' @param ... further arguments to be passed from or to other methods.
 #' @details
 #' print.bins() prints the information of "bins" and "optimal_bins" objects nicely.
-#' This includes frequency of bins, binned type, and number of bins.
-#' summary.bins() returns data.frame including frequency and relative frequency for each levels(bins).
+#' This includes the frequency of bins, the binned type, and the number of bins.
+#' summary.bins() returns a data.frame including the frequency and relative frequency for each level (bin).
 #'
 #' See vignette("transformation") for an introduction to these concepts.
 #'
 #' @return
 #' The function summary.bins() computes and returns a data.frame of summary statistics of the
-#' binned given in object. Variables of data frame is as follows.
+#' binned variable given in object. Variables of the data frame are as follows.
 #' \itemize{
 #' \item levels : levels of factor.
 #' \item freq : frequency of levels.
-#' \item rate : relative frequency of levels. it is not percentage.
+#' \item rate : relative frequency of levels. It is not a percentage.
 #' }
 #' @seealso \code{\link{binning}}
 #' @examples
@@ -261,7 +261,7 @@ summary.bins <- function(object, ...) {
              rate = as.numeric(tab) / length(object))
 }
 
-#' @param x an object of class "bins" and "optimal_bins",
+#' @param x an object of class "bins" or "optimal_bins",
 #' usually, a result of a call to binning().
 #' @param ... further arguments passed to or from other methods.
 #' @rdname summary.bins
@@ -286,8 +286,8 @@ print.bins <- function(x, ...) {
 #' use it after loading the Google font with import_google_font().
 #' 
 #' @param x an object of class "bins", usually, a result of a call to binning().
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
+#' @param typographic logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+#' The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
@@ -381,22 +381,22 @@ plot.bins <- function(x, typographic = TRUE, base_family = NULL, ...) {
 
 #' Optimal Binning for Scoring Modeling
 #'
-#' @description The binning_by() finding intervals for numerical variable
-#' using optical binning. Optimal binning categorizes a numeric characteristic
+#' @description The binning_by() finds intervals for a numerical variable
+#' using optimal binning. Optimal binning categorizes a numeric characteristic
 #' into bins for ulterior usage in scoring modeling.
 #'
 #' @details This function is useful when used with the mutate/transmute
-#' function of the dplyr package. And this function is implemented using
-#' smbinning() function of smbinning package.
+#' function of the dplyr package. This function is implemented using
+#' the smbinning() function of the smbinning package.
 #'
 #' @section attributes of "optimal_bins" class:
-#' Attributes of the "optimal_bins" class that is as follows.
+#' Attributes of the "optimal_bins" class are as follows.
 #' \itemize{
 #' \item class : "optimal_bins".
 #' \item levels : character. factor or ordered factor levels
 #' \item type : character. binning method
 #' \item breaks : numeric. breaks for binning
-#' \item raw : numeric. before the binned the raw data
+#' \item raw : numeric. the raw data before binning
 #' \item ivtable : data.frame. information value table
 #' \item iv : numeric. information value
 #' \item target : integer. binary response variable
@@ -405,16 +405,16 @@ plot.bins <- function(x, typographic = TRUE, base_family = NULL, ...) {
 #' See vignette("transformation") for an introduction to these concepts.
 #'
 #' @param .data a data frame.
-#' @param y character. name of binary response variable(0, 1). 
-#' The variable must contain only the integers 0 and 1 as element. 
-#' However, in the case of factor having two levels, it is performed while type conversion is performed in the calculation process.
-#' @param x character. name of continuous characteristic variable. At least 5 different values. and Inf is not allowed.
+#' @param y character. name of the binary response variable (0, 1).
+#' The variable must contain only the integers 0 and 1 as elements.
+#' However, a factor with two levels is also allowed; it is converted to the appropriate type during the calculation process.
+#' @param x character. name of the continuous characteristic variable. It must have at least 5 different values, and Inf is not allowed.
 #' @param p numeric. percentage of records per bin. Default 5\% (0.05).
-#' This parameter only accepts values greater that 0.00 (0\%) and lower than 0.50 (50\%).
+#' This parameter only accepts values greater than 0.00 (0\%) and lower than 0.50 (50\%).
 #' @param ordered logical. whether to build an ordered factor or not.
 #' @param labels character. the label names to use for each of the bins.
 #' @return an object of "optimal_bins" class.
-#' Attributes of "optimal_bins" class is as follows.
+#' Attributes of the "optimal_bins" class are as follows.
 #' \itemize{
 #' \item class : "optimal_bins".
 #' \item type : binning type, "optimal".
@@ -566,12 +566,12 @@ binning_by <- function(.data, y, x, p = 0.05, ordered = TRUE, labels = NULL) {
 #' Summarizing Performance for Optimal Bins
 #'
 #' @description summary method for "optimal_bins". summary metrics to evaluate the performance 
-#' of binomial classification model.
+#' of a binomial classification model.
 #' @param object an object of class "optimal_bins", usually, a result of a call to binning_by().
 #' @param ... further arguments to be passed from or to other methods.
 #' @details
-#' print() to print only binning table information of "optimal_bins" objects.
-#' summary.performance_bin() includes general metrics and result of significance tests life follows.:
+#' print() prints only the binning table information of "optimal_bins" objects.
+#' summary.performance_bin() includes general metrics and the results of significance tests as follows:
 #' \itemize{
 #'   \item Binning Table : Metrics by bins.
 #'   \itemize{
@@ -625,7 +625,7 @@ summary.optimal_bins <- function(object, ...) {
 #' Visualize Distribution for an "optimal_bins" Object
 #'
 #' @description
-#' It generates plots for understand distribution, frequency, bad rate, and weight of evidence using optimal_bins.
+#' It generates plots to understand the distribution, frequency, bad rate, and weight of evidence using optimal_bins.
 #'
 #' See vignette("transformation") for an introduction to these concepts.
 #'
@@ -634,10 +634,10 @@ summary.optimal_bins <- function(object, ...) {
 #' use it after loading the Google font with import_google_font().
 #' 
 #' @param x an object of class "optimal_bins", usually, a result of a call to binning_by().
-#' @param type character. options for visualization. Distribution ("dist"), Relateive Frequency ("freq"),
-#' Positive Rate ("posrate"), and Weight of Evidence ("WoE"). and default "all" draw all plot.
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
+#' @param type character. options for visualization. Distribution ("dist"), Relative Frequency ("freq"),
+#' Positive Rate ("posrate"), and Weight of Evidence ("WoE"). The default "all" draws all plots.
+#' @param typographic logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+#' The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param rotate_angle integer. specifies the rotation angle of the x-axis label. 
@@ -837,7 +837,7 @@ extract <- function(x) {
 
 #' Extract bins from "bins"
 #'
-#' @description The extract() extract binned variable from "bins", "optimal_bins" class object.
+#' @description The extract() extracts a binned variable from a "bins" or "optimal_bins" class object.
 #' 
 #' @details The "bins" and "optimal_bins" class objects use the summary() and plot() functions to diagnose 
 #' the performance of binned results. This function is used to extract the binned result if you are satisfied 
@@ -880,39 +880,39 @@ extract.bins <- function(x) {
 }
 
 
-#' Diagnose Performance Binned Variable
+#' Diagnose Performance of Binned Variable
 #'
-#' @description The performance_bin() calculates metrics to evaluate the performance of binned variable for 
-#' binomial classification model.
+#' @description The performance_bin() calculates metrics to evaluate the performance of a binned variable for
+#' a binomial classification model.
 #'
 #' @details This function is useful when used with the mutate/transmute
 #' function of the dplyr package.
 #' 
 #' @param y character or numeric, integer, factor. a binary response variable (0, 1). 
-#' The variable must contain only the integers 0 and 1 as element. 
-#' However, in the case of factor/character having two levels, it is performed while type conversion is performed in the calculation process.
-#' @param x integer or factor, character. At least 2 different values. and Inf is not allowed.
+#' The variable must contain only the integers 0 and 1 as elements.
+#' However, a factor/character with two levels is also allowed; it is converted to the appropriate type during the calculation process.
+#' @param x integer or factor, character. It must have at least 2 different values, and Inf is not allowed.
 #' @param na.rm logical. a logical indicating whether missing values should be removed.
-#' @return an object of "performance_bin" class. vaue of data.frame is as follows.
+#' @return an object of "performance_bin" class. The value of the data.frame is as follows.
 #' \itemize{
 #' \item Bin : character. bins.
 #' \item CntRec : integer. frequency by bins.
-#' \item CntPos : integer. frequency of positive  by bins.
-#' \item CntNeg : integer. frequency of negative  by bins.
-#' \item CntCumPos : integer. cumulate frequency of positive  by bins.
-#' \item CntCumNeg : integer. cumulate frequency of negative  by bins.
-#' \item RatePos : integer. relative frequency of positive  by bins.
-#' \item RateNeg : integer. relative frequency of negative  by bins.
-#' \item RateCumPos : numeric. cumulate relative frequency of positive  by bins.
-#' \item RateCumNeg : numeric. cumulate relative frequency of negative  by bins.
-#' \item Odds : numeric. odd ratio.
-#' \item LnOdds : numeric. loged odd ratio.
+#' \item CntPos : integer. frequency of positive by bins.
+#' \item CntNeg : integer. frequency of negative by bins.
+#' \item CntCumPos : integer. cumulative frequency of positive by bins.
+#' \item CntCumNeg : integer. cumulative frequency of negative by bins.
+#' \item RatePos : integer. relative frequency of positive by bins.
+#' \item RateNeg : integer. relative frequency of negative by bins.
+#' \item RateCumPos : numeric. cumulative relative frequency of positive by bins.
+#' \item RateCumNeg : numeric. cumulative relative frequency of negative by bins.
+#' \item Odds : numeric. odds ratio.
+#' \item LnOdds : numeric. log odds ratio.
 #' \item WoE : numeric. weight of evidence.
 #' \item IV : numeric. Jeffrey's Information Value.
 #' \item JSD : numeric. Jensen-Shannon Divergence.
-#' \item AUC : numeric. AUC. area under curve.
+#' \item AUC : numeric. AUC. area under the curve.
 #' }
-#' Attributes of "performance_bin" class is as follows.
+#' Attributes of the "performance_bin" class are as follows.
 #' \itemize{
 #' \item names : character. variable name of data.frame with "Binning Table".
 #' \item class : character. name of class. "performance_bin" "data.frame".
@@ -922,12 +922,12 @@ extract.bins <- function(x) {
 #' \item KS : numeric. Kolmogorov-Smirnov Statistics.
 #' \item gini : numeric. Gini index.
 #' \item HHI : numeric. Herfindahl-Hirschman Index.
-#' \item HHI_norm : numeric.normalized Herfindahl-Hirschman Index.
+#' \item HHI_norm : numeric. normalized Herfindahl-Hirschman Index.
 #' \item Cramer_V : numeric. Cramer's V Statistics.
-#' \item chisq_test : data.frame. table of significance tests. name is as follows.
+#' \item chisq_test : data.frame. table of significance tests. names are as follows.
 #' \itemize{
-#'   \item Bin A : character. first bins.
-#'   \item Bin B : character. second bins.
+#'   \item Bin A : character. first bin.
+#'   \item Bin B : character. second bin.
 #'   \item statistics : numeric. statistics of Chi-square test.
 #'   \item p_value : numeric. p-value of Chi-square test.
 #'   }
@@ -1140,12 +1140,12 @@ performance_bin <- function (y, x, na.rm = FALSE) {
 #' Summarizing Performance for Binned Variable
 #'
 #' @description summary method for "performance_bin". summary metrics to evaluate the performance 
-#' of binomial classification model.
+#' of a binomial classification model.
 #' @param object an object of class "performance_bin", usually, a result of a call to performance_bin().
 #' @param ... further arguments to be passed from or to other methods.
 #' @details
-#' print() to print only binning table information of "performance_bin" objects.
-#' summary.performance_bin() includes general metrics and result of significance tests life follows.:
+#' print() prints only the binning table information of "performance_bin" objects.
+#' summary.performance_bin() includes general metrics and the results of significance tests as follows:
 #' \itemize{
 #'   \item Binning Table : Metrics by bins.
 #'   \itemize{
@@ -1248,18 +1248,18 @@ summary.performance_bin <- function(object, ...) {
 }
 
 
-#' Visualize Performance for an "performance_bin" Object
+#' Visualize Performance for a "performance_bin" Object
 #'
 #' @description
-#' It generates plots for understand frequency, WoE by bins using performance_bin.
+#' It generates plots to understand frequency and WoE by bins using performance_bin.
 #'
 #' @details The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 #' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font().
 #' 
 #' @param x an object of class "performance_bin", usually, a result of a call to performance_bin().
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
+#' @param typographic logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+#' The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... further arguments to be passed from or to other methods.
@@ -1350,23 +1350,23 @@ plot.performance_bin <- function(x, typographic = TRUE, base_family = NULL, ...)
 
 #' Binning by recursive information gain ratio maximization
 #'
-#' @description The binning_rgr() finding intervals for numerical variable
+#' @description The binning_rgr() finds intervals for a numerical variable
 #' using recursive information gain ratio maximization. 
 #'
 #' @details This function can be usefully used when developing a model that predicts y.
 #'
 #' @param .data a data frame.
 #' @param y character. name of binary response variable. 
-#' The variable must character of factor.
+#' The variable must be a character or factor.
 #' @param x character. name of continuous characteristic variable. 
-#' At least 5 different values. and Inf is not allowed.
-#' @param min_perc_bins numeric. minimum percetange of rows for each split or 
+#' It must have at least 5 different values, and Inf is not allowed.
+#' @param min_perc_bins numeric. minimum percentage of rows for each split or
 #' segment (controls the sample size), 0.1 (or 10 percent) as default.
 #' @param max_n_bins integer. maximum number of bins or segments 
 #' to split the input variable, 5 bins as default. 
 #' @param ordered logical. whether to build an ordered factor or not.
 #' @return an object of "infogain_bins" class.
-#' Attributes of "infogain_bins" class is as follows.
+#' Attributes of the "infogain_bins" class are as follows.
 #' \itemize{
 #' \item class : "infogain_bins".
 #' \item type : binning type, "infogain".
@@ -1500,7 +1500,7 @@ binning_rgr <- function(.data, y, x, min_perc_bins = 0.1, max_n_bins = 5, ordere
 #' Visualize Distribution for an "infogain_bins" Object
 #'
 #' @description
-#' It generates plots for understand distribution and  distribution by target variable using infogain_bins.
+#' It generates plots to understand the distribution and the distribution by target variable using infogain_bins.
 #'
 #' @details The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 #' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
@@ -1508,8 +1508,8 @@ binning_rgr <- function(.data, y, x, min_perc_bins = 0.1, max_n_bins = 5, ordere
 #' 
 #' @param x an object of class "infogain_bins", usually, a result of a call to binning_rgr().
 #' @param type character. options for visualization. Distribution("bar"), Relative Frequency by target ("cross").
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
+#' @param typographic logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+#' The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... further arguments to be passed from or to other methods.

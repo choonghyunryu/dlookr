@@ -9,14 +9,14 @@ binning_by(.data, y, x, p = 0.05, ordered = TRUE, labels = NULL)
 \arguments{
 \item{.data}{a data frame.}
 
-\item{y}{character. name of binary response variable(0, 1). 
-The variable must contain only the integers 0 and 1 as element. 
-However, in the case of factor having two levels, it is performed while type conversion is performed in the calculation process.}
+\item{y}{character. name of the binary response variable (0, 1).
+The variable must contain only the integers 0 and 1 as elements.
+However, a factor with two levels is also allowed; it is converted to the appropriate type during the calculation process.}
 
-\item{x}{character. name of continuous characteristic variable. At least 5 different values. and Inf is not allowed.}
+\item{x}{character. name of the continuous characteristic variable. It must have at least 5 different values, and Inf is not allowed.}
 
 \item{p}{numeric. percentage of records per bin. Default 5\% (0.05).
-This parameter only accepts values greater that 0.00 (0\%) and lower than 0.50 (50\%).}
+This parameter only accepts values greater than 0.00 (0\%) and lower than 0.50 (50\%).}
 
 \item{ordered}{logical. whether to build an ordered factor or not.}
 
@@ -24,7 +24,7 @@ This parameter only accepts values greater that 0.00 (0\%) and lower than 0.50 (
 }
 \value{
 an object of "optimal_bins" class.
-Attributes of "optimal_bins" class is as follows.
+Attributes of the "optimal_bins" class are as follows.
 \itemize{
 \item class : "optimal_bins".
 \item type : binning type, "optimal".
@@ -37,24 +37,24 @@ Attributes of "optimal_bins" class is as follows.
 }
 }
 \description{
-The binning_by() finding intervals for numerical variable
-using optical binning. Optimal binning categorizes a numeric characteristic
+The binning_by() finds intervals for a numerical variable
+using optimal binning. Optimal binning categorizes a numeric characteristic
 into bins for ulterior usage in scoring modeling.
 }
 \details{
 This function is useful when used with the mutate/transmute
-function of the dplyr package. And this function is implemented using
-smbinning() function of smbinning package.
+function of the dplyr package. This function is implemented using
+the smbinning() function of the smbinning package.
 }
 \section{attributes of "optimal_bins" class}{
 
-Attributes of the "optimal_bins" class that is as follows.
+Attributes of the "optimal_bins" class are as follows.
 \itemize{
 \item class : "optimal_bins".
 \item levels : character. factor or ordered factor levels
 \item type : character. binning method
 \item breaks : numeric. breaks for binning
-\item raw : numeric. before the binned the raw data
+\item raw : numeric. the raw data before binning
 \item ivtable : data.frame. information value table
 \item iv : numeric. information value
 \item target : integer. binary response variable

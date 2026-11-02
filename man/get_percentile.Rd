@@ -9,25 +9,25 @@ get_percentile(x, value, from = 0, to = 1, eps = 1e-06)
 \arguments{
 \item{x}{numeric. a numeric vector.}
 
-\item{value}{numeric. a scalar to find percentile value from vector x.}
+\item{value}{numeric. a scalar to find the percentile value from vector x.}
 
-\item{from}{numeric. Start interval in logic to find percentile value. default to 0.}
+\item{from}{numeric. Start of the interval in the logic to find the percentile value. default is 0.}
 
-\item{to}{numeric. End interval in logic to find percentile value. default to 1.}
+\item{to}{numeric. End of the interval in the logic to find the percentile value. default is 1.}
 
 \item{eps}{numeric. Threshold value for calculating the approximate value in recursive 
-calling logic to find the percentile value. (epsilon). default to 1e-06.}
+calling logic to find the percentile value (epsilon). default is 1e-06.}
 }
 \value{
 list.
-Components of list. is as follows.
+Components of the list are as follows.
 \itemize{
 \item percentile : numeric. Percentile position of value. It has a value between [0, 100].
 \item is_outlier : logical. Whether value is an outlier.
 }
 }
 \description{
-Find the percentile of the value specified in numeric vector.
+Find the percentile of the value specified in a numeric vector.
 }
 \examples{
 carat <- ggplot2::diamonds$carat

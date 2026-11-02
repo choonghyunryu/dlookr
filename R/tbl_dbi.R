@@ -1,6 +1,6 @@
-#' Describe column of table in the DBMS
+#' Describe columns of a table in the DBMS
 #'
-#' @description The get_column_info() retrieves the column information of the DBMS table through the tbl_bdi object of dplyr.
+#' @description The get_column_info() retrieves the column information of the DBMS table through the tbl_dbi object of dplyr.
 #'
 #' @section Column information of the DBMS table:
 #'
@@ -22,9 +22,9 @@
 #'     \item name: column name
 #'     \item Sclass: column type in R
 #'     \item type: data type of column in the DBMS
-#'     \item len: length of column(CHAR/VARCHAR/VARCHAR2 data type) in the DBMS
-#'     \item precision: precision of column(NUMBER data type) in the DBMS
-#'     \item scale: decimal places of column(NUMBER data type) in the DBMS
+#'     \item len: length of the column (CHAR/VARCHAR/VARCHAR2 data type) in the DBMS
+#'     \item precision: precision of the column (NUMBER data type) in the DBMS
+#'     \item scale: decimal places of the column (NUMBER data type) in the DBMS
 #'     \item nullOK: nullability
 #'   }
 #' }
@@ -73,16 +73,16 @@ get_column_info <- function(df) {
 #' Diagnose data quality of variables in the DBMS 
 #'
 #' @description The diagnose() produces information for diagnosing the quality of 
-#' the column of the DBMS table through tbl_dbi.
+#' the columns of the DBMS table through tbl_dbi.
 #'
-#' @details The scope of data quality diagnosis is information on missing values
+#' @details The scope of the data quality diagnosis is information on missing values
 #' and unique value information. Data quality diagnosis can determine variables
 #' that require missing value processing. Also, the unique value information can
-#' determine the variable to be removed from the data analysis. 
+#' determine the variables to be removed from the data analysis.
 #' You can use grouped_df as the group_by() function.
 #'
 #' @section Diagnostic information:
-#' The information derived from the data diagnosis is as follows.:
+#' The information derived from the data diagnosis is as follows:
 #'
 #' \itemize{
 #' \item variables : column names
@@ -94,7 +94,7 @@ get_column_info <- function(df) {
 #' \item missing_count : number of missing values
 #' \item missing_percent : percentage of missing values
 #' \item unique_count : number of unique values
-#' \item unique_rate : ratio of unique values. unique_count / number of observation
+#' \item unique_rate : ratio of unique values. unique_count / number of observations
 #' }
 #'
 #' See vignette("diagonosis") for an introduction to these concepts.
@@ -102,15 +102,15 @@ get_column_info <- function(df) {
 #' @param .data a tbl_dbi.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' If the first expression is negative, diagnose() will automatically start with all variables.
 #' These arguments are automatically quoted and evaluated in a context where column names
 #' represent column positions.
 #' They support unquoting and splicing.
-#' @param in_database a logical. Specifies whether to perform in-database operations. 
-#' If TRUE, most operations are performed in the DBMS. if FALSE, 
-#' table data is taken in R and operated in-memory.
-#' @param collect_size a integer. The number of data samples from the DBMS to R. 
+#' @param in_database logical. Specifies whether to perform in-database operations.
+#' If TRUE, most operations are performed in the DBMS. If FALSE,
+#' table data is taken into R and operated on in memory.
+#' @param collect_size an integer. The number of data samples from the DBMS to R.
 #' Applies only if in_database = FALSE.
 #'
 #' @return An object of tbl_df.
@@ -260,12 +260,12 @@ diagn_group_impl_dbi <- function(df, vars) {
 #' Diagnose data quality of categorical variables in the DBMS 
 #'
 #' @description The diagnose_category() produces information for 
-#' diagnosing the quality of the character(CHAR, VARCHAR, VARCHAR2, etc.) 
-#' column of the DBMS table through tbl_dbi.
+#' diagnosing the quality of the character (CHAR, VARCHAR, VARCHAR2, etc.)
+#' columns of the DBMS table through tbl_dbi.
 #' 
 #' @details The scope of the diagnosis is the occupancy status of the levels
 #' in categorical data. If a certain level of occupancy is close to 100%,
-#' then the removal of this variable in the forecast model will have to be
+#' then the removal of this variable from the forecast model will have to be
 #' considered. Also, if the occupancy of all levels is close to 0%, this
 #' variable is likely to be an identifier.
 #' You can use grouped_df as the group_by() function.
@@ -276,9 +276,9 @@ diagn_group_impl_dbi <- function(df, vars) {
 #' \itemize{
 #' \item variables : variable names
 #' \item levels: level names
-#' \item N : number of observation
-#' \item freq : number of observation at the levels
-#' \item ratio : percentage of observation at the levels
+#' \item N : number of observations
+#' \item freq : number of observations at the levels
+#' \item ratio : percentage of observations at the levels
 #' \item rank : rank of occupancy ratio of levels
 #' }
 #'
@@ -287,7 +287,7 @@ diagn_group_impl_dbi <- function(df, vars) {
 #' @param .data a tbl_dbi.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' If the first expression is negative, diagnose_category() will automatically
 #' start with all variables.
 #' These arguments are automatically quoted and evaluated in a context where
@@ -295,17 +295,17 @@ diagn_group_impl_dbi <- function(df, vars) {
 #' They support unquoting and splicing.
 #' @param top an integer. Specifies the upper top rank to extract.
 #' Default is 10.
-#' @param type a character string specifying how result are extracted.
-#' Default is "rank" that extract top n ranks by decreasing frequency. 
+#' @param type a character string specifying how results are extracted.
+#' The default is "rank", which extracts the top n ranks by decreasing frequency.
 #' In this case, if there are ties in rank, more rows than the number specified 
 #' by the top argument are returned.
-#' "n" extract top n rows by decreasing frequency. 
+#' "n" extracts the top n rows by decreasing frequency.
 #' If there are too many rows to be returned because there are too many ties, 
 #' you can adjust the returned rows appropriately by using "n".
 #' @param in_database Specifies whether to perform in-database operations. 
-#' If TRUE, most operations are performed in the DBMS. if FALSE, 
-#' table data is taken in R and operated in-memory.
-#' @param collect_size a integer. The number of data samples from the DBMS to R. 
+#' If TRUE, most operations are performed in the DBMS. If FALSE,
+#' table data is taken into R and operated on in memory.
+#' @param collect_size an integer. The number of data samples from the DBMS to R.
 #' Applies only if in_database = FALSE.
 #' 
 #' @return an object of tbl_df.
@@ -528,14 +528,14 @@ diagn_category_group_impl_dbi <- function(df, vars, top, type) {
 #' Diagnose data quality of numerical variables in the DBMS 
 #'
 #' @description The diagnose_numeric() produces information
-#' for diagnosing the quality of the numerical(INTEGER, NUMBER, etc.) column 
+#' for diagnosing the quality of the numerical (INTEGER, NUMBER, etc.) columns
 #' of the DBMS table through tbl_dbi.
 #' 
-#' @details The scope of the diagnosis is the calculate a statistic that can be
+#' @details The scope of the diagnosis is to calculate statistics that can be
 #' used to understand the distribution of numerical data.
 #' min, Q1, mean, median, Q3, max can be used to estimate the distribution
-#' of data. If the number of zero or minus is large, it is necessary to suspect
-#' the error of the data. If the number of outliers is large, a strategy of
+#' of data. If the number of zeros or negative values is large, it is necessary to suspect
+#' errors in the data. If the number of outliers is large, a strategy of
 #' eliminating or replacing outliers is needed.
 #' You can use grouped_df as the group_by() function.
 #' 
@@ -545,13 +545,13 @@ diagn_category_group_impl_dbi <- function(df, vars, top, type) {
 #' \itemize{
 #' \item variables : variable names
 #' \item min : minimum
-#' \item Q1 : 25 percentile
+#' \item Q1 : 25th percentile
 #' \item mean : arithmetic average
-#' \item median : median. 50 percentile
-#' \item Q3 : 75 percentile
+#' \item median : median. 50th percentile
+#' \item Q3 : 75th percentile
 #' \item max : maximum
 #' \item zero : count of zero values
-#' \item minus : count of minus values
+#' \item minus : count of negative values
 #' \item outlier : count of outliers
 #' }
 #'
@@ -560,16 +560,16 @@ diagn_category_group_impl_dbi <- function(df, vars, top, type) {
 #' @param .data a tbl_dbi.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' If the first expression is negative, diagnose_numeric() will automatically
 #' start with all variables.
 #' These arguments are automatically quoted and evaluated in a context where column names
 #' represent column positions.
 #' They support unquoting and splicing.
 #' @param in_database Specifies whether to perform in-database operations. 
-#' If TRUE, most operations are performed in the DBMS. if FALSE, 
-#' table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.
-#' @param collect_size a integer. The number of data samples from the DBMS to R. 
+#' If TRUE, most operations are performed in the DBMS. If FALSE,
+#' table data is taken into R and operated on in memory. in_database = TRUE is not yet supported.
+#' @param collect_size an integer. The number of data samples from the DBMS to R.
 #' Applies only if in_database = FALSE.
 #' @return an object of tbl_df.
 #' @seealso \code{\link{diagnose_numeric.data.frame}}, \code{\link{diagnose.tbl_dbi}}, \code{\link{diagnose_category.tbl_dbi}}, \code{\link{diagnose_outlier.tbl_dbi}}.
@@ -647,13 +647,13 @@ diagnose_numeric.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_si
 }
 
 
-#' Diagnose outlier of numerical variables in the DBMS
+#' Diagnose outliers of numerical variables in the DBMS
 #'
 #' @description The diagnose_outlier() produces outlier information
-#' for diagnosing the quality of the numerical(INTEGER, NUMBER, etc.) column 
+#' for diagnosing the quality of the numerical (INTEGER, NUMBER, etc.) columns
 #' of the DBMS table through tbl_dbi.
 #' 
-#' @details The scope of the diagnosis is the provide a outlier information.
+#' @details The scope of the diagnosis is to provide outlier information.
 #' If the number of outliers is small and the difference between the averages
 #' including outliers and the averages not including them is large,
 #' it is necessary to eliminate or replace the outliers.
@@ -667,8 +667,8 @@ diagnose_numeric.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_si
 #' \item outliers_cnt : number of outliers
 #' \item outliers_ratio : percent of outliers
 #' \item outliers_mean : arithmetic average of outliers
-#' \item with_mean : arithmetic average of with outliers
-#' \item without_mean : arithmetic average of without outliers
+#' \item with_mean : arithmetic average including outliers
+#' \item without_mean : arithmetic average excluding outliers
 #' }
 #'
 #' See vignette("diagonosis") for an introduction to these concepts.
@@ -676,16 +676,16 @@ diagnose_numeric.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_si
 #' @param .data a tbl_dbi.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' If the first expression is negative, diagnose_outlier() will automatically
 #' start with all variables.
 #' These arguments are automatically quoted and evaluated in a context
 #' where column names represent column positions.
 #' They support unquoting and splicing.
 #' @param in_database Specifies whether to perform in-database operations. 
-#' If TRUE, most operations are performed in the DBMS. if FALSE, 
-#' table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.
-#' @param collect_size a integer. The number of data samples from the DBMS to R. 
+#' If TRUE, most operations are performed in the DBMS. If FALSE,
+#' table data is taken into R and operated on in memory. in_database = TRUE is not yet supported.
+#' @param collect_size an integer. The number of data samples from the DBMS to R.
 #' Applies only if in_database = FALSE.
 #' 
 #' @return an object of tbl_df.
@@ -766,16 +766,16 @@ diagnose_outlier.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_si
 
 #' Plot outlier information of numerical data diagnosis in the DBMS
 #'
-#' @description The plot_outlier() visualize outlier information
-#' for diagnosing the quality of the numerical(INTEGER, NUMBER, etc.) column 
+#' @description The plot_outlier() visualizes outlier information
+#' for diagnosing the quality of the numerical (INTEGER, NUMBER, etc.) columns
 #' of the DBMS table through tbl_dbi.
 #' 
-#' @details The scope of the diagnosis is the provide a outlier information.
+#' @details The scope of the diagnosis is to provide outlier information.
 #' Since the plot is drawn for each variable, if you specify more than
-#' one variable in the ... argument, the specified number of plots are drawn.
+#' one variable in the ... argument, the specified number of plots is drawn.
 #'
 #' @section Outlier diagnostic information:
-#' The plot derived from the numerical data diagnosis is as follows.
+#' The plots derived from the numerical data diagnosis are as follows.
 #'
 #' \itemize{
 #' \item With outliers box plot
@@ -793,7 +793,7 @@ diagnose_outlier.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_si
 #' @param .data a tbl_dbi.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' If the first expression is negative, plot_outlier() will automatically start
 #' with all variables.
 #' These arguments are automatically quoted and evaluated in a context
@@ -801,12 +801,12 @@ diagnose_outlier.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_si
 #' They support unquoting and splicing.
 #' @param col a color to be used to fill the bars. The default is "lightblue".
 #' @param in_database Specifies whether to perform in-database operations. 
-#' If TRUE, most operations are performed in the DBMS. if FALSE, 
-#' table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.
-#' @param collect_size a integer. The number of data samples from the DBMS to R. 
+#' If TRUE, most operations are performed in the DBMS. If FALSE,
+#' table data is taken into R and operated on in memory. in_database = TRUE is not yet supported.
+#' @param collect_size an integer. The number of data samples from the DBMS to R.
 #' Applies only if in_database = FALSE.
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
+#' @param typographic logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+#' The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' 
@@ -886,39 +886,39 @@ plot_outlier.tbl_dbi <- function(.data, ..., col = "steelblue",
 
 #' Performs the Shapiro-Wilk test of normality
 #'
-#' @description The normality() performs Shapiro-Wilk test of normality 
-#' of numerical(INTEGER, NUMBER, etc.) column of the DBMS table through tbl_dbi.
+#' @description The normality() performs the Shapiro-Wilk test of normality
+#' of numerical (INTEGER, NUMBER, etc.) columns of the DBMS table through tbl_dbi.
 #'
 #' @details This function is useful when used with the \code{\link[dplyr]{group_by}}
 #' function of the dplyr package. If you want to test by level of the categorical
 #' data you are interested in, rather than the whole observation,
-#' you can use group_tf as the group_by function.
-#' This function is computed \code{\link{shapiro.test}} function.
+#' you can use grouped_df as the group_by function.
+#' This function is computed with the \code{\link{shapiro.test}} function.
 #'
 #' @section Normality test information:
 #' The information derived from the numerical data test is as follows.
 #'
 #' \itemize{
 #' \item statistic : the value of the Shapiro-Wilk statistic.
-#' \item p_value : an approximate p-value for the test. This is said in
-#' Roystion(1995) to be adequate for p_value < 0.1.
-#' \item sample : the numer of samples to perform the test.
+#' \item p_value : an approximate p-value for the test. This is said by
+#' Royston (1995) to be adequate for p_value < 0.1.
+#' \item sample : the number of samples to perform the test.
 #' The number of observations supported by the stats::shapiro.test function is 3 to 5000.
 #' }
 #'
 #' @param .data a tbl_dbi.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' If the first expression is negative, normality() will automatically start with all variables.
 #' These arguments are automatically quoted and evaluated in a context where column names
 #' represent column positions.
 #' They support unquoting and splicing.
 #' @param sample the number of samples to perform the test.
 #' @param in_database Specifies whether to perform in-database operations. 
-#' If TRUE, most operations are performed in the DBMS. if FALSE, 
-#' table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.
-#' @param collect_size a integer. The number of data samples from the DBMS to R. 
+#' If TRUE, most operations are performed in the DBMS. If FALSE,
+#' table data is taken into R and operated on in memory. in_database = TRUE is not yet supported.
+#' @param collect_size an integer. The number of data samples from the DBMS to R.
 #' Applies only if in_database = FALSE.
 #' 
 #' See vignette("EDA") for an introduction to these concepts.
@@ -1015,35 +1015,35 @@ normality.tbl_dbi <- function(.data, ..., sample = 5000,
 
 #' Plot distribution information of numerical data
 #'
-#' @description The plot_normality() visualize distribution information
-#' for normality test of the numerical(INTEGER, NUMBER, etc.) column of 
+#' @description The plot_normality() visualizes distribution information
+#' for the normality test of the numerical (INTEGER, NUMBER, etc.) columns of
 #' the DBMS table through tbl_dbi.
 #'
-#' @details The scope of the visualization is the provide a distribution information.
+#' @details The scope of the visualization is to provide distribution information.
 #' Since the plot is drawn for each variable, if you specify more than
-#' one variable in the ... argument, the specified number of plots are drawn.
+#' one variable in the ... argument, the specified number of plots is drawn.
 #'
-#' The argument values that left and right can have are as follows.:
+#' The argument values that left and right can have are as follows:
 #' 
 #' \itemize{
 #'   \item "log" : log transformation. log(x)
 #'   \item "log+1" : log transformation. log(x + 1). Used for values that contain 0.
 #'   \item "sqrt" : square root transformation.
 #'   \item "1/x" : 1 / x transformation
-#'   \item "x^2" : x square transformation
-#'   \item "x^3" : x^3 square transformation
-#'   \item "Box-Cox" : Box-Box transformation
+#'   \item "x^2" : x squared transformation
+#'   \item "x^3" : x cubed transformation
+#'   \item "Box-Cox" : Box-Cox transformation
 #'   \item "Yeo-Johnson" : Yeo-Johnson transformation
 #' }
 #'
 #' @section Distribution information:
-#' The plot derived from the numerical data visualization is as follows.
+#' The plots derived from the numerical data visualization are as follows.
 #'
 #' \itemize{
 #' \item histogram by original data
 #' \item q-q plot by original data
-#' \item histogram by log transfer data
-#' \item histogram by square root transfer data
+#' \item histogram by log-transformed data
+#' \item histogram by square root-transformed data
 #' }
 #'
 #' The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
@@ -1053,7 +1053,7 @@ normality.tbl_dbi <- function(.data, ..., sample = 5000,
 #' @param .data a tbl_dbi.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' If the first expression is negative, plot_normality() will automatically
 #' start with all variables.
 #' These arguments are automatically quoted and evaluated in a context where column names
@@ -1062,16 +1062,16 @@ normality.tbl_dbi <- function(.data, ..., sample = 5000,
 #' 
 #' See vignette("EDA") for an introduction to these concepts.
 #' @param in_database Specifies whether to perform in-database operations. 
-#' If TRUE, most operations are performed in the DBMS. if FALSE, 
-#' table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.
-#' @param collect_size a integer. The number of data samples from the DBMS to R. 
+#' If TRUE, most operations are performed in the DBMS. If FALSE,
+#' table data is taken into R and operated on in memory. in_database = TRUE is not yet supported.
+#' @param collect_size an integer. The number of data samples from the DBMS to R.
 #' Applies only if in_database = FALSE.
 #' @param left character. Specifies the data transformation method to draw the histogram in the 
 #' lower left corner. The default is "log".
 #' @param right character. Specifies the data transformation method to draw the histogram in the 
 #' lower right corner. The default is "sqrt".
 #' @param col a color to be used to fill the bars. The default is "steelblue".
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
+#' @param typographic logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' 
@@ -1157,9 +1157,9 @@ plot_normality.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
 
 #' @rdname correlate.data.frame
 #' @param in_database Specifies whether to perform in-database operations. 
-#' If TRUE, most operations are performed in the DBMS. if FALSE, 
-#' table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.
-#' @param collect_size a integer. The number of data samples from the DBMS to R. 
+#' If TRUE, most operations are performed in the DBMS. If FALSE,
+#' table data is taken into R and operated on in memory. in_database = TRUE is not yet supported.
+#' @param collect_size an integer. The number of data samples from the DBMS to R.
 #' Applies only if in_database = FALSE.
 #'
 #' @export
@@ -1232,16 +1232,16 @@ correlate.tbl_dbi <- function(.data, ...,
 
 #' Visualize correlation plot of numerical data
 #'
-#' @description The plot_correlate() visualize correlation plot
-#' for find relationship between two numerical(INTEGER, NUMBER, etc.) column of 
+#' @description The plot_correlate() visualizes a correlation plot
+#' to find the relationship between two numerical (INTEGER, NUMBER, etc.) columns of
 #' the DBMS table through tbl_dbi.
 #'
-#' @details The scope of the visualization is the provide a correlation information.
+#' @details The scope of the visualization is to provide correlation information.
 #' Since the plot is drawn for each variable, if you specify more than
-#' one variable in the ... argument, the specified number of plots are drawn.
+#' one variable in the ... argument, the specified number of plots is drawn.
 #'
-#' The direction of the diagonal is top-left to bottom-right. and color of the 
-#' cells is 'red' to -1, 'blue' to 1.
+#' The direction of the diagonal is top-left to bottom-right, and the color of the
+#' cells is 'red' for -1 and 'blue' for 1.
 #' 
 #' The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 #' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
@@ -1250,19 +1250,19 @@ correlate.tbl_dbi <- function(.data, ...,
 #' @param .data a tbl_dbi.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' If the first expression is negative, plot_correlate() will automatically start with all variables.
 #' These arguments are automatically quoted and evaluated in a context where column names
 #' represent column positions.
 #' They support unquoting and splicing.
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
+#' @param typographic logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+#' The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param in_database Specifies whether to perform in-database operations. 
-#' If TRUE, most operations are performed in the DBMS. if FALSE, 
-#' table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.
-#' @param collect_size a integer. The number of data samples from the DBMS to R. 
+#' If TRUE, most operations are performed in the DBMS. If FALSE,
+#' table data is taken into R and operated on in memory. in_database = TRUE is not yet supported.
+#' @param collect_size an integer. The number of data samples from the DBMS to R.
 #' Applies only if in_database = FALSE.
 #' @param method a character string indicating which correlation coefficient (or covariance) is 
 #' to be computed. One of "pearson" (default), "kendall", or "spearman": can be abbreviated.
@@ -1295,14 +1295,14 @@ plot_correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
 }
 
 
-#' Compute descriptive statistic
+#' Compute descriptive statistics
 #'
-#' @description The describe() compute descriptive statistic of numerical(INTEGER, NUMBER, etc.) 
+#' @description The describe() computes descriptive statistics of numerical (INTEGER, NUMBER, etc.)
 #' column of the DBMS table through tbl_dbi for exploratory data analysis.
 #'
 #' @details This function is useful when used with the \code{\link[dplyr]{group_by}} function
 #' of the dplyr package.
-#' If you want to calculate the statistic by level of the categorical data
+#' If you want to calculate the statistics by level of the categorical data
 #' you are interested in, rather than the whole statistic, you can use
 #' grouped_df as the group_by() function.
 #'
@@ -1313,21 +1313,21 @@ plot_correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
 #' included in the variable name of the data.
 #'
 #' @section Descriptive statistic information:
-#' The information derived from the numerical data describe is as follows.
+#' The information derived from the numerical data description is as follows.
 #'
 #' \itemize{
 #' \item n : number of observations excluding missing values
 #' \item na : number of missing values
 #' \item mean : arithmetic average
 #' \item sd : standard deviation
-#' \item se_mean : standard error mean. sd/sqrt(n)
+#' \item se_mean : standard error of the mean. sd/sqrt(n)
 #' \item IQR : interquartile range (Q3-Q1)
 #' \item skewness : skewness
 #' \item kurtosis : kurtosis
 #' \item p25 : Q1. 25\% percentile
 #' \item p50 : median. 50\% percentile
 #' \item p75 : Q3. 75\% percentile
-#' \item p01, p05, p10, p20, p30 : 1\%, 5\%, 20\%, 30\% percentiles
+#' \item p01, p05, p10, p20, p30 : 1\%, 5\%, 10\%, 20\%, 30\% percentiles
 #' \item p40, p60, p70, p80 : 40\%, 60\%, 70\%, 80\% percentiles
 #' \item p90, p95, p99, p100 : 90\%, 95\%, 99\%, 100\% percentiles
 #'
@@ -1336,21 +1336,21 @@ plot_correlate.tbl_dbi <- function(.data, ..., in_database = FALSE, collect_size
 #' @param .data a tbl_dbi.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' If the first expression is negative, describe() will automatically start with all variables.
 #' These arguments are automatically quoted and evaluated in a context where column names
 #' represent column positions.
 #' They support unquoting and splicing.
-#' @param statistics character. the name of the descriptive statistic to calculate. The defaults is c("mean", "sd", "se_mean", "IQR", "skewness", "kurtosis", "quantiles")
-#' @param quantiles numeric. list of quantiles to calculate. The values of elements must be between 0 and 1. and to calculate quantiles, you must include "quantiles" in the statistics argument value. The default is c(0, .01, .05, 0.1, 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.9, 0.95, 0.99, 1).
+#' @param statistics character. the name of the descriptive statistic to calculate. The default is c("mean", "sd", "se_mean", "IQR", "skewness", "kurtosis", "quantiles")
+#' @param quantiles numeric. list of quantiles to calculate. The values of elements must be between 0 and 1, and to calculate quantiles, you must include "quantiles" in the statistics argument value. The default is c(0, .01, .05, 0.1, 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.9, 0.95, 0.99, 1).
 #' @param all.combinations logical. When used with group_by(), 
-#' this argument expresses all combinations of  group combinations. 
+#' this argument expresses all combinations of groups.
 #' If the argument value is TRUE, cases that do not exist as actual 
 #' data are also included in the output.
 #' @param in_database Specifies whether to perform in-database operations. 
-#' If TRUE, most operations are performed in the DBMS. if FALSE, 
-#' table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.
-#' @param collect_size a integer. The number of data samples from the DBMS to R. 
+#' If TRUE, most operations are performed in the DBMS. If FALSE,
+#' table data is taken into R and operated on in memory. in_database = TRUE is not yet supported.
+#' @param collect_size an integer. The number of data samples from the DBMS to R.
 #' Applies only if in_database = FALSE.
 #' 
 #' See vignette("EDA") for an introduction to these concepts.
@@ -1449,7 +1449,7 @@ describe.tbl_dbi <- function(.data, ..., statistics = NULL, quantiles = NULL,
 #'
 #' @description
 #' In the data analysis, a target_df class is created to identify the
-#' relationship between the target column and the other column of the DBMS table through tbl_dbi
+#' relationship between the target column and the other columns of the DBMS table through tbl_dbi.
 #'
 #' @details
 #' Data analysis proceeds with the purpose of predicting target variables that
@@ -1460,22 +1460,22 @@ describe.tbl_dbi <- function(.data, ..., statistics = NULL, quantiles = NULL,
 #'  Based on the derived relationships, analysts create scenarios for data analysis.
 #'
 #'  target_by() inherits the \code{\link[dplyr]{grouped_df}} class and returns a target_df
-#'  class containing information about the target variable and the variable.
+#'  class containing information about the target variable and the other variables.
 #'
 #' See vignette("EDA") for an introduction to these concepts.
 #'
 #' @param .data a tbl_dbi.
 #' @param target target variable.
 #' @param in_database Specifies whether to perform in-database operations. 
-#' If TRUE, most operations are performed in the DBMS. if FALSE, 
-#' table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.
-#' @param collect_size a integer. The number of data samples from the DBMS to R.
+#' If TRUE, most operations are performed in the DBMS. If FALSE,
+#' table data is taken into R and operated on in memory. in_database = TRUE is not yet supported.
+#' @param collect_size an integer. The number of data samples from the DBMS to R.
 #' Applies only if in_database = FALSE.
 #' @param ... arguments to be passed to methods.
 #' @return an object of target_df class.
-#' Attributes of target_df class is as follows.
+#' Attributes of the target_df class are as follows.
 #' \itemize{
-#' \item type_y : the data type of target variable.
+#' \item type_y : the data type of the target variable.
 #' }
 #' @seealso \code{\link{target_by.data.frame}}, \code{\link{relate}}.
 #' @examples
@@ -1547,36 +1547,36 @@ target_by.tbl_dbi <- function(.data, target, in_database = FALSE, collect_size =
 }
 
 
-#' Reporting the information of data diagnosis for table of the DBMS
+#' Reporting the information of data diagnosis for a DBMS table
 #'
-#' @description The diagnose_report() report the information for diagnosing
+#' @description The diagnose_report() reports the information for diagnosing
 #' the quality of the DBMS table through tbl_dbi
 #'
-#' @details Generate generalized data diagnostic reports automatically.
-#' You can choose to output to pdf and html files.
-#' This is useful for diagnosing a data frame with a large number of variables
+#' @details Generates generalized data diagnostic reports automatically.
+#' You can choose to output the report as a pdf or html file.
+#' This is more useful for diagnosing a data frame with a large number of variables
 #' than data with a small number of variables.
-#' For pdf output, Korean Gothic font must be installed in Korean operating system.
+#' For pdf output, the Korean Gothic font must be installed on a Korean operating system.
 #' 
 #' @section Reported information:
-#' Reported from the data diagnosis is as follows.
+#' The information reported from the data diagnosis is as follows.
 #'
 #' \itemize{
 #'   \item Diagnose Data
 #'   \itemize{
 #'     \item Overview of Diagnosis
 #'     \itemize{
-#'       \item List of all variables quality
+#'       \item List of all variables' quality
 #'       \item Diagnosis of missing data
-#'       \item Diagnosis of unique data(Text and Category)
-#'       \item Diagnosis of unique data(Numerical)
+#'       \item Diagnosis of unique data (Text and Category)
+#'       \item Diagnosis of unique data (Numerical)
 #'     }
 #'     \item Detailed data diagnosis
 #'     \itemize{
 #'       \item Diagnosis of categorical variables
 #'       \item Diagnosis of numerical variables
 #'       \item List of numerical diagnosis (zero)
-#'       \item List of numerical diagnosis (minus)
+#'       \item List of numerical diagnosis (negative)
 #'     }
 #'   }
 #'   \item Diagnose Outliers
@@ -1593,16 +1593,16 @@ target_by.tbl_dbi <- function(.data, target, in_database = FALSE, collect_size =
 #'
 #' @param .data a tbl_dbi.
 #' @param in_database Specifies whether to perform in-database operations. 
-#' If TRUE, most operations are performed in the DBMS. if FALSE, 
-#' table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.
-#' @param collect_size a integer. The number of data samples from the DBMS to R. 
+#' If TRUE, most operations are performed in the DBMS. If FALSE,
+#' table data is taken into R and operated on in memory. in_database = TRUE is not yet supported.
+#' @param collect_size an integer. The number of data samples from the DBMS to R.
 #' Applies only if in_database = FALSE.
-#' @param output_format report output type. Choose either "pdf" and "html".
-#' "pdf" create pdf file by knitr::knit().
-#' "html" create html file by rmarkdown::render().
-#' @param output_file name of generated file. default is NULL.
-#' @param output_dir name of directory to generate report file. default is tempdir().
-#' @param font_family character. font family name for figure in pdf.
+#' @param output_format report output type. Choose either "pdf" or "html".
+#' "pdf" creates a pdf file by knitr::knit().
+#' "html" creates an html file by rmarkdown::render().
+#' @param output_file name of the generated file. default is NULL.
+#' @param output_dir name of the directory in which to generate the report file. default is tempdir().
+#' @param font_family character. font family name for figures in the pdf.
 #' @param ... arguments to be passed to methods.
 #' 
 #' @return No return value. This function only generates a report.
@@ -1664,16 +1664,16 @@ diagnose_report.tbl_dbi <- function(.data, output_format = c("pdf", "html"),
 }
 
 
-#' Reporting the information of EDA for table of the DBMS
+#' Reporting the information of EDA for a DBMS table
 #'
-#' @description The eda_report() report the information of Exploratory
-#' data analysis for object inheriting from the DBMS table through tbl_dbi
+#' @description The eda_report() reports the information of exploratory
+#' data analysis for objects inheriting from the DBMS table through tbl_dbi.
 #'
-#' @details Generate generalized data EDA reports automatically.
-#' You can choose to output to pdf and html files.
-#' This is useful for EDA a data frame with a large number of variables
+#' @details Generates generalized EDA reports automatically.
+#' You can choose to output the report as a pdf or html file.
+#' This is more useful for performing EDA on a data frame with a large number of variables
 #' than data with a small number of variables.
-#' For pdf output, Korean Gothic font must be installed in Korean operating system.
+#' For pdf output, the Korean Gothic font must be installed on a Korean operating system.
 #' 
 #' @section Reported information:
 #' The EDA process will report the following information:
@@ -1701,7 +1701,7 @@ diagnose_report.tbl_dbi <- function(.data, output_format = c("pdf", "html"),
 #'       \item Correlation Plot of Numerical Variables
 #'     }
 #'   }
-#'   \item Target based Analysis
+#'   \item Target-based Analysis
 #'   \itemize{
 #'     \item Grouped Descriptive Statistics
 #'     \itemize{
@@ -1721,16 +1721,16 @@ diagnose_report.tbl_dbi <- function(.data, output_format = c("pdf", "html"),
 #' @param .data a tbl_dbi.
 #' @param target target variable.
 #' @param in_database Specifies whether to perform in-database operations. 
-#' If TRUE, most operations are performed in the DBMS. if FALSE, 
-#' table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.
-#' @param collect_size a integer. The number of data samples from the DBMS to R. 
+#' If TRUE, most operations are performed in the DBMS. If FALSE,
+#' table data is taken into R and operated on in memory. in_database = TRUE is not yet supported.
+#' @param collect_size an integer. The number of data samples from the DBMS to R.
 #' Applies only if in_database = FALSE.
-#' @param output_format report output type. Choose either "pdf" and "html".
-#' "pdf" create pdf file by knitr::knit().
-#' "html" create html file by rmarkdown::render().
-#' @param output_file name of generated file. default is NULL.
-#' @param output_dir name of directory to generate report file. default is tempdir().
-#' @param font_family character. font family name for figure in pdf.
+#' @param output_format report output type. Choose either "pdf" or "html".
+#' "pdf" creates a pdf file by knitr::knit().
+#' "html" creates an html file by rmarkdown::render().
+#' @param output_file name of the generated file. default is NULL.
+#' @param output_dir name of the directory in which to generate the report file. default is tempdir().
+#' @param font_family character. font family name for figures in the pdf.
 #' @param ... arguments to be passed to methods.
 #' 
 #' @return No return value. This function only generates a report.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/tbl_dbi.R
 \name{get_column_info}
 \alias{get_column_info}
-\title{Describe column of table in the DBMS}
+\title{Describe columns of a table in the DBMS}
 \usage{
 get_column_info(df)
 }
@@ -13,7 +13,7 @@ get_column_info(df)
 An object of data.frame.
 }
 \description{
-The get_column_info() retrieves the column information of the DBMS table through the tbl_bdi object of dplyr.
+The get_column_info() retrieves the column information of the DBMS table through the tbl_dbi object of dplyr.
 }
 \section{Column information of the DBMS table}{
 
@@ -36,9 +36,9 @@ The get_column_info() retrieves the column information of the DBMS table through
     \item name: column name
     \item Sclass: column type in R
     \item type: data type of column in the DBMS
-    \item len: length of column(CHAR/VARCHAR/VARCHAR2 data type) in the DBMS
-    \item precision: precision of column(NUMBER data type) in the DBMS
-    \item scale: decimal places of column(NUMBER data type) in the DBMS
+    \item len: length of the column (CHAR/VARCHAR/VARCHAR2 data type) in the DBMS
+    \item precision: precision of the column (NUMBER data type) in the DBMS
+    \item scale: decimal places of the column (NUMBER data type) in the DBMS
     \item nullOK: nullability
   }
 }

@@ -2,15 +2,15 @@
 % Please edit documentation in R/pps.R
 \name{plot.pps}
 \alias{plot.pps}
-\title{Visualize Information for an "pps" Object}
+\title{Visualize Information for a "pps" Object}
 \usage{
 \method{plot}{pps}(x, typographic = TRUE, base_family = NULL, ...)
 }
 \arguments{
 \item{x}{an object of class "pps", usually, a result of a call to pps().}
 
-\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.}
+\item{typographic}{logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.}
 
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
@@ -21,8 +21,8 @@ for the visualization. If not specified, the font defined in dlookr is applied. 
 A ggplot2 object.
 }
 \description{
-Visualize by attribute of `pps` class.
-The plot of a PPS(Predictive Power Score) is a bar plot or tile plot by PPS.
+Visualize by attribute of the `pps` class.
+The plot of a PPS (Predictive Power Score) is a bar plot or tile plot by PPS.
 }
 \details{
 The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",

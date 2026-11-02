@@ -18,24 +18,24 @@ find_class(
 "numerical" searches for "numeric" and "integer" classes,
 "categorical" searches for "factor" and "ordered" classes.
 "categorical2" adds "character" class to "categorical".
-"date_categorical" adds result of "categorical2" and "Date", "POSIXct".
-"date_categorical2" adds result of "categorical" and "Date", "POSIXct".}
+"date_categorical" adds "Date" and "POSIXct" to the result of "categorical2".
+"date_categorical2" adds "Date" and "POSIXct" to the result of "categorical".}
 
-\item{index}{logical. If TRUE is return numeric vector that is variables index.
-and if FALSE is return character vector that is variables name.
+\item{index}{logical. If TRUE, returns a numeric vector of variable indices,
+and if FALSE, returns a character vector of variable names.
 default is TRUE.}
 }
 \value{
 character vector or numeric vector.
 The meaning of vector according to data type is as follows.
 \itemize{
-\item character vector : variables name
-\item numeric vector : variables index
+\item character vector : variable names
+\item numeric vector : variable indices
 }
 }
 \description{
 The find_class() extracts variable information having a
-certain class from an object inheriting data.frame.
+certain class from an object inheriting from data.frame.
 }
 \examples{
 # data.frame

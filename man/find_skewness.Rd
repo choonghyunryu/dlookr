@@ -11,21 +11,21 @@ find_skewness(.data, index = TRUE, value = FALSE, thres = NULL)
 
 \item{index}{logical. When representing the information of a skewed variable,
 specify whether or not the variable is represented by an index.
-Returns an index if TRUE or a variable names if FALSE.}
+Returns an index if TRUE or variable names if FALSE.}
 
 \item{value}{logical. If TRUE, returns the skewness value
-in the individual variable.}
+in the individual variables.}
 
 \item{thres}{Returns a skewness threshold value that has an absolute skewness
 greater than thres. The default is NULL to ignore the threshold.
-but, If value = TRUE, default to 0.5.}
+But if value = TRUE, the default is 0.5.}
 }
 \value{
 Information on variables including skewness.
 }
 \description{
-Find the numerical variable that skewed variable
-that inherits the data.frame or data.frame.
+Find the numerical variables that are skewed
+that inherits from data.frame, or a data.frame.
 }
 \examples{
 find_skewness(heartfailure)

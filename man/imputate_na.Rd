@@ -9,30 +9,30 @@ imputate_na(.data, xvar, yvar, method, seed, print_flag, no_attrs)
 \arguments{
 \item{.data}{a data.frame or a \code{\link[tibble]{tbl_df}}.}
 
-\item{xvar}{variable name to replace missing value.}
+\item{xvar}{variable name to replace missing values.}
 
 \item{yvar}{target variable.}
 
-\item{method}{method of missing values imputation.}
+\item{method}{method of missing value imputation.}
 
-\item{seed}{integer. the random seed used in mice. only used "mice" method.}
+\item{seed}{integer. the random seed used in mice. Used only when method is "mice".}
 
-\item{print_flag}{logical. If TRUE, mice will print running log on console.
+\item{print_flag}{logical. If TRUE, mice will print the running log on the console.
 Use print_flag=FALSE for silent computation. Used only when method is "mice".}
 
-\item{no_attrs}{logical. If TRUE, return numerical variable or categorical variable. 
-else If FALSE, imputation class.}
+\item{no_attrs}{logical. If TRUE, returns a numerical or categorical variable.
+If FALSE, returns an imputation class.}
 }
 \value{
-An object of imputation class. or numerical variable or categorical variable. 
-if no_attrs is FALSE then return imputation class, else no_attrs is TRUE then return
+An object of imputation class, or a numerical or categorical variable.
+If no_attrs is FALSE, it returns an imputation class; if no_attrs is TRUE, it returns a
 numerical vector or factor.
-Attributes of imputation class is as follows.
+Attributes of the imputation class are as follows.
 \itemize{
-\item var_type : the data type of predictor to replace missing value.
+\item var_type : the data type of the predictor to replace missing values.
 \item method : method of missing value imputation.
 \itemize{
-  \item predictor is numerical variable.
+  \item predictor is a numerical variable.
   \itemize{
     \item "mean" : arithmetic mean.
     \item "median" : median.
@@ -41,17 +41,17 @@ Attributes of imputation class is as follows.
     \item "rpart" : Recursive Partitioning and Regression Trees.
     \item "mice" : Multivariate Imputation by Chained Equations.
   }
-  \item predictor is categorical variable.
+  \item predictor is a categorical variable.
   \itemize{
     \item "mode" : mode.
     \item "rpart" : Recursive Partitioning and Regression Trees.
     \item "mice" : Multivariate Imputation by Chained Equations.
   }
 }
-\item na_pos : position of missing value in predictor.
-\item seed : the random seed used in mice. only used "mice" method.
+\item na_pos : position of missing values in the predictor.
+\item seed : the random seed used in mice. Used only when method is "mice".
 \item type : "missing values". type of imputation.
-\item message : a message tells you if the result was successful.
+\item message : a message that tells you whether the result was successful.
 \item success : Whether the imputation was successful.
 }
 }
@@ -61,7 +61,7 @@ statistical methods.
 }
 \details{
 imputate_na() creates an imputation class.
-The `imputation` class includes missing value position, imputed value,
+The `imputation` class includes the missing value position, imputed value,
 and method of missing value imputation, etc.
 The `imputation` class compares the imputed value with the original value
 to help determine whether the imputed value is used in the analysis.

@@ -2,9 +2,9 @@
 #'
 #' @description Computes the Kullback-Leibler divergence between two probability distributions.
 #'
-#' @param p numeric. probability distributions.
-#' @param q numeric. probability distributions.
-#' @param base character. log bases. "log", "log2", "log10". default is "log"
+#' @param p numeric. probability distribution.
+#' @param q numeric. probability distribution.
+#' @param base character. log base. "log", "log2", "log10". default is "log".
 #' @param margin logical. Choose whether to return individual values or totals. 
 #' The default value is FALSE, which returns individual values.
 #' 
@@ -41,9 +41,9 @@ kld <- function(p, q, base = c("log", "log2", "log10"), margin = FALSE) {
 #'
 #' @description Computes the Jensen-Shannon divergence between two probability distributions.
 #'
-#' @param p numeric. probability distributions.
-#' @param q numeric. probability distributions.
-#' @param base character. log bases. "log", "log2", "log10". default is "log"
+#' @param p numeric. probability distribution.
+#' @param q numeric. probability distribution.
+#' @param base character. log base. "log", "log2", "log10". default is "log".
 #' @param margin logical. Choose whether to return individual values or totals. 
 #' The default value is FALSE, which returns individual values.
 #' 
@@ -119,19 +119,19 @@ get_tab_chisq <- function(x) {
 
 #' Cramer's V statistic 
 #'
-#' @description Computes the Cramer's V statistic and Chisquare p value between two categorical variables in data.frame.
+#' @description Computes Cramer's V statistic and the chi-square p-value between two categorical variables in a data.frame.
 #'
-#' @param dfm data.frame. probability distributions.
-#' @param x character. name of categorical or discrete variable.
+#' @param dfm data.frame. data containing the variables.
+#' @param x character. name of a categorical or discrete variable.
 #' @param y character. name of another categorical or discrete variable.
 #' 
-#' @return data.frame. It has the following variables.:
+#' @return data.frame. It has the following variables:
 #' \itemize{
 #' \item var1 : character. first variable name.
 #' \item var2 : character. second variable name.
-#' \item chisq : numeric. Chisquare statistic.
-#' \item df : integer. degree of freedom.
-#' \item pval : numeric. p value of Chisquare test.
+#' \item chisq : numeric. chi-square statistic.
+#' \item df : integer. degrees of freedom.
+#' \item pval : numeric. p-value of the chi-square test.
 #' \item coef_corr : numeric. Cramer's V statistic.
 #' }
 #' 
@@ -166,13 +166,13 @@ cramer <- function(dfm, x, y) {
 # function to get Theil's U statistic 
 #' Theil's U statistic 
 #'
-#' @description Computes the Theil's U statistic between two categorical variables in data.frame.
+#' @description Computes Theil's U statistic between two categorical variables in a data.frame.
 #'
-#' @param dfm data.frame. probability distributions.
-#' @param x character. name of categorical or discrete variable.
+#' @param dfm data.frame. data containing the variables.
+#' @param x character. name of a categorical or discrete variable.
 #' @param y character. name of another categorical or discrete variable.
 #' 
-#' @return data.frame. It has the following variables.:
+#' @return data.frame. It has the following variables:
 #' \itemize{
 #' \item var1 : character. first variable name.
 #' \item var2 : character. second variable name.

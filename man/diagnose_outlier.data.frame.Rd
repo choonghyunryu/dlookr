@@ -4,7 +4,7 @@
 \alias{diagnose_outlier}
 \alias{diagnose_outlier.data.frame}
 \alias{diagnose_outlier.grouped_df}
-\title{Diagnose outlier of numerical variables}
+\title{Diagnose outliers of numerical variables}
 \usage{
 diagnose_outlier(.data, ...)
 
@@ -17,7 +17,7 @@ diagnose_outlier(.data, ...)
 
 \item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
-Positive values select variables; negative values to drop variables.
+Positive values select variables; negative values drop variables.
 If the first expression is negative, diagnose_outlier() will automatically
 start with all variables.
 These arguments are automatically quoted and evaluated in a context
@@ -32,7 +32,7 @@ The diagnose_outlier() produces outlier information
 for diagnosing the quality of the numerical data.
 }
 \details{
-The scope of the diagnosis is the provide a outlier information.
+The scope of the diagnosis is to provide outlier information.
 If the number of outliers is small and the difference between the averages
 including outliers and the averages not including them is large,
 it is necessary to eliminate or replace the outliers.
@@ -46,8 +46,8 @@ The information derived from the numerical data diagnosis is as follows.
 \item outliers_cnt : number of outliers
 \item outliers_ratio : percent of outliers
 \item outliers_mean : arithmetic average of outliers
-\item with_mean : arithmetic average of with outliers
-\item without_mean : arithmetic average of without outliers
+\item with_mean : arithmetic average including outliers
+\item without_mean : arithmetic average excluding outliers
 }
 
 See vignette("diagonosis") for an introduction to these concepts.

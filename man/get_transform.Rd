@@ -11,27 +11,27 @@ get_transform(
 )
 }
 \arguments{
-\item{x}{numeric. numeric for transform}
+\item{x}{numeric. numeric vector to transform}
 
-\item{method}{character. transformation method of numeric variable}
+\item{method}{character. transformation method of the numeric variable}
 }
 \value{
 numeric. transformed numeric vector.
 }
 \description{
-The get_transform() gets transformation of numeric variable.
+The get_transform() gets the transformation of a numeric variable.
 }
 \details{
-The supported transformation method is follow.: 
+The supported transformation methods are as follows:
 \itemize{
   \item "log" : log transformation. log(x)
   \item "log+1" : log transformation. log(x + 1). Used for values that contain 0.
   \item "log+a" : log transformation. log(x + 1 - min(x)). Used for values that contain 0.   
   \item "sqrt" : square root transformation.
   \item "1/x" : 1 / x transformation
-  \item "x^2" : x square transformation
-  \item "x^3" : x^3 square transformation
-  \item "Box-Cox" : Box-Box transformation
+  \item "x^2" : x squared transformation
+  \item "x^3" : x cubed transformation
+  \item "Box-Cox" : Box-Cox transformation
   \item "Yeo-Johnson" : Yeo-Johnson transformation
 }
 }

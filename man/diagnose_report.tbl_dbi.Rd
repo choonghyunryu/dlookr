@@ -2,7 +2,7 @@
 % Please edit documentation in R/tbl_dbi.R
 \name{diagnose_report.tbl_dbi}
 \alias{diagnose_report.tbl_dbi}
-\title{Reporting the information of data diagnosis for table of the DBMS}
+\title{Reporting the information of data diagnosis for a DBMS table}
 \usage{
 \method{diagnose_report}{tbl_dbi}(
   .data,
@@ -18,21 +18,21 @@
 \arguments{
 \item{.data}{a tbl_dbi.}
 
-\item{output_format}{report output type. Choose either "pdf" and "html".
-"pdf" create pdf file by knitr::knit().
-"html" create html file by rmarkdown::render().}
+\item{output_format}{report output type. Choose either "pdf" or "html".
+"pdf" creates a pdf file by knitr::knit().
+"html" creates an html file by rmarkdown::render().}
 
-\item{output_file}{name of generated file. default is NULL.}
+\item{output_file}{name of the generated file. default is NULL.}
 
-\item{output_dir}{name of directory to generate report file. default is tempdir().}
+\item{output_dir}{name of the directory in which to generate the report file. default is tempdir().}
 
-\item{font_family}{character. font family name for figure in pdf.}
+\item{font_family}{character. font family name for figures in the pdf.}
 
 \item{in_database}{Specifies whether to perform in-database operations. 
-If TRUE, most operations are performed in the DBMS. if FALSE, 
-table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.}
+If TRUE, most operations are performed in the DBMS. If FALSE,
+table data is taken into R and operated on in memory. in_database = TRUE is not yet supported.}
 
-\item{collect_size}{a integer. The number of data samples from the DBMS to R. 
+\item{collect_size}{an integer. The number of data samples from the DBMS to R.
 Applies only if in_database = FALSE.}
 
 \item{...}{arguments to be passed to methods.}
@@ -41,36 +41,36 @@ Applies only if in_database = FALSE.}
 No return value. This function only generates a report.
 }
 \description{
-The diagnose_report() report the information for diagnosing
+The diagnose_report() reports the information for diagnosing
 the quality of the DBMS table through tbl_dbi
 }
 \details{
-Generate generalized data diagnostic reports automatically.
-You can choose to output to pdf and html files.
-This is useful for diagnosing a data frame with a large number of variables
+Generates generalized data diagnostic reports automatically.
+You can choose to output the report as a pdf or html file.
+This is more useful for diagnosing a data frame with a large number of variables
 than data with a small number of variables.
-For pdf output, Korean Gothic font must be installed in Korean operating system.
+For pdf output, the Korean Gothic font must be installed on a Korean operating system.
 }
 \section{Reported information}{
 
-Reported from the data diagnosis is as follows.
+The information reported from the data diagnosis is as follows.
 
 \itemize{
   \item Diagnose Data
   \itemize{
     \item Overview of Diagnosis
     \itemize{
-      \item List of all variables quality
+      \item List of all variables' quality
       \item Diagnosis of missing data
-      \item Diagnosis of unique data(Text and Category)
-      \item Diagnosis of unique data(Numerical)
+      \item Diagnosis of unique data (Text and Category)
+      \item Diagnosis of unique data (Numerical)
     }
     \item Detailed data diagnosis
     \itemize{
       \item Diagnosis of categorical variables
       \item Diagnosis of numerical variables
       \item List of numerical diagnosis (zero)
-      \item List of numerical diagnosis (minus)
+      \item List of numerical diagnosis (negative)
     }
   }
   \item Diagnose Outliers

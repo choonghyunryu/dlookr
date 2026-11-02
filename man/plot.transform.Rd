@@ -2,15 +2,15 @@
 % Please edit documentation in R/transform.R
 \name{plot.transform}
 \alias{plot.transform}
-\title{Visualize Information for an "transform" Object}
+\title{Visualize Information for a "transform" Object}
 \usage{
 \method{plot}{transform}(x, typographic = TRUE, base_family = NULL, ...)
 }
 \arguments{
 \item{x}{an object of class "transform", usually, a result of a call to transform().}
 
-\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.}
+\item{typographic}{logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.}
 
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
@@ -18,7 +18,7 @@ for the visualization. If not specified, the font defined in dlookr is applied. 
 \item{...}{arguments to be passed to methods, such as graphical parameters (see par).}
 }
 \description{
-Visualize two kinds of plot by attribute of `transform` class.
+Visualize two kinds of plots by attribute of the `transform` class.
 The transformation of a numerical variable is a density plot.
 }
 \details{

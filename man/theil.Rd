@@ -7,14 +7,14 @@
 theil(dfm, x, y)
 }
 \arguments{
-\item{dfm}{data.frame. probability distributions.}
+\item{dfm}{data.frame. data containing the variables.}
 
-\item{x}{character. name of categorical or discrete variable.}
+\item{x}{character. name of a categorical or discrete variable.}
 
 \item{y}{character. name of another categorical or discrete variable.}
 }
 \value{
-data.frame. It has the following variables.:
+data.frame. It has the following variables:
 \itemize{
 \item var1 : character. first variable name.
 \item var2 : character. second variable name.
@@ -22,7 +22,7 @@ data.frame. It has the following variables.:
 }
 }
 \description{
-Computes the Theil's U statistic between two categorical variables in data.frame.
+Computes Theil's U statistic between two categorical variables in a data.frame.
 }
 \examples{
 theil(mtcars, "gear", "carb")

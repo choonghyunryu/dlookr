@@ -13,17 +13,17 @@ import_google_font(family)
 No return value. This function just loads Google Fonts.
 }
 \description{
-Import google font to be used when drawing charts.
+Import Google fonts to be used when drawing charts.
 }
 \details{
 When attaching the dlookr package, use "Roboto Condensed" and 
-"Noto Sans Korean" among Google fonts. And also loads "Liberation Sans Narrow"
-and "NanumSquare" included in the package for offline environment.
+"Noto Sans Korean" among Google fonts. It also loads "Liberation Sans Narrow"
+and "NanumSquare" included in the package for offline environments.
 
 If you want to use anything other than the 4 fonts that are loaded with 
 the dlookr package, load the desired Google fonts with import_google_font().
 
-dlookr recommends the following google fonts, both sans and condensed:
+dlookr recommends the following Google fonts, both sans and condensed:
 "IBM Plex Sans Condensed", "Encode Sans Condensed", "Barlow Condensed", 
 "Saira Condensed", "Titillium Web", "Oswald", "PT Sans Narrow"
 

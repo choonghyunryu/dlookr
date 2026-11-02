@@ -3,7 +3,7 @@
 \name{target_by}
 \alias{target_by}
 \alias{target_by.data.frame}
-\title{Target by one variables}
+\title{Target by one variable}
 \usage{
 target_by(.data, target, ...)
 
@@ -18,14 +18,14 @@ target_by(.data, target, ...)
 }
 \value{
 an object of target_df class.
-Attributes of target_df class is as follows.
+Attributes of the target_df class are as follows.
 \itemize{
-\item type_y : the data type of target variable.
+\item type_y : the data type of the target variable.
 }
 }
 \description{
 In the data analysis, a target_df class is created to identify the
-relationship between the target variable and the other variable.
+relationship between the target variable and the other variables.
 }
 \details{
 Data analysis proceeds with the purpose of predicting target variables that
@@ -36,7 +36,7 @@ Data analysis proceeds with the purpose of predicting target variables that
  Based on the derived relationships, analysts create scenarios for data analysis.
 
  target_by() inherits the \code{\link[dplyr]{grouped_df}} class and returns a target_df
- class containing information about the target variable and the variable.
+ class containing information about the target variable and the other variables.
 
 See vignette("EDA") for an introduction to these concepts.
 }

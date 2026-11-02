@@ -14,16 +14,16 @@ compare_numeric <- function(.data, ...) {
 
 #' Compare categorical variables
 #'
-#' @description The compare_category() compute information to examine the relationship 
+#' @description The compare_category() computes information to examine the relationship
 #' between categorical variables.
 #'
 #' @details 
 #' It is important to understand the relationship between categorical variables in EDA.
 #' compare_category() compares relations by pair combination of all categorical variables. 
-#' and return compare_category class that based list object.
+#' and returns a list-based object of the compare_category class.
 #'
-#' @return An object of the class as compare based list.
-#' The information to examine the relationship between categorical variables is as follows each components.
+#' @return A list-based object of the compare class.
+#' The information to examine the relationship between categorical variables in each component is as follows.
 #'
 #' \itemize{
 #' \item var1 : factor. The level of the first variable to compare. 'var1' is the name of the first variable to be compared.
@@ -35,7 +35,7 @@ compare_numeric <- function(.data, ...) {
 #' }
 #'
 #' @section Attributes of return object:
-#' Attributes of compare_category class is as follows.
+#' Attributes of the compare_category class are as follows.
 #' \itemize{
 #' \item variables : character. List of variables selected for comparison.
 #' \item combination : matrix. It consists of pairs of variables to compare.
@@ -44,7 +44,7 @@ compare_numeric <- function(.data, ...) {
 #' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' These arguments are automatically quoted and evaluated in a context where column names
 #' represent column positions.
 #' They support unquoting and splicing.
@@ -202,16 +202,16 @@ compare_category_impl <- function(df, vars) {
 
 #' Compare numerical variables
 #'
-#' @description The compare_numeric() compute information to examine the relationship 
+#' @description The compare_numeric() computes information to examine the relationship
 #' between numerical variables.
 #'
 #' @details 
 #' It is important to understand the relationship between numerical variables in EDA.
 #' compare_numeric() compares relations by pair combination of all numerical variables. 
-#' and return compare_numeric class that based list object.
+#' and returns a list-based object of the compare_numeric class.
 #'
-#' @return An object of the class as compare based list.
-#' The information to examine the relationship between numerical variables is as follows each components.
+#' @return A list-based object of the compare class.
+#' The information to examine the relationship between numerical variables in each component is as follows.
 #' - correlation component : Pearson's correlation coefficient.
 #' \itemize{
 #' \item var1 : factor. The level of the first variable to compare. 'var1' is the name of the first variable to be compared.
@@ -222,22 +222,22 @@ compare_category_impl <- function(df, vars) {
 #' - linear component : linear model summaries
 #' \itemize{
 #' \item var1 : factor. The level of the first variable to compare. 'var1' is the name of the first variable to be compared.
-#' \item var2 : factor.The level of the second variable to compare. 'var2' is the name of the second variable to be compared.
+#' \item var2 : factor. The level of the second variable to compare. 'var2' is the name of the second variable to be compared.
 #' \item r.squared : double. The percent of variance explained by the model.
 #' \item adj.r.squared : double. r.squared adjusted based on the degrees of freedom.
 #' \item sigma : double. The square root of the estimated residual variance.
 #' \item statistic : double. F-statistic.
 #' \item p.value : double. p-value from the F test, describing whether the full regression is significant.
-#' \item df : integer degrees of freedom.
+#' \item df : integer. degrees of freedom.
 #' \item logLik : double. the log-likelihood of data under the model.
 #' \item AIC : double. the Akaike Information Criterion.
 #' \item BIC : double. the Bayesian Information Criterion.
 #' \item deviance : double. deviance.
-#' \item df.residual : integer residual degrees of freedom.
+#' \item df.residual : integer. residual degrees of freedom.
 #' }
 #'
 #' @section Attributes of return object:
-#' Attributes of compare_numeric class is as follows.
+#' Attributes of the compare_numeric class are as follows.
 #' \itemize{
 #' \item raw : a data.frame or a \code{\link[tibble]{tbl_df}}. Data containing variables to be compared. Save it for visualization with plot.compare_numeric().
 #' \item variables : character. List of variables selected for comparison. 
@@ -247,7 +247,7 @@ compare_category_impl <- function(df, vars) {
 #' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' These arguments are automatically quoted and evaluated in a context where column names
 #' represent column positions.
 #' They support unquoting and splicing.
@@ -394,9 +394,9 @@ compare_numeric_impl <- function(df, vars) {
 #'
 #' @description print and summary method for "compare_category" class.
 #' @param object an object of class "compare_category", usually, a result of a call to compare_category().
-#' @param method character. Specifies the type of information to be aggregated. "table" create contingency table, 
-#' "relative" create relative contingency table, and "chisq" create information of chi-square test. 
-#' and "all" aggregates all information. The default is "all"
+#' @param method character. Specifies the type of information to be aggregated. "table" creates a contingency table,
+#' "relative" creates a relative contingency table, and "chisq" creates information of the chi-square test.
+#' and "all" aggregates all information. The default is "all".
 #' @param pos integer. Specifies the pair of variables to be summarized by index. 
 #' The default is NULL, which aggregates all variable pairs.
 #' @param na.rm logical. Specifies whether to include NA when counting the contingency tables or performing a chi-square test. 
@@ -404,7 +404,7 @@ compare_numeric_impl <- function(df, vars) {
 #' @param marginal logical. Specifies whether to add marginal values to the contingency table.
 #' The default value is FALSE, so no marginal value is added.
 #' @param verbose logical. Specifies whether to output additional information during the calculation process.
-#' The default is to output information as TRUE. In this case, the function returns the value with invisible(). 
+#' The default is TRUE, which outputs the information. In this case, the function returns the value with invisible().
 #' If FALSE, the value is returned by return().
 #' @param ... further arguments passed to or from other methods.
 #' @details
@@ -660,16 +660,16 @@ summary.compare_category <- function(object, method = c("all", "table", "relativ
 #' @param object an object of class "compare_numeric", usually, a result of a call to compare_numeric().
 #' @param method character. Select statistics to be aggregated. 
 #' "correlation" calculates the Pearson's correlation coefficient, and "linear" returns the aggregation of the linear model.
-#' "all" returns both information. 
+#' "all" returns both types of information.
 #' However, the difference between summary.compare_numeric() and compare_numeric() is that only cases that are greater than the specified threshold are returned.
 #' "correlation" returns only cases with a correlation coefficient greater than the thres_corr argument value. 
 #' "linear" returns only cases with R^2 greater than the thres_rs argument.
-#' @param thres_corr numeric. This is the correlation coefficient threshold of the correlation coefficient information to be returned. 
+#' @param thres_corr numeric. The correlation coefficient threshold of the correlation coefficient information to be returned.
 #' The default is 0.3.
-#' @param thres_rs numeric. R^2 threshold of linear model summaries information to return. 
+#' @param thres_rs numeric. R^2 threshold of the linear model summary information to be returned.
 #' The default is 0.1.
 #' @param verbose logical. Specifies whether to output additional information during the calculation process.
-#' The default is to output information as TRUE. In this case, the function returns the value with invisible(). 
+#' The default is TRUE, which outputs the information. In this case, the function returns the value with invisible().
 #' If FALSE, the value is returned by return().
 #' @param ... further arguments passed to or from other methods.
 #' @details
@@ -677,8 +677,8 @@ summary.compare_category <- function(object, method = c("all", "table", "relativ
 #' When using summary.compare_numeric(), it is advantageous to set the verbose argument to TRUE if the user is only viewing information from the console. 
 #' It is also advantageous to specify FALSE if you want to manipulate the results.
 #'
-#' @return An object of the class as compare based list.
-#' The information to examine the relationship between numerical variables is as follows each components.
+#' @return A list-based object of the compare class.
+#' The information to examine the relationship between numerical variables in each component is as follows.
 #' - correlation component : Pearson's correlation coefficient.
 #' \itemize{
 #' \item var1 : factor. The level of the first variable to compare. 'var1' is the name of the first variable to be compared.
@@ -695,12 +695,12 @@ summary.compare_category <- function(object, method = c("all", "table", "relativ
 #' \item sigma : double. The square root of the estimated residual variance.
 #' \item statistic : double. F-statistic.
 #' \item p.value : double. p-value from the F test, describing whether the full regression is significant.
-#' \item df : integer degrees of freedom.
+#' \item df : integer. degrees of freedom.
 #' \item logLik : double. the log-likelihood of data under the model.
 #' \item AIC : double. the Akaike Information Criterion.
 #' \item BIC : double. the Bayesian Information Criterion.
 #' \item deviance : double. deviance.
-#' \item df.residual : integer residual degrees of freedom.
+#' \item df.residual : integer. residual degrees of freedom.
 #' }
 #' 
 #' @seealso \code{\link{plot.compare_numeric}}.
@@ -844,25 +844,25 @@ print.compare_numeric <- function(x, ...) {
 }
 
 
-#' Visualize Information for an "compare_category" Object
+#' Visualize Information for a "compare_category" Object
 #'
 #' @description
-#' Visualize mosaics plot by attribute of compare_category class.
+#' Visualize a mosaic plot by attribute of the compare_category class.
 #' 
 #' @details The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 #' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font().
 #' 
 #' @param x an object of class "compare_category", usually, a result of a call to compare_category().
-#' @param prompt logical. The default value is FALSE. If there are multiple visualizations to be output, if this argument value is TRUE, a prompt is output each time. 
-#' @param na.rm logical. Specifies whether to include NA when plotting mosaics plot. 
-#' The default is FALSE, so plot NA.  
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
+#' @param prompt logical. The default value is FALSE. If there are multiple visualizations to be output and this argument value is TRUE, a prompt is output each time.
+#' @param na.rm logical. Specifies whether to include NA when plotting a mosaic plot.
+#' The default is FALSE, so NA is plotted.
+#' @param typographic logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+#' The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
-#' However, it only support las parameter. las is numeric in 0, 1; the style of axis labels.
+#' However, it only supports the las parameter. las is numeric in 0, 1; the style of axis labels.
 #' \itemize{
 #'   \item 0 : always parallel to the axis [default],
 #'   \item 1 : always horizontal to the axis,
@@ -994,10 +994,10 @@ plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE,
 }
 
 
-#' Visualize Information for an "compare_numeric" Object
+#' Visualize Information for a "compare_numeric" Object
 #'
 #' @description
-#' Visualize scatter plot included box plots by attribute of compare_numeric class.
+#' Visualize a scatter plot including box plots by attribute of the compare_numeric class.
 #'
 #' @details The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 #' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
@@ -1005,13 +1005,13 @@ plot.compare_category <- function(x, prompt = FALSE, na.rm = FALSE,
 #' 
 #' @param x an object of class "compare_numeric", usually, a result of a call to compare_numeric().
 #' @param prompt logical. The default value is FALSE. If there are multiple visualizations to be output, 
-#' if this argument value is TRUE, a prompt is output each time. 
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using.
+#' and this argument value is TRUE, a prompt is output each time.
+#' @param typographic logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+#' The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
-#' However, it does not support.
+#' However, it is not supported.
 #' @return NULL. This function just draws a plot.
 #' @seealso \code{\link{compare_numeric}}, \code{\link{print.compare_numeric}}, \code{\link{summary.compare_numeric}}.
 #' @examples

@@ -2,7 +2,7 @@
 % Please edit documentation in R/report_tbl_dbi.R
 \name{eda_paged_report.tbl_dbi}
 \alias{eda_paged_report.tbl_dbi}
-\title{Reporting the information of EDA for table of the DBMS}
+\title{Reporting the information of EDA for a DBMS table}
 \usage{
 \method{eda_paged_report}{tbl_dbi}(
   .data,
@@ -34,54 +34,54 @@
 
 \item{target}{character. target variable.}
 
-\item{output_format}{report output type. Choose either "pdf" and "html".
-"pdf" create pdf file by rmarkdown::render() and pagedown::chrome_print(). so, 
-you needed Chrome web browser on computer.  
-"html" create html file by rmarkdown::render().}
+\item{output_format}{report output type. Choose either "pdf" or "html".
+"pdf" creates a pdf file by rmarkdown::render() and pagedown::chrome_print(). So,
+you need the Chrome web browser on your computer.
+"html" creates an html file by rmarkdown::render().}
 
-\item{output_file}{name of generated file. default is NULL.}
+\item{output_file}{name of the generated file. default is NULL.}
 
-\item{output_dir}{name of directory to generate report file. default is tempdir().}
+\item{output_dir}{name of the directory in which to generate the report file. default is tempdir().}
 
 \item{browse}{logical. choose whether to output the report results to the browser.}
 
-\item{title}{character. title of report. default is "Data Diagnosis Report".}
+\item{title}{character. title of the report. default is "Data Diagnosis Report".}
 
-\item{subtitle}{character. subtitle of report. default is name of data.}
+\item{subtitle}{character. subtitle of the report. default is the name of the data.}
 
-\item{author}{character. author of report. default is "dlookr".}
+\item{author}{character. author of the report. default is "dlookr".}
 
-\item{abstract_title}{character. abstract title of report. default is 
+\item{abstract_title}{character. abstract title of the report. default is
 "Report Overview".}
 
-\item{abstract}{character. abstract of report.}
+\item{abstract}{character. abstract of the report.}
 
-\item{title_color}{character. color of title. default is "black".}
+\item{title_color}{character. color of the title. default is "black".}
 
-\item{subtitle_color}{character. color of title. default is "blue".}
+\item{subtitle_color}{character. color of the subtitle. default is "blue".}
 
-\item{cover_img}{character. name of cover image.}
+\item{cover_img}{character. name of the cover image.}
 
 \item{create_date}{Date or POSIXct, character. The date on which the report is generated. 
 The default value is the result of Sys.time().}
 
-\item{logo_img}{character. name of logo image on top right.}
+\item{logo_img}{character. name of the logo image on the top right.}
 
-\item{theme}{character. name of theme for report. support "orange" and "blue". 
+\item{theme}{character. name of the theme for the report. supports "orange" and "blue".
 default is "orange".}
 
-\item{sample_percent}{numeric. Sample percent of data for performing EDA. 
+\item{sample_percent}{numeric. Sample percentage of data for performing EDA.
 It has a value between (0, 100]. 100 means all data, and 5 means 5\% of sample data.
 This is useful for data with a large number of observations.}
 
 \item{in_database}{Specifies whether to perform in-database operations. 
-If TRUE, most operations are performed in the DBMS. if FALSE, 
-table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.}
+If TRUE, most operations are performed in the DBMS. If FALSE,
+table data is taken into R and operated on in memory. in_database = TRUE is not yet supported.}
 
-\item{collect_size}{a integer. The number of data samples from the DBMS to R. 
+\item{collect_size}{an integer. The number of data samples from the DBMS to R.
 Applies only if in_database = FALSE.}
 
-\item{as_factor}{logical. whether to convert to factor when importing a character type variable from DBMS table into R.}
+\item{as_factor}{logical. whether to convert to factor when importing a character type variable from a DBMS table into R.}
 
 \item{...}{arguments to be passed to pagedown::chrome_print().}
 }
@@ -89,15 +89,15 @@ Applies only if in_database = FALSE.}
 No return value. This function only generates a report.
 }
 \description{
-The eda_paged_report() paged report the information for EDA of the DBMS table through tbl_dbi
+The eda_paged_report() generates a paged report of the information for EDA of the DBMS table through tbl_dbi.
 }
 \details{
-Generate generalized EDA report automatically. 
-You can choose to output to pdf and html files.
+Generates a generalized EDA report automatically.
+You can choose to output the report as a pdf or html file.
 This feature is useful for EDA of data with many variables, 
 rather than data with fewer variables.
 
-Create an  PDF through the Chrome DevTools Protocol. If you want to create PDF, 
+Create a PDF through the Chrome DevTools Protocol. If you want to create a PDF,
 Google Chrome or Microsoft Edge (or Chromium on Linux) must be installed prior to using this function.
 If not installed, you must use output_format = "html".
 }
@@ -133,7 +133,7 @@ The EDA process will report the following information:
       \item Correlation Plot
     }
   }
-  \item Target based Analysis
+  \item Target-based Analysis
   \itemize{
     \item Grouped Numerical Variables
     \item Grouped Categorical Variables

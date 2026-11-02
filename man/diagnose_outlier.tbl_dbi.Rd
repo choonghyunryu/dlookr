@@ -2,7 +2,7 @@
 % Please edit documentation in R/tbl_dbi.R
 \name{diagnose_outlier.tbl_dbi}
 \alias{diagnose_outlier.tbl_dbi}
-\title{Diagnose outlier of numerical variables in the DBMS}
+\title{Diagnose outliers of numerical variables in the DBMS}
 \usage{
 \method{diagnose_outlier}{tbl_dbi}(.data, ..., in_database = FALSE, collect_size = Inf)
 }
@@ -11,7 +11,7 @@
 
 \item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
-Positive values select variables; negative values to drop variables.
+Positive values select variables; negative values drop variables.
 If the first expression is negative, diagnose_outlier() will automatically
 start with all variables.
 These arguments are automatically quoted and evaluated in a context
@@ -19,10 +19,10 @@ where column names represent column positions.
 They support unquoting and splicing.}
 
 \item{in_database}{Specifies whether to perform in-database operations. 
-If TRUE, most operations are performed in the DBMS. if FALSE, 
-table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.}
+If TRUE, most operations are performed in the DBMS. If FALSE,
+table data is taken into R and operated on in memory. in_database = TRUE is not yet supported.}
 
-\item{collect_size}{a integer. The number of data samples from the DBMS to R. 
+\item{collect_size}{an integer. The number of data samples from the DBMS to R.
 Applies only if in_database = FALSE.}
 }
 \value{
@@ -30,11 +30,11 @@ an object of tbl_df.
 }
 \description{
 The diagnose_outlier() produces outlier information
-for diagnosing the quality of the numerical(INTEGER, NUMBER, etc.) column 
+for diagnosing the quality of the numerical (INTEGER, NUMBER, etc.) columns
 of the DBMS table through tbl_dbi.
 }
 \details{
-The scope of the diagnosis is the provide a outlier information.
+The scope of the diagnosis is to provide outlier information.
 If the number of outliers is small and the difference between the averages
 including outliers and the averages not including them is large,
 it is necessary to eliminate or replace the outliers.
@@ -49,8 +49,8 @@ The information derived from the numerical data diagnosis is as follows.
 \item outliers_cnt : number of outliers
 \item outliers_ratio : percent of outliers
 \item outliers_mean : arithmetic average of outliers
-\item with_mean : arithmetic average of with outliers
-\item without_mean : arithmetic average of without outliers
+\item with_mean : arithmetic average including outliers
+\item without_mean : arithmetic average excluding outliers
 }
 
 See vignette("diagonosis") for an introduction to these concepts.

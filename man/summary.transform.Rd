@@ -14,7 +14,7 @@
 
 \item{...}{further arguments passed to or from other methods.}
 
-\item{x}{an object of class "transform",usually, a result of a call to transform().}
+\item{x}{an object of class "transform", usually, a result of a call to transform().}
 }
 \description{
 print and summary method for "transform" class.

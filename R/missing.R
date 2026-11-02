@@ -1,11 +1,11 @@
-#' Combination chart for missing value
+#' Combination chart for missing values
 #'
 #' @description
-#' Visualize distribution of missing value by combination of variables.
+#' Visualize the distribution of missing values by combination of variables.
 #'
 #' @details Rows are variables containing missing values, and columns are observations. 
-#' These data structures were grouped into similar groups by applying hclust. 
-#' So, it was made possible to visually examine how the missing values are distributed 
+#' These data structures are grouped into similar groups by applying hclust.
+#' This makes it possible to visually examine how the missing values are distributed
 #' for each combination of variables.
 #' 
 #' The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
@@ -14,10 +14,10 @@
 #' 
 #' @param x data frames, or objects to be coerced to one.
 #' @param main character. Main title.
-#' @param col.left character. The color of left legend that is frequency of NA. default is "#009E73".
-#' @param col.right character. The color of right legend that is percentage of NA. default is "#56B4E9".
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
+#' @param col.left character. The color of the left legend, which is the frequency of NA. default is "#009E73".
+#' @param col.right character. The color of the right legend, which is the percentage of NA. default is "#56B4E9".
+#' @param typographic logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+#' The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @return a ggplot2 object.
@@ -128,10 +128,10 @@ plot_na_hclust <- function (x, main = NULL, col.left = "#009E73",
 }
 
 
-#' Pareto chart for missing value
+#' Pareto chart for missing values
 #'
 #' @description
-#' Visualize pareto chart for variables with missing value.
+#' Visualize a Pareto chart for variables with missing values.
 #'
 #' @details The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 #' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
@@ -142,14 +142,14 @@ plot_na_hclust <- function (x, main = NULL, col.left = "#009E73",
 #' If TRUE, only variables containing missing values are selected for visualization. 
 #' If FALSE, all variables are included.
 #' @param relative logical. If this argument is TRUE, it sets the unit of the left y-axis to relative frequency. 
-#' In case of FALSE, set it to frequency.
+#' If FALSE, it sets the unit to frequency.
 #' @param grade list. Specifies the cut-off to set the grade of the variable according to the ratio of missing values.
 #' The default values are Good: [0, 0.05], OK: (0.05, 0.1], NotBad: (0.1, 0.2], Bad: (0.2, 0.5], Remove: (0.5, 1].
 #' @param main character. Main title.
-#' @param col character. The color of line for display the cumulative percentage.
-#' @param plot logical. If this value is TRUE then visualize plot. else if FALSE, return aggregate information about missing values.
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
+#' @param col character. The color of the line that displays the cumulative percentage.
+#' @param plot logical. If this value is TRUE, the plot is visualized. If FALSE, aggregate information about missing values is returned.
+#' @param typographic logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+#' The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @return a ggplot2 object.
@@ -295,18 +295,18 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
 }
 
 
-#' Plot the combination variables that is include missing value
+#' Plot the combinations of variables that include missing values
 #'
 #' @description
-#' Visualize the combinations of missing value across cases.
+#' Visualize the combinations of missing values across cases.
 #'
 #' @details 
 #' The visualization consists of four parts.
-#' The bottom left, which is the most basic, visualizes the case of cross(intersection)-combination. 
+#' The bottom left, which is the most basic, visualizes the case of cross (intersection) combinations.
 #' The x-axis is the variable including the missing value, and the y-axis represents the case of a combination of variables.
-#' And on the marginal of the two axes, the frequency of the case is expressed as a bar graph. 
+#' On the margins of the two axes, the frequency of each case is expressed as a bar graph.
 #' Finally, the visualization at the top right expresses the number of variables including missing values in the data set, 
-#' and the number of observations including missing values and complete cases .
+#' and the number of observations including missing values and complete cases.
 #' 
 #' The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 #' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
@@ -315,16 +315,16 @@ plot_na_pareto <- function (x, only_na = FALSE, relative = FALSE, main = NULL, c
 #' @param x data frames, or objects to be coerced to one.
 #' @param only_na logical. The default value is FALSE. 
 #' If TRUE, only variables containing missing values are selected for visualization. 
-#' If FALSE, included complete case.
+#' If FALSE, complete cases are included.
 #' @param n_intersacts integer. Specifies the number of combinations of variables including missing values. 
 #' The combination of variables containing many missing values is chosen first.
 #' @param n_vars integer. Specifies the number of variables that contain missing values to be visualized. 
-#' The default value is NULL, which visualizes variables containing all missing values. 
+#' The default value is NULL, which visualizes all variables containing missing values.
 #' If this value is greater than the number of variables containing missing values, 
 #' all variables containing missing values are visualized. Variables containing many missing values are chosen first.
 #' @param main character. Main title.
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
+#' @param typographic logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+#' The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @return an object of gtable class.

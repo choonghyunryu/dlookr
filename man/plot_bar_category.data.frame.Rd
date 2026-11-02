@@ -35,7 +35,7 @@ plot_bar_category(.data, ...)
 
 \item{\dots}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
-Positive values select variables; negative values to drop variables.
+Positive values select variables; negative values drop variables.
 If the first expression is negative, plot_bar_category() will automatically
 start with all variables.
 These arguments are automatically quoted and evaluated in a context where
@@ -53,14 +53,14 @@ diagnosis of categorical data. The default value is TRUE, which also includes ch
 \item{each}{logical. Specifies whether to draw multiple plots on one screen. 
 The default is FALSE, which draws multiple plots on one screen.}
 
-\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.}
+\item{typographic}{logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.}
 
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
 }
 \description{
-The plot_bar_category() to visualizes the distribution of 
+The plot_bar_category() visualizes the distribution of
 categorical data by level or relationship to specific numerical data by level.
 }
 \details{

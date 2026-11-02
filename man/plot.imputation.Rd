@@ -10,8 +10,8 @@
 \item{x}{an object of class "imputation", usually, a result of a call to imputate_na()
 or imputate_outlier().}
 
-\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.}
+\item{typographic}{logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.}
 
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
@@ -23,7 +23,7 @@ only applies when the model argument is TRUE, and is used for ... of the plot.lm
 A ggplot2 object.
 }
 \description{
-Visualize two kinds of plot by attribute of `imputation` class.
+Visualize two kinds of plots by attribute of the `imputation` class.
 The imputation of a numerical variable is a density plot,
 and the imputation of a categorical variable is a bar plot.
 }

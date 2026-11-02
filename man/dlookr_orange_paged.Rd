@@ -13,7 +13,7 @@ dlookr_blue_paged(...)
 \item{...}{arguments to be passed to \code{pagedown::\link[pagedown]{html_paged}}.}
 }
 \value{
-document of markdown format.
+An R Markdown output format.
 }
 \description{
 Generate paged HTML document

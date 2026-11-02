@@ -19,17 +19,17 @@
 
 \item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
-Positive values select variables; negative values to drop variables.
+Positive values select variables; negative values drop variables.
 If the first expression is negative, plot_correlate() will automatically start with all variables.
 These arguments are automatically quoted and evaluated in a context where column names
 represent column positions.
 They support unquoting and splicing.}
 
 \item{in_database}{Specifies whether to perform in-database operations. 
-If TRUE, most operations are performed in the DBMS. if FALSE, 
-table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.}
+If TRUE, most operations are performed in the DBMS. If FALSE,
+table data is taken into R and operated on in memory. in_database = TRUE is not yet supported.}
 
-\item{collect_size}{a integer. The number of data samples from the DBMS to R. 
+\item{collect_size}{an integer. The number of data samples from the DBMS to R.
 Applies only if in_database = FALSE.}
 
 \item{method}{a character string indicating which correlation coefficient (or covariance) is 
@@ -37,24 +37,24 @@ to be computed. One of "pearson" (default), "kendall", or "spearman": can be abb
 
 See vignette("EDA") for an introduction to these concepts.}
 
-\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.}
+\item{typographic}{logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.}
 
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
 }
 \description{
-The plot_correlate() visualize correlation plot
-for find relationship between two numerical(INTEGER, NUMBER, etc.) column of 
+The plot_correlate() visualizes a correlation plot
+to find the relationship between two numerical (INTEGER, NUMBER, etc.) columns of
 the DBMS table through tbl_dbi.
 }
 \details{
-The scope of the visualization is the provide a correlation information.
+The scope of the visualization is to provide correlation information.
 Since the plot is drawn for each variable, if you specify more than
-one variable in the ... argument, the specified number of plots are drawn.
+one variable in the ... argument, the specified number of plots is drawn.
 
-The direction of the diagonal is top-left to bottom-right. and color of the 
-cells is 'red' to -1, 'blue' to 1.
+The direction of the diagonal is top-left to bottom-right, and the color of the
+cells is 'red' for -1 and 'blue' for 1.
 
 The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 "NanumSquare", "Noto Sans Korean". If you want to use a different font, 

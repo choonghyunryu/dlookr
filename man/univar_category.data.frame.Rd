@@ -3,7 +3,7 @@
 \name{univar_category}
 \alias{univar_category}
 \alias{univar_category.data.frame}
-\title{Statistic of univariate categorical variables}
+\title{Statistics of univariate categorical variables}
 \usage{
 univar_category(.data, ...)
 
@@ -14,14 +14,14 @@ univar_category(.data, ...)
 
 \item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
-Positive values select variables; negative values to drop variables.
+Positive values select variables; negative values drop variables.
 These arguments are automatically quoted and evaluated in a context where column names
 represent column positions.
 They support unquoting and splicing.}
 }
 \value{
-An object of the class as individual variables based list.
-The information to examine the relationship between categorical variables is as follows each components.
+A list-based object containing individual variables.
+The information to examine the relationship between categorical variables in each component is as follows.
 
 \itemize{
 \item variable : factor. The level of the variable. 'variable' is the name of the variable.
@@ -30,19 +30,19 @@ The information to examine the relationship between categorical variables is as 
 }
 }
 \description{
-The univar_category() calculates statistic of categorical variables that is frequency table
+The univar_category() calculates statistics of categorical variables, that is, frequency tables
 }
 \details{
 univar_category() calculates the frequency table of categorical variables. 
 If a specific variable name is not specified, frequency tables for all categorical variables included in the data are calculated.
-The univar_category class returned by univar_category() is useful because it can draw chisqure tests and bar plots as well as frequency tables of individual variables.
-and return univar_category class that based list object.
+The univar_category class returned by univar_category() is useful because it can perform chi-square tests and draw bar plots as well as frequency tables of individual variables.
+and returns a list-based object of the univar_category class.
 }
 \section{Attributes of return object}{
 
-Attributes of compare_category class is as follows.
+Attributes of the compare_category class are as follows.
 \itemize{
-\item variables : character. List of variables selected for calculate frequency.
+\item variables : character. List of variables selected for calculating frequency.
 }
 }
 

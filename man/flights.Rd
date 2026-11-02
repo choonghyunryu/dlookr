@@ -11,7 +11,7 @@ A data frame with 3000 rows and 19 variables. The variables are as follows:
   \item{dep_time, arr_time}{Actual departure and arrival times (format HHMM or HMM), local tz.}
   \item{sched_dep_time, sched_arr_time}{Scheduled departure and arrival times (format HHMM or HMM), local tz.}
   \item{dep_delay, arr_delay}{Departure and arrival delays, in minutes. Negative times represent early departures/arrivals.}
-  \item{carrier}{Two letter carrier abbreviation. See airlines to get name.}
+  \item{carrier}{Two-letter carrier abbreviation. See airlines to get name.}
   \item{flight}{Flight number.}
   \item{tailnum}{Plane tail number. See planes for additional metadata.}
   \item{origin, dest}{Origin and destination.}

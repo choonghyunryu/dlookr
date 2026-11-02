@@ -2,7 +2,7 @@
 % Please edit documentation in R/missing.R
 \name{plot_na_hclust}
 \alias{plot_na_hclust}
-\title{Combination chart for missing value}
+\title{Combination chart for missing values}
 \usage{
 plot_na_hclust(
   x,
@@ -18,12 +18,12 @@ plot_na_hclust(
 
 \item{main}{character. Main title.}
 
-\item{col.left}{character. The color of left legend that is frequency of NA. default is "#009E73".}
+\item{col.left}{character. The color of the left legend, which is the frequency of NA. default is "#009E73".}
 
-\item{col.right}{character. The color of right legend that is percentage of NA. default is "#56B4E9".}
+\item{col.right}{character. The color of the right legend, which is the percentage of NA. default is "#56B4E9".}
 
-\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.}
+\item{typographic}{logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.}
 
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
@@ -32,12 +32,12 @@ for the visualization. If not specified, the font defined in dlookr is applied. 
 a ggplot2 object.
 }
 \description{
-Visualize distribution of missing value by combination of variables.
+Visualize the distribution of missing values by combination of variables.
 }
 \details{
 Rows are variables containing missing values, and columns are observations. 
-These data structures were grouped into similar groups by applying hclust. 
-So, it was made possible to visually examine how the missing values are distributed 
+These data structures are grouped into similar groups by applying hclust.
+This makes it possible to visually examine how the missing values are distributed
 for each combination of variables.
 
 The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",

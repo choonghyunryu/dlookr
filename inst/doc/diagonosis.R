@@ -61,45 +61,45 @@ diagnose_outlier(flights) %>%
   arrange(desc(rate)) %>% 
   select(-outliers_cnt)
 
-## ----plot_outlier, fig.align='center', fig.width = 6, fig.height = 4----------
+## ----plot_outlier, fig.align='center', fig.width = 6, fig.height = 4, fig.alt='Visualization result of outliers in arr_delay variable'----
 flights %>%
   plot_outlier(arr_delay) 
 
-## ----plot_outlier_pipe, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE----
+## ----plot_outlier_pipe, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE, fig.alt='Visualization result of outliers in variables with outlier ratio of 5% or higher'----
 # flights %>%
 #   plot_outlier(diagnose_outlier(flights) %>%
 #                  filter(outliers_ratio >= 5) %>%
 #                  select(variables) %>%
 #                  unlist())
 
-## ----plot_na_pareto1, fig.align='center', fig.width = 6, fig.height = 4-------
+## ----plot_na_pareto1, fig.align='center', fig.width = 6, fig.height = 4, fig.alt='Visualization result of mising values'----
 mice::boys %>% 
   plot_na_pareto(col = "blue")
 
-## ----plot_na_pareto2, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE----
+## ----plot_na_pareto2, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE, fig.alt='Visualization result of mising values with title'----
 # mice::boys %>%
 #   plot_na_pareto(only_na = TRUE, main = "Pareto Chart for mice::boys")
 
-## ----plot_na_pareto3, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE----
+## ----plot_na_pareto3, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE, fig.alt = 'Visualization result of mising values with custom grade'----
 # mice::boys %>%
 #   plot_na_pareto(grade = list(High = 0.1, Middle = 0.6, Low = 1), relative = TRUE)
 
 ## ----plot_na_pareto4, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE----
 # plot_na_pareto(mice::boys, only_na = TRUE, plot = FALSE)
 
-## ----plot_na_hclust, fig.align='center', fig.width = 6, fig.height = 4--------
+## ----plot_na_hclust, fig.align='center', fig.width = 6, fig.height = 4, fig.alt='Visualization result of mising values with hclust'----
 mice::boys %>% 
   plot_na_hclust(main = "Distribution of missing value")
 
-## ----plot_na_hclust1, fig.align='center', fig.width = 6, fig.height = 4-------
+## ----plot_na_hclust1, fig.align='center', fig.width = 6, fig.height = 4, fig.alt='Visualization result of mising values with intersect'----
 mice::boys %>% 
   plot_na_intersect()
 
-## ----plot_na_hclust3, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE----
+## ----plot_na_hclust3, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE, fig.alt='Visualization result of mising values with top 5 variables'----
 # mice::boys %>%
 #   plot_na_intersect(n_vars = 5)
 
-## ----plot_na_hclust4, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE----
+## ----plot_na_hclust4, fig.align='center', fig.width = 6, fig.height = 4, eval=FALSE, fig.alt='Visualization result of mising values with top 7 intersections'----
 # mice::boys %>%
 #   plot_na_intersect(only_na = FALSE, n_intersacts = 7)
 

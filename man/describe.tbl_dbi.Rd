@@ -2,7 +2,7 @@
 % Please edit documentation in R/tbl_dbi.R
 \name{describe.tbl_dbi}
 \alias{describe.tbl_dbi}
-\title{Compute descriptive statistic}
+\title{Compute descriptive statistics}
 \usage{
 \method{describe}{tbl_dbi}(
   .data,
@@ -19,26 +19,26 @@
 
 \item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
-Positive values select variables; negative values to drop variables.
+Positive values select variables; negative values drop variables.
 If the first expression is negative, describe() will automatically start with all variables.
 These arguments are automatically quoted and evaluated in a context where column names
 represent column positions.
 They support unquoting and splicing.}
 
-\item{statistics}{character. the name of the descriptive statistic to calculate. The defaults is c("mean", "sd", "se_mean", "IQR", "skewness", "kurtosis", "quantiles")}
+\item{statistics}{character. the name of the descriptive statistic to calculate. The default is c("mean", "sd", "se_mean", "IQR", "skewness", "kurtosis", "quantiles")}
 
-\item{quantiles}{numeric. list of quantiles to calculate. The values of elements must be between 0 and 1. and to calculate quantiles, you must include "quantiles" in the statistics argument value. The default is c(0, .01, .05, 0.1, 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.9, 0.95, 0.99, 1).}
+\item{quantiles}{numeric. list of quantiles to calculate. The values of elements must be between 0 and 1, and to calculate quantiles, you must include "quantiles" in the statistics argument value. The default is c(0, .01, .05, 0.1, 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.9, 0.95, 0.99, 1).}
 
 \item{all.combinations}{logical. When used with group_by(), 
-this argument expresses all combinations of  group combinations. 
+this argument expresses all combinations of groups.
 If the argument value is TRUE, cases that do not exist as actual 
 data are also included in the output.}
 
 \item{in_database}{Specifies whether to perform in-database operations. 
-If TRUE, most operations are performed in the DBMS. if FALSE, 
-table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.}
+If TRUE, most operations are performed in the DBMS. If FALSE,
+table data is taken into R and operated on in memory. in_database = TRUE is not yet supported.}
 
-\item{collect_size}{a integer. The number of data samples from the DBMS to R. 
+\item{collect_size}{an integer. The number of data samples from the DBMS to R.
 Applies only if in_database = FALSE.
 
 See vignette("EDA") for an introduction to these concepts.}
@@ -47,13 +47,13 @@ See vignette("EDA") for an introduction to these concepts.}
 An object of the same class as .data.
 }
 \description{
-The describe() compute descriptive statistic of numerical(INTEGER, NUMBER, etc.) 
+The describe() computes descriptive statistics of numerical (INTEGER, NUMBER, etc.)
 column of the DBMS table through tbl_dbi for exploratory data analysis.
 }
 \details{
 This function is useful when used with the \code{\link[dplyr]{group_by}} function
 of the dplyr package.
-If you want to calculate the statistic by level of the categorical data
+If you want to calculate the statistics by level of the categorical data
 you are interested in, rather than the whole statistic, you can use
 grouped_df as the group_by() function.
 
@@ -65,21 +65,21 @@ included in the variable name of the data.
 }
 \section{Descriptive statistic information}{
 
-The information derived from the numerical data describe is as follows.
+The information derived from the numerical data description is as follows.
 
 \itemize{
 \item n : number of observations excluding missing values
 \item na : number of missing values
 \item mean : arithmetic average
 \item sd : standard deviation
-\item se_mean : standard error mean. sd/sqrt(n)
+\item se_mean : standard error of the mean. sd/sqrt(n)
 \item IQR : interquartile range (Q3-Q1)
 \item skewness : skewness
 \item kurtosis : kurtosis
 \item p25 : Q1. 25\% percentile
 \item p50 : median. 50\% percentile
 \item p75 : Q3. 75\% percentile
-\item p01, p05, p10, p20, p30 : 1\%, 5\%, 20\%, 30\% percentiles
+\item p01, p05, p10, p20, p30 : 1\%, 5\%, 10\%, 20\%, 30\% percentiles
 \item p40, p60, p70, p80 : 40\%, 60\%, 70\%, 80\% percentiles
 \item p90, p95, p99, p100 : 90\%, 95\%, 99\%, 100\% percentiles
 

@@ -2,15 +2,15 @@
 % Please edit documentation in R/binning.R
 \name{plot.performance_bin}
 \alias{plot.performance_bin}
-\title{Visualize Performance for an "performance_bin" Object}
+\title{Visualize Performance for a "performance_bin" Object}
 \usage{
 \method{plot}{performance_bin}(x, typographic = TRUE, base_family = NULL, ...)
 }
 \arguments{
 \item{x}{an object of class "performance_bin", usually, a result of a call to performance_bin().}
 
-\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.}
+\item{typographic}{logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.}
 
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
@@ -21,7 +21,7 @@ for the visualization. If not specified, the font defined in dlookr is applied. 
 A ggplot2 object.
 }
 \description{
-It generates plots for understand frequency, WoE by bins using performance_bin.
+It generates plots to understand frequency and WoE by bins using performance_bin.
 }
 \details{
 The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",

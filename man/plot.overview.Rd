@@ -15,10 +15,10 @@
 \arguments{
 \item{x}{an object of class "overview", usually, a result of a call to overview().}
 
-\item{order_type}{character. method of order of bars(variables).}
+\item{order_type}{character. method of ordering the bars (variables).}
 
-\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.}
+\item{typographic}{logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.}
 
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
@@ -29,7 +29,7 @@ for the visualization. If not specified, the font defined in dlookr is applied. 
 A ggplot2 object.
 }
 \description{
-Visualize a plot by attribute of `overview` class.
+Visualize a plot by attribute of the `overview` class.
 Visualize the data type, number of observations, and number of missing values for each variable.
 }
 \details{

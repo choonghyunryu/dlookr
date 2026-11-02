@@ -16,7 +16,7 @@ binning(
 \arguments{
 \item{x}{numeric. numeric vector for binning.}
 
-\item{nbins}{integer. number of intervals(bins). required. if missing, nclass.Sturges is used.}
+\item{nbins}{integer. number of intervals (bins). required. If missing, nclass.Sturges is used.}
 
 \item{type}{character. binning method. Choose from "quantile", "equal", "pretty", "kmeans" and "bclust".
 The "quantile" sets breaks with quantiles of the same interval.
@@ -25,7 +25,7 @@ The "pretty" chooses a number of breaks not necessarily equal
 to nbins using base::pretty function.
 The "kmeans" uses stats::kmeans function to generate the breaks.
 The "bclust" uses e1071::bclust function to generate the breaks using bagged clustering.
-"kmeans" and "bclust" was implemented by classInt::classIntervals() function.}
+"kmeans" and "bclust" were implemented by the classInt::classIntervals() function.}
 
 \item{ordered}{logical. whether to build an ordered factor or not.}
 
@@ -36,7 +36,7 @@ If FALSE, the original breaks obtained by type are used.}
 }
 \value{
 An object of bins class.
-Attributes of bins class is as follows.
+Attributes of the bins class are as follows.
 \itemize{
 \item class : "bins"
 \item type : binning type, "quantile", "equal", "pretty", "kmeans", "bclust".
@@ -46,7 +46,7 @@ Attributes of bins class is as follows.
 }
 }
 \description{
-The binning() converts a numeric variable to a categorization variable.
+The binning() converts a numeric variable to a categorical variable.
 }
 \details{
 This function is useful when used with the mutate/transmute

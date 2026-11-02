@@ -16,11 +16,11 @@
 \arguments{
 \item{x}{an object of class "optimal_bins", usually, a result of a call to binning_by().}
 
-\item{type}{character. options for visualization. Distribution ("dist"), Relateive Frequency ("freq"),
-Positive Rate ("posrate"), and Weight of Evidence ("WoE"). and default "all" draw all plot.}
+\item{type}{character. options for visualization. Distribution ("dist"), Relative Frequency ("freq"),
+Positive Rate ("posrate"), and Weight of Evidence ("WoE"). The default "all" draws all plots.}
 
-\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.}
+\item{typographic}{logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.}
 
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
@@ -35,7 +35,7 @@ The default is 0 to not rotate the label.}
 An object of gtable class.
 }
 \description{
-It generates plots for understand distribution, frequency, bad rate, and weight of evidence using optimal_bins.
+It generates plots to understand the distribution, frequency, bad rate, and weight of evidence using optimal_bins.
 
 See vignette("transformation") for an introduction to these concepts.
 }

@@ -1,22 +1,22 @@
 #' Data Transformations
 #'
 #' @description
-#' Performs variable transformation for standardization and resolving skewness
+#' Performs variable transformations for standardization and resolving skewness
 #' of numerical variables.
 #'
 #' @details
-#' transform() creates an transform class.
-#' The `transform` class includes original data, transformed data,
-#' and method of transformation.
+#' transform() creates a transform class.
+#' The `transform` class includes the original data, transformed data,
+#' and the method of transformation.
 #'
 #' See vignette("transformation") for an introduction to these concepts.
 #'
 #' @param x numeric vector for transformation.
-#' @param method method of transformations.
+#' @param method method of transformation.
 #' @return An object of transform class.
-#' Attributes of transform class is as follows.
+#' Attributes of the transform class are as follows.
 #' \itemize{
-#'   \item method : method of transformation data.
+#'   \item method : method of data transformation.
 #'   \itemize{
 #'     \item Standardization
 #'       \itemize{
@@ -29,9 +29,9 @@
 #'       \item "log+1" : log transformation. log(x + 1). Used for values that contain 0.
 #'       \item "sqrt" : square root transformation.
 #'       \item "1/x" : 1 / x transformation
-#'       \item "x^2" : x square transformation
-#'       \item "x^3" : x^3 square transformation
-#'       \item "Box-Cox" : Box-Box transformation
+#'       \item "x^2" : x squared transformation
+#'       \item "x^3" : x cubed transformation
+#'       \item "Box-Cox" : Box-Cox transformation
 #'       \item "Yeo-Johnson" : Yeo-Johnson transformation
 #'     }
 #'   }
@@ -199,7 +199,7 @@ summary.transform <- function(object, ...) {
 }
 
 
-#' @param x an object of class "transform",usually, a result of a call to transform().
+#' @param x an object of class "transform", usually, a result of a call to transform().
 #' @param ... further arguments passed to or from other methods.
 #' @rdname summary.transform
 #' @method print transform
@@ -208,10 +208,10 @@ print.transform <- function(x, ...) {
   print(as.numeric(x))
 }
 
-#' Visualize Information for an "transform" Object
+#' Visualize Information for a "transform" Object
 #'
 #' @description
-#' Visualize two kinds of plot by attribute of `transform` class.
+#' Visualize two kinds of plots by attribute of the `transform` class.
 #' The transformation of a numerical variable is a density plot.
 #' 
 #' @details The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
@@ -219,8 +219,8 @@ print.transform <- function(x, ...) {
 #' use it after loading the Google font with import_google_font().
 #' 
 #' @param x an object of class "transform", usually, a result of a call to transform().
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
+#' @param typographic logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+#' The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
@@ -290,14 +290,14 @@ plot.transform <- function(x, typographic = TRUE, base_family = NULL, ...) {
 
 #' Reporting the information of transformation
 #'
-#' @description The transformation_report() report the information of transform
-#' numerical variables for object inheriting from data.frame.
+#' @description The transformation_report() reports the information of transforming
+#' numerical variables for objects inheriting from data.frame.
 #'
-#' @details Generate transformation reports automatically.
-#' You can choose to output to pdf and html files.
-#' This is useful for Binning a data frame with a large number of variables
+#' @details Generates transformation reports automatically.
+#' You can choose to output the report as a pdf or html file.
+#' This is more useful for binning a data frame with a large number of variables
 #' than data with a small number of variables.
-#' For pdf output, Korean Gothic font must be installed in Korean operating system.
+#' For pdf output, the Korean Gothic font must be installed on a Korean operating system.
 #' 
 #' @section Reported information:
 #' The transformation process will report the following information:
@@ -307,7 +307,7 @@ plot.transform <- function(x, typographic = TRUE, base_family = NULL, ...) {
 #'   \itemize{
 #'     \item Missing Values
 #'     \itemize{
-#'       \item * Variable names including missing value
+#'       \item * Variable names including missing values
 #'     }
 #'     \item Outliers
 #'     \itemize{
@@ -340,14 +340,14 @@ plot.transform <- function(x, typographic = TRUE, base_family = NULL, ...) {
 #' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param target target variable. If the target variable is not specified,
 #' the method of using the target variable information is not performed when
-#' the missing value is imputed. and Optimal binning is not performed if the
+#' the missing value is imputed, and optimal binning is not performed if the
 #' target variable is not a binary class.
-#' @param output_format report output type. Choose either "pdf" and "html".
-#' "pdf" create pdf file by knitr::knit().
-#' "html" create html file by rmarkdown::render().
-#' @param output_file name of generated file. default is NULL.
-#' @param output_dir name of directory to generate report file. default is tempdir().
-#' @param font_family character. font family name for figure in pdf.
+#' @param output_format report output type. Choose either "pdf" or "html".
+#' "pdf" creates a pdf file by knitr::knit().
+#' "html" creates an html file by rmarkdown::render().
+#' @param output_file name of the generated file. default is NULL.
+#' @param output_dir name of the directory in which to generate the report file. default is tempdir().
+#' @param font_family character. font family name for figures in the pdf.
 #' @param browse logical. choose whether to output the report results to the browser.
 #' @return No return value. This function only generates a report.
 #' 

@@ -5,7 +5,7 @@
 \alias{correlate.data.frame}
 \alias{correlate.grouped_df}
 \alias{correlate.tbl_dbi}
-\title{Compute the correlation coefficient between two variable}
+\title{Compute the correlation coefficient between two variables}
 \usage{
 correlate(.data, ...)
 
@@ -34,7 +34,7 @@ correlate(.data, ...)
 
 \item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
-Positive values select variables; negative values to drop variables.
+Positive values select variables; negative values drop variables.
 If the first expression is negative, correlate() will automatically start with all variables.
 These arguments are automatically quoted and evaluated in a context where column names
 represent column positions.
@@ -50,43 +50,43 @@ For categorical variables, "cramer" and "theil" can be used. "cramer"
 computes Cramer's V statistic, "theil" computes Theil's U statistic.}
 
 \item{in_database}{Specifies whether to perform in-database operations. 
-If TRUE, most operations are performed in the DBMS. if FALSE, 
-table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.}
+If TRUE, most operations are performed in the DBMS. If FALSE,
+table data is taken into R and operated on in memory. in_database = TRUE is not yet supported.}
 
-\item{collect_size}{a integer. The number of data samples from the DBMS to R. 
+\item{collect_size}{an integer. The number of data samples from the DBMS to R.
 Applies only if in_database = FALSE.}
 }
 \value{
 An object of correlate class.
 }
 \description{
-The correlate() compute the correlation coefficient for numerical or categorical data.
+The correlate() computes the correlation coefficient for numerical or categorical data.
 }
 \details{
 This function is useful when used with the group_by() function of the dplyr package.
 If you want to compute by level of the categorical data you are interested in,
 rather than the whole observation, you can use \code{\link[dplyr]{grouped_df}} as the group_by() function.
-This function is computed stats::cor() function by use = "pairwise.complete.obs" option for numerical variable.
-And support categorical variable with theil's U correlation coefficient and Cramer's V correlation coefficient.
+For numerical variables, this function computes the stats::cor() function with the use = "pairwise.complete.obs" option.
+For categorical variables, it supports Theil's U correlation coefficient and Cramer's V correlation coefficient.
 }
 \section{correlate class}{
 
-The correlate class inherits the tibble class and has the following variables.:
+The correlate class inherits the tibble class and has the following variables:
 
 \itemize{
-\item var1 : names of numerical variable
+\item var1 : names of numerical variables
 \item var2 : name of the corresponding numeric variable
 \item coef_corr : Correlation coefficient
 }
 
-When method = "cramer", data.frame with the following variables is returned.
+When method = "cramer", a data.frame with the following variables is returned.
 \itemize{
-\item var1 : names of numerical variable
+\item var1 : names of numerical variables
 \item var2 : name of the corresponding numeric variable
-\item chisq : the value the chi-squared test statistic
+\item chisq : the value of the chi-squared test statistic
 \item df : the degrees of freedom of the approximate chi-squared distribution of the test statistic
 \item pval : the p-value for the test
-\item coef_corr : theil's U correlation coefficient (Uncertainty Coefficient).
+\item coef_corr : Theil's U correlation coefficient (Uncertainty Coefficient).
 }
 }
 

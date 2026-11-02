@@ -16,7 +16,7 @@ The default is TRUE.}
 numeric. calculated skewness.
 }
 \description{
-This function calculated skewness of given data.
+This function calculates the skewness of the given data.
 }
 \examples{
 set.seed(123)

@@ -14,16 +14,16 @@ relate(.data, predictor)
 
 \item{predictor}{variable of interest. predictor.
 
-See vignette("relate") for an introduction to these concepts.}
+See vignette("EDA") for an introduction to these concepts.}
 }
 \value{
-An object of the class as relate.
-Attributes of relate class is as follows.
+An object of the relate class.
+Attributes of the relate class are as follows.
 \itemize{
 \item target : name of target variable
 \item predictor : name of predictor
 \item model : levels of binned value.
-\item raw : table_df with two variables target and predictor.
+\item raw : table_df with two variables, target and predictor.
 }
 }
 \description{
@@ -44,7 +44,7 @@ of the target variable and the data type of the variable of interest.
     }
     \item predictor: numerical variable
     \itemize{
-      \item descriptive statistic for each levels and total observation.
+      \item descriptive statistics for each level and the total observations.
     }
   }
   \item target variable: numerical variable
@@ -62,19 +62,19 @@ of the target variable and the data type of the variable of interest.
 }
 \section{Descriptive statistic information}{
 
-The information derived from the numerical data describe is as follows.
+The information derived from the numerical data description is as follows.
 
 \itemize{
 \item mean : arithmetic average
 \item sd : standard deviation
-\item se_mean : standrd error mean. sd/sqrt(n)
-\item IQR : interqurtle range (Q3-Q1)
+\item se_mean : standard error of the mean. sd/sqrt(n)
+\item IQR : interquartile range (Q3-Q1)
 \item skewness : skewness
 \item kurtosis : kurtosis
 \item p25 : Q1. 25\% percentile
 \item p50 : median. 50\% percentile
 \item p75 : Q3. 75\% percentile
-\item p01, p05, p10, p20, p30 : 1\%, 5\%, 20\%, 30\% percentiles
+\item p01, p05, p10, p20, p30 : 1\%, 5\%, 10\%, 20\%, 30\% percentiles
 \item p40, p60, p70, p80 : 40\%, 60\%, 70\%, 80\% percentiles
 \item p90, p95, p99, p100 : 90\%, 95\%, 99\%, 100\% percentiles
 }

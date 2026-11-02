@@ -14,35 +14,35 @@ plot_correlate <- function(.data, ...) {
 }
 
 
-#' Compute the correlation coefficient between two variable
+#' Compute the correlation coefficient between two variables
 #'
-#' @description The correlate() compute the correlation coefficient for numerical or categorical data.
+#' @description The correlate() computes the correlation coefficient for numerical or categorical data.
 #'
 #' @details This function is useful when used with the group_by() function of the dplyr package.
 #' If you want to compute by level of the categorical data you are interested in,
 #' rather than the whole observation, you can use \code{\link[dplyr]{grouped_df}} as the group_by() function.
-#' This function is computed stats::cor() function by use = "pairwise.complete.obs" option for numerical variable.
-#' And support categorical variable with theil's U correlation coefficient and Cramer's V correlation coefficient.
+#' For numerical variables, this function computes the stats::cor() function with the use = "pairwise.complete.obs" option.
+#' For categorical variables, it supports Theil's U correlation coefficient and Cramer's V correlation coefficient.
 #'
 #' @return An object of correlate class.
 #' 
 #' @section correlate class:
-#' The correlate class inherits the tibble class and has the following variables.:
+#' The correlate class inherits the tibble class and has the following variables:
 #'
 #' \itemize{
-#' \item var1 : names of numerical variable
+#' \item var1 : names of numerical variables
 #' \item var2 : name of the corresponding numeric variable
 #' \item coef_corr : Correlation coefficient
 #' }
 #' 
-#' When method = "cramer", data.frame with the following variables is returned.
+#' When method = "cramer", a data.frame with the following variables is returned.
 #' \itemize{
-#' \item var1 : names of numerical variable
+#' \item var1 : names of numerical variables
 #' \item var2 : name of the corresponding numeric variable
-#' \item chisq : the value the chi-squared test statistic
+#' \item chisq : the value of the chi-squared test statistic
 #' \item df : the degrees of freedom of the approximate chi-squared distribution of the test statistic
 #' \item pval : the p-value for the test
-#' \item coef_corr : theil's U correlation coefficient (Uncertainty Coefficient).
+#' \item coef_corr : Theil's U correlation coefficient (Uncertainty Coefficient).
 #' }
 #' 
 #'
@@ -55,7 +55,7 @@ plot_correlate <- function(.data, ...) {
 #' computes Cramer's V statistic, "theil" computes Theil's U statistic.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' If the first expression is negative, correlate() will automatically start with all variables.
 #' These arguments are automatically quoted and evaluated in a context where column names
 #' represent column positions.
@@ -578,15 +578,15 @@ summary.correlate <- function(object, ...) {
 #' Visualize correlation plot of numerical data
 #'
 #' @description 
-#' The plot_correlate() visualize correlation plot
-#' for find relationship between two numerical variables.
+#' The plot_correlate() visualizes a correlation plot
+#' to find the relationship between two numerical variables.
 #'
-#' @details The scope of the visualization is the provide a correlation information.
+#' @details The scope of the visualization is to provide correlation information.
 #' Since the plot is drawn for each variable, if you specify more than
-#' one variable in the ... argument, the specified number of plots are drawn.
+#' one variable in the ... argument, the specified number of plots is drawn.
 #' 
-#' The direction of the diagonal is top-left to bottom-right. and color of the 
-#' cells is 'red' to -1, 'blue' to 1.
+#' The direction of the diagonal is top-left to bottom-right, and the color of the
+#' cells is 'red' for -1 and 'blue' for 1.
 #'
 #' The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 #' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
@@ -595,13 +595,13 @@ summary.correlate <- function(object, ...) {
 #' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param method a character string indicating which correlation coefficient (or covariance) is 
 #' to be computed. One of "pearson" (default), "kendall", or "spearman": can be abbreviated.
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
+#' @param typographic logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+#' The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' If the first expression is negative, plot_correlate() will automatically start with all variables.
 #' These arguments are automatically quoted and evaluated in a context where column names
 #' represent column positions.
@@ -798,19 +798,19 @@ plot_correlate_group_impl <- function(df, vars, method, typographic, base_family
 }
 
 
-#' Visualize Information for an "correlate" Object
+#' Visualize Information for a "correlate" Object
 #'
 #' @description
-#' Visualize by attribute of `correlate` class.
-#' The plot of correlation matrix is a tile plot.
+#' Visualize by attribute of the `correlate` class.
+#' The plot of the correlation matrix is a tile plot.
 #' 
 #' @details The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 #' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font().
 #' 
 #' @param x an object of class "correlate", usually, a result of a call to correlate().
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
+#' @param typographic logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+#' The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).

@@ -40,31 +40,31 @@ diagnose_paged_report(.data, ...)
 
 \item{...}{arguments to be passed to pagedown::chrome_print().}
 
-\item{output_format}{report output type. Choose either "pdf" and "html".
-"pdf" create pdf file by rmarkdown::render() and pagedown::chrome_print(). so, 
-you needed Chrome web browser on computer.  
-"html" create html file by rmarkdown::render().}
+\item{output_format}{report output type. Choose either "pdf" or "html".
+"pdf" creates a pdf file by rmarkdown::render() and pagedown::chrome_print(). So,
+you need the Chrome web browser on your computer.
+"html" creates an html file by rmarkdown::render().}
 
-\item{output_file}{name of generated file. default is NULL.}
+\item{output_file}{name of the generated file. default is NULL.}
 
-\item{output_dir}{name of directory to generate report file. default is tempdir().}
+\item{output_dir}{name of the directory in which to generate the report file. default is tempdir().}
 
 \item{browse}{logical. choose whether to output the report results to the browser.}
 
-\item{title}{character. title of report. default is "Data Diagnosis Report".}
+\item{title}{character. title of the report. default is "Data Diagnosis Report".}
 
-\item{subtitle}{character. subtitle of report. default is name of data.}
+\item{subtitle}{character. subtitle of the report. default is the name of the data.}
 
-\item{author}{character. author of report. default is "dlookr".}
+\item{author}{character. author of the report. default is "dlookr".}
 
-\item{abstract_title}{character. abstract title of report. default is 
+\item{abstract_title}{character. abstract title of the report. default is
 "Report Overview".}
 
-\item{abstract}{character. abstract of report.}
+\item{abstract}{character. abstract of the report.}
 
-\item{title_color}{character. color of title. default is "white".}
+\item{title_color}{character. color of the title. default is "white".}
 
-\item{subtitle_color}{character. color of subtitle. default is "gold".}
+\item{subtitle_color}{character. color of the subtitle. default is "gold".}
 
 \item{thres_uniq_cat}{numeric. threshold to use for "Unique Values - 
 Categorical Variables". default is 0.5.}
@@ -73,25 +73,25 @@ Categorical Variables". default is 0.5.}
 Numerical Variables". default is 5.}
 
 \item{flag_content_zero}{logical. whether to output "Zero Values" information. 
-the default value is TRUE, and the information is displayed.}
+The default value is TRUE, and the information is displayed.}
 
 \item{flag_content_minus}{logical. whether to output "Minus Values" information. 
-the default value is TRUE, and the information is displayed.}
+The default value is TRUE, and the information is displayed.}
 
 \item{flag_content_missing}{logical. whether to output "Missing Value" information. 
-the default value is TRUE, and the information is displayed.}
+The default value is TRUE, and the information is displayed.}
 
-\item{cover_img}{character. name of cover image.}
+\item{cover_img}{character. name of the cover image.}
 
 \item{create_date}{Date or POSIXct, character. The date on which the report is generated. 
 The default value is the result of Sys.time().}
 
-\item{logo_img}{character. name of logo image file on top right.}
+\item{logo_img}{character. name of the logo image file on the top right.}
 
-\item{theme}{character. name of theme for report. support "orange" and "blue". 
+\item{theme}{character. name of the theme for the report. supports "orange" and "blue".
 default is "orange".}
 
-\item{sample_percent}{numeric. Sample percent of data for performing Diagnosis. 
+\item{sample_percent}{numeric. Sample percentage of data for performing the diagnosis.
 It has a value between (0, 100]. 100 means all data, and 5 means 5\% of sample data.
 This is useful for data with a large number of observations.}
 
@@ -104,22 +104,22 @@ for the visualization. If not specified, the font defined in dlookr is applied. 
 No return value. This function only generates a report.
 }
 \description{
-The diagnose_paged_report() paged report the information 
+The diagnose_paged_report() generates a paged report of the information
 for diagnosing the quality of the data.
 }
 \details{
-Generate generalized data diagnostic reports automatically.
-You can choose to output to pdf and html files.
-This is useful for diagnosing a data frame with a large number of variables
+Generates generalized data diagnostic reports automatically.
+You can choose to output the report as a pdf or html file.
+This is more useful for diagnosing a data frame with a large number of variables
 than data with a small number of variables.
 
-Create an  PDF through the Chrome DevTools Protocol. If you want to create PDF, 
+Create a PDF through the Chrome DevTools Protocol. If you want to create a PDF,
 Google Chrome or Microsoft Edge (or Chromium on Linux) must be installed prior to using this function.
 If not installed, you must use output_format = "html".
 }
 \section{Reported information}{
 
-Reported from the data diagnosis is as follows.
+The information reported from the data diagnosis is as follows.
 
 \itemize{
   \item Overview

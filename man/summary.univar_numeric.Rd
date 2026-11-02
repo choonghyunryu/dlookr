@@ -12,10 +12,10 @@
 \arguments{
 \item{object}{an object of class "univar_numeric", usually, a result of a call to univar_numeric().}
 
-\item{stand}{character Describe how to standardize the original data. 
+\item{stand}{character. Describe how to standardize the original data.
 "robust" normalizes the raw data through transformation calculated by IQR and median.
 "minmax" normalizes the original data using minmax transformation.
-"zscore" standardizes the original data using z-Score transformation.
+"zscore" standardizes the original data using z-score transformation.
 The default is "robust".}
 
 \item{...}{further arguments passed to or from other methods.}
@@ -23,17 +23,17 @@ The default is "robust".}
 \item{x}{an object of class "univar_numeric", usually, a result of a call to univar_numeric().}
 }
 \value{
-An object of the class as indivisual variabes based list.
+A list-based object containing individual variables.
 The statistics returned by summary.univar_numeric() are different from the statistics returned by univar_numeric().
-univar_numeric() is the statistics for the original data, but summary. univar_numeric() is the statistics for the standardized data.
-A component named "statistics" is a tibble object with the following statistics.:
+univar_numeric() returns the statistics for the original data, but summary.univar_numeric() returns the statistics for the standardized data.
+A component named "statistics" is a tibble object with the following statistics:
 \itemize{
 \item variable : factor. The level of the variable. 'variable' is the name of the variable.
 \item n : number of observations excluding missing values
 \item na : number of missing values
 \item mean : arithmetic average
 \item sd : standard deviation
-\item se_mean : standard error mean. sd/sqrt(n)
+\item se_mean : standard error of the mean. sd/sqrt(n)
 \item IQR : interquartile range (Q3-Q1)
 \item skewness : skewness
 \item kurtosis : kurtosis
@@ -44,7 +44,7 @@ A component named "statistics" is a tibble object with the following statistics.
 print and summary method for "univar_numeric" class.
 }
 \details{
-print.univar_numeric() displays only the information of variables included in univar_numeric 
+print.univar_numeric() displays only the information of variables included in univar_numeric.
 The "variables" attribute is not displayed.
 }
 \examples{

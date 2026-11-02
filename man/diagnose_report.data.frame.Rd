@@ -20,17 +20,17 @@ diagnose_report(.data, output_format, output_file, output_dir, ...)
 \arguments{
 \item{.data}{a data.frame or a \code{\link[tibble]{tbl_df}}.}
 
-\item{output_format}{report output type. Choose either "pdf" and "html".
-"pdf" create pdf file by knitr::knit().
-"html" create html file by rmarkdown::render().}
+\item{output_format}{report output type. Choose either "pdf" or "html".
+"pdf" creates a pdf file by knitr::knit().
+"html" creates an html file by rmarkdown::render().}
 
-\item{output_file}{name of generated file. default is NULL.}
+\item{output_file}{name of the generated file. default is NULL.}
 
-\item{output_dir}{name of directory to generate report file. default is tempdir().}
+\item{output_dir}{name of the directory in which to generate the report file. default is tempdir().}
 
 \item{...}{arguments to be passed to methods.}
 
-\item{font_family}{character. font family name for figure in pdf.}
+\item{font_family}{character. font family name for figures in the pdf.}
 
 \item{browse}{logical. choose whether to output the report results to the browser.}
 }
@@ -38,36 +38,36 @@ diagnose_report(.data, output_format, output_file, output_dir, ...)
 No return value. This function only generates a report.
 }
 \description{
-The diagnose_report() report the information for diagnosing
+The diagnose_report() reports the information for diagnosing
 the quality of the data.
 }
 \details{
-Generate generalized data diagnostic reports automatically.
-You can choose to output to pdf and html files.
-This is useful for diagnosing a data frame with a large number of variables
+Generates generalized data diagnostic reports automatically.
+You can choose to output the report as a pdf or html file.
+This is more useful for diagnosing a data frame with a large number of variables
 than data with a small number of variables.
-For pdf output, Korean Gothic font must be installed in Korean operating system.
+For pdf output, the Korean Gothic font must be installed on a Korean operating system.
 }
 \section{Reported information}{
 
-Reported from the data diagnosis is as follows.
+The information reported from the data diagnosis is as follows.
 
 \itemize{
   \item Diagnose Data
   \itemize{
     \item Overview of Diagnosis
     \itemize{
-      \item List of all variables quality
+      \item List of all variables' quality
       \item Diagnosis of missing data
-      \item Diagnosis of unique data(Text and Category)
-      \item Diagnosis of unique data(Numerical)
+      \item Diagnosis of unique data (Text and Category)
+      \item Diagnosis of unique data (Numerical)
     }
     \item Detailed data diagnosis
     \itemize{
       \item Diagnosis of categorical variables
       \item Diagnosis of numerical variables
       \item List of numerical diagnosis (zero)
-      \item List of numerical diagnosis (minus)
+      \item List of numerical diagnosis (negative)
     }
   }
   \item Diagnose Outliers

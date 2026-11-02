@@ -10,12 +10,12 @@ binning_rgr(.data, y, x, min_perc_bins = 0.1, max_n_bins = 5, ordered = TRUE)
 \item{.data}{a data frame.}
 
 \item{y}{character. name of binary response variable. 
-The variable must character of factor.}
+The variable must be a character or factor.}
 
 \item{x}{character. name of continuous characteristic variable. 
-At least 5 different values. and Inf is not allowed.}
+It must have at least 5 different values, and Inf is not allowed.}
 
-\item{min_perc_bins}{numeric. minimum percetange of rows for each split or 
+\item{min_perc_bins}{numeric. minimum percentage of rows for each split or
 segment (controls the sample size), 0.1 (or 10 percent) as default.}
 
 \item{max_n_bins}{integer. maximum number of bins or segments 
@@ -25,7 +25,7 @@ to split the input variable, 5 bins as default.}
 }
 \value{
 an object of "infogain_bins" class.
-Attributes of "infogain_bins" class is as follows.
+Attributes of the "infogain_bins" class are as follows.
 \itemize{
 \item class : "infogain_bins".
 \item type : binning type, "infogain".
@@ -38,7 +38,7 @@ Attributes of "infogain_bins" class is as follows.
 }
 }
 \description{
-The binning_rgr() finding intervals for numerical variable
+The binning_rgr() finds intervals for a numerical variable
 using recursive information gain ratio maximization.
 }
 \details{

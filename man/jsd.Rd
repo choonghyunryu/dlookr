@@ -7,11 +7,11 @@
 jsd(p, q, base = c("log", "log2", "log10"), margin = FALSE)
 }
 \arguments{
-\item{p}{numeric. probability distributions.}
+\item{p}{numeric. probability distribution.}
 
-\item{q}{numeric. probability distributions.}
+\item{q}{numeric. probability distribution.}
 
-\item{base}{character. log bases. "log", "log2", "log10". default is "log"}
+\item{base}{character. log base. "log", "log2", "log10". default is "log".}
 
 \item{margin}{logical. Choose whether to return individual values or totals. 
 The default value is FALSE, which returns individual values.}

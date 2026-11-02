@@ -37,7 +37,7 @@ plot_normality(.data, ...)
 
 \item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
-Positive values select variables; negative values to drop variables.
+Positive values select variables; negative values drop variables.
 If the first expression is negative, plot_normality() will automatically
 start with all variables.
 These arguments are automatically quoted and evaluated in a context where column names
@@ -54,22 +54,22 @@ lower right corner. The default is "sqrt".}
 
 \item{col}{a color to be used to fill the bars. The default is "steelblue".}
 
-\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.}
+\item{typographic}{logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.}
 
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
 }
 \description{
-The plot_normality() visualize distribution information
-for normality test of the numerical data.
+The plot_normality() visualizes distribution information
+for the normality test of the numerical data.
 }
 \details{
-The scope of the visualization is the provide a distribution information.
+The scope of the visualization is to provide distribution information.
 Since the plot is drawn for each variable, if you specify more than
-one variable in the ... argument, the specified number of plots are drawn.
+one variable in the ... argument, the specified number of plots is drawn.
 
-The argument values that left and right can have are as follows.:
+The argument values that left and right can have are as follows:
 
 \itemize{
   \item "log" : log transformation. log(x)
@@ -77,21 +77,21 @@ The argument values that left and right can have are as follows.:
   \item "log+a" : log transformation. log(x + 1 - min(x)). Used for values that contain 0.   
   \item "sqrt" : square root transformation.
   \item "1/x" : 1 / x transformation
-  \item "x^2" : x square transformation
-  \item "x^3" : x^3 square transformation
-  \item "Box-Cox" : Box-Box transformation
+  \item "x^2" : x squared transformation
+  \item "x^3" : x cubed transformation
+  \item "Box-Cox" : Box-Cox transformation
   \item "Yeo-Johnson" : Yeo-Johnson transformation
 }
 }
 \section{Distribution information}{
 
-The plot derived from the numerical data visualization is as follows.
+The plots derived from the numerical data visualization are as follows.
 
 \itemize{
   \item histogram by original data
   \item q-q plot by original data
-  \item histogram by log transfer data
-  \item histogram by square root transfer data
+  \item histogram by log-transformed data
+  \item histogram by square root-transformed data
 }
 
 The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",

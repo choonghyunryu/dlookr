@@ -12,18 +12,18 @@ univar_numeric <- function(.data, ...) {
 }
 
 
-#'  Statistic of univariate categorical variables
+#'  Statistics of univariate categorical variables
 #'
-#' @description The univar_category() calculates statistic of categorical variables that is frequency table
+#' @description The univar_category() calculates statistics of categorical variables, that is, frequency tables
 #'
 #' @details 
 #' univar_category() calculates the frequency table of categorical variables. 
 #' If a specific variable name is not specified, frequency tables for all categorical variables included in the data are calculated.
-#' The univar_category class returned by univar_category() is useful because it can draw chisqure tests and bar plots as well as frequency tables of individual variables.
-#' and return univar_category class that based list object.
+#' The univar_category class returned by univar_category() is useful because it can perform chi-square tests and draw bar plots as well as frequency tables of individual variables.
+#' and returns a list-based object of the univar_category class.
 #'
-#' @return An object of the class as individual variables based list.
-#' The information to examine the relationship between categorical variables is as follows each components.
+#' @return A list-based object containing individual variables.
+#' The information to examine the relationship between categorical variables in each component is as follows.
 #'
 #' \itemize{
 #' \item variable : factor. The level of the variable. 'variable' is the name of the variable.
@@ -32,15 +32,15 @@ univar_numeric <- function(.data, ...) {
 #' }
 #'
 #' @section Attributes of return object:
-#' Attributes of compare_category class is as follows.
+#' Attributes of the compare_category class are as follows.
 #' \itemize{
-#' \item variables : character. List of variables selected for calculate frequency.
+#' \item variables : character. List of variables selected for calculating frequency.
 #' }
 #' 
 #' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' These arguments are automatically quoted and evaluated in a context where column names
 #' represent column positions.
 #' They support unquoting and splicing.
@@ -136,26 +136,26 @@ univar_category_impl <- function(df, vars) {
 }
 
 
-#'  Statistic of univariate numerical variables
+#'  Statistics of univariate numerical variables
 #'
-#' @description The univar_numeric() calculates statistic of numerical variables that is frequency table
+#' @description The univar_numeric() calculates statistics of numerical variables
 #'
 #' @details 
-#' univar_numeric() calculates the popular statistics of  numerical variables. 
-#' If a specific variable name is not specified, statistics for all categorical numerical included in the data are calculated.
+#' univar_numeric() calculates the popular statistics of numerical variables.
+#' If a specific variable name is not specified, statistics for all numerical variables included in the data are calculated.
 #' The statistics obtained by univar_numeric() are part of those obtained by describe(). 
 #' Therefore, it is recommended to use describe() to simply calculate statistics. 
 #' However, if you want to visualize the distribution of individual variables, you should use univar_numeric().
 #'
-#' @return An object of the class as individual variables based list.
-#' A component named "statistics" is a tibble object with the following statistics.:
+#' @return A list-based object containing individual variables.
+#' A component named "statistics" is a tibble object with the following statistics:
 #' \itemize{
 #' \item variable : factor. The level of the variable. 'variable' is the name of the variable.
 #' \item n : number of observations excluding missing values
 #' \item na : number of missing values
 #' \item mean : arithmetic average
 #' \item sd : standard deviation
-#' \item se_mean : standrd error mean. sd/sqrt(n)
+#' \item se_mean : standard error of the mean. sd/sqrt(n)
 #' \item IQR : interquartile range (Q3-Q1)
 #' \item skewness : skewness
 #' \item kurtosis : kurtosis
@@ -163,16 +163,16 @@ univar_category_impl <- function(df, vars) {
 #' }
 #'
 #' @section Attributes of return object:
-#' Attributes of compare_category class is as follows.
+#' Attributes of the compare_category class are as follows.
 #' \itemize{
 #' \item raw : a data.frame or a \code{\link[tibble]{tbl_df}}. Data containing variables to be compared. Save it for visualization with plot.univar_numeric().
-#' \item variables : character. List of variables selected for calculate statistics.
+#' \item variables : character. List of variables selected for calculating statistics.
 #' }
 #' 
 #' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' These arguments are automatically quoted and evaluated in a context where column names
 #' represent column positions.
 #' They support unquoting and splicing.
@@ -280,12 +280,12 @@ univar_numeric_impl <- function(df, vars) {
 #' print.univar_category() displays only the information of variables included in univar_category. 
 #' The "variables" attribute is not displayed.
 #'
-#' @return An object of the class as individual variables based list.
-#' The information to examine the relationship between categorical variables is as follows each components.
+#' @return A list-based object containing individual variables.
+#' The information to examine the relationship between categorical variables in each component is as follows.
 #'
 #' \itemize{
 #' \item variable : factor. The level of the variable. 'variable' is the name of the variable.
-#' \item statistic : numeric. the value the chi-squared test statistic.
+#' \item statistic : numeric. the value of the chi-squared test statistic.
 #' \item p.value : numeric. the p-value for the test.
 #' \item df : integer. the degrees of freedom of the chi-squared test.
 #' }
@@ -360,27 +360,27 @@ summary.univar_category <- function(object, na.rm = TRUE, ...) {
 #'
 #' @description print and summary method for "univar_numeric" class.
 #' @param object an object of class "univar_numeric", usually, a result of a call to univar_numeric().
-#' @param stand character Describe how to standardize the original data. 
+#' @param stand character. Describe how to standardize the original data.
 #' "robust" normalizes the raw data through transformation calculated by IQR and median.
 #' "minmax" normalizes the original data using minmax transformation.
-#' "zscore" standardizes the original data using z-Score transformation.
+#' "zscore" standardizes the original data using z-score transformation.
 #' The default is "robust".
 #' @param ... further arguments passed to or from other methods.
 #' @details
-#' print.univar_numeric() displays only the information of variables included in univar_numeric 
+#' print.univar_numeric() displays only the information of variables included in univar_numeric.
 #' The "variables" attribute is not displayed.
 #'
-#' @return An object of the class as indivisual variabes based list.
+#' @return A list-based object containing individual variables.
 #' The statistics returned by summary.univar_numeric() are different from the statistics returned by univar_numeric().
-#' univar_numeric() is the statistics for the original data, but summary. univar_numeric() is the statistics for the standardized data.
-#' A component named "statistics" is a tibble object with the following statistics.:
+#' univar_numeric() returns the statistics for the original data, but summary.univar_numeric() returns the statistics for the standardized data.
+#' A component named "statistics" is a tibble object with the following statistics:
 #' \itemize{
 #' \item variable : factor. The level of the variable. 'variable' is the name of the variable.
 #' \item n : number of observations excluding missing values
 #' \item na : number of missing values
 #' \item mean : arithmetic average
 #' \item sd : standard deviation
-#' \item se_mean : standard error mean. sd/sqrt(n)
+#' \item se_mean : standard error of the mean. sd/sqrt(n)
 #' \item IQR : interquartile range (Q3-Q1)
 #' \item skewness : skewness
 #' \item kurtosis : kurtosis
@@ -487,10 +487,10 @@ print.univar_numeric <- function(x, ...) {
 
 
 
-#' Visualize Information for an "univar_category" Object
+#' Visualize Information for a "univar_category" Object
 #'
 #' @description
-#' Visualize mosaics plot by attribute of univar_category class.
+#' Visualize a bar plot by attribute of the univar_category class.
 #'
 #' @details The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 #' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
@@ -498,11 +498,11 @@ print.univar_numeric <- function(x, ...) {
 #' 
 #' @param x an object of class "univar_category", usually, a result of a call to univar_category().
 #' @param prompt logical. The default value is FALSE. If there are multiple visualizations to be output, 
-#' if this argument value is TRUE, a prompt is output each time. 
-#' @param na.rm logical. Specifies whether to include NA when plotting bar plot. 
-#' The default is FALSE, so plot NA.  
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
+#' and this argument value is TRUE, a prompt is output each time.
+#' @param na.rm logical. Specifies whether to include NA when plotting a bar plot.
+#' The default is FALSE, so NA is plotted.
+#' @param typographic logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+#' The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
@@ -590,10 +590,10 @@ plot.univar_category <- function(x, na.rm = TRUE, prompt = FALSE,
 }
 
 
-#' Visualize Information for an "univar_numeric" Object
+#' Visualize Information for a "univar_numeric" Object
 #'
 #' @description
-#' Visualize boxplots and histogram by attribute of univar_numeric class.
+#' Visualize box plots and histograms by attribute of the univar_numeric class.
 #'
 #' @details The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 #' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
@@ -601,24 +601,24 @@ plot.univar_category <- function(x, na.rm = TRUE, prompt = FALSE,
 #' 
 #' @param x an object of class "univar_numeric", usually, a result of a call to univar_numeric().
 #' @param indiv logical. Select whether to display information of all variables in one plot when there are multiple selected numeric variables. 
-#' In case of FALSE, all variable information is displayed in one plot. 
+#' If FALSE, all variable information is displayed in one plot.
 #' If TRUE, the information of the individual variables is output to the individual plots. 
 #' The default is FALSE. If only one variable is selected, TRUE is applied.
-#' @param viz character. Describe what to plot visualization. "hist" draws a histogram and "boxplot" draws a boxplot. The default is "hist".
+#' @param viz character. Describe what to visualize. "hist" draws a histogram and "boxplot" draws a box plot. The default is "hist".
 #' @param stand character. Describe how to standardize the original data. 
 #' "robust" normalizes the raw data through transformation calculated by IQR and median.
 #' "minmax" normalizes the original data using minmax transformation.
-#' "zscore" standardizes the original data using z-Score transformation.
+#' "zscore" standardizes the original data using z-score transformation.
 #' "none" does not perform data transformation.
-#' he default is "none" if indiv is TRUE, and "robust" if FALSE.
+#' The default is "none" if indiv is TRUE, and "robust" if FALSE.
 #' @param prompt logical. The default value is FALSE. If there are multiple visualizations to be output, 
-#' if this argument value is TRUE, a prompt is output each time. 
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements. 
+#' and this argument value is TRUE, a prompt is output each time.
+#' @param typographic logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+#' The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).
-#' However, it does not support.
+#' However, it is not supported.
 #' @seealso \code{\link{univar_numeric}}, \code{\link{print.univar_numeric}}, \code{\link{summary.univar_numeric}}.
 #' @examples
 #' \donttest{

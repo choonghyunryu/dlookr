@@ -33,29 +33,29 @@ eda_web_report(.data, ...)
 
 \item{target}{character. target variable.}
 
-\item{output_file}{name of generated file. default is NULL.}
+\item{output_file}{name of the generated file. default is NULL.}
 
-\item{output_dir}{name of directory to generate report file. default is tempdir().}
+\item{output_dir}{name of the directory in which to generate the report file. default is tempdir().}
 
 \item{browse}{logical. choose whether to output the report results to the browser.}
 
-\item{title}{character. title of report. default is "EDA".}
+\item{title}{character. title of the report. default is "EDA".}
 
-\item{subtitle}{character. subtitle of report. default is name of data.}
+\item{subtitle}{character. subtitle of the report. default is the name of the data.}
 
-\item{author}{character. author of report. default is "dlookr".}
+\item{author}{character. author of the report. default is "dlookr".}
 
-\item{title_color}{character. color of title. default is "gray".}
+\item{title_color}{character. color of the title. default is "gray".}
 
-\item{logo_img}{character. name of logo image file on top left.}
+\item{logo_img}{character. name of the logo image file on the top left.}
 
 \item{create_date}{Date or POSIXct, character. The date on which the report is generated. 
 The default value is the result of Sys.time().}
 
-\item{theme}{character. name of theme for report. support "orange" and "blue". 
+\item{theme}{character. name of the theme for the report. supports "orange" and "blue".
 default is "orange".}
 
-\item{sample_percent}{numeric. Sample percent of data for performing EDA. 
+\item{sample_percent}{numeric. Sample percentage of data for performing EDA.
 It has a value between (0, 100]. 100 means all data, and 5 means 5\% of sample data.
 This is useful for data with a large number of observations.}
 
@@ -68,16 +68,16 @@ for the visualization. If not specified, the font defined in dlookr is applied. 
 No return value. This function only generates a report.
 }
 \description{
-The eda_web_report() report the information of exploratory 
-data analysis for object inheriting from data.frame.
+The eda_web_report() reports the information of exploratory
+data analysis for objects inheriting from data.frame.
 }
 \details{
-Generate generalized EDA report automatically.
+Generates a generalized EDA report automatically.
 This feature is useful for EDA of data with many variables, rather than data with fewer variables.
 }
 \section{Reported information}{
 
-Reported from the EDA is as follows.
+The information reported from the EDA is as follows.
 
 \itemize{
   \item Overview
@@ -104,7 +104,7 @@ Reported from the EDA is as follows.
       \item Correlation Plot
     }
   }
-  \item Target based Analysis
+  \item Target-based Analysis
   \itemize{
     \item Grouped Numerical Variables
     \item Grouped Categorical Variables

@@ -6,7 +6,7 @@
 #'
 #' @details
 #' imputate_na() creates an imputation class.
-#' The `imputation` class includes missing value position, imputed value,
+#' The `imputation` class includes the missing value position, imputed value,
 #' and method of missing value imputation, etc.
 #' The `imputation` class compares the imputed value with the original value
 #' to help determine whether the imputed value is used in the analysis.
@@ -14,23 +14,23 @@
 #' See vignette("transformation") for an introduction to these concepts.
 #'
 #' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
-#' @param xvar variable name to replace missing value.
+#' @param xvar variable name to replace missing values.
 #' @param yvar target variable.
-#' @param method method of missing values imputation.
-#' @param seed integer. the random seed used in mice. only used "mice" method.
-#' @param print_flag logical. If TRUE, mice will print running log on console.
+#' @param method method of missing value imputation.
+#' @param seed integer. the random seed used in mice. Used only when method is "mice".
+#' @param print_flag logical. If TRUE, mice will print the running log on the console.
 #' Use print_flag=FALSE for silent computation. Used only when method is "mice".
-#' @param no_attrs logical. If TRUE, return numerical variable or categorical variable. 
-#' else If FALSE, imputation class.
-#' @return An object of imputation class. or numerical variable or categorical variable. 
-#' if no_attrs is FALSE then return imputation class, else no_attrs is TRUE then return
+#' @param no_attrs logical. If TRUE, returns a numerical or categorical variable.
+#' If FALSE, returns an imputation class.
+#' @return An object of imputation class, or a numerical or categorical variable.
+#' If no_attrs is FALSE, it returns an imputation class; if no_attrs is TRUE, it returns a
 #' numerical vector or factor.
-#' Attributes of imputation class is as follows.
+#' Attributes of the imputation class are as follows.
 #' \itemize{
-#' \item var_type : the data type of predictor to replace missing value.
+#' \item var_type : the data type of the predictor to replace missing values.
 #' \item method : method of missing value imputation.
 #' \itemize{
-#'   \item predictor is numerical variable.
+#'   \item predictor is a numerical variable.
 #'   \itemize{
 #'     \item "mean" : arithmetic mean.
 #'     \item "median" : median.
@@ -39,17 +39,17 @@
 #'     \item "rpart" : Recursive Partitioning and Regression Trees.
 #'     \item "mice" : Multivariate Imputation by Chained Equations.
 #'   }
-#'   \item predictor is categorical variable.
+#'   \item predictor is a categorical variable.
 #'   \itemize{
 #'     \item "mode" : mode.
 #'     \item "rpart" : Recursive Partitioning and Regression Trees.
 #'     \item "mice" : Multivariate Imputation by Chained Equations.
 #'   }
 #' }
-#' \item na_pos : position of missing value in predictor.
-#' \item seed : the random seed used in mice. only used "mice" method.
+#' \item na_pos : position of missing values in the predictor.
+#' \item seed : the random seed used in mice. Used only when method is "mice".
 #' \item type : "missing values". type of imputation.
-#' \item message : a message tells you if the result was successful.
+#' \item message : a message that tells you whether the result was successful.
 #' \item success : Whether the imputation was successful.
 #' }
 #' @seealso \code{\link{imputate_outlier}}.
@@ -305,7 +305,7 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL,
 #'
 #' @details
 #' imputate_outlier() creates an imputation class.
-#' The `imputation` class includes missing value position, imputed value,
+#' The `imputation` class includes the missing value position, imputed value,
 #' and method of missing value imputation, etc.
 #' The `imputation` class compares the imputed value with the original value
 #' to help determine whether the imputed value is used in the analysis.
@@ -313,33 +313,33 @@ imputate_na_impl <- function(df, xvar, yvar, method, seed = NULL,
 #' See vignette("transformation") for an introduction to these concepts.
 #'
 #' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
-#' @param xvar variable name to replace missing value.
-#' @param method method of missing values imputation.
+#' @param xvar variable name to replace missing values.
+#' @param method method of missing value imputation.
 #' @param cap_ntiles numeric. Only used when method is "capping".
-#' Specifies the value of percentiles replaced by the values of lower outliers 
+#' Specifies the percentile values used to replace the lower outliers
 #' and upper outliers. The default is c(0.05, 0.95).
-#' @param no_attrs logical. If TRUE, return numerical variable or categorical variable. 
-#' else If FALSE, imputation class. 
-#' @return An object of imputation class. or numerical variable. 
-#' if no_attrs is FALSE then return imputation class, else no_attrs is TRUE then return
+#' @param no_attrs logical. If TRUE, returns a numerical or categorical variable.
+#' If FALSE, returns an imputation class.
+#' @return An object of imputation class, or a numerical variable.
+#' If no_attrs is FALSE, it returns an imputation class; if no_attrs is TRUE, it returns a
 #' numerical vector.
-#' Attributes of imputation class is as follows.
+#' Attributes of the imputation class are as follows.
 #' \itemize{
 #' \item method : method of missing value imputation.
 #' \itemize{
-#'   \item predictor is numerical variable
+#'   \item predictor is a numerical variable
 #'   \itemize{
 #'     \item "mean" : arithmetic mean
 #'     \item "median" : median
 #'     \item "mode" : mode
-#'     \item "capping" : Impute the upper outliers with 95 percentile,
-#'     and Impute the lower outliers with 5 percentile. 
+#'     \item "capping" : Impute the upper outliers with the 95th percentile,
+#'     and impute the lower outliers with the 5th percentile.
 #'     \itemize{     
 #'       \item You can change this criterion with the cap_ntiles argument.
 #'     }
 #'   }
 #' }
-#' \item outlier_pos : position of outliers in predictor.
+#' \item outlier_pos : position of outliers in the predictor.
 #' \item outliers : outliers. outliers corresponding to outlier_pos.
 #' \item type : "outliers". type of imputation.
 #' }
@@ -596,7 +596,7 @@ summary.imputation <- function(object, ...) {
 #' Visualize Information for an "imputation" Object
 #'
 #' @description
-#' Visualize two kinds of plot by attribute of `imputation` class.
+#' Visualize two kinds of plots by attribute of the `imputation` class.
 #' The imputation of a numerical variable is a density plot,
 #' and the imputation of a categorical variable is a bar plot.
 #'
@@ -606,8 +606,8 @@ summary.imputation <- function(object, ...) {
 #' 
 #' @param x an object of class "imputation", usually, a result of a call to imputate_na()
 #' or imputate_outlier().
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
+#' @param typographic logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+#' The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).

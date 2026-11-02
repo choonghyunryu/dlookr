@@ -20,12 +20,12 @@ The default is TRUE, where NA is removed and aggregated.}
 \item{x}{an object of class "univar_category", usually, a result of a call to univar_category().}
 }
 \value{
-An object of the class as individual variables based list.
-The information to examine the relationship between categorical variables is as follows each components.
+A list-based object containing individual variables.
+The information to examine the relationship between categorical variables in each component is as follows.
 
 \itemize{
 \item variable : factor. The level of the variable. 'variable' is the name of the variable.
-\item statistic : numeric. the value the chi-squared test statistic.
+\item statistic : numeric. the value of the chi-squared test statistic.
 \item p.value : numeric. the p-value for the test.
 \item df : integer. the degrees of freedom of the chi-squared test.
 }

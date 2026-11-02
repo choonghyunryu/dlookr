@@ -11,8 +11,8 @@
 
 \item{type}{character. options for visualization. Distribution("bar"), Relative Frequency by target ("cross").}
 
-\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.}
+\item{typographic}{logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.}
 
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
@@ -23,7 +23,7 @@ for the visualization. If not specified, the font defined in dlookr is applied. 
 An object of gtable class.
 }
 \description{
-It generates plots for understand distribution and  distribution by target variable using infogain_bins.
+It generates plots to understand the distribution and the distribution by target variable using infogain_bins.
 }
 \details{
 The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",

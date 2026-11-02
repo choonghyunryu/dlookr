@@ -9,38 +9,38 @@ imputate_outlier(.data, xvar, method, no_attrs, cap_ntiles)
 \arguments{
 \item{.data}{a data.frame or a \code{\link[tibble]{tbl_df}}.}
 
-\item{xvar}{variable name to replace missing value.}
+\item{xvar}{variable name to replace missing values.}
 
-\item{method}{method of missing values imputation.}
+\item{method}{method of missing value imputation.}
 
-\item{no_attrs}{logical. If TRUE, return numerical variable or categorical variable. 
-else If FALSE, imputation class.}
+\item{no_attrs}{logical. If TRUE, returns a numerical or categorical variable.
+If FALSE, returns an imputation class.}
 
 \item{cap_ntiles}{numeric. Only used when method is "capping".
-Specifies the value of percentiles replaced by the values of lower outliers 
+Specifies the percentile values used to replace the lower outliers
 and upper outliers. The default is c(0.05, 0.95).}
 }
 \value{
-An object of imputation class. or numerical variable. 
-if no_attrs is FALSE then return imputation class, else no_attrs is TRUE then return
+An object of imputation class, or a numerical variable.
+If no_attrs is FALSE, it returns an imputation class; if no_attrs is TRUE, it returns a
 numerical vector.
-Attributes of imputation class is as follows.
+Attributes of the imputation class are as follows.
 \itemize{
 \item method : method of missing value imputation.
 \itemize{
-  \item predictor is numerical variable
+  \item predictor is a numerical variable
   \itemize{
     \item "mean" : arithmetic mean
     \item "median" : median
     \item "mode" : mode
-    \item "capping" : Impute the upper outliers with 95 percentile,
-    and Impute the lower outliers with 5 percentile. 
+    \item "capping" : Impute the upper outliers with the 95th percentile,
+    and impute the lower outliers with the 5th percentile.
     \itemize{     
       \item You can change this criterion with the cap_ntiles argument.
     }
   }
 }
-\item outlier_pos : position of outliers in predictor.
+\item outlier_pos : position of outliers in the predictor.
 \item outliers : outliers. outliers corresponding to outlier_pos.
 \item type : "outliers". type of imputation.
 }
@@ -50,7 +50,7 @@ Outliers are imputed with some representative values and statistical methods.
 }
 \details{
 imputate_outlier() creates an imputation class.
-The `imputation` class includes missing value position, imputed value,
+The `imputation` class includes the missing value position, imputed value,
 and method of missing value imputation, etc.
 The `imputation` class compares the imputed value with the original value
 to help determine whether the imputed value is used in the analysis.

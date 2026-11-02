@@ -16,11 +16,11 @@ NULL.
 }
 \description{
 summary method for "performance_bin". summary metrics to evaluate the performance 
-of binomial classification model.
+of a binomial classification model.
 }
 \details{
-print() to print only binning table information of "performance_bin" objects.
-summary.performance_bin() includes general metrics and result of significance tests life follows.:
+print() prints only the binning table information of "performance_bin" objects.
+summary.performance_bin() includes general metrics and the results of significance tests as follows:
 \itemize{
   \item Binning Table : Metrics by bins.
   \itemize{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/tbl_dbi.R
 \name{eda_report.tbl_dbi}
 \alias{eda_report.tbl_dbi}
-\title{Reporting the information of EDA for table of the DBMS}
+\title{Reporting the information of EDA for a DBMS table}
 \usage{
 \method{eda_report}{tbl_dbi}(
   .data,
@@ -21,21 +21,21 @@
 
 \item{target}{target variable.}
 
-\item{output_format}{report output type. Choose either "pdf" and "html".
-"pdf" create pdf file by knitr::knit().
-"html" create html file by rmarkdown::render().}
+\item{output_format}{report output type. Choose either "pdf" or "html".
+"pdf" creates a pdf file by knitr::knit().
+"html" creates an html file by rmarkdown::render().}
 
-\item{output_file}{name of generated file. default is NULL.}
+\item{output_file}{name of the generated file. default is NULL.}
 
-\item{font_family}{character. font family name for figure in pdf.}
+\item{font_family}{character. font family name for figures in the pdf.}
 
-\item{output_dir}{name of directory to generate report file. default is tempdir().}
+\item{output_dir}{name of the directory in which to generate the report file. default is tempdir().}
 
 \item{in_database}{Specifies whether to perform in-database operations. 
-If TRUE, most operations are performed in the DBMS. if FALSE, 
-table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.}
+If TRUE, most operations are performed in the DBMS. If FALSE,
+table data is taken into R and operated on in memory. in_database = TRUE is not yet supported.}
 
-\item{collect_size}{a integer. The number of data samples from the DBMS to R. 
+\item{collect_size}{an integer. The number of data samples from the DBMS to R.
 Applies only if in_database = FALSE.}
 
 \item{...}{arguments to be passed to methods.}
@@ -44,15 +44,15 @@ Applies only if in_database = FALSE.}
 No return value. This function only generates a report.
 }
 \description{
-The eda_report() report the information of Exploratory
-data analysis for object inheriting from the DBMS table through tbl_dbi
+The eda_report() reports the information of exploratory
+data analysis for objects inheriting from the DBMS table through tbl_dbi.
 }
 \details{
-Generate generalized data EDA reports automatically.
-You can choose to output to pdf and html files.
-This is useful for EDA a data frame with a large number of variables
+Generates generalized EDA reports automatically.
+You can choose to output the report as a pdf or html file.
+This is more useful for performing EDA on a data frame with a large number of variables
 than data with a small number of variables.
-For pdf output, Korean Gothic font must be installed in Korean operating system.
+For pdf output, the Korean Gothic font must be installed on a Korean operating system.
 }
 \section{Reported information}{
 
@@ -81,7 +81,7 @@ The EDA process will report the following information:
       \item Correlation Plot of Numerical Variables
     }
   }
-  \item Target based Analysis
+  \item Target-based Analysis
   \itemize{
     \item Grouped Descriptive Statistics
     \itemize{

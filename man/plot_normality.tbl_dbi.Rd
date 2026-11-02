@@ -21,7 +21,7 @@
 
 \item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
-Positive values select variables; negative values to drop variables.
+Positive values select variables; negative values drop variables.
 If the first expression is negative, plot_normality() will automatically
 start with all variables.
 These arguments are automatically quoted and evaluated in a context where column names
@@ -31,10 +31,10 @@ They support unquoting and splicing.
 See vignette("EDA") for an introduction to these concepts.}
 
 \item{in_database}{Specifies whether to perform in-database operations. 
-If TRUE, most operations are performed in the DBMS. if FALSE, 
-table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.}
+If TRUE, most operations are performed in the DBMS. If FALSE,
+table data is taken into R and operated on in memory. in_database = TRUE is not yet supported.}
 
-\item{collect_size}{a integer. The number of data samples from the DBMS to R. 
+\item{collect_size}{an integer. The number of data samples from the DBMS to R.
 Applies only if in_database = FALSE.}
 
 \item{left}{character. Specifies the data transformation method to draw the histogram in the 
@@ -45,43 +45,43 @@ lower right corner. The default is "sqrt".}
 
 \item{col}{a color to be used to fill the bars. The default is "steelblue".}
 
-\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization.}
+\item{typographic}{logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.}
 
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
 }
 \description{
-The plot_normality() visualize distribution information
-for normality test of the numerical(INTEGER, NUMBER, etc.) column of 
+The plot_normality() visualizes distribution information
+for the normality test of the numerical (INTEGER, NUMBER, etc.) columns of
 the DBMS table through tbl_dbi.
 }
 \details{
-The scope of the visualization is the provide a distribution information.
+The scope of the visualization is to provide distribution information.
 Since the plot is drawn for each variable, if you specify more than
-one variable in the ... argument, the specified number of plots are drawn.
+one variable in the ... argument, the specified number of plots is drawn.
 
-The argument values that left and right can have are as follows.:
+The argument values that left and right can have are as follows:
 
 \itemize{
   \item "log" : log transformation. log(x)
   \item "log+1" : log transformation. log(x + 1). Used for values that contain 0.
   \item "sqrt" : square root transformation.
   \item "1/x" : 1 / x transformation
-  \item "x^2" : x square transformation
-  \item "x^3" : x^3 square transformation
-  \item "Box-Cox" : Box-Box transformation
+  \item "x^2" : x squared transformation
+  \item "x^3" : x cubed transformation
+  \item "Box-Cox" : Box-Cox transformation
   \item "Yeo-Johnson" : Yeo-Johnson transformation
 }
 }
 \section{Distribution information}{
 
-The plot derived from the numerical data visualization is as follows.
+The plots derived from the numerical data visualization are as follows.
 
 \itemize{
 \item histogram by original data
 \item q-q plot by original data
-\item histogram by log transfer data
-\item histogram by square root transfer data
+\item histogram by log-transformed data
+\item histogram by square root-transformed data
 }
 
 The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",

@@ -16,7 +16,7 @@ extract(x)
 factor.
 }
 \description{
-The extract() extract binned variable from "bins", "optimal_bins" class object.
+The extract() extracts a binned variable from a "bins" or "optimal_bins" class object.
 }
 \details{
 The "bins" and "optimal_bins" class objects use the summary() and plot() functions to diagnose 

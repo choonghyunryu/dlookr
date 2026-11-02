@@ -11,17 +11,17 @@
 
 \item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
-Positive values select variables; negative values to drop variables.
+Positive values select variables; negative values drop variables.
 If the first expression is negative, diagnose() will automatically start with all variables.
 These arguments are automatically quoted and evaluated in a context where column names
 represent column positions.
 They support unquoting and splicing.}
 
-\item{in_database}{a logical. Specifies whether to perform in-database operations. 
-If TRUE, most operations are performed in the DBMS. if FALSE, 
-table data is taken in R and operated in-memory.}
+\item{in_database}{logical. Specifies whether to perform in-database operations.
+If TRUE, most operations are performed in the DBMS. If FALSE,
+table data is taken into R and operated on in memory.}
 
-\item{collect_size}{a integer. The number of data samples from the DBMS to R. 
+\item{collect_size}{an integer. The number of data samples from the DBMS to R.
 Applies only if in_database = FALSE.}
 }
 \value{
@@ -29,18 +29,18 @@ An object of tbl_df.
 }
 \description{
 The diagnose() produces information for diagnosing the quality of 
-the column of the DBMS table through tbl_dbi.
+the columns of the DBMS table through tbl_dbi.
 }
 \details{
-The scope of data quality diagnosis is information on missing values
+The scope of the data quality diagnosis is information on missing values
 and unique value information. Data quality diagnosis can determine variables
 that require missing value processing. Also, the unique value information can
-determine the variable to be removed from the data analysis. 
+determine the variables to be removed from the data analysis.
 You can use grouped_df as the group_by() function.
 }
 \section{Diagnostic information}{
 
-The information derived from the data diagnosis is as follows.:
+The information derived from the data diagnosis is as follows:
 
 \itemize{
 \item variables : column names
@@ -52,7 +52,7 @@ or to select a variable to be corrected or removed through data diagnosis.
 \item missing_count : number of missing values
 \item missing_percent : percentage of missing values
 \item unique_count : number of unique values
-\item unique_rate : ratio of unique values. unique_count / number of observation
+\item unique_rate : ratio of unique values. unique_count / number of observations
 }
 
 See vignette("diagonosis") for an introduction to these concepts.

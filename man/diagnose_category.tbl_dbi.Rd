@@ -18,7 +18,7 @@
 
 \item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
-Positive values select variables; negative values to drop variables.
+Positive values select variables; negative values drop variables.
 If the first expression is negative, diagnose_category() will automatically
 start with all variables.
 These arguments are automatically quoted and evaluated in a context where
@@ -28,19 +28,19 @@ They support unquoting and splicing.}
 \item{top}{an integer. Specifies the upper top rank to extract.
 Default is 10.}
 
-\item{type}{a character string specifying how result are extracted.
-Default is "rank" that extract top n ranks by decreasing frequency. 
+\item{type}{a character string specifying how results are extracted.
+The default is "rank", which extracts the top n ranks by decreasing frequency.
 In this case, if there are ties in rank, more rows than the number specified 
 by the top argument are returned.
-"n" extract top n rows by decreasing frequency. 
+"n" extracts the top n rows by decreasing frequency.
 If there are too many rows to be returned because there are too many ties, 
 you can adjust the returned rows appropriately by using "n".}
 
 \item{in_database}{Specifies whether to perform in-database operations. 
-If TRUE, most operations are performed in the DBMS. if FALSE, 
-table data is taken in R and operated in-memory.}
+If TRUE, most operations are performed in the DBMS. If FALSE,
+table data is taken into R and operated on in memory.}
 
-\item{collect_size}{a integer. The number of data samples from the DBMS to R. 
+\item{collect_size}{an integer. The number of data samples from the DBMS to R.
 Applies only if in_database = FALSE.}
 }
 \value{
@@ -48,13 +48,13 @@ an object of tbl_df.
 }
 \description{
 The diagnose_category() produces information for 
-diagnosing the quality of the character(CHAR, VARCHAR, VARCHAR2, etc.) 
-column of the DBMS table through tbl_dbi.
+diagnosing the quality of the character (CHAR, VARCHAR, VARCHAR2, etc.)
+columns of the DBMS table through tbl_dbi.
 }
 \details{
 The scope of the diagnosis is the occupancy status of the levels
 in categorical data. If a certain level of occupancy is close to 100%,
-then the removal of this variable in the forecast model will have to be
+then the removal of this variable from the forecast model will have to be
 considered. Also, if the occupancy of all levels is close to 0%, this
 variable is likely to be an identifier.
 You can use grouped_df as the group_by() function.
@@ -66,9 +66,9 @@ The information derived from the categorical data diagnosis is as follows.
 \itemize{
 \item variables : variable names
 \item levels: level names
-\item N : number of observation
-\item freq : number of observation at the levels
-\item ratio : percentage of observation at the levels
+\item N : number of observations
+\item freq : number of observations at the levels
+\item ratio : percentage of observations at the levels
 \item rank : rank of occupancy ratio of levels
 }
 

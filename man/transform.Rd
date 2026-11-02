@@ -13,13 +13,13 @@ transform(
 \arguments{
 \item{x}{numeric vector for transformation.}
 
-\item{method}{method of transformations.}
+\item{method}{method of transformation.}
 }
 \value{
 An object of transform class.
-Attributes of transform class is as follows.
+Attributes of the transform class are as follows.
 \itemize{
-  \item method : method of transformation data.
+  \item method : method of data transformation.
   \itemize{
     \item Standardization
       \itemize{
@@ -32,22 +32,22 @@ Attributes of transform class is as follows.
       \item "log+1" : log transformation. log(x + 1). Used for values that contain 0.
       \item "sqrt" : square root transformation.
       \item "1/x" : 1 / x transformation
-      \item "x^2" : x square transformation
-      \item "x^3" : x^3 square transformation
-      \item "Box-Cox" : Box-Box transformation
+      \item "x^2" : x squared transformation
+      \item "x^3" : x cubed transformation
+      \item "Box-Cox" : Box-Cox transformation
       \item "Yeo-Johnson" : Yeo-Johnson transformation
     }
   }
 }
 }
 \description{
-Performs variable transformation for standardization and resolving skewness
+Performs variable transformations for standardization and resolving skewness
 of numerical variables.
 }
 \details{
-transform() creates an transform class.
-The `transform` class includes original data, transformed data,
-and method of transformation.
+transform() creates a transform class.
+The `transform` class includes the original data, transformed data,
+and the method of transformation.
 
 See vignette("transformation") for an introduction to these concepts.
 }

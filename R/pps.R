@@ -1,6 +1,6 @@
 #' Compute Predictive Power Score
 #'
-#' @description The pps() compute PPS(Predictive Power Score) 
+#' @description The pps() computes the PPS (Predictive Power Score)
 #' for exploratory data analysis.
 #'
 #' @details The PPS is an asymmetric, data-type-agnostic score that can detect 
@@ -20,24 +20,24 @@
 #' \item model_score : the score of the predictive model on the evaluation metric
 #' \item cv_folds : how many cross-validation folds were used
 #' \item seed : the seed that was set
-#' \item algorithm : text shwoing what algorithm was used
+#' \item algorithm : text showing what algorithm was used
 #' \item model_type : text showing whether classification or regression was used
 #' }
 #'
 #' @param .data a target_df or data.frame.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' If the first expression is negative, describe() will automatically start with all variables.
 #' These arguments are automatically quoted and evaluated in a context where column names
 #' represent column positions.
 #' They support unquoting and splicing.
 #' @param do_parallel logical. whether to perform score calls in parallel.
-#' @param n_cores	integer. number of cores to use, defaults to maximum cores - 1.
+#' @param n_cores integer. number of cores to use, defaults to maximum cores - 1.
 #' @param cv_folds integer. number of cross-validation folds.
 #'
-#' @return An object of the class as pps.
-#' Attributes of pps class is as follows.
+#' @return An object of the pps class.
+#' Attributes of the pps class are as follows.
 #' \itemize{
 #' \item type : type of pps
 #' \item target : name of target variable
@@ -275,19 +275,19 @@ summary.pps <- function(object, ...) {
 }
 
 
-#' Visualize Information for an "pps" Object
+#' Visualize Information for a "pps" Object
 #'
 #' @description
-#' Visualize by attribute of `pps` class.
-#' The plot of a PPS(Predictive Power Score) is a bar plot or tile plot by PPS.
+#' Visualize by attribute of the `pps` class.
+#' The plot of a PPS (Predictive Power Score) is a bar plot or tile plot by PPS.
 #' 
 #' @details The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 #' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
 #' use it after loading the Google font with import_google_font().
 #' 
 #' @param x an object of class "pps", usually, a result of a call to pps().
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
+#' @param typographic logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+#' The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @return A ggplot2 object.

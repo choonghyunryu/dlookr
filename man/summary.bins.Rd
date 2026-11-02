@@ -10,21 +10,21 @@
 \method{print}{bins}(x, ...)
 }
 \arguments{
-\item{object}{an object of "bins" and "optimal_bins",
+\item{object}{an object of "bins" or "optimal_bins",
 usually, a result of a call to binning().}
 
 \item{...}{further arguments passed to or from other methods.}
 
-\item{x}{an object of class "bins" and "optimal_bins",
+\item{x}{an object of class "bins" or "optimal_bins",
 usually, a result of a call to binning().}
 }
 \value{
 The function summary.bins() computes and returns a data.frame of summary statistics of the
-binned given in object. Variables of data frame is as follows.
+binned variable given in object. Variables of the data frame are as follows.
 \itemize{
 \item levels : levels of factor.
 \item freq : frequency of levels.
-\item rate : relative frequency of levels. it is not percentage.
+\item rate : relative frequency of levels. It is not a percentage.
 }
 }
 \description{
@@ -32,8 +32,8 @@ summary method for "bins" and "optimal_bins".
 }
 \details{
 print.bins() prints the information of "bins" and "optimal_bins" objects nicely.
-This includes frequency of bins, binned type, and number of bins.
-summary.bins() returns data.frame including frequency and relative frequency for each levels(bins).
+This includes the frequency of bins, the binned type, and the number of bins.
+summary.bins() returns a data.frame including the frequency and relative frequency for each level (bin).
 
 See vignette("transformation") for an introduction to these concepts.
 }

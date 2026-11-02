@@ -6,7 +6,7 @@
 \alias{dlookr-package}
 \title{dlookr: Tools for Data Diagnosis, Exploration, Transformation}
 \description{
-dlookr provides data diagnosis, data exploration and transformation of variables
+dlookr provides data diagnosis, data exploration, and transformation of variables
 during data analysis.
 }
 \details{
@@ -16,10 +16,10 @@ It has three main goals:
 \item When data is acquired, it is possible to judge whether data is erroneous
 or to select a variable to be corrected or removed through data diagnosis.
 \item Understand the distribution of data in the EDA process. It can also
-understand the relationship between target variables and predictor variables
+help you understand the relationship between target variables and predictor variables
 for the prediction model.
-\item Imputes missing value and outlier to standardization and resolving skewness.
-And, To convert a continuous variable to a categorical variable, bin the continuous variables.
+\item Imputes missing values and outliers, standardizes data, and resolves skewness.
+It also bins continuous variables to convert them into categorical variables.
 }
 
 To learn more about dlookr, start with the vignettes:

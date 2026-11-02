@@ -5,11 +5,11 @@ target_by <- function(.data, target, ...) {
 }
 
 
-#' Target by one variables
+#' Target by one variable
 #'
 #' @description
 #' In the data analysis, a target_df class is created to identify the
-#' relationship between the target variable and the other variable.
+#' relationship between the target variable and the other variables.
 #'
 #' @details
 #' Data analysis proceeds with the purpose of predicting target variables that
@@ -20,7 +20,7 @@ target_by <- function(.data, target, ...) {
 #'  Based on the derived relationships, analysts create scenarios for data analysis.
 #'
 #'  target_by() inherits the \code{\link[dplyr]{grouped_df}} class and returns a target_df
-#'  class containing information about the target variable and the variable.
+#'  class containing information about the target variable and the other variables.
 #'
 #' See vignette("EDA") for an introduction to these concepts.
 #'
@@ -28,9 +28,9 @@ target_by <- function(.data, target, ...) {
 #' @param target target variable.
 #' @param ... arguments to be passed to methods.
 #' @return an object of target_df class.
-#' Attributes of target_df class is as follows.
+#' Attributes of the target_df class are as follows.
 #' \itemize{
-#' \item type_y : the data type of target variable.
+#' \item type_y : the data type of the target variable.
 #' }
 #' @seealso \code{\link{relate}}.
 #' @examples
@@ -128,7 +128,7 @@ target_by_impl <- function(.data, target) {
 #'     }
 #'     \item predictor: numerical variable
 #'     \itemize{
-#'       \item descriptive statistic for each levels and total observation.
+#'       \item descriptive statistics for each level and the total observations.
 #'     }
 #'   }
 #'   \item target variable: numerical variable
@@ -145,19 +145,19 @@ target_by_impl <- function(.data, target) {
 #' }
 #'
 #' @section Descriptive statistic information:
-#' The information derived from the numerical data describe is as follows.
+#' The information derived from the numerical data description is as follows.
 #'
 #' \itemize{
 #' \item mean : arithmetic average
 #' \item sd : standard deviation
-#' \item se_mean : standrd error mean. sd/sqrt(n)
-#' \item IQR : interqurtle range (Q3-Q1)
+#' \item se_mean : standard error of the mean. sd/sqrt(n)
+#' \item IQR : interquartile range (Q3-Q1)
 #' \item skewness : skewness
 #' \item kurtosis : kurtosis
 #' \item p25 : Q1. 25\% percentile
 #' \item p50 : median. 50\% percentile
 #' \item p75 : Q3. 75\% percentile
-#' \item p01, p05, p10, p20, p30 : 1\%, 5\%, 20\%, 30\% percentiles
+#' \item p01, p05, p10, p20, p30 : 1\%, 5\%, 10\%, 20\%, 30\% percentiles
 #' \item p40, p60, p70, p80 : 40\%, 60\%, 70\%, 80\% percentiles
 #' \item p90, p95, p99, p100 : 90\%, 95\%, 99\%, 100\% percentiles
 #' }
@@ -165,15 +165,15 @@ target_by_impl <- function(.data, target) {
 #' @param .data a target_df.
 #' @param predictor variable of interest. predictor.
 #'
-#' See vignette("relate") for an introduction to these concepts.
+#' See vignette("EDA") for an introduction to these concepts.
 #'
-#' @return An object of the class as relate.
-#' Attributes of relate class is as follows.
+#' @return An object of the relate class.
+#' Attributes of the relate class are as follows.
 #' \itemize{
 #' \item target : name of target variable
 #' \item predictor : name of predictor
 #' \item model : levels of binned value.
-#' \item raw : table_df with two variables target and predictor.
+#' \item raw : table_df with two variables, target and predictor.
 #' }
 #' @seealso \code{\link{print.relate}}, \code{\link{plot.relate}}.
 #'
@@ -455,10 +455,10 @@ print.relate <- function(x, ...) {
 }
 
 
-#' Visualize Information for an "relate" Object
+#' Visualize Information for a "relate" Object
 #'
 #' @description
-#' Visualize four kinds of plot by attribute of relate class.
+#' Visualize four kinds of plots by attribute of the relate class.
 #'
 #' @details The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 #' "NanumSquare", "Noto Sans Korean". If you want to use a different font, 
@@ -470,12 +470,12 @@ print.relate <- function(x, ...) {
 #' the numerical variables.
 #' @param hex_thres an integer. Use only when the target and predictor are numeric variables.
 #' Used when the number of observations is large. 
-#' Specify the threshold of the observations to draw hexabin plots that are not scatterplots. 
+#' Specify the threshold of the observations to draw hexbin plots instead of scatter plots.
 #' The default value is 1000.
-#' @param pal Color palette to paint hexabin. Use only when the target and predictor are numeric variables.
+#' @param pal Color palette to paint the hexbin plot. Use only when the target and predictor are numeric variables.
 #' Applied only when the number of observations is greater than hex_thres.
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
+#' @param typographic logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+#' The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @param ... arguments to be passed to methods, such as graphical parameters (see par).

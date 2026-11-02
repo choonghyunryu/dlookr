@@ -4,7 +4,7 @@
 #'
 #' @param ... arguments to be passed to \code{pagedown::\link[pagedown]{html_paged}}.
 #' @references \url{https://pagedown.rbind.io}
-#' @return document of markdown format.
+#' @return An R Markdown output format.
 #' @import pagedown
 #' @export dlookr_orange_paged
 #'

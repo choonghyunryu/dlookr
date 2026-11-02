@@ -17,7 +17,7 @@ pps(.data, ...)
 
 \item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
-Positive values select variables; negative values to drop variables.
+Positive values select variables; negative values drop variables.
 If the first expression is negative, describe() will automatically start with all variables.
 These arguments are automatically quoted and evaluated in a context where column names
 represent column positions.
@@ -30,8 +30,8 @@ They support unquoting and splicing.}
 \item{n_cores}{integer. number of cores to use, defaults to maximum cores - 1.}
 }
 \value{
-An object of the class as pps.
-Attributes of pps class is as follows.
+An object of the pps class.
+Attributes of the pps class are as follows.
 \itemize{
 \item type : type of pps
 \item target : name of target variable
@@ -39,7 +39,7 @@ Attributes of pps class is as follows.
 }
 }
 \description{
-The pps() compute PPS(Predictive Power Score) 
+The pps() computes the PPS (Predictive Power Score)
 for exploratory data analysis.
 }
 \details{
@@ -61,7 +61,7 @@ The information of PPS is as follows.
 \item model_score : the score of the predictive model on the evaluation metric
 \item cv_folds : how many cross-validation folds were used
 \item seed : the seed that was set
-\item algorithm : text shwoing what algorithm was used
+\item algorithm : text showing what algorithm was used
 \item model_type : text showing whether classification or regression was used
 }
 }

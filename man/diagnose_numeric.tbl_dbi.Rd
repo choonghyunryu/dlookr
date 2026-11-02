@@ -11,7 +11,7 @@
 
 \item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
-Positive values select variables; negative values to drop variables.
+Positive values select variables; negative values drop variables.
 If the first expression is negative, diagnose_numeric() will automatically
 start with all variables.
 These arguments are automatically quoted and evaluated in a context where column names
@@ -19,10 +19,10 @@ represent column positions.
 They support unquoting and splicing.}
 
 \item{in_database}{Specifies whether to perform in-database operations. 
-If TRUE, most operations are performed in the DBMS. if FALSE, 
-table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.}
+If TRUE, most operations are performed in the DBMS. If FALSE,
+table data is taken into R and operated on in memory. in_database = TRUE is not yet supported.}
 
-\item{collect_size}{a integer. The number of data samples from the DBMS to R. 
+\item{collect_size}{an integer. The number of data samples from the DBMS to R.
 Applies only if in_database = FALSE.}
 }
 \value{
@@ -30,15 +30,15 @@ an object of tbl_df.
 }
 \description{
 The diagnose_numeric() produces information
-for diagnosing the quality of the numerical(INTEGER, NUMBER, etc.) column 
+for diagnosing the quality of the numerical (INTEGER, NUMBER, etc.) columns
 of the DBMS table through tbl_dbi.
 }
 \details{
-The scope of the diagnosis is the calculate a statistic that can be
+The scope of the diagnosis is to calculate statistics that can be
 used to understand the distribution of numerical data.
 min, Q1, mean, median, Q3, max can be used to estimate the distribution
-of data. If the number of zero or minus is large, it is necessary to suspect
-the error of the data. If the number of outliers is large, a strategy of
+of data. If the number of zeros or negative values is large, it is necessary to suspect
+errors in the data. If the number of outliers is large, a strategy of
 eliminating or replacing outliers is needed.
 You can use grouped_df as the group_by() function.
 }
@@ -49,13 +49,13 @@ The information derived from the numerical data diagnosis is as follows.
 \itemize{
 \item variables : variable names
 \item min : minimum
-\item Q1 : 25 percentile
+\item Q1 : 25th percentile
 \item mean : arithmetic average
-\item median : median. 50 percentile
-\item Q3 : 75 percentile
+\item median : median. 50th percentile
+\item Q3 : 75th percentile
 \item max : maximum
 \item zero : count of zero values
-\item minus : count of minus values
+\item minus : count of negative values
 \item outlier : count of outliers
 }
 

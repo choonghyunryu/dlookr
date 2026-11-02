@@ -20,9 +20,9 @@
 \arguments{
 \item{object}{an object of class "compare_category", usually, a result of a call to compare_category().}
 
-\item{method}{character. Specifies the type of information to be aggregated. "table" create contingency table, 
-"relative" create relative contingency table, and "chisq" create information of chi-square test. 
-and "all" aggregates all information. The default is "all"}
+\item{method}{character. Specifies the type of information to be aggregated. "table" creates a contingency table,
+"relative" creates a relative contingency table, and "chisq" creates information of the chi-square test.
+and "all" aggregates all information. The default is "all".}
 
 \item{pos}{integer. Specifies the pair of variables to be summarized by index. 
 The default is NULL, which aggregates all variable pairs.}
@@ -34,7 +34,7 @@ The default is TRUE, where NA is removed and aggregated.}
 The default value is FALSE, so no marginal value is added.}
 
 \item{verbose}{logical. Specifies whether to output additional information during the calculation process.
-The default is to output information as TRUE. In this case, the function returns the value with invisible(). 
+The default is TRUE, which outputs the information. In this case, the function returns the value with invisible().
 If FALSE, the value is returned by return().}
 
 \item{...}{further arguments passed to or from other methods.}

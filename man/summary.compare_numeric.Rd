@@ -21,19 +21,19 @@
 
 \item{method}{character. Select statistics to be aggregated. 
 "correlation" calculates the Pearson's correlation coefficient, and "linear" returns the aggregation of the linear model.
-"all" returns both information. 
+"all" returns both types of information.
 However, the difference between summary.compare_numeric() and compare_numeric() is that only cases that are greater than the specified threshold are returned.
 "correlation" returns only cases with a correlation coefficient greater than the thres_corr argument value. 
 "linear" returns only cases with R^2 greater than the thres_rs argument.}
 
-\item{thres_corr}{numeric. This is the correlation coefficient threshold of the correlation coefficient information to be returned. 
+\item{thres_corr}{numeric. The correlation coefficient threshold of the correlation coefficient information to be returned.
 The default is 0.3.}
 
-\item{thres_rs}{numeric. R^2 threshold of linear model summaries information to return. 
+\item{thres_rs}{numeric. R^2 threshold of the linear model summary information to be returned.
 The default is 0.1.}
 
 \item{verbose}{logical. Specifies whether to output additional information during the calculation process.
-The default is to output information as TRUE. In this case, the function returns the value with invisible(). 
+The default is TRUE, which outputs the information. In this case, the function returns the value with invisible().
 If FALSE, the value is returned by return().}
 
 \item{...}{further arguments passed to or from other methods.}
@@ -41,8 +41,8 @@ If FALSE, the value is returned by return().}
 \item{x}{an object of class "compare_numeric", usually, a result of a call to compare_numeric().}
 }
 \value{
-An object of the class as compare based list.
-The information to examine the relationship between numerical variables is as follows each components.
+A list-based object of the compare class.
+The information to examine the relationship between numerical variables in each component is as follows.
 - correlation component : Pearson's correlation coefficient.
 \itemize{
 \item var1 : factor. The level of the first variable to compare. 'var1' is the name of the first variable to be compared.
@@ -59,12 +59,12 @@ The information to examine the relationship between numerical variables is as fo
 \item sigma : double. The square root of the estimated residual variance.
 \item statistic : double. F-statistic.
 \item p.value : double. p-value from the F test, describing whether the full regression is significant.
-\item df : integer degrees of freedom.
+\item df : integer. degrees of freedom.
 \item logLik : double. the log-likelihood of data under the model.
 \item AIC : double. the Akaike Information Criterion.
 \item BIC : double. the Bayesian Information Criterion.
 \item deviance : double. deviance.
-\item df.residual : integer residual degrees of freedom.
+\item df.residual : integer. residual degrees of freedom.
 }
 }
 \description{

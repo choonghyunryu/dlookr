@@ -31,7 +31,7 @@ plot_hist_numeric(.data, ...)
 
 \item{\dots}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
-Positive values select variables; negative values to drop variables.
+Positive values select variables; negative values drop variables.
 If the first expression is negative, plot_hist_numeric() will automatically
 start with all variables.
 These arguments are automatically quoted and evaluated in a context where
@@ -43,19 +43,19 @@ They support unquoting and splicing.}
 \item{each}{logical. Specifies whether to draw multiple plots on one screen. 
 The default is FALSE, which draws multiple plots on one screen.}
 
-\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.}
+\item{typographic}{logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.}
 
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
 }
 \description{
-The plot_hist_numeric() to visualizes the histogram of numeric data or 
+The plot_hist_numeric() visualizes the histogram of numeric data or
 relationship to specific categorical data.
 }
 \details{
-The histogram helps determine whether the distribution of a numeric variable. 
-plot_hist_numeric() shows box plots of several numeric variables 
+The histogram helps to understand the distribution of a numeric variable.
+plot_hist_numeric() shows histograms of several numeric variables
 on one screen. This function can also display a histogram for each level of a specific 
 categorical variable.
 The bin-width is set to the Freedman-Diaconis rule (2 * IQR(x) / length(x)^(1/3))

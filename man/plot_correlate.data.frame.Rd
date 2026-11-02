@@ -17,7 +17,7 @@
 
 \item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
-Positive values select variables; negative values to drop variables.
+Positive values select variables; negative values drop variables.
 If the first expression is negative, plot_correlate() will automatically start with all variables.
 These arguments are automatically quoted and evaluated in a context where column names
 represent column positions.
@@ -28,8 +28,8 @@ See vignette("EDA") for an introduction to these concepts.}
 \item{method}{a character string indicating which correlation coefficient (or covariance) is 
 to be computed. One of "pearson" (default), "kendall", or "spearman": can be abbreviated.}
 
-\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.}
+\item{typographic}{logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.}
 
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
@@ -38,16 +38,16 @@ for the visualization. If not specified, the font defined in dlookr is applied. 
 a ggplot2 object.
 }
 \description{
-The plot_correlate() visualize correlation plot
-for find relationship between two numerical variables.
+The plot_correlate() visualizes a correlation plot
+to find the relationship between two numerical variables.
 }
 \details{
-The scope of the visualization is the provide a correlation information.
+The scope of the visualization is to provide correlation information.
 Since the plot is drawn for each variable, if you specify more than
-one variable in the ... argument, the specified number of plots are drawn.
+one variable in the ... argument, the specified number of plots is drawn.
 
-The direction of the diagonal is top-left to bottom-right. and color of the 
-cells is 'red' to -1, 'blue' to 1.
+The direction of the diagonal is top-left to bottom-right, and the color of the
+cells is 'red' for -1 and 'blue' for 1.
 
 The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 "NanumSquare", "Noto Sans Korean". If you want to use a different font, 

@@ -1,14 +1,14 @@
-#' Reporting the information of data diagnosis for table of the DBMS with html
+#' Reporting the information of data diagnosis for a DBMS table with html
 #'
-#' @description The diagnose_web_report() report the information for diagnosing
+#' @description The diagnose_web_report() reports the information for diagnosing
 #' the quality of the DBMS table through tbl_dbi
 #'
-#' @details Generate generalized data diagnostic reports automatically.
-#' This is useful for diagnosing a data frame with a large number of variables
+#' @details Generates generalized data diagnostic reports automatically.
+#' This is more useful for diagnosing a data frame with a large number of variables
 #' than data with a small number of variables.
 #' 
 #' @section Reported information:
-#' Reported from the data diagnosis is as follows.
+#' The information reported from the data diagnosis is as follows.
 #'
 #' \itemize{
 #'   \item Overview
@@ -47,30 +47,30 @@
 #'
 #' @param .data a tbl_dbi.
 #' @param in_database Specifies whether to perform in-database operations. 
-#' If TRUE, most operations are performed in the DBMS. if FALSE, 
-#' table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.
-#' @param collect_size a integer. The number of data samples from the DBMS to R. 
+#' If TRUE, most operations are performed in the DBMS. If FALSE,
+#' table data is taken into R and operated on in memory. in_database = TRUE is not yet supported.
+#' @param collect_size an integer. The number of data samples from the DBMS to R.
 #' Applies only if in_database = FALSE.
-#' @param output_file name of generated file. default is NULL.
-#' @param output_dir name of directory to generate report file. default is tempdir().
+#' @param output_file name of the generated file. default is NULL.
+#' @param output_dir name of the directory in which to generate the report file. default is tempdir().
 #' @param browse logical. choose whether to output the report results to the browser.
-#' @param title character. title of report. default is "Data Diagnosis Report".
-#' @param subtitle character. subtitle of report. default is name of data.
-#' @param author character. author of report. default is "dlookr".
-#' @param title_color character. color of title. default is "gray".
+#' @param title character. title of the report. default is "Data Diagnosis Report".
+#' @param subtitle character. subtitle of the report. default is the name of the data.
+#' @param author character. author of the report. default is "dlookr".
+#' @param title_color character. color of the title. default is "gray".
 #' @param thres_uniq_cat numeric. threshold to use for "Unique Values - 
 #' Categorical Variables". default is 0.5.
 #' @param thres_uniq_num numeric. threshold to use for "Unique Values - 
 #' Numerical Variables". default is 5.
 #' @param create_date Date or POSIXct, character. The date on which the report is generated. 
 #' The default value is the result of Sys.time().
-#' @param logo_img character. name of logo image on top right.
-#' @param theme character. name of theme for report. support "orange" and "blue". 
+#' @param logo_img character. name of the logo image on the top right.
+#' @param theme character. name of the theme for the report. supports "orange" and "blue".
 #' default is "orange".
-#' @param sample_percent numeric. Sample percent of data for performing Diagnosis. 
+#' @param sample_percent numeric. Sample percentage of data for performing the diagnosis.
 #' It has a value between (0, 100]. 100 means all data, and 5 means 5\% of sample data.
 #' This is useful for data with a large number of observations.
-#' @param as_factor logical. whether to convert to factor when importing a character type variable from DBMS table into R.
+#' @param as_factor logical. whether to convert to factor when importing a character type variable from a DBMS table into R.
 #' @param ... arguments to be passed to methods.
 #' 
 #' @return No return value. This function only generates a report.
@@ -140,22 +140,22 @@ diagnose_web_report.tbl_dbi <- function(.data, output_file = NULL, output_dir = 
 }
 
 
-#' Reporting the information of data diagnosis for table of the DBMS
+#' Reporting the information of data diagnosis for a DBMS table
 #'
-#' @description The diagnose_paged_report() paged report the information 
+#' @description The diagnose_paged_report() generates a paged report of the information
 #' for diagnosing the quality of the DBMS table through tbl_dbi.
 #'
-#' @details Generate generalized data diagnostic reports automatically.
-#' You can choose to output to pdf and html files.
-#' This is useful for diagnosing a data frame with a large number of variables
+#' @details Generates generalized data diagnostic reports automatically.
+#' You can choose to output the report as a pdf or html file.
+#' This is more useful for diagnosing a data frame with a large number of variables
 #' than data with a small number of variables.
 #' 
-#' Create an  PDF through the Chrome DevTools Protocol. If you want to create PDF, 
+#' Create a PDF through the Chrome DevTools Protocol. If you want to create a PDF,
 #' Google Chrome or Microsoft Edge (or Chromium on Linux) must be installed prior to using this function.
 #' If not installed, you must use output_format = "html".
 #' 
 #' @section Reported information:
-#' Reported from the data diagnosis is as follows.
+#' The information reported from the data diagnosis is as follows.
 #'
 #' \itemize{
 #'   \item Overview
@@ -196,25 +196,25 @@ diagnose_web_report.tbl_dbi <- function(.data, output_file = NULL, output_dir = 
 #'
 #' @param .data a tbl_dbi.
 #' @param in_database Specifies whether to perform in-database operations. 
-#' If TRUE, most operations are performed in the DBMS. if FALSE, 
-#' table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.
-#' @param collect_size a integer. The number of data samples from the DBMS to R. 
+#' If TRUE, most operations are performed in the DBMS. If FALSE,
+#' table data is taken into R and operated on in memory. in_database = TRUE is not yet supported.
+#' @param collect_size an integer. The number of data samples from the DBMS to R.
 #' Applies only if in_database = FALSE.
-#' @param output_format report output type. Choose either "pdf" and "html".
-#' "pdf" create pdf file by rmarkdown::render() and pagedown::chrome_print(). so, 
-#' you needed Chrome web browser on computer.  
-#' "html" create html file by rmarkdown::render().
-#' @param output_file name of generated file. default is NULL.
-#' @param output_dir name of directory to generate report file. default is tempdir().
+#' @param output_format report output type. Choose either "pdf" or "html".
+#' "pdf" creates a pdf file by rmarkdown::render() and pagedown::chrome_print(). So,
+#' you need the Chrome web browser on your computer.
+#' "html" creates an html file by rmarkdown::render().
+#' @param output_file name of the generated file. default is NULL.
+#' @param output_dir name of the directory in which to generate the report file. default is tempdir().
 #' @param browse logical. choose whether to output the report results to the browser.
-#' @param title character. title of report. default is "Data Diagnosis Report".
-#' @param subtitle character. subtitle of report. default is name of data.
-#' @param author character. author of report. default is "dlookr".
-#' @param abstract_title character. abstract title of report. default is 
+#' @param title character. title of the report. default is "Data Diagnosis Report".
+#' @param subtitle character. subtitle of the report. default is the name of the data.
+#' @param author character. author of the report. default is "dlookr".
+#' @param abstract_title character. abstract title of the report. default is
 #' "Report Overview".
-#' @param abstract character. abstract of report. 
-#' @param title_color character. color of title. default is "white".
-#' @param subtitle_color character. color of title. default is "gold".
+#' @param abstract character. abstract of the report.
+#' @param title_color character. color of the title. default is "white".
+#' @param subtitle_color character. color of the subtitle. default is "gold".
 #' @param thres_uniq_cat numeric. threshold to use for "Unique Values - 
 #' Categorical Variables". default is 0.5.
 #' @param thres_uniq_num numeric. threshold to use for "Unique Values - 
@@ -222,19 +222,19 @@ diagnose_web_report.tbl_dbi <- function(.data, output_file = NULL, output_dir = 
 #' @param create_date Date or POSIXct, character. The date on which the report is generated. 
 #' The default value is the result of Sys.time().
 #' @param flag_content_missing logical. whether to output "Missing Value" information. 
-#' the default value is TRUE, and the information is displayed.
+#' The default value is TRUE, and the information is displayed.
 #' @param flag_content_zero logical. whether to output "Zero Values" information. 
-#' the default value is TRUE, and the information is displayed.
+#' The default value is TRUE, and the information is displayed.
 #' @param flag_content_minus logical. whether to output "Minus Values" information. 
-#' the default value is TRUE, and the information is displayed.
-#' @param cover_img character. name of cover image. 
-#' @param logo_img character. name of logo image on top right.
-#' @param theme character. name of theme for report. support "orange" and "blue". 
+#' The default value is TRUE, and the information is displayed.
+#' @param cover_img character. name of the cover image.
+#' @param logo_img character. name of the logo image on the top right.
+#' @param theme character. name of the theme for the report. supports "orange" and "blue".
 #' default is "orange".
-#' @param sample_percent numeric. Sample percent of data for performing Diagnosis. 
+#' @param sample_percent numeric. Sample percentage of data for performing the diagnosis.
 #' It has a value between (0, 100]. 100 means all data, and 5 means 5\% of sample data.
 #' This is useful for data with a large number of observations.
-#' @param as_factor logical. whether to convert to factor when importing a character type variable from DBMS table into R.
+#' @param as_factor logical. whether to convert to factor when importing a character type variable from a DBMS table into R.
 #' @param ... arguments to be passed to pagedown::chrome_print().
 #' 
 #' @return No return value. This function only generates a report.
@@ -324,16 +324,16 @@ diagnose_paged_report.tbl_dbi <- function(.data, output_format = c("pdf", "html"
 }  
   
 
-#' Reporting the information of EDA for table of the DBMS with html
+#' Reporting the information of EDA for a DBMS table with html
 #'
-#' @description The eda_web_report() report the information of exploratory 
+#' @description The eda_web_report() reports the information of exploratory
 #' data analysis for the DBMS table through tbl_dbi
 #'
-#' @details Generate generalized EDA report automatically.
+#' @details Generates a generalized EDA report automatically.
 #' This feature is useful for EDA of data with many variables, rather than data with fewer variables.
 #' 
 #' @section Reported information:
-#' Reported from the EDA is as follows.
+#' The information reported from the EDA is as follows.
 #'
 #' \itemize{
 #'   \item Overview
@@ -360,7 +360,7 @@ diagnose_paged_report.tbl_dbi <- function(.data, output_format = c("pdf", "html"
 #'       \item Correlation Plot
 #'     }
 #'   }
-#'   \item Target based Analysis
+#'   \item Target-based Analysis
 #'   \itemize{
 #'     \item Grouped Numerical Variables
 #'     \item Grouped Categorical Variables
@@ -371,26 +371,26 @@ diagnose_paged_report.tbl_dbi <- function(.data, output_format = c("pdf", "html"
 #' @param .data a tbl_dbi.
 #' @param target character. target variable.
 #' @param in_database Specifies whether to perform in-database operations. 
-#' If TRUE, most operations are performed in the DBMS. if FALSE, 
-#' table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.
-#' @param collect_size a integer. The number of data samples from the DBMS to R. 
+#' If TRUE, most operations are performed in the DBMS. If FALSE,
+#' table data is taken into R and operated on in memory. in_database = TRUE is not yet supported.
+#' @param collect_size an integer. The number of data samples from the DBMS to R.
 #' Applies only if in_database = FALSE.
-#' @param output_file name of generated file. default is NULL.
-#' @param output_dir name of directory to generate report file. default is tempdir().
+#' @param output_file name of the generated file. default is NULL.
+#' @param output_dir name of the directory in which to generate the report file. default is tempdir().
 #' @param browse logical. choose whether to output the report results to the browser.
-#' @param title character. title of report. default is "EDA Report".
-#' @param subtitle character. subtitle of report. default is name of data.
-#' @param author character. author of report. default is "dlookr".
-#' @param title_color character. color of title. default is "gray".
+#' @param title character. title of the report. default is "EDA Report".
+#' @param subtitle character. subtitle of the report. default is the name of the data.
+#' @param author character. author of the report. default is "dlookr".
+#' @param title_color character. color of the title. default is "gray".
 #' @param create_date Date or POSIXct, character. The date on which the report is generated. 
 #' The default value is the result of Sys.time().
-#' @param logo_img character. name of logo image on top right.
-#' @param theme character. name of theme for report. support "orange" and "blue". 
+#' @param logo_img character. name of the logo image on the top right.
+#' @param theme character. name of the theme for the report. supports "orange" and "blue".
 #' default is "orange".
-#' @param sample_percent numeric. Sample percent of data for performing EDA. 
+#' @param sample_percent numeric. Sample percentage of data for performing EDA.
 #' It has a value between (0, 100]. 100 means all data, and 5 means 5\% of sample data.
 #' This is useful for data with a large number of observations.
-#' @param as_factor logical. whether to convert to factor when importing a character type variable from DBMS table into R.
+#' @param as_factor logical. whether to convert to factor when importing a character type variable from a DBMS table into R.
 #' @param ... arguments to be passed to methods.
 #' 
 #' @return No return value. This function only generates a report.
@@ -457,16 +457,16 @@ eda_web_report.tbl_dbi <- function(.data, target = NULL, output_file = NULL,
 }
 
 
-#' Reporting the information of EDA for table of the DBMS
+#' Reporting the information of EDA for a DBMS table
 #'
-#' @description The eda_paged_report() paged report the information for EDA of the DBMS table through tbl_dbi
+#' @description The eda_paged_report() generates a paged report of the information for EDA of the DBMS table through tbl_dbi.
 #'
-#' @details Generate generalized EDA report automatically. 
-#' You can choose to output to pdf and html files.
+#' @details Generates a generalized EDA report automatically.
+#' You can choose to output the report as a pdf or html file.
 #' This feature is useful for EDA of data with many variables, 
 #' rather than data with fewer variables.
 #' 
-#' Create an  PDF through the Chrome DevTools Protocol. If you want to create PDF, 
+#' Create a PDF through the Chrome DevTools Protocol. If you want to create a PDF,
 #' Google Chrome or Microsoft Edge (or Chromium on Linux) must be installed prior to using this function.
 #' If not installed, you must use output_format = "html".
 #' 
@@ -501,7 +501,7 @@ eda_web_report.tbl_dbi <- function(.data, target = NULL, output_file = NULL,
 #'       \item Correlation Plot
 #'     }
 #'   }
-#'   \item Target based Analysis
+#'   \item Target-based Analysis
 #'   \itemize{
 #'     \item Grouped Numerical Variables
 #'     \item Grouped Categorical Variables
@@ -512,35 +512,35 @@ eda_web_report.tbl_dbi <- function(.data, target = NULL, output_file = NULL,
 #' @param .data a tbl_dbi.
 #' @param target character. target variable.
 #' @param in_database Specifies whether to perform in-database operations. 
-#' If TRUE, most operations are performed in the DBMS. if FALSE, 
-#' table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.
-#' @param collect_size a integer. The number of data samples from the DBMS to R. 
+#' If TRUE, most operations are performed in the DBMS. If FALSE,
+#' table data is taken into R and operated on in memory. in_database = TRUE is not yet supported.
+#' @param collect_size an integer. The number of data samples from the DBMS to R.
 #' Applies only if in_database = FALSE.
-#' @param output_format report output type. Choose either "pdf" and "html".
-#' "pdf" create pdf file by rmarkdown::render() and pagedown::chrome_print(). so, 
-#' you needed Chrome web browser on computer.  
-#' "html" create html file by rmarkdown::render().
-#' @param output_file name of generated file. default is NULL.
-#' @param output_dir name of directory to generate report file. default is tempdir().
+#' @param output_format report output type. Choose either "pdf" or "html".
+#' "pdf" creates a pdf file by rmarkdown::render() and pagedown::chrome_print(). So,
+#' you need the Chrome web browser on your computer.
+#' "html" creates an html file by rmarkdown::render().
+#' @param output_file name of the generated file. default is NULL.
+#' @param output_dir name of the directory in which to generate the report file. default is tempdir().
 #' @param browse logical. choose whether to output the report results to the browser.
-#' @param title character. title of report. default is "Data Diagnosis Report".
-#' @param subtitle character. subtitle of report. default is name of data.
-#' @param author character. author of report. default is "dlookr".
-#' @param abstract_title character. abstract title of report. default is 
+#' @param title character. title of the report. default is "Data Diagnosis Report".
+#' @param subtitle character. subtitle of the report. default is the name of the data.
+#' @param author character. author of the report. default is "dlookr".
+#' @param abstract_title character. abstract title of the report. default is
 #' "Report Overview".
-#' @param abstract character. abstract of report. 
-#' @param title_color character. color of title. default is "black".
-#' @param subtitle_color character. color of title. default is "blue".
+#' @param abstract character. abstract of the report.
+#' @param title_color character. color of the title. default is "black".
+#' @param subtitle_color character. color of the subtitle. default is "blue".
 #' @param create_date Date or POSIXct, character. The date on which the report is generated. 
 #' The default value is the result of Sys.time().
-#' @param cover_img character. name of cover image. 
-#' @param logo_img character. name of logo image on top right.
-#' @param theme character. name of theme for report. support "orange" and "blue". 
+#' @param cover_img character. name of the cover image.
+#' @param logo_img character. name of the logo image on the top right.
+#' @param theme character. name of the theme for the report. supports "orange" and "blue".
 #' default is "orange".
-#' @param sample_percent numeric. Sample percent of data for performing EDA. 
+#' @param sample_percent numeric. Sample percentage of data for performing EDA.
 #' It has a value between (0, 100]. 100 means all data, and 5 means 5\% of sample data.
 #' This is useful for data with a large number of observations.
-#' @param as_factor logical. whether to convert to factor when importing a character type variable from DBMS table into R.
+#' @param as_factor logical. whether to convert to factor when importing a character type variable from a DBMS table into R.
 #' @param ... arguments to be passed to pagedown::chrome_print().
 #' 
 #' @return No return value. This function only generates a report.

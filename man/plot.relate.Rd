@@ -2,7 +2,7 @@
 % Please edit documentation in R/target_by.R
 \name{plot.relate}
 \alias{plot.relate}
-\title{Visualize Information for an "relate" Object}
+\title{Visualize Information for a "relate" Object}
 \usage{
 \method{plot}{relate}(
   x,
@@ -23,14 +23,14 @@ the numerical variables.}
 
 \item{hex_thres}{an integer. Use only when the target and predictor are numeric variables.
 Used when the number of observations is large. 
-Specify the threshold of the observations to draw hexabin plots that are not scatterplots. 
+Specify the threshold of the observations to draw hexbin plots instead of scatter plots.
 The default value is 1000.}
 
-\item{pal}{Color palette to paint hexabin. Use only when the target and predictor are numeric variables.
+\item{pal}{Color palette to paint the hexbin plot. Use only when the target and predictor are numeric variables.
 Applied only when the number of observations is greater than hex_thres.}
 
-\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.}
+\item{typographic}{logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.}
 
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
@@ -39,7 +39,7 @@ for the visualization. If not specified, the font defined in dlookr is applied. 
 only applies when the model argument is TRUE, and is used for ... of the plot.lm() function.}
 }
 \description{
-Visualize four kinds of plot by attribute of relate class.
+Visualize four kinds of plots by attribute of the relate class.
 }
 \details{
 The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",

@@ -2,7 +2,7 @@
 % Please edit documentation in R/univariate.R
 \name{plot.univar_category}
 \alias{plot.univar_category}
-\title{Visualize Information for an "univar_category" Object}
+\title{Visualize Information for a "univar_category" Object}
 \usage{
 \method{plot}{univar_category}(
   x,
@@ -16,14 +16,14 @@
 \arguments{
 \item{x}{an object of class "univar_category", usually, a result of a call to univar_category().}
 
-\item{na.rm}{logical. Specifies whether to include NA when plotting bar plot. 
-The default is FALSE, so plot NA.}
+\item{na.rm}{logical. Specifies whether to include NA when plotting a bar plot.
+The default is FALSE, so NA is plotted.}
 
 \item{prompt}{logical. The default value is FALSE. If there are multiple visualizations to be output, 
-if this argument value is TRUE, a prompt is output each time.}
+and this argument value is TRUE, a prompt is output each time.}
 
-\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.}
+\item{typographic}{logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.}
 
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
@@ -32,7 +32,7 @@ for the visualization. If not specified, the font defined in dlookr is applied. 
 However, it does not support all parameters.}
 }
 \description{
-Visualize mosaics plot by attribute of univar_category class.
+Visualize a bar plot by attribute of the univar_category class.
 }
 \details{
 The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",

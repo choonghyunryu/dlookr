@@ -14,14 +14,14 @@ compare_category(.data, ...)
 
 \item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
-Positive values select variables; negative values to drop variables.
+Positive values select variables; negative values drop variables.
 These arguments are automatically quoted and evaluated in a context where column names
 represent column positions.
 They support unquoting and splicing.}
 }
 \value{
-An object of the class as compare based list.
-The information to examine the relationship between categorical variables is as follows each components.
+A list-based object of the compare class.
+The information to examine the relationship between categorical variables in each component is as follows.
 
 \itemize{
 \item var1 : factor. The level of the first variable to compare. 'var1' is the name of the first variable to be compared.
@@ -33,17 +33,17 @@ The information to examine the relationship between categorical variables is as 
 }
 }
 \description{
-The compare_category() compute information to examine the relationship 
+The compare_category() computes information to examine the relationship
 between categorical variables.
 }
 \details{
 It is important to understand the relationship between categorical variables in EDA.
 compare_category() compares relations by pair combination of all categorical variables. 
-and return compare_category class that based list object.
+and returns a list-based object of the compare_category class.
 }
 \section{Attributes of return object}{
 
-Attributes of compare_category class is as follows.
+Attributes of the compare_category class are as follows.
 \itemize{
 \item variables : character. List of variables selected for comparison.
 \item combination : matrix. It consists of pairs of variables to compare.

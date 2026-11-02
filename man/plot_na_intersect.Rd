@@ -2,7 +2,7 @@
 % Please edit documentation in R/missing.R
 \name{plot_na_intersect}
 \alias{plot_na_intersect}
-\title{Plot the combination variables that is include missing value}
+\title{Plot the combinations of variables that include missing values}
 \usage{
 plot_na_intersect(
   x,
@@ -19,20 +19,20 @@ plot_na_intersect(
 
 \item{only_na}{logical. The default value is FALSE. 
 If TRUE, only variables containing missing values are selected for visualization. 
-If FALSE, included complete case.}
+If FALSE, complete cases are included.}
 
 \item{n_intersacts}{integer. Specifies the number of combinations of variables including missing values. 
 The combination of variables containing many missing values is chosen first.}
 
 \item{n_vars}{integer. Specifies the number of variables that contain missing values to be visualized. 
-The default value is NULL, which visualizes variables containing all missing values. 
+The default value is NULL, which visualizes all variables containing missing values.
 If this value is greater than the number of variables containing missing values, 
 all variables containing missing values are visualized. Variables containing many missing values are chosen first.}
 
 \item{main}{character. Main title.}
 
-\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.}
+\item{typographic}{logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.}
 
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
@@ -41,15 +41,15 @@ for the visualization. If not specified, the font defined in dlookr is applied. 
 an object of gtable class.
 }
 \description{
-Visualize the combinations of missing value across cases.
+Visualize the combinations of missing values across cases.
 }
 \details{
 The visualization consists of four parts.
-The bottom left, which is the most basic, visualizes the case of cross(intersection)-combination. 
+The bottom left, which is the most basic, visualizes the case of cross (intersection) combinations.
 The x-axis is the variable including the missing value, and the y-axis represents the case of a combination of variables.
-And on the marginal of the two axes, the frequency of the case is expressed as a bar graph. 
+On the margins of the two axes, the frequency of each case is expressed as a bar graph.
 Finally, the visualization at the top right expresses the number of variables including missing values in the data set, 
-and the number of observations including missing values and complete cases .
+and the number of observations including missing values and complete cases.
 
 The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
 "NanumSquare", "Noto Sans Korean". If you want to use a different font, 

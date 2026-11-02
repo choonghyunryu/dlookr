@@ -28,15 +28,15 @@ eda_paged_report <- function(.data, ...) {
 
 #' Reporting the information of data diagnosis with html
 #'
-#' @description The diagnose_web_report() report the information for diagnosing
+#' @description The diagnose_web_report() reports the information for diagnosing
 #' the quality of the data.
 #'
-#' @details Generate generalized data diagnostic reports automatically.
-#' This is useful for diagnosing a data frame with a large number of variables
+#' @details Generates generalized data diagnostic reports automatically.
+#' This is more useful for diagnosing a data frame with a large number of variables
 #' than data with a small number of variables.
 #' 
 #' @section Reported information:
-#' Reported from the data diagnosis is as follows.
+#' The information reported from the data diagnosis is as follows.
 #'
 #' \itemize{
 #'   \item Overview
@@ -76,23 +76,23 @@ eda_paged_report <- function(.data, ...) {
 #' @seealso \code{\link{diagnose_web_report.tbl_dbi}}.
 #'
 #' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
-#' @param output_file name of generated file. default is NULL.
-#' @param output_dir name of directory to generate report file. default is tempdir().
+#' @param output_file name of the generated file. default is NULL.
+#' @param output_dir name of the directory in which to generate the report file. default is tempdir().
 #' @param browse logical. choose whether to output the report results to the browser.
-#' @param title character. title of report. default is "Data Diagnosis Report".
-#' @param subtitle character. subtitle of report. default is name of data.
-#' @param author character. author of report. default is "dlookr".
-#' @param title_color character. color of title. default is "gray".
+#' @param title character. title of the report. default is "Data Diagnosis Report".
+#' @param subtitle character. subtitle of the report. default is the name of the data.
+#' @param author character. author of the report. default is "dlookr".
+#' @param title_color character. color of the title. default is "gray".
 #' @param thres_uniq_cat numeric. threshold to use for "Unique Values - 
 #' Categorical Variables". default is 0.5.
 #' @param thres_uniq_num numeric. threshold to use for "Unique Values - 
 #' Numerical Variables". default is 5.
 #' @param create_date Date or POSIXct, character. The date on which the report is generated. 
 #' The default value is the result of Sys.time().
-#' @param logo_img character. name of logo image file on top left.
-#' @param theme character. name of theme for report. support "orange" and "blue". 
+#' @param logo_img character. name of the logo image file on the top left.
+#' @param theme character. name of the theme for the report. supports "orange" and "blue".
 #' default is "orange".
-#' @param sample_percent numeric. Sample percent of data for performing Diagnosis. 
+#' @param sample_percent numeric. Sample percentage of data for performing the diagnosis.
 #' It has a value between (0, 100]. 100 means all data, and 5 means 5\% of sample data.
 #' This is useful for data with a large number of observations.
 #' @param is_tbl_dbi logical. whether .data is a tbl_dbi object.
@@ -257,20 +257,20 @@ diagnose_web_report.data.frame <- function(.data, output_file = NULL, output_dir
 
 #' Reporting the information of data diagnosis
 #'
-#' @description The diagnose_paged_report() paged report the information 
+#' @description The diagnose_paged_report() generates a paged report of the information
 #' for diagnosing the quality of the data.
 #'
-#' @details Generate generalized data diagnostic reports automatically.
-#' You can choose to output to pdf and html files.
-#' This is useful for diagnosing a data frame with a large number of variables
+#' @details Generates generalized data diagnostic reports automatically.
+#' You can choose to output the report as a pdf or html file.
+#' This is more useful for diagnosing a data frame with a large number of variables
 #' than data with a small number of variables.
 #' 
-#' Create an  PDF through the Chrome DevTools Protocol. If you want to create PDF, 
+#' Create a PDF through the Chrome DevTools Protocol. If you want to create a PDF,
 #' Google Chrome or Microsoft Edge (or Chromium on Linux) must be installed prior to using this function.
 #' If not installed, you must use output_format = "html".
 #' 
 #' @section Reported information:
-#' Reported from the data diagnosis is as follows.
+#' The information reported from the data diagnosis is as follows.
 #'
 #' \itemize{
 #'   \item Overview
@@ -314,21 +314,21 @@ diagnose_web_report.data.frame <- function(.data, output_file = NULL, output_dir
 #' use it after loading the Google font with import_google_font(). 
 #'
 #' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
-#' @param output_format report output type. Choose either "pdf" and "html".
-#' "pdf" create pdf file by rmarkdown::render() and pagedown::chrome_print(). so, 
-#' you needed Chrome web browser on computer.  
-#' "html" create html file by rmarkdown::render().
-#' @param output_file name of generated file. default is NULL.
-#' @param output_dir name of directory to generate report file. default is tempdir().
+#' @param output_format report output type. Choose either "pdf" or "html".
+#' "pdf" creates a pdf file by rmarkdown::render() and pagedown::chrome_print(). So,
+#' you need the Chrome web browser on your computer.
+#' "html" creates an html file by rmarkdown::render().
+#' @param output_file name of the generated file. default is NULL.
+#' @param output_dir name of the directory in which to generate the report file. default is tempdir().
 #' @param browse logical. choose whether to output the report results to the browser.
-#' @param title character. title of report. default is "Data Diagnosis Report".
-#' @param subtitle character. subtitle of report. default is name of data.
-#' @param author character. author of report. default is "dlookr".
-#' @param abstract_title character. abstract title of report. default is 
+#' @param title character. title of the report. default is "Data Diagnosis Report".
+#' @param subtitle character. subtitle of the report. default is the name of the data.
+#' @param author character. author of the report. default is "dlookr".
+#' @param abstract_title character. abstract title of the report. default is
 #' "Report Overview".
-#' @param abstract character. abstract of report. 
-#' @param title_color character. color of title. default is "white".
-#' @param subtitle_color character. color of subtitle. default is "gold".
+#' @param abstract character. abstract of the report.
+#' @param title_color character. color of the title. default is "white".
+#' @param subtitle_color character. color of the subtitle. default is "gold".
 #' @param thres_uniq_cat numeric. threshold to use for "Unique Values - 
 #' Categorical Variables". default is 0.5.
 #' @param thres_uniq_num numeric. threshold to use for "Unique Values - 
@@ -336,16 +336,16 @@ diagnose_web_report.data.frame <- function(.data, output_file = NULL, output_dir
 #' @param create_date Date or POSIXct, character. The date on which the report is generated. 
 #' The default value is the result of Sys.time().
 #' @param flag_content_missing logical. whether to output "Missing Value" information. 
-#' the default value is TRUE, and the information is displayed.
+#' The default value is TRUE, and the information is displayed.
 #' @param flag_content_zero logical. whether to output "Zero Values" information. 
-#' the default value is TRUE, and the information is displayed.
+#' The default value is TRUE, and the information is displayed.
 #' @param flag_content_minus logical. whether to output "Minus Values" information. 
-#' the default value is TRUE, and the information is displayed.
-#' @param cover_img character. name of cover image. 
-#' @param logo_img character. name of logo image file on top right.
-#' @param theme character. name of theme for report. support "orange" and "blue". 
+#' The default value is TRUE, and the information is displayed.
+#' @param cover_img character. name of the cover image.
+#' @param logo_img character. name of the logo image file on the top right.
+#' @param theme character. name of the theme for the report. supports "orange" and "blue".
 #' default is "orange".
-#' @param sample_percent numeric. Sample percent of data for performing Diagnosis. 
+#' @param sample_percent numeric. Sample percentage of data for performing the diagnosis.
 #' It has a value between (0, 100]. 100 means all data, and 5 means 5\% of sample data.
 #' This is useful for data with a large number of observations.
 #' @param is_tbl_dbi logical. whether .data is a tbl_dbi object.
@@ -588,14 +588,14 @@ diagnose_paged_report.data.frame <- function(.data, output_format = c("pdf", "ht
 
 #' Reporting the information of EDA with html
 #'
-#' @description The eda_web_report() report the information of exploratory 
-#' data analysis for object inheriting from data.frame.
+#' @description The eda_web_report() reports the information of exploratory
+#' data analysis for objects inheriting from data.frame.
 #'
-#' @details Generate generalized EDA report automatically.
+#' @details Generates a generalized EDA report automatically.
 #' This feature is useful for EDA of data with many variables, rather than data with fewer variables.
 #' 
 #' @section Reported information:
-#' Reported from the EDA is as follows.
+#' The information reported from the EDA is as follows.
 #'
 #' \itemize{
 #'   \item Overview
@@ -622,7 +622,7 @@ diagnose_paged_report.data.frame <- function(.data, output_format = c("pdf", "ht
 #'       \item Correlation Plot
 #'     }
 #'   }
-#'   \item Target based Analysis
+#'   \item Target-based Analysis
 #'   \itemize{
 #'     \item Grouped Numerical Variables
 #'     \item Grouped Categorical Variables
@@ -636,19 +636,19 @@ diagnose_paged_report.data.frame <- function(.data, output_format = c("pdf", "ht
 #' 
 #' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param target character. target variable.
-#' @param output_file name of generated file. default is NULL.
-#' @param output_dir name of directory to generate report file. default is tempdir().
+#' @param output_file name of the generated file. default is NULL.
+#' @param output_dir name of the directory in which to generate the report file. default is tempdir().
 #' @param browse logical. choose whether to output the report results to the browser.
-#' @param title character. title of report. default is "EDA".
-#' @param subtitle character. subtitle of report. default is name of data.
-#' @param author character. author of report. default is "dlookr".
-#' @param title_color character. color of title. default is "gray".
+#' @param title character. title of the report. default is "EDA".
+#' @param subtitle character. subtitle of the report. default is the name of the data.
+#' @param author character. author of the report. default is "dlookr".
+#' @param title_color character. color of the title. default is "gray".
 #' @param create_date Date or POSIXct, character. The date on which the report is generated. 
 #' The default value is the result of Sys.time().
-#' @param logo_img character. name of logo image file on top left.
-#' @param theme character. name of theme for report. support "orange" and "blue". 
+#' @param logo_img character. name of the logo image file on the top left.
+#' @param theme character. name of the theme for the report. supports "orange" and "blue".
 #' default is "orange".
-#' @param sample_percent numeric. Sample percent of data for performing EDA. 
+#' @param sample_percent numeric. Sample percentage of data for performing EDA.
 #' It has a value between (0, 100]. 100 means all data, and 5 means 5\% of sample data.
 #' This is useful for data with a large number of observations.
 #' @param is_tbl_dbi logical. whether .data is a tbl_dbi object.
@@ -829,14 +829,14 @@ eda_web_report.data.frame <- function(.data, target = NULL, output_file = NULL,
 
 #' Reporting the information of EDA
 #'
-#' @description The eda_paged_report() paged report the information for EDA.
+#' @description The eda_paged_report() generates a paged report of the information for EDA.
 #'
-#' @details Generate generalized EDA report automatically. 
-#' You can choose to output to pdf and html files.
+#' @details Generates a generalized EDA report automatically.
+#' You can choose to output the report as a pdf or html file.
 #' This feature is useful for EDA of data with many variables, 
 #' rather than data with fewer variables.
 #' 
-#' Create an  PDF through the Chrome DevTools Protocol. If you want to create PDF, 
+#' Create a PDF through the Chrome DevTools Protocol. If you want to create a PDF,
 #' Google Chrome or Microsoft Edge (or Chromium on Linux) must be installed prior to using this function.
 #' If not installed, you must use output_format = "html".
 #' 
@@ -871,7 +871,7 @@ eda_web_report.data.frame <- function(.data, target = NULL, output_file = NULL,
 #'       \item Correlation Plot
 #'     }
 #'   }
-#'   \item Target based Analysis
+#'   \item Target-based Analysis
 #'   \itemize{
 #'     \item Grouped Numerical Variables
 #'     \item Grouped Categorical Variables
@@ -885,28 +885,28 @@ eda_web_report.data.frame <- function(.data, target = NULL, output_file = NULL,
 #' 
 #' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param target character. target variable.
-#' @param output_format report output type. Choose either "pdf" and "html".
-#' "pdf" create pdf file by rmarkdown::render() and pagedown::chrome_print(). so, 
-#' you needed Chrome web browser on computer.  
-#' "html" create html file by rmarkdown::render().
-#' @param output_file name of generated file. default is NULL.
-#' @param output_dir name of directory to generate report file. default is tempdir().
+#' @param output_format report output type. Choose either "pdf" or "html".
+#' "pdf" creates a pdf file by rmarkdown::render() and pagedown::chrome_print(). So,
+#' you need the Chrome web browser on your computer.
+#' "html" creates an html file by rmarkdown::render().
+#' @param output_file name of the generated file. default is NULL.
+#' @param output_dir name of the directory in which to generate the report file. default is tempdir().
 #' @param browse logical. choose whether to output the report results to the browser.
-#' @param title character. title of report. default is "Data Diagnosis Report".
-#' @param subtitle character. subtitle of report. default is name of data.
-#' @param author character. author of report. default is "dlookr".
-#' @param abstract_title character. abstract title of report. default is 
+#' @param title character. title of the report. default is "Data Diagnosis Report".
+#' @param subtitle character. subtitle of the report. default is the name of the data.
+#' @param author character. author of the report. default is "dlookr".
+#' @param abstract_title character. abstract title of the report. default is
 #' "Report Overview".
-#' @param abstract character. abstract of report. 
-#' @param title_color character. color of title. default is "black".
-#' @param subtitle_color character. color of subtitle. default is "blue".
+#' @param abstract character. abstract of the report.
+#' @param title_color character. color of the title. default is "black".
+#' @param subtitle_color character. color of the subtitle. default is "blue".
 #' @param create_date Date or POSIXct, character. The date on which the report is generated. 
 #' The default value is the result of Sys.time().
-#' @param cover_img character. name of cover image. 
-#' @param logo_img character. name of logo image file on top right.
-#' @param theme character. name of theme for report. support "orange" and "blue". 
+#' @param cover_img character. name of the cover image.
+#' @param logo_img character. name of the logo image file on the top right.
+#' @param theme character. name of the theme for the report. supports "orange" and "blue".
 #' default is "orange".
-#' @param sample_percent numeric. Sample percent of data for performing Diagnosis. 
+#' @param sample_percent numeric. Sample percentage of data for performing the diagnosis.
 #' It has a value between (0, 100]. 100 means all data, and 5 means 5\% of sample data.
 #' This is useful for data with a large number of observations.
 #' @param is_tbl_dbi logical. whether .data is a tbl_dbi object.
@@ -1126,11 +1126,11 @@ eda_paged_report.data.frame <- function(.data, target = NULL, output_format = c(
 
 #' Reporting the information of transformation with html
 #'
-#' @description The transformation_web_report() report the information of 
-#' transform numerical variables for object inheriting from data.frame.
+#' @description The transformation_web_report() reports the information of
+#' transforming numerical variables for objects inheriting from data.frame.
 #'
-#' @details Generate transformation reports automatically. 
-#' This is useful for Binning a data frame with a large number of variables 
+#' @details Generates transformation reports automatically.
+#' This is more useful for binning a data frame with a large number of variables
 #' than data with a small number of variables.
 #' 
 #' @section Reported information:
@@ -1159,19 +1159,19 @@ eda_paged_report.data.frame <- function(.data, target = NULL, output_format = c(
 #'
 #' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param target character. target variable.
-#' @param output_file name of generated file. default is NULL.
-#' @param output_dir name of directory to generate report file. default is tempdir().
+#' @param output_file name of the generated file. default is NULL.
+#' @param output_dir name of the directory in which to generate the report file. default is tempdir().
 #' @param browse logical. choose whether to output the report results to the browser.
-#' @param title character. title of report. default is "EDA Report".
-#' @param subtitle character. subtitle of report. default is name of data.
-#' @param author character. author of report. default is "dlookr".
-#' @param title_color character. color of title. default is "gray".
+#' @param title character. title of the report. default is "EDA Report".
+#' @param subtitle character. subtitle of the report. default is the name of the data.
+#' @param author character. author of the report. default is "dlookr".
+#' @param title_color character. color of the title. default is "gray".
 #' @param create_date Date or POSIXct, character. The date on which the report is generated. 
 #' The default value is the result of Sys.time().
-#' @param logo_img character. name of logo image file on top left.
-#' @param theme character. name of theme for report. support "orange" and "blue". 
+#' @param logo_img character. name of the logo image file on the top left.
+#' @param theme character. name of the theme for the report. supports "orange" and "blue".
 #' default is "orange".
-#' @param sample_percent numeric. Sample percent of data for performing EDA. 
+#' @param sample_percent numeric. Sample percentage of data for performing EDA.
 #' It has a value between (0, 100]. 100 means all data, and 5 means 5\% of sample data.
 #' This is useful for data with a large number of observations.
 #' @param base_family character. The name of the base font family to use 
@@ -1335,19 +1335,19 @@ transformation_web_report <- function(.data, target = NULL, output_file = NULL,
 
 #' Reporting the information of transformation
 #'
-#' @description The eda_paged_report() paged report the information for data transformatiom.
+#' @description The transformation_paged_report() generates a paged report of the information for data transformation.
 #'
-#' @details Generate transformation reports automatically. 
-#' You can choose to output to pdf and html files.
-#' This is useful for Binning a data frame with a large number of variables 
+#' @details Generates transformation reports automatically.
+#' You can choose to output the report as a pdf or html file.
+#' This is more useful for binning a data frame with a large number of variables
 #' than data with a small number of variables.
 #' 
-#' Create an  PDF through the Chrome DevTools Protocol. If you want to create PDF, 
+#' Create a PDF through the Chrome DevTools Protocol. If you want to create a PDF,
 #' Google Chrome or Microsoft Edge (or Chromium on Linux) must be installed prior to using this function.
 #' If not installed, you must use output_format = "html".
 #' 
 #' @section Reported information:
-#' TThe transformation process will report the following information:
+#' The transformation process will report the following information:
 #'
 #' \itemize{
 #'   \item Overview
@@ -1371,28 +1371,28 @@ transformation_web_report <- function(.data, target = NULL, output_file = NULL,
 #' 
 #' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param target character. target variable.
-#' @param output_format report output type. Choose either "pdf" and "html".
-#' "pdf" create pdf file by rmarkdown::render() and pagedown::chrome_print(). so, 
-#' you needed Chrome web browser on computer.  
-#' "html" create html file by rmarkdown::render().
-#' @param output_file name of generated file. default is NULL.
-#' @param output_dir name of directory to generate report file. default is tempdir().
+#' @param output_format report output type. Choose either "pdf" or "html".
+#' "pdf" creates a pdf file by rmarkdown::render() and pagedown::chrome_print(). So,
+#' you need the Chrome web browser on your computer.
+#' "html" creates an html file by rmarkdown::render().
+#' @param output_file name of the generated file. default is NULL.
+#' @param output_dir name of the directory in which to generate the report file. default is tempdir().
 #' @param browse logical. choose whether to output the report results to the browser.
-#' @param title character. title of report. default is "Data Diagnosis Report".
-#' @param subtitle character. subtitle of report. default is name of data.
-#' @param author character. author of report. default is "dlookr".
-#' @param abstract_title character. abstract title of report. default is 
+#' @param title character. title of the report. default is "Data Diagnosis Report".
+#' @param subtitle character. subtitle of the report. default is the name of the data.
+#' @param author character. author of the report. default is "dlookr".
+#' @param abstract_title character. abstract title of the report. default is
 #' "Report Overview".
-#' @param abstract character. abstract of report. 
-#' @param title_color character. color of title. default is "white".
-#' @param subtitle_color character. color of subtitle. default is "tomato1".
+#' @param abstract character. abstract of the report.
+#' @param title_color character. color of the title. default is "white".
+#' @param subtitle_color character. color of the subtitle. default is "tomato1".
 #' @param create_date Date or POSIXct, character. The date on which the report is generated. 
 #' The default value is the result of Sys.time().
-#' @param cover_img character. name of cover image. 
-#' @param logo_img character. name of logo image file on top right.
-#' @param theme character. name of theme for report. support "orange" and "blue". 
+#' @param cover_img character. name of the cover image.
+#' @param logo_img character. name of the logo image file on the top right.
+#' @param theme character. name of the theme for the report. supports "orange" and "blue".
 #' default is "orange".
-#' @param sample_percent numeric. Sample percent of data for performing Diagnosis. 
+#' @param sample_percent numeric. Sample percentage of data for performing the diagnosis.
 #' It has a value between (0, 100]. 100 means all data, and 5 means 5\% of sample data.
 #' This is useful for data with a large number of observations.
 #' @param base_family character. The name of the base font family to use 

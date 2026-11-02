@@ -19,7 +19,7 @@ A data frame with 299 rows and 13 variables. The variables are as follows:
   \item{sex}{patient's sex (binary), Male, Female.}
   \item{smoking}{if the patient smokes or not (boolean), Yes, No.}
   \item{time}{follow-up period (days).}
-  \item{death_event}{if the patient deceased during the follow-up period (boolean), Yes, No.}
+  \item{death_event}{if the patient died during the follow-up period (boolean), Yes, No.}
 }
 }
 \source{
@@ -34,7 +34,7 @@ data(heartfailure)
 A dataset containing the ages and other attributes of almost 300 cases.
 }
 \details{
-Heart failure is a common event caused by Cardiovascular diseasess and this dataset contains 12 features that can be used to predict mortality by heart failure.
+Heart failure is a common event caused by cardiovascular diseases, and this dataset contains 12 features that can be used to predict mortality by heart failure.
 }
 \references{
 {

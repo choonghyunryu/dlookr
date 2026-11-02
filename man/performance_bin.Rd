@@ -2,40 +2,40 @@
 % Please edit documentation in R/binning.R
 \name{performance_bin}
 \alias{performance_bin}
-\title{Diagnose Performance Binned Variable}
+\title{Diagnose Performance of Binned Variable}
 \usage{
 performance_bin(y, x, na.rm = FALSE)
 }
 \arguments{
 \item{y}{character or numeric, integer, factor. a binary response variable (0, 1). 
-The variable must contain only the integers 0 and 1 as element. 
-However, in the case of factor/character having two levels, it is performed while type conversion is performed in the calculation process.}
+The variable must contain only the integers 0 and 1 as elements.
+However, a factor/character with two levels is also allowed; it is converted to the appropriate type during the calculation process.}
 
-\item{x}{integer or factor, character. At least 2 different values. and Inf is not allowed.}
+\item{x}{integer or factor, character. It must have at least 2 different values, and Inf is not allowed.}
 
 \item{na.rm}{logical. a logical indicating whether missing values should be removed.}
 }
 \value{
-an object of "performance_bin" class. vaue of data.frame is as follows.
+an object of "performance_bin" class. The value of the data.frame is as follows.
 \itemize{
 \item Bin : character. bins.
 \item CntRec : integer. frequency by bins.
-\item CntPos : integer. frequency of positive  by bins.
-\item CntNeg : integer. frequency of negative  by bins.
-\item CntCumPos : integer. cumulate frequency of positive  by bins.
-\item CntCumNeg : integer. cumulate frequency of negative  by bins.
-\item RatePos : integer. relative frequency of positive  by bins.
-\item RateNeg : integer. relative frequency of negative  by bins.
-\item RateCumPos : numeric. cumulate relative frequency of positive  by bins.
-\item RateCumNeg : numeric. cumulate relative frequency of negative  by bins.
-\item Odds : numeric. odd ratio.
-\item LnOdds : numeric. loged odd ratio.
+\item CntPos : integer. frequency of positive by bins.
+\item CntNeg : integer. frequency of negative by bins.
+\item CntCumPos : integer. cumulative frequency of positive by bins.
+\item CntCumNeg : integer. cumulative frequency of negative by bins.
+\item RatePos : integer. relative frequency of positive by bins.
+\item RateNeg : integer. relative frequency of negative by bins.
+\item RateCumPos : numeric. cumulative relative frequency of positive by bins.
+\item RateCumNeg : numeric. cumulative relative frequency of negative by bins.
+\item Odds : numeric. odds ratio.
+\item LnOdds : numeric. log odds ratio.
 \item WoE : numeric. weight of evidence.
 \item IV : numeric. Jeffrey's Information Value.
 \item JSD : numeric. Jensen-Shannon Divergence.
-\item AUC : numeric. AUC. area under curve.
+\item AUC : numeric. AUC. area under the curve.
 }
-Attributes of "performance_bin" class is as follows.
+Attributes of the "performance_bin" class are as follows.
 \itemize{
 \item names : character. variable name of data.frame with "Binning Table".
 \item class : character. name of class. "performance_bin" "data.frame".
@@ -45,20 +45,20 @@ Attributes of "performance_bin" class is as follows.
 \item KS : numeric. Kolmogorov-Smirnov Statistics.
 \item gini : numeric. Gini index.
 \item HHI : numeric. Herfindahl-Hirschman Index.
-\item HHI_norm : numeric.normalized Herfindahl-Hirschman Index.
+\item HHI_norm : numeric. normalized Herfindahl-Hirschman Index.
 \item Cramer_V : numeric. Cramer's V Statistics.
-\item chisq_test : data.frame. table of significance tests. name is as follows.
+\item chisq_test : data.frame. table of significance tests. names are as follows.
 \itemize{
-  \item Bin A : character. first bins.
-  \item Bin B : character. second bins.
+  \item Bin A : character. first bin.
+  \item Bin B : character. second bin.
   \item statistics : numeric. statistics of Chi-square test.
   \item p_value : numeric. p-value of Chi-square test.
   }
 }
 }
 \description{
-The performance_bin() calculates metrics to evaluate the performance of binned variable for 
-binomial classification model.
+The performance_bin() calculates metrics to evaluate the performance of a binned variable for
+a binomial classification model.
 }
 \details{
 This function is useful when used with the mutate/transmute

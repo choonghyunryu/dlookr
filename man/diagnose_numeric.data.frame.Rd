@@ -17,7 +17,7 @@ diagnose_numeric(.data, ...)
 
 \item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
-Positive values select variables; negative values to drop variables.
+Positive values select variables; negative values drop variables.
 If the first expression is negative, diagnose_numeric() will automatically
 start with all variables.
 These arguments are automatically quoted and evaluated in a context where column names
@@ -32,11 +32,11 @@ The diagnose_numeric() produces information
 for diagnosing the quality of the numerical data.
 }
 \details{
-The scope of the diagnosis is the calculate a statistic that can be
+The scope of the diagnosis is to calculate statistics that can be
 used to understand the distribution of numerical data.
 min, Q1, mean, median, Q3, max can be used to estimate the distribution
-of data. If the number of zero or minus is large, it is necessary to suspect
-the error of the data. If the number of outliers is large, a strategy of
+of data. If the number of zeros or negative values is large, it is necessary to suspect
+errors in the data. If the number of outliers is large, a strategy of
 eliminating or replacing outliers is needed.
 }
 \section{Numerical diagnostic information}{
@@ -46,13 +46,13 @@ The information derived from the numerical data diagnosis is as follows.
 \itemize{
 \item variables : variable names
 \item min : minimum
-\item Q1 : 25 percentile
+\item Q1 : 25th percentile
 \item mean : arithmetic average
-\item median : median. 50 percentile
-\item Q3 : 75 percentile
+\item median : median. 50th percentile
+\item Q3 : 75th percentile
 \item max : maximum
 \item zero : count of zero values
-\item minus : count of minus values
+\item minus : count of negative values
 \item outlier : count of outliers
 }
 

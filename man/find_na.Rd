@@ -11,17 +11,17 @@ find_na(.data, index = TRUE, rate = FALSE)
 
 \item{index}{logical. When representing the information of a variable including
 missing values, specify whether or not the variable is represented by an index.
-Returns an index if TRUE or a variable names if FALSE.}
+Returns an index if TRUE or variable names if FALSE.}
 
 \item{rate}{logical. If TRUE, returns the percentage of missing values
-in the individual variable.}
+in the individual variables.}
 }
 \value{
 Information on variables including missing values.
 }
 \description{
-Find the variable that contains the missing value in the object
-that inherits the data.frame or data.frame.
+Find the variables that contain missing values in the object
+that inherits from data.frame, or a data.frame.
 }
 \examples{
 find_na(jobchange)

@@ -2,15 +2,15 @@
 % Please edit documentation in R/correlate.R
 \name{plot.correlate}
 \alias{plot.correlate}
-\title{Visualize Information for an "correlate" Object}
+\title{Visualize Information for a "correlate" Object}
 \usage{
 \method{plot}{correlate}(x, typographic = TRUE, base_family = NULL, ...)
 }
 \arguments{
 \item{x}{an object of class "correlate", usually, a result of a call to correlate().}
 
-\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.}
+\item{typographic}{logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.}
 
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
@@ -21,8 +21,8 @@ for the visualization. If not specified, the font defined in dlookr is applied. 
 No return value. This function is called for its side effect, which is to produce a plot on the current graphics device.
 }
 \description{
-Visualize by attribute of `correlate` class.
-The plot of correlation matrix is a tile plot.
+Visualize by attribute of the `correlate` class.
+The plot of the correlation matrix is a tile plot.
 }
 \details{
 The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",

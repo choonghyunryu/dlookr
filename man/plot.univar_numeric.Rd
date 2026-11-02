@@ -2,7 +2,7 @@
 % Please edit documentation in R/univariate.R
 \name{plot.univar_numeric}
 \alias{plot.univar_numeric}
-\title{Visualize Information for an "univar_numeric" Object}
+\title{Visualize Information for a "univar_numeric" Object}
 \usage{
 \method{plot}{univar_numeric}(
   x,
@@ -20,33 +20,33 @@
 \item{x}{an object of class "univar_numeric", usually, a result of a call to univar_numeric().}
 
 \item{indiv}{logical. Select whether to display information of all variables in one plot when there are multiple selected numeric variables. 
-In case of FALSE, all variable information is displayed in one plot. 
+If FALSE, all variable information is displayed in one plot.
 If TRUE, the information of the individual variables is output to the individual plots. 
 The default is FALSE. If only one variable is selected, TRUE is applied.}
 
-\item{viz}{character. Describe what to plot visualization. "hist" draws a histogram and "boxplot" draws a boxplot. The default is "hist".}
+\item{viz}{character. Describe what to visualize. "hist" draws a histogram and "boxplot" draws a box plot. The default is "hist".}
 
 \item{stand}{character. Describe how to standardize the original data. 
 "robust" normalizes the raw data through transformation calculated by IQR and median.
 "minmax" normalizes the original data using minmax transformation.
-"zscore" standardizes the original data using z-Score transformation.
+"zscore" standardizes the original data using z-score transformation.
 "none" does not perform data transformation.
-he default is "none" if indiv is TRUE, and "robust" if FALSE.}
+The default is "none" if indiv is TRUE, and "robust" if FALSE.}
 
 \item{prompt}{logical. The default value is FALSE. If there are multiple visualizations to be output, 
-if this argument value is TRUE, a prompt is output each time.}
+and this argument value is TRUE, a prompt is output each time.}
 
-\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.}
+\item{typographic}{logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.}
 
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
 
 \item{...}{arguments to be passed to methods, such as graphical parameters (see par).
-However, it does not support.}
+However, it is not supported.}
 }
 \description{
-Visualize boxplots and histogram by attribute of univar_numeric class.
+Visualize box plots and histograms by attribute of the univar_numeric class.
 }
 \details{
 The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",

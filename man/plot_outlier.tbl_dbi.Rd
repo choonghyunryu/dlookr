@@ -19,7 +19,7 @@
 
 \item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
-Positive values select variables; negative values to drop variables.
+Positive values select variables; negative values drop variables.
 If the first expression is negative, plot_outlier() will automatically start
 with all variables.
 These arguments are automatically quoted and evaluated in a context
@@ -29,31 +29,31 @@ They support unquoting and splicing.}
 \item{col}{a color to be used to fill the bars. The default is "lightblue".}
 
 \item{in_database}{Specifies whether to perform in-database operations. 
-If TRUE, most operations are performed in the DBMS. if FALSE, 
-table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.}
+If TRUE, most operations are performed in the DBMS. If FALSE,
+table data is taken into R and operated on in memory. in_database = TRUE is not yet supported.}
 
-\item{collect_size}{a integer. The number of data samples from the DBMS to R. 
+\item{collect_size}{an integer. The number of data samples from the DBMS to R.
 Applies only if in_database = FALSE.}
 
-\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.}
+\item{typographic}{logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.}
 
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
 }
 \description{
-The plot_outlier() visualize outlier information
-for diagnosing the quality of the numerical(INTEGER, NUMBER, etc.) column 
+The plot_outlier() visualizes outlier information
+for diagnosing the quality of the numerical (INTEGER, NUMBER, etc.) columns
 of the DBMS table through tbl_dbi.
 }
 \details{
-The scope of the diagnosis is the provide a outlier information.
+The scope of the diagnosis is to provide outlier information.
 Since the plot is drawn for each variable, if you specify more than
-one variable in the ... argument, the specified number of plots are drawn.
+one variable in the ... argument, the specified number of plots is drawn.
 }
 \section{Outlier diagnostic information}{
 
-The plot derived from the numerical data diagnosis is as follows.
+The plots derived from the numerical data diagnosis are as follows.
 
 \itemize{
 \item With outliers box plot

@@ -12,24 +12,24 @@
 \item{target}{target variable.}
 
 \item{in_database}{Specifies whether to perform in-database operations. 
-If TRUE, most operations are performed in the DBMS. if FALSE, 
-table data is taken in R and operated in-memory. Not yet supported in_database = TRUE.}
+If TRUE, most operations are performed in the DBMS. If FALSE,
+table data is taken into R and operated on in memory. in_database = TRUE is not yet supported.}
 
-\item{collect_size}{a integer. The number of data samples from the DBMS to R.
+\item{collect_size}{an integer. The number of data samples from the DBMS to R.
 Applies only if in_database = FALSE.}
 
 \item{...}{arguments to be passed to methods.}
 }
 \value{
 an object of target_df class.
-Attributes of target_df class is as follows.
+Attributes of the target_df class are as follows.
 \itemize{
-\item type_y : the data type of target variable.
+\item type_y : the data type of the target variable.
 }
 }
 \description{
 In the data analysis, a target_df class is created to identify the
-relationship between the target column and the other column of the DBMS table through tbl_dbi
+relationship between the target column and the other columns of the DBMS table through tbl_dbi.
 }
 \details{
 Data analysis proceeds with the purpose of predicting target variables that
@@ -40,7 +40,7 @@ Data analysis proceeds with the purpose of predicting target variables that
  Based on the derived relationships, analysts create scenarios for data analysis.
 
  target_by() inherits the \code{\link[dplyr]{grouped_df}} class and returns a target_df
- class containing information about the target variable and the variable.
+ class containing information about the target variable and the other variables.
 
 See vignette("EDA") for an introduction to these concepts.
 }

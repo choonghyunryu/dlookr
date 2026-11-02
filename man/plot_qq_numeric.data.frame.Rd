@@ -35,35 +35,35 @@ plot_qq_numeric(.data, ...)
 
 \item{\dots}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
-Positive values select variables; negative values to drop variables.
+Positive values select variables; negative values drop variables.
 If the first expression is negative, plot_qq_numeric() will automatically
 start with all variables.
 These arguments are automatically quoted and evaluated in a context where
 column names represent column positions.
 They support unquoting and splicing.}
 
-\item{col_point}{character. a color of points in Q-Q plot.}
+\item{col_point}{character. a color of the points in the Q-Q plot.}
 
-\item{col_line}{character. a color of line in Q-Q plot.}
+\item{col_line}{character. a color of the line in the Q-Q plot.}
 
 \item{title}{character. a main title for the plot.}
 
 \item{each}{logical. Specifies whether to draw multiple plots on one screen. 
 The default is FALSE, which draws multiple plots on one screen.}
 
-\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.}
+\item{typographic}{logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.}
 
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
 }
 \description{
-The plot_qq_numeric() to visualizes the Q-Q plot of numeric data or 
+The plot_qq_numeric() visualizes the Q-Q plot of numeric data or
 relationship to specific categorical data.
 }
 \details{
-The The Q-Q plot helps determine whether the distribution of a numeric variable 
-is normally distributed. plot_qq_numeric() shows Q-Q plots of several numeric variables 
+The Q-Q plot helps determine whether the distribution of a numeric variable
+is normal. plot_qq_numeric() shows Q-Q plots of several numeric variables
 on one screen. This function can also display a Q-Q plot for each level of a specific 
 categorical variable.
 

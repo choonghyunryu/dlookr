@@ -15,7 +15,7 @@ dlookr_templ_html(toc = TRUE, ...)
 An R Markdown output format.
 }
 \description{
-Loads additional style and template file
+Loads additional style and template files
 }
 \references{
 https://raw.githubusercontent.com/dr-harper/example-rmd-templates/master/R/my_html_format.R

@@ -25,15 +25,15 @@ eda_report(.data, ...)
 
 \item{target}{target variable.}
 
-\item{output_format}{character. report output type. Choose either "pdf" and "html".
-"pdf" create pdf file by knitr::knit().
-"html" create html file by rmarkdown::render().}
+\item{output_format}{character. report output type. Choose either "pdf" or "html".
+"pdf" creates a pdf file by knitr::knit().
+"html" creates an html file by rmarkdown::render().}
 
-\item{output_file}{character. name of generated file. default is NULL.}
+\item{output_file}{character. name of the generated file. default is NULL.}
 
-\item{output_dir}{character. name of directory to generate report file. default is tempdir().}
+\item{output_dir}{character. name of the directory in which to generate the report file. default is tempdir().}
 
-\item{font_family}{character. font family name for figure in pdf.}
+\item{font_family}{character. font family name for figures in the pdf.}
 
 \item{browse}{logical. choose whether to output the report results to the browser.}
 }
@@ -41,14 +41,14 @@ eda_report(.data, ...)
 No return value. This function only generates a report.
 }
 \description{
-The eda_report() report the information of exploratory
-data analysis for object inheriting from data.frame.
+The eda_report() reports the information of exploratory
+data analysis for objects inheriting from data.frame.
 }
 \details{
-Generate generalized EDA report automatically.
-You can choose to output as pdf and html files.
+Generates a generalized EDA report automatically.
+You can choose to output the report as a pdf or html file.
 This feature is useful for EDA of data with many variables, rather than data with fewer variables.
-For pdf output, Korean Gothic font must be installed in Korean operating system.
+For pdf output, the Korean Gothic font must be installed on a Korean operating system.
 }
 \section{Reported information}{
 
@@ -77,7 +77,7 @@ The EDA process will report the following information:
       \item Correlation Plot of Numerical Variables
     }
   }
-  \item Target based Analysis
+  \item Target-based Analysis
   \itemize{
     \item Grouped Descriptive Statistics
     \itemize{

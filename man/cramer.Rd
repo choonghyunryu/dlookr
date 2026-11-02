@@ -7,25 +7,25 @@
 cramer(dfm, x, y)
 }
 \arguments{
-\item{dfm}{data.frame. probability distributions.}
+\item{dfm}{data.frame. data containing the variables.}
 
-\item{x}{character. name of categorical or discrete variable.}
+\item{x}{character. name of a categorical or discrete variable.}
 
 \item{y}{character. name of another categorical or discrete variable.}
 }
 \value{
-data.frame. It has the following variables.:
+data.frame. It has the following variables:
 \itemize{
 \item var1 : character. first variable name.
 \item var2 : character. second variable name.
-\item chisq : numeric. Chisquare statistic.
-\item df : integer. degree of freedom.
-\item pval : numeric. p value of Chisquare test.
+\item chisq : numeric. chi-square statistic.
+\item df : integer. degrees of freedom.
+\item pval : numeric. p-value of the chi-square test.
 \item coef_corr : numeric. Cramer's V statistic.
 }
 }
 \description{
-Computes the Cramer's V statistic and Chisquare p value between two categorical variables in data.frame.
+Computes Cramer's V statistic and the chi-square p-value between two categorical variables in a data.frame.
 }
 \examples{
 cramer(mtcars, "gear", "carb")

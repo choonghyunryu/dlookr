@@ -31,7 +31,7 @@ diagnose_category(.data, ...)
 
 \item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
-Positive values select variables; negative values to drop variables.
+Positive values select variables; negative values drop variables.
 If the first expression is negative, diagnose_category() will automatically
 start with all variables.
 These arguments are automatically quoted and evaluated in a context where
@@ -41,18 +41,18 @@ They support unquoting and splicing.}
 \item{top}{an integer. Specifies the upper top rows or rank to extract.
 Default is 10.}
 
-\item{type}{a character string specifying how result are extracted.
-"rank" that extract top n ranks by decreasing frequency. 
+\item{type}{a character string specifying how results are extracted.
+"rank" extracts the top n ranks by decreasing frequency.
 In this case, if there are ties in rank, more rows than the number specified 
 by the top argument are returned.
-Default is "n" extract only top n rows by decreasing frequency. 
+The default is "n", which extracts only the top n rows by decreasing frequency.
 If there are too many rows to be returned because there are too many ties, 
 you can adjust the returned rows appropriately by using "n".}
 
 \item{add_character}{logical. Decide whether to include text variables in the
 diagnosis of categorical data. The default value is TRUE, which also includes character variables.}
 
-\item{add_date}{ogical. Decide whether to include Date and POSIXct variables in the
+\item{add_date}{logical. Decide whether to include Date and POSIXct variables in the
 diagnosis of categorical data. The default value is TRUE, which also includes character variables.}
 }
 \value{
@@ -60,12 +60,12 @@ an object of tbl_df.
 }
 \description{
 The diagnose_category() produces information for
-diagnosing the quality of the variables of data.frame or tbl_df.
+diagnosing the quality of the variables of a data.frame or tbl_df.
 }
 \details{
 The scope of the diagnosis is the occupancy status of the levels
 in categorical data. If a certain level of occupancy is close to 100%,
-then the removal of this variable in the forecast model will have to be
+then the removal of this variable from the forecast model will have to be
 considered. Also, if the occupancy of all levels is close to 0%, this
 variable is likely to be an identifier.
 }
@@ -76,9 +76,9 @@ The information derived from the categorical data diagnosis is as follows.
 \itemize{
 \item variables : variable names
 \item levels: level names
-\item N : number of observation
-\item freq : number of observation at the levels
-\item ratio : percentage of observation at the levels
+\item N : number of observations
+\item freq : number of observations at the levels
+\item ratio : percentage of observations at the levels
 \item rank : rank of occupancy ratio of levels
 }
 

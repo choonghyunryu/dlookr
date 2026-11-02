@@ -14,21 +14,21 @@ plot_normality <- function(.data, ...) {
 
 #' Performs the Shapiro-Wilk test of normality
 #'
-#' @description The normality() performs Shapiro-Wilk test of normality of numerical values.
+#' @description The normality() performs the Shapiro-Wilk test of normality of numerical values.
 #'
 #' @details This function is useful when used with the \code{\link[dplyr]{group_by}}
 #' function of the dplyr package. If you want to test by level of the categorical
 #' data you are interested in, rather than the whole observation,
-#' you can use group_tf as the group_by function.
-#' This function is computed \code{\link{shapiro.test}} function.
+#' you can use grouped_df as the group_by function.
+#' This function is computed with the \code{\link{shapiro.test}} function.
 #'
 #' @section Normality test information:
 #' The information derived from the numerical data test is as follows.
 #'
 #' \itemize{
 #' \item statistic : the value of the Shapiro-Wilk statistic.
-#' \item p_value : an approximate p-value for the test. This is said in
-#' Roystion(1995) to be adequate for p_value < 0.1.
+#' \item p_value : an approximate p-value for the test. This is said by
+#' Royston (1995) to be adequate for p_value < 0.1.
 #' \item sample : the number of samples to perform the test.
 #' The number of observations supported by the stats::shapiro.test function is 3 to 5000.
 #' }
@@ -36,7 +36,7 @@ plot_normality <- function(.data, ...) {
 #' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' If the first expression is negative, normality() will automatically start with all variables.
 #' These arguments are automatically quoted and evaluated in a context where column names
 #' represent column positions.
@@ -197,14 +197,14 @@ normality_group_impl <- function(df, vars, sample) {
 
 #' Plot distribution information of numerical data
 #'
-#' @description The plot_normality() visualize distribution information
-#' for normality test of the numerical data.
+#' @description The plot_normality() visualizes distribution information
+#' for the normality test of the numerical data.
 #'
-#' @details The scope of the visualization is the provide a distribution information.
+#' @details The scope of the visualization is to provide distribution information.
 #' Since the plot is drawn for each variable, if you specify more than
-#' one variable in the ... argument, the specified number of plots are drawn.
+#' one variable in the ... argument, the specified number of plots is drawn.
 #'
-#' The argument values that left and right can have are as follows.:
+#' The argument values that left and right can have are as follows:
 #' 
 #' \itemize{
 #'   \item "log" : log transformation. log(x)
@@ -212,20 +212,20 @@ normality_group_impl <- function(df, vars, sample) {
 #'   \item "log+a" : log transformation. log(x + 1 - min(x)). Used for values that contain 0.   
 #'   \item "sqrt" : square root transformation.
 #'   \item "1/x" : 1 / x transformation
-#'   \item "x^2" : x square transformation
-#'   \item "x^3" : x^3 square transformation
-#'   \item "Box-Cox" : Box-Box transformation
+#'   \item "x^2" : x squared transformation
+#'   \item "x^3" : x cubed transformation
+#'   \item "Box-Cox" : Box-Cox transformation
 #'   \item "Yeo-Johnson" : Yeo-Johnson transformation
 #' }
 #' 
 #' @section Distribution information:
-#' The plot derived from the numerical data visualization is as follows.
+#' The plots derived from the numerical data visualization are as follows.
 #'
 #' \itemize{
 #'   \item histogram by original data
 #'   \item q-q plot by original data
-#'   \item histogram by log transfer data
-#'   \item histogram by square root transfer data
+#'   \item histogram by log-transformed data
+#'   \item histogram by square root-transformed data
 #' }
 #'
 #' The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",
@@ -235,7 +235,7 @@ normality_group_impl <- function(df, vars, sample) {
 #' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' If the first expression is negative, plot_normality() will automatically
 #' start with all variables.
 #' These arguments are automatically quoted and evaluated in a context where column names
@@ -248,8 +248,8 @@ normality_group_impl <- function(df, vars, sample) {
 #' @param right character. Specifies the data transformation method to draw the histogram in the 
 #' lower right corner. The default is "sqrt".
 #' @param col a color to be used to fill the bars. The default is "steelblue".
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
+#' @param typographic logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+#' The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' 
@@ -555,22 +555,22 @@ plot_normality_group_impl <- function(df, vars, left, right, col = "steelblue",
 
 #' Transform a numeric vector
 #'
-#' @description The get_transform() gets transformation of numeric variable.
+#' @description The get_transform() gets the transformation of a numeric variable.
 #'
-#' @param x numeric. numeric for transform
-#' @param method character. transformation method of numeric variable
+#' @param x numeric. numeric vector to transform
+#' @param method character. transformation method of the numeric variable
 #' @return numeric. transformed numeric vector.
 #' 
-#' @details The supported transformation method is follow.: 
+#' @details The supported transformation methods are as follows:
 #' \itemize{
 #'   \item "log" : log transformation. log(x)
 #'   \item "log+1" : log transformation. log(x + 1). Used for values that contain 0.
 #'   \item "log+a" : log transformation. log(x + 1 - min(x)). Used for values that contain 0.   
 #'   \item "sqrt" : square root transformation.
 #'   \item "1/x" : 1 / x transformation
-#'   \item "x^2" : x square transformation
-#'   \item "x^3" : x^3 square transformation
-#'   \item "Box-Cox" : Box-Box transformation
+#'   \item "x^2" : x squared transformation
+#'   \item "x^3" : x cubed transformation
+#'   \item "Box-Cox" : Box-Cox transformation
 #'   \item "Yeo-Johnson" : Yeo-Johnson transformation
 #' }
 #' 

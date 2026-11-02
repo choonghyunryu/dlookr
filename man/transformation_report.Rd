@@ -19,18 +19,18 @@ transformation_report(
 
 \item{target}{target variable. If the target variable is not specified,
 the method of using the target variable information is not performed when
-the missing value is imputed. and Optimal binning is not performed if the
+the missing value is imputed, and optimal binning is not performed if the
 target variable is not a binary class.}
 
-\item{output_format}{report output type. Choose either "pdf" and "html".
-"pdf" create pdf file by knitr::knit().
-"html" create html file by rmarkdown::render().}
+\item{output_format}{report output type. Choose either "pdf" or "html".
+"pdf" creates a pdf file by knitr::knit().
+"html" creates an html file by rmarkdown::render().}
 
-\item{output_file}{name of generated file. default is NULL.}
+\item{output_file}{name of the generated file. default is NULL.}
 
-\item{output_dir}{name of directory to generate report file. default is tempdir().}
+\item{output_dir}{name of the directory in which to generate the report file. default is tempdir().}
 
-\item{font_family}{character. font family name for figure in pdf.}
+\item{font_family}{character. font family name for figures in the pdf.}
 
 \item{browse}{logical. choose whether to output the report results to the browser.}
 }
@@ -38,15 +38,15 @@ target variable is not a binary class.}
 No return value. This function only generates a report.
 }
 \description{
-The transformation_report() report the information of transform
-numerical variables for object inheriting from data.frame.
+The transformation_report() reports the information of transforming
+numerical variables for objects inheriting from data.frame.
 }
 \details{
-Generate transformation reports automatically.
-You can choose to output to pdf and html files.
-This is useful for Binning a data frame with a large number of variables
+Generates transformation reports automatically.
+You can choose to output the report as a pdf or html file.
+This is more useful for binning a data frame with a large number of variables
 than data with a small number of variables.
-For pdf output, Korean Gothic font must be installed in Korean operating system.
+For pdf output, the Korean Gothic font must be installed on a Korean operating system.
 }
 \section{Reported information}{
 
@@ -57,7 +57,7 @@ The transformation process will report the following information:
   \itemize{
     \item Missing Values
     \itemize{
-      \item * Variable names including missing value
+      \item * Variable names including missing values
     }
     \item Outliers
     \itemize{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/missing.R
 \name{plot_na_pareto}
 \alias{plot_na_pareto}
-\title{Pareto chart for missing value}
+\title{Pareto chart for missing values}
 \usage{
 plot_na_pareto(
   x,
@@ -24,19 +24,19 @@ If TRUE, only variables containing missing values are selected for visualization
 If FALSE, all variables are included.}
 
 \item{relative}{logical. If this argument is TRUE, it sets the unit of the left y-axis to relative frequency. 
-In case of FALSE, set it to frequency.}
+If FALSE, it sets the unit to frequency.}
 
 \item{main}{character. Main title.}
 
-\item{col}{character. The color of line for display the cumulative percentage.}
+\item{col}{character. The color of the line that displays the cumulative percentage.}
 
 \item{grade}{list. Specifies the cut-off to set the grade of the variable according to the ratio of missing values.
 The default values are Good: [0, 0.05], OK: (0.05, 0.1], NotBad: (0.1, 0.2], Bad: (0.2, 0.5], Remove: (0.5, 1].}
 
-\item{plot}{logical. If this value is TRUE then visualize plot. else if FALSE, return aggregate information about missing values.}
+\item{plot}{logical. If this value is TRUE, the plot is visualized. If FALSE, aggregate information about missing values is returned.}
 
-\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.}
+\item{typographic}{logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.}
 
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
@@ -45,7 +45,7 @@ for the visualization. If not specified, the font defined in dlookr is applied. 
 a ggplot2 object.
 }
 \description{
-Visualize pareto chart for variables with missing value.
+Visualize a Pareto chart for variables with missing values.
 }
 \details{
 The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",

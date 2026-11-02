@@ -13,7 +13,7 @@ entropy(x)
 numeric. entropy
 }
 \description{
-Calculate the Shannon's entropy.
+Calculate Shannon's entropy.
 }
 \examples{
 set.seed(123)

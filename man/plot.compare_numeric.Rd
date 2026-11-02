@@ -2,7 +2,7 @@
 % Please edit documentation in R/compare.R
 \name{plot.compare_numeric}
 \alias{plot.compare_numeric}
-\title{Visualize Information for an "compare_numeric" Object}
+\title{Visualize Information for a "compare_numeric" Object}
 \usage{
 \method{plot}{compare_numeric}(x, prompt = FALSE, typographic = TRUE, base_family = NULL, ...)
 }
@@ -10,22 +10,22 @@
 \item{x}{an object of class "compare_numeric", usually, a result of a call to compare_numeric().}
 
 \item{prompt}{logical. The default value is FALSE. If there are multiple visualizations to be output, 
-if this argument value is TRUE, a prompt is output each time.}
+and this argument value is TRUE, a prompt is output each time.}
 
-\item{typographic}{logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-The default is TRUE. if TRUE provides a base theme that focuses on typographic elements using.}
+\item{typographic}{logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.}
 
 \item{base_family}{character. The name of the base font family to use 
 for the visualization. If not specified, the font defined in dlookr is applied. (See details)}
 
 \item{...}{arguments to be passed to methods, such as graphical parameters (see par).
-However, it does not support.}
+However, it is not supported.}
 }
 \value{
 NULL. This function just draws a plot.
 }
 \description{
-Visualize scatter plot included box plots by attribute of compare_numeric class.
+Visualize a scatter plot including box plots by attribute of the compare_numeric class.
 }
 \details{
 The base_family is selected from "Roboto Condensed", "Liberation Sans Narrow",

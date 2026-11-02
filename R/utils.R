@@ -1,12 +1,12 @@
 #' Extracting a class of variables
 #'
-#' @description The get_class() gets class of variables in data.frame or tbl_df.
+#' @description The get_class() gets the class of variables in a data.frame or tbl_df.
 #'
 #' @param df a data.frame or objects inheriting from data.frame
 #' @return a data.frame
-#' Variables of data.frame is as follows.
+#' Variables of the data.frame are as follows.
 #' \itemize{
-#' \item variable : variables name
+#' \item variable : variable name
 #' \item class : class of variables
 #' }
 #' @seealso \code{\link{find_class}}.
@@ -33,24 +33,24 @@ get_class <- function(df) {
 #' Extract variable names or indices of a specific class
 #'
 #' @description The find_class() extracts variable information having a
-#' certain class from an object inheriting data.frame.
+#' certain class from an object inheriting from data.frame.
 #'
 #' @param df a data.frame or objects inheriting from data.frame
 #' @param type character. Defines a group of classes to be searched.
 #' "numerical" searches for "numeric" and "integer" classes,
 #' "categorical" searches for "factor" and "ordered" classes.
 #' "categorical2" adds "character" class to "categorical".
-#' "date_categorical" adds result of "categorical2" and "Date", "POSIXct".
-#' "date_categorical2" adds result of "categorical" and "Date", "POSIXct".
-#' @param index logical. If TRUE is return numeric vector that is variables index.
-#' and if FALSE is return character vector that is variables name.
+#' "date_categorical" adds "Date" and "POSIXct" to the result of "categorical2".
+#' "date_categorical2" adds "Date" and "POSIXct" to the result of "categorical".
+#' @param index logical. If TRUE, returns a numeric vector of variable indices,
+#' and if FALSE, returns a character vector of variable names.
 #' default is TRUE.
 #'
 #' @return character vector or numeric vector.
 #' The meaning of vector according to data type is as follows.
 #' \itemize{
-#' \item character vector : variables name
-#' \item numeric vector : variables index
+#' \item character vector : variable names
+#' \item numeric vector : variable indices
 #' }
 #' @seealso \code{\link{get_class}}.
 #' @export
@@ -107,15 +107,15 @@ find_class <- function(df, type = c("numerical", "categorical", "categorical2",
 #' Finding variables including missing values
 #'
 #' @description
-#' Find the variable that contains the missing value in the object
-#' that inherits the data.frame or data.frame.
+#' Find the variables that contain missing values in the object
+#' that inherits from data.frame, or a data.frame.
 #'
 #' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param index logical. When representing the information of a variable including
 #' missing values, specify whether or not the variable is represented by an index.
-#' Returns an index if TRUE or a variable names if FALSE.
+#' Returns an index if TRUE or variable names if FALSE.
 #' @param rate logical. If TRUE, returns the percentage of missing values
-#' in the individual variable.
+#' in the individual variables.
 #' @return Information on variables including missing values.
 #' @seealso \code{\link{imputate_na}}, \code{\link{find_outliers}}.
 #' @examples
@@ -157,15 +157,15 @@ find_na <- function(.data, index = TRUE, rate = FALSE) {
 #' Finding variables including outliers
 #'
 #' @description
-#' Find the numerical variable that contains outliers in the object
-#' that inherits the data.frame or data.frame.
+#' Find the numerical variables that contain outliers in the object
+#' that inherits from data.frame, or a data.frame.
 #'
 #' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param index logical. When representing the information of a variable including
 #' outliers, specify whether or not the variable is represented by an index.
-#' Returns an index if TRUE or a variable names if FALSE.
+#' Returns an index if TRUE or variable names if FALSE.
 #' @param rate logical. If TRUE, returns the percentage of outliers
-#' in the individual variable.
+#' in the individual variables.
 #' @return Information on variables including outliers.
 #' @seealso \code{\link{find_na}}, \code{\link{imputate_outlier}}.
 #' @examples
@@ -213,18 +213,18 @@ find_outliers <- function(.data, index = TRUE, rate = FALSE) {
 #' Finding skewed variables
 #'
 #' @description
-#' Find the numerical variable that skewed variable
-#' that inherits the data.frame or data.frame.
+#' Find the numerical variables that are skewed
+#' that inherits from data.frame, or a data.frame.
 #'
 #' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param index logical. When representing the information of a skewed variable,
 #' specify whether or not the variable is represented by an index.
-#' Returns an index if TRUE or a variable names if FALSE.
+#' Returns an index if TRUE or variable names if FALSE.
 #' @param value logical. If TRUE, returns the skewness value
-#' in the individual variable.
+#' in the individual variables.
 #' @param thres Returns a skewness threshold value that has an absolute skewness
 #' greater than thres. The default is NULL to ignore the threshold.
-#' but, If value = TRUE, default to 0.5.
+#' But if value = TRUE, the default is 0.5.
 #' @return Information on variables including skewness.
 #' @seealso \code{\link{find_na}}, \code{\link{find_outliers}}.
 #' @examples
@@ -278,7 +278,7 @@ find_skewness <- function(.data, index = TRUE, value = FALSE, thres = NULL) {
 #' Skewness of the data
 #'
 #' @description
-#' This function calculated skewness of given data.
+#' This function calculates the skewness of the given data.
 #'
 #' @param x a numeric vector.
 #' @param na.rm logical. Determine whether to remove missing values and calculate them. 
@@ -302,7 +302,7 @@ skewness <- function(x,  na.rm = TRUE) {
 #' Kurtosis of the data
 #'
 #' @description
-#' This function calculated kurtosis of given data.
+#' This function calculates the kurtosis of the given data.
 #'
 #' @param x a numeric vector.
 #' @param na.rm logical. Determine whether to remove missing values and calculate them. 
@@ -323,10 +323,10 @@ kurtosis <- function(x,  na.rm = FALSE) {
 }
 
 
-#' Finding Users Machine's OS
+#' Finding the User's Machine OS
 #'
 #' @description
-#' Get the operating system that users machines.
+#' Get the operating system of the user's machine.
 #'
 #' @return OS names. "windows" or "osx" or "linux"
 #'
@@ -357,7 +357,7 @@ get_os <- function() {
 #' Calculate the entropy
 #'
 #' @description
-#' Calculate the Shannon's entropy.
+#' Calculate Shannon's entropy.
 #' 
 #' @param x a numeric vector.
 #'
@@ -379,16 +379,16 @@ entropy <- function(x) {
 #' Finding percentile
 #'
 #' @description
-#' Find the percentile of the value specified in numeric vector.
+#' Find the percentile of the value specified in a numeric vector.
 #'
 #' @param x numeric. a numeric vector.
-#' @param value numeric. a scalar to find percentile value from vector x.
-#' @param from numeric. Start interval in logic to find percentile value. default to 0.
-#' @param to numeric. End interval in logic to find percentile value. default to 1.
+#' @param value numeric. a scalar to find the percentile value from vector x.
+#' @param from numeric. Start of the interval in the logic to find the percentile value. default is 0.
+#' @param to numeric. End of the interval in the logic to find the percentile value. default is 1.
 #' @param eps numeric. Threshold value for calculating the approximate value in recursive 
-#' calling logic to find the percentile value. (epsilon). default to 1e-06.
+#' calling logic to find the percentile value (epsilon). default is 1e-06.
 #' @return list.
-#' Components of list. is as follows.
+#' Components of the list are as follows.
 #' \itemize{
 #' \item percentile : numeric. Percentile position of value. It has a value between [0, 100].
 #' \item is_outlier : logical. Whether value is an outlier.

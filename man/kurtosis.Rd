@@ -16,7 +16,7 @@ The default is TRUE.}
 numeric. calculated kurtosis
 }
 \description{
-This function calculated kurtosis of given data.
+This function calculates the kurtosis of the given data.
 }
 \examples{
 set.seed(123)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{get_os}
 \alias{get_os}
-\title{Finding Users Machine's OS}
+\title{Finding the User's Machine OS}
 \usage{
 get_os()
 }
@@ -10,7 +10,7 @@ get_os()
 OS names. "windows" or "osx" or "linux"
 }
 \description{
-Get the operating system that users machines.
+Get the operating system of the user's machine.
 }
 \examples{
 get_os()

@@ -6,7 +6,7 @@ plot_bar_category <- function(.data, ...) {
 
 #' Plot bar chart of categorical variables 
 #'
-#' @description The plot_bar_category() to visualizes the distribution of 
+#' @description The plot_bar_category() visualizes the distribution of
 #' categorical data by level or relationship to specific numerical data by level.
 #'
 #' @details The distribution of categorical variables can be understood by 
@@ -21,7 +21,7 @@ plot_bar_category <- function(.data, ...) {
 #' @param .data a data.frame or a \code{\link[tibble]{tbl_df}} or a \code{\link[dplyr]{grouped_df}}.
 #' @param \dots one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' If the first expression is negative, plot_bar_category() will automatically
 #' start with all variables.
 #' These arguments are automatically quoted and evaluated in a context where
@@ -34,8 +34,8 @@ plot_bar_category <- function(.data, ...) {
 #' @param title character. a main title for the plot.
 #' @param each logical. Specifies whether to draw multiple plots on one screen. 
 #' The default is FALSE, which draws multiple plots on one screen.
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
+#' @param typographic logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+#' The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' 
@@ -429,11 +429,11 @@ plot_qq_numeric <- function(.data, ...) {
 
 #' Plot Q-Q plot of numerical variables 
 #'
-#' @description The plot_qq_numeric() to visualizes the Q-Q plot of numeric data or 
+#' @description The plot_qq_numeric() visualizes the Q-Q plot of numeric data or
 #' relationship to specific categorical data.
 #' 
-#' @details The The Q-Q plot helps determine whether the distribution of a numeric variable 
-#' is normally distributed. plot_qq_numeric() shows Q-Q plots of several numeric variables 
+#' @details The Q-Q plot helps determine whether the distribution of a numeric variable
+#' is normal. plot_qq_numeric() shows Q-Q plots of several numeric variables
 #' on one screen. This function can also display a Q-Q plot for each level of a specific 
 #' categorical variable.
 #'
@@ -444,20 +444,20 @@ plot_qq_numeric <- function(.data, ...) {
 #' @param .data data.frame or a \code{\link[tibble]{tbl_df}} or a \code{\link[dplyr]{grouped_df}}.
 #' @param \dots one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' If the first expression is negative, plot_qq_numeric() will automatically
 #' start with all variables.
 #' These arguments are automatically quoted and evaluated in a context where
 #' column names represent column positions.
 #' They support unquoting and splicing.
 #'
-#' @param col_point character. a color of points in Q-Q plot.
-#' @param col_line character. a color of line in Q-Q plot.
+#' @param col_point character. a color of the points in the Q-Q plot.
+#' @param col_line character. a color of the line in the Q-Q plot.
 #' @param title character. a main title for the plot. 
 #' @param each logical. Specifies whether to draw multiple plots on one screen. 
 #' The default is FALSE, which draws multiple plots on one screen.
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
+#' @param typographic logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+#' The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @examples
@@ -703,10 +703,10 @@ plot_box_numeric <- function(.data, ...) {
 
 #' Plot Box-Plot of numerical variables 
 #'
-#' @description The plot_box_numeric() to visualizes the box plot of numeric data or 
+#' @description The plot_box_numeric() visualizes the box plot of numeric data or
 #' relationship to specific categorical data.
 #' 
-#' @details The box plot helps determine whether the distribution of a numeric variable. 
+#' @details The box plot helps to understand the distribution of a numeric variable.
 #' plot_box_numeric() shows box plots of several numeric variables 
 #' on one screen. This function can also display a box plot for each level of a specific 
 #' categorical variable.
@@ -718,7 +718,7 @@ plot_box_numeric <- function(.data, ...) {
 #' @param .data data.frame or a \code{\link[tibble]{tbl_df}} or a \code{\link[dplyr]{grouped_df}}.
 #' @param \dots one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' If the first expression is negative, plot_box_numeric() will automatically
 #' start with all variables.
 #' These arguments are automatically quoted and evaluated in a context where
@@ -728,8 +728,8 @@ plot_box_numeric <- function(.data, ...) {
 #' @param title character. a main title for the plot. 
 #' @param each logical. Specifies whether to draw multiple plots on one screen. 
 #' The default is FALSE, which draws multiple plots on one screen.
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
+#' @param typographic logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+#' The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @examples
@@ -987,11 +987,11 @@ plot_hist_numeric <- function(.data, ...) {
 
 #' Plot histogram of numerical variables 
 #'
-#' @description The plot_hist_numeric() to visualizes the histogram of numeric data or 
+#' @description The plot_hist_numeric() visualizes the histogram of numeric data or
 #' relationship to specific categorical data.
 #' 
-#' @details The histogram helps determine whether the distribution of a numeric variable. 
-#' plot_hist_numeric() shows box plots of several numeric variables 
+#' @details The histogram helps to understand the distribution of a numeric variable.
+#' plot_hist_numeric() shows histograms of several numeric variables
 #' on one screen. This function can also display a histogram for each level of a specific 
 #' categorical variable.
 #' The bin-width is set to the Freedman-Diaconis rule (2 * IQR(x) / length(x)^(1/3))
@@ -1003,7 +1003,7 @@ plot_hist_numeric <- function(.data, ...) {
 #' @param .data data.frame or a \code{\link[tibble]{tbl_df}} or a \code{\link[dplyr]{grouped_df}}.
 #' @param \dots one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' If the first expression is negative, plot_hist_numeric() will automatically
 #' start with all variables.
 #' These arguments are automatically quoted and evaluated in a context where
@@ -1013,8 +1013,8 @@ plot_hist_numeric <- function(.data, ...) {
 #' @param title character. a main title for the plot. 
 #' @param each logical. Specifies whether to draw multiple plots on one screen. 
 #' The default is FALSE, which draws multiple plots on one screen.
-#' @param typographic logical. Whether to apply focuses on typographic elements to ggplot2 visualization. 
-#' The default is TRUE. if TRUE provides a base theme that focuses on typographic elements.
+#' @param typographic logical. Whether to apply a theme that focuses on typographic elements to the ggplot2 visualization.
+#' The default is TRUE. If TRUE, it provides a base theme that focuses on typographic elements.
 #' @param base_family character. The name of the base font family to use 
 #' for the visualization. If not specified, the font defined in dlookr is applied. (See details)
 #' @examples

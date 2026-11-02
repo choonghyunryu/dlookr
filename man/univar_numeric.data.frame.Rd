@@ -3,7 +3,7 @@
 \name{univar_numeric}
 \alias{univar_numeric}
 \alias{univar_numeric.data.frame}
-\title{Statistic of univariate numerical variables}
+\title{Statistics of univariate numerical variables}
 \usage{
 univar_numeric(.data, ...)
 
@@ -14,21 +14,21 @@ univar_numeric(.data, ...)
 
 \item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
-Positive values select variables; negative values to drop variables.
+Positive values select variables; negative values drop variables.
 These arguments are automatically quoted and evaluated in a context where column names
 represent column positions.
 They support unquoting and splicing.}
 }
 \value{
-An object of the class as individual variables based list.
-A component named "statistics" is a tibble object with the following statistics.:
+A list-based object containing individual variables.
+A component named "statistics" is a tibble object with the following statistics:
 \itemize{
 \item variable : factor. The level of the variable. 'variable' is the name of the variable.
 \item n : number of observations excluding missing values
 \item na : number of missing values
 \item mean : arithmetic average
 \item sd : standard deviation
-\item se_mean : standrd error mean. sd/sqrt(n)
+\item se_mean : standard error of the mean. sd/sqrt(n)
 \item IQR : interquartile range (Q3-Q1)
 \item skewness : skewness
 \item kurtosis : kurtosis
@@ -36,21 +36,21 @@ A component named "statistics" is a tibble object with the following statistics.
 }
 }
 \description{
-The univar_numeric() calculates statistic of numerical variables that is frequency table
+The univar_numeric() calculates statistics of numerical variables
 }
 \details{
-univar_numeric() calculates the popular statistics of  numerical variables. 
-If a specific variable name is not specified, statistics for all categorical numerical included in the data are calculated.
+univar_numeric() calculates the popular statistics of numerical variables.
+If a specific variable name is not specified, statistics for all numerical variables included in the data are calculated.
 The statistics obtained by univar_numeric() are part of those obtained by describe(). 
 Therefore, it is recommended to use describe() to simply calculate statistics. 
 However, if you want to visualize the distribution of individual variables, you should use univar_numeric().
 }
 \section{Attributes of return object}{
 
-Attributes of compare_category class is as follows.
+Attributes of the compare_category class are as follows.
 \itemize{
 \item raw : a data.frame or a \code{\link[tibble]{tbl_df}}. Data containing variables to be compared. Save it for visualization with plot.univar_numeric().
-\item variables : character. List of variables selected for calculate statistics.
+\item variables : character. List of variables selected for calculating statistics.
 }
 }
 

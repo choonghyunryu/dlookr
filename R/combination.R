@@ -14,27 +14,27 @@ diagnose_sparese <- function(.data, ...) {
 #'
 #' \itemize{
 #' \item variables : level of categorical variables.
-#' \item N : number of observation. (optional)
+#' \item N : number of observations. (optional)
 #' }
 #'
 #' @param .data a data.frame or a \code{\link[tibble]{tbl_df}}.
 #' @param ... one or more unquoted expressions separated by commas.
 #' You can treat variable names like they are positions.
-#' Positive values select variables; negative values to drop variables.
+#' Positive values select variables; negative values drop variables.
 #' If the first expression is negative, diagnose_sparese() will automatically
 #' start with all variables.
 #' These arguments are automatically quoted and evaluated in a context where
 #' column names represent column positions.
 #' They support unquoting and splicing.
 #'
-#' @param type a character string specifying how result are extracted.
-#' "all" that returns a combination of all possible levels. At this time, 
-#' the frequency of each case is also returned..
-#' Default is "sparse" returns only sparse level combinations.
+#' @param type a character string specifying how results are extracted.
+#' "all" returns all possible combinations of levels. At this time,
+#' the frequency of each case is also returned.
+#' The default is "sparse", which returns only sparse level combinations.
 #' @param add_character logical. Decide whether to include text variables in the
 #' diagnosis of categorical data. The default value is TRUE, 
 #' which also includes character variables.
-#' @param limit integer. Conditions to check sparse levels. 
+#' @param limit integer. Condition to check sparse levels.
 #' If the number of all possible combinations exceeds the limit, the calculation ends.
 #' @return an object of data.frame.
 #' @export

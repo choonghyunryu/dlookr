@@ -14,14 +14,14 @@ compare_numeric(.data, ...)
 
 \item{...}{one or more unquoted expressions separated by commas.
 You can treat variable names like they are positions.
-Positive values select variables; negative values to drop variables.
+Positive values select variables; negative values drop variables.
 These arguments are automatically quoted and evaluated in a context where column names
 represent column positions.
 They support unquoting and splicing.}
 }
 \value{
-An object of the class as compare based list.
-The information to examine the relationship between numerical variables is as follows each components.
+A list-based object of the compare class.
+The information to examine the relationship between numerical variables in each component is as follows.
 - correlation component : Pearson's correlation coefficient.
 \itemize{
 \item var1 : factor. The level of the first variable to compare. 'var1' is the name of the first variable to be compared.
@@ -32,32 +32,32 @@ The information to examine the relationship between numerical variables is as fo
 - linear component : linear model summaries
 \itemize{
 \item var1 : factor. The level of the first variable to compare. 'var1' is the name of the first variable to be compared.
-\item var2 : factor.The level of the second variable to compare. 'var2' is the name of the second variable to be compared.
+\item var2 : factor. The level of the second variable to compare. 'var2' is the name of the second variable to be compared.
 \item r.squared : double. The percent of variance explained by the model.
 \item adj.r.squared : double. r.squared adjusted based on the degrees of freedom.
 \item sigma : double. The square root of the estimated residual variance.
 \item statistic : double. F-statistic.
 \item p.value : double. p-value from the F test, describing whether the full regression is significant.
-\item df : integer degrees of freedom.
+\item df : integer. degrees of freedom.
 \item logLik : double. the log-likelihood of data under the model.
 \item AIC : double. the Akaike Information Criterion.
 \item BIC : double. the Bayesian Information Criterion.
 \item deviance : double. deviance.
-\item df.residual : integer residual degrees of freedom.
+\item df.residual : integer. residual degrees of freedom.
 }
 }
 \description{
-The compare_numeric() compute information to examine the relationship 
+The compare_numeric() computes information to examine the relationship
 between numerical variables.
 }
 \details{
 It is important to understand the relationship between numerical variables in EDA.
 compare_numeric() compares relations by pair combination of all numerical variables. 
-and return compare_numeric class that based list object.
+and returns a list-based object of the compare_numeric class.
 }
 \section{Attributes of return object}{
 
-Attributes of compare_numeric class is as follows.
+Attributes of the compare_numeric class are as follows.
 \itemize{
 \item raw : a data.frame or a \code{\link[tibble]{tbl_df}}. Data containing variables to be compared. Save it for visualization with plot.compare_numeric().
 \item variables : character. List of variables selected for comparison. 
