@@ -1,15 +1,3 @@
-# dlookr 0.6.7
-
-## MINOR CHANGES
-
-* Improvement of English grammar in package documents. (#128)
-    - README
-    - Vignettes
-    - Man pages
-    - Report pages
-
-
-
 # dlookr 0.6.6
 
 ## MINOR CHANGES
@@ -18,6 +6,13 @@
   missing values across cases on the data diagnosis report. (#126)
     - diagnose_paged_report()
     - diagnose_web_report()
+
+* Improvement of English grammar in package documents. (#128)
+    - README
+    - Vignettes
+    - Man pages
+    - Report pages
+
 
 
 
